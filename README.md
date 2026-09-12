@@ -55,6 +55,31 @@ the following client-side medians with fixed 512-token outputs:
 All 20 requests had zero prefix-cache hits. See
 [the full methodology, ranges, native counters, and raw result records](benchmarks/RESULTS.md).
 
+## Real-world coding-agent benchmark
+
+A complete local coding-agent task investigated and fixed an incorrect
+throughput graph in a separate TypeScript application, added regression tests,
+ran the full quality suite, reviewed its diff, and committed the result. The
+entire run used the production endpoint and was timed end to end:
+
+| Result | Measured value |
+|---|---:|
+| End-to-end wall time | **41 min 37 s** |
+| Model requests / tool calls | 122 / 135 |
+| Logical prompt / generated tokens | 11,456,619 / 69,149 |
+| Newly computed / prefix-cached prompt tokens | 630,635 / 10,825,984 |
+| Prefix-cache hit rate | 94.50% |
+| Weighted native prefill compute | **658.33 tok/s** |
+| Weighted native decode | **48.09 tok/s** |
+| Outcome | 12 files, 378 tests passed, fix committed |
+
+The 11.46M input count includes the full logical conversation sent again on
+each agent turn. Automatic prefix caching meant only 630.6K prompt tokens
+actually required new KV computation. Dividing logical tokens by prefill time
+would yield 11,959.74 effective tok/s, but that is a cache-amplified application
+rate—not GPU prefill compute throughput. See the
+[full real-world methodology and counter deltas](benchmarks/RESULTS.md#real-world-coding-agent-run-2026-09-12).
+
 ## Requirements
 
 - Linux with a working Intel `xe` kernel driver and a visible B70 render node.

@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "date": "2026-09-12",
+  "benchmark": "real-world-coding-agent",
+  "engine_profile": "w4a16-mtp6-workload-40k-production",
+  "agent": {
+    "name": "Pi Coding Agent",
+    "version": "0.85.1",
+    "thinking": "medium",
+    "model_requests": 122,
+    "tool_calls": 135
+  },
+  "task": {
+    "summary": "Diagnose and fix incorrect prefill-throughput graph semantics in a separate TypeScript observability application; add regression tests, run quality checks, review, document, and commit.",
+    "success": true,
+    "files_changed": 12,
+    "insertions": 562,
+    "deletions": 55,
+    "tests_passed": {
+      "contracts": 43,
+      "server": 282,
+      "web": 53,
+      "total": 378
+    },
+    "checks": {
+      "test": "passed",
+      "typecheck": "passed",
+      "lint": "passed",
+      "format_check": "passed",
+      "build": "passed",
+      "production_dependency_audit": "0 known vulnerabilities"
+    }
+  },
+  "measurement": {
+    "scope": "Exclusive vLLM counter delta around the complete agent process; endpoint idle at both boundaries and no concurrent model client.",
+    "wall_seconds": 2497.24839936,
+    "wall_human": "41 min 37 s",
+    "logical_prompt_tokens": 11456619,
+    "generated_tokens": 69149,
+    "total_logical_tokens": 11525768,
+    "newly_computed_prompt_tokens": 630635,
+    "prefix_cache_query_tokens": 11456619,
+    "prefix_cache_hit_tokens": 10825984,
+    "prefix_cache_hit_rate": 0.944954528,
+    "native_prefill_seconds": 957.931879457,
+    "native_decode_seconds": 1435.275557471,
+    "weighted_prefill_compute_tokens_per_second": 658.329692877,
+    "effective_logical_prompt_tokens_per_prefill_second": 11959.742906243,
+    "weighted_decode_tokens_per_second_post_first": 48.093203873,
+    "weighted_decode_tokens_per_second_all_tokens": 48.178204973,
+    "mtp_proposed_tokens": 120456,
+    "mtp_accepted_tokens": 49206,
+    "mtp_acceptance_rate": 0.408497709
+  },
+  "privacy": {
+    "raw_agent_stream_published": false,
+    "application_source_published": false,
+    "prompts_or_responses_published": false
+  }
+}

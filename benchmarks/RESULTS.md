@@ -42,6 +42,55 @@ an equivalently representative local list.
 The aggregate CSV and per-request JSON are in
 [`runs/2026-09-12-mtp6-production`](runs/2026-09-12-mtp6-production/).
 
+## Real-world coding-agent run (2026-09-12)
+
+One Pi 0.85.1 coding-agent session, with medium thinking, received a real
+bug-fix assignment in a separate TypeScript observability application. It had
+to diagnose an implausible throughput chart end to end, correct the collector
+and UI semantics, add regression tests, run the documented checks, review the
+diff, write a milestone report, and commit. The endpoint was idle at the
+boundary snapshots and no other model client ran during the session.
+
+| Metric | Result |
+|---|---:|
+| End-to-end wall time | **2,497.248 s (41 min 37 s)** |
+| Model requests | 122 |
+| Agent tool calls | 135 |
+| Logical prompt tokens | 11,456,619 |
+| Generated tokens | 69,149 |
+| Total logical tokens | 11,525,768 |
+| Newly computed prompt/KV tokens | 630,635 |
+| Prefix-cache hit tokens | 10,825,984 |
+| Prefix-cache hit rate | **94.50%** |
+| Native prefill-phase time | 957.932 s |
+| Native decode-phase time | 1,435.276 s |
+| Weighted prefill compute throughput | **658.33 tok/s** |
+| Effective logical input / prefill time | 11,959.74 tok/s |
+| Weighted decode throughput | **48.09 tok/s** |
+| MTP accepted / proposed | 49,206 / 120,456 (**40.85%**) |
+
+The rates come from vLLM counter differences captured immediately before and
+after the complete agent process:
+
+- Prefill compute = `Δrequest_prefill_kv_computed_tokens_sum ÷
+  Δrequest_prefill_time_seconds_sum`.
+- Decode = `(Δrequest_generation_tokens_sum − completed requests) ÷
+  Δrequest_decode_time_seconds_sum`; subtracting one first token per request
+  matches the post-first-token convention used by the synthetic sweep.
+- Logical effective prefill = `Δrequest_prompt_tokens_sum ÷
+  Δrequest_prefill_time_seconds_sum`. It is disclosed to explain the benefit
+  of caching, but must not be labeled hardware prefill throughput.
+
+The task succeeded: the agent produced a 12-file fix with 562 insertions and
+55 deletions. Independent verification passed 43 contract, 282 server, and 53
+web tests (378 total), plus TypeScript checks, lint, formatting, and a
+production-dependency audit with zero known vulnerabilities. The fix replaced
+a wall-clock delta of a batch-updated prompt counter with matched vLLM
+computed-token and prefill-time histogram deltas; it did not clamp or smooth
+the graph. The raw 8.3 MB agent stream and application source are not published.
+A privacy-safe machine-readable record is in
+[`runs/2026-09-12-real-world-coding/summary.json`](runs/2026-09-12-real-world-coding/summary.json).
+
 ## Final coding profile: MTP6 versus MTP4
 
 Matched W4A16 runs used an 8,192-token coding prompt, up to 16,384 output

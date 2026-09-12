@@ -1,0 +1,17 @@
+[Unit]
+Description=Qwen3.8 27B on Intel Arc Pro B70 with vLLM
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=exec
+WorkingDirectory=@REPO_DIR@
+ExecStart=@REPO_DIR@/scripts/run-server.sh
+ExecStop=-/usr/bin/docker stop -t 45 b70-qwen38-vllm
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=660
+TimeoutStopSec=65
+
+[Install]
+WantedBy=default.target

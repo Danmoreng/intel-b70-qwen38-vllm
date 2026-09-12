@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "date": "2026-09-12",
+  "benchmark": "real-world-coding-agent-request-instrumentation",
+  "engine_profile": "w4a16-mtp6-workload-40k-production",
+  "agent": {
+    "name": "Pi Coding Agent",
+    "version": "0.85.1",
+    "thinking": "medium",
+    "sampling": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20
+    },
+    "model_requests": 64,
+    "tool_calls": 74
+  },
+  "task": {
+    "summary": "Investigate and correct misleading prefix-cache query/hit rate semantics in a separate TypeScript observability application; add regression tests, verify, document, and commit.",
+    "success": true,
+    "files_changed": 5,
+    "insertions": 295,
+    "deletions": 21,
+    "tests_passed": {
+      "contracts": 44,
+      "server": 283,
+      "web": 53,
+      "total": 380
+    },
+    "checks": {
+      "test": "passed",
+      "typecheck": "passed",
+      "lint": "passed",
+      "format_check": "passed",
+      "build": "passed",
+      "production_dependency_audit": "0 known vulnerabilities"
+    }
+  },
+  "measurement": {
+    "scope": "Per-request native vLLM counter deltas captured by a content-free loopback proxy; no concurrent model client and no engine restart or reconfiguration.",
+    "wall_seconds": 781.62751232,
+    "wall_human": "13 min 2 s",
+    "logical_prompt_tokens": 2443675,
+    "generated_tokens": 26489,
+    "newly_computed_prompt_tokens": 323739,
+    "prefix_cache_hit_tokens": 2119936,
+    "prefix_cache_hit_rate": 0.8675196169703419,
+    "native_prefill_seconds": 291.4768235920005,
+    "native_decode_seconds": 447.50782607999986,
+    "upstream_request_wall_seconds": 742.3928351000001,
+    "weighted_prefill_compute_tokens_per_second": 1110.6852202189461,
+    "effective_logical_prompt_tokens_per_prefill_second": 8383.771203094262,
+    "weighted_decode_tokens_per_second_post_first": 59.04924664999282,
+    "mtp_proposed_tokens": 46614,
+    "mtp_accepted_tokens": 18788,
+    "mtp_acceptance_rate": 0.4030548762174454,
+    "context_bands": [
+      { "band": "0-10000", "actual_min": 2985, "actual_max": 9564, "requests": 6, "prefill_compute_tps": 1866.1892340022491, "effective_logical_prefill_tps": 2093.1628030831057, "decode_tps_post_first": 103.50866117873056, "prefix_cache_hit_rate": 0.10843569776155876, "mtp_acceptance_rate": 0.6043083900226758 },
+      { "band": "10000-20000", "actual_min": 13702, "actual_max": 17848, "requests": 2, "prefill_compute_tps": 1670.5247806640523, "effective_logical_prefill_tps": 2648.229164403118, "decode_tps_post_first": 66.5129954853175, "prefix_cache_hit_rate": 0.36919175911251984, "mtp_acceptance_rate": 0.3637440758293839 },
+      { "band": "20000-30000", "actual_min": 21422, "actual_max": 29089, "requests": 23, "prefill_compute_tps": 1322.3907527079368, "effective_logical_prefill_tps": 7414.741915836636, "decode_tps_post_first": 63.00633321059636, "prefix_cache_hit_rate": 0.821653839375915, "mtp_acceptance_rate": 0.3682932750667638 },
+      { "band": "30000-40000", "actual_min": 30373, "actual_max": 36130, "requests": 5, "prefill_compute_tps": 1196.9255911718687, "effective_logical_prefill_tps": 7028.236332527423, "decode_tps_post_first": 65.56545734753401, "prefix_cache_hit_rate": 0.8296975891899978, "mtp_acceptance_rate": 0.41025641025641024 },
+      { "band": "40000-50000", "actual_min": 40240, "actual_max": 49363, "requests": 6, "prefill_compute_tps": 1059.1093476401538, "effective_logical_prefill_tps": 6289.118005482016, "decode_tps_post_first": 54.20523182263007, "prefix_cache_hit_rate": 0.8315965216876257, "mtp_acceptance_rate": 0.35641998734977864 },
+      { "band": "50000-60000", "actual_min": 54498, "actual_max": 59508, "requests": 7, "prefill_compute_tps": 880.3184950966574, "effective_logical_prefill_tps": 11273.681112730881, "decode_tps_post_first": 82.7747125823017, "prefix_cache_hit_rate": 0.9219138375217522, "mtp_acceptance_rate": 0.6656118143459916 },
+      { "band": "60000-70000", "actual_min": 60152, "actual_max": 68053, "requests": 11, "prefill_compute_tps": 832.4441500662083, "effective_logical_prefill_tps": 11335.99958894939, "decode_tps_post_first": 50.261431334989226, "prefix_cache_hit_rate": 0.926566321431619, "mtp_acceptance_rate": 0.36600985221674875 },
+      { "band": "70000-80000", "actual_min": 71866, "actual_max": 72736, "requests": 4, "prefill_compute_tps": 767.8455298719655, "effective_logical_prefill_tps": 11294.014355976828, "decode_tps_post_first": 52.10287334043708, "prefix_cache_hit_rate": 0.9320130552635946, "mtp_acceptance_rate": 0.3996884735202492 }
+    ]
+  },
+  "draft_vocab_coverage": {
+    "method": "Offline tokenization of structured assistant thinking, final text, tool names, and tool arguments; protocol wrapper tokens excluded.",
+    "tokenized_occurrences": 24544,
+    "covered_occurrences": 24089,
+    "missing_occurrences": 455,
+    "coverage": 0.9814618644067796,
+    "unique_tokens": 2885,
+    "missing_unique_tokens": 173,
+    "pearson_missing_fraction_vs_mtp_acceptance": -0.17119324530611327,
+    "lower_missing_half_mtp_acceptance": 0.43439716312056736,
+    "higher_missing_half_mtp_acceptance": 0.38946300055360766
+  },
+  "privacy": {
+    "raw_agent_stream_published": false,
+    "application_source_published": false,
+    "prompts_or_responses_published": false,
+    "only_aggregated_numeric_results_published": true
+  }
+}

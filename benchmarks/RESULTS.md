@@ -91,6 +91,93 @@ the graph. The raw 8.3 MB agent stream and application source are not published.
 A privacy-safe machine-readable record is in
 [`runs/2026-09-12-real-world-coding/summary.json`](runs/2026-09-12-real-world-coding/summary.json).
 
+## Instrumented coding-agent follow-up by context band
+
+A second real task investigated the remaining prefix-cache query/hit rate
+semantics in the same separate observability application. The agent traced the
+metrics through the contract and normalization layers, removed two misleading
+wall-clock-derived rates, added regression tests and documentation, ran the
+quality suite, reviewed the diff, and committed the fix. It changed five files
+(295 insertions, 21 deletions); independent verification passed 44 contract,
+283 server, and 53 web tests (380 total), TypeScript checks, lint, formatting,
+and a production-dependency audit with zero known vulnerabilities.
+
+This run used a loopback measurement proxy that forwarded each streaming
+request unchanged and retained only per-request metric deltas. It sampled the
+native vLLM counters immediately before each request and after its final stream
+event, before allowing the agent to begin its next request. It did not retain
+prompt or response content. The engine, container, system service, and
+production configuration were not changed or restarted.
+
+The table groups requests by the complete logical prompt context of that turn.
+Rates are weighted ratios of token sums to matching native phase-time sums—not
+means of per-request rates:
+
+| Prompt context band | Actual context range | n | Prefill compute | Effective logical prefill | Decode | Prefix-cache hit | MTP accepted/drafted |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 0–10K | 2,985–9,564 | 6 | **1,866.19 tok/s** | 2,093.16 tok/s | **103.51 tok/s** | 10.84% | 60.4% |
+| 10–20K | 13,702–17,848 | 2 | **1,670.52 tok/s** | 2,648.23 tok/s | **66.51 tok/s** | 36.92% | 36.4% |
+| 20–30K | 21,422–29,089 | 23 | **1,322.39 tok/s** | 7,414.74 tok/s | **63.01 tok/s** | 82.17% | 36.8% |
+| 30–40K | 30,373–36,130 | 5 | **1,196.93 tok/s** | 7,028.24 tok/s | **65.57 tok/s** | 82.97% | 41.0% |
+| 40–50K | 40,240–49,363 | 6 | **1,059.11 tok/s** | 6,289.12 tok/s | **54.21 tok/s** | 83.16% | 35.6% |
+| 50–60K | 54,498–59,508 | 7 | **880.32 tok/s** | 11,273.68 tok/s | **82.77 tok/s** | 92.19% | 66.6% |
+| 60–70K | 60,152–68,053 | 11 | **832.44 tok/s** | 11,336.00 tok/s | **50.26 tok/s** | 92.66% | 36.6% |
+| 70–80K | 71,866–72,736 | 4 | **767.85 tok/s** | 11,294.01 tok/s | **52.10 tok/s** | 93.20% | 40.0% |
+
+Overall, the run completed in **781.628 s (13 min 2 s)** with 64 model
+requests and 74 tool calls. It processed 2,443,675 logical prompt tokens,
+323,739 newly computed prompt tokens, 2,119,936 cached prompt tokens, and
+26,489 generated tokens. The weighted results were:
+
+- prefill compute: **1,110.69 tok/s** over 291.477 native prefill seconds;
+- effective logical input: 8,383.77 tok/s (cache-amplified, not GPU compute);
+- decode: **59.05 tok/s** over 447.508 native decode seconds; and
+- MTP acceptance: 18,788 / 46,614 = **40.31%**.
+
+The sum of native phase times was 738.985 s, while upstream request wall time
+was 742.393 s and the complete agent wall time was 781.628 s. Tool execution
+and agent orchestration therefore affect end-to-end time, but are not included
+in the reported prefill or decode rates. This also resolves the ambiguity in
+the longer 41-minute run: its 658.33 prefill and 48.09 decode figures are slow
+native engine rates for a much longer average context, not rates diluted by
+waiting for tools.
+
+### Does the reduced 40K draft head explain the low MTP acceptance?
+
+It may contribute, but this run does not support it as the main explanation.
+Using the exact active 40,960-token ID list, an offline tokenizer-only pass over
+the structured assistant output found:
+
+| Component | Tokenized occurrences | Missing from 40K head | Coverage |
+|---|---:|---:|---:|
+| Thinking | 11,436 | 206 | 98.20% |
+| Final text | 1,944 | 35 | 98.20% |
+| Tool names and arguments | 11,164 | 214 | 98.08% |
+| **Total** | **24,544** | **455** | **98.15%** |
+
+The half of responses with fewer missing tokens had 43.44% weighted MTP
+acceptance, versus 38.95% for the half with more missing tokens; the
+per-response Pearson correlation between missing-token fraction and acceptance
+was only −0.17. This is consistent with a modest vocabulary effect, but it is
+observational and confounded by response content and length.
+
+More importantly, the same fixed head produced 60.4% acceptance below 10K,
+36–41% through most 10–50K bands, 66.6% at 50–60K, and 40.0% at 70–80K.
+Coding-agent output mixes reasoning, source identifiers, paths, tool JSON, and
+natural language, and this run used normal agent sampling (`temperature=1.0`,
+`top_p=0.95`, `top_k=20`). The matched 8K draft-head screen used the same
+sampling parameters but a fixed prompt, seed 42, short context, and 512-token
+output; it reached 89.4% with the same 40K size. A decisive causal answer still
+requires a matched 40K-versus-full-head A/B with identical replay prompts and
+sampling; no engine profile was switched during this run.
+
+The coverage pass deliberately excludes raw prompts/responses and protocol
+wrapper tokens. Its 24,544 tokenized structured-output occurrences are
+therefore slightly fewer than the 26,489 native generated-token count and
+should be read as a domain-coverage diagnostic, not an exact reconstruction of
+the wire token stream. The privacy-safe aggregate is in
+[`runs/2026-09-12-real-world-coding-context-bands/summary.json`](runs/2026-09-12-real-world-coding-context-bands/summary.json).
+
 ## Final coding profile: MTP6 versus MTP4
 
 Matched W4A16 runs used an 8,192-token coding prompt, up to 16,384 output

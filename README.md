@@ -80,6 +80,31 @@ would yield 11,959.74 effective tok/s, but that is a cache-amplified application
 rate—not GPU prefill compute throughput. See the
 [full real-world methodology and counter deltas](benchmarks/RESULTS.md#real-world-coding-agent-run-2026-09-12).
 
+A second, shorter coding-agent task captured native counter deltas around every
+individual model request. This separates engine work from tool execution and
+groups requests by the prompt context sent to the model:
+
+| Prompt context band | Requests | Prefill compute | Decode | MTP accepted/drafted |
+|---:|---:|---:|---:|---:|
+| 0–10K | 6 | 1,866.19 tok/s | 103.51 tok/s | 60.4% |
+| 10–20K | 2 | 1,670.52 tok/s | 66.51 tok/s | 36.4% |
+| 20–30K | 23 | 1,322.39 tok/s | 63.01 tok/s | 36.8% |
+| 30–40K | 5 | 1,196.93 tok/s | 65.57 tok/s | 41.0% |
+| 40–50K | 6 | 1,059.11 tok/s | 54.21 tok/s | 35.6% |
+| 50–60K | 7 | 880.32 tok/s | 82.77 tok/s | 66.6% |
+| 60–70K | 11 | 832.44 tok/s | 50.26 tok/s | 36.6% |
+| 70–80K | 4 | 767.85 tok/s | 52.10 tok/s | 40.0% |
+
+The 13 min 2 s run completed 64 model requests and 74 tool calls, changed five
+files, and passed 380 tests. Its overall weighted rates were 1,110.69 prefill
+compute tok/s and 59.05 decode tok/s. Tool-call time is not part of either
+rate. An offline, content-free aggregate found that the active 40K draft
+vocabulary covered 98.15% of tokenized structured agent output. Responses with
+more out-of-vocabulary tokens did have somewhat lower MTP acceptance, but the
+relationship was weak; the reduced head can contribute, yet it does not by
+itself explain the roughly 40% overall real-agent acceptance. See the
+[request-level methodology and full table](benchmarks/RESULTS.md#instrumented-coding-agent-follow-up-by-context-band).
+
 ## Requirements
 
 - Linux with a working Intel `xe` kernel driver and a visible B70 render node.

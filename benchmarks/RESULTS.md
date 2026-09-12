@@ -5,6 +5,43 @@ request. Native vLLM prefill/decode counters were used; warmups were excluded.
 Results are not cross-hardware claims and should not be read as a model-quality
 benchmark.
 
+## Fresh production context sweep (2026-09-12)
+
+This sweep used the final W4A16, MTP6, workload-tuned 40K draft-vocabulary
+profile. Each row is the median of five measured cold-cache requests following
+a discarded generic warm-up and a discarded full-shape warm-up. Prompt lengths
+include the rendered chat template and were checked against endpoint usage.
+Every measured request produced exactly 512 tokens with `ignore_eos=true`.
+
+| Input tokens | n | Client prefill | Client decode | Decode range | Native prefill | Native decode | MTP accepted/drafted |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 8,192 | 5 | 1,924.94 tok/s | **88.66 tok/s** | 76.62–95.84 | 1,932.17 tok/s | 88.63 tok/s | 45.5% |
+| 32,768 | 5 | 1,535.58 tok/s | **70.81 tok/s** | 68.38–84.55 | 1,538.91 tok/s | 70.75 tok/s | 45.6% |
+| 65,536 | 5 | 1,209.07 tok/s | **69.49 tok/s** | 65.15–70.05 | 1,211.08 tok/s | 69.39 tok/s | 53.1% |
+| 131,072 | 5 | 785.40 tok/s | **50.54 tok/s** | 38.00–61.34 | 786.32 tok/s | 50.43 tok/s | 48.7% |
+
+Client prefill is input tokens divided by time to first generated token. Client
+decode is the remaining 511 tokens divided by time from the first generated
+token to request completion. Native rates use the corresponding vLLM phase
+counters. Prefix-cache hit deltas were zero for all 20 measured requests.
+
+A report-aligned short-output point used 512 input and 128 forced output tokens:
+
+| Input/output | n | Client prefill | Client decode | Decode range | Native prefill | Native decode | MTP accepted/drafted |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 512/128 | 5 | 1,763.01 tok/s | **117.85 tok/s** | 109.74–144.64 | 1,788.27 tok/s | 117.80 tok/s | 65.6% |
+
+The prompts span five synthetic assistant/research/RAG/tool/document families.
+This exposes MTP acceptance sensitivity rather than hiding it behind one
+favorable output. It also explains why these standardized synthetic decode
+medians should not replace the complete coding-task result below. The exact
+40K draft-vocabulary list is corpus-specific and is not published; a clone can
+reproduce the method, but will only reproduce the exact profile after building
+an equivalently representative local list.
+
+The aggregate CSV and per-request JSON are in
+[`runs/2026-09-12-mtp6-production`](runs/2026-09-12-mtp6-production/).
+
 ## Final coding profile: MTP6 versus MTP4
 
 Matched W4A16 runs used an 8,192-token coding prompt, up to 16,384 output
@@ -19,7 +56,7 @@ MTP6 improved median decode by 10.7% and reduced mean completed-task time by
 8.0%. One MTP6 response also passed all 19 self-generated tests; every output
 passed the fixed suite.
 
-## Throughput across context lengths
+## Historical throughput across context lengths
 
 The long-context W4A16 measurements below predate the final MTP6/40K retune and
 used MTP4 with the full INT4 draft head. They remain useful as a reproducible
@@ -82,6 +119,5 @@ user create and evaluate their own list without disclosing their corpus.
 - Vision input, parsed tool call, tool-result continuation, and a real coding
   read/edit/bash smoke test passed.
 
-Run `scripts/benchmark.py` to generate a fresh, privacy-safe context table for
-your exact host and final local vocabulary.
-
+Run `scripts/run-context-benchmark.sh` to generate the same privacy-safe matrix
+for your exact host and final local vocabulary.

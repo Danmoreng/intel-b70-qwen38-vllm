@@ -11,10 +11,11 @@ their SHA-256 digests before executing or installing them.
   `SergiioB/intel-arc-pro-b70-inference-cookbook` are covered by that
   project's MIT license. The build pins commit
   `966c593a8b375c4df5173d8d07b6be4db7835fdb`.
+- `scripts/context-benchmark.py` and `scripts/generate-exact-prompts.py` are
+  adapted from that same MIT-licensed cookbook revision.
 - Intel Compute Runtime and Intel Graphics Compiler packages retain their own
   upstream licenses.
 
 Review all upstream licenses before redistribution. This project is an
 independent community recipe and is not affiliated with Intel, Qwen, vLLM,
 Hugging Face, or the upstream cookbook authors.
-

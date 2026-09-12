@@ -6,9 +6,11 @@ while retaining a 204,800-token context, vision, tool calling, and automatic
 prefix caching.
 
 The final measured profile reaches **103.15 decode tokens/s** on a complete
-coding workload (median, two runs) and exposes **215,870 KV-cache tokens** at
-the configured memory fraction. It uses one request at a time; this is a
-single-user latency profile, not a multi-user throughput setup.
+coding workload (median, two runs). A separate five-run cold-context sweep
+measured **88.66 decode tokens/s at 8K** and **50.54 decode tokens/s at 128K**
+with fixed 512-token outputs. The configuration exposes **215,870 KV-cache
+tokens** at the configured memory fraction. It uses one request at a time;
+this is a single-user latency profile, not a multi-user throughput setup.
 
 > [!IMPORTANT]
 > This project patches an exact vLLM development image. Keep the pins. Treat a
@@ -37,6 +39,21 @@ Why W4A16? An end-to-end coding A/B showed that W4A8 made 8K prefill 38.1%
 faster but made decode 10.3% slower and increased completed-task wall time by
 15.7%. The production profile therefore optimizes the phase that dominates
 long coding answers. See [the measured results](benchmarks/RESULTS.md).
+
+## Fresh context benchmark
+
+Five measured cold-cache requests per row, after full-shape warm-up, produced
+the following client-side medians with fixed 512-token outputs:
+
+| Input context | Prefill | Decode |
+|---:|---:|---:|
+| 8,192 tokens | 1,924.94 tok/s | **88.66 tok/s** |
+| 32,768 tokens | 1,535.58 tok/s | **70.81 tok/s** |
+| 65,536 tokens | 1,209.07 tok/s | **69.49 tok/s** |
+| 131,072 tokens | 785.40 tok/s | **50.54 tok/s** |
+
+All 20 requests had zero prefix-cache hits. See
+[the full methodology, ranges, native counters, and raw result records](benchmarks/RESULTS.md).
 
 ## Requirements
 
@@ -144,20 +161,26 @@ sudo loginctl enable-linger "$USER"
 
 ## Re-run the context benchmark
 
-Use an idle server. The script constructs exact 8,192, 65,536, and 122,880
-token synthetic prompts, forces a fixed 512-token output, reads native vLLM
-phase counters, and writes JSON, CSV, and Markdown:
+Use an idle server. The reproducible sweep generates six unique synthetic
+prompts at each exact rendered length, discards one full-shape warm-up, and
+measures five cold-cache requests. It covers 8K, 32K, 64K, and 128K with
+fixed 512-token outputs, plus a 512-input/128-output reference point. The
+harness reads both client timings and native vLLM phase counters, asserts zero
+prefix-cache hits, and stores the detailed JSON results:
 
 ```bash
-./scripts/benchmark.py --repeats 1
+./scripts/run-context-benchmark.sh
 ```
 
-For a more stable local result, use three repeats. Expect this to take several
-minutes, especially at 122,880 input tokens:
+Pass a relative output directory to name the run explicitly:
 
 ```bash
-./scripts/benchmark.py --repeats 3 --output-dir benchmark-results/my-host
+./scripts/run-context-benchmark.sh benchmark-results/my-host
 ```
+
+The exact sweep takes tens of minutes on a B70 because it processes six full
+requests per context length. The script aborts if another request is active,
+so do not share the endpoint with an agent or application while it runs.
 
 These synthetic numbers measure engine throughput, not answer quality. Before
 deployment, also run representative coding tests, long-context retrieval tests,
@@ -188,4 +211,3 @@ validated only for one card and one active request.
 - [Intel Graphics Compiler 2.40.13](https://github.com/intel/intel-graphics-compiler/releases/tag/v2.40.13)
 
 See [NOTICE.md](NOTICE.md) for licensing and attribution details.
-

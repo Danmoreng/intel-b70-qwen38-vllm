@@ -1,9 +1,9 @@
-ARG BASE_IMAGE=vllm/vllm-openai-xpu@sha256:f01e24f6c7ff01f1e0662234255a1372297d1dbd89d003cf13c8fad3eab1ba4f
+ARG BASE_IMAGE=vllm/vllm-openai-xpu@sha256:96db42e248d48760a4937eb3d04c4878b39d13a9814efea95d510393e097a901
 FROM ${BASE_IMAGE}
 
 USER root
 
-# Newer, measured Battlemage userspace. Every package is verified before
+# Measured Battlemage userspace. Every package is verified before
 # installation; the base image itself is pinned by digest above.
 ADD https://github.com/intel/intel-graphics-compiler/releases/download/v2.40.13/intel-igc-core-2_2.40.13%2B22418_amd64.deb /tmp/intel-runtime/intel-igc-core.deb
 ADD https://github.com/intel/intel-graphics-compiler/releases/download/v2.40.13/intel-igc-opencl-2_2.40.13%2B22418_amd64.deb /tmp/intel-runtime/intel-igc-opencl.deb
@@ -46,8 +46,16 @@ RUN echo "4d7a02c4ea10ca7c00dc89ad927fa3dafa747dbf0553d2adf24e30a3c53e9c14  /opt
 COPY patches/ /opt/b70-local-patches/
 RUN python /opt/b70-local-patches/patch_draft_lmhead_int4.py \
  && python /opt/b70-local-patches/patch_draft_mtp_int4.py \
- && python /opt/b70-local-patches/patch_reduced_draft_vocab.py \
  && rm -rf /opt/b70-local-patches
 
-ENTRYPOINT ["vllm", "serve"]
+# Exact Q128/KV32 prefill extension qualified with this pinned vLLM/XPU ABI.
+# The adapter fails closed to the native attention path for every unsupported
+# tensor shape, dtype, stride or option. Variant 1 is Q128/subgroup-16.
+COPY q128/tiles.so /opt/b70/tiles.so
+COPY q128/b70_attention.py /opt/venv/lib/python3.12/site-packages/b70_attention.py
+COPY q128/patch_attention_import.py /tmp/patch_attention_import.py
+RUN echo "f38f23c4535407b6c3f083c5e81c89c7f704bae374571cf2e32f9da13abe0873  /opt/b70/tiles.so" | sha256sum -c - \
+ && python /tmp/patch_attention_import.py \
+ && rm /tmp/patch_attention_import.py
 
+ENTRYPOINT ["vllm", "serve"]

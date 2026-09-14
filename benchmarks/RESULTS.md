@@ -5,7 +5,50 @@ request. Native vLLM prefill/decode counters were used; warmups were excluded.
 Results are not cross-hardware claims and should not be read as a model-quality
 benchmark.
 
-## Fresh production context sweep (2026-09-12)
+## Current 180 W Q128 production sweep (2026-09-14)
+
+The current production profile uses the Q128/KV32 prefill extension, W4A16
+target computation, MTP4 with the full INT4 draft head, FP8 KV cache, a 4,096
+token scheduler budget, and a 200,704-token context window. The card power
+limit was verified as 180 W immediately before and after the uninterrupted
+sweep. It was not continuously sampled.
+
+Each row is the median of five measured cold-cache requests after a discarded
+generic warm-up and a discarded full-shape warm-up. Prompt lengths include the
+rendered chat template and were verified against endpoint usage. All 25
+measured requests produced the requested fixed output with `ignore_eos=true`,
+finished with `finish_reason=length`, and recorded zero prefix-cache hits.
+
+| Input tokens | Output | n | Client prefill | Client decode | Decode range | Native prefill | Native decode | MTP accepted/drafted |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 512 | 128 | 5 | 1,586.23 tok/s | **100.90 tok/s** | 91.51–107.00 | 1,676.87 tok/s | 100.92 tok/s | 77.4% |
+| 8,192 | 512 | 5 | 1,419.99 tok/s | **77.41 tok/s** | 72.44–85.21 | 1,424.85 tok/s | 77.39 tok/s | 60.7% |
+| 32,768 | 512 | 5 | 1,156.10 tok/s | **70.11 tok/s** | 62.32–77.76 | 1,157.94 tok/s | 70.06 tok/s | 62.5% |
+| 65,536 | 512 | 5 | 940.65 tok/s | **57.07 tok/s** | 56.76–62.40 | 941.85 tok/s | 57.00 tok/s | 60.4% |
+| 131,072 | 512 | 5 | 665.12 tok/s | **41.85 tok/s** | 40.35–53.15 | 665.77 tok/s | 41.77 tok/s | 55.1% |
+
+Client prefill is input tokens divided by time to first generated token. Client
+decode is the remaining output tokens divided by time after the first token.
+Native rates use matching vLLM phase-counter deltas. The client and native
+numbers closely agree, while the very stable native prefill rates make the
+context-scaling curve especially clear.
+
+These rows are the reproducible numbers for the new 180 W deployment, not new
+all-time throughput records. Compared with the 2026-09-12 MTP6/40K sweep below,
+native prefill is 6.2–26.3% lower and native decode is 1.0–17.9% lower,
+depending on context. That comparison changes several variables at once:
+power policy, Q128 versus native attention, vLLM/XPU-kernel versions,
+MTP4/full vocabulary versus MTP6/40K, and scheduler budget. It therefore must
+not be interpreted as an isolated Q128 regression or an isolated power result.
+In the matched 196K Q128-versus-Q256 qualification, Q128 reduced TTFT by 4.32%
+and improved logical prompt throughput by 4.51% with identical scheduler work.
+The compact evidence is in
+[`runs/2026-09-14-q128-vs-q256-196k`](runs/2026-09-14-q128-vs-q256-196k/).
+
+The aggregate CSV, exact profile manifest and per-request JSON are in
+[`runs/2026-09-14-q128-196k-180w`](runs/2026-09-14-q128-196k-180w/).
+
+## Historical MTP6 production context sweep (2026-09-12)
 
 This sweep used the final W4A16, MTP6, workload-tuned 40K draft-vocabulary
 profile. Each row is the median of five measured cold-cache requests following
@@ -248,12 +291,18 @@ user create and evaluate their own list without disclosing their corpus.
 
 ## Capacity and functional checks
 
-- 215,870 KV-cache tokens available at `gpu-memory-utilization=0.93`.
-- 204,800-token configured context passed a boundary request containing vision.
-- Prefix-cache test: 17,662 prompt tokens; cold TTFT 10.915 s, warm TTFT
-  2.902/2.901 s, 13,312 cached tokens reused on each warm request.
-- Vision input, parsed tool call, tool-result continuation, and a real coding
-  read/edit/bash smoke test passed.
+- Current Q128/180 W profile: 213,699 KV-cache tokens available at
+  `gpu-memory-utilization=0.93`.
+- Current 200,704-token configured context passed an exact boundary request
+  containing vision: 200,448 prompt plus 256 completion tokens, with all text,
+  image and code-fix markers present.
+- Current prefix-cache test: 17,664 prompt tokens; cold TTFT 13.376 s, warm
+  TTFT 3.650/3.642 s, 13,312 cached tokens reused on each warm request.
+- Vision input, parsed tool call and tool-result continuation passed on the
+  current Q128 service.
+- Historical MTP6/40K capacity was 215,870 KV-cache tokens with a 204,800-token
+  boundary; its detailed functional numbers remain in Git history and the
+  historical sections above.
 
 Run `scripts/run-context-benchmark.sh` to generate the same privacy-safe matrix
 for your exact host and final local vocabulary.

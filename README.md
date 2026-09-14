@@ -1,16 +1,15 @@
 # Intel Arc Pro B70: fast Qwen3.8-27B serving with vLLM
 
 This is a small, reproducible recipe for serving Qwen3.8-27B on one 32 GB
-Intel Arc Pro B70. The validated profile prioritizes coding-agent decode speed
-while retaining a 204,800-token context, vision, tool calling, and automatic
-prefix caching.
+Intel Arc Pro B70. The current validated profile runs at a fixed **180 W** card
+limit and combines a Q128/KV32 prefill extension with a 200,704-token context,
+vision, tool calling, and automatic prefix caching.
 
-The final measured profile reaches **103.15 decode tokens/s** on a complete
-coding workload (median, two runs). A separate five-run cold-context sweep
-measured **88.66 decode tokens/s at 8K** and **50.54 decode tokens/s at 128K**
-with fixed 512-token outputs. The configuration exposes **215,870 KV-cache
-tokens** at the configured memory fraction. It uses one request at a time;
-this is a single-user latency profile, not a multi-user throughput setup.
+The five-run cold-context sweep measured **77.41 decode tokens/s at 8K** and
+**41.85 decode tokens/s at 128K**, with native prefill rates of 1,424.85 and
+665.77 tok/s respectively. The configuration exposes 213,699 KV-cache tokens
+at the configured memory fraction. It uses one request at a time; this is a
+single-user latency profile, not a multi-user throughput setup.
 
 > [!IMPORTANT]
 > This project patches an exact vLLM development image. Keep the pins. Treat a
@@ -25,39 +24,52 @@ this is a single-user latency profile, not a multi-user throughput setup.
 | Model revision | `a47b0c6f0d756bc394c4cc629d5b0ded1acc7001` |
 | Target weights | GPTQ INT4, symmetric, group size 128 |
 | Target computation | W4A16 (`float16` activations); W4A8 deliberately off |
-| Speculative draft | MTP6; draft LM head and five draft linears converted to INT4 |
-| Draft vocabulary | 40,960 workload-selected rows (optional and corpus-specific) |
+| Speculative draft | MTP4; draft LM head and five draft linears converted to INT4 |
+| Draft vocabulary | Full 248,320 rows |
 | KV cache | FP8 |
-| Context | 204,800 total tokens |
+| Context | 200,704 total tokens (196 Ki tokens) |
 | GPU memory fraction | 0.93 |
-| Scheduler | one sequence, 6,656 max batched tokens |
+| Scheduler | one sequence, 4,096 max batched tokens |
 | Prefix cache | enabled, hybrid-cache mode `align` |
-| vLLM | `0.27.2rc1.dev77+gac7509e2b`, XPU kernels 0.1.12.3 |
+| Prefill attention | Q128/KV32 for the qualified Qwen shape; native fallback otherwise |
+| vLLM | `0.29.0+xpu`, XPU kernels 0.1.14.1 |
 | XPU userspace | Compute Runtime 26.31.39395.13, IGC 2.40.13 |
+| Card power limit | 180 W, checked before every systemd start |
 
 Why W4A16? An end-to-end coding A/B showed that W4A8 made 8K prefill 38.1%
 faster but made decode 10.3% slower and increased completed-task wall time by
 15.7%. The production profile therefore optimizes the phase that dominates
 long coding answers. See [the measured results](benchmarks/RESULTS.md).
 
-## Fresh context benchmark
+## Fresh 180 W context benchmark
 
 Five measured cold-cache requests per row, after full-shape warm-up, produced
 the following client-side medians with fixed 512-token outputs:
 
 | Input context | Prefill | Decode |
 |---:|---:|---:|
-| 8,192 tokens | 1,924.94 tok/s | **88.66 tok/s** |
-| 32,768 tokens | 1,535.58 tok/s | **70.81 tok/s** |
-| 65,536 tokens | 1,209.07 tok/s | **69.49 tok/s** |
-| 131,072 tokens | 785.40 tok/s | **50.54 tok/s** |
+| 8,192 tokens | 1,419.99 tok/s | **77.41 tok/s** |
+| 32,768 tokens | 1,156.10 tok/s | **70.11 tok/s** |
+| 65,536 tokens | 940.65 tok/s | **57.07 tok/s** |
+| 131,072 tokens | 665.12 tok/s | **41.85 tok/s** |
 
-All 20 requests had zero prefix-cache hits. See
+All 20 long-context requests had zero prefix-cache hits and completed the
+forced 512-token output. A separate 512-input/128-output point reached 100.90
+decode tok/s. See
 [the full methodology, ranges, native counters, and raw result records](benchmarks/RESULTS.md).
 
-## Real-world coding-agent benchmark
+These are the qualified numbers for the current 180 W deployment, not the
+highest absolute throughput ever recorded in this repository. The historical
+MTP6/40K sweep was faster in most rows but changed power policy, engine/kernel
+versions, MTP depth, vocabulary and scheduler budget simultaneously. The
+matched 196K Q128-versus-Q256 qualification isolates the attention change:
+Q128 reduced TTFT by 4.32% and improved logical prompt throughput by 4.51%.
+See [the matched comparison](benchmarks/runs/2026-09-14-q128-vs-q256-196k/README.md).
 
-A complete local coding-agent task investigated and fixed an incorrect
+## Historical real-world coding-agent benchmark
+
+A complete local coding-agent task on the previous MTP6/40K profile
+investigated and fixed an incorrect
 throughput graph in a separate TypeScript application, added regression tests,
 ran the full quality suite, reviewed its diff, and committed the result. The
 entire run used the production endpoint and was timed end to end:
@@ -144,6 +156,7 @@ Download the pinned model revision into the Hugging Face cache:
 Start the server in the foreground:
 
 ```bash
+./scripts/set-power-limit.py
 ./scripts/run-server.sh
 ```
 
@@ -159,38 +172,23 @@ name is `Qwen3.8-27B`. No API authentication is configured. Keep the loopback
 binding unless you add your own authenticated reverse proxy or otherwise trust
 the network.
 
-## Optional workload-tuned 40K draft vocabulary
+## Configure the 180 W power limit
 
-Reducing only the speculative draft head from 248,320 to 40,960 candidate rows
-improved matched 8K decode throughput by 7.9% in the first screening. The target
-head remains complete and verifies every proposed token.
-
-The exact benchmark list is intentionally not published because it was built
-from private coding-agent sessions. Generate a list from your own representative,
-non-sensitive assistant outputs, source code, and documentation. Run the builder
-inside the derived image so no host Python packages are required:
+The service fails closed if it cannot set and verify 180 W. Install the scoped
+udev rule once so members of the `render` group can write this B70's hwmon
+limit, then reload the rules:
 
 ```bash
-docker run --rm \
-  -v "$HOME/.cache/huggingface:/root/.cache/huggingface:ro" \
-  -v "$PWD:/work" -w /work \
-  --entrypoint python local/b70-qwen38-vllm:2026-09 \
-  scripts/build-draft-vocab.py \
-  --model mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16 \
-  --revision a47b0c6f0d756bc394c4cc629d5b0ded1acc7001 \
-  --size 40960 --output /work/draft-vocab-40960.txt \
-  /work/YOUR_PUBLIC_OR_PRIVATE_CORPUS
+sudo install -m 0644 systemd/80-b70-power.rules /etc/udev/rules.d/80-b70-power.rules
+sudo udevadm control --reload-rules
+sudo udevadm trigger --subsystem-match=hwmon
+./scripts/set-power-limit.py
 ```
 
-Set the resulting absolute path in `.env`:
-
-```text
-DRAFT_VOCAB_FILE=/absolute/path/to/draft-vocab-40960.txt
-```
-
-If this variable is omitted, the server safely uses the full INT4 draft head.
-Always benchmark your own list: a poor domain match can reduce MTP acceptance
-and erase the speed benefit.
+The checked hardware path is PCI `0000:03:00.0`. Change both the rule and
+`scripts/set-power-limit.py` only after identifying a different B70 address on
+your host. For a foreground launch, run the power-limit script first. The
+systemd unit runs it automatically before every server start.
 
 ## Run as a systemd user service
 
@@ -246,11 +244,14 @@ The Dockerfile applies:
    inference cookbook;
 3. local, environment-gated INT4 conversion for the speculative draft LM head
    and five MTP linears; and
-4. optional reduced-draft-vocabulary support.
+4. the shape-gated Q128/KV32 prefill extension in `docker/q128`.
 
 The GPTQ target model is not modified. Draft proposals can change, but each is
 verified by the target. The local draft patches fail closed for TP>1 and were
-validated only for one card and one active request.
+validated only for one card and one active request. The Q128 adapter checks the
+complete tensor signature and falls back to native attention for unsupported
+calls. Its prebuilt extension is ABI-bound to the pinned base-image digest;
+source and binary hash are included next to it.
 
 ## Sources and acknowledgements
 

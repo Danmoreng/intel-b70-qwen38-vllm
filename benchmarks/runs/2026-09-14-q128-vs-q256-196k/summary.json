@@ -1,0 +1,28 @@
+{
+  "decision": "Q128",
+  "total_context": 200704,
+  "prompt_tokens": 200448,
+  "output_budget": 256,
+  "fixed_configuration": {
+    "power_w": 180,
+    "max_num_batched_tokens": 4096,
+    "speculative_tokens": 4,
+    "draft_vocabulary": "full",
+    "kv_cache_dtype": "fp8"
+  },
+  "q128_ttft_s": 407.1148837199871,
+  "q256_ttft_s": 425.4902514160058,
+  "q128_time_reduction_pct": 4.318634242468904,
+  "q128_throughput_gain_pct": 4.51355831752327,
+  "q128_wall_s": 412.665027725001,
+  "q256_wall_s": 430.59401320200413,
+  "scheduler_equivalence": {
+    "scheduled_prefill_tokens_each": 217088,
+    "recomputed_prefill_tokens_each": 16640,
+    "preemptions_each": 5
+  },
+  "functional_equivalence": {
+    "finish_reason_each": "stop",
+    "all_four_markers_found_both": true
+  }
+}

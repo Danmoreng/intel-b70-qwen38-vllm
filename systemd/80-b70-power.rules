@@ -1,0 +1,1 @@
+SUBSYSTEM=="hwmon", KERNEL=="hwmon*", ATTR{name}=="xe", DEVPATH=="*0000:03:00.0*", RUN+="/bin/chgrp render /sys%p/power1_cap", RUN+="/bin/chmod g+w /sys%p/power1_cap"

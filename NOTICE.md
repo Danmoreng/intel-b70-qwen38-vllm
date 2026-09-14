@@ -13,6 +13,10 @@ their SHA-256 digests before executing or installing them.
   `966c593a8b375c4df5173d8d07b6be4db7835fdb`.
 - `scripts/context-benchmark.py` and `scripts/generate-exact-prompts.py` are
   adapted from that same MIT-licensed cookbook revision.
+- `docker/q128/tiles.cpp` instantiates the public Q128/subgroup-16 policy from
+  the pinned `vllm-xpu-kernels`/SYCL-TLA interfaces. The matching prebuilt
+  extension is redistributed only for the exact pinned vLLM XPU ABI; source
+  and SHA-256 are included in `docker/q128/README.md`.
 - Intel Compute Runtime and Intel Graphics Compiler packages retain their own
   upstream licenses.
 

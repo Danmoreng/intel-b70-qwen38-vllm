@@ -15,13 +15,13 @@ if [[ "$run_dir" == /* || "$run_dir" == *".."* ]]; then
   exit 2
 fi
 
-image="${VLLM_IMAGE:-local/b70-qwen38-vllm:2026-09}"
+image="${VLLM_IMAGE:-local/b70-qwen38-vllm:q128-196k-180w}"
 model="${MODEL_ID:-mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16}"
 revision="${MODEL_REVISION:-a47b0c6f0d756bc394c4cc629d5b0ded1acc7001}"
 served_name="${SERVED_MODEL_NAME:-Qwen3.8-27B}"
 hf_home="${HF_HOME:-$HOME/.cache/huggingface}"
 api_root="${BENCHMARK_ROOT:-http://127.0.0.1:${PORT:-8081}}"
-budget="${MAX_NUM_BATCHED_TOKENS:-6656}"
+budget="${MAX_NUM_BATCHED_TOKENS:-4096}"
 
 cd "$repo_dir"
 mkdir -p "$run_dir"

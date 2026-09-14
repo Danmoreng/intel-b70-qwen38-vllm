@@ -6,6 +6,8 @@ StartLimitIntervalSec=0
 [Service]
 Type=exec
 WorkingDirectory=@REPO_DIR@
+EnvironmentFile=-@REPO_DIR@/.env
+ExecStartPre=@REPO_DIR@/scripts/set-power-limit.py
 ExecStart=@REPO_DIR@/scripts/run-server.sh
 ExecStop=-/usr/bin/docker stop -t 45 b70-qwen38-vllm
 Restart=on-failure

@@ -2,8 +2,8 @@
 
 This is a small, reproducible recipe for serving Qwen3.8-27B on one 32 GB
 Intel Arc Pro B70. The current validated profile runs at a fixed **180 W** card
-limit and combines a Q128/KV32 prefill extension with a 200,704-token context,
-vision, tool calling, and automatic prefix caching.
+limit and combines Q128/KV32 prefill with M04 shared-KV MTP verification, a
+200,704-token context, vision, tool calling, and automatic prefix caching.
 
 The five-run cold-context sweep measured **77.41 decode tokens/s at 8K** and
 **41.85 decode tokens/s at 128K**, with native prefill rates of 1,424.85 and
@@ -32,6 +32,7 @@ single-user latency profile, not a multi-user throughput setup.
 | Scheduler | one sequence, 4,096 max batched tokens |
 | Prefix cache | enabled, hybrid-cache mode `align` |
 | Prefill attention | Q128/KV32 for the qualified Qwen shape; native fallback otherwise |
+| MTP verification attention | M04 shared-KV path with Q8 packed-query tiles; native fallback otherwise |
 | vLLM | `0.29.0+xpu`, XPU kernels 0.1.14.1 |
 | XPU userspace | Compute Runtime 26.31.39395.13, IGC 2.40.13 |
 | Card power limit | 180 W, checked before every systemd start |
@@ -41,7 +42,21 @@ faster but made decode 10.3% slower and increased completed-task wall time by
 15.7%. The production profile therefore optimizes the phase that dominates
 long coding answers. See [the measured results](benchmarks/RESULTS.md).
 
-## Fresh 180 W context benchmark
+## Current best M04 qualification
+
+Matched cold-cache A/B tests at 180 W qualify the promoted M04 line:
+
+| Workload | Q128 baseline decode | M04 decode | Change |
+|---|---:|---:|---:|
+| 65,536 input / 512 output | 59.355 tok/s | **62.898 tok/s** | **+5.97%** |
+| 200,448 input / 256 output | 33.916 tok/s | **34.964 tok/s** | **+3.09%** |
+
+At the full-context boundary, prefill/TTFT remained neutral and both arms had
+the same five preemptions and 16,640 recompute tokens. The isolated operator
+qualification passed 90/90 correctness checks. See the
+[M04 experiment and raw summary](benchmarks/experiments/m04-shared-kv-verification/README.md).
+
+## Published 180 W context sweep (pre-M04 Q128 baseline)
 
 Five measured cold-cache requests per row, after full-shape warm-up, produced
 the following client-side medians with fixed 512-token outputs:

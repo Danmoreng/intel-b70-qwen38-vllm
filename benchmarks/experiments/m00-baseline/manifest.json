@@ -1,0 +1,162 @@
+{
+  "schema": 1,
+  "captured_at_unix": 1789479737.1754563,
+  "control": "q128-mtp4-full-180w",
+  "production_container": "qwen38-vllm-production",
+  "container_image_reference": "local/qwen38-b70-vllm:q128-196k-20260914",
+  "container_image_id": "sha256:3f20b0cf493fe0904a7efd0ca310067790e901bc5d60203340c411e57c25010a",
+  "container_command": [
+    "vllm",
+    "serve",
+    "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+    "--revision",
+    "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+    "--quantization",
+    "gptq",
+    "--dtype",
+    "float16",
+    "--max-model-len",
+    "200704",
+    "--gpu-memory-utilization",
+    "0.93",
+    "--kv-cache-dtype",
+    "fp8",
+    "--max-num-seqs",
+    "1",
+    "--max-num-batched-tokens",
+    "4096",
+    "--enable-prefix-caching",
+    "--mamba-cache-mode",
+    "align",
+    "--served-model-name",
+    "Qwen3.8-27B",
+    "--speculative-config",
+    "{\"method\":\"mtp\",\"num_speculative_tokens\":4}",
+    "--middleware",
+    "request_defaults.ChatDefaults",
+    "--reasoning-config",
+    "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+    "--override-generation-config",
+    "{\"max_new_tokens\":16384}",
+    "--enable-auto-tool-choice",
+    "--tool-call-parser",
+    "qwen3_xml",
+    "--reasoning-parser",
+    "qwen3",
+    "--limit-mm-per-prompt",
+    "{\"image\":1,\"video\":0}",
+    "--mm-processor-kwargs",
+    "{\"max_pixels\":4194304}"
+  ],
+  "selected_environment": {
+    "ZE_AFFINITY_MASK": "0",
+    "B70_DRAFT_MTP_INT4": "1",
+    "B70_DRAFT_VOCAB_ENABLED": "0",
+    "B70_GPTQ_W4A8_PREFILL": "0",
+    "B70_GPTQ_W4A8_WIDE_MIN_TOKENS": "512",
+    "VLLM_XPU_ENABLE_XPU_GRAPH": "1",
+    "HF_HUB_OFFLINE": "1",
+    "VLLM_TARGET_DEVICE": "xpu",
+    "B70_DRAFT_LMHEAD_INT4": "1",
+    "B70_DRAFT_VOCAB_PATH": "",
+    "B70_GPTQ_W4A8_MIN_TOKENS": "512",
+    "PYTORCH_ALLOC_CONF": "expandable_segments:True",
+    "PYTHONPATH": "/opt/qwen-production",
+    "ZE_FLAT_DEVICE_HIERARCHY": "COMPOSITE",
+    "B70_XPU_SINGLE_SEED_SAMPLER": "0",
+    "B70_MTP_BF16_DRAFT": "1",
+    "VLLM_WORKER_MULTIPROC_METHOD": "spawn"
+  },
+  "mount_destinations": [
+    "/dev/dri",
+    "/opt/qwen-production",
+    "/root/.cache/huggingface",
+    "/root/.cache/vllm",
+    "/root/.triton/cache"
+  ],
+  "runtime": {
+    "packages": {
+      "vllm": "0.29.0+xpu",
+      "vllm-xpu-kernels": "0.1.14.1",
+      "torch": "2.13.0+xpu",
+      "triton": "3.7.2+xpu",
+      "pytorch-triton-xpu": null
+    },
+    "installed_files_sha256": {
+      "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/xpu_worker.py": "22b8c74f17ed05c0e543150df87eaca8149633542325a115df8e63cb0ee49aca",
+      "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/gpu_worker.py": "b0f39124f31ead3d2d20f1c6ac8696393c0ed6fed585ba8d31a4f7673e390407",
+      "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/gpu_model_runner.py": "703fefa7381eb8a3f470b426bf299e75126d665cdf03478de5f563c53fb2eb13",
+      "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/xpu_model_runner.py": "07fa0390d28f2b8c3c3c0019eb9c3b126e2397aea268ba47c889f06b423deb23",
+      "/opt/venv/lib/python3.12/site-packages/b70_attention.py": "ae6b78dd316484a16b68aa4d09f674f9d5ca327ebf6b53a08724a8a1e94b9141",
+      "/opt/b70/tiles.so": "f38f23c4535407b6c3f083c5e81c89c7f704bae374571cf2e32f9da13abe0873"
+    },
+    "driver_packages": {
+      "intel-igc-core-2": "2.40.13",
+      "intel-igc-opencl-2": "2.40.13",
+      "intel-ocloc": "26.31.39395.13-0",
+      "intel-opencl-icd": "26.31.39395.13-0",
+      "libze-intel-gpu1": "26.31.39395.13-0",
+      "libigdgmm12": "22.10.0"
+    },
+    "container_kernel": "7.2.3-2-MANJARO"
+  },
+  "repository": {
+    "revision": "adaddad0ecae10e89d55b351c0ad8b0d96be230e",
+    "dirty": true,
+    "tracked_diff_sha256": "b16714e7748396b15881aa3d6dcde1ffb3be9bc3e78be7c91938a5e915b53f79",
+    "untracked_files": [
+      {
+        "path": "scripts/analyze-diagnostics.py",
+        "sha256": "1795cf689c30dc9c6c8e29f397920e59ee289feeae1328e5265804783cc62ae6"
+      },
+      {
+        "path": "scripts/collect-runtime-manifest.py",
+        "sha256": "4519c87aa997099d81f9c1dcdf77e0bf7b544e3b62005edb0711fd512414397f"
+      },
+      {
+        "path": "scripts/experiment_config.py",
+        "sha256": "280ffa5d38f81c6f1c57c6352f2e241543d90f185350e5d001fa548ba0b69443"
+      },
+      {
+        "path": "scripts/memory_sampler.py",
+        "sha256": "dc4ac8fa1a81c1a7b00aae9aba527d7abdad5f326099d65327c9fc2f95388c4f"
+      },
+      {
+        "path": "scripts/restore-production.py",
+        "sha256": "c5a00c5824abd6248a5e11a4378136896e574ea7ae81e3d3f1f40f4d3c4e8ba2"
+      },
+      {
+        "path": "scripts/run-diagnostics.py",
+        "sha256": "27c6195aa4efeec75ec0effc4f3752a28ed79996522e121aa75d792fcf7c4049"
+      },
+      {
+        "path": "scripts/start-diagnostics.sh",
+        "sha256": "3b9d1760af2285eef0390d8dfbf73fef5ddfe1438d8c26b1260f6bd604c4f1ca"
+      }
+    ]
+  },
+  "power_policy": {
+    "pci_device": "0000:03:00.0",
+    "power_cap_uw": 180000000,
+    "power_cap_source_count": 1
+  },
+  "model_identity": {
+    "model": "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+    "revision": "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+    "tokenizer_revision": "same pinned model revision",
+    "high_precision_source_lineage": "unresolved; not inferred from the live config"
+  },
+  "quantization": {
+    "target": "GPTQ symmetric INT4 group-size 128, W4A16 runtime",
+    "draft": "BF16 MTP parameters with INT4 LM head and five INT4 linears",
+    "draft_vocabulary": "full 248320-token vocabulary",
+    "kv_cache": "FP8"
+  },
+  "storage_identity_audit": {
+    "status": "pending in-process object inspection",
+    "known": "packing code reads head.weight to create owned INT4 tensors",
+    "not_claimed": "the wrapper alone does not prove source storage was released",
+    "weight_values_recorded": false
+  },
+  "rollback": "systemctl --user start qwen38.service"
+}

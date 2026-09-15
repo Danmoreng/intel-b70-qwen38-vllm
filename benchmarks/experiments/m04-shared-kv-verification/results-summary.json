@@ -1,0 +1,27 @@
+{
+  "decision": "promoted",
+  "operator_correctness": "90/90",
+  "operator_q5_speedup_pct": {
+    "8192": 70.74,
+    "65536": 34.95,
+    "131072": 28.15,
+    "200704": 25.16
+  },
+  "serving_65k": {
+    "control_decode_tps": 59.355,
+    "candidate_decode_tps": 62.898,
+    "speedup_pct": 5.9696,
+    "acceptance_change_percentage_points": -1.6086
+  },
+  "serving_200704": {
+    "control_decode_tps": 33.915843,
+    "candidate_decode_tps": 34.964071,
+    "speedup_pct": 3.090673,
+    "prefill_change_pct": -0.0927,
+    "preemptions_control": 5,
+    "preemptions_candidate": 5,
+    "recompute_tokens_control": 16640,
+    "recompute_tokens_candidate": 16640
+  },
+  "promoted_image_id": "sha256:aee9857bef1f37c8f0ee136d9f89d7166201212175a8b171d958627706cf1c0b"
+}

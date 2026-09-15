@@ -1,0 +1,22 @@
+{
+  "decision": "rejected",
+  "weight_shape": [248320, 5120],
+  "storage_bytes": {
+    "fp16": 2542796800,
+    "int4": 655564800,
+    "int2": 357580800
+  },
+  "real_distinct_draft_states": 16,
+  "top1_recall_vs_int4": {
+    "rerank_32": 1.0,
+    "rerank_64": 1.0,
+    "rerank_128": 1.0
+  },
+  "median_ms": {
+    "rows_1_int4_full_argmax": 1.1903,
+    "rows_1_int2_rerank_32": 9.4628,
+    "rows_16_int4_full_argmax": 1.2668,
+    "rows_16_int2_rerank_32": 9.5760
+  },
+  "reason": "The Xe2 INT2 shortlist plus exact rerank was 7.6--7.9x slower than the deployed INT4 full-vocabulary head."
+}

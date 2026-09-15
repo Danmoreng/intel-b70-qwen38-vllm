@@ -27,6 +27,7 @@ METRICS = (
     "vllm:num_requests_running",
     "vllm:num_requests_waiting",
 )
+CHAT_TEMPLATE_KWARGS = {"enable_thinking": False}
 
 
 def post_json(url: str, payload: dict, timeout: int = 60):
@@ -52,7 +53,11 @@ def metric_snapshot(root: str) -> dict[str, float]:
 
 
 def token_count(root: str, model: str, messages: list[dict]) -> int:
-    result = post_json(root + "/tokenize", {"model": model, "messages": messages})
+    result = post_json(root + "/tokenize", {
+        "model": model,
+        "messages": messages,
+        "chat_template_kwargs": CHAT_TEMPLATE_KWARGS,
+    })
     return int(result["count"])
 
 
@@ -157,6 +162,10 @@ def main() -> None:
     parser.add_argument("--output-tokens", type=int, default=512)
     parser.add_argument("--repeats", type=int, default=1)
     parser.add_argument("--timeout", type=int, default=1800)
+    parser.add_argument(
+        "--nonce",
+        help="Optional frozen prompt nonce; repeat index is appended when repeats > 1",
+    )
     parser.add_argument("--output-dir", type=Path, default=Path("benchmark-results"))
     args = parser.parse_args()
     contexts = [int(value) for value in args.contexts.split(",")]
@@ -176,7 +185,10 @@ def main() -> None:
     }
     for context in contexts:
         for repeat in range(args.repeats):
-            nonce = uuid.uuid4().hex
+            nonce = (
+                f"{args.nonce}-{repeat}" if args.nonce is not None
+                else uuid.uuid4().hex
+            )
             messages = make_messages(args.root, args.model, context, nonce)
             payload = {
                 "model": args.model,
@@ -184,7 +196,7 @@ def main() -> None:
                 "max_tokens": args.output_tokens,
                 "temperature": 0,
                 "ignore_eos": True,
-                "chat_template_kwargs": {"enable_thinking": False},
+                "chat_template_kwargs": CHAT_TEMPLATE_KWARGS,
                 "stream": True,
                 "stream_options": {"include_usage": True},
             }

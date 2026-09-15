@@ -14,3 +14,10 @@ mean KL(FP16 || INT4) 0.00463 (maximum 0.02716). At 36 rows, full projection
 plus argmax improved from 4.868 to 1.468 ms (+231.7%). This justifies a broader
 quality arm, not production use. The earlier static-buffer captures are invalid
 for quality conclusions and are intentionally not summarized as evidence.
+
+The first serving image retained both FP16 and INT4 target-head weights and
+failed the 200704-token startup gate (estimated maximum 194688). The revised
+default-off challenger releases the independent target-only FP16 source after
+packing. This is permitted by `tie_word_embeddings=false`; the Step3.5 MTP
+proposer also explicitly owns a separate draft head. Production remains on the
+FP16-target M04 image while the revised serving gate runs.

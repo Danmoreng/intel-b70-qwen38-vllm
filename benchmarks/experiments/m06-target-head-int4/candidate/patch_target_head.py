@@ -54,8 +54,19 @@ new = '''    def _b70_target_logits(self, hidden_states: torch.Tensor) -> torch.
             from vllm.model_executor.models.b70_draft_lmhead_int4 import quantize_lmhead_to_int4
             if self.vllm_config.parallel_config.tensor_parallel_size != 1:
                 raise RuntimeError("B70 target INT4 qualification is TP1-only")
-            self._b70_target_lmhead_int4 = quantize_lmhead_to_int4(self.lm_head.weight.detach())
-            print("B70_TARGET_LMHEAD_INT4_READY", tuple(self.lm_head.weight.shape), flush=True)
+            source_weight = self.lm_head.weight
+            source_shape = tuple(source_weight.shape)
+            self._b70_target_lmhead_int4 = quantize_lmhead_to_int4(source_weight.detach())
+            torch.xpu.synchronize()
+            if os.environ.get("B70_TARGET_LMHEAD_FREE_FP16") == "1":
+                # Qwen3.5 has tie_word_embeddings=false and Step3.5 explicitly
+                # keeps a separate draft lm_head. Both compute_logits paths
+                # above fail closed to the packed tensor before releasing this
+                # independent target-only source allocation.
+                self.lm_head.weight = torch.nn.Parameter(
+                    source_weight.new_empty(0), requires_grad=False)
+            print("B70_TARGET_LMHEAD_INT4_READY", source_shape,
+                  "source_numel", self.lm_head.weight.numel(), flush=True)
         return loaded
 '''
 assert source.count(old) == 1, source.count(old)

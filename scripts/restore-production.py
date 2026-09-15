@@ -10,7 +10,7 @@ import time
 import urllib.request
 
 
-EXPECTED_IMAGE_ID = "sha256:3f20b0cf493fe0904a7efd0ca310067790e901bc5d60203340c411e57c25010a"
+EXPECTED_IMAGE_ID = "sha256:aee9857bef1f37c8f0ee136d9f89d7166201212175a8b171d958627706cf1c0b"
 DIAGNOSTIC_CONTAINERS = (
     "b70-m01-long-context",
     "b70-m01-decode-trace",
@@ -21,6 +21,9 @@ DIAGNOSTIC_CONTAINERS = (
     "b70-direct-serving-arm",
     "b70-direct-serving-196k",
     "b70-gptq-small-m-probe",
+    "b70-m04-serving-arm",
+    "b70-m04-control-196k",
+    "b70-m04-serving-196k",
 )
 
 

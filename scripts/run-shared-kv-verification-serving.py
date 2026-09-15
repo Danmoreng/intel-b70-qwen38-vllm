@@ -15,9 +15,15 @@ import time
 
 
 REPO = Path(__file__).resolve().parents[1]
-CONTROL_IMAGE = "sha256:3f20b0cf493fe0904a7efd0ca310067790e901bc5d60203340c411e57c25010a"
-CANDIDATE_IMAGE = "local/qwen38-b70-vllm:m04-shared-kv-candidate"
-CANDIDATE_ID = "sha256:aee9857bef1f37c8f0ee136d9f89d7166201212175a8b171d958627706cf1c0b"
+CONTROL_IMAGE = os.environ.get(
+    "B70_CONTROL_IMAGE",
+    "sha256:3f20b0cf493fe0904a7efd0ca310067790e901bc5d60203340c411e57c25010a")
+CANDIDATE_IMAGE = os.environ.get(
+    "B70_CANDIDATE_IMAGE", "local/qwen38-b70-vllm:m04-shared-kv-candidate")
+CANDIDATE_ID = os.environ.get(
+    "B70_CANDIDATE_ID",
+    "sha256:aee9857bef1f37c8f0ee136d9f89d7166201212175a8b171d958627706cf1c0b")
+REQUIRE_M04_DIFFERENTIAL = os.environ.get("B70_REQUIRE_M04_DIFFERENTIAL", "1") == "1"
 spec = importlib.util.spec_from_file_location(
     "b70_diagnostics", REPO / "scripts/run-diagnostics.py")
 diag = importlib.util.module_from_spec(spec)
@@ -57,10 +63,11 @@ def run_arm(inspect: dict, run_dir: Path, index: int, label: str,
         log_handle.flush()
         engine_log = (phase / "engine.log").read_text()
         dispatches = engine_log.count("B70_M04_SHARED_KV_DISPATCH")
-        if label == "candidate" and dispatches == 0:
-            raise RuntimeError("candidate did not dispatch M04")
-        if label == "control" and dispatches:
-            raise RuntimeError("control unexpectedly dispatched M04")
+        if REQUIRE_M04_DIFFERENTIAL:
+            if label == "candidate" and dispatches == 0:
+                raise RuntimeError("candidate did not dispatch M04")
+            if label == "control" and dispatches:
+                raise RuntimeError("control unexpectedly dispatched M04")
         row.update({"arm": index, "label": label, "image": image,
                     "m04_dispatch_shapes_logged": dispatches})
         save(phase / "summary.json", row)

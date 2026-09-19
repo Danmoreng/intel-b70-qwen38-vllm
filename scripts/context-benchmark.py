@@ -26,6 +26,9 @@ COUNTER_CANDIDATES = {
     "mtp_drafts": ("vllm:spec_decode_num_drafts", "vllm:spec_decode_num_drafts_total"),
     "native_prefill_seconds": ("vllm:request_prefill_time_seconds_sum",),
     "native_decode_seconds": ("vllm:request_decode_time_seconds_sum",),
+    "computed_prompt_tokens": ("vllm:request_prefill_kv_computed_tokens_sum",),
+    "finished_requests": ("vllm:request_success_total",),
+    "preemptions": ("vllm:num_preemptions_total",),
 }
 PER_POSITION_CANDIDATES = (
     "vllm:spec_decode_num_accepted_tokens_per_pos",
@@ -83,7 +86,8 @@ def ensure_idle(root):
 
 
 def request(url, root, model, messages, max_tokens, raw_path, cache_expected,
-            expected_prompt_tokens=None, require_spec=True, ignore_eos=False):
+            expected_prompt_tokens=None, require_spec=True, ignore_eos=False,
+            sampling=None):
     ensure_idle(root)
     before = snapshot(root, require_spec=require_spec)
     body = {
@@ -102,6 +106,11 @@ def request(url, root, model, messages, max_tokens, raw_path, cache_expected,
         "stream_options": {"include_usage": True},
         "ignore_eos": ignore_eos,
     }
+    if sampling:
+        unknown = set(sampling) - {"temperature", "top_p", "top_k", "seed"}
+        if unknown:
+            raise ValueError(f"unsupported sampling fields: {unknown}")
+        body.update(sampling)
     req = urllib.request.Request(url, data=json.dumps(body).encode(),
                                  headers={"Content-Type": "application/json"})
     start_ns = time.monotonic_ns()
@@ -145,7 +154,20 @@ def request(url, root, model, messages, max_tokens, raw_path, cache_expected,
                 if choice.get("finish_reason"):
                     finish_reason = choice["finish_reason"]
     end_ns = time.monotonic_ns()
-    after = snapshot(root, require_spec=require_spec)
+    # Streaming can finish before the engine publishes finished-request metrics.
+    # Wait for the request's accounting, not a guessed fixed sleep interval.
+    deadline = time.monotonic() + 15
+    while True:
+        after = snapshot(root, require_spec=require_spec)
+        finished = (after["values"]["finished_requests"]
+                    - before["values"]["finished_requests"])
+        if finished == 1:
+            break
+        if finished > 1:
+            raise RuntimeError("concurrent request contaminated native accounting")
+        if time.monotonic() >= deadline:
+            raise RuntimeError("finished-request metric accounting timed out")
+        time.sleep(0.1)
     if before["resolved_names"] != after["resolved_names"]:
         raise RuntimeError("Prometheus counter names changed during request")
     usage = usage or {}
@@ -207,6 +229,8 @@ def request(url, root, model, messages, max_tokens, raw_path, cache_expected,
         "mtp_accepted_per_position_delta": per_position_deltas,
         "native_prefill_seconds": deltas["native_prefill_seconds"],
         "native_decode_seconds": deltas["native_decode_seconds"],
+        "computed_prompt_tokens": deltas["computed_prompt_tokens"],
+        "preemptions": deltas["preemptions"],
         "cache_expected": cache_expected,
         "expected_prompt_tokens": expected_prompt_tokens,
         "messages_sha256": hashlib.sha256(
@@ -215,7 +239,7 @@ def request(url, root, model, messages, max_tokens, raw_path, cache_expected,
     }
     record["input_tokens_per_ttft_s"] = prompt_tokens / max(record["ttft_s"], 1e-9)
     record["native_prefill_tokens_per_second"] = (
-        prompt_tokens / deltas["native_prefill_seconds"]
+        deltas["computed_prompt_tokens"] / deltas["native_prefill_seconds"]
         if deltas["native_prefill_seconds"] > 0 else None)
     record["native_decode_tokens_per_second"] = (
         post_first_tokens / deltas["native_decode_seconds"]

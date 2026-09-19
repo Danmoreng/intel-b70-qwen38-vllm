@@ -1,0 +1,10 @@
+import {launchSandboxedJob} from './evaluator/launcher.js';
+import {randomBytes} from 'node:crypto';
+import {dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=dirname(fileURLToPath(import.meta.url));
+const [workspace,dependencies,commands,mode]=process.argv.slice(2);
+const id=randomBytes(12).toString('hex');
+const {child}=launchSandboxedJob({runId:id,workspace:{path:workspace,revision:'0'.repeat(40),runId:id,branch:`agent/${id}`},dependencyRoot:dependencies,dependencyTarget:'dashboard/node_modules',runtimeRoot:root+'/evaluator',runtimeExecutable:'check.mjs',runtimeNodeEntrypoint:true,profileRoot:root+'/profile',args:[commands,mode??'stop'],limits:{memoryBytes:4294967296,cpuQuotaPercent:200,tasksMax:128,runtimeSeconds:1200,tmpBytes:536870912}});
+child.stdout.pipe(process.stdout);child.stderr.pipe(process.stderr);child.stdin.end();
+child.on('error',e=>{console.error(e);process.exitCode=1});child.on('close',code=>process.exit(code??1));

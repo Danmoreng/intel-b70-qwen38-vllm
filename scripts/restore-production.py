@@ -12,6 +12,7 @@ import urllib.request
 
 EXPECTED_IMAGE_ID = "sha256:b675d81d4e7cc63fbcd6df395965ea16ec5c4704428c81118a1618185245dd5a"
 DIAGNOSTIC_CONTAINERS = (
+    "b70-m06-target-head-arm",
     "b70-m01-long-context",
     "b70-m01-decode-trace",
     "b70-m06-screen",

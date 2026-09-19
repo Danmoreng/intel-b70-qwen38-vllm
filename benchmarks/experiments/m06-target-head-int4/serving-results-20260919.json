@@ -1,0 +1,285 @@
+{
+  "date": "2026-09-19",
+  "decision": "serving-functional-screen-positive-not-promoted",
+  "run": "benchmarks/experiments/m06-target-head-int4/runs/serving-20260919-091133",
+  "manifest": {
+    "control": "sha256:aee9857bef1f37c8f0ee136d9f89d7166201212175a8b171d958627706cf1c0b",
+    "candidate": "sha256:790b308dfa001d3974684eb413532672ff059efc42ac277ef774a48eee43324e",
+    "patch_sha256": "f5274502e71ba77041e8710d6d882bd66582d0e72d0f676143583207fd9381ee"
+  },
+  "benchmark": [
+    {
+      "context": 8192,
+      "control": {
+        "n": 2,
+        "decode_tokens_per_second": 78.55060045338158,
+        "prefill_seconds": 5.556363242000089,
+        "ttft_seconds": 5.573017668499915,
+        "accepted_per_drafted": 0.5921052631578947
+      },
+      "candidate": {
+        "n": 2,
+        "decode_tokens_per_second": 88.41163098591026,
+        "prefill_seconds": 5.54169565050006,
+        "ttft_seconds": 5.557636176499955,
+        "accepted_per_drafted": 0.6249590930341281
+      },
+      "decode_change_pct": 12.55373030328526
+    },
+    {
+      "context": 65536,
+      "control": {
+        "n": 2,
+        "decode_tokens_per_second": 61.38013710190544,
+        "prefill_seconds": 66.85800169249978,
+        "ttft_seconds": 66.96932018050006,
+        "accepted_per_drafted": 0.5833544303797469
+      },
+      "candidate": {
+        "n": 2,
+        "decode_tokens_per_second": 64.50097070609073,
+        "prefill_seconds": 66.74106796100023,
+        "ttft_seconds": 66.85064850900017,
+        "accepted_per_drafted": 0.5764589709653404
+      },
+      "decode_change_pct": 5.084435701086765
+    },
+    {
+      "context": 131072,
+      "control": {
+        "n": 1,
+        "decode_tokens_per_second": 48.086787184075135,
+        "prefill_seconds": 191.11536185500017,
+        "ttft_seconds": 191.3475000950002,
+        "accepted_per_drafted": 0.5581761006289309
+      },
+      "candidate": {
+        "n": 1,
+        "decode_tokens_per_second": 55.78237617608877,
+        "prefill_seconds": 192.13211938400036,
+        "ttft_seconds": 192.36242479899965,
+        "accepted_per_drafted": 0.6423611111111112
+      },
+      "decode_change_pct": 16.00354160188555
+    }
+  ],
+  "raw_arms": [
+    {
+      "index": 0,
+      "label": "candidate",
+      "directory": "benchmarks/experiments/m06-target-head-int4/runs/serving-20260919-091133/arm-0-candidate",
+      "measurements": [
+        {
+          "target_context": 8192,
+          "prompt_tokens": 8192,
+          "completion_tokens": 512,
+          "repeat": 0,
+          "prefill_seconds": 5.547752459000094,
+          "prefill_tokens_per_second": 1476.6340172064013,
+          "decode_seconds": 5.461194652999893,
+          "decode_tokens_per_second": 93.56927054766345,
+          "ttft_seconds": 5.563488008000149,
+          "wall_seconds": 11.023110595000162,
+          "accepted_per_drafted": 0.6757246376811594,
+          "prefix_cache_hits": 0
+        },
+        {
+          "target_context": 65536,
+          "prompt_tokens": 65536,
+          "completion_tokens": 512,
+          "repeat": 0,
+          "prefill_seconds": 67.11835082000016,
+          "prefill_tokens_per_second": 976.4244681123981,
+          "decode_seconds": 7.823043478999807,
+          "decode_tokens_per_second": 65.31984660084396,
+          "ttft_seconds": 67.22823327300011,
+          "wall_seconds": 75.03778236100015,
+          "accepted_per_drafted": 0.586038961038961,
+          "prefix_cache_hits": 0
+        },
+        {
+          "target_context": 131072,
+          "prompt_tokens": 131072,
+          "completion_tokens": 512,
+          "repeat": 0,
+          "prefill_seconds": 192.13211938400036,
+          "prefill_tokens_per_second": 682.1972318851905,
+          "decode_seconds": 9.16059936900001,
+          "decode_tokens_per_second": 55.78237617608877,
+          "ttft_seconds": 192.36242479899965,
+          "wall_seconds": 201.49735366699997,
+          "accepted_per_drafted": 0.6423611111111112,
+          "prefix_cache_hits": 0
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "label": "control",
+      "directory": "benchmarks/experiments/m06-target-head-int4/runs/serving-20260919-091133/arm-1-control-retry-1789809965874901545",
+      "measurements": [
+        {
+          "target_context": 8192,
+          "prompt_tokens": 8192,
+          "completion_tokens": 512,
+          "repeat": 0,
+          "prefill_seconds": 5.5764849819997835,
+          "prefill_tokens_per_second": 1469.0257440740504,
+          "decode_seconds": 6.5069517689998975,
+          "decode_tokens_per_second": 78.53139505881714,
+          "ttft_seconds": 5.592925393999849,
+          "wall_seconds": 12.099285411999972,
+          "accepted_per_drafted": 0.5921052631578947,
+          "prefix_cache_hits": 0
+        },
+        {
+          "target_context": 65536,
+          "prompt_tokens": 65536,
+          "completion_tokens": 512,
+          "repeat": 0,
+          "prefill_seconds": 67.35288849299968,
+          "prefill_tokens_per_second": 973.024341885671,
+          "decode_seconds": 8.544092617999922,
+          "decode_tokens_per_second": 59.80740411491694,
+          "ttft_seconds": 67.46369995299983,
+          "wall_seconds": 75.99424247500019,
+          "accepted_per_drafted": 0.5617088607594937,
+          "prefix_cache_hits": 0
+        },
+        {
+          "target_context": 131072,
+          "prompt_tokens": 131072,
+          "completion_tokens": 512,
+          "repeat": 0,
+          "prefill_seconds": 191.11536185500017,
+          "prefill_tokens_per_second": 685.826606128317,
+          "decode_seconds": 10.626619699999992,
+          "decode_tokens_per_second": 48.086787184075135,
+          "ttft_seconds": 191.3475000950002,
+          "wall_seconds": 201.9491286739999,
+          "accepted_per_drafted": 0.5581761006289309,
+          "prefix_cache_hits": 0
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "label": "control",
+      "directory": "benchmarks/experiments/m06-target-head-int4/runs/serving-20260919-091133/arm-2-control",
+      "measurements": [
+        {
+          "target_context": 8192,
+          "prompt_tokens": 8192,
+          "completion_tokens": 512,
+          "repeat": 0,
+          "prefill_seconds": 5.536241502000394,
+          "prefill_tokens_per_second": 1479.7042356335087,
+          "decode_seconds": 6.503770684999836,
+          "decode_tokens_per_second": 78.56980584794601,
+          "ttft_seconds": 5.553109942999981,
+          "wall_seconds": 12.056440606000251,
+          "accepted_per_drafted": 0.5921052631578947,
+          "prefix_cache_hits": 0
+        },
+        {
+          "target_context": 65536,
+          "prompt_tokens": 65536,
+          "completion_tokens": 512,
+          "repeat": 0,
+          "prefill_seconds": 66.36311489199989,
+          "prefill_tokens_per_second": 987.5365269796944,
+          "decode_seconds": 8.11718352600019,
+          "decode_tokens_per_second": 62.95287008889394,
+          "ttft_seconds": 66.4749404080003,
+          "wall_seconds": 74.57854935100022,
+          "accepted_per_drafted": 0.605,
+          "prefix_cache_hits": 0
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "label": "candidate",
+      "directory": "benchmarks/experiments/m06-target-head-int4/runs/serving-20260919-091133/arm-3-candidate",
+      "measurements": [
+        {
+          "target_context": 8192,
+          "prompt_tokens": 8192,
+          "completion_tokens": 512,
+          "repeat": 0,
+          "prefill_seconds": 5.535638842000026,
+          "prefill_tokens_per_second": 1479.8653296970203,
+          "decode_seconds": 6.137843858999986,
+          "decode_tokens_per_second": 83.25399142415708,
+          "ttft_seconds": 5.55178434499976,
+          "wall_seconds": 11.68800993800005,
+          "accepted_per_drafted": 0.5741935483870968,
+          "prefix_cache_hits": 0
+        },
+        {
+          "target_context": 65536,
+          "prompt_tokens": 65536,
+          "completion_tokens": 512,
+          "repeat": 0,
+          "prefill_seconds": 66.36378510200029,
+          "prefill_tokens_per_second": 987.5265538165432,
+          "decode_seconds": 8.02423352300002,
+          "decode_tokens_per_second": 63.68209481133749,
+          "ttft_seconds": 66.47306374500022,
+          "wall_seconds": 74.48408348300018,
+          "accepted_per_drafted": 0.5668789808917197,
+          "prefix_cache_hits": 0
+        }
+      ]
+    }
+  ],
+  "quality": {
+    "candidate": {
+      "coding_passes": 3,
+      "coding_cases": 3,
+      "nll_tokens": 125,
+      "nll": 1.6445855936349254,
+      "perplexity": 5.1788633082783475,
+      "vision_tools": "PASS",
+      "prefix_state": "PASS"
+    },
+    "control": {
+      "coding_passes": 2,
+      "coding_cases": 3,
+      "nll_tokens": 125,
+      "nll": 1.6324989748814842,
+      "perplexity": 5.116645123070872,
+      "vision_tools": "PASS",
+      "prefix_state": "PASS"
+    },
+    "delta_nll": 0.012086618753441192,
+    "relative_perplexity_change_pct": 1.2159957102933605
+  },
+  "memory": {
+    "candidate": {
+      "model_loading_gib": 15.94,
+      "kv_capacity_tokens": 284450,
+      "target_pack_messages": 1,
+      "shared_pack_messages": 1
+    },
+    "control": {
+      "model_loading_gib": 17.69,
+      "kv_capacity_tokens": 213699,
+      "target_pack_messages": 0,
+      "shared_pack_messages": 0
+    }
+  },
+  "limits": [
+    "Synthetic fixed 512-token decode benchmark, not coding-agent task time.",
+    "Two measurements per arm at 8K/64K; one per arm at 128K. MTP acceptance and output trajectories differ.",
+    "Three short coding tasks and only 125 teacher-forced reference tokens do not qualify general model quality.",
+    "Startup at 200704-token API limit passed; filled contexts tested through 131072, not the 200704-token boundary.",
+    "The run resumed after a control coding failure; completed candidate arm retained unchanged."
+  ],
+  "production_restored": {
+    "health": 200,
+    "image_id": "sha256:aee9857bef1f37c8f0ee136d9f89d7166201212175a8b171d958627706cf1c0b",
+    "power_cap_uw": 180000000,
+    "restored_at_unix": 1789811171.099407
+  }
+}

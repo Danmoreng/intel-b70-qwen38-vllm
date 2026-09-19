@@ -1,0 +1,395 @@
+{
+  "short_serving_pass": false,
+  "nll_pass": true,
+  "nll": [
+    {
+      "index": 0,
+      "tokens": 30,
+      "reference": 1.8829604296324154,
+      "candidate": 1.8823899204377086,
+      "increase": -0.0005705091947068031
+    },
+    {
+      "index": 1,
+      "tokens": 47,
+      "reference": 0.6305223454589995,
+      "candidate": 0.6306961534360295,
+      "increase": 0.00017380797702992723
+    },
+    {
+      "index": 2,
+      "tokens": 48,
+      "reference": 2.4567521092737743,
+      "candidate": 2.4568207594763294,
+      "increase": 6.865020255508725e-05
+    }
+  ],
+  "nll_mean_increase": -0.00010935033837392953,
+  "coding": "3/3 each arm",
+  "vision_tools_prefix": "PASS each arm",
+  "cells": [
+    {
+      "context": 8192,
+      "cache": "cold",
+      "arm_means": {
+        "control": {
+          "native_prefill_tokens_per_second": 1430.1545277698917,
+          "native_decode_tokens_per_second": 85.72298680612853,
+          "mtp_acceptance_rate": 0.6723299545961662
+        },
+        "candidate": {
+          "native_prefill_tokens_per_second": 1430.3862571033299,
+          "native_decode_tokens_per_second": 86.48764910608027,
+          "mtp_acceptance_rate": 0.6807198542256274
+        }
+      }
+    },
+    {
+      "context": 8192,
+      "cache": "warm",
+      "arm_means": {
+        "control": {
+          "native_prefill_tokens_per_second": 1379.721120255413,
+          "native_decode_tokens_per_second": 85.21934482302036,
+          "mtp_acceptance_rate": 0.6684734587297431
+        },
+        "candidate": {
+          "native_prefill_tokens_per_second": 1379.9098723431132,
+          "native_decode_tokens_per_second": 85.41374548925518,
+          "mtp_acceptance_rate": 0.6679694439538293
+        }
+      }
+    },
+    {
+      "context": 16384,
+      "cache": "cold",
+      "arm_means": {
+        "control": {
+          "native_prefill_tokens_per_second": 1332.7804121204358,
+          "native_decode_tokens_per_second": 81.14617758289168,
+          "mtp_acceptance_rate": 0.6636981104042573
+        },
+        "candidate": {
+          "native_prefill_tokens_per_second": 1333.597345757706,
+          "native_decode_tokens_per_second": 80.988637334964,
+          "mtp_acceptance_rate": 0.6584068360583077
+        }
+      }
+    },
+    {
+      "context": 16384,
+      "cache": "warm",
+      "arm_means": {
+        "control": {
+          "native_prefill_tokens_per_second": 1237.7629908893357,
+          "native_decode_tokens_per_second": 81.5261024050308,
+          "mtp_acceptance_rate": 0.667453025136341
+        },
+        "candidate": {
+          "native_prefill_tokens_per_second": 1236.8603392900507,
+          "native_decode_tokens_per_second": 81.7801316983168,
+          "mtp_acceptance_rate": 0.6689776326801564
+        }
+      }
+    }
+  ],
+  "paired_latency_results": [
+    {
+      "context": 8192,
+      "cache": "cold",
+      "metric": "native_prefill_seconds",
+      "pairs": 5,
+      "paired_latency_reduction_pct": 0.016116028080277456,
+      "bootstrap_95pct": [
+        -0.06091322677312494,
+        0.0626648059825019
+      ],
+      "pair_values": [
+        0.07445714972214024,
+        0.03841564361611871,
+        0.05480324348940968,
+        -0.13613674046437652,
+        0.049040844038095166
+      ]
+    },
+    {
+      "context": 8192,
+      "cache": "cold",
+      "metric": "native_decode_seconds",
+      "pairs": 5,
+      "paired_latency_reduction_pct": 0.9405294428663734,
+      "bootstrap_95pct": [
+        -0.5281479954538804,
+        3.0888206564629868
+      ],
+      "pair_values": [
+        0.13995425022945707,
+        4.98137055583695,
+        -1.111031192767431,
+        0.360037364574628,
+        0.33231623645826325
+      ]
+    },
+    {
+      "context": 8192,
+      "cache": "cold",
+      "metric": "ttft_s",
+      "pairs": 5,
+      "paired_latency_reduction_pct": 0.01542264323106668,
+      "bootstrap_95pct": [
+        -0.059867972564005,
+        0.05975675164989758
+      ],
+      "pair_values": [
+        0.06261995208343141,
+        0.03057187618999979,
+        0.058778569169570805,
+        -0.13084389703115207,
+        0.05598671574348346
+      ]
+    },
+    {
+      "context": 8192,
+      "cache": "cold",
+      "metric": "total_s",
+      "pairs": 5,
+      "paired_latency_reduction_pct": 0.35257220978870185,
+      "bootstrap_95pct": [
+        -0.1695802144634473,
+        1.153481684043236
+      ],
+      "pair_values": [
+        0.09470899625578788,
+        1.8672552217489646,
+        -0.3647459240305295,
+        0.014015051450722016,
+        0.15162770351856425
+      ]
+    },
+    {
+      "context": 8192,
+      "cache": "warm",
+      "metric": "native_prefill_seconds",
+      "pairs": 5,
+      "paired_latency_reduction_pct": 0.013590458520673643,
+      "bootstrap_95pct": [
+        -0.2280755211505059,
+        0.2911927009268056
+      ],
+      "pair_values": [
+        -0.2559255399807947,
+        0.5388734129077255,
+        0.007997753360522442,
+        -0.31826213957573124,
+        0.09526880589164621
+      ]
+    },
+    {
+      "context": 8192,
+      "cache": "warm",
+      "metric": "native_decode_seconds",
+      "pairs": 5,
+      "paired_latency_reduction_pct": 0.2853252344218449,
+      "bootstrap_95pct": [
+        -0.9122756953005218,
+        1.6820923192205761
+      ],
+      "pair_values": [
+        -1.2973411031886428,
+        3.0266055876798537,
+        0.36671685455469394,
+        0.3727566550039696,
+        -1.04211182194065
+      ]
+    },
+    {
+      "context": 8192,
+      "cache": "warm",
+      "metric": "ttft_s",
+      "pairs": 5,
+      "paired_latency_reduction_pct": -0.0172557770627213,
+      "bootstrap_95pct": [
+        -0.27226348329287386,
+        0.2852578915401627
+      ],
+      "pair_values": [
+        -0.36741737312380174,
+        0.5502999099406991,
+        -0.0696369304351796,
+        -0.308087704301796,
+        0.10856321260647173
+      ]
+    },
+    {
+      "context": 8192,
+      "cache": "warm",
+      "metric": "total_s",
+      "pairs": 5,
+      "paired_latency_reduction_pct": 0.1355200261116951,
+      "bootstrap_95pct": [
+        -0.4938637423914072,
+        0.9787201780808696
+      ],
+      "pair_values": [
+        -0.788572445696123,
+        1.783908134483736,
+        0.14038795481772226,
+        -0.024073205528929442,
+        -0.4340503075179303
+      ]
+    },
+    {
+      "context": 16384,
+      "cache": "cold",
+      "metric": "native_prefill_seconds",
+      "pairs": 5,
+      "paired_latency_reduction_pct": 0.06117306240491116,
+      "bootstrap_95pct": [
+        -0.09728612140028403,
+        0.24008214728137744
+      ],
+      "pair_values": [
+        -0.2021793713603781,
+        0.0010784287612586319,
+        0.12542701080416885,
+        0.4088965319130611,
+        -0.027357288093554644
+      ]
+    },
+    {
+      "context": 16384,
+      "cache": "cold",
+      "metric": "native_decode_seconds",
+      "pairs": 5,
+      "paired_latency_reduction_pct": -0.3499212828858633,
+      "bootstrap_95pct": [
+        -2.979394539600324,
+        2.208845658942309
+      ],
+      "pair_values": [
+        2.869412149116146,
+        -0.9198977907613592,
+        3.1126508936203057,
+        -1.3344650760477306,
+        -5.477306590356679
+      ]
+    },
+    {
+      "context": 16384,
+      "cache": "cold",
+      "metric": "ttft_s",
+      "pairs": 5,
+      "paired_latency_reduction_pct": 0.06384969535397689,
+      "bootstrap_95pct": [
+        -0.092595272883913,
+        0.2413069067184126
+      ],
+      "pair_values": [
+        -0.19058077234277437,
+        0.0004477422327231473,
+        0.125533647478826,
+        0.4111194659791151,
+        -0.027271606578005425
+      ]
+    },
+    {
+      "context": 16384,
+      "cache": "cold",
+      "metric": "total_s",
+      "pairs": 5,
+      "paired_latency_reduction_pct": -0.032591769312109165,
+      "bootstrap_95pct": [
+        -0.6487745527137756,
+        0.4935372782241676
+      ],
+      "pair_values": [
+        0.4607121104691969,
+        -0.19400123142581105,
+        0.7194810388040151,
+        0.10730009257441386,
+        -1.2564508569823607
+      ]
+    },
+    {
+      "context": 16384,
+      "cache": "warm",
+      "metric": "native_prefill_seconds",
+      "pairs": 5,
+      "paired_latency_reduction_pct": -0.07286434086702265,
+      "bootstrap_95pct": [
+        -0.1851691277433698,
+        5.813785678210337e-05
+      ],
+      "pair_values": [
+        -0.28995040395194405,
+        0.029639764550881686,
+        -0.048016638073034024,
+        -0.005486100872409416,
+        -0.05050832598860744
+      ]
+    },
+    {
+      "context": 16384,
+      "cache": "warm",
+      "metric": "native_decode_seconds",
+      "pairs": 5,
+      "paired_latency_reduction_pct": 0.3040078822610126,
+      "bootstrap_95pct": [
+        -0.43944529281589206,
+        1.0648533836252438
+      ],
+      "pair_values": [
+        1.5861577298253438,
+        -0.9328874983687063,
+        0.26533314882176695,
+        0.300460579828421,
+        0.30097545119823765
+      ]
+    },
+    {
+      "context": 16384,
+      "cache": "warm",
+      "metric": "ttft_s",
+      "pairs": 5,
+      "paired_latency_reduction_pct": -0.05947803464679824,
+      "bootstrap_95pct": [
+        -0.16320021108483296,
+        0.010466916305276186
+      ],
+      "pair_values": [
+        -0.25829237713907993,
+        0.03639631921924513,
+        -0.04807999120448603,
+        0.006956067197561033,
+        -0.0343701913072314
+      ]
+    },
+    {
+      "context": 16384,
+      "cache": "warm",
+      "metric": "total_s",
+      "pairs": 5,
+      "paired_latency_reduction_pct": 0.07616108415823275,
+      "bootstrap_95pct": [
+        -0.16290969797741583,
+        0.30329938809239065
+      ],
+      "pair_values": [
+        0.45072487318700283,
+        -0.3383156637069229,
+        0.0679977100773943,
+        0.10407389041013904,
+        0.09632461082355048
+      ]
+    }
+  ],
+  "scope": "8K/16K short serving only. Operator-region gains are not serving gains.",
+  "long_context_qualified": false,
+  "production_promoted": false,
+  "evidence_sha256": {
+    "serving-results.jsonl": "8936dda460f4ee82d5a62d3054ef285100f96509f01d07cb6e95553a1e310c00",
+    "paired-summary.json": "5b14f3e56280ba94ef07a655c64ebf7ea8569e82a497e6275fbbf93f36e2fc41",
+    "fixtures.json": "12feda4f441e48e6aff8c5cb5ab3306b5020a66952e309a0f52bc79c728aa1d7",
+    "context-benchmark.py": "174494ba152613c25e0e0a1df5f12ef6fd0274486ec5ebc6a184f8f636aa8a57"
+  }
+}

@@ -1,0 +1,77 @@
+--- a/qwen3_next.py
++++ b/qwen3_next.py
+@@ -4,6 +4,8 @@
+ 
+ from collections.abc import Iterable
+ from itertools import islice
++
++import os
+ 
+ import torch
+ from torch import nn
+@@ -373,12 +375,53 @@
+             torch.float16,
+             torch.bfloat16,
+         )
++        self._b70_xpu_qk_fusion = (
++            current_platform.is_xpu()
++            and os.environ.get("B70_FUSED_QK_ROPE_GATE", "0") == "1"
++            and tp_size == 1
++            and self.num_heads == 24
++            and self.num_kv_heads == 4
++            and self.head_dim == 256
++            and self.rotary_emb.rotary_dim == 64
++            and self.rotary_emb.dtype == torch.float16
++            and (mrope_section is None or (
++                supports_mrope and list(mrope_section) == [11, 11, 10]
++            ))
++        )
+         self.use_fused_qk_norm_rope_gate = (
+             self.attn_output_gate
+             and getattr(self.rotary_emb, "is_neox_style", False)
+-            and current_platform.is_cuda()
++            and (current_platform.is_cuda() or self._b70_xpu_qk_fusion)
+             and supports_dtype
+             and (text_only or supports_mrope)
++        )
++
++    def _b70_qk_metadata_ok(self, qkv, positions):
++        # Metadata only: no device reads, implicit copies or launch-error fallback.
++        cache = self.rotary_emb.cos_sin_cache
++        q_weight, k_weight = self.q_norm.weight, self.k_norm.weight
++        return (
++            qkv.device.type == "xpu" and qkv.dtype == torch.float16
++            and qkv.ndim == 2 and qkv.shape[0] > 0
++            and qkv.shape[1] == 14336 and qkv.stride(-1) == 1
++            and qkv.stride(0) >= 14336
++            and positions.device == qkv.device
++            and positions.dtype in (torch.int32, torch.int64)
++            and positions.ndim in (1, 2)
++            and positions.shape[-1] == qkv.shape[0]
++            and positions.stride(-1) > 0
++            and (positions.ndim == 1 or (
++                positions.shape[0] == 3 and positions.stride(0) > 0
++                and getattr(self.rotary_emb, "mrope_interleaved", False)
++                and list(getattr(self.rotary_emb, "mrope_section", []) or []) == [11, 11, 10]
++            ))
++            and cache.device == qkv.device and cache.dtype == qkv.dtype
++            and cache.ndim == 2 and cache.shape[1] == 64
++            and cache.stride(-1) == 1 and cache.stride(0) >= 64
++            and q_weight.device == qkv.device and k_weight.device == qkv.device
++            and q_weight.dtype == qkv.dtype and k_weight.dtype == qkv.dtype
++            and q_weight.shape == (256,) and k_weight.shape == (256,)
++            and q_weight.stride(0) == 1 and k_weight.stride(0) == 1
+         )
+ 
+     def _project_qkv_gate(
+@@ -392,7 +435,9 @@
+         split + QK-RMSNorm + RoPE path. ``gate`` is ``None`` when output
+         gating is disabled.
+         """
+-        if self.use_fused_qk_norm_rope_gate:
++        if self.use_fused_qk_norm_rope_gate and (
++            not self._b70_xpu_qk_fusion or self._b70_qk_metadata_ok(qkv, positions)
++        ):
+             q_gate, k, v = qkv.split(
+                 [self.q_size * 2, self.kv_size, self.kv_size], dim=-1
+             )

@@ -1,0 +1,743 @@
+{
+  "scope": "operator-region diagnostic on synthetic Q/K/V; elision is NOT a correct implementation",
+  "source_binary": "/opt/b70/m04.so",
+  "rows": [
+    {
+      "m": 2,
+      "context": 8192,
+      "max_seqlen_k": 200704,
+      "splits": 32,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.10335939999999999,
+          "wall_ms": 0.13499589986167848
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.1011927,
+          "wall_ms": 0.13262889988254756
+        },
+        "layout_only": {
+          "device_ms": 0.0182865,
+          "wall_ms": 0.0500640002428554
+        }
+      },
+      "removable_ms_upper_estimate": 0.0021666999999999936,
+      "removable_pct_upper_estimate": 2.096277648670555
+    },
+    {
+      "m": 2,
+      "context": 8192,
+      "max_seqlen_k": 200704,
+      "splits": 32,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.1265521,
+          "wall_ms": 0.15287089991034009
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.125,
+          "wall_ms": 0.1516738993814215
+        },
+        "layout_only": {
+          "device_ms": 0.0365052,
+          "wall_ms": 0.06285190029302612
+        }
+      },
+      "removable_ms_upper_estimate": 0.0015521000000000007,
+      "removable_pct_upper_estimate": 1.226451398277864
+    },
+    {
+      "m": 2,
+      "context": 16384,
+      "max_seqlen_k": 200704,
+      "splits": 32,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.14465630000000002,
+          "wall_ms": 0.17688090010778978
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.1426979,
+          "wall_ms": 0.17455090055591427
+        },
+        "layout_only": {
+          "device_ms": 0.0181979,
+          "wall_ms": 0.05002290054108016
+        }
+      },
+      "removable_ms_upper_estimate": 0.001958400000000027,
+      "removable_pct_upper_estimate": 1.3538297329601452
+    },
+    {
+      "m": 2,
+      "context": 16384,
+      "max_seqlen_k": 200704,
+      "splits": 32,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.1723594,
+          "wall_ms": 0.1989238997339271
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.1699114,
+          "wall_ms": 0.19664580031530932
+        },
+        "layout_only": {
+          "device_ms": 0.0360052,
+          "wall_ms": 0.06289000011747703
+        }
+      },
+      "removable_ms_upper_estimate": 0.0024480000000000057,
+      "removable_pct_upper_estimate": 1.4202880724811098
+    },
+    {
+      "m": 2,
+      "context": 65536,
+      "max_seqlen_k": 200704,
+      "splits": 32,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.40978649999999994,
+          "wall_ms": 0.4421876998094376
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.4088073,
+          "wall_ms": 0.4416797004523687
+        },
+        "layout_only": {
+          "device_ms": 0.0184375,
+          "wall_ms": 0.05085890006739646
+        }
+      },
+      "removable_ms_upper_estimate": 0.0009791999999999579,
+      "removable_pct_upper_estimate": 0.2389536990603541
+    },
+    {
+      "m": 2,
+      "context": 65536,
+      "max_seqlen_k": 200704,
+      "splits": 32,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.44351039999999997,
+          "wall_ms": 0.4709286993602291
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.4417813,
+          "wall_ms": 0.46877069980837405
+        },
+        "layout_only": {
+          "device_ms": 0.0370417,
+          "wall_ms": 0.0635599993984215
+        }
+      },
+      "removable_ms_upper_estimate": 0.0017290999999999834,
+      "removable_pct_upper_estimate": 0.38986684415968226
+    },
+    {
+      "m": 2,
+      "context": 196608,
+      "max_seqlen_k": 200704,
+      "splits": 32,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 1.1329113999999998,
+          "wall_ms": 1.1674511995806824
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 1.1302032,
+          "wall_ms": 1.1640073003945872
+        },
+        "layout_only": {
+          "device_ms": 0.0186093,
+          "wall_ms": 0.05257500015432015
+        }
+      },
+      "removable_ms_upper_estimate": 0.0027081999999998274,
+      "removable_pct_upper_estimate": 0.23904781962647986
+    },
+    {
+      "m": 2,
+      "context": 196608,
+      "max_seqlen_k": 200704,
+      "splits": 32,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 1.1679165999999999,
+          "wall_ms": 1.1961981996137183
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 1.1659219,
+          "wall_ms": 1.1940552001760807
+        },
+        "layout_only": {
+          "device_ms": 0.0372604,
+          "wall_ms": 0.06536889995913953
+        }
+      },
+      "removable_ms_upper_estimate": 0.001994699999999794,
+      "removable_pct_upper_estimate": 0.17079130479006754
+    },
+    {
+      "m": 3,
+      "context": 8192,
+      "max_seqlen_k": 200704,
+      "splits": 8,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.0849896,
+          "wall_ms": 0.11688700033118948
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.082375,
+          "wall_ms": 0.11391389998607337
+        },
+        "layout_only": {
+          "device_ms": 0.0182656,
+          "wall_ms": 0.05041800031904131
+        }
+      },
+      "removable_ms_upper_estimate": 0.0026145999999999947,
+      "removable_pct_upper_estimate": 3.0763764037011527
+    },
+    {
+      "m": 3,
+      "context": 8192,
+      "max_seqlen_k": 200704,
+      "splits": 8,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.10403130000000001,
+          "wall_ms": 0.1315059002081398
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.1043437,
+          "wall_ms": 0.13078789997962303
+        },
+        "layout_only": {
+          "device_ms": 0.0356197,
+          "wall_ms": 0.06246599950827658
+        }
+      },
+      "removable_ms_upper_estimate": -0.00031239999999999046,
+      "removable_pct_upper_estimate": -0.3002942383686356
+    },
+    {
+      "m": 3,
+      "context": 16384,
+      "max_seqlen_k": 200704,
+      "splits": 8,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.1303229,
+          "wall_ms": 0.16321290022460744
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.12918749999999998,
+          "wall_ms": 0.1613508997252211
+        },
+        "layout_only": {
+          "device_ms": 0.0186354,
+          "wall_ms": 0.05139300046721473
+        }
+      },
+      "removable_ms_upper_estimate": 0.0011354000000000086,
+      "removable_pct_upper_estimate": 0.8712206373553756
+    },
+    {
+      "m": 3,
+      "context": 16384,
+      "max_seqlen_k": 200704,
+      "splits": 8,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.15541149999999998,
+          "wall_ms": 0.18244279999635182
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.1528646,
+          "wall_ms": 0.17968790052691475
+        },
+        "layout_only": {
+          "device_ms": 0.0364427,
+          "wall_ms": 0.0631610004347749
+        }
+      },
+      "removable_ms_upper_estimate": 0.002546899999999991,
+      "removable_pct_upper_estimate": 1.6388105127355383
+    },
+    {
+      "m": 3,
+      "context": 65536,
+      "max_seqlen_k": 200704,
+      "splits": 8,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.47091669999999997,
+          "wall_ms": 0.5035855996538885
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.47067709999999996,
+          "wall_ms": 0.5032706998463254
+        },
+        "layout_only": {
+          "device_ms": 0.0183854,
+          "wall_ms": 0.05092990031698719
+        }
+      },
+      "removable_ms_upper_estimate": 0.00023960000000000647,
+      "removable_pct_upper_estimate": 0.050879486754240505
+    },
+    {
+      "m": 3,
+      "context": 65536,
+      "max_seqlen_k": 200704,
+      "splits": 8,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.5114114,
+          "wall_ms": 0.5378826004744042
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.5101875,
+          "wall_ms": 0.5375277003622614
+        },
+        "layout_only": {
+          "device_ms": 0.0365364,
+          "wall_ms": 0.06288400036282837
+        }
+      },
+      "removable_ms_upper_estimate": 0.0012238999999999445,
+      "removable_pct_upper_estimate": 0.23931809107109162
+    },
+    {
+      "m": 3,
+      "context": 196608,
+      "max_seqlen_k": 200704,
+      "splits": 8,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 1.4395104,
+          "wall_ms": 1.4797420000832062
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 1.4422709,
+          "wall_ms": 1.4839809999102727
+        },
+        "layout_only": {
+          "device_ms": 0.018875,
+          "wall_ms": 0.05297390016494319
+        }
+      },
+      "removable_ms_upper_estimate": -0.0027604999999999436,
+      "removable_pct_upper_estimate": -0.19176658952932493
+    },
+    {
+      "m": 3,
+      "context": 196608,
+      "max_seqlen_k": 200704,
+      "splits": 8,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 1.4798437,
+          "wall_ms": 1.5070349996676669
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 1.4746354,
+          "wall_ms": 1.5029408998088911
+        },
+        "layout_only": {
+          "device_ms": 0.0370312,
+          "wall_ms": 0.06463500030804425
+        }
+      },
+      "removable_ms_upper_estimate": 0.0052083000000000546,
+      "removable_pct_upper_estimate": 0.35194933086514846
+    },
+    {
+      "m": 4,
+      "context": 8192,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.10330729999999999,
+          "wall_ms": 0.13500089989975095
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.10089059999999998,
+          "wall_ms": 0.13276789977680892
+        },
+        "layout_only": {
+          "device_ms": 0.0180885,
+          "wall_ms": 0.050000899500446394
+        }
+      },
+      "removable_ms_upper_estimate": 0.0024167000000000077,
+      "removable_pct_upper_estimate": 2.3393312960458825
+    },
+    {
+      "m": 4,
+      "context": 8192,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.12104169999999999,
+          "wall_ms": 0.14796589966863394
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.12118229999999999,
+          "wall_ms": 0.14753799987374805
+        },
+        "layout_only": {
+          "device_ms": 0.036463499999999996,
+          "wall_ms": 0.06305300048552454
+        }
+      },
+      "removable_ms_upper_estimate": -0.0001406000000000046,
+      "removable_pct_upper_estimate": -0.11615831568790311
+    },
+    {
+      "m": 4,
+      "context": 16384,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.15009899999999998,
+          "wall_ms": 0.18197089957538992
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.1465521,
+          "wall_ms": 0.1788437999493908
+        },
+        "layout_only": {
+          "device_ms": 0.0181354,
+          "wall_ms": 0.05040100004407577
+        }
+      },
+      "removable_ms_upper_estimate": 0.0035468999999999917,
+      "removable_pct_upper_estimate": 2.3630403933403903
+    },
+    {
+      "m": 4,
+      "context": 16384,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.1739635,
+          "wall_ms": 0.2001199005462695
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.171974,
+          "wall_ms": 0.19815479972749017
+        },
+        "layout_only": {
+          "device_ms": 0.0363646,
+          "wall_ms": 0.06266390046221204
+        }
+      },
+      "removable_ms_upper_estimate": 0.001989500000000005,
+      "removable_pct_upper_estimate": 1.1436307041419638
+    },
+    {
+      "m": 4,
+      "context": 65536,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.4907655999999999,
+          "wall_ms": 0.5243436993623618
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.4884688,
+          "wall_ms": 0.5214156000874937
+        },
+        "layout_only": {
+          "device_ms": 0.0181406,
+          "wall_ms": 0.05056299996795133
+        }
+      },
+      "removable_ms_upper_estimate": 0.0022967999999999322,
+      "removable_pct_upper_estimate": 0.46800346234535034
+    },
+    {
+      "m": 4,
+      "context": 65536,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.5342188,
+          "wall_ms": 0.561965600354597
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.5323906,
+          "wall_ms": 0.5593526002485305
+        },
+        "layout_only": {
+          "device_ms": 0.0370989,
+          "wall_ms": 0.06348300012177788
+        }
+      },
+      "removable_ms_upper_estimate": 0.0018281999999999465,
+      "removable_pct_upper_estimate": 0.34221933035676516
+    },
+    {
+      "m": 4,
+      "context": 196608,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 1.4705886,
+          "wall_ms": 1.5079479999258183
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 1.4685207999999998,
+          "wall_ms": 1.502792999963276
+        },
+        "layout_only": {
+          "device_ms": 0.018979199999999998,
+          "wall_ms": 0.0531959994987119
+        }
+      },
+      "removable_ms_upper_estimate": 0.002067800000000064,
+      "removable_pct_upper_estimate": 0.1406103651286338
+    },
+    {
+      "m": 4,
+      "context": 196608,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 1.5086979999999999,
+          "wall_ms": 1.5375380004115868
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 1.5039375,
+          "wall_ms": 1.531447000161279
+        },
+        "layout_only": {
+          "device_ms": 0.03725,
+          "wall_ms": 0.06515700006275438
+        }
+      },
+      "removable_ms_upper_estimate": 0.004760499999999945,
+      "removable_pct_upper_estimate": 0.31553697293957744
+    },
+    {
+      "m": 5,
+      "context": 8192,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.13373439999999998,
+          "wall_ms": 0.16551090011489578
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.1318125,
+          "wall_ms": 0.16417090009781532
+        },
+        "layout_only": {
+          "device_ms": 0.018348999999999997,
+          "wall_ms": 0.0504609000927303
+        }
+      },
+      "removable_ms_upper_estimate": 0.0019218999999999764,
+      "removable_pct_upper_estimate": 1.4371021965926318
+    },
+    {
+      "m": 5,
+      "context": 8192,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.14970319999999998,
+          "wall_ms": 0.17610790018807165
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.1481407,
+          "wall_ms": 0.1766408997355029
+        },
+        "layout_only": {
+          "device_ms": 0.036067699999999994,
+          "wall_ms": 0.0628419998975005
+        }
+      },
+      "removable_ms_upper_estimate": 0.0015624999999999944,
+      "removable_pct_upper_estimate": 1.0437318641151256
+    },
+    {
+      "m": 5,
+      "context": 16384,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.199625,
+          "wall_ms": 0.23237179993884638
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.1972864,
+          "wall_ms": 0.2295599006174598
+        },
+        "layout_only": {
+          "device_ms": 0.0185104,
+          "wall_ms": 0.05112090002512559
+        }
+      },
+      "removable_ms_upper_estimate": 0.0023385999999999962,
+      "removable_pct_upper_estimate": 1.171496556042578
+    },
+    {
+      "m": 5,
+      "context": 16384,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.2241927,
+          "wall_ms": 0.2513408995582722
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.22159369999999998,
+          "wall_ms": 0.24860089979483746
+        },
+        "layout_only": {
+          "device_ms": 0.0363386,
+          "wall_ms": 0.06318300002021715
+        }
+      },
+      "removable_ms_upper_estimate": 0.002599000000000018,
+      "removable_pct_upper_estimate": 1.1592705739303812
+    },
+    {
+      "m": 5,
+      "context": 65536,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.7055834,
+          "wall_ms": 0.7375395005510654
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.7029063,
+          "wall_ms": 0.7365495999692939
+        },
+        "layout_only": {
+          "device_ms": 0.0185782,
+          "wall_ms": 0.0519749999511987
+        }
+      },
+      "removable_ms_upper_estimate": 0.002677099999999988,
+      "removable_pct_upper_estimate": 0.3794165225542421
+    },
+    {
+      "m": 5,
+      "context": 65536,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 0.7476615,
+          "wall_ms": 0.7738075000816025
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 0.7399479999999999,
+          "wall_ms": 0.7666413999686483
+        },
+        "layout_only": {
+          "device_ms": 0.0373333,
+          "wall_ms": 0.06393099974957295
+        }
+      },
+      "removable_ms_upper_estimate": 0.00771350000000004,
+      "removable_pct_upper_estimate": 1.031683455681487
+    },
+    {
+      "m": 5,
+      "context": 196608,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "eager",
+      "medians": {
+        "production_region": {
+          "device_ms": 2.0725521000000002,
+          "wall_ms": 2.1232625003904104
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 2.0687604,
+          "wall_ms": 2.1186675992794335
+        },
+        "layout_only": {
+          "device_ms": 0.0191042,
+          "wall_ms": 0.054066900338511914
+        }
+      },
+      "removable_ms_upper_estimate": 0.0037917000000002865,
+      "removable_pct_upper_estimate": 0.1829483562801768
+    },
+    {
+      "m": 5,
+      "context": 196608,
+      "max_seqlen_k": 200704,
+      "splits": 16,
+      "mode": "graph",
+      "medians": {
+        "production_region": {
+          "device_ms": 2.1160938,
+          "wall_ms": 2.144745600526221
+        },
+        "elide_output_layout_INVALID": {
+          "device_ms": 2.1053854,
+          "wall_ms": 2.1420596000098158
+        },
+        "layout_only": {
+          "device_ms": 0.0374114,
+          "wall_ms": 0.066308999521425
+        }
+      },
+      "removable_ms_upper_estimate": 0.010708399999999951,
+      "removable_pct_upper_estimate": 0.5060456204729654
+    }
+  ],
+  "decision": "Do not implement/promote: observed removable output-layout region is too small; all captured-graph region reductions below 2%, including the intentionally invalid no-output-conversion diagnostic."
+}

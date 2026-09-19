@@ -1,0 +1,51 @@
+{
+  "providers": {
+    "b70-vllm": {
+      "baseUrl": "http://127.0.0.1:8081/v1",
+      "api": "openai-completions",
+      "apiKey": "$B70_INFERENCE_TOKEN",
+      "models": [
+        {
+          "id": "Qwen3.8-27B",
+          "name": "Arc B70 \u00b7 Qwen3.8 27B \u00b7 isolated vLLM",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "contextWindow": 200704,
+          "maxTokens": 16384,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "thinkingLevelMap": {
+            "off": "none",
+            "minimal": null,
+            "low": "low",
+            "medium": "medium",
+            "high": "high",
+            "xhigh": null,
+            "max": null
+          },
+          "samplingParams": {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 20,
+            "min_p": 0,
+            "repeat_penalty": 1
+          },
+          "compat": {
+            "supportsDeveloperRole": false,
+            "supportsStore": false,
+            "supportsReasoningEffort": true,
+            "maxTokensField": "max_tokens",
+            "thinkingFormat": "qwen-chat-template"
+          }
+        }
+      ]
+    }
+  }
+}

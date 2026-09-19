@@ -52,9 +52,13 @@ RUN python /opt/b70-local-patches/patch_draft_lmhead_int4.py \
 # The adapter fails closed to the native attention path for every unsupported
 # tensor shape, dtype, stride or option. Variant 1 is Q128/subgroup-16.
 COPY q128/tiles.so /opt/b70/tiles.so
-COPY q128/b70_attention.py /opt/venv/lib/python3.12/site-packages/b70_attention.py
+# Combined production adapter: Q128 prefill and M04 shared-KV verification.
+COPY m04/m04.so /opt/b70/m04.so
+COPY m04/b70_attention.py /opt/venv/lib/python3.12/site-packages/b70_attention.py
 COPY q128/patch_attention_import.py /tmp/patch_attention_import.py
 RUN echo "f38f23c4535407b6c3f083c5e81c89c7f704bae374571cf2e32f9da13abe0873  /opt/b70/tiles.so" | sha256sum -c - \
+ && echo "784916abd42b614794becac634a6a154f854c73d6dfcb1a50cd939b563020c6a  /opt/b70/m04.so" | sha256sum -c - \
+ && echo "d288bb54f52f5be166e851b2d7862da81c041bd7eff6b90e6eaca68c92333b64  /opt/venv/lib/python3.12/site-packages/b70_attention.py" | sha256sum -c - \
  && python /tmp/patch_attention_import.py \
  && rm /tmp/patch_attention_import.py
 

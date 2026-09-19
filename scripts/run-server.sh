@@ -9,7 +9,7 @@ if [[ -f "$repo_dir/.env" ]]; then
   set +a
 fi
 
-image="${VLLM_IMAGE:-local/b70-qwen38-vllm:q128-196k-180w}"
+image="${VLLM_IMAGE:-local/b70-qwen38-vllm:q128-m04-196k-180w}"
 model="${MODEL_ID:-mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16}"
 revision="${MODEL_REVISION:-a47b0c6f0d756bc394c4cc629d5b0ded1acc7001}"
 served_name="${SERVED_MODEL_NAME:-Qwen3.8-27B}"
@@ -44,6 +44,9 @@ exec docker run --rm --name "$container" \
   -e VLLM_TARGET_DEVICE=xpu \
   -e ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE \
   -e ZE_AFFINITY_MASK="${ZE_AFFINITY_MASK:-0}" \
+  -e VLLM_WORKER_MULTIPROC_METHOD=spawn \
+  -e B70_GPTQ_W4A8_PREFILL=0 \
+  -e B70_XPU_SINGLE_SEED_SAMPLER=0 \
   -e B70_MTP_BF16_DRAFT=1 \
   -e B70_DRAFT_LMHEAD_INT4=1 \
   -e B70_DRAFT_MTP_INT4=1 \

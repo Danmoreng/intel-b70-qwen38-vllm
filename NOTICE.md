@@ -17,6 +17,10 @@ their SHA-256 digests before executing or installing them.
   the pinned `vllm-xpu-kernels`/SYCL-TLA interfaces. The matching prebuilt
   extension is redistributed only for the exact pinned vLLM XPU ABI; source
   and SHA-256 are included in `docker/q128/README.md`.
+- `docker/m04/m04.so` is the deployed shared-KV verification extension;
+  its local sources and upstream build pins are documented in
+  `docker/m04/README.md`. It uses the pinned vLLM-XPU-kernels and SYCL-TLA
+  interfaces and is restricted to the same runtime ABI.
 - Intel Compute Runtime and Intel Graphics Compiler packages retain their own
   upstream licenses.
 

@@ -8,7 +8,7 @@ if [[ -f "$repo_dir/.env" ]]; then
   source "$repo_dir/.env"
   set +a
 fi
-image="${VLLM_IMAGE:-local/b70-qwen38-vllm:q128-m04-196k-180w}"
+image="${VLLM_IMAGE:-local/b70-qwen38-vllm:q128-m04-196k-180w-runtime2635}"
 
 docker build --pull=false \
   -t "$image" \

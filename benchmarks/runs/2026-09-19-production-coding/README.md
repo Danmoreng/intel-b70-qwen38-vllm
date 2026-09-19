@@ -2,8 +2,11 @@
 
 One completed Pi 0.85.1 coding session on a single Arc Pro B70 at 180 W,
 using **Q128 prefill + M04 verification, MTP4, GPTQ W4A16 and FP8 KV**.
+Intel Compute Runtime **26.35.39758.10** and IGC **2.41.5** are installed.
 The target output head is FP16; the draft head and five MTP linears are INT4.
 See [the exact profile and artifact hashes](profile.json).
+The [build and deployment verification](build-verification.json) records the
+reconstructed image comparison and smoke checks on the deployed engine.
 
 ## Workload and outcome
 
@@ -14,10 +17,10 @@ follow-up in the same conversation distinguished disabled, disconnected and
 ready agent-runner states in the API and English/German UI. The agent inspected
 code, edited it, added regression tests and ran repository checks.
 
-Both tasks completed in **2,567.412 s (42 min 47 s)** with 133 successful model
-requests and 131 tool calls. There was no context compaction and no run-limit
+Both tasks completed in **2,498.411 s (41 min 38 s)** with 119 successful model
+requests and 139 tool calls. There was no context compaction and no run-limit
 termination (limits: 60 minutes, 160 requests, 100,000 generated tokens).
-The output passed **9/9 independently held acceptance checks** and **570
+The output passed **9/9 independently held acceptance checks** and **565
 repository tests**; six tests requiring unavailable host/nested-runner facilities
 were skipped. Type checking, build and lint passed. The combined validation
 command returned exit code 1 solely because the format check still reported
@@ -40,11 +43,11 @@ for an independent coding measurement.
 - The benchmark engine enabled `VLLM_SERVER_DEV_MODE=1` only to expose the
   cache-reset endpoint. Normal serving does not enable this instrumentation.
 - Native Prometheus counters were captured before and after every request,
-  waiting for request accounting to complete. All 133 request records passed
+  waiting for request accounting to complete. All 119 request records passed
   accounting validation. Tool execution is outside native phase timings.
 - Context bands use the full rendered input prompt, with K = 1,000 tokens and
   lower-inclusive/upper-exclusive intervals. Actual prompts ranged from 2,177
-  to **143,034** tokens; the 140–150K band contains no measurement above that.
+  to **145,729** tokens; the 140–150K band contains no measurement above that.
 - Prefill compute = sum(newly computed prompt tokens) / sum(native prefill s).
   Decode = sum(generated tokens − 1 per request) / sum(native decode s), because
   the first output token belongs to prefill. These are weighted rates, not
@@ -53,7 +56,7 @@ for an independent coding measurement.
   sum(accepted draft tokens) / sum(drafted tokens). Cached prompt tokens must
   not be counted as newly computed prefill work.
 - Card energy integrates hwmon energy over the whole agent session, including
-  tool and idle time: 446,350 J / **123.99 Wh**, averaging **173.85 W**.
+  tool and idle time: 429,259 J / **119.24 Wh**, averaging **171.82 W**.
   This measures the GPU card, not whole-system wall energy.
 
 [summary.json](summary.json) contains totals and every context band.
@@ -66,3 +69,8 @@ This is one adaptive coding trajectory with variable answer lengths and task
 content. Acceptance and decode therefore vary across context bands. It is not
 a cold-cache synthetic sweep or a measurement of every context up to the
 configured 200,704-token limit.
+
+Before the coding session, a full-context probe processed **200,448 input tokens**
+and produced 200 output tokens, returning all four expected markers. The configured
+ceiling remained 200,704 tokens. Prefix correctness and isolated agent/tool probes
+also passed; these qualification requests are excluded from the coding measurements.

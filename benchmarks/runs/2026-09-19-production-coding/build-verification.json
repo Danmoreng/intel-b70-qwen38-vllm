@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-19",
+  "recipe_build": "passed",
+  "recipe_image_id": "sha256:806984cfc819d824baf5fad6d9077d4cd72c412f76b0021d203d1d78250e2bc3",
+  "measured_and_deployed_image_id": "sha256:b675d81d4e7cc63fbcd6df395965ea16ec5c4704428c81118a1618185245dd5a",
+  "comparison_scope": "Installed vLLM, XPU kernel package, Q128/M04 libraries and attention adapter used by the vllm console entrypoint",
+  "matching_files": 2336,
+  "difference": {
+    "path": "vllm/v1/worker/xpu_worker.py",
+    "explanation": "Measured image adds one logger.info statement reporting runner class, cache and compilation configuration. Inference operations are unchanged.",
+    "measured_sha256": "22b8c74f17ed05c0e543150df87eaca8149633542325a115df8e63cb0ee49aca",
+    "recipe_sha256": "463785cbe4dbbe90052c6262fcdaafb55ca9edb7642ccf8f36e5116e599f22f0"
+  },
+  "production_smoke": {
+    "health_http": 200,
+    "vision": "passed",
+    "structured_tool_call": "passed",
+    "tool_result_continuation": "passed",
+    "prefix_cache_state": "passed",
+    "max_model_len": 200704,
+    "power_limit_w": 180,
+    "kv_capacity_tokens": 215143
+  },
+  "long_context_qualification": {
+    "input_tokens": 200448,
+    "output_tokens": 200,
+    "four_markers_correct": true,
+    "scope": "separate preflight, excluded from coding measurements"
+  }
+}

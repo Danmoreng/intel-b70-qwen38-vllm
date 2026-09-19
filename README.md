@@ -5,9 +5,9 @@ A deployment recipe for **one 32 GB Intel Arc Pro B70 at 180 W**, with
 context, vision, tool calling and automatic prefix caching. This is the
 current production configuration, verified on **2026-09-19**.
 
-The completed coding benchmark took **42 min 47 s** and averaged **54.39
-decode tok/s**, **637.49 newly computed prefill tok/s** and **93.75% prefix-cache
-hits** across 133 model requests, with input context growing to 143,034 tokens.
+The completed coding benchmark took **41 min 38 s** and averaged **56.77
+decode tok/s**, **604.00 newly computed prefill tok/s** and **94.16% prefix-cache
+hits** across 119 model requests, with input context growing to 145,729 tokens.
 This profile serves one active sequence and targets interactive coding latency.
 
 ## Current configuration
@@ -34,7 +34,7 @@ its head and five MTP linears.
 | Prefix cache | Enabled; `--mamba-cache-mode align` |
 | Attention | Q128/KV32 prefill + M04 shared-KV verification; native fallback |
 | vLLM / XPU kernels | `0.29.0+xpu` / `0.1.14.1` |
-| Intel userspace | Compute Runtime `26.31.39395.13`; IGC `2.40.13` |
+| Intel userspace | Compute Runtime `26.35.39758.10`; IGC `2.41.5` |
 | XPU execution | Graphs enabled; expandable allocator segments; worker `spawn` |
 | Chat defaults | Medium reasoning; thinking budget capped at **8,192**; default output **16,384** |
 | Parsers | Tool calls: `qwen3_xml`; reasoning: `qwen3` |
@@ -94,7 +94,7 @@ it before every start and refuses to start if it cannot apply the cap.
 ./scripts/run-server.sh
 ```
 
-The default image tag is `local/b70-qwen38-vllm:q128-m04-196k-180w`.
+The default image tag is `local/b70-qwen38-vllm:q128-m04-196k-180w-runtime2635`.
 Build, download and serving scripts read the same `.env` image setting.
 The download script fetches the pinned model revision; serving uses that cache
 in offline mode. Wait for `Application startup complete`, then check:
@@ -130,7 +130,8 @@ sudo loginctl enable-linger "$USER"
 
 ## Current coding benchmark
 
-**2026-09-19, same Q128 + M04 production profile at 180 W.** Pi 0.85.1 completed
+**2026-09-19, Q128 + M04 at 180 W, Intel Runtime 26.35.39758.10 / IGC 2.41.5.**
+Pi 0.85.1 completed
 two linked tasks in a TypeScript observability dashboard: preserve configuration
 when rotating login credentials, then distinguish disabled and disconnected
 agent-runner states in the API and UI. The follow-up kept the same conversation
@@ -139,18 +140,18 @@ reasoning, an 8,192-token thinking budget and a 16,384-token output limit.
 
 | Session result | Measured value |
 |---|---:|
-| End-to-end time | **42 min 47 s**, completed normally |
-| Model requests / tool calls | **133 / 131** |
-| Actual input-context range | **2,177–143,034 tokens** |
-| Logical prompt / generated tokens | 10,124,335 / 79,308 |
-| Newly computed / prefix-cached prompt tokens | 632,879 / 9,491,456 |
-| Prefix-cache hit rate | **93.75%** |
-| Weighted native prefill compute | **637.49 tok/s** |
-| Weighted native decode | **54.39 tok/s** |
-| MTP accepted / drafted tokens | **52.20%** |
-| GPU card energy / average power over session | **123.99 Wh / 173.85 W** |
+| End-to-end time | **41 min 38 s**, completed normally |
+| Model requests / tool calls | **119 / 139** |
+| Actual input-context range | **2,177–145,729 tokens** |
+| Logical prompt / generated tokens | 9,709,218 / 80,343 |
+| Newly computed / prefix-cached prompt tokens | 567,202 / 9,142,016 |
+| Prefix-cache hit rate | **94.16%** |
+| Weighted native prefill compute | **604.00 tok/s** |
+| Weighted native decode | **56.77 tok/s** |
+| MTP accepted / drafted tokens | **54.55%** |
+| GPU card energy / average power over session | **119.24 Wh / 171.82 W** |
 | Independent task acceptance | **9/9 passed** |
-| Repository tests | **570 passed**, 6 host-dependent tests skipped |
+| Repository tests | **565 passed**, 6 host-dependent tests skipped |
 
 Type checking, build and lint passed. The format check reported seven existing
 files, unchanged from the baseline; the combined validation command therefore
@@ -164,25 +165,27 @@ summed native phase counters across the requests in each band.
 
 | Input context | Requests | Prefill compute (tok/s) | Decode (tok/s) | Prefix hit rate | MTP acceptance |
 |---|---:|---:|---:|---:|---:|
-| 0–10K | 15 | 1,427.61 | 67.87 | 34.20% | 49.57% |
-| 10–20K | 6 | 1,232.84 | 55.39 | 65.90% | 38.29% |
-| 20–30K | 6 | 1,066.85 | 53.14 | 78.61% | 37.35% |
-| 30–40K | 5 | 953.41 | 56.65 | 86.92% | 44.73% |
-| 40–50K | 8 | 822.13 | 75.06 | 90.94% | 71.24% |
-| 50–60K | 3 | 766.68 | 68.28 | 87.87% | 65.33% |
-| 60–70K | 20 | 697.40 | 61.74 | 93.41% | 60.35% |
-| 70–80K | 14 | 642.16 | 48.84 | 93.86% | 44.44% |
-| 80–90K | 5 | 606.94 | 43.55 | 92.82% | 39.43% |
-| 90–100K | 7 | 561.06 | 42.89 | 94.43% | 40.28% |
-| 100–110K | 5 | 516.94 | 41.56 | 94.26% | 40.84% |
-| 110–120K | 6 | 485.07 | 44.64 | 95.25% | 47.11% |
-| 120–130K | 11 | 460.55 | 52.34 | 96.29% | 62.26% |
-| 130–140K | 18 | 434.11 | 55.15 | 96.81% | 69.82% |
-| 140–150K | 4 | 423.86 | 41.44 | 96.82% | 47.71% |
+| 0–10K | 8 | 1,435.54 | 69.07 | 12.73% | 50.84% |
+| 10–20K | 8 | 1,240.88 | 55.36 | 65.10% | 38.49% |
+| 20–30K | 1 | 1,077.91 | 60.33 | 83.89% | 46.73% |
+| 30–40K | 1 | 979.12 | 63.68 | 83.29% | 53.33% |
+| 40–50K | 8 | 836.90 | 78.82 | 90.36% | 76.20% |
+| 50–60K | 12 | 746.34 | 64.76 | 91.93% | 61.52% |
+| 60–70K | 17 | 692.28 | 63.51 | 93.41% | 62.96% |
+| 70–80K | 15 | 644.74 | 55.53 | 93.65% | 54.18% |
+| 80–90K | 3 | 600.87 | 50.82 | 92.17% | 50.43% |
+| 90–100K | 2 | 557.52 | 52.35 | 90.38% | 56.53% |
+| 100–110K | 3 | 521.87 | 41.54 | 94.98% | 40.09% |
+| 110–120K | 4 | 489.85 | 40.45 | 94.32% | 41.08% |
+| 120–130K | 9 | 451.20 | 49.36 | 96.03% | 57.67% |
+| 130–140K | 17 | 431.38 | 55.53 | 96.68% | 71.01% |
+| 140–150K | 11 | 413.02 | 44.54 | 96.97% | 53.69% |
 
-The final band reaches **143,034**, not 150,000 tokens. This run does not measure
-the entire configured 200,704-token context window. It is one real coding
-trajectory; task content, output length and MTP acceptance vary between bands.
+The final band reaches **145,729**, not 150,000 tokens. This run does not measure
+the entire configured 200,704-token context window. A separate qualification
+probe processed 200,448 input tokens and correctly returned all four control
+markers; it is excluded from the coding rates. The coding benchmark is one
+real trajectory; task content, output length and MTP acceptance vary between bands.
 
 **Prefill** counts only newly computed prompt tokens divided by native prefill
 time. **Prefix hits** count cache reuse separately. **Decode** divides generated
@@ -194,7 +197,7 @@ The measurement used an exclusive endpoint and a prefix-cache reset after
 warm-up. See the [methodology](benchmarks/runs/2026-09-19-production-coding/README.md),
 [profile and hashes](benchmarks/runs/2026-09-19-production-coding/profile.json),
 [aggregate results](benchmarks/runs/2026-09-19-production-coding/summary.json) and
-[all 133 content-free request records](benchmarks/runs/2026-09-19-production-coding/requests.json).
+[all 119 content-free request records](benchmarks/runs/2026-09-19-production-coding/requests.json).
 The private application source and task transcript are not redistributed.
 
 ## Measure your deployment
@@ -236,13 +239,17 @@ The prebuilt attention libraries are bound to this exact vLLM/XPU ABI. Keep
 the pins to reproduce the profile; changing the base, model or kernels needs
 fresh validation. The build uses the deployed attention artifacts; a rebuild's
 Docker image ID can differ from the measured image ID recorded with the result.
+The [build verification](benchmarks/runs/2026-09-19-production-coding/build-verification.json)
+records the successful recipe build, file comparison and production smoke checks.
+Its only vLLM source difference from the measured image is an additional
+startup diagnostic log statement in the measured worker.
 
 ## Sources and acknowledgements
 
 - [vLLM XPU documentation](https://docs.vllm.ai/en/stable/getting_started/installation/gpu/)
 - [Intel Arc Pro B70 inference cookbook](https://github.com/SergiioB/intel-arc-pro-b70-inference-cookbook)
 - [Quantized Qwen3.8-27B model](https://huggingface.co/mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16)
-- [Intel Compute Runtime 26.31.39395.13](https://github.com/intel/compute-runtime/releases/tag/26.31.39395.13)
-- [Intel Graphics Compiler 2.40.13](https://github.com/intel/intel-graphics-compiler/releases/tag/v2.40.13)
+- [Intel Compute Runtime 26.35.39758.10](https://github.com/intel/compute-runtime/releases/tag/26.35.39758.10)
+- [Intel Graphics Compiler 2.41.5](https://github.com/intel/intel-graphics-compiler/releases/tag/v2.41.5)
 
 See [NOTICE.md](NOTICE.md) for licensing and attribution.

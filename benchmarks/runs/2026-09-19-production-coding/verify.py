@@ -10,7 +10,7 @@ summary = json.loads((ROOT / 'summary.json').read_text())
 raw = (ROOT / 'requests.json').read_bytes()
 assert hashlib.sha256(raw).hexdigest() == summary['requests_sha256']
 rows = json.loads(raw)
-assert len(rows) == 133 and [r['index'] for r in rows] == list(range(133))
+assert len(rows) == 119 and [r['index'] for r in rows] == list(range(119))
 assert all(r['status'] == 'ok' and r['http_status'] == 200 for r in rows)
 
 
@@ -44,4 +44,4 @@ for band in summary['bands']:
     check([r for r in rows if low <= r['prompt_tokens'] < high], band)
 assert sum(b['requests'] for b in summary['bands']) == len(rows)
 assert summary['overall']['computed_tokens'] + summary['overall']['cached_tokens'] == summary['overall']['prompt_tokens']
-print('Verified 133 requests, overall metrics and all 15 context bands.')
+print('Verified 119 requests, overall metrics and all 15 context bands.')

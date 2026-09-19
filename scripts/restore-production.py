@@ -10,7 +10,7 @@ import time
 import urllib.request
 
 
-EXPECTED_IMAGE_ID = "sha256:aee9857bef1f37c8f0ee136d9f89d7166201212175a8b171d958627706cf1c0b"
+EXPECTED_IMAGE_ID = "sha256:b675d81d4e7cc63fbcd6df395965ea16ec5c4704428c81118a1618185245dd5a"
 DIAGNOSTIC_CONTAINERS = (
     "b70-m01-long-context",
     "b70-m01-decode-trace",

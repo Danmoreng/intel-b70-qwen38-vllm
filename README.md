@@ -3,12 +3,13 @@
 A deployment recipe for **one 32 GB Intel Arc Pro B70 at 180 W**, with
 **Q128/KV32 prefill + M04 shared-KV MTP verification**, a **200,704-token**
 context, vision, tool calling and automatic prefix caching. This is the
-current production configuration, verified on **2026-09-19**.
+current production configuration, verified on **2026-09-20**.
 
 The completed coding benchmark took **41 min 38 s** and averaged **56.77
 decode tok/s**, **604.00 newly computed prefill tok/s** and **94.16% prefix-cache
 hits** across 119 model requests, with input context growing to 145,729 tokens.
-This profile serves one active sequence and targets interactive coding latency.
+The current scheduler permits up to four active sequences and dynamically
+queues requests as KV capacity tightens.
 
 ## Current configuration
 
@@ -30,7 +31,7 @@ its head and five MTP linears.
 | KV cache | **FP8** |
 | Maximum context | **200,704** total input + output tokens (196 Ki tokens) |
 | GPU memory fraction | **0.93** |
-| Scheduler | **1** sequence; **4,096** max batched tokens |
+| Scheduler | Up to **4** sequences; **6,656** max batched tokens; full-ISL admission; watermark **0.0** |
 | Prefix cache | Enabled; `--mamba-cache-mode align` |
 | Attention | Q128/KV32 prefill + M04 shared-KV verification; native fallback |
 | vLLM / XPU kernels | `0.29.0+xpu` / `0.1.14.1` |
@@ -48,6 +49,35 @@ sets `B70_MTP_BF16_DRAFT=1`, `B70_DRAFT_LMHEAD_INT4=1`,
 `B70_GPTQ_W4A8_PREFILL=0` and `B70_XPU_SINGLE_SEED_SAMPLER=0`.
 The BF16-draft flag selects the model's draft-loading path; the two INT4 flags
 then convert the listed draft layers.
+
+## Current concurrency qualification
+
+The production scheduler was promoted on 2026-09-20 after a C1-C4 sweep plus
+targeted admission, growth, watermark and batch-size comparisons. Four
+sequences are a ceiling, not a requirement: vLLM ran four short requests
+together and automatically reduced effective concurrency to two or one for
+large contexts while keeping the remainder in its capacity queue.
+
+| Measurement | Result |
+|---|---:|
+| Realistic 4K prompt / 1K output, C1 | 64.80 aggregate output tok/s |
+| Same workload, C4 | **129.68 aggregate output tok/s** |
+| 16K prompt / 512 output, C1 → C4 | 25.64 → **32.46 tok/s** |
+| 96K prompt / 256 output, batch 4096 | 1.968 tok/s, 5 preemptions |
+| Same 96K/C4 case, batch 6656 | **2.072 tok/s, 0 preemptions** |
+| KV capacity, batch 4096 → 6656 | 215,143 → 212,255 tokens (-1.34%) |
+
+Watermarks 0.05 and 0.10 did not remove growth preemptions or materially improve
+the 96K admission result; 0.10 reduced growth throughput. The promoted profile
+therefore uses watermark 0.0. Batch 6656 retained realistic C4 throughput
+(128.80 versus 129.68 tok/s at 4096) while improving the long-prefill boundary.
+See the [qualification record](benchmarks/runs/2026-09-20-concurrency/README.md)
+and [machine-readable summary](benchmarks/runs/2026-09-20-concurrency/summary.json).
+
+Greedy byte-for-byte output is not guaranteed across sequential and concurrent
+batching. Two of four fixed prompts matched exactly; two selected different
+late-output variants, and repeated sequential baselines also changed variants.
+All requests completed without protocol corruption or cross-request mixing.
 
 ## Install and run
 
@@ -131,6 +161,9 @@ sudo loginctl enable-linger "$USER"
 ## Current coding benchmark
 
 **2026-09-19, Q128 + M04 at 180 W, Intel Runtime 26.35.39758.10 / IGC 2.41.5.**
+This coding run predates the concurrency promotion and used the earlier
+C1/batch-4096 scheduler profile; its model, kernel and agent measurements remain
+the production baseline for those dimensions.
 Pi 0.85.1 completed
 two linked tasks in a TypeScript observability dashboard: preserve configuration
 when rotating login credentials, then distinguish disabled and disconnected

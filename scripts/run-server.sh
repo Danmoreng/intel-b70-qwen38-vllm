@@ -19,8 +19,14 @@ cache_root="${XDG_CACHE_HOME:-$HOME/.cache}/b70-qwen38-vllm"
 container="${VLLM_CONTAINER:-b70-qwen38-vllm}"
 
 [[ -e "$render_node" ]] || { echo "Render node not found: $render_node" >&2; exit 2; }
-[[ "${SPECULATIVE_TOKENS:-4}" =~ ^[1-9][0-9]*$ ]] || { echo "SPECULATIVE_TOKENS must be positive" >&2; exit 2; }
-[[ "${MAX_NUM_BATCHED_TOKENS:-4096}" =~ ^[1-9][0-9]*$ ]] || { echo "MAX_NUM_BATCHED_TOKENS must be positive" >&2; exit 2; }
+speculative_tokens="${SPECULATIVE_TOKENS:-4}"
+max_num_batched_tokens="${MAX_NUM_BATCHED_TOKENS:-6656}"
+max_num_seqs="${MAX_NUM_SEQS:-4}"
+scheduler_watermark="${SCHEDULER_WATERMARK:-0.0}"
+[[ "$speculative_tokens" =~ ^[1-9][0-9]*$ ]] || { echo "SPECULATIVE_TOKENS must be positive" >&2; exit 2; }
+[[ "$max_num_batched_tokens" =~ ^[1-9][0-9]*$ ]] || { echo "MAX_NUM_BATCHED_TOKENS must be positive" >&2; exit 2; }
+[[ "$max_num_seqs" =~ ^[1-9][0-9]*$ ]] || { echo "MAX_NUM_SEQS must be positive" >&2; exit 2; }
+[[ "$scheduler_watermark" =~ ^0(\.[0-9]+)?$ ]] || { echo "SCHEDULER_WATERMARK must be in [0.0, 1.0)" >&2; exit 2; }
 
 mkdir -p "$hf_home" "$cache_root/vllm" "$cache_root/triton"
 render_gid="$(stat -c '%g' "$render_node")"
@@ -30,7 +36,7 @@ if [[ "${PREFIX_CACHING:-1}" != "1" ]]; then
   cache_args=(--no-enable-prefix-caching)
 fi
 
-speculative_config="{\"method\":\"mtp\",\"num_speculative_tokens\":${SPECULATIVE_TOKENS:-4}}"
+speculative_config="{\"method\":\"mtp\",\"num_speculative_tokens\":$speculative_tokens}"
 
 exec docker run --rm --name "$container" \
   --device /dev/dri --group-add "$render_gid" \
@@ -62,8 +68,10 @@ exec docker run --rm --name "$container" \
   --max-model-len "${CONTEXT_SIZE:-200704}" \
   --gpu-memory-utilization "${GPU_MEMORY_UTILIZATION:-0.93}" \
   --kv-cache-dtype fp8 \
-  --max-num-seqs "${MAX_NUM_SEQS:-1}" \
-  --max-num-batched-tokens "${MAX_NUM_BATCHED_TOKENS:-4096}" \
+  --max-num-seqs "$max_num_seqs" \
+  --max-num-batched-tokens "$max_num_batched_tokens" \
+  --scheduler-reserve-full-isl \
+  --watermark "$scheduler_watermark" \
   "${cache_args[@]}" \
   --mamba-cache-mode align \
   --served-model-name "$served_name" \

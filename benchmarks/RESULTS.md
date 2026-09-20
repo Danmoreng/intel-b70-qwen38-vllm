@@ -5,6 +5,17 @@ request. Native vLLM prefill/decode counters were used; warmups were excluded.
 Results are not cross-hardware claims and should not be read as a model-quality
 benchmark.
 
+## Current C4 scheduler qualification (2026-09-20)
+
+Production now uses up to four sequences, a 6,656-token scheduler budget,
+full-ISL admission and watermark 0.0. In the realistic 4K/1K workload,
+aggregate output throughput increased from 64.80 tok/s at C1 to 129.68 tok/s at
+C4. The promoted 6,656-token budget retained short C4 throughput and improved
+the 96K/C4 boundary from 1.968 tok/s with five preemptions to 2.072 tok/s with
+zero preemptions. KV capacity decreased by 1.34%, from 215,143 to 212,255
+tokens. Full results and limitations are in
+[`runs/2026-09-20-concurrency`](runs/2026-09-20-concurrency/README.md).
+
 ## Current 180 W Q128 production sweep (2026-09-14)
 
 The current production profile uses the Q128/KV32 prefill extension, W4A16

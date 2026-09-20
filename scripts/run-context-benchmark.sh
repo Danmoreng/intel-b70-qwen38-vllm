@@ -21,7 +21,7 @@ revision="${MODEL_REVISION:-a47b0c6f0d756bc394c4cc629d5b0ded1acc7001}"
 served_name="${SERVED_MODEL_NAME:-Qwen3.8-27B}"
 hf_home="${HF_HOME:-$HOME/.cache/huggingface}"
 api_root="${BENCHMARK_ROOT:-http://127.0.0.1:${PORT:-8081}}"
-budget="${MAX_NUM_BATCHED_TOKENS:-4096}"
+budget="${MAX_NUM_BATCHED_TOKENS:-6656}"
 
 cd "$repo_dir"
 mkdir -p "$run_dir"

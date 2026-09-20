@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-20",
+  "units": "aggregate output tokens per second",
+  "throughput_batch4096_watermark0": {
+    "short_2k_512": {"c1": 59.5867, "c2": 86.6128, "c3": 102.0985, "c4": 116.1134},
+    "coding_4k_1k": {"c1": 64.8010, "c2": 93.1465, "c3": 110.3225, "c4": 129.6756},
+    "medium_16k_512": {"c1": 25.6401, "c2": 29.6500, "c3": 31.1579, "c4": 32.4561}
+  },
+  "watermark_batch4096": {
+    "0.00": {"admission_96k_c4_tps": 1.9676, "admission_preemptions": 5, "growth_48k_c4_tps": 62.1172, "growth_preemptions": 4},
+    "0.05": {"admission_96k_c4_tps": 1.9738, "admission_preemptions": 4, "growth_48k_c4_tps": 64.4003, "growth_preemptions": 4},
+    "0.10": {"admission_96k_c4_tps": 1.9727, "admission_preemptions": 4, "growth_48k_c4_tps": 57.1521, "growth_preemptions": 4}
+  },
+  "batch_comparison_c4_watermark0": {
+    "4096": {"coding_4k_1k_tps": 129.6756, "admission_96k_tps": 1.9676, "admission_96k_preemptions": 5, "kv_cache_tokens": 215143},
+    "6656": {"coding_4k_1k_tps": 128.7962, "admission_96k_tps": 2.0721, "admission_96k_preemptions": 0, "kv_cache_tokens": 212255}
+  },
+  "post_promotion_correctness": {
+    "sequential_tps": 42.6351,
+    "concurrent_c4_tps": 64.4640,
+    "preemptions": 0,
+    "exact_hash_matches": 2,
+    "comparable_prompts": 4,
+    "all_requests_completed": true
+  }
+}

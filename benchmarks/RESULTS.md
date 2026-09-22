@@ -1,19 +1,40 @@
 # Measured results
 
-Measurements were collected on one Intel Arc Pro B70 32 GB with one active
-request. Native vLLM prefill/decode counters were used; warmups were excluded.
-Results are not cross-hardware claims and should not be read as a model-quality
-benchmark.
+Measurements were collected on one Intel Arc Pro B70 32 GB. Native vLLM
+prefill/decode counters were used. Results are not cross-hardware claims and
+should not be read as a model-quality benchmark.
 
-## Current C4 scheduler qualification (2026-09-20)
+## Current production-profile benchmark (2026-09-22)
+
+The active MTP4/Q128/M04 profile was measured without a service restart or
+configuration change. The run covered a cold-cache C1 phase sweep through
+128K, C2–C4 waves at three workload shapes, cold/warm prefix reuse and an exact
+200,704-token boundary request. It completed 124 measured requests without an
+API failure or token-accounting mismatch.
+
+Fully overlapped aggregate decode—measured only after every request emitted its
+first token and before any request completed—reaches **214.17 tok/s at 2K/C4**,
+**215.81 tok/s at 4K-coding/C4** and **196.21 tok/s at 16K/C4**. The matching
+average per active request is 53.54, 53.95 and 49.05 tok/s. Aggregate prefill
+stays close to its saturated C1 level rather than scaling with concurrency.
+
+The exact maximum-window request (200,448 input + 256 output) completed in
+432.55 s at 469.45 native prefill tok/s and 47.19 native decode tok/s. It
+reached 100% KV use and incurred four preemptions. Full phase, concurrency,
+cache and validation results are in
+[`runs/2026-09-22-current-profile`](runs/2026-09-22-current-profile/README.md).
+
+## Scheduler qualification (2026-09-20)
 
 Production now uses up to four sequences, a 6,656-token scheduler budget,
-full-ISL admission and watermark 0.0. In the realistic 4K/1K workload,
-aggregate output throughput increased from 64.80 tok/s at C1 to 129.68 tok/s at
-C4. The promoted 6,656-token budget retained short C4 throughput and improved
-the 96K/C4 boundary from 1.968 tok/s with five preemptions to 2.072 tok/s with
-zero preemptions. KV capacity decreased by 1.34%, from 215,143 to 212,255
-tokens. Full results and limitations are in
+full-ISL admission and watermark 0.0. One realistic 4K/1K request completed in
+15.80 s; a concurrent wave of four completed in 31.59 s instead of the 63.21 s
+needed by four serial C1 requests. The promoted 6,656-token budget kept that C4
+batch time effectively flat at 31.80 s and improved the 96K/C4 boundary from
+520.43 s with five preemptions to 494.18 s with zero preemptions. KV capacity
+decreased by 1.34%, from 215,143 to 212,255 tokens. This scheduler run did not
+retain separate prefill/decode phase deltas; those rates are therefore not
+inferred from end-to-end time. Full results and limitations are in
 [`runs/2026-09-20-concurrency`](runs/2026-09-20-concurrency/README.md).
 
 ## Current 180 W Q128 production sweep (2026-09-14)

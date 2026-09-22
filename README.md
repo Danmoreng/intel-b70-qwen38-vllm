@@ -3,7 +3,10 @@
 A deployment recipe for **one 32 GB Intel Arc Pro B70 at 180 W**, with
 **Q128/KV32 prefill + M04 shared-KV MTP verification**, a **200,704-token**
 context, vision, tool calling and automatic prefix caching. This is the
-current production configuration, verified on **2026-09-20**.
+current production configuration, verified on **2026-09-22**.
+
+With four concurrent requests, aggregate decode reaches **214.17 tok/s at
+2K/512**, **215.81 tok/s at 4K/1K coding** and **196.21 tok/s at 16K/512**.
 
 The completed coding benchmark took **41 min 38 s** and averaged **56.77
 decode tok/s**, **604.00 newly computed prefill tok/s** and **94.16% prefix-cache
@@ -50,34 +53,92 @@ sets `B70_MTP_BF16_DRAFT=1`, `B70_DRAFT_LMHEAD_INT4=1`,
 The BF16-draft flag selects the model's draft-loading path; the two INT4 flags
 then convert the listed draft layers.
 
-## Current concurrency qualification
+## Current phase and concurrency benchmark
 
-The production scheduler was promoted on 2026-09-20 after a C1-C4 sweep plus
-targeted admission, growth, watermark and batch-size comparisons. Four
-sequences are a ceiling, not a requirement: vLLM ran four short requests
-together and automatically reduced effective concurrency to two or one for
-large contexts while keeping the remainder in its capacity queue.
+The current profile was measured again on 2026-09-22 without changing or
+restarting the engine. MTP4, Q128/KV32 prefill, M04 shared-KV verification,
+batch 6,656, C4, FP8 KV and the 180 W cap were active throughout. The run
+contained 70 measured request waves and 124 completions. Every completion was
+non-empty, returned exactly the requested number of tokens and ended with
+`finish_reason=length`.
 
-| Measurement | Result |
-|---|---:|
-| Realistic 4K prompt / 1K output, C1 | 64.80 aggregate output tok/s |
-| Same workload, C4 | **129.68 aggregate output tok/s** |
-| 16K prompt / 512 output, C1 → C4 | 25.64 → **32.46 tok/s** |
-| 96K prompt / 256 output, batch 4096 | 1.968 tok/s, 5 preemptions |
-| Same 96K/C4 case, batch 6656 | **2.072 tok/s, 0 preemptions** |
-| KV capacity, batch 4096 → 6656 | 215,143 → 212,255 tokens (-1.34%) |
+The tables deliberately keep three different concepts separate:
 
-Watermarks 0.05 and 0.10 did not remove growth preemptions or materially improve
-the 96K admission result; 0.10 reduced growth throughput. The promoted profile
-therefore uses watermark 0.0. Batch 6656 retained realistic C4 throughput
-(128.80 versus 129.68 tok/s at 4096) while improving the long-prefill boundary.
-See the [qualification record](benchmarks/runs/2026-09-20-concurrency/README.md)
-and [machine-readable summary](benchmarks/runs/2026-09-20-concurrency/summary.json).
+- **prefill compute** is newly computed KV tokens divided by native vLLM
+  prefill time;
+- **decode** is generated tokens after the first token divided by native vLLM
+  decode time; and
+- **end to end** is elapsed wall time in seconds, including both phases and any
+  scheduler waiting.
 
-Greedy byte-for-byte output is not guaranteed across sequential and concurrent
-batching. Two of four fixed prompts matched exactly; two selected different
-late-output variants, and repeated sequential baselines also changed variants.
-All requests completed without protocol corruption or cross-request mixing.
+No end-to-end duration is presented as a model token rate. Concurrent serving
+is reported as aggregate decode throughput while all requests are decoding.
+
+### Cold-cache C1 phase sweep
+
+Each point had one discarded full-shape warm-up. Values below are medians of
+five measured requests through 32K and three at 64K/128K. Prompts were exact,
+prefix-cache hits were zero and output length was forced with `ignore_eos`.
+
+| Input / output | n | Native prefill compute | Native decode | TTFT | TPOT | End to end | MTP accepted |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 512 / 128 | 5 | **1,778.48 tok/s** | **84.57 tok/s** | 0.292 s | 11.82 ms | 1.79 s | 55.6% |
+| 2,048 / 512 | 5 | **1,625.77 tok/s** | **84.24 tok/s** | 1.265 s | 11.87 ms | 7.33 s | 64.6% |
+| 4,096 / 1,024 coding | 5 | **1,527.71 tok/s** | **80.31 tok/s** | 2.690 s | 12.45 ms | 15.40 s | 63.3% |
+| 8,192 / 512 | 5 | **1,466.62 tok/s** | **80.64 tok/s** | 5.596 s | 12.40 ms | 11.94 s | 65.8% |
+| 16,384 / 512 | 5 | **1,366.89 tok/s** | **77.69 tok/s** | 12.007 s | 12.86 ms | 18.58 s | 66.5% |
+| 32,768 / 512 | 5 | **1,208.94 tok/s** | **66.17 tok/s** | 27.137 s | 15.10 ms | 34.85 s | 59.7% |
+| 65,536 / 512 | 3 | **984.03 tok/s** | **24.65 tok/s** | 66.660 s | 40.55 ms | 87.37 s | 17.3% |
+| 131,072 / 512 | 3 | **661.14 tok/s** | **56.60 tok/s** | 198.371 s | 17.63 ms | 207.37 s | 69.9% |
+
+Decode is content-sensitive because MTP acceptance is content-sensitive. The
+64K median is not a typo: one repeat decoded at 68.56 tok/s, while two decoded
+at 24.51–24.65 tok/s and pulled aggregate MTP acceptance down to 17.3%.
+Prefill stayed stable at 982.98–984.15 tok/s. Each 128K request reached 100%
+KV use and incurred one preemption; all three still completed correctly.
+
+### Concurrent request waves
+
+**Aggregate decode** is measured only after every request has emitted its first
+token and before any request completes. Its numerator is the native
+`generation_tokens_total` counter delta sampled every 250 ms. Rates use token
+and sampled-time sums across five C1 requests or three C2–C4 waves. None of the
+nine C2–C4 scenarios preempted.
+
+| Workload per request | C1 | C2 | C3 | C4 |
+|---|---:|---:|---:|---:|
+| 2K / 512 | 86.17 tok/s | 150.44 tok/s | 186.79 tok/s | **214.17 tok/s** |
+| 4K / 1K coding | 84.17 tok/s | 130.59 tok/s | 174.79 tok/s | **215.81 tok/s** |
+| 16K / 512 | 81.59 tok/s | 133.24 tok/s | 151.78 tok/s | **196.21 tok/s** |
+
+During each selected window exactly `C` requests are decoding. The C1 phase
+table above reports prefill separately; it is intentionally not mixed into this
+decode-scaling table. The 250 ms counter sampling limits boundary precision,
+but every C2–C4 result combines thousands of native generation tokens across
+three measured waves.
+
+### Prefix cache and maximum context
+
+The prefix-cache probes repeated a nominally 90%-shared prompt without an
+excluded warm-up, so repeat 1 is cold and repeats 2–3 are warm. The table shows
+what vLLM actually reused rather than claiming the nominal share.
+
+| Prompt / output | State | Cached / computed prompt tokens | TTFT | End to end |
+|---:|---|---:|---:|---:|
+| 16,384 / 512 | cold | 0 / 16,384 | 11.950 s | 19.46 s |
+| 16,384 / 512 | warm median | 6,656 / 9,728 | **7.462 s** | **14.99 s** |
+| 65,536 / 512 | cold | 0 / 65,536 | 66.569 s | 73.05 s |
+| 65,536 / 512 | warm median | 53,248 / 12,288 | **16.441 s** | **24.30 s** |
+
+The maximum-window probe used 200,448 input plus 256 output tokens, exactly the
+configured 200,704-token limit. It completed in **432.55 s**, with **427.18 s
+TTFT**, 469.45 native prefill tok/s, 47.19 native decode tok/s and 69.8% MTP
+acceptance. It reached 100% KV use and incurred four preemptions. This proves
+the boundary is reachable; it does not imply that the boundary is a
+low-latency operating point.
+
+The content-free [run record](benchmarks/runs/2026-09-22-current-profile/README.md)
+contains method, validation, ranges and machine-readable aggregates.
 
 ## Install and run
 
@@ -158,12 +219,12 @@ it. To start it at boot without an interactive login:
 sudo loginctl enable-linger "$USER"
 ```
 
-## Current coding benchmark
+## Coding workload benchmark
 
 **2026-09-19, Q128 + M04 at 180 W, Intel Runtime 26.35.39758.10 / IGC 2.41.5.**
-This coding run predates the concurrency promotion and used the earlier
-C1/batch-4096 scheduler profile; its model, kernel and agent measurements remain
-the production baseline for those dimensions.
+This workload used single-request execution with a 4,096-token scheduler
+budget. Its model, kernel and agent measurements describe the coding trajectory
+independently of the concurrent synthetic waves above.
 Pi 0.85.1 completed
 two linked tasks in a TypeScript observability dashboard: preserve configuration
 when rotating login credentials, then distinguish disabled and disconnected
@@ -235,10 +296,24 @@ The private application source and task transcript are not redistributed.
 
 ## Measure your deployment
 
-For coding measurements, use an exclusive endpoint, record native `/metrics`
-counter deltas around each completed request, and use the same client settings
-as above. Keep prefix caching enabled across agent turns and report cache hits
-separately from newly computed prefill. The published run's
+For a full current-profile qualification, first inspect the dry plan and then
+run the phase, concurrency, prefix-cache and context suite on an exclusive
+endpoint:
+
+```bash
+python3 scripts/current-profile-benchmark.py
+python3 scripts/current-profile-benchmark.py --execute
+```
+
+The runner validates the active C4/full-ISL container, refuses a busy engine,
+constructs exact-token prompts and records native phase counters, client
+latencies, scheduler transitions, MTP acceptance, card energy and content-free
+correctness evidence. Allow about one hour for the default plan.
+
+For coding-agent measurements, use an exclusive endpoint, record native
+`/metrics` counter deltas around each completed request, and use the same client
+settings as above. Keep prefix caching enabled across agent turns and report
+cache hits separately from newly computed prefill. The published run's
 [methodology and formulas](benchmarks/runs/2026-09-19-production-coding/README.md#measurement)
 explain how to aggregate by actual rendered context.
 

@@ -1,0 +1,44 @@
+{
+  "date": "2026-09-22",
+  "run_id": "run-20260922-194946-w0.00",
+  "hardware": {
+    "gpu": "Intel Arc Pro B70",
+    "vram_gb": 32,
+    "gpu_count": 1,
+    "tensor_parallel": 1,
+    "power_cap_w": 180
+  },
+  "model": {
+    "id": "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+    "revision": "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+    "served_name": "Qwen3.8-27B",
+    "target_body": "GPTQ INT4 symmetric G128",
+    "activations": "FP16",
+    "target_output_head": "FP16",
+    "draft": "INT4 head plus five INT4 MTP linears, full 248320-row vocabulary"
+  },
+  "engine": {
+    "vllm": "0.29.0+xpu",
+    "xpu_kernels": "0.1.14.1",
+    "intel_compute_runtime": "26.35.39758.10",
+    "igc": "2.41.5",
+    "container_image": "local/qwen38-b70-vllm:runtime-26.35-igc-2.41.5-20260919",
+    "container_image_id": "sha256:b675d81d4e7cc63fbcd6df395965ea16ec5c4704428c81118a1618185245dd5a"
+  },
+  "serving": {
+    "max_model_len": 200704,
+    "gpu_memory_utilization": 0.93,
+    "kv_cache_dtype": "fp8",
+    "kv_capacity_tokens": 212255,
+    "max_num_seqs": 4,
+    "max_num_batched_tokens": 6656,
+    "scheduler_reserve_full_isl": true,
+    "watermark": 0.0,
+    "prefix_caching": true,
+    "mamba_cache_mode": "align",
+    "speculative_method": "mtp",
+    "speculative_tokens": 4,
+    "attention": "Q128/KV32 prefill plus M04 shared-KV verification with native fallback",
+    "xpu_graphs": true
+  }
+}

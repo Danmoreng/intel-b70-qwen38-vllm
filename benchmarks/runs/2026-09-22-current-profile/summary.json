@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-22",
+  "run_id": "run-20260922-194946-w0.00",
+  "source_results_sha256": "8cc24643357ae130407f0ee1d40f9f8bbb4a45b1d3469d1d67a620d82a80e117",
+  "validation": {
+    "measured_waves": 70,
+    "measured_requests": 124,
+    "prompt_tokens": 1964288,
+    "completion_tokens": 77696,
+    "all_prompt_counts_exact": true,
+    "all_completion_counts_exact": true,
+    "all_outputs_nonempty": true,
+    "all_finish_reasons": "length",
+    "request_failures": 0,
+    "semantic_output_equality_claimed": false
+  },
+  "totals": {
+    "computed_prompt_tokens": 1844480,
+    "cached_prompt_tokens": 119808,
+    "mtp_draft_tokens": 93728,
+    "mtp_accepted_tokens": 54309,
+    "preemptions": 7,
+    "measured_wave_seconds": 2683.537146,
+    "card_energy_j": 483394.72797
+  },
+  "definitions": {
+    "native_prefill_compute_tps": "computed KV tokens divided by summed native request prefill seconds",
+    "native_weighted_decode_tps": "generated tokens after the first token of each request divided by summed native request decode seconds",
+    "aggregate_prefill_tps": "all prompt tokens in a wave divided by time from simultaneous release until the last request emits its first token",
+    "serving_decode_window_tps": "all post-first output tokens in a wave divided by time from the earliest first token until the final request completes",
+    "fully_overlapped_aggregate_decode_tps": "native generation-token counter delta divided by sampled wall time after every request emitted its first token and before any request completed",
+    "tpot_ms": "client time after the first generated event divided by completion tokens minus one",
+    "batch_e2e_s": "elapsed time from simultaneous release until every request in the wave completed",
+    "phase_sweep_aggregation": "median across measured repeats",
+    "concurrency_rate_aggregation": "token sums divided by matching time sums across all measured waves",
+    "latency_aggregation": "median across measured repeats unless explicitly marked cold or warm",
+    "effective_decode_concurrency": "summed native per-request decode seconds divided by aggregate decode-window seconds"
+  },
+  "phase_sweep": [
+    {"input":512,"output":128,"n":5,"prefill_tps":1778.475663,"decode_tps":84.565335,"aggregate_prefill_tps":1751.970528,"aggregate_decode_tps":84.583806,"decode_min":68.446847,"decode_max":89.334717,"ttft_s":0.292242,"tpot_ms":11.822594,"e2e_s":1.794117,"mtp_acceptance":0.55625,"preemptions":0},
+    {"input":2048,"output":512,"n":5,"prefill_tps":1625.76911,"decode_tps":84.242816,"aggregate_prefill_tps":1619.304932,"aggregate_decode_tps":84.252251,"decode_min":81.603026,"decode_max":99.000813,"ttft_s":1.26474,"tpot_ms":11.869119,"e2e_s":7.327344,"mtp_acceptance":0.646154,"preemptions":0},
+    {"input":4096,"output":1024,"n":5,"style":"coding","prefill_tps":1527.709172,"decode_tps":80.307558,"aggregate_prefill_tps":1522.931852,"aggregate_decode_tps":80.309842,"decode_min":78.123875,"decode_max":102.213041,"ttft_s":2.689549,"tpot_ms":12.451774,"e2e_s":15.401724,"mtp_acceptance":0.633184,"preemptions":0},
+    {"input":8192,"output":512,"n":5,"prefill_tps":1466.623776,"decode_tps":80.637372,"aggregate_prefill_tps":1463.835496,"aggregate_decode_tps":80.653651,"decode_min":78.048685,"decode_max":94.659922,"ttft_s":5.596257,"tpot_ms":12.398695,"e2e_s":11.939597,"mtp_acceptance":0.657578,"preemptions":0},
+    {"input":16384,"output":512,"n":5,"prefill_tps":1366.893471,"decode_tps":77.688791,"aggregate_prefill_tps":1364.526709,"aggregate_decode_tps":77.769375,"decode_min":76.76978,"decode_max":106.337672,"ttft_s":12.007094,"tpot_ms":12.858532,"e2e_s":18.584694,"mtp_acceptance":0.665242,"preemptions":0},
+    {"input":32768,"output":512,"n":5,"prefill_tps":1208.942372,"decode_tps":66.165458,"aggregate_prefill_tps":1207.489515,"aggregate_decode_tps":66.203943,"decode_min":65.756884,"decode_max":98.240189,"ttft_s":27.137296,"tpot_ms":15.104841,"e2e_s":34.849326,"mtp_acceptance":0.596892,"preemptions":0},
+    {"input":65536,"output":512,"n":3,"prefill_tps":984.033234,"decode_tps":24.653766,"aggregate_prefill_tps":983.137087,"aggregate_decode_tps":24.663826,"decode_min":24.511491,"decode_max":68.561014,"ttft_s":66.660083,"tpot_ms":40.54521,"e2e_s":87.370544,"mtp_acceptance":0.172632,"preemptions":0},
+    {"input":131072,"output":512,"n":3,"prefill_tps":661.137935,"decode_tps":56.595704,"aggregate_prefill_tps":660.740455,"aggregate_decode_tps":56.70635,"decode_min":55.826907,"decode_max":57.433779,"ttft_s":198.371386,"tpot_ms":17.634709,"e2e_s":207.373579,"mtp_acceptance":0.699383,"preemptions":3}
+  ],
+  "concurrency_sweep": [
+    {"input":2048,"output":512,"concurrency":1,"n":5,"aggregate_prefill_tps":1620.102449,"serving_decode_window_tps":86.615647,"fully_overlapped_aggregate_decode_tps":86.174038,"fully_overlapped_average_per_request_tps":86.174038,"fully_overlapped_sampled_s":28.825387,"fully_overlapped_generation_tokens":2484,"batch_e2e_s":7.327344,"mtp_acceptance":0.646154,"max_running":1,"max_waiting":0,"preemptions":0},
+    {"input":2048,"output":512,"concurrency":2,"n":3,"aggregate_prefill_tps":1513.024746,"serving_decode_window_tps":119.827659,"fully_overlapped_aggregate_decode_tps":150.437717,"fully_overlapped_average_per_request_tps":75.218859,"fully_overlapped_sampled_s":19.150782,"fully_overlapped_generation_tokens":2881,"batch_e2e_s":9.844299,"mtp_acceptance":0.650176,"max_running":2,"max_waiting":0,"preemptions":0},
+    {"input":2048,"output":512,"concurrency":3,"n":3,"aggregate_prefill_tps":1514.60396,"serving_decode_window_tps":137.487664,"fully_overlapped_aggregate_decode_tps":186.792538,"fully_overlapped_average_per_request_tps":62.264179,"fully_overlapped_sampled_s":23.469888,"fully_overlapped_generation_tokens":4384,"batch_e2e_s":12.373485,"mtp_acceptance":0.608526,"max_running":3,"max_waiting":0,"preemptions":0},
+    {"input":2048,"output":512,"concurrency":4,"n":3,"aggregate_prefill_tps":1515.881947,"serving_decode_window_tps":145.62164,"fully_overlapped_aggregate_decode_tps":214.174879,"fully_overlapped_average_per_request_tps":53.54372,"fully_overlapped_sampled_s":25.259732,"fully_overlapped_generation_tokens":5410,"batch_e2e_s":15.333955,"mtp_acceptance":0.518903,"max_running":4,"max_waiting":0,"preemptions":0},
+    {"input":4096,"output":1024,"style":"coding","concurrency":1,"n":5,"aggregate_prefill_tps":1524.992355,"serving_decode_window_tps":84.28675,"fully_overlapped_aggregate_decode_tps":84.173374,"fully_overlapped_average_per_request_tps":84.173374,"fully_overlapped_sampled_s":59.187363,"fully_overlapped_generation_tokens":4982,"batch_e2e_s":15.401724,"mtp_acceptance":0.633184,"max_running":1,"max_waiting":0,"preemptions":0},
+    {"input":4096,"output":1024,"style":"coding","concurrency":2,"n":3,"aggregate_prefill_tps":1489.062019,"serving_decode_window_tps":116.816136,"fully_overlapped_aggregate_decode_tps":130.591923,"fully_overlapped_average_per_request_tps":65.295962,"fully_overlapped_sampled_s":45.163589,"fully_overlapped_generation_tokens":5898,"batch_e2e_s":21.731855,"mtp_acceptance":0.565985,"max_running":2,"max_waiting":0,"preemptions":0},
+    {"input":4096,"output":1024,"style":"coding","concurrency":3,"n":3,"aggregate_prefill_tps":1482.432212,"serving_decode_window_tps":143.900299,"fully_overlapped_aggregate_decode_tps":174.789761,"fully_overlapped_average_per_request_tps":58.263254,"fully_overlapped_sampled_s":48.469658,"fully_overlapped_generation_tokens":8472,"batch_e2e_s":26.518893,"mtp_acceptance":0.582942,"max_running":3,"max_waiting":0,"preemptions":0},
+    {"input":4096,"output":1024,"style":"coding","concurrency":4,"n":3,"aggregate_prefill_tps":1470.304808,"serving_decode_window_tps":166.145145,"fully_overlapped_aggregate_decode_tps":215.811521,"fully_overlapped_average_per_request_tps":53.95288,"fully_overlapped_sampled_s":51.016739,"fully_overlapped_generation_tokens":11010,"batch_e2e_s":31.01922,"mtp_acceptance":0.55374,"max_running":4,"max_waiting":1,"preemptions":0},
+    {"input":16384,"output":512,"concurrency":1,"n":5,"aggregate_prefill_tps":1364.991936,"serving_decode_window_tps":81.975757,"fully_overlapped_aggregate_decode_tps":81.585408,"fully_overlapped_average_per_request_tps":81.585408,"fully_overlapped_sampled_s":30.103422,"fully_overlapped_generation_tokens":2456,"batch_e2e_s":18.584694,"mtp_acceptance":0.665242,"max_running":1,"max_waiting":0,"preemptions":0},
+    {"input":16384,"output":512,"concurrency":2,"n":3,"aggregate_prefill_tps":1346.010783,"serving_decode_window_tps":56.117041,"fully_overlapped_aggregate_decode_tps":133.238441,"fully_overlapped_average_per_request_tps":66.61922,"fully_overlapped_sampled_s":20.159347,"fully_overlapped_generation_tokens":2686,"batch_e2e_s":32.396198,"mtp_acceptance":0.672269,"max_running":2,"max_waiting":1,"preemptions":0},
+    {"input":16384,"output":512,"concurrency":3,"n":3,"aggregate_prefill_tps":1334.029548,"serving_decode_window_tps":46.878697,"fully_overlapped_aggregate_decode_tps":151.779553,"fully_overlapped_average_per_request_tps":50.593184,"fully_overlapped_sampled_s":26.5319,"fully_overlapped_generation_tokens":4027,"batch_e2e_s":47.071728,"mtp_acceptance":0.605341,"max_running":3,"max_waiting":2,"preemptions":0},
+    {"input":16384,"output":512,"concurrency":4,"n":3,"aggregate_prefill_tps":1325.24997,"serving_decode_window_tps":44.571873,"fully_overlapped_aggregate_decode_tps":196.214552,"fully_overlapped_average_per_request_tps":49.053638,"fully_overlapped_sampled_s":27.041827,"fully_overlapped_generation_tokens":5306,"batch_e2e_s":60.09209,"mtp_acceptance":0.625285,"max_running":4,"max_waiting":3,"preemptions":0}
+  ],
+  "prefix_cache": [
+    {"input":16384,"output":512,"state":"cold","cached":0,"computed":16384,"ttft_s":11.950424,"e2e_s":19.459448},
+    {"input":16384,"output":512,"state":"warm_median","n":2,"cached":6656,"computed":9728,"ttft_s":7.461988,"e2e_s":14.992578},
+    {"input":65536,"output":512,"state":"cold","cached":0,"computed":65536,"ttft_s":66.56936,"e2e_s":73.050078},
+    {"input":65536,"output":512,"state":"warm_median","n":2,"cached":53248,"computed":12288,"ttft_s":16.440512,"e2e_s":24.304613}
+  ],
+  "full_context": {
+    "input": 200448,
+    "output": 256,
+    "n": 1,
+    "prefill_tps": 469.445191,
+    "decode_tps": 47.190805,
+    "ttft_s": 427.175607,
+    "tpot_ms": 21.090297,
+    "e2e_s": 432.554716,
+    "mtp_acceptance": 0.697761,
+    "max_kv_usage": 1.0,
+    "max_running": 1,
+    "max_waiting": 1,
+    "preemptions": 4
+  }
+}

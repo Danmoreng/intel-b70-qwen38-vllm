@@ -1,0 +1,25 @@
+[
+  {"name":"phase-512-c1","group":"phase-sweep","prompt_tokens":512,"output_tokens":128,"concurrency":1,"repeats":5},
+  {"name":"phase-2k-c1","group":"phase-sweep","prompt_tokens":2048,"output_tokens":512,"concurrency":1,"repeats":5},
+  {"name":"phase-4k-c1","group":"phase-sweep","prompt_tokens":4096,"output_tokens":1024,"concurrency":1,"repeats":5,"prompt_style":"coding"},
+  {"name":"phase-8k-c1","group":"phase-sweep","prompt_tokens":8192,"output_tokens":512,"concurrency":1,"repeats":5},
+  {"name":"phase-16k-c1","group":"phase-sweep","prompt_tokens":16384,"output_tokens":512,"concurrency":1,"repeats":5},
+  {"name":"phase-32k-c1","group":"phase-sweep","prompt_tokens":32768,"output_tokens":512,"concurrency":1,"repeats":5},
+  {"name":"phase-64k-c1","group":"phase-sweep","prompt_tokens":65536,"output_tokens":512,"concurrency":1,"repeats":3},
+  {"name":"phase-128k-c1","group":"phase-sweep","prompt_tokens":131072,"output_tokens":512,"concurrency":1,"repeats":3},
+
+  {"name":"concurrency-2k-c2","group":"concurrency-sweep","prompt_tokens":2048,"output_tokens":512,"concurrency":2,"repeats":3},
+  {"name":"concurrency-2k-c3","group":"concurrency-sweep","prompt_tokens":2048,"output_tokens":512,"concurrency":3,"repeats":3},
+  {"name":"concurrency-2k-c4","group":"concurrency-sweep","prompt_tokens":2048,"output_tokens":512,"concurrency":4,"repeats":3},
+  {"name":"concurrency-4k-c2","group":"concurrency-sweep","prompt_tokens":4096,"output_tokens":1024,"concurrency":2,"repeats":3,"prompt_style":"coding"},
+  {"name":"concurrency-4k-c3","group":"concurrency-sweep","prompt_tokens":4096,"output_tokens":1024,"concurrency":3,"repeats":3,"prompt_style":"coding"},
+  {"name":"concurrency-4k-c4","group":"concurrency-sweep","prompt_tokens":4096,"output_tokens":1024,"concurrency":4,"repeats":3,"prompt_style":"coding"},
+  {"name":"concurrency-16k-c2","group":"concurrency-sweep","prompt_tokens":16384,"output_tokens":512,"concurrency":2,"repeats":3},
+  {"name":"concurrency-16k-c3","group":"concurrency-sweep","prompt_tokens":16384,"output_tokens":512,"concurrency":3,"repeats":3},
+  {"name":"concurrency-16k-c4","group":"concurrency-sweep","prompt_tokens":16384,"output_tokens":512,"concurrency":4,"repeats":3},
+
+  {"name":"prefix-16k-cold-warm","group":"prefix-cache","prompt_tokens":16384,"output_tokens":512,"concurrency":1,"repeats":3,"shared_prefix_fraction":0.9,"warmups":0},
+  {"name":"prefix-64k-cold-warm","group":"prefix-cache","prompt_tokens":65536,"output_tokens":512,"concurrency":1,"repeats":3,"shared_prefix_fraction":0.9,"warmups":0},
+
+  {"name":"full-context-200448","group":"full-context","prompt_tokens":200448,"output_tokens":256,"concurrency":1,"repeats":1,"expected_peak_running":1,"warmups":0}
+]

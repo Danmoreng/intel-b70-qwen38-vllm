@@ -25,7 +25,13 @@ docker build --pull=false \
 uses 4K/1K C1 and C4, two measured repetitions per arm and
 one full-shape warmup. All requests are greedy like the published 2026-09-22
 phase/concurrency baseline. The harness uses separate compiler caches per arm,
-requires Q128 and M04 dispatch in both, and restores production after success
-or failure. A win would still need correctness, long-context, vision, tools and
-coding qualification before promotion. The completed run is documented in
+requires Q128 and M04 dispatch when MTP is enabled, and restores production
+after success or failure. Add `--disable-mtp` to remove `--speculative-config`
+from both server arms. With MTP off, the harness instead requires zero draft
+tokens and no M04 dispatch. Q128 dispatch is recorded but not required: it
+was inactive in both versions for this no-MTP workload. A win would still need
+correctness, long-context, vision, tools and coding qualification before
+promotion. The completed MTP run is documented in
 [`../../runs/2026-09-22-vllm-030-short/README.md`](../../runs/2026-09-22-vllm-030-short/README.md).
+The no-MTP follow-up is in
+[`../../runs/2026-09-22-vllm-030-no-mtp/README.md`](../../runs/2026-09-22-vllm-030-no-mtp/README.md).

@@ -16,7 +16,6 @@ METRICS = (
     "native_weighted_decode_tokens_per_s",
     "fully_overlapped_aggregate_decode_tokens_per_s",
     "batch_wall_s",
-    "speculative_acceptance",
 )
 
 
@@ -34,10 +33,13 @@ def main() -> None:
     args = parser.parse_args()
     root = args.run_dir.resolve()
     plan = json.loads((root / "plan.json").read_text())
+    mtp_enabled = plan.get("mtp_enabled", True)
+    metrics = METRICS + (("speculative_acceptance",) if mtp_enabled else ())
     cases: dict[str, list[dict]] = {}
     runtimes = []
     versions = {}
     output_hashes = {}
+    dispatch = {}
     for arm in ARMS:
         result = read_one(str(root / arm / "benchmark" / "run-*" / "results.json"))
         rows = result["cases"]
@@ -53,8 +55,19 @@ def main() -> None:
             ):
                 raise RuntimeError(f"{arm}: failed request validation")
         log = (root / arm / "server.log").read_text()
-        if "B70_Q128_DISPATCH" not in log or "B70_M04_SHARED_KV_DISPATCH" not in log:
-            raise RuntimeError(f"{arm}: custom dispatch missing")
+        dispatch[arm] = {
+            "q128": "B70_Q128_DISPATCH" in log,
+            "m04": "B70_M04_SHARED_KV_DISPATCH" in log,
+        }
+        if mtp_enabled and not dispatch[arm]["q128"]:
+            raise RuntimeError(f"{arm}: Q128 dispatch missing")
+        if mtp_enabled != dispatch[arm]["m04"]:
+            raise RuntimeError(f"{arm}: unexpected M04 dispatch state")
+        if not mtp_enabled and any(
+            row["speculative_draft_tokens"] != 0 or row["speculative_accepted_tokens"] != 0
+            for row in rows
+        ):
+            raise RuntimeError(f"{arm}: speculative tokens observed with MTP disabled")
         cases[arm] = rows
         runtime = json.loads((root / arm / "runtime.json").read_text())
         expected_image = plan["candidate_image" if "candidate" in arm else "control_image"]
@@ -78,6 +91,8 @@ def main() -> None:
         for item in runtimes[1:]
     ):
         raise RuntimeError("server args or extra environment differ between arms")
+    if any(("--speculative-config" in item["args"]) != mtp_enabled for item in runtimes):
+        raise RuntimeError("speculative configuration differs from plan")
 
     prompt_hashes: dict[str, list[str]] = {}
     for arm in ARMS:
@@ -111,14 +126,14 @@ def main() -> None:
                     "max": max(row[key] for row in selected),
                     "values": [row[key] for row in selected],
                 }
-                for key in METRICS
+                for key in metrics
             }
         scenario_out["candidate_vs_control_pct"] = {
             key: 100 * (
                 scenario_out["candidate"][key]["mean"]
                 / scenario_out["control"][key]["mean"] - 1
             )
-            for key in METRICS
+            for key in metrics
         }
         scenarios[scenario] = scenario_out
     output = {
@@ -128,7 +143,7 @@ def main() -> None:
             "measured_waves": 16,
             "request_payloads_with_matching_prompt_hashes": len(prompt_hashes),
             "server_args_and_extra_environment_equal": True,
-            "q128_and_m04_dispatched_in_every_arm": True,
+            "custom_dispatch_by_arm": dispatch,
             "all_outputs_nonempty": True,
             "all_output_lengths_exact": True,
             "all_finish_reasons_length": True,

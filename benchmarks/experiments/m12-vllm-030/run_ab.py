@@ -35,6 +35,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--disable-mtp", action="store_true",
+                        help="remove --speculative-config from both server arms")
     args = parser.parse_args()
     if image_id(CONTROL) != CONTROL or image_id(CANDIDATE) != CANDIDATE_ID:
         parser.error("an image ID changed; review and update the frozen manifest")
@@ -48,6 +50,7 @@ def main() -> None:
         "sampling": {"temperature": 0},
         "max_num_batched_tokens": 6656,
         "max_run_minutes_before_recovery": 27,
+        "mtp_enabled": not args.disable_mtp,
     }
     print(json.dumps(plan, indent=2), flush=True)
     if not args.execute:
@@ -62,7 +65,11 @@ def main() -> None:
                     raise TimeoutError("screen budget exhausted before next arm")
                 image = CANDIDATE if arm == "candidate" else CONTROL
                 label = f"{index + 1:02d}-{arm}"
-                out = session.start(label, image, budget=6656, cache_key=arm)
+                out = session.start(
+                    label, image, budget=6656,
+                    cache_key=arm + ("-nomtp" if args.disable_mtp else "-mtp"),
+                    remove_options_with_values=("--speculative-config",) if args.disable_mtp else (),
+                )
                 versions = subprocess.check_output([
                     "docker", "exec", common.NAME, "python", "-c",
                     "import importlib.metadata as m; print(m.version('vllm')); print(m.version('vllm-xpu-kernels'))",
@@ -80,8 +87,12 @@ def main() -> None:
                     subprocess.run(cmd, stdout=output, stderr=subprocess.STDOUT,
                                    check=True, timeout=remaining)
                 log = (out / "server.log").read_text()
-                if "B70_Q128_DISPATCH" not in log or "B70_M04_SHARED_KV_DISPATCH" not in log:
-                    raise RuntimeError(f"Q128/M04 dispatch missing in {label}")
+                if not args.disable_mtp and "B70_Q128_DISPATCH" not in log:
+                    raise RuntimeError(f"Q128 dispatch missing in {label}")
+                if not args.disable_mtp and "B70_M04_SHARED_KV_DISPATCH" not in log:
+                    raise RuntimeError(f"M04 dispatch missing in {label}")
+                if args.disable_mtp and "B70_M04_SHARED_KV_DISPATCH" in log:
+                    raise RuntimeError(f"M04 unexpectedly dispatched in {label}")
                 session.stop()
     finally:
         common.recover(run_dir)

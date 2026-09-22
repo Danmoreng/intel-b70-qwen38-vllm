@@ -21,7 +21,24 @@
     "measured_waves": 16,
     "request_payloads_with_matching_prompt_hashes": 10,
     "server_args_and_extra_environment_equal": true,
-    "q128_and_m04_dispatched_in_every_arm": true,
+    "custom_dispatch_by_arm": {
+      "01-candidate": {
+        "q128": true,
+        "m04": true
+      },
+      "02-control": {
+        "q128": true,
+        "m04": true
+      },
+      "03-control": {
+        "q128": true,
+        "m04": true
+      },
+      "04-candidate": {
+        "q128": true,
+        "m04": true
+      }
+    },
     "all_outputs_nonempty": true,
     "all_output_lengths_exact": true,
     "all_finish_reasons_length": true,

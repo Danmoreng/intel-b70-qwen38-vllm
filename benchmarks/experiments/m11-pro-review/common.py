@@ -43,11 +43,14 @@ class Session:
         (self.run/'production-owned').touch()
         subprocess.run(['systemctl','--user','stop','qwen38.service'],check=True,timeout=120)
         return self
-    def start(self,label,image,*,flags=None,extra=None,budget=4096,cache_key=None):
+    def start(self,label,image,*,flags=None,extra=None,budget=4096,cache_key=None,remove_options_with_values=()):
         self.stop()
         out=self.run/label;out.mkdir(parents=True,exist_ok=True)
         args=self.production['Args'].copy()
         args[args.index('--max-num-batched-tokens')+1]=str(budget)
+        for option in remove_options_with_values:
+            at=args.index(option)
+            del args[at:at+2]
         args+=extra or []
         cmd=diag.engine_command(self.production,name=NAME,image=image,evidence=out,arguments=args)
         # Cache separation is per actual arm, retained across repeated starts.

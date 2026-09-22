@@ -43,7 +43,7 @@ class Session:
         (self.run/'production-owned').touch()
         subprocess.run(['systemctl','--user','stop','qwen38.service'],check=True,timeout=120)
         return self
-    def start(self,label,image,*,flags=None,extra=None,budget=4096):
+    def start(self,label,image,*,flags=None,extra=None,budget=4096,cache_key=None):
         self.stop()
         out=self.run/label;out.mkdir(parents=True,exist_ok=True)
         args=self.production['Args'].copy()
@@ -53,7 +53,7 @@ class Session:
         # Cache separation is per actual arm, retained across repeated starts.
         for i,a in enumerate(cmd):
             if a.endswith(':/root/.cache/vllm') or a.endswith(':/root/.triton/cache'):
-                dest=a.split(':',1)[1];p=self.run/'compiler-cache'/str((flags or {}).get('B70_FUSED_QK_ROPE_GATE','0'))/str(budget)/('vllm' if 'vllm' in dest else 'triton')
+                dest=a.split(':',1)[1];p=self.run/'compiler-cache'/str(cache_key if cache_key is not None else (flags or {}).get('B70_FUSED_QK_ROPE_GATE','0'))/str(budget)/('vllm' if 'vllm' in dest else 'triton')
                 p.mkdir(parents=True,exist_ok=True);cmd[i]=str(p)+':'+dest
         at=cmd.index(image)
         env={'VLLM_SERVER_DEV_MODE':'1','PYTHONUNBUFFERED':'1',**(flags or {})}

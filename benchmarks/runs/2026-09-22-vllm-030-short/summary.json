@@ -1,0 +1,299 @@
+{
+  "run_id": "v030-quick-20260922",
+  "plan": {
+    "control_image": "sha256:b675d81d4e7cc63fbcd6df395965ea16ec5c4704428c81118a1618185245dd5a",
+    "candidate_image": "sha256:05e0981ea0a37ed82b309dbba3157f57c9a8144aadbf2bcb8746bfed70d95016",
+    "candidate_base_digest": "sha256:fc0e112afb64e3a06fe8daff34652435822a629412f38efce8f0f67a46636b8d",
+    "order": [
+      "candidate",
+      "control",
+      "control",
+      "candidate"
+    ],
+    "scenario_file": "scenarios.json",
+    "sampling": {
+      "temperature": 0
+    },
+    "max_num_batched_tokens": 6656,
+    "max_run_minutes_before_recovery": 27
+  },
+  "validation": {
+    "measured_waves": 16,
+    "request_payloads_with_matching_prompt_hashes": 10,
+    "server_args_and_extra_environment_equal": true,
+    "q128_and_m04_dispatched_in_every_arm": true,
+    "all_outputs_nonempty": true,
+    "all_output_lengths_exact": true,
+    "all_finish_reasons_length": true,
+    "all_prefix_cache_hits_zero": true,
+    "all_preemptions_zero": true,
+    "vllm_and_xpu_kernel_versions": {
+      "01-candidate": [
+        "0.30.0+xpu",
+        "0.1.14.1"
+      ],
+      "02-control": [
+        "0.29.0+xpu",
+        "0.1.14.1"
+      ],
+      "03-control": [
+        "0.29.0+xpu",
+        "0.1.14.1"
+      ],
+      "04-candidate": [
+        "0.30.0+xpu",
+        "0.1.14.1"
+      ]
+    },
+    "output_hash_matches_between_control_repeats": 0,
+    "measured_requests_per_arm": 10
+  },
+  "scenarios": {
+    "v030-4k-c1": {
+      "candidate": {
+        "native_prefill_compute_tokens_per_s": {
+          "mean": 1532.2130616564166,
+          "min": 1522.4140585809707,
+          "max": 1539.347410809737,
+          "values": [
+            1537.9529470566652,
+            1539.347410809737,
+            1529.1378301782931,
+            1522.4140585809707
+          ]
+        },
+        "native_weighted_decode_tokens_per_s": {
+          "mean": 81.26808210444617,
+          "min": 73.84434563283514,
+          "max": 88.58189504001656,
+          "values": [
+            74.91002031881722,
+            88.58189504001656,
+            73.84434563283514,
+            87.73606742611572
+          ]
+        },
+        "fully_overlapped_aggregate_decode_tokens_per_s": {
+          "mean": 81.15547543913183,
+          "min": 73.79203134546263,
+          "max": 88.50003861032076,
+          "values": [
+            74.1904674012627,
+            88.50003861032076,
+            73.79203134546263,
+            88.13936439948128
+          ]
+        },
+        "batch_wall_s": {
+          "mean": 15.359991213250396,
+          "min": 14.215446641999733,
+          "max": 16.53809771700071,
+          "values": [
+            16.330300469000576,
+            14.215446641999733,
+            16.53809771700071,
+            14.356120025000564
+          ]
+        },
+        "speculative_acceptance": {
+          "mean": 0.5997399113140476,
+          "min": 0.5226586102719033,
+          "max": 0.674187725631769,
+          "values": [
+            0.53125,
+            0.674187725631769,
+            0.5226586102719033,
+            0.670863309352518
+          ]
+        }
+      },
+      "control": {
+        "native_prefill_compute_tokens_per_s": {
+          "mean": 1536.902171558233,
+          "min": 1533.9048592930753,
+          "max": 1540.5539653325827,
+          "values": [
+            1540.5539653325827,
+            1538.5507737120547,
+            1533.9048592930753,
+            1534.5990878952189
+          ]
+        },
+        "native_weighted_decode_tokens_per_s": {
+          "mean": 80.10024930324846,
+          "min": 73.91927153330789,
+          "max": 86.96907402782674,
+          "values": [
+            74.56641637361535,
+            84.94623527824389,
+            73.91927153330789,
+            86.96907402782674
+          ]
+        },
+        "fully_overlapped_aggregate_decode_tokens_per_s": {
+          "mean": 80.55689995659223,
+          "min": 74.30105030809001,
+          "max": 87.9680899505789,
+          "values": [
+            74.38643251944089,
+            85.57202704825913,
+            74.30105030809001,
+            87.9680899505789
+          ]
+        },
+        "batch_wall_s": {
+          "mean": 15.512654978999308,
+          "min": 14.439942569999403,
+          "max": 16.515532690998953,
+          "values": [
+            16.384070236999833,
+            14.711074417999043,
+            16.515532690998953,
+            14.439942569999403
+          ]
+        },
+        "speculative_acceptance": {
+          "mean": 0.5878950293638032,
+          "min": 0.5234138972809668,
+          "max": 0.6619217081850534,
+          "values": [
+            0.5273556231003039,
+            0.6388888888888888,
+            0.5234138972809668,
+            0.6619217081850534
+          ]
+        }
+      },
+      "candidate_vs_control_pct": {
+        "native_prefill_compute_tokens_per_s": -0.3051013908752731,
+        "native_weighted_decode_tokens_per_s": 1.45796400305378,
+        "fully_overlapped_aggregate_decode_tokens_per_s": 0.7430468189095318,
+        "batch_wall_s": -0.9841240326403433,
+        "speculative_acceptance": 2.014795390099211
+      }
+    },
+    "v030-4k-c4": {
+      "candidate": {
+        "native_prefill_compute_tokens_per_s": {
+          "mean": 480.6023461489216,
+          "min": 478.2114729375588,
+          "max": 484.18563256819533,
+          "values": [
+            484.18563256819533,
+            480.3796325395421,
+            479.63264655039006,
+            478.2114729375588
+          ]
+        },
+        "native_weighted_decode_tokens_per_s": {
+          "mean": 45.805883443651716,
+          "min": 45.35371193686959,
+          "max": 46.97680991117422,
+          "values": [
+            46.97680991117422,
+            45.35371193686959,
+            45.453545378594235,
+            45.43946654796883
+          ]
+        },
+        "fully_overlapped_aggregate_decode_tokens_per_s": {
+          "mean": 206.173973581518,
+          "min": 203.76328852260997,
+          "max": 211.5992536998184,
+          "values": [
+            211.5992536998184,
+            203.76328852260997,
+            203.83227062417464,
+            205.50108147946904
+          ]
+        },
+        "batch_wall_s": {
+          "mean": 34.7308355792502,
+          "min": 32.552335115999085,
+          "max": 35.86006645599991,
+          "values": [
+            32.552335115999085,
+            35.74238063300072,
+            34.76856011200107,
+            35.86006645599991
+          ]
+        },
+        "speculative_acceptance": {
+          "mean": 0.4931344461370473,
+          "min": 0.48127674750356636,
+          "max": 0.5203160270880361,
+          "values": [
+            0.5203160270880361,
+            0.48127674750356636,
+            0.4881123919308357,
+            0.48283261802575106
+          ]
+        }
+      },
+      "control": {
+        "native_prefill_compute_tokens_per_s": {
+          "mean": 485.4538546115691,
+          "min": 484.36290352687394,
+          "max": 486.6737550115251,
+          "values": [
+            486.6737550115251,
+            485.2292495190122,
+            485.5495103888651,
+            484.36290352687394
+          ]
+        },
+        "native_weighted_decode_tokens_per_s": {
+          "mean": 51.23497856071137,
+          "min": 50.31561538031868,
+          "max": 51.68242217052581,
+          "values": [
+            51.68242217052581,
+            51.36238284828657,
+            51.57949384371442,
+            50.31561538031868
+          ]
+        },
+        "fully_overlapped_aggregate_decode_tokens_per_s": {
+          "mean": 231.72506820118136,
+          "min": 225.89304832586342,
+          "max": 234.24885703405332,
+          "values": [
+            234.24885703405332,
+            233.74887258386806,
+            233.00949486094063,
+            225.89304832586342
+          ]
+        },
+        "batch_wall_s": {
+          "mean": 30.52914429724933,
+          "min": 30.299665459999233,
+          "max": 30.81304631799867,
+          "values": [
+            30.299665459999233,
+            30.81304631799867,
+            30.364639756999168,
+            30.639225654000256
+          ]
+        },
+        "speculative_acceptance": {
+          "mean": 0.597560857832075,
+          "min": 0.582520325203252,
+          "max": 0.6053839732888147,
+          "values": [
+            0.6053839732888147,
+            0.5990057995028998,
+            0.6033333333333334,
+            0.582520325203252
+          ]
+        }
+      },
+      "candidate_vs_control_pct": {
+        "native_prefill_compute_tokens_per_s": -0.9993758246145568,
+        "native_weighted_decode_tokens_per_s": -10.596462162322162,
+        "fully_overlapped_aggregate_decode_tokens_per_s": -11.026469780766302,
+        "batch_wall_s": 13.762885854548612,
+        "speculative_acceptance": -17.47544376883757
+      }
+    }
+  }
+}

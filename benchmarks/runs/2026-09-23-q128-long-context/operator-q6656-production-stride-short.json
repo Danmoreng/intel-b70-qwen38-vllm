@@ -1,0 +1,107 @@
+{
+  "timestamp_utc": "2026-09-23T15:15:37.410748+00:00",
+  "torch_version": "2.13.0+xpu",
+  "gpu_name": "Intel(R) Arc(TM) Pro B70 Graphics",
+  "q128_binary_sha256": "f38f23c4535407b6c3f083c5e81c89c7f704bae374571cf2e32f9da13abe0873",
+  "available_gpu_bytes_before": 2051002368,
+  "available_gpu_bytes_after_alloc": 1700159488,
+  "total_gpu_bytes": 34242297856,
+  "block_size": 1664,
+  "kv_stride": [
+    3407872,
+    2048,
+    512,
+    1
+  ],
+  "q_len": 6656,
+  "descale": 0.01,
+  "pairs": 4,
+  "kv_lengths": [
+    16384,
+    65536
+  ],
+  "rows": [
+    {
+      "kv_tokens": 16384,
+      "q_tokens": 6656,
+      "blocks_allocated": 40,
+      "blocks_used": 10,
+      "correctness": {
+        "allclose": true,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "output_max_abs": 0.037384033203125,
+        "output_rms": 0.006298740394413471
+      },
+      "timings_ms": {
+        "q128": [
+          59.243646,
+          57.635312,
+          59.300155999999994,
+          60.722552,
+          61.127187,
+          60.924583,
+          60.696614,
+          61.786823
+        ],
+        "native": [
+          60.612448,
+          61.963176999999995,
+          64.368073,
+          66.02192699999999,
+          66.653021,
+          66.399479,
+          66.447032,
+          67.11979099999999
+        ]
+      },
+      "median_ms": {
+        "q128": 60.709582999999995,
+        "native": 66.210703
+      },
+      "q128_speedup_percent": 9.061370097040534
+    },
+    {
+      "kv_tokens": 65536,
+      "q_tokens": 6656,
+      "blocks_allocated": 40,
+      "blocks_used": 40,
+      "correctness": {
+        "allclose": true,
+        "finite": true,
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "output_max_abs": 0.0142974853515625,
+        "output_rms": 0.002847484778612852
+      },
+      "timings_ms": {
+        "q128": [
+          256.7525,
+          286.870052,
+          288.581979,
+          294.744375,
+          287.71948,
+          286.954688,
+          288.494739,
+          294.164479
+        ],
+        "native": [
+          307.048906,
+          306.148646,
+          315.490261,
+          316.58687499999996,
+          315.37026,
+          308.41531299999997,
+          315.530625,
+          317.54276
+        ]
+      },
+      "median_ms": {
+        "q128": 288.1071095,
+        "native": 315.4302605
+      },
+      "q128_speedup_percent": 9.483678152690644
+    }
+  ]
+}

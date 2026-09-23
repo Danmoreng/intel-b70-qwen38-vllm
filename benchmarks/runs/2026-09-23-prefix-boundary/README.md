@@ -59,3 +59,29 @@ older [read-side drop proposal](https://github.com/vllm-project/vllm/pull/48375)
 predates that path. This spot check supports keeping the upstream v0.30
 behavior, while a five-question check cannot prove equivalence for every
 possible request or long-context state layout.
+
+## 160K → 190K retention extension
+
+The remaining long-context retention case was measured on the production
+v0.30 image with one exact 160,000-token prompt and a 190,000-token extension.
+The extension's first 160,000 token IDs matched the original prompt exactly.
+After the warm extension, the unchanged service was restarted so an identical
+190K request could run with a cold cache. All requests used MTP4, greedy seed
+38 and a 32-token output budget.
+
+| Request | Computed tokens | Cached tokens | TTFT | Peak KV usage | Preemptions |
+|---|---:|---:|---:|---:|---:|
+| Cold 160K prefix | 160,000 | 0 | 253.91 s | 80.82% | 0 |
+| Warm 190K extension | 31,920 | 158,080 | 87.82 s | 93.15% | 0 |
+| Cold 190K replay | 190,000 | 0 | 338.87 s | 93.15% | 0 |
+
+The warm and cold 190K outputs had identical SHA-256 hashes and equal 32-token
+usage; both drafted 32 and accepted 24 MTP tokens. Warm reuse reduced TTFT by
+251.05 s (74.1%) on this one prompt. This validates useful long-prefix reuse
+and detects no Mamba-state divergence in the measured continuation. It is one
+seeded synthetic case, not a general correctness proof. The exposed metrics do
+not count occupied Mamba-state blocks separately; KV usage and preemptions were
+observed instead. No new patch is indicated by this long-retention result.
+
+Evidence: [`long-retention-v030.json`](long-retention-v030.json); runner:
+[`long_retention.py`](../../experiments/m16-prefix-mamba/long_retention.py).

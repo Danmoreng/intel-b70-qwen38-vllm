@@ -44,18 +44,16 @@ def main():
     available_before, total = torch.xpu.mem_get_info()
     max_blocks = (max(args.kv_lengths) + BLOCK - 1) // BLOCK
     q = torch.randn((args.q_len, HEADS_Q, DIM), device="xpu", dtype=torch.float16)
-    k = torch.empty((max_blocks, BLOCK, HEADS_KV, DIM), device="xpu",
-                    dtype=torch.float8_e4m3fn)
-    v = torch.empty_like(k)
+    kv = torch.empty((max_blocks, BLOCK, HEADS_KV, 2, DIM), device="xpu",
+                     dtype=torch.float8_e4m3fn)
     for offset in range(0, max_blocks, 8):
         count = min(8, max_blocks - offset)
-        shape = (count, BLOCK, HEADS_KV, DIM)
-        k[offset:offset + count].copy_(
+        shape = (count, BLOCK, HEADS_KV, 2, DIM)
+        kv[offset:offset + count].copy_(
             (torch.randn(shape, device="xpu", dtype=torch.float16) * 60).to(torch.float8_e4m3fn)
         )
-        v[offset:offset + count].copy_(
-            (torch.randn(shape, device="xpu", dtype=torch.float16) * 60).to(torch.float8_e4m3fn)
-        )
+    k, v = kv[:, :, :, 0, :], kv[:, :, :, 1, :]
+    assert k.stride() == v.stride() == (3407872, 2048, 512, 1)
     block_table = torch.arange(max_blocks, device="xpu", dtype=torch.int32).reshape(1, -1)
     cu_q = torch.tensor([0, args.q_len], device="xpu", dtype=torch.int32)
     used_k = torch.tensor([0], device="xpu", dtype=torch.int32)
@@ -134,6 +132,7 @@ def main():
         "available_gpu_bytes_after_alloc": available_after,
         "total_gpu_bytes": total,
         "block_size": BLOCK,
+        "kv_stride": list(k.stride()),
         "q_len": args.q_len,
         "descale": args.descale,
         "pairs": args.pairs,

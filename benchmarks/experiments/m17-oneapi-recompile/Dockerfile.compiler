@@ -1,0 +1,18 @@
+ARG BASE_IMAGE=local/qwen38-b70-vllm:vllm-0.30.0-20260923
+FROM ${BASE_IMAGE}
+
+USER root
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+ && apt-get -y -f install \
+ && apt-get install -y --no-install-recommends ca-certificates curl gnupg \
+ && curl -fsSL https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
+      | gpg --dearmor -o /usr/share/keyrings/oneapi-archive-keyring.gpg \
+ && echo 'deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main' \
+      > /etc/apt/sources.list.d/oneapi.list \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends \
+      intel-oneapi-compiler-dpcpp-cpp-2026.1=2026.1.1-325 \
+ && /opt/intel/oneapi/compiler/2026.1/bin/icpx --version \
+ && rm -rf /var/lib/apt/lists/*

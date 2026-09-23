@@ -3,7 +3,7 @@
 Measured 2026-09-23 on the running Intel Arc Pro B70 production container
 `local/qwen38-b70-vllm:vllm-0.30.0-20260923` (image SHA-256
 `cd6562f03c8328fe60ca69269d0e4175a284859e56525950fbfc021be19d73f3`).
-No service restart or configuration change was made. The Q128 binary SHA-256
+The serving run made no service or configuration change. The Q128 binary SHA-256
 was `f38f23c4535407b6c3f083c5e81c89c7f704bae374571cf2e32f9da13abe0873`.
 
 ## Isolated attention operators
@@ -13,34 +13,28 @@ called the production Q128 binary and the native `vllm-xpu-kernels` attention
 function on the same FP16 queries and randomly quantized FP8 K/V. Both received
 the same causal, block-table and descale arguments. Each shape had three warmups
 per arm and eight device-event timings per arm in alternating ABBA/BAAB order.
-The output tensors were finite and exactly equal at every measured shape;
-the outputs were nonzero. Timings are medians in milliseconds. The percentage
-is `(native / Q128 - 1) × 100`, so positive values favor Q128.
+The corrected sweep uses the production interleaved K/V stride
+`(3407872, 2048, 512, 1)`. The output tensors were finite, nonzero and exactly
+equal at every corrected shape. Timings are medians in milliseconds. The
+percentage is `(native / Q128 - 1) × 100`, so positive values favor Q128.
 
 | New Q tokens | KV tokens | Q128 ms | Native ms | Q128 advantage | Paired wins |
 |---:|---:|---:|---:|---:|---:|
-| 512 | 16K | 6.49 | 6.73 | 3.8% | 8/8 |
-| 512 | 64K | 27.81 | 29.34 | 5.5% | 7/8 |
-| 512 | 128K | 53.63 | 59.04 | 10.1% | 7/8 |
-| 512 | 192K | 80.91 | 88.66 | 9.6% | 7/8 |
-| 4,096 | 16K | 43.42 | 42.76 | -1.5% | 2/8 |
-| 4,096 | 64K | 192.68 | 198.29 | 2.9% | 8/8 |
-| 4,096 | 128K | 397.15 | 398.96 | 0.5% | 3/8 |
-| 4,096 | 192K | 584.17 | 598.53 | 2.5% | 4/8 |
-| 6,656 | 16K | 59.88 | 65.83 | 9.9% | 8/8 |
-| 6,656 | 64K | 287.62 | 315.37 | 9.6% | 8/8 |
-| 6,656 | 128K | 600.47 | 643.79 | 7.2% | 8/8 |
-| 6,656 | 192K | 922.27 | 974.58 | 5.7% | 8/8 |
+| 6,656 | 16K | 60.71 | 66.21 | 9.1% | 8/8 |
+| 6,656 | 64K | 288.11 | 315.43 | 9.5% | 8/8 |
+| 6,656 | 128K | 599.38 | 643.80 | 7.4% | 8/8 |
+| 6,656 | 192K | 918.02 | 972.96 | 6.0% | 8/8 |
 
-Raw device-event samples, tensor checks, GPU memory availability and software
-versions are in [`operator-q512.json`](operator-q512.json),
-[`operator-q4096.json`](operator-q4096.json),
-[`operator-q6656-short.json`](operator-q6656-short.json) and
-[`operator-q6656.json`](operator-q6656.json). At the actual 6,656-token
-production chunk size, Q128's added time from 64K to 128K was 313 ms and from
-128K to 192K was 322 ms: near-linear growth, without a new 128K/192K cliff.
-The 4,096-token arm has appreciable run-to-run variation; its small differences
-at 128K/192K are inconclusive.
+Corrected raw device-event samples and tensor checks are in
+[`operator-q6656-production-stride-short.json`](operator-q6656-production-stride-short.json)
+and [`operator-q6656-production-stride.json`](operator-q6656-production-stride.json).
+Q128's added time from 64K to 128K was 311 ms and from 128K to 192K was
+319 ms: near-linear growth, without a new 128K/192K cliff. The earlier
+[`q512`](operator-q512.json), [`q4096`](operator-q4096.json),
+[`q6656-short`](operator-q6656-short.json) and
+[`q6656`](operator-q6656.json) raw files used separate contiguous K/V allocations,
+which do not match the production stride. They are retained as superseded
+exploratory data and must not be used for production performance claims.
 
 ## One real 192K serving request
 

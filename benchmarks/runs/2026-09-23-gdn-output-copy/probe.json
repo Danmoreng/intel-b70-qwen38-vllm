@@ -1,0 +1,363 @@
+{
+  "scope": "synthetic GDN output region with production dimensions and dense stand-in projection",
+  "shape": {
+    "tokens": 4,
+    "heads": 48,
+    "head_dim": 128,
+    "hidden_size": 5120
+  },
+  "torch_version": "2.13.0+xpu",
+  "output_allclose": true,
+  "rows": {
+    "eager": {
+      "samples_ms": {
+        "current": [
+          0.30791599999999997,
+          0.302343,
+          0.32140599999999997,
+          0.31130199999999997,
+          0.347396,
+          0.306094,
+          0.304479,
+          0.30578099999999997,
+          0.303438,
+          0.300989,
+          0.302865,
+          0.306041,
+          0.3,
+          0.298125,
+          0.300208,
+          0.30463599999999996
+        ],
+        "proposed": [
+          0.28974,
+          0.290312,
+          0.305156,
+          0.300886,
+          0.298906,
+          0.296406,
+          0.295,
+          0.439687,
+          0.297031,
+          0.322083,
+          0.28973899999999997,
+          0.29109399999999996,
+          0.29151,
+          0.290313,
+          0.37182299999999996,
+          0.293386
+        ]
+      },
+      "median_ms": {
+        "current": 0.3045575,
+        "proposed": 0.295703
+      },
+      "traces": {
+        "current": {
+          "kernel_count": 65,
+          "kernel_names": [
+            "at::native::xpu::ElementwiseGlobalRangeKernel<at::native::xpu::LegacyKernelScalarFunctor<float, 3, OffsetCalculator<3, unsigned int, false>, at::native::xpu::BinaryFunctor<float, float, float, at::native::xpu::MulFunctor<float> > > >",
+            "at::native::xpu::ReduceKernel<1, at::native::xpu::ReduceOp<float, at::native::xpu::MeanOps<float, float, float, float>, unsigned int, float, 4> >",
+            "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+            "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+            "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<float, float, float, at::native::xpu::AddFunctor<float> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+            "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BinaryFunctor<float, float, float, at::native::xpu::MulFunctor<float> >, at::detail::Array<char*, 3>, OffsetCalculator<2, unsigned int, false> >",
+            "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BinaryFunctor<float, float, float, at::native::xpu::MulFunctor<float> >, at::detail::Array<char*, 3>, TrivialOffsetCalculator<2, unsigned int> >",
+            "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::PowImplUnaryFunctor1<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+            "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::RsqrtFunctor<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+            "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::SiluFunctor<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+            "gemm_kernel"
+          ],
+          "copy_like_kernels": [
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 8.437
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 2.395
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 7.187
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 8.333
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 8.02
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 2.291
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 7.187
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 7.812
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 8.437
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 2.291
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 6.979
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 8.437
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 8.333
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 2.187
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 6.979
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 8.229
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 8.125
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 2.395
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 6.979
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 8.229
+            }
+          ],
+          "trace_file": "/tmp/gdn_probe-eager-current.trace.json"
+        },
+        "proposed": {
+          "kernel_count": 65,
+          "kernel_names": [
+            "at::native::xpu::ElementwiseGlobalRangeKernel<at::native::xpu::LegacyKernelScalarFunctor<float, 3, OffsetCalculator<3, unsigned int, false>, at::native::xpu::BinaryFunctor<float, float, float, at::native::xpu::MulFunctor<float> > > >",
+            "at::native::xpu::ReduceKernel<1, at::native::xpu::ReduceOp<float, at::native::xpu::MeanOps<float, float, float, float>, unsigned int, float, 4> >",
+            "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+            "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+            "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<float, float, float, at::native::xpu::AddFunctor<float> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+            "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BinaryFunctor<float, float, float, at::native::xpu::MulFunctor<float> >, at::detail::Array<char*, 3>, OffsetCalculator<2, unsigned int, false> >",
+            "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BinaryFunctor<float, float, float, at::native::xpu::MulFunctor<float> >, at::detail::Array<char*, 3>, TrivialOffsetCalculator<2, unsigned int> >",
+            "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::PowImplUnaryFunctor1<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+            "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::RsqrtFunctor<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+            "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::SiluFunctor<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+            "gemm_kernel"
+          ],
+          "copy_like_kernels": [
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 4.687
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 1.145
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 3.645
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 5.0
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 4.687
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 1.145
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 3.645
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 5.0
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 4.687
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 1.145
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 3.541
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 4.895
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 4.791
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 1.145
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 3.645
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 4.895
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 4.791
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 1.145
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 3.541
+            },
+            {
+              "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<float>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+              "duration_us": 5.0
+            }
+          ],
+          "trace_file": "/tmp/gdn_probe-eager-proposed.trace.json"
+        }
+      }
+    },
+    "compiled": {
+      "samples_ms": {
+        "current": [
+          0.221302,
+          0.21994799999999998,
+          0.220104,
+          0.226823,
+          0.22494799999999998,
+          0.230625,
+          0.224219,
+          0.22494699999999998,
+          0.222292,
+          0.22286399999999998,
+          0.21994799999999998,
+          0.22109299999999998,
+          0.221719,
+          0.221302,
+          0.22281199999999998,
+          0.22151099999999999
+        ],
+        "proposed": [
+          0.256667,
+          0.221406,
+          0.220573,
+          0.22755199999999998,
+          0.223489,
+          0.224427,
+          0.223854,
+          0.221458,
+          0.222188,
+          0.222083,
+          0.221875,
+          0.22953199999999999,
+          0.22224,
+          0.220105,
+          0.22150999999999998,
+          0.221718
+        ]
+      },
+      "median_ms": {
+        "current": 0.2220055,
+        "proposed": 0.22213549999999999
+      },
+      "traces": {
+        "current": {
+          "kernel_count": 10,
+          "kernel_names": [
+            "gemm_kernel",
+            "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_silu_view_0"
+          ],
+          "copy_like_kernels": [
+            {
+              "name": "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_silu_view_0",
+              "duration_us": 2.812
+            },
+            {
+              "name": "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_silu_view_0",
+              "duration_us": 2.5
+            },
+            {
+              "name": "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_silu_view_0",
+              "duration_us": 2.708
+            },
+            {
+              "name": "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_silu_view_0",
+              "duration_us": 2.5
+            },
+            {
+              "name": "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_silu_view_0",
+              "duration_us": 2.604
+            }
+          ],
+          "trace_file": "/tmp/gdn_probe-compiled-current.trace.json"
+        },
+        "proposed": {
+          "kernel_count": 10,
+          "kernel_names": [
+            "gemm_kernel",
+            "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_silu_0"
+          ],
+          "copy_like_kernels": [
+            {
+              "name": "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_silu_0",
+              "duration_us": 2.708
+            },
+            {
+              "name": "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_silu_0",
+              "duration_us": 2.708
+            },
+            {
+              "name": "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_silu_0",
+              "duration_us": 2.604
+            },
+            {
+              "name": "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_silu_0",
+              "duration_us": 2.395
+            },
+            {
+              "name": "triton_per_fused__to_copy_add_mean_mul_pow_rsqrt_silu_0",
+              "duration_us": 2.604
+            }
+          ],
+          "trace_file": "/tmp/gdn_probe-compiled-proposed.trace.json"
+        }
+      }
+    }
+  }
+}

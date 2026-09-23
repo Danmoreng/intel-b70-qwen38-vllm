@@ -320,7 +320,7 @@ def run_once(
             sources, scenario.prompt_tokens, marker,
             lambda content: token_count(base, content),
             scenario.shared_prefix_fraction,
-            namespace,
+            f"{namespace}-{scenario.name}" if scenario.shared_prefix_fraction == 1.0 else namespace,
         )
         prompts.append((prompt, actual, marker, included))
 

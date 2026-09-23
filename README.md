@@ -2,22 +2,11 @@
 
 A deployment recipe for **one 32 GB Intel Arc Pro B70 at 180 W**, with
 **Q128/KV32 prefill + M04 shared-KV MTP verification**, a **200,704-token**
-context, vision, tool calling and automatic prefix caching. This is the
-current production configuration, promoted with vLLM **0.30.0** on
-**2026-09-23**. The current performance table below uses sampled reviews of
-frozen source files on vLLM **0.30.0**. The older vLLM 0.29 synthetic phase
-sweep is preserved in its [historical run](benchmarks/runs/2026-09-22-current-profile/README.md).
-
-With four concurrent source-review requests, fully overlapped aggregate decode
-reached **185.2 tok/s at 4K/1K** and **166.7 tok/s at 16K/1K**. At 64K/1K C1,
-median native decode was **54.1 tok/s** with **48.6%** weighted MTP acceptance.
-
-An earlier real coding-agent benchmark on vLLM 0.29 took **41 min 38 s** and
-averaged **56.77 decode tok/s**, **604.00 newly computed prefill tok/s** and
-**94.16% prefix-cache hits** across 119 model requests, with input context
-growing to 145,729 tokens. That adaptive agent run is a separate workload.
-The current scheduler permits up to four active sequences and dynamically
-queues requests as KV capacity tightens.
+context, vision, tool calling and automatic prefix caching. The current
+production configuration uses vLLM **0.30.0** and XPU kernels **0.1.15.4**.
+The scheduler permits up to four active sequences and dynamically queues
+requests as KV capacity tightens. The benchmark below measures this
+configuration with sampled reviews of frozen source files.
 
 ## Current configuration
 
@@ -58,80 +47,69 @@ sets `B70_MTP_BF16_DRAFT=1`, `B70_DRAFT_LMHEAD_INT4=1`,
 The BF16-draft flag selects the model's draft-loading path; the two INT4 flags
 then convert the listed draft layers.
 
-The v0.30.0 image keeps the production Q128/M04 binaries and Intel userspace.
-The previous local EAGLE/Mamba-drop patch is omitted because it suppressed all
-prefix reuse on this release; v0.30 already moves the written Mamba checkpoint
-to the EAGLE replay boundary. See the
-[paired boundary check](benchmarks/runs/2026-09-23-prefix-boundary/README.md)
-and [seeded Wikipedia MTP A/B](benchmarks/runs/2026-09-23-wikipedia-mtp/README.md).
+The v0.30.0 image includes the Q128/M04 binaries and Intel userspace above.
+It uses vLLM's Mamba cache alignment for prefix reuse during EAGLE replay.
 
-## Current sampled source-review profile: vLLM 0.30
+## Current source-review benchmark
 
 Measured on 2026-09-23 with the production vLLM 0.30.0 image, Q128/M04,
-MTP4, FP8 KV and a verified 180 W card cap. The [frozen public corpus](benchmarks/meaningful-corpus.json)
-provides complete code and documentation files with concrete review and test
-tasks. Sampling used temperature 1.0, top-p 0.95, top-k 20 and pinned seeds;
-thinking was disabled for this fixed-length serving screen. Every request
-produced exactly 1,024 tokens with `ignore_eos=true`. The short run covered
-33 waves and 51 successful requests in **28 min 05 s**. The [run report](benchmarks/runs/2026-09-23-meaningful-source/README.md)
-and [machine-readable summary](benchmarks/runs/2026-09-23-meaningful-source/summary.json)
-contain the exact method, actual token ranges and individual-wave ranges.
+MTP4, FP8 KV and a verified 180 W card cap. The
+[frozen public corpus](benchmarks/meaningful-corpus.json) supplies complete
+code and documentation files for source-review tasks. Sampling used
+temperature 1.0, top-p 0.95, top-k 20 and pinned seeds; thinking was disabled
+for this fixed-length serving screen. Every request produced exactly 1,024
+tokens with `ignore_eos=true`. The complete run covered **20 scenarios, 70
+waves and 124 successful requests** in **75.7 minutes**. See the
+[full run report](benchmarks/runs/2026-09-23-meaningful-full/README.md) and
+[machine-readable summary](benchmarks/runs/2026-09-23-meaningful-full/summary.json).
 
-The C1 table gives medians across three source-review tasks per point, except
-128K with two. Input values are token budgets; actual prompts stayed just
-below them. Prefill is newly computed KV tokens per native prefill second;
-decode is generated tokens after the first per native decode second. MTP
-acceptance is accepted draft tokens divided by drafted tokens across the
-point's requests. TTFT and end-to-end time are client wall measurements.
+### Cold C1 context sweep
 
-| Input budget / output | n | Prefill tok/s | Decode tok/s | MTP accepted | TTFT | End to end |
-|---:|---:|---:|---:|---:|---:|---:|
-| 512 / 1,024 | 3 | 1,725.6 | 74.7 | 49.2% | 0.30 s | 13.98 s |
-| 2,048 / 1,024 | 3 | 1,600.7 | 69.4 | 47.8% | 1.28 s | 16.03 s |
-| 4,096 / 1,024 | 3 | 1,501.4 | 72.5 | 53.1% | 2.74 s | 16.85 s |
-| 8,192 / 1,024 | 3 | 1,416.0 | 64.0 | 44.7% | 5.79 s | 21.82 s |
-| 16,384 / 1,024 | 3 | 1,312.8 | 65.6 | 49.3% | 12.49 s | 28.08 s |
-| 32,768 / 1,024 | 3 | 1,158.1 | 62.6 | 48.2% | 28.30 s | 44.64 s |
-| 65,536 / 1,024 | 3 | 940.6 | 54.1 | 48.6% | 69.74 s | 88.64 s |
-| 131,072 / 1,024 | 2 | 681.4 | 42.9 | 47.4% | 192.48 s | 216.35 s |
+Input values are token budgets; actual prompts stayed at or just below them.
+Prefill counts newly computed KV tokens per native prefill second. Decode
+counts generated tokens after the first per native decode second. MTP
+acceptance is accepted draft tokens divided by drafted tokens. Rates and
+latencies are medians across waves; acceptance is weighted across drafted
+tokens.
 
-The three 64K tasks had **46.8–50.0% MTP acceptance** and **52.3–54.7
-native decode tok/s**. The former 17.3% at 64K came from a repeated-`x`
-greedy prompt on vLLM 0.29. Prompt, sampling, output length and engine version
-changed, so the two runs cannot measure a version speedup or regression.
-There were no preemptions in the new sweep, including at 128K.
+| Input budget / output | Waves | Actual input | Prefill tok/s | Decode tok/s | MTP accepted | TTFT | End to end |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 512 / 1,024 | 5 | 479–507 | 1,739.2 | 71.8 | 46.1% | 0.29 s | 14.54 s |
+| 2,048 / 1,024 | 5 | 1,992–2,047 | 1,541.6 | 68.4 | 49.0% | 1.30 s | 16.29 s |
+| 4,096 / 1,024 | 5 | 4,052–4,094 | 1,480.9 | 67.6 | 47.5% | 2.76 s | 17.94 s |
+| 8,192 / 1,024 | 5 | 8,167–8,186 | 1,414.7 | 64.1 | 45.6% | 5.80 s | 21.80 s |
+| 16,384 / 1,024 | 5 | 16,335–16,379 | 1,311.0 | 65.7 | 50.3% | 12.51 s | 28.06 s |
+| 32,768 / 1,024 | 5 | 32,704–32,762 | 1,157.3 | 59.6 | 49.1% | 28.33 s | 45.49 s |
+| 65,536 / 1,024 | 3 | 65,491–65,532 | 939.9 | 54.7 | 48.7% | 69.79 s | 88.48 s |
+| 131,072 / 1,024 | 3 | 131,034–131,070 | 680.4 | 46.0 | 52.8% | 192.80 s | 215.01 s |
 
 ### Concurrent source-review requests
 
-The table uses aggregate decode only while every request has emitted its
-first token and none has finished. The generation counter was sampled every
-250 ms; C2–C4 rates combine two waves each. C1 values come from the sweep
-above. The tasks vary between load levels, so these are serving-load points,
-not paired scaling measurements.
+The table gives native aggregate decode during intervals when all requests
+were producing output. C1 comes from the context sweep; C2–C4 use three waves
+each. These are distinct serving-load points with different tasks, not paired
+scaling comparisons.
 
 | Input / output per request | C1 | C2 | C3 | C4 |
 |---|---:|---:|---:|---:|
-| 4K / 1,024 | 73.5 tok/s | 110.5 tok/s | 146.9 tok/s | **185.2 tok/s** |
-| 16K / 1,024 | 65.7 tok/s | — | — | **166.7 tok/s** |
+| 2,048 / 1,024 | 69.9 tok/s | 119.1 tok/s | 159.2 tok/s | 204.7 tok/s |
+| 4,096 / 1,024 | 67.8 tok/s | 115.3 tok/s | 155.2 tok/s | 189.8 tok/s |
+| 16,384 / 1,024 | 66.4 tok/s | 101.0 tok/s | 127.2 tok/s | 165.9 tok/s |
 
-At 4K/C4 the median batch end-to-end time was **34.75 s**; at 16K/C4 it
-was **76.58 s**. The scheduler briefly had one and two waiting requests,
-respectively, but neither scenario preempted.
+### Prefix reuse and maximum context
 
-### Prefix-cache resend
+| Scenario | Result |
+|---|---:|
+| 16K exact resend | 13,312 / 16,382 prompt tokens reused; TTFT 12.51 s cold → 2.51 s warm |
+| 64K exact resend | 63,232 / 65,476 prompt tokens reused; TTFT 69.73 s cold → 3.36 s warm |
+| Maximum context | 199,673 input + 1,024 output; 526.3 prefill and 32.0 decode tok/s |
 
-An exact 16,383-token source prompt was sent twice with the same run-specific
-namespace. The first request computed all tokens; the second reused 13,312.
+The 64K resend was repeated in isolation because the first 64K request in
+the full suite had reused a prefix from the 16K case. The table uses the
+isolated cold/warm measurements.
 
-| State | Cached / computed prompt tokens | TTFT | End to end |
-|---|---:|---:|---:|
-| Cold | 0 / 16,383 | 12.54 s | 29.69 s |
-| Warm | 13,312 / 3,071 | 2.53 s | 18.65 s |
-
-The [historical vLLM 0.29 synthetic profile](benchmarks/runs/2026-09-22-current-profile/README.md)
-and its [summary](benchmarks/runs/2026-09-22-current-profile/summary.json)
-remain available. The current source-review run does not replace the separate
-real-agent coding benchmark or the maximum-context capacity test.
+All requests matched their expected token counts and finished at the output
+cap. The run recorded 0 preemptions and 0 excess recomputed prefill tokens.
 
 ## Install and run
 
@@ -212,7 +190,12 @@ it. To start it at boot without an interactive login:
 sudo loginctl enable-linger "$USER"
 ```
 
-## Coding workload benchmark
+## Coding workload benchmark (vLLM 0.29 profile)
+
+This is the only retained measurement from a slightly older engine profile.
+It captures a complete adaptive coding session with growing context and prefix
+reuse. Its rates are specific to vLLM 0.29 and should not be read as a
+measurement of the current vLLM 0.30 serving configuration.
 
 **2026-09-19, Q128 + M04 at 180 W, Intel Runtime 26.35.39758.10 / IGC 2.41.5.**
 This workload used single-request execution with a 4,096-token scheduler
@@ -289,17 +272,9 @@ The private application source and task transcript are not redistributed.
 
 ## Measure your deployment
 
-To repeat the roughly 30-minute source-review screen shown above on an
-exclusive engine:
-
-```bash
-python3 scripts/current-profile-benchmark.py \
-  --scenarios benchmarks/meaningful-short-scenarios.json --execute
-```
-
-For a full current-profile qualification, first inspect the dry plan and then
-run the phase, concurrency, prefix-cache and context suite on an exclusive
-endpoint:
+Run the complete current-profile suite on an exclusive engine. Inspect the dry
+plan first, then execute all phase, concurrency, prefix-cache and
+maximum-context scenarios:
 
 ```bash
 python3 scripts/current-profile-benchmark.py
@@ -311,20 +286,18 @@ constructs prompts from a [frozen public source corpus](benchmarks/meaningful-be
 and records native phase counters, client latencies, scheduler transitions,
 MTP acceptance, card energy, prompt hashes and locally inspectable answers.
 It uses the production coding sampler (temperature 1, top-p 0.95, top-k 20)
-with thinking disabled for the short fixed-cap requests. Source files are not
+with thinking disabled for the fixed-length requests. Source files are not
 padded to an exact token count: each record contains its actual prompt and
 completion counts. Outputs are forced to 1,024 tokens with `ignore_eos=true`.
-The full plan takes much longer than a short A/B test; use
-`--only` to select a few scenarios.
+Use `--only` to select scenarios when diagnosing a specific load point.
 
-For coding-agent measurements, use an exclusive endpoint, record native
-`/metrics` counter deltas around each completed request, and use the agent's
-documented sampling and reasoning settings. Keep prefix caching enabled across
-agent turns and report cache hits separately from newly computed prefill. The published run's
-[methodology and formulas](benchmarks/runs/2026-09-19-production-coding/README.md#measurement)
-explain how to aggregate by actual rendered context.
+For adaptive coding-agent measurements, use an exclusive endpoint, record
+native `/metrics` counter deltas around each completed request, and use the
+agent's documented sampling and reasoning settings. Keep prefix caching
+enabled across agent turns and report cache hits separately from newly
+computed prefill.
 
-An additional short cold-cache source-review sweep is available:
+An additional cold-cache source-review sweep is available:
 
 ```bash
 ./scripts/run-context-benchmark.sh benchmark-results/my-host
@@ -334,8 +307,7 @@ It generates frozen source-review prompts under token budgets of 512, 8,192,
 32,768 and 65,536, performs a full-shape warm-up and two measured requests per
 point, then saves generated text, client timings and native counters. Answers
 are forced to 1,024 tokens. The script checks for competing requests and
-requires zero prefix hits. This is a separate workload from the coding result
-above.
+requires zero prefix hits.
 
 ## Pinned build contents
 
@@ -359,10 +331,6 @@ The prebuilt attention libraries are bound to this exact vLLM/XPU ABI. Keep
 the pins to reproduce the profile; changing the base, model or kernels needs
 fresh validation. The build uses the deployed attention artifacts; a rebuild's
 Docker image ID can differ from the measured image ID recorded with the result.
-The [earlier build verification](benchmarks/runs/2026-09-19-production-coding/build-verification.json)
-records the vLLM 0.29 recipe build and production smoke checks. The
-[XPU kernel A/B and qualification](benchmarks/runs/2026-09-23-xpu-kernels-0115/README.md)
-records the 0.30 wheel update; it showed no stable performance gain.
 
 ## Sources and acknowledgements
 

@@ -9,7 +9,7 @@ if [[ -f "$repo_dir/.env" ]]; then
   set +a
 fi
 
-image="${VLLM_IMAGE:-local/b70-qwen38-vllm:q128-m04-196k-180w-runtime2635}"
+image="${VLLM_IMAGE:-local/b70-qwen38-vllm:vllm-0.30.0-xpu-kernels-0.1.15.4}"
 model="${MODEL_ID:-mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16}"
 revision="${MODEL_REVISION:-a47b0c6f0d756bc394c4cc629d5b0ded1acc7001}"
 served_name="${SERVED_MODEL_NAME:-Qwen3.8-27B}"

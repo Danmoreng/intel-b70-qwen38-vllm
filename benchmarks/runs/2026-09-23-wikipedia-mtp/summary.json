@@ -1,0 +1,866 @@
+{
+  "run_id": "wiki-mtp-ab-20260923",
+  "plan": {
+    "control_image": "sha256:b675d81d4e7cc63fbcd6df395965ea16ec5c4704428c81118a1618185245dd5a",
+    "candidate_image": "sha256:05e0981ea0a37ed82b309dbba3157f57c9a8144aadbf2bcb8746bfed70d95016",
+    "order": [
+      "candidate",
+      "control",
+      "control",
+      "candidate"
+    ],
+    "mtp_enabled": true,
+    "sampling": {
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "max_tokens": 512
+    },
+    "seed_rule": "770000 + concurrency*1000 + repeat*100 + article_index*10 + position",
+    "concurrencies": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "repeats": {
+      "c1": 4,
+      "c2": 2,
+      "c3": 2,
+      "c4": 2
+    },
+    "max_run_minutes_before_recovery": 27,
+    "articles": [
+      {
+        "title": "Marie Curie",
+        "revision_id": 270535757,
+        "revision_url": "https://de.wikipedia.org/w/index.php?oldid=270535757",
+        "article_sha256": "14a808411dde09c11dd78732cde7e705240fbc47130503b75908bdc9cd634c5f",
+        "excerpt_sha256": "63bebcf0124ce0bd87a601de799b0965b1add5f50bfbfbd1b48c85c6c2a2a837",
+        "prompt_sha256": "5ed189141c45e0f2d4717fd9b9d4731c3a73bbac01939b30c5dd6011fda613d0",
+        "prompt_tokens": 4090
+      },
+      {
+        "title": "Apollo 11",
+        "revision_id": 268725520,
+        "revision_url": "https://de.wikipedia.org/w/index.php?oldid=268725520",
+        "article_sha256": "7b15a80c2608c69526e311357644ac3a8e2e86d99fba9edbb942b8b1dfa843f4",
+        "excerpt_sha256": "7fccce753e0c9c4b180c5e815df736fa125fcfaf870edb79335ef7600bc2073e",
+        "prompt_sha256": "bc6784a594bdd4f081e9efb0d361b0b7dda1b7752efff1b5a6a5c28147c21c2d",
+        "prompt_tokens": 4090
+      },
+      {
+        "title": "Photosynthese",
+        "revision_id": 268891481,
+        "revision_url": "https://de.wikipedia.org/w/index.php?oldid=268891481",
+        "article_sha256": "6291f2f8d96df2efdd495b4a812cecd89297cfd791af34936b8efbbe63e4cec6",
+        "excerpt_sha256": "58c7c613ee508a3f67296b0177ae7156c07488d295a496afd2dfd443fc4e5a0f",
+        "prompt_sha256": "53282d1ed356c655bc584a8202bf6700466aa0463a678d207b0288769beb2945",
+        "prompt_tokens": 4080
+      },
+      {
+        "title": "Berlin",
+        "revision_id": 270716683,
+        "revision_url": "https://de.wikipedia.org/w/index.php?oldid=270716683",
+        "article_sha256": "5c786c542b264bfdb072fdb97b5feccd591dca122b6aa93bbb3e3a05469624e0",
+        "excerpt_sha256": "2ec886c83ad01134ac5c1f84a03bea760ea402e3b6822b8f1b3d96190c173b6a",
+        "prompt_sha256": "0a0073a0bc321653e2a98ebbf2c7c7656089a5730a54060a6db67ccc0a589f54",
+        "prompt_tokens": 4053
+      }
+    ]
+  },
+  "validation": {
+    "measured_waves": 40,
+    "measured_requests": 88,
+    "matching_prompt_hashes_and_seeds_across_arms": true,
+    "matching_server_args_and_extra_environment": true,
+    "no_prefix_cache_hits_or_preemptions": true,
+    "all_outputs_nonempty_without_reasoning": true,
+    "versions": {
+      "01-candidate": [
+        "0.30.0+xpu",
+        "0.1.14.1"
+      ],
+      "02-control": [
+        "0.29.0+xpu",
+        "0.1.14.1"
+      ],
+      "03-control": [
+        "0.29.0+xpu",
+        "0.1.14.1"
+      ],
+      "04-candidate": [
+        "0.30.0+xpu",
+        "0.1.14.1"
+      ]
+    },
+    "dispatch": {
+      "01-candidate": {
+        "q128": true,
+        "m04": true,
+        "v2_runner": true
+      },
+      "02-control": {
+        "q128": true,
+        "m04": true,
+        "v2_runner": true
+      },
+      "03-control": {
+        "q128": true,
+        "m04": true,
+        "v2_runner": true
+      },
+      "04-candidate": {
+        "q128": true,
+        "m04": true,
+        "v2_runner": true
+      }
+    },
+    "matching_output_hashes_between_control_repeats": 3,
+    "matching_output_hashes_between_candidate_repeats": 0,
+    "requests_per_arm": 22
+  },
+  "scenarios": {
+    "c1": {
+      "candidate": {
+        "native_decode_tokens_per_s": {
+          "mean": 69.01553685684526,
+          "min": 64.4459785707463,
+          "max": 74.69936979153027,
+          "values": [
+            68.09026606860327,
+            68.170664816458,
+            65.08483361797074,
+            74.69936979153027,
+            68.57095905696343,
+            68.56587221550066,
+            64.4459785707463,
+            74.49635071698943
+          ]
+        },
+        "native_prefill_compute_tokens_per_s": {
+          "mean": 1482.381420839948,
+          "min": 1469.9177451665853,
+          "max": 1499.0070439568196,
+          "values": [
+            1493.1262605494805,
+            1485.3852139282794,
+            1499.0070439568196,
+            1484.7473443403194,
+            1469.9177451665853,
+            1478.666808290243,
+            1477.6886736404551,
+            1470.512276847403
+          ]
+        },
+        "fully_overlapped_aggregate_decode_tokens_per_s": {
+          "mean": 68.98349992427497,
+          "min": 64.53909192617986,
+          "max": 75.27877636701996,
+          "values": [
+            67.37750592737943,
+            68.77168278353669,
+            64.62823739391827,
+            74.1982242418922,
+            68.19656930517766,
+            68.87791144909563,
+            64.53909192617986,
+            75.27877636701996
+          ]
+        },
+        "batch_wall_s": {
+          "mean": 9.70640870125004,
+          "min": 8.840935684000215,
+          "max": 10.334844175999933,
+          "values": [
+            9.703167668999868,
+            10.265442226999994,
+            9.65418061299988,
+            9.58807951599988,
+            9.029761811000299,
+            10.234857914000258,
+            10.334844175999933,
+            8.840935684000215
+          ]
+        },
+        "speculative_acceptance": {
+          "mean": 0.4875076475912695,
+          "min": 0.4406779661016949,
+          "max": 0.5481366459627329,
+          "values": [
+            0.4725609756097561,
+            0.4745762711864407,
+            0.44631901840490795,
+            0.5481366459627329,
+            0.4863013698630137,
+            0.4857142857142857,
+            0.4406779661016949,
+            0.545774647887324
+          ]
+        },
+        "completion_tokens": {
+          "mean": 478.75,
+          "min": 428,
+          "max": 512,
+          "values": [
+            474,
+            512,
+            451,
+            512,
+            428,
+            512,
+            488,
+            453
+          ]
+        },
+        "weighted_speculative_acceptance": 0.48582375478927203,
+        "total_drafted_tokens": 5220.0,
+        "total_accepted_tokens": 2536.0
+      },
+      "control": {
+        "native_decode_tokens_per_s": {
+          "mean": 67.94888755330992,
+          "min": 64.35929740131856,
+          "max": 73.02796812604163,
+          "values": [
+            68.38321439949196,
+            67.82410198275622,
+            64.35929740131856,
+            71.28433566633313,
+            64.47030253299249,
+            73.02796812604163,
+            66.48447353695309,
+            67.75740678059225
+          ]
+        },
+        "native_prefill_compute_tokens_per_s": {
+          "mean": 1487.1601457051347,
+          "min": 1477.889105447625,
+          "max": 1499.698190779609,
+          "values": [
+            1487.1532753859474,
+            1488.3771528455216,
+            1499.698190779609,
+            1484.437750734039,
+            1485.8405864809065,
+            1480.534799769567,
+            1493.3503041978624,
+            1477.889105447625
+          ]
+        },
+        "fully_overlapped_aggregate_decode_tokens_per_s": {
+          "mean": 67.94449761075195,
+          "min": 64.28788244407036,
+          "max": 73.42117721763263,
+          "values": [
+            69.04630239249266,
+            67.6622625593489,
+            64.38489005139336,
+            70.67769758193856,
+            64.28788244407036,
+            73.42117721763263,
+            66.03492855562293,
+            68.04084008351626
+          ]
+        },
+        "batch_wall_s": {
+          "mean": 9.948249876749998,
+          "min": 9.612403948000065,
+          "max": 10.346602473000075,
+          "values": [
+            9.612403948000065,
+            10.299443810999946,
+            9.729660207000052,
+            9.916064632999905,
+            10.014387811999995,
+            9.777394051000101,
+            10.346602473000075,
+            9.89004207899984
+          ]
+        },
+        "speculative_acceptance": {
+          "mean": 0.4818195809853885,
+          "min": 0.4423076923076923,
+          "max": 0.5368098159509203,
+          "values": [
+            0.4859375,
+            0.4758522727272727,
+            0.44631901840490795,
+            0.5149700598802395,
+            0.4423076923076923,
+            0.5368098159509203,
+            0.4689265536723164,
+            0.48343373493975905
+          ]
+        },
+        "completion_tokens": {
+          "mean": 489.25,
+          "min": 451,
+          "max": 512,
+          "values": [
+            469,
+            512,
+            451,
+            512,
+            468,
+            512,
+            506,
+            484
+          ]
+        },
+        "weighted_speculative_acceptance": 0.4815436241610738,
+        "total_drafted_tokens": 5364.0,
+        "total_accepted_tokens": 2583.0
+      },
+      "candidate_vs_control_pct": {
+        "native_decode_tokens_per_s": 1.5697818491855253,
+        "native_prefill_compute_tokens_per_s": -0.3213322303577959,
+        "fully_overlapped_aggregate_decode_tokens_per_s": 1.5291927235600022,
+        "batch_wall_s": -2.430992169438395,
+        "speculative_acceptance": 1.180538697544864,
+        "completion_tokens": -2.146142054164535
+      },
+      "paired_aggregate_decode_change_pct": [
+        -2.4169237269607624,
+        1.6396439938949348,
+        0.37795722308551216,
+        4.98109980998207,
+        6.07997450298321,
+        -6.187950044807911,
+        -2.265220334391793,
+        10.637635094774755
+      ]
+    },
+    "c2": {
+      "candidate": {
+        "native_decode_tokens_per_s": {
+          "mean": 52.94155690706717,
+          "min": 52.04269649192165,
+          "max": 54.397759100493836,
+          "values": [
+            52.340861294562984,
+            54.397759100493836,
+            52.04269649192165,
+            52.984910741290186
+          ]
+        },
+        "native_prefill_compute_tokens_per_s": {
+          "mean": 861.2777835638301,
+          "min": 854.4915899478545,
+          "max": 866.1789250916515,
+          "values": [
+            864.4009150984905,
+            866.1789250916515,
+            854.4915899478545,
+            860.0397041173237
+          ]
+        },
+        "fully_overlapped_aggregate_decode_tokens_per_s": {
+          "mean": 116.12188385921104,
+          "min": 114.99080573065807,
+          "max": 117.71688572621494,
+          "values": [
+            114.99080573065807,
+            117.71688572621494,
+            115.19948857542401,
+            116.58035540454715
+          ]
+        },
+        "batch_wall_s": {
+          "mean": 14.363185003999945,
+          "min": 13.648962634999862,
+          "max": 14.789846082000167,
+          "values": [
+            14.789846082000167,
+            14.244821565999928,
+            14.769109732999823,
+            13.648962634999862
+          ]
+        },
+        "speculative_acceptance": {
+          "mean": 0.48113855570498587,
+          "min": 0.4653179190751445,
+          "max": 0.5,
+          "values": [
+            0.4653179190751445,
+            0.5,
+            0.46651785714285715,
+            0.49271844660194175
+          ]
+        },
+        "completion_tokens": {
+          "mean": 962.75,
+          "min": 915,
+          "max": 990,
+          "values": [
+            990,
+            983,
+            963,
+            915
+          ]
+        },
+        "weighted_speculative_acceptance": 0.4806671721000758,
+        "total_drafted_tokens": 5276.0,
+        "total_accepted_tokens": 2536.0
+      },
+      "control": {
+        "native_decode_tokens_per_s": {
+          "mean": 51.0758850816038,
+          "min": 48.64810177473964,
+          "max": 52.9857896185729,
+          "values": [
+            50.5342915568931,
+            52.9857896185729,
+            48.64810177473964,
+            52.135357376209555
+          ]
+        },
+        "native_prefill_compute_tokens_per_s": {
+          "mean": 860.9564840168348,
+          "min": 857.9643971003769,
+          "max": 865.4410200734904,
+          "values": [
+            857.9643971003769,
+            862.2720337806106,
+            858.148485112861,
+            865.4410200734904
+          ]
+        },
+        "fully_overlapped_aggregate_decode_tokens_per_s": {
+          "mean": 112.34777141181301,
+          "min": 107.1576299758703,
+          "max": 115.28039131708799,
+          "values": [
+            112.4226919704898,
+            115.28039131708799,
+            107.1576299758703,
+            114.53037238380396
+          ]
+        },
+        "batch_wall_s": {
+          "mean": 14.850920712250002,
+          "min": 14.101740311999947,
+          "max": 15.307268524000165,
+          "values": [
+            15.230530544999965,
+            14.101740311999947,
+            15.307268524000165,
+            14.76414346799993
+          ]
+        },
+        "speculative_acceptance": {
+          "mean": 0.45543921206006044,
+          "min": 0.42112299465240643,
+          "max": 0.486646884272997,
+          "values": [
+            0.44603825136612024,
+            0.486646884272997,
+            0.42112299465240643,
+            0.46794871794871795
+          ]
+        },
+        "completion_tokens": {
+          "mean": 1003.25,
+          "min": 992,
+          "max": 1014,
+          "values": [
+            1014,
+            992,
+            1000,
+            1007
+          ]
+        },
+        "weighted_speculative_acceptance": 0.45448179271708683,
+        "total_drafted_tokens": 5712.0,
+        "total_accepted_tokens": 2596.0
+      },
+      "candidate_vs_control_pct": {
+        "native_decode_tokens_per_s": 3.652744974428912,
+        "native_prefill_compute_tokens_per_s": 0.037318906699712606,
+        "fully_overlapped_aggregate_decode_tokens_per_s": 3.3593122497854733,
+        "batch_wall_s": -3.2842119199231856,
+        "speculative_acceptance": 5.642760430899463,
+        "completion_tokens": -4.036880139546472
+      },
+      "paired_aggregate_decode_change_pct": [
+        2.2843375435649405,
+        2.1135375941127466,
+        7.504699946578319,
+        1.7899033925022678
+      ]
+    },
+    "c3": {
+      "candidate": {
+        "native_decode_tokens_per_s": {
+          "mean": 45.495551795112505,
+          "min": 45.259641616531574,
+          "max": 46.05525017866585,
+          "values": [
+            45.36993307594968,
+            46.05525017866585,
+            45.259641616531574,
+            45.297382309302904
+          ]
+        },
+        "native_prefill_compute_tokens_per_s": {
+          "mean": 557.208416252837,
+          "min": 554.7872785083779,
+          "max": 560.3099605457841,
+          "values": [
+            560.3099605457841,
+            557.1307323398245,
+            556.6056936173612,
+            554.7872785083779
+          ]
+        },
+        "fully_overlapped_aggregate_decode_tokens_per_s": {
+          "mean": 151.42082764520515,
+          "min": 150.22000979677938,
+          "max": 152.37951966184784,
+          "values": [
+            151.6117465918659,
+            152.37951966184784,
+            151.47203453032745,
+            150.22000979677938
+          ]
+        },
+        "batch_wall_s": {
+          "mean": 18.44035632825006,
+          "min": 18.273408416000166,
+          "max": 18.631705371999942,
+          "values": [
+            18.273408416000166,
+            18.570848697999963,
+            18.285462827000174,
+            18.631705371999942
+          ]
+        },
+        "speculative_acceptance": {
+          "mean": 0.47967080447434773,
+          "min": 0.4774038461538462,
+          "max": 0.48385518590998045,
+          "values": [
+            0.47754491017964074,
+            0.48385518590998045,
+            0.4798792756539235,
+            0.4774038461538462
+          ]
+        },
+        "completion_tokens": {
+          "mean": 1478.5,
+          "min": 1447,
+          "max": 1509,
+          "values": [
+            1455,
+            1503,
+            1447,
+            1509
+          ]
+        },
+        "weighted_speculative_acceptance": 0.47966978807294236,
+        "total_drafted_tokens": 8116.0,
+        "total_accepted_tokens": 3893.0
+      },
+      "control": {
+        "native_decode_tokens_per_s": {
+          "mean": 45.61355969877046,
+          "min": 44.71322739264658,
+          "max": 46.82234758173156,
+          "values": [
+            45.33859162461514,
+            46.82234758173156,
+            44.71322739264658,
+            45.58007219608855
+          ]
+        },
+        "native_prefill_compute_tokens_per_s": {
+          "mean": 562.204725200156,
+          "min": 561.1312143343752,
+          "max": 563.3042536902373,
+          "values": [
+            563.3042536902373,
+            561.5193492028308,
+            561.1312143343752,
+            562.8640835731804
+          ]
+        },
+        "fully_overlapped_aggregate_decode_tokens_per_s": {
+          "mean": 152.51267950228944,
+          "min": 149.62335430000203,
+          "max": 156.6637585943407,
+          "values": [
+            152.41541979917417,
+            156.6637585943407,
+            149.62335430000203,
+            151.34818531564088
+          ]
+        },
+        "batch_wall_s": {
+          "mean": 18.324470915000063,
+          "min": 18.099060705000056,
+          "max": 18.645796723999865,
+          "values": [
+            18.224993164000125,
+            18.645796723999865,
+            18.099060705000056,
+            18.328033067000206
+          ]
+        },
+        "speculative_acceptance": {
+          "mean": 0.4798268094391354,
+          "min": 0.4705,
+          "max": 0.49066390041493774,
+          "values": [
+            0.4778672032193159,
+            0.49066390041493774,
+            0.4705,
+            0.480276134122288
+          ]
+        },
+        "completion_tokens": {
+          "mean": 1447,
+          "min": 1426,
+          "max": 1477,
+          "values": [
+            1444,
+            1426,
+            1441,
+            1477
+          ]
+        },
+        "weighted_speculative_acceptance": 0.47973313192346423,
+        "total_drafted_tokens": 7944.0,
+        "total_accepted_tokens": 3811.0
+      },
+      "candidate_vs_control_pct": {
+        "native_decode_tokens_per_s": -0.25871233123937465,
+        "native_prefill_compute_tokens_per_s": -0.8886992092676183,
+        "fully_overlapped_aggregate_decode_tokens_per_s": -0.7159089071462454,
+        "batch_wall_s": 0.6324079630322998,
+        "speculative_acceptance": -0.03251276538092096,
+        "completion_tokens": 2.176917760884578
+      },
+      "paired_aggregate_decode_change_pct": [
+        -0.5272912730005963,
+        -2.7346713566258174,
+        1.2355559324106036,
+        -0.7454172750790855
+      ]
+    },
+    "c4": {
+      "candidate": {
+        "native_decode_tokens_per_s": {
+          "mean": 39.535743943972946,
+          "min": 39.15901620188075,
+          "max": 39.97386123975059,
+          "values": [
+            39.80766723032991,
+            39.20243110393052,
+            39.15901620188075,
+            39.97386123975059
+          ]
+        },
+        "native_prefill_compute_tokens_per_s": {
+          "mean": 468.05184259348306,
+          "min": 466.44442405125744,
+          "max": 469.9171978280476,
+          "values": [
+            468.4077322970297,
+            469.9171978280476,
+            467.4380161975975,
+            466.44442405125744
+          ]
+        },
+        "fully_overlapped_aggregate_decode_tokens_per_s": {
+          "mean": 196.23950240230354,
+          "min": 191.14437215223046,
+          "max": 199.7623895728323,
+          "values": [
+            198.95746643429032,
+            195.09378144986107,
+            191.14437215223046,
+            199.7623895728323
+          ]
+        },
+        "batch_wall_s": {
+          "mean": 21.600288739250004,
+          "min": 21.42068049799991,
+          "max": 21.975239170999885,
+          "values": [
+            21.484362607000094,
+            21.42068049799991,
+            21.975239170999885,
+            21.520872681000128
+          ]
+        },
+        "speculative_acceptance": {
+          "mean": 0.49051061135840796,
+          "min": 0.479739507959479,
+          "max": 0.5011811023622047,
+          "values": [
+            0.498070987654321,
+            0.4830508474576271,
+            0.479739507959479,
+            0.5011811023622047
+          ]
+        },
+        "completion_tokens": {
+          "mean": 1938.5,
+          "min": 1903,
+          "max": 2012,
+          "values": [
+            1934,
+            1903,
+            2012,
+            1905
+          ]
+        },
+        "weighted_speculative_acceptance": 0.4902783072817385,
+        "total_drafted_tokens": 10492.0,
+        "total_accepted_tokens": 5144.0
+      },
+      "control": {
+        "native_decode_tokens_per_s": {
+          "mean": 40.1270380847959,
+          "min": 39.758430058201625,
+          "max": 40.42726534172928,
+          "values": [
+            40.14757324147784,
+            40.42726534172928,
+            40.17488369777486,
+            39.758430058201625
+          ]
+        },
+        "native_prefill_compute_tokens_per_s": {
+          "mean": 473.85327870784135,
+          "min": 472.40154876050576,
+          "max": 474.73355994634255,
+          "values": [
+            474.73355994634255,
+            474.7045908296066,
+            472.40154876050576,
+            473.5734152949105
+          ]
+        },
+        "fully_overlapped_aggregate_decode_tokens_per_s": {
+          "mean": 201.44687481887797,
+          "min": 197.95249544903805,
+          "max": 205.66666939847676,
+          "values": [
+            198.06699524071226,
+            204.10133918728488,
+            205.66666939847676,
+            197.95249544903805
+          ]
+        },
+        "batch_wall_s": {
+          "mean": 21.537960281499977,
+          "min": 21.296598299999914,
+          "max": 21.64998830200011,
+          "values": [
+            21.571647347999942,
+            21.296598299999914,
+            21.63360717599994,
+            21.64998830200011
+          ]
+        },
+        "speculative_acceptance": {
+          "mean": 0.4993206876165039,
+          "min": 0.49115384615384616,
+          "max": 0.5083069620253164,
+          "values": [
+            0.4970193740685544,
+            0.5083069620253164,
+            0.5008025682182986,
+            0.49115384615384616
+          ]
+        },
+        "completion_tokens": {
+          "mean": 1928.25,
+          "min": 1867,
+          "max": 2003,
+          "values": [
+            2003,
+            1916,
+            1867,
+            1927
+          ]
+        },
+        "weighted_speculative_acceptance": 0.49922360248447206,
+        "total_drafted_tokens": 10304.0,
+        "total_accepted_tokens": 5144.0
+      },
+      "candidate_vs_control_pct": {
+        "native_decode_tokens_per_s": -1.4735554106272142,
+        "native_prefill_compute_tokens_per_s": -1.22431064108669,
+        "fully_overlapped_aggregate_decode_tokens_per_s": -2.584985456466582,
+        "batch_wall_s": 0.2893888601120942,
+        "speculative_acceptance": -1.764412426040396,
+        "completion_tokens": 0.5315700764942255
+      },
+      "paired_aggregate_decode_change_pct": [
+        0.4495808059772344,
+        -4.413277136392724,
+        -7.061084466783251,
+        0.9143073037238825
+      ]
+    }
+  },
+  "c1_by_article": {
+    "Marie Curie": {
+      "candidate": {
+        "mean_completion_tokens": 451,
+        "mean_native_decode_tokens_per_s": 68.33061256278336,
+        "mean_speculative_acceptance": 0.4794311727363849,
+        "output_hashes_identical_between_repeats": false
+      },
+      "control": {
+        "mean_completion_tokens": 468.5,
+        "mean_native_decode_tokens_per_s": 66.42675846624223,
+        "mean_speculative_acceptance": 0.46412259615384616,
+        "output_hashes_identical_between_repeats": false
+      }
+    },
+    "Apollo 11": {
+      "candidate": {
+        "mean_completion_tokens": 512,
+        "mean_native_decode_tokens_per_s": 68.36826851597934,
+        "mean_speculative_acceptance": 0.4801452784503632,
+        "output_hashes_identical_between_repeats": false
+      },
+      "control": {
+        "mean_completion_tokens": 512,
+        "mean_native_decode_tokens_per_s": 70.42603505439892,
+        "mean_speculative_acceptance": 0.5063310443390965,
+        "output_hashes_identical_between_repeats": false
+      }
+    },
+    "Photosynthese": {
+      "candidate": {
+        "mean_completion_tokens": 469.5,
+        "mean_native_decode_tokens_per_s": 64.76540609435853,
+        "mean_speculative_acceptance": 0.4434984922533014,
+        "output_hashes_identical_between_repeats": false
+      },
+      "control": {
+        "mean_completion_tokens": 478.5,
+        "mean_native_decode_tokens_per_s": 65.42188546913582,
+        "mean_speculative_acceptance": 0.4576227860386122,
+        "output_hashes_identical_between_repeats": false
+      }
+    },
+    "Berlin": {
+      "candidate": {
+        "mean_completion_tokens": 482.5,
+        "mean_native_decode_tokens_per_s": 74.59786025425984,
+        "mean_speculative_acceptance": 0.5469556469250285,
+        "output_hashes_identical_between_repeats": false
+      },
+      "control": {
+        "mean_completion_tokens": 498,
+        "mean_native_decode_tokens_per_s": 69.52087122346269,
+        "mean_speculative_acceptance": 0.49920189740999926,
+        "output_hashes_identical_between_repeats": false
+      }
+    }
+  }
+}

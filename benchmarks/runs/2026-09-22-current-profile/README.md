@@ -69,8 +69,8 @@ by semantic or byte-equality claims. Greedy output identity is not claimed.
 
 ## Results
 
-The primary tables and interpretation are in the repository
-[`README`](../../../README.md#current-phase-and-concurrency-benchmark).
+The original tables are preserved in the [README at the measured repository
+revision](https://github.com/Danmoreng/intel-b70-qwen38-vllm/blob/a343c40/README.md#vllm-029-phase-and-concurrency-baseline).
 [`summary.json`](summary.json) contains the medians, ranges, cache deltas,
 scheduler observations, MTP acceptance and full-context result in a compact,
 content-free format.

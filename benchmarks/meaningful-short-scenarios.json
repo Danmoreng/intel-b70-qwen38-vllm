@@ -1,0 +1,120 @@
+[
+  {
+    "name": "phase-512-c1",
+    "group": "phase-sweep",
+    "prompt_tokens": 512,
+    "output_tokens": 1024,
+    "concurrency": 1,
+    "repeats": 3,
+    "warmups": 0
+  },
+  {
+    "name": "phase-2k-c1",
+    "group": "phase-sweep",
+    "prompt_tokens": 2048,
+    "output_tokens": 1024,
+    "concurrency": 1,
+    "repeats": 3,
+    "warmups": 0
+  },
+  {
+    "name": "phase-4k-c1",
+    "group": "phase-sweep",
+    "prompt_tokens": 4096,
+    "output_tokens": 1024,
+    "concurrency": 1,
+    "repeats": 3,
+    "warmups": 0
+  },
+  {
+    "name": "phase-8k-c1",
+    "group": "phase-sweep",
+    "prompt_tokens": 8192,
+    "output_tokens": 1024,
+    "concurrency": 1,
+    "repeats": 3,
+    "warmups": 0
+  },
+  {
+    "name": "phase-16k-c1",
+    "group": "phase-sweep",
+    "prompt_tokens": 16384,
+    "output_tokens": 1024,
+    "concurrency": 1,
+    "repeats": 3,
+    "warmups": 0
+  },
+  {
+    "name": "phase-32k-c1",
+    "group": "phase-sweep",
+    "prompt_tokens": 32768,
+    "output_tokens": 1024,
+    "concurrency": 1,
+    "repeats": 3,
+    "warmups": 0
+  },
+  {
+    "name": "phase-64k-c1",
+    "group": "phase-sweep",
+    "prompt_tokens": 65536,
+    "output_tokens": 1024,
+    "concurrency": 1,
+    "repeats": 3,
+    "warmups": 0
+  },
+  {
+    "name": "phase-128k-c1",
+    "group": "phase-sweep",
+    "prompt_tokens": 131072,
+    "output_tokens": 1024,
+    "concurrency": 1,
+    "repeats": 2,
+    "warmups": 0
+  },
+  {
+    "name": "concurrency-4k-c2",
+    "group": "concurrency-sweep",
+    "prompt_tokens": 4096,
+    "output_tokens": 1024,
+    "concurrency": 2,
+    "repeats": 2,
+    "warmups": 0
+  },
+  {
+    "name": "concurrency-4k-c3",
+    "group": "concurrency-sweep",
+    "prompt_tokens": 4096,
+    "output_tokens": 1024,
+    "concurrency": 3,
+    "repeats": 2,
+    "warmups": 0
+  },
+  {
+    "name": "concurrency-4k-c4",
+    "group": "concurrency-sweep",
+    "prompt_tokens": 4096,
+    "output_tokens": 1024,
+    "concurrency": 4,
+    "repeats": 2,
+    "warmups": 0
+  },
+  {
+    "name": "concurrency-16k-c4",
+    "group": "concurrency-sweep",
+    "prompt_tokens": 16384,
+    "output_tokens": 1024,
+    "concurrency": 4,
+    "repeats": 2,
+    "warmups": 0
+  },
+  {
+    "name": "prefix-16k-cold-warm",
+    "group": "prefix-cache",
+    "prompt_tokens": 16384,
+    "output_tokens": 1024,
+    "concurrency": 1,
+    "repeats": 2,
+    "shared_prefix_fraction": 1.0,
+    "warmups": 0
+  }
+]

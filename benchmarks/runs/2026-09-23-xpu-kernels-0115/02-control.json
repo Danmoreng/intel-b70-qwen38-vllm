@@ -1,0 +1,366 @@
+{
+  "rows": [
+    {
+      "label": "c1-r1",
+      "concurrency": 1,
+      "repeat": 1,
+      "warmup": false,
+      "requests": [
+        {
+          "title": "Marie Curie",
+          "revision_id": 270535757,
+          "prompt_sha256": "5ed189141c45e0f2d4717fd9b9d4731c3a73bbac01939b30c5dd6011fda613d0",
+          "seed": 771000,
+          "sampling": {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 20,
+            "max_tokens": 512
+          },
+          "wall_s": 10.451428484000644,
+          "ttft_s": 2.797965188998205,
+          "post_first_generation_s": 7.653463295002439,
+          "usage": {
+            "prompt_tokens": 4101,
+            "total_tokens": 4555,
+            "completion_tokens": 454,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "stop",
+          "output_chars": 1885,
+          "output_sha256": "aa5a53375aaa948cd3c1ce3c7b35e652def24a0ca90e2149e7ee41b9d94594c9",
+          "reasoning_chars": 0
+        }
+      ],
+      "batch_wall_s": 10.45188765399871,
+      "completion_tokens": 454,
+      "prompt_tokens": 4101,
+      "native_decode_tokens_per_s": 59.19253946912837,
+      "native_prefill_compute_tokens_per_s": 1471.5631667347452,
+      "fully_overlapped_aggregate_decode_tokens_per_s": 59.44632729982486,
+      "speculative_draft_tokens": 720.0,
+      "speculative_accepted_tokens": 275.0,
+      "speculative_acceptance": 0.3819444444444444,
+      "prompt_tokens_cached": 0.0,
+      "preemptions": 0.0,
+      "finished_requests": 1.0,
+      "peak_running": 1.0,
+      "peak_waiting": 0.0,
+      "request_wall_mean_s": 10.451428484000644
+    },
+    {
+      "label": "c1-r2",
+      "concurrency": 1,
+      "repeat": 2,
+      "warmup": false,
+      "requests": [
+        {
+          "title": "Apollo 11",
+          "revision_id": 268725520,
+          "prompt_sha256": "bc6784a594bdd4f081e9efb0d361b0b7dda1b7752efff1b5a6a5c28147c21c2d",
+          "seed": 771110,
+          "sampling": {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 20,
+            "max_tokens": 512
+          },
+          "wall_s": 11.070127153998328,
+          "ttft_s": 2.7868672419972427,
+          "post_first_generation_s": 8.283259912001085,
+          "usage": {
+            "prompt_tokens": 4101,
+            "total_tokens": 4613,
+            "completion_tokens": 512,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "output_chars": 2154,
+          "output_sha256": "1c5d1107de28f46cf9a9ef1cde8901fc5dcb1e0ea23e94ef1d2fe035ee78aee9",
+          "reasoning_chars": 0
+        }
+      ],
+      "batch_wall_s": 11.070573503999185,
+      "completion_tokens": 512,
+      "prompt_tokens": 4101,
+      "native_decode_tokens_per_s": 61.682305231364886,
+      "native_prefill_compute_tokens_per_s": 1476.5204027974662,
+      "fully_overlapped_aggregate_decode_tokens_per_s": 61.884372083720045,
+      "speculative_draft_tokens": 780.0,
+      "speculative_accepted_tokens": 317.0,
+      "speculative_acceptance": 0.4064102564102564,
+      "prompt_tokens_cached": 0.0,
+      "preemptions": 0.0,
+      "finished_requests": 1.0,
+      "peak_running": 1.0,
+      "peak_waiting": 0.0,
+      "request_wall_mean_s": 11.070127153998328
+    },
+    {
+      "label": "c4-r1",
+      "concurrency": 4,
+      "repeat": 1,
+      "warmup": false,
+      "requests": [
+        {
+          "title": "Marie Curie",
+          "revision_id": 270535757,
+          "prompt_sha256": "5ed189141c45e0f2d4717fd9b9d4731c3a73bbac01939b30c5dd6011fda613d0",
+          "seed": 774000,
+          "sampling": {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 20,
+            "max_tokens": 512
+          },
+          "wall_s": 21.384975855999073,
+          "ttft_s": 9.725190642002417,
+          "post_first_generation_s": 11.659785213996656,
+          "usage": {
+            "prompt_tokens": 4101,
+            "total_tokens": 4567,
+            "completion_tokens": 466,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "stop",
+          "output_chars": 1939,
+          "output_sha256": "d0ca85fca8e13a92c5611a7b5e3feabfeba2d275fdc61165375db1e05ee4fb6e",
+          "reasoning_chars": 0
+        },
+        {
+          "title": "Apollo 11",
+          "revision_id": 268725520,
+          "prompt_sha256": "bc6784a594bdd4f081e9efb0d361b0b7dda1b7752efff1b5a6a5c28147c21c2d",
+          "seed": 774011,
+          "sampling": {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 20,
+            "max_tokens": 512
+          },
+          "wall_s": 22.321787347998907,
+          "ttft_s": 5.107657384000049,
+          "post_first_generation_s": 17.214129963998857,
+          "usage": {
+            "prompt_tokens": 4101,
+            "total_tokens": 4594,
+            "completion_tokens": 493,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "stop",
+          "output_chars": 1983,
+          "output_sha256": "ee1d2538ad556915cd54b0339bb0f4357f1bf18447d0c7f964c3a3dfa593ebe4",
+          "reasoning_chars": 0
+        },
+        {
+          "title": "Photosynthese",
+          "revision_id": 268891481,
+          "prompt_sha256": "53282d1ed356c655bc584a8202bf6700466aa0463a678d207b0288769beb2945",
+          "seed": 774022,
+          "sampling": {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 20,
+            "max_tokens": 512
+          },
+          "wall_s": 21.963077843000065,
+          "ttft_s": 9.725198492000345,
+          "post_first_generation_s": 12.23787935099972,
+          "usage": {
+            "prompt_tokens": 4091,
+            "total_tokens": 4590,
+            "completion_tokens": 499,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "stop",
+          "output_chars": 2179,
+          "output_sha256": "2f7f76bf81d68930815d06f266ca6094728cf3d81f1ac794a572a905e97bac51",
+          "reasoning_chars": 0
+        },
+        {
+          "title": "Berlin",
+          "revision_id": 270716683,
+          "prompt_sha256": "0a0073a0bc321653e2a98ebbf2c7c7656089a5730a54060a6db67ccc0a589f54",
+          "seed": 774033,
+          "sampling": {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 20,
+            "max_tokens": 512
+          },
+          "wall_s": 22.541306999999506,
+          "ttft_s": 11.441630846002226,
+          "post_first_generation_s": 11.09967615399728,
+          "usage": {
+            "prompt_tokens": 4064,
+            "total_tokens": 4576,
+            "completion_tokens": 512,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "output_chars": 2108,
+          "output_sha256": "16845771b34ccd5f474e2783b8990d8d73b45b4e99cc84249cb75fd09f767f11",
+          "reasoning_chars": 0
+        }
+      ],
+      "batch_wall_s": 22.54248595899844,
+      "completion_tokens": 1970,
+      "prompt_tokens": 16357,
+      "native_decode_tokens_per_s": 37.65087777817287,
+      "native_prefill_compute_tokens_per_s": 469.4592195843945,
+      "fully_overlapped_aggregate_decode_tokens_per_s": 183.46775308993688,
+      "speculative_draft_tokens": 2868.0,
+      "speculative_accepted_tokens": 1253.0,
+      "speculative_acceptance": 0.43688981868898186,
+      "prompt_tokens_cached": 0.0,
+      "preemptions": 0.0,
+      "finished_requests": 4.0,
+      "peak_running": 4.0,
+      "peak_waiting": 1.0,
+      "request_wall_mean_s": 22.052787011749388
+    },
+    {
+      "label": "c4-r2",
+      "concurrency": 4,
+      "repeat": 2,
+      "warmup": false,
+      "requests": [
+        {
+          "title": "Apollo 11",
+          "revision_id": 268725520,
+          "prompt_sha256": "bc6784a594bdd4f081e9efb0d361b0b7dda1b7752efff1b5a6a5c28147c21c2d",
+          "seed": 774110,
+          "sampling": {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 20,
+            "max_tokens": 512
+          },
+          "wall_s": 21.856769482001255,
+          "ttft_s": 9.7420588519999,
+          "post_first_generation_s": 12.114710630001355,
+          "usage": {
+            "prompt_tokens": 4101,
+            "total_tokens": 4592,
+            "completion_tokens": 491,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "stop",
+          "output_chars": 1924,
+          "output_sha256": "ff58995f5d57594e69a2a60120732c9551e6df63afdf1c64a08d513bb6720680",
+          "reasoning_chars": 0
+        },
+        {
+          "title": "Photosynthese",
+          "revision_id": 268891481,
+          "prompt_sha256": "53282d1ed356c655bc584a8202bf6700466aa0463a678d207b0288769beb2945",
+          "seed": 774121,
+          "sampling": {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 20,
+            "max_tokens": 512
+          },
+          "wall_s": 21.8567426419977,
+          "ttft_s": 9.742190051998477,
+          "post_first_generation_s": 12.11455258999922,
+          "usage": {
+            "prompt_tokens": 4091,
+            "total_tokens": 4552,
+            "completion_tokens": 461,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "stop",
+          "output_chars": 2018,
+          "output_sha256": "22278f8862e64a5aa7f9aec2ba256bf60236c81e52f6210f4a7229474922b081",
+          "reasoning_chars": 0
+        },
+        {
+          "title": "Berlin",
+          "revision_id": 270716683,
+          "prompt_sha256": "0a0073a0bc321653e2a98ebbf2c7c7656089a5730a54060a6db67ccc0a589f54",
+          "seed": 774132,
+          "sampling": {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 20,
+            "max_tokens": 512
+          },
+          "wall_s": 22.58968651000032,
+          "ttft_s": 5.10411704299986,
+          "post_first_generation_s": 17.48556946700046,
+          "usage": {
+            "prompt_tokens": 4064,
+            "total_tokens": 4576,
+            "completion_tokens": 512,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "output_chars": 2150,
+          "output_sha256": "c77eedb1bc5fa459dc2e59af04b364d3e4ba562314145caa7527565b7287e8ec",
+          "reasoning_chars": 0
+        },
+        {
+          "title": "Marie Curie",
+          "revision_id": 270535757,
+          "prompt_sha256": "5ed189141c45e0f2d4717fd9b9d4731c3a73bbac01939b30c5dd6011fda613d0",
+          "seed": 774103,
+          "sampling": {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 20,
+            "max_tokens": 512
+          },
+          "wall_s": 22.369077086001198,
+          "ttft_s": 11.501091754002118,
+          "post_first_generation_s": 10.86798533199908,
+          "usage": {
+            "prompt_tokens": 4101,
+            "total_tokens": 4579,
+            "completion_tokens": 478,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "stop",
+          "output_chars": 2121,
+          "output_sha256": "ff182a6d60fa7ed487cd0225fedf0d02ddb5cb32008623612bcf551c10a90894",
+          "reasoning_chars": 0
+        }
+      ],
+      "batch_wall_s": 22.59081017999779,
+      "completion_tokens": 1942,
+      "prompt_tokens": 16357,
+      "native_decode_tokens_per_s": 36.85696256410916,
+      "native_prefill_compute_tokens_per_s": 468.3637595858006,
+      "fully_overlapped_aggregate_decode_tokens_per_s": 179.055621634852,
+      "speculative_draft_tokens": 2868.0,
+      "speculative_accepted_tokens": 1227.0,
+      "speculative_acceptance": 0.42782426778242677,
+      "prompt_tokens_cached": 0.0,
+      "preemptions": 0.0,
+      "finished_requests": 4.0,
+      "peak_running": 4.0,
+      "peak_waiting": 1.0,
+      "request_wall_mean_s": 22.168068930000118
+    }
+  ]
+}

@@ -315,29 +315,35 @@ python3 scripts/current-profile-benchmark.py --execute
 ```
 
 The runner validates the active C4/full-ISL container, refuses a busy engine,
-constructs exact-token prompts and records native phase counters, client
-latencies, scheduler transitions, MTP acceptance, card energy and content-free
-correctness evidence. Allow about one hour for the default plan.
+constructs prompts from a [frozen public source corpus](benchmarks/meaningful-benchmark.md),
+and records native phase counters, client latencies, scheduler transitions,
+MTP acceptance, card energy, prompt hashes and locally inspectable answers.
+It uses the production coding sampler (temperature 1, top-p 0.95, top-k 20)
+with thinking disabled for the short fixed-cap requests. Source lines are not
+padded to an exact token count: each record contains its actual prompt and
+completion counts. Outputs are forced to 1,024 tokens with `ignore_eos=true`.
+The full plan takes much longer than a short A/B test; use
+`--only` to select a few scenarios.
 
 For coding-agent measurements, use an exclusive endpoint, record native
-`/metrics` counter deltas around each completed request, and use the same client
-settings as above. Keep prefix caching enabled across agent turns and report
+`/metrics` counter deltas around each completed request, and use the agent's
+documented sampling and reasoning settings. Keep prefix caching enabled across agent turns and report
 cache hits separately from newly computed prefill. The published run's
 [methodology and formulas](benchmarks/runs/2026-09-19-production-coding/README.md#measurement)
 explain how to aggregate by actual rendered context.
 
-An additional synthetic cold-cache sweep is available:
+An additional short cold-cache source-review sweep is available:
 
 ```bash
 ./scripts/run-context-benchmark.sh benchmark-results/my-host
 ```
 
-It generates exact rendered contexts at 512, 8,192, 32,768, 65,536 and 131,072
-tokens, performs a full-shape warm-up and five measured requests per point,
-then saves client timings and native counters. Outputs are 128 tokens for the
-512-input point and 512 tokens otherwise. Allow tens of minutes on an idle
-server; the script checks for competing requests and requires zero prefix hits.
-This is a separate workload from the coding result above.
+It generates frozen source-review prompts under token budgets of 512, 8,192,
+32,768 and 65,536, performs a full-shape warm-up and two measured requests per
+point, then saves generated text, client timings and native counters. Answers
+are forced to 1,024 tokens. The script checks for competing requests and
+requires zero prefix hits. This is a separate workload from the coding result
+above.
 
 ## Pinned build contents
 

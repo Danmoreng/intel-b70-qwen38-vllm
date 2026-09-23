@@ -18,6 +18,8 @@ import statistics
 import time
 import urllib.request
 
+from meaningful_benchmark import CHAT_TEMPLATE_KWARGS, CORPUS, SAMPLING, load_corpus
+
 COUNTER_CANDIDATES = {
     "prefix_cache_hits": ("vllm:prefix_cache_hits", "vllm:prefix_cache_hits_total"),
     "prefix_cache_queries": ("vllm:prefix_cache_queries", "vllm:prefix_cache_queries_total"),
@@ -86,7 +88,7 @@ def ensure_idle(root):
 
 
 def request(url, root, model, messages, max_tokens, raw_path, cache_expected,
-            expected_prompt_tokens=None, require_spec=True, ignore_eos=False,
+            expected_prompt_tokens=None, require_spec=True, ignore_eos=True,
             sampling=None):
     ensure_idle(root)
     before = snapshot(root, require_spec=require_spec)
@@ -94,14 +96,9 @@ def request(url, root, model, messages, max_tokens, raw_path, cache_expected,
         "model": model,
         "messages": messages,
         "max_tokens": max_tokens,
-        "temperature": 0.0,
-        "reasoning_effort": "medium",
-        "thinking_token_budget": 8192,
-        "chat_template_kwargs": {
-            "enable_thinking": True,
-            "preserve_thinking": True,
-            "reasoning_effort": "medium",
-        },
+        **SAMPLING,
+        "seed": 770000,
+        "chat_template_kwargs": CHAT_TEMPLATE_KWARGS,
         "stream": True,
         "stream_options": {"include_usage": True},
         "ignore_eos": ignore_eos,
@@ -189,9 +186,11 @@ def request(url, root, model, messages, max_tokens, raw_path, cache_expected,
     if cache_expected == "cold" and deltas["prefix_cache_hits"] != 0:
         raise RuntimeError(
             f"cold-prefix contamination: cache-hit delta={deltas['prefix_cache_hits']}")
-    if first_generated_ns is None or completion_tokens < 1:
+    if first_generated_ns is None or completion_tokens < 1 or not "".join(content_parts).strip():
         raise RuntimeError(
-            f"request produced no timed output token: completion_tokens={completion_tokens}")
+            f"request produced no meaningful visible output: completion_tokens={completion_tokens}")
+    if ignore_eos and (completion_tokens != max_tokens or finish_reason != "length"):
+        raise RuntimeError("fixed-length response did not reach the requested output cap")
 
     generation_interval_s = max((end_ns - first_generated_ns) / 1e9, 1e-9)
     post_first_tokens = completion_tokens - 1
@@ -232,6 +231,7 @@ def request(url, root, model, messages, max_tokens, raw_path, cache_expected,
         "computed_prompt_tokens": deltas["computed_prompt_tokens"],
         "preemptions": deltas["preemptions"],
         "cache_expected": cache_expected,
+        "sampling": {key: body[key] for key in ("temperature", "top_p", "top_k", "seed")},
         "expected_prompt_tokens": expected_prompt_tokens,
         "messages_sha256": hashlib.sha256(
             json.dumps(messages, sort_keys=True).encode()).hexdigest(),
@@ -276,16 +276,26 @@ def main():
     parser.add_argument("--budget", type=int, required=True)
     parser.add_argument("--reps", type=int, default=5)
     parser.add_argument("--target", type=int)
-    parser.add_argument("--output", type=int, default=128)
+    parser.add_argument("--output", type=int, default=1024)
     parser.add_argument("--root", default="http://127.0.0.1:8001")
     parser.add_argument("--no-spec", action="store_true")
     parser.add_argument("--full-output-warmup", action="store_true")
-    parser.add_argument("--ignore-eos", action="store_true")
+    parser.add_argument("--ignore-eos", action="store_true", default=True)
+    parser.add_argument("--allow-eos", action="store_false", dest="ignore_eos")
     args = parser.parse_args()
     os.makedirs(args.outdir, exist_ok=False)
     with open(args.prompts) as source:
         prompt_data = json.load(source)
+    _, corpus_sha256 = load_corpus(CORPUS)
+    if prompt_data.get("schema") != 2 or prompt_data.get("corpus_sha256") != corpus_sha256:
+        raise RuntimeError("obsolete or mismatched prompt fixture; regenerate with generate-exact-prompts.py")
     prompts = prompt_data["prompts"]
+    for item in prompts:
+        if item.get("family") != "source-review" or not item.get("source_paths"):
+            raise RuntimeError("prompt fixture does not contain a meaningful source review")
+        content = item["messages"][-1]["content"]
+        if hashlib.sha256(content.encode()).hexdigest() != item.get("content_sha256"):
+            raise RuntimeError("prompt fixture content hash mismatch")
     if args.target is not None:
         prompts = [p for p in prompts if p["target_tokens"] == args.target]
     if len(prompts) < args.reps + 1:
@@ -299,7 +309,8 @@ def main():
         args.root + "/v1/chat/completions", args.root, args.model,
         [{"role": "user", "content": generic_content}], 16,
         args.outdir + "/warmup-generic.sse.jsonl", "cold",
-        require_spec=not args.no_spec)
+        require_spec=not args.no_spec,
+        sampling={"seed": 770001})
     print("milestone=warmup_generic_done", flush=True)
 
     shape_prompt = prompts[0]
@@ -313,7 +324,8 @@ def main():
         args.outdir + "/warmup-shape.sse.jsonl", "cold",
         expected_prompt_tokens=shape_prompt["calibrated_tokens"],
         require_spec=not args.no_spec,
-        ignore_eos=args.ignore_eos)
+        ignore_eos=args.ignore_eos,
+        sampling={"seed": 770002})
     print("milestone=warmup_shape_done", flush=True)
 
     records = []
@@ -328,7 +340,8 @@ def main():
             item["messages"], args.output, raw_path, "cold",
             expected_prompt_tokens=item["calibrated_tokens"],
             require_spec=not args.no_spec,
-            ignore_eos=args.ignore_eos)
+            ignore_eos=args.ignore_eos,
+            sampling={"seed": 770100 + rep})
         record.update({
             "rep": rep,
             "mode": args.mode,
@@ -364,6 +377,8 @@ def main():
         "target": args.target,
         "requested_output_tokens": args.output,
         "ignore_eos": args.ignore_eos,
+        "sampling": SAMPLING,
+        "corpus_sha256": corpus_sha256,
         "timing_note": (
             "input_tokens_per_ttft_s is endpoint input tokens divided by client TTFT; "
             "it is not isolated engine prefill throughput"),

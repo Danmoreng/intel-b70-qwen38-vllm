@@ -87,6 +87,12 @@ preempted once; the maximum-context request preempted four times. All completed.
 
 ## Reproduction
 
+Historical note: the commands below describe the runner at the time of this
+2026-09-22 measurement. The current runner uses frozen source prompts and
+sampling, so its new results are not directly comparable to these synthetic
+greedy numbers. Use the repository revision from this run to reproduce the
+original workload.
+
 With the repository's default container running and no other API client active:
 
 ```bash

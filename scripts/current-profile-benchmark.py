@@ -24,6 +24,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from meaningful_benchmark import (
+    CHAT_TEMPLATE_KWARGS, CORPUS, SAMPLING, load_corpus, make_prompt,
+)
+
 
 ROOT = Path(__file__).resolve().parent
 DEFAULT_BASE = "http://127.0.0.1:8081"
@@ -57,7 +61,7 @@ class Scenario:
     repeats: int
     shared_prefix_fraction: float = 0.0
     prompt_set: str = ""
-    prompt_style: str = "synthetic"
+    prompt_style: str = "source-review"
     expected_peak_running: int | None = None
     warmups: int = 1
 
@@ -144,66 +148,26 @@ def load_scenarios(path: Path) -> list[Scenario]:
     for scenario in scenarios:
         if not 1 <= scenario.concurrency <= 4:
             raise ValueError(f"invalid concurrency in {scenario.name}")
-        if not 0.0 <= scenario.shared_prefix_fraction < 1.0:
+        if not 0.0 <= scenario.shared_prefix_fraction <= 1.0:
             raise ValueError(f"invalid shared_prefix_fraction in {scenario.name}")
         if scenario.expected_peak_running is not None and not (
             1 <= scenario.expected_peak_running <= scenario.concurrency
         ):
             raise ValueError(f"invalid expected_peak_running in {scenario.name}")
-        if scenario.prompt_style not in ("synthetic", "coding"):
-            raise ValueError(f"invalid prompt_style in {scenario.name}")
+        if scenario.prompt_style != "source-review":
+            raise ValueError(f"obsolete prompt_style in {scenario.name}; use source-review")
         if scenario.warmups < 0:
             raise ValueError(f"invalid warmup count in {scenario.name}")
     return scenarios
 
 
 def token_count(base: str, prompt: str) -> int:
-    result = http_json(base, "/tokenize", {"model": MODEL, "prompt": prompt}, timeout=120)
+    result = http_json(base, "/tokenize", {
+        "model": MODEL,
+        "messages": [{"role": "user", "content": prompt}],
+        "chat_template_kwargs": CHAT_TEMPLATE_KWARGS,
+    }, timeout=120)
     return int(result["count"])
-
-
-CODING_TASKS = (
-    "Implement a production-quality Python LRU cache without OrderedDict. Include type hints, invariants, tests, and complexity analysis.",
-    "Design an asyncio job scheduler with bounded concurrency, cancellation, backpressure, and deterministic unit tests. Explain race handling.",
-    "Design PostgreSQL tables and queries for an append-only audit log with tenant isolation, cursor pagination, retention, and indexes.",
-    "Implement a Rust parser for a length-prefixed binary protocol. Handle partial input, malformed frames, limits, and property-based tests.",
-)
-
-
-def make_prompt(
-    base: str,
-    target: int,
-    marker: str,
-    shared_prefix: str = "",
-    task_suffix: str = "",
-) -> tuple[str, int]:
-    header = f"{shared_prefix}\nREQUEST {marker}\nReference material follows.\n"
-    suffix = task_suffix or f"\nReturn the exact request marker {marker}, then summarize the reference."
-    filler_count = max(1, target - token_count(base, header + suffix))
-    for _ in range(12):
-        prompt = header + " x" * filler_count + suffix
-        actual = token_count(base, prompt)
-        if actual == target:
-            return prompt, actual
-        filler_count += target - actual
-        if filler_count < 0:
-            raise RuntimeError(f"cannot construct {target}-token prompt")
-    raise RuntimeError(f"failed to construct exactly {target} tokens for {marker}; got {actual}")
-
-
-def make_shared_prefix(base: str, target: int, fraction: float, namespace: str) -> str:
-    if fraction <= 0:
-        return ""
-    shared_target = int(target * fraction)
-    header = f"SHARED PREFIX FOR {namespace}\n"
-    filler_count = max(1, shared_target - token_count(base, header))
-    for _ in range(12):
-        prefix = header + " shared" * filler_count
-        actual = token_count(base, prefix)
-        if actual == shared_target:
-            return prefix
-        filler_count += shared_target - actual
-    raise RuntimeError(f"failed to construct shared prefix of {shared_target} tokens")
 
 
 def stream_completion(
@@ -214,7 +178,7 @@ def stream_completion(
     stream_path: Path,
 ) -> dict[str, Any]:
     request = urllib.request.Request(
-        base + "/v1/completions",
+        base + "/v1/chat/completions",
         data=json.dumps(payload).encode(),
         headers={"Content-Type": "application/json"},
     )
@@ -224,6 +188,8 @@ def stream_completion(
     usage: dict[str, Any] | None = None
     finish_reason: str | None = None
     output_parts: list[str] = []
+    content_parts: list[str] = []
+    reasoning_parts: list[str] = []
     token_event_times: list[float] = []
     events = 0
     try:
@@ -240,17 +206,25 @@ def stream_completion(
                 if event.get("usage"):
                     usage = event["usage"]
                 for choice in event.get("choices", []):
-                    text = choice.get("text") or ""
+                    delta = choice.get("delta") or {}
+                    reasoning = delta.get("reasoning_content") or delta.get("reasoning") or ""
+                    content = delta.get("content") or ""
+                    text = reasoning + content
                     if text and first is None:
                         first = elapsed
                     if text:
                         token_event_times.append(elapsed)
                     output_parts.append(text)
+                    reasoning_parts.append(reasoning)
+                    content_parts.append(content)
                     finish_reason = choice.get("finish_reason") or finish_reason
     except urllib.error.HTTPError as error:
         raise RuntimeError(f"HTTP {error.code}: {error.read().decode()}") from error
     wall = time.monotonic() - start
     output = "".join(output_parts)
+    stream_path.with_name(stream_path.name.replace("stream-", "response-").replace(".jsonl", ".txt")).write_text(
+        "REASONING\n" + "".join(reasoning_parts) + "\nCONTENT\n" + "".join(content_parts)
+    )
     stream_gaps = [
         later - earlier for earlier, later in zip(token_event_times, token_event_times[1:])
     ]
@@ -264,7 +238,8 @@ def stream_completion(
         "events": events,
         "output_chars": len(output),
         "output_sha256": hashlib.sha256(output.encode()).hexdigest(),
-        "marker_present": marker in output,
+        "content_chars": len("".join(content_parts)),
+        "reasoning_chars": len("".join(reasoning_parts)),
         "max_stream_gap_s": max(stream_gaps, default=0.0),
         "stream_gaps_over_2s": sum(gap > 2.0 for gap in stream_gaps),
     }
@@ -326,37 +301,28 @@ def run_once(
     scenario: Scenario,
     repeat: int,
     run_dir: Path,
+    sources: list[dict[str, str]],
+    namespace: str,
 ) -> dict[str, Any]:
     wait_idle(base)
     case_dir = run_dir / f"{scenario.name}-r{repeat + 1}"
     case_dir.mkdir(parents=True)
-    shared_prefix = make_shared_prefix(
-        base,
-        scenario.prompt_tokens,
-        scenario.shared_prefix_fraction,
-        scenario.name,
-    )
-    prompts: list[tuple[str, int, str]] = []
+    prompts: list[tuple[str, int, str, list[str]]] = []
     for index in range(scenario.concurrency):
-        if scenario.prompt_set:
+        if scenario.shared_prefix_fraction == 1.0:
+            marker = f"B70-{namespace}-{scenario.name}-Q{index + 1}"
+        elif scenario.prompt_set:
             logical_index = repeat * scenario.concurrency + index + 1
-            marker = f"B70-{scenario.prompt_set}-Q{logical_index}"
+            marker = f"B70-{namespace}-{scenario.prompt_set}-Q{logical_index}"
         else:
-            marker = f"B70-{scenario.name}-R{repeat + 1}-Q{index + 1}"
-        logical_task = (repeat * scenario.concurrency + index) % len(CODING_TASKS)
-        task_suffix = (
-            "\nTASK: " + CODING_TASKS[logical_task]
-            if scenario.prompt_style == "coding"
-            else ""
+            marker = f"B70-{namespace}-{scenario.name}-R{repeat + 1}-Q{index + 1}"
+        prompt, actual, included = make_prompt(
+            sources, scenario.prompt_tokens, marker,
+            lambda content: token_count(base, content),
+            scenario.shared_prefix_fraction,
+            namespace,
         )
-        prompt, actual = make_prompt(
-            base,
-            scenario.prompt_tokens,
-            marker,
-            shared_prefix,
-            task_suffix,
-        )
-        prompts.append((prompt, actual, marker))
+        prompts.append((prompt, actual, marker, included))
 
     before, before_raw = metric_snapshot(base)
     energy_before_uj = read_card_energy_uj()
@@ -382,13 +348,16 @@ def run_once(
     futures: list[concurrent.futures.Future[dict[str, Any]]] = []
     try:
         with concurrent.futures.ThreadPoolExecutor(max_workers=scenario.concurrency) as executor:
-            for index, (prompt, actual, marker) in enumerate(prompts):
+            for index, (prompt, actual, marker, included) in enumerate(prompts):
+                (case_dir / f"prompt-{index + 1}.txt").write_text(prompt)
                 payload = {
                     "model": MODEL,
-                    "prompt": prompt,
+                    "messages": [{"role": "user", "content": prompt}],
                     "max_tokens": scenario.output_tokens,
-                    "temperature": 0,
+                    **SAMPLING,
+                    "seed": 770000 + repeat * 100 + index,
                     "ignore_eos": True,
+                    "chat_template_kwargs": CHAT_TEMPLATE_KWARGS,
                     "stream": True,
                     "stream_options": {"include_usage": True},
                 }
@@ -396,9 +365,10 @@ def run_once(
                     json.dumps(
                         {
                             **payload,
-                            "prompt": f"<generated:{actual} tokens>",
+                            "messages": f"<frozen-source-prompt:{actual} tokens>",
                             "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
                             "marker": marker,
+                            "source_paths": included,
                         },
                         indent=2,
                     )
@@ -588,20 +558,17 @@ def run_once(
         "server_preemption_lines": server_preemption_lines,
         "admission_expectation_met": scenario.expected_peak_running is None
         or peak_running == scenario.expected_peak_running,
-        "all_outputs_nonempty": all(row["output_chars"] > 0 for row in results),
+        "all_outputs_nonempty": all(row["content_chars"] > 0 for row in results),
+        "all_prompt_counts_match": all(
+            int((row.get("usage") or {}).get("prompt_tokens", 0)) == prompts[index][1]
+            for index, row in enumerate(results)
+        ),
         "all_completion_counts_exact": all(
             int((row.get("usage") or {}).get("completion_tokens", 0))
-            == scenario.output_tokens
-            for row in results
+            == scenario.output_tokens for row in results
         ),
         "all_finish_reasons_length": all(
             row["finish_reason"] == "length" for row in results
-        ),
-        "marker_check_applicable": scenario.prompt_style != "coding",
-        "all_requested_markers_present": (
-            all(row["marker_present"] for row in results)
-            if scenario.prompt_style != "coding"
-            else None
         ),
     }
     if finished_requests != scenario.concurrency:
@@ -616,10 +583,10 @@ def run_once(
         )
     if not summary["all_outputs_nonempty"]:
         raise RuntimeError("one or more responses were empty")
+    if not summary["all_prompt_counts_match"]:
+        raise RuntimeError("endpoint prompt count differs from the calibrated prompt")
     if not summary["all_completion_counts_exact"]:
-        raise RuntimeError(
-            f"one or more responses did not produce exactly {scenario.output_tokens} tokens"
-        )
+        raise RuntimeError("one or more responses did not reach the output cap")
     if not summary["all_finish_reasons_length"]:
         raise RuntimeError("one or more responses did not finish with reason=length")
     (case_dir / "summary.json").write_text(json.dumps(summary, indent=2))
@@ -711,19 +678,12 @@ def write_aggregate(run_dir: Path, manifest: dict[str, Any], rows: list[dict[str
                     item["prefill_recompute_excess"] for item in items
                 ),
                 "all_outputs_nonempty": all(item["all_outputs_nonempty"] for item in items),
+                "all_prompt_counts_match": all(item["all_prompt_counts_match"] for item in items),
                 "all_completion_counts_exact": all(
                     item["all_completion_counts_exact"] for item in items
                 ),
                 "all_finish_reasons_length": all(
                     item["all_finish_reasons_length"] for item in items
-                ),
-                "marker_check_applicable": all(
-                    item["marker_check_applicable"] for item in items
-                ),
-                "all_requested_markers_present": (
-                    all(item["all_requested_markers_present"] for item in items)
-                    if all(item["marker_check_applicable"] for item in items)
-                    else None
                 ),
             }
         )
@@ -756,13 +716,14 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--execute", action="store_true", help="actually send inference requests")
     parser.add_argument("--base", default=DEFAULT_BASE)
-    parser.add_argument("--container", default="b70-qwen38-vllm")
+    parser.add_argument("--container", default="qwen38-vllm-production")
     parser.add_argument(
         "--scenarios",
         type=Path,
         default=ROOT.parent / "benchmarks" / "current-profile-scenarios.json",
     )
     parser.add_argument("--only", action="append", default=[], help="scenario name or group")
+    parser.add_argument("--prompt-namespace", help="Pin this value across A/B arms for identical prompts; defaults to a fresh run ID")
     parser.add_argument(
         "--output-root",
         type=Path,
@@ -776,9 +737,12 @@ def main() -> int:
         scenarios = [row for row in scenarios if row.name in selected or row.group in selected]
     if not scenarios:
         raise SystemExit("no scenarios selected")
+    timestamp = datetime.now().astimezone().strftime("%Y%m%d-%H%M%S")
+    namespace = args.prompt_namespace or timestamp
+    sources, corpus_sha256 = load_corpus(CORPUS)
     plan = [scenario.__dict__ for scenario in scenarios]
     if not args.execute:
-        print(json.dumps({"execute": False, "note": "dry plan only; no API calls made", "plan": plan}, indent=2))
+        print(json.dumps({"execute": False, "note": "dry plan only; no API calls made", "corpus_sha256": corpus_sha256, "sampling": SAMPLING, "prompt_namespace": namespace, "plan": plan}, indent=2))
         return 0
 
     inspect = inspect_container(args.container)
@@ -788,12 +752,14 @@ def main() -> int:
         raise SystemExit(f"refusing benchmark: live max_num_seqs={inspect['max_num_seqs']}, expected 4")
     if not inspect["reserve_full_isl_explicit"]:
         raise SystemExit("refusing benchmark: --scheduler-reserve-full-isl is not explicit")
+    for scenario in scenarios:
+        if scenario.prompt_tokens + scenario.output_tokens > inspect["max_model_len"]:
+            raise SystemExit(f"scenario {scenario.name} exceeds the live model context limit")
     if metrics["running"] or metrics["waiting"]:
         raise SystemExit(
             f"refusing benchmark: engine is busy (running={metrics['running']}, waiting={metrics['waiting']})"
         )
 
-    timestamp = datetime.now().astimezone().strftime("%Y%m%d-%H%M%S")
     run_dir = args.output_root / f"run-{timestamp}-w{inspect['watermark']:.2f}"
     run_dir.mkdir(parents=True)
     manifest = {
@@ -801,6 +767,12 @@ def main() -> int:
         "base": args.base,
         "container": inspect,
         "models": models,
+        "corpus_sha256": corpus_sha256,
+        "prompt_namespace": namespace,
+        "corpus_sources": len(sources),
+        "sampling": SAMPLING,
+        "chat_template_kwargs": CHAT_TEMPLATE_KWARGS,
+        "quality_note": "Responses are saved for inspection; 1024-token fixed-length output may continue after a natural EOS and is a throughput measure, not a semantic correctness grade.",
         "scenarios": plan,
         "measurement_definitions": {
             "prefill_compute_tokens_per_s": "native computed KV tokens divided by native request prefill seconds",
@@ -829,10 +801,12 @@ def main() -> int:
                     scenario,
                     -scenario.warmups + warmup,
                     run_dir / "warmups",
+                    sources,
+                    namespace,
                 )
             for repeat in range(scenario.repeats):
                 print(f"START {scenario.name} repeat {repeat + 1}/{scenario.repeats}", flush=True)
-                row = run_once(args.base, args.container, scenario, repeat, run_dir)
+                row = run_once(args.base, args.container, scenario, repeat, run_dir, sources, namespace)
                 rows.append(row)
                 write_aggregate(run_dir, manifest, rows)
                 print(

@@ -15,7 +15,7 @@ if [[ "$run_dir" == /* || "$run_dir" == *".."* ]]; then
   exit 2
 fi
 
-image="${VLLM_IMAGE:-local/b70-qwen38-vllm:q128-m04-196k-180w-runtime2635}"
+image="${VLLM_IMAGE:-local/qwen38-b70-vllm:vllm-0.30.0-xpu-kernels-0.1.15.4}"
 model="${MODEL_ID:-mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16}"
 revision="${MODEL_REVISION:-a47b0c6f0d756bc394c4cc629d5b0ded1acc7001}"
 served_name="${SERVED_MODEL_NAME:-Qwen3.8-27B}"
@@ -32,23 +32,23 @@ docker run --rm \
   --entrypoint python "$image" \
   scripts/generate-exact-prompts.py \
   --model "$model" --revision "$revision" \
-  --targets 512,8192,32768,65536,131072 \
-  --per-target 6 --output "/work/$run_dir/prompts.json"
+  --targets 512,8192,32768,65536 \
+  --per-target 3 --output "/work/$run_dir/prompts.json"
 
 python3 scripts/context-benchmark.py \
   --mode context --prompts "$run_dir/prompts.json" \
   --outdir "$run_dir/p512-g128" \
-  --model "$served_name" --budget "$budget" --reps 5 \
-  --target 512 --output 128 --root "$api_root" \
-  --full-output-warmup --ignore-eos
+  --model "$served_name" --budget "$budget" --reps 2 \
+  --target 512 --output 1024 --root "$api_root" \
+  --full-output-warmup
 
-for target in 8192 32768 65536 131072; do
+for target in 8192 32768 65536; do
   python3 scripts/context-benchmark.py \
     --mode context --prompts "$run_dir/prompts.json" \
     --outdir "$run_dir/p${target}-g512" \
-    --model "$served_name" --budget "$budget" --reps 5 \
-    --target "$target" --output 512 --root "$api_root" \
-    --full-output-warmup --ignore-eos
+    --model "$served_name" --budget "$budget" --reps 2 \
+    --target "$target" --output 1024 --root "$api_root" \
+    --full-output-warmup
 done
 
 echo "Benchmark complete: $run_dir"

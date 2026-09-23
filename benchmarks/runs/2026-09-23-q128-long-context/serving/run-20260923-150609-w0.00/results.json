@@ -1,0 +1,336 @@
+{
+  "manifest": {
+    "started_at": "2026-09-23T15:06:09.646109+02:00",
+    "base": "http://127.0.0.1:8081",
+    "container": {
+      "id": "87c66f6297ca59c052712e22e9f358834650ae76436ea8668e79ad02ee62c76f",
+      "image": "local/qwen38-b70-vllm:vllm-0.30.0-20260923",
+      "created": "2026-09-23T12:30:06.633421841Z",
+      "command": [
+        "serve",
+        "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+        "--revision",
+        "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+        "--quantization",
+        "gptq",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "200704",
+        "--gpu-memory-utilization",
+        "0.93",
+        "--kv-cache-dtype",
+        "fp8",
+        "--max-num-seqs",
+        "4",
+        "--max-num-batched-tokens",
+        "6656",
+        "--scheduler-reserve-full-isl",
+        "--watermark",
+        "0.0",
+        "--enable-prefix-caching",
+        "--mamba-cache-mode",
+        "align",
+        "--served-model-name",
+        "Qwen3.8-27B",
+        "--speculative-config",
+        "{\"method\":\"mtp\",\"num_speculative_tokens\":4}",
+        "--middleware",
+        "request_defaults.ChatDefaults",
+        "--reasoning-config",
+        "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+        "--override-generation-config",
+        "{\"max_new_tokens\":16384}",
+        "--enable-auto-tool-choice",
+        "--tool-call-parser",
+        "qwen3_xml",
+        "--reasoning-parser",
+        "qwen3",
+        "--limit-mm-per-prompt",
+        "{\"image\":1,\"video\":0}",
+        "--mm-processor-kwargs",
+        "{\"max_pixels\":4194304}"
+      ],
+      "max_num_seqs": 4,
+      "max_num_batched_tokens": 6656,
+      "max_model_len": 200704,
+      "watermark": 0.0,
+      "reserve_full_isl_explicit": true
+    },
+    "models": {
+      "object": "list",
+      "data": [
+        {
+          "id": "Qwen3.8-27B",
+          "object": "model",
+          "created": 1790168769,
+          "owned_by": "vllm",
+          "root": "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+          "parent": null,
+          "max_model_len": 200704,
+          "permission": [
+            {
+              "id": "modelperm-91e396a4a88cc5bb",
+              "object": "model_permission",
+              "created": 1790168769,
+              "allow_create_engine": false,
+              "allow_sampling": true,
+              "allow_logprobs": true,
+              "allow_search_indices": false,
+              "allow_view": true,
+              "allow_fine_tuning": false,
+              "organization": "*",
+              "group": null,
+              "is_blocking": false
+            }
+          ]
+        }
+      ]
+    },
+    "scenarios": [
+      {
+        "name": "q128-long-context-192k-c1",
+        "group": "q128-long-context",
+        "prompt_tokens": 196608,
+        "output_tokens": 32,
+        "concurrency": 1,
+        "repeats": 1,
+        "shared_prefix_fraction": 0.0,
+        "prompt_set": "",
+        "prompt_style": "synthetic",
+        "expected_peak_running": 1,
+        "warmups": 0
+      }
+    ],
+    "measurement_definitions": {
+      "prefill_compute_tokens_per_s": "native computed KV tokens divided by native request prefill seconds",
+      "weighted_decode_tokens_per_s": "generated tokens after the first token of each request divided by summed native request decode seconds",
+      "aggregate_prefill_wave_tokens_per_s": "all prompt tokens in the wave divided by time from simultaneous release until the last request emits its first token",
+      "aggregate_decode_wave_tokens_per_s": "all post-first output tokens in the wave divided by time from the earliest first token until the final request completes",
+      "effective_decode_concurrency": "summed native per-request decode seconds divided by aggregate decode-window seconds; aggregate decode equals weighted per-request decode multiplied by this occupancy",
+      "fully_overlapped_aggregate_decode_tokens_per_s": "native generation-token counter delta divided by sampled wall time after every request emitted its first token and before any request completed",
+      "tpot_s": "client time after first generated event divided by completion tokens minus one",
+      "batch_wall_s": "elapsed time from simultaneous release until every request in the wave completed",
+      "e2e_policy": "reported in seconds; legacy aggregate output tokens per wall second is retained only in per-case raw data"
+    }
+  },
+  "cases": [
+    {
+      "scenario": {
+        "name": "q128-long-context-192k-c1",
+        "group": "q128-long-context",
+        "prompt_tokens": 196608,
+        "output_tokens": 32,
+        "concurrency": 1,
+        "repeats": 1,
+        "shared_prefix_fraction": 0.0,
+        "prompt_set": "",
+        "prompt_style": "synthetic",
+        "expected_peak_running": 1,
+        "warmups": 0
+      },
+      "repeat": 1,
+      "batch_wall_s": 359.566514741,
+      "requests": [
+        {
+          "marker": "B70-q128-long-context-192k-c1-R1-Q1",
+          "wall_s": 359.5598793899999,
+          "ttft_s": 358.79301354199924,
+          "post_first_generation_s": 0.7668658480006343,
+          "usage": {
+            "prompt_tokens": 196608,
+            "total_tokens": 196640,
+            "completion_tokens": 32
+          },
+          "finish_reason": "length",
+          "events": 13,
+          "output_chars": 149,
+          "output_sha256": "5d4f71a92348147deebf54814733be68c783f4b0bdbc7e6438b9a654fe295a93",
+          "marker_present": false,
+          "max_stream_gap_s": 0.08045409799979097,
+          "stream_gaps_over_2s": 0
+        }
+      ],
+      "legacy_aggregate_output_tokens_per_s": 0.08899605132321617,
+      "request_ttft_s": {
+        "n": 1,
+        "mean": 358.79301354199924,
+        "median": 358.79301354199924,
+        "p95": 358.79301354199924,
+        "min": 358.79301354199924,
+        "max": 358.79301354199924
+      },
+      "request_tpot_s": {
+        "n": 1,
+        "mean": 0.02473760800002046,
+        "median": 0.02473760800002046,
+        "p95": 0.02473760800002046,
+        "min": 0.02473760800002046,
+        "max": 0.02473760800002046
+      },
+      "request_post_first_decode_tps": {
+        "n": 1,
+        "mean": 40.42428031033449,
+        "median": 40.42428031033449,
+        "p95": 40.42428031033449,
+        "min": 40.42428031033449,
+        "max": 40.42428031033449
+      },
+      "request_e2e_s": {
+        "n": 1,
+        "mean": 359.5598793899999,
+        "median": 359.5598793899999,
+        "p95": 359.5598793899999,
+        "min": 359.5598793899999,
+        "max": 359.5598793899999
+      },
+      "peak_running": 1.0,
+      "peak_waiting": 0.0,
+      "peak_waiting_capacity": 0.0,
+      "peak_kv_cache_usage": 0.9589041095890412,
+      "preemptions": 0.0,
+      "requested_prompt_tokens": 196608,
+      "logical_prompt_tokens_observed": 196608.0,
+      "prefill_tokens_computed": 196608.0,
+      "prompt_tokens_cached": 0.0,
+      "prefill_recompute_excess": 0.0,
+      "native_prefill_seconds": 358.594637227,
+      "native_decode_seconds": 0.7948044059994572,
+      "native_prefill_compute_tokens_per_s": 548.2736761496571,
+      "native_weighted_decode_tokens_per_s": 39.0033066827528,
+      "aggregate_prefill_wave_tokens_per_s": 547.9705361570137,
+      "aggregate_prefill_window_s": 358.79301354199924,
+      "aggregate_decode_wave_tokens_per_s": 40.42428031033449,
+      "aggregate_decode_window_s": 0.7668658480006343,
+      "effective_decode_concurrency": 1.036432132258418,
+      "fully_overlapped_decode_sampled_s": 0.5106177489997208,
+      "fully_overlapped_generation_tokens": 15.0,
+      "fully_overlapped_aggregate_decode_tokens_per_s": 29.376182142873773,
+      "completion_tokens": 32,
+      "post_first_completion_tokens": 31,
+      "finished_requests_delta": 1.0,
+      "speculative_draft_tokens": 44.0,
+      "speculative_accepted_tokens": 22.0,
+      "speculative_acceptance": 0.5,
+      "queue_time_sum_s": 1.8030000319413375e-05,
+      "queue_observations": 1.0,
+      "card_energy_j": 64699.444641,
+      "average_card_power_w": 179.9373467454381,
+      "scheduler_transitions": [
+        {
+          "elapsed_s": 0.0056745609999779845,
+          "running": 0.0,
+          "waiting": 0.0,
+          "waiting_capacity": 0.0,
+          "kv_cache_usage": 0.0,
+          "preemptions_total": 0.0
+        },
+        {
+          "elapsed_s": 4.863818664000064,
+          "running": 1.0,
+          "waiting": 0.0,
+          "waiting_capacity": 0.0,
+          "kv_cache_usage": 0.18493150684931503,
+          "preemptions_total": 0.0
+        }
+      ],
+      "server_preemption_lines": [],
+      "admission_expectation_met": true,
+      "all_outputs_nonempty": true,
+      "all_completion_counts_exact": true,
+      "all_finish_reasons_length": true,
+      "marker_check_applicable": true,
+      "all_requested_markers_present": false
+    }
+  ],
+  "summary": [
+    {
+      "name": "q128-long-context-192k-c1",
+      "group": "q128-long-context",
+      "concurrency": 1,
+      "prompt_tokens": 196608,
+      "output_tokens": 32,
+      "repeats": 1,
+      "batch_wall_s": {
+        "n": 1,
+        "mean": 359.566514741,
+        "median": 359.566514741,
+        "p95": 359.566514741,
+        "min": 359.566514741,
+        "max": 359.566514741
+      },
+      "request_ttft_median_s": {
+        "n": 1,
+        "mean": 358.79301354199924,
+        "median": 358.79301354199924,
+        "p95": 358.79301354199924,
+        "min": 358.79301354199924,
+        "max": 358.79301354199924
+      },
+      "request_tpot_median_s": {
+        "n": 1,
+        "mean": 0.02473760800002046,
+        "median": 0.02473760800002046,
+        "p95": 0.02473760800002046,
+        "min": 0.02473760800002046,
+        "max": 0.02473760800002046
+      },
+      "native_prefill_compute_tokens_per_s": {
+        "n": 1,
+        "mean": 548.2736761496571,
+        "median": 548.2736761496571,
+        "p95": 548.2736761496571,
+        "min": 548.2736761496571,
+        "max": 548.2736761496571
+      },
+      "native_weighted_decode_tokens_per_s": {
+        "n": 1,
+        "mean": 39.0033066827528,
+        "median": 39.0033066827528,
+        "p95": 39.0033066827528,
+        "min": 39.0033066827528,
+        "max": 39.0033066827528
+      },
+      "aggregate_prefill_wave_tokens_per_s": {
+        "n": 1,
+        "mean": 547.9705361570137,
+        "median": 547.9705361570137,
+        "p95": 547.9705361570137,
+        "min": 547.9705361570137,
+        "max": 547.9705361570137
+      },
+      "aggregate_decode_wave_tokens_per_s": {
+        "n": 1,
+        "mean": 40.42428031033449,
+        "median": 40.42428031033449,
+        "p95": 40.42428031033449,
+        "min": 40.42428031033449,
+        "max": 40.42428031033449
+      },
+      "weighted_aggregate_prefill_wave_tokens_per_s": 547.9705361570137,
+      "weighted_aggregate_decode_wave_tokens_per_s": 40.42428031033449,
+      "weighted_native_decode_per_request_tokens_per_s": 39.0033066827528,
+      "effective_decode_concurrency": 1.036432132258418,
+      "fully_overlapped_decode_sampled_s": 0.5106177489997208,
+      "fully_overlapped_generation_tokens": 15.0,
+      "fully_overlapped_aggregate_decode_tokens_per_s": 29.376182142873773,
+      "speculative_acceptance": 0.5,
+      "card_energy_j": 64699.444641,
+      "max_running": 1.0,
+      "max_waiting": 0.0,
+      "max_kv_cache_usage": 0.9589041095890412,
+      "preemptions": 0.0,
+      "prefill_recompute_excess": 0.0,
+      "all_outputs_nonempty": true,
+      "all_completion_counts_exact": true,
+      "all_finish_reasons_length": true,
+      "marker_check_applicable": true,
+      "all_requested_markers_present": false
+    }
+  ],
+  "correctness": {
+    "by_marker": {},
+    "comparable_markers": 0,
+    "all_comparable_outputs_equal": false
+  }
+}

@@ -39,7 +39,7 @@ its head and five MTP linears.
 | Scheduler | Up to **4** sequences; **6,656** max batched tokens; full-ISL admission; watermark **0.0** |
 | Prefix cache | Enabled; `--mamba-cache-mode align` |
 | Attention | Q128/KV32 prefill + M04 shared-KV verification; native fallback |
-| vLLM / XPU kernels | `0.30.0+xpu` / `0.1.14.1` |
+| vLLM / XPU kernels | `0.30.0+xpu` / `0.1.15.4` |
 | Intel userspace | Compute Runtime `26.35.39758.10`; IGC `2.41.5` |
 | XPU execution | Graphs enabled; expandable allocator segments; worker `spawn` |
 | Chat defaults | Medium reasoning; thinking budget capped at **8,192**; default output **16,384** |
@@ -194,7 +194,7 @@ it before every start and refuses to start if it cannot apply the cap.
 ./scripts/run-server.sh
 ```
 
-The default image tag is `local/b70-qwen38-vllm:q128-m04-196k-180w-runtime2635`.
+The default image tag is `local/b70-qwen38-vllm:vllm-0.30.0-xpu-kernels-0.1.15.4`.
 Build, download and serving scripts read the same `.env` image setting.
 The download script fetches the pinned model revision; serving uses that cache
 in offline mode. Wait for `Application startup complete`, then check:
@@ -342,7 +342,7 @@ This is a separate workload from the coding result above.
 ## Pinned build contents
 
 [`docker/Dockerfile`](docker/Dockerfile) starts from
-`vllm/vllm-openai-xpu@sha256:96db42e248d48760a4937eb3d04c4878b39d13a9814efea95d510393e097a901`
+`vllm/vllm-openai-xpu@sha256:fc0e112afb64e3a06fe8daff34652435822a629412f38efce8f0f67a46636b8d`
 and installs:
 
 1. SHA-256-verified Intel userspace packages at the versions above.
@@ -351,15 +351,20 @@ and installs:
 3. Environment-gated INT4 conversions for the draft head and five MTP linears.
 4. The hash-checked Q128 library and M04 library plus the combined production
    attention adapter, documented in [`docker/m04`](docker/m04/README.md).
+5. The SHA-256-verified published XPU kernel wheel `0.1.15.4`.
+
+Run [`scripts/build-image.sh`](scripts/build-image.sh) to fetch and verify the
+wheel before Docker builds the image. The wheel is stored only in the ignored
+local build context.
 
 The prebuilt attention libraries are bound to this exact vLLM/XPU ABI. Keep
 the pins to reproduce the profile; changing the base, model or kernels needs
 fresh validation. The build uses the deployed attention artifacts; a rebuild's
 Docker image ID can differ from the measured image ID recorded with the result.
-The [build verification](benchmarks/runs/2026-09-19-production-coding/build-verification.json)
-records the successful recipe build, file comparison and production smoke checks.
-Its only vLLM source difference from the measured image is an additional
-startup diagnostic log statement in the measured worker.
+The [earlier build verification](benchmarks/runs/2026-09-19-production-coding/build-verification.json)
+records the vLLM 0.29 recipe build and production smoke checks. The
+[XPU kernel A/B and qualification](benchmarks/runs/2026-09-23-xpu-kernels-0115/README.md)
+records the 0.30 wheel update; it showed no stable performance gain.
 
 ## Sources and acknowledgements
 

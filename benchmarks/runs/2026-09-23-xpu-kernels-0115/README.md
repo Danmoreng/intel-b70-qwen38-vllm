@@ -39,9 +39,19 @@ also seen in the earlier vLLM version comparison. Four waves per load are too
 few to resolve effects around 1%, and acceptance/output variation is material.
 
 The wheel passed this serving compatibility screen, but it produced **no stable
-performance improvement**. Keep 0.1.14.1 in production. The standalone
-new-wheel image remains an experiment; long context, vision, tools and a
-quality comparison were not run for promotion.
+performance improvement**. The user chose to promote the published newer
+kernel wheel after additional compatibility checks. The candidate passed
+vision and tool calling, prefix-cache/MTP state, and a cold 196,608-token
+input with 32 output tokens. Q128/M04 dispatch occurred with zero
+preemptions. The long-context check measured 360.23 seconds wall time, including
+359.60 seconds to first token. Its short output was not a content-quality
+test. Production then started with image
+`sha256:648132c9b9da4bb244d7304b956c1a9bb825be640a92755a5ffe32f2bbd679b4`,
+vLLM 0.30.0+xpu, Torch 2.13.0+xpu and XPU kernels 0.1.15.4. Vision/tools
+and prefix-cache checks passed on the production endpoint; two warm requests
+reused 14,976 prompt tokens each. The configured context is 200,704 tokens
+and the card limit is 180 W. See [`qualification.json`](qualification.json)
+and [`production-promotion.json`](production-promotion.json).
 
 Evidence: [`plan.json`](plan.json), [`summary.json`](summary.json), the four
 content-free arm results ([1](01-candidate.json), [2](02-control.json),

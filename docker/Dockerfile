@@ -60,4 +60,11 @@ RUN echo "f38f23c4535407b6c3f083c5e81c89c7f704bae374571cf2e32f9da13abe0873  /opt
  && python /tmp/patch_attention_import.py \
  && rm /tmp/patch_attention_import.py
 
+# Published XPU kernel wheel promoted after the short A/B and serving checks.
+# Keep vLLM 0.30.0+xpu and Torch 2.13.0+xpu pinned.
+COPY wheel/vllm_xpu_kernels-0.1.15.4-cp38-abi3-manylinux_2_28_x86_64.whl /tmp/vllm_xpu_kernels-0.1.15.4-cp38-abi3-manylinux_2_28_x86_64.whl
+RUN echo "4ec262f7afdd07c62defc8286dc9f357569627b996c09b410f7972b653696fe7  /tmp/vllm_xpu_kernels-0.1.15.4-cp38-abi3-manylinux_2_28_x86_64.whl" | sha256sum -c - \
+ && /opt/venv/bin/python -m pip install --no-deps --force-reinstall /tmp/vllm_xpu_kernels-0.1.15.4-cp38-abi3-manylinux_2_28_x86_64.whl \
+ && rm /tmp/vllm_xpu_kernels-0.1.15.4-cp38-abi3-manylinux_2_28_x86_64.whl
+
 ENTRYPOINT ["vllm", "serve"]

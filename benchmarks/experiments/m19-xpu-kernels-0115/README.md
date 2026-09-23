@@ -1,6 +1,6 @@
 # XPU kernels 0.1.15.4 on published vLLM 0.30.0
 
-The production image has `vllm-xpu-kernels 0.1.14.1`, vLLM 0.30.0+xpu and
+The pre-promotion production image had `vllm-xpu-kernels 0.1.14.1`, vLLM 0.30.0+xpu and
 Torch 2.13.0+xpu. The isolated candidate takes that exact production image and
 replaces only the XPU kernel wheel with PyPI version 0.1.15.4. The wheel SHA-256
 is pinned in [`Dockerfile`](Dockerfile). The existing Q128/M04 binaries, local

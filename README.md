@@ -3,7 +3,9 @@
 A deployment recipe for **one 32 GB Intel Arc Pro B70 at 180 W**, with
 **Q128/KV32 prefill + M04 shared-KV MTP verification**, a **200,704-token**
 context, vision, tool calling and automatic prefix caching. This is the
-current production configuration, verified on **2026-09-22**.
+current production configuration, promoted with vLLM **0.30.0** on
+**2026-09-23**. The performance tables below are the vLLM **0.29.0** baseline;
+the short 0.30 MTP and prefix-boundary comparisons are linked below.
 
 With four concurrent requests, aggregate decode reaches **214.17 tok/s at
 2K/512**, **215.81 tok/s at 4K/1K coding** and **196.21 tok/s at 16K/512**.
@@ -37,7 +39,7 @@ its head and five MTP linears.
 | Scheduler | Up to **4** sequences; **6,656** max batched tokens; full-ISL admission; watermark **0.0** |
 | Prefix cache | Enabled; `--mamba-cache-mode align` |
 | Attention | Q128/KV32 prefill + M04 shared-KV verification; native fallback |
-| vLLM / XPU kernels | `0.29.0+xpu` / `0.1.14.1` |
+| vLLM / XPU kernels | `0.30.0+xpu` / `0.1.14.1` |
 | Intel userspace | Compute Runtime `26.35.39758.10`; IGC `2.41.5` |
 | XPU execution | Graphs enabled; expandable allocator segments; worker `spawn` |
 | Chat defaults | Medium reasoning; thinking budget capped at **8,192**; default output **16,384** |
@@ -53,9 +55,16 @@ sets `B70_MTP_BF16_DRAFT=1`, `B70_DRAFT_LMHEAD_INT4=1`,
 The BF16-draft flag selects the model's draft-loading path; the two INT4 flags
 then convert the listed draft layers.
 
-## Current phase and concurrency benchmark
+The v0.30.0 image keeps the production Q128/M04 binaries and Intel userspace.
+The previous local EAGLE/Mamba-drop patch is omitted because it suppressed all
+prefix reuse on this release; v0.30 already moves the written Mamba checkpoint
+to the EAGLE replay boundary. See the
+[paired boundary check](benchmarks/runs/2026-09-23-prefix-boundary/README.md)
+and [seeded Wikipedia MTP A/B](benchmarks/runs/2026-09-23-wikipedia-mtp/README.md).
 
-The current profile was measured again on 2026-09-22 without changing or
+## vLLM 0.29 phase and concurrency baseline
+
+The then-current production profile was measured again on 2026-09-22 without changing or
 restarting the engine. MTP4, Q128/KV32 prefill, M04 shared-KV verification,
 batch 6,656, C4, FP8 KV and the 180 W cap were active throughout. The run
 contained 70 measured request waves and 124 completions. Every completion was

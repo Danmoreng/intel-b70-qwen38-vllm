@@ -50,3 +50,26 @@ path; they do not identify which component causes it. The current production
 image remains the sensible choice until the MTP regression and the relevant
 correctness/long-context behavior are qualified. No production image or
 service was changed by this audit.
+
+## Promotion follow-up, 2026-09-23
+
+The earlier recommendation to retain `patch_fix_eagle_drop.py` on v0.30.0
+was overturned by a direct production-prefix check. The original candidate
+reported **0 prefix-cache hits** on both warm requests with a shared 17.7K
+system prompt (TTFT about 13.5 s each). The same test on v0.29 reported
+13,312 hits and 3.74 s warm TTFT. Replacing only the patched
+`single_type_kv_cache_manager.py` with the unmodified v0.30.0 file restored
+14,976 hits and about 2.36 s warm TTFT. The reproducible v0.30.0 Dockerfile
+therefore omits this patch; the other production patches and Q128/M04 binaries
+remain. The rebuilt image ID is
+`sha256:cd6562f03c8328fe60ca69269d0e4175a284859e56525950fbfc021be19d73f3`.
+The [boundary screen](../../runs/2026-09-23-prefix-boundary/README.md) records
+the remaining exactly aligned resend behavior.
+
+The relevant upstream change is [#53945](https://github.com/vllm-project/vllm/pull/53945):
+v0.30 moves the Mamba checkpoint written for EAGLE replay back by one hash
+block. Applying our earlier read-side drop on top of this skips a second
+block. On the corrected image, five fixed-seed code lookups in a 22.9K-token
+shared document matched exactly with prefix caching enabled and disabled;
+all were correct. This is targeted evidence, not a proof across every
+Mamba-state layout.

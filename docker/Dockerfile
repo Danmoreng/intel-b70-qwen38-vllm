@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=vllm/vllm-openai-xpu@sha256:96db42e248d48760a4937eb3d04c4878b39d13a9814efea95d510393e097a901
+ARG BASE_IMAGE=vllm/vllm-openai-xpu@sha256:fc0e112afb64e3a06fe8daff34652435822a629412f38efce8f0f67a46636b8d
 FROM ${BASE_IMAGE}
 
 USER root
@@ -28,17 +28,14 @@ ADD https://raw.githubusercontent.com/SergiioB/intel-arc-pro-b70-inference-cookb
 ADD https://raw.githubusercontent.com/SergiioB/intel-arc-pro-b70-inference-cookbook/${COOKBOOK_COMMIT}/patches/patch_mtp_boundary.py /opt/b70-upstream/patch_mtp_boundary.py
 ADD https://raw.githubusercontent.com/SergiioB/intel-arc-pro-b70-inference-cookbook/${COOKBOOK_COMMIT}/patches/patch_fix_accepted_sync.py /opt/b70-upstream/patch_fix_accepted_sync.py
 ADD https://raw.githubusercontent.com/SergiioB/intel-arc-pro-b70-inference-cookbook/${COOKBOOK_COMMIT}/patches/patch_fix_backward_copy.py /opt/b70-upstream/patch_fix_backward_copy.py
-ADD https://raw.githubusercontent.com/SergiioB/intel-arc-pro-b70-inference-cookbook/${COOKBOOK_COMMIT}/patches/patch_fix_eagle_drop.py /opt/b70-upstream/patch_fix_eagle_drop.py
 
 RUN echo "4d7a02c4ea10ca7c00dc89ad927fa3dafa747dbf0553d2adf24e30a3c53e9c14  /opt/b70-upstream/patch_mtp_nightly.py" | sha256sum -c - \
  && echo "41d2f74e5fef1f074b76b5a90dd1016de437228431802cfb1fa7bd7ce4cc9b50  /opt/b70-upstream/patch_mtp_boundary.py" | sha256sum -c - \
  && echo "56ff7bdfd093a770db6ae3fa3b0af146fbe8f51022819595d660859251136f07  /opt/b70-upstream/patch_fix_accepted_sync.py" | sha256sum -c - \
  && echo "86fccfdb2d34c1546c3d3972827efd49ee73cdb49bb155d6ae1f4feaa56b64f2  /opt/b70-upstream/patch_fix_backward_copy.py" | sha256sum -c - \
- && echo "fba4708fc6e5d7feaee93bd243129d110fd2d2cde428832a36c44e258f485570  /opt/b70-upstream/patch_fix_eagle_drop.py" | sha256sum -c - \
  && python /opt/b70-upstream/patch_mtp_nightly.py \
  && python /opt/b70-upstream/patch_mtp_boundary.py \
  && python /opt/b70-upstream/patch_fix_backward_copy.py \
- && python /opt/b70-upstream/patch_fix_eagle_drop.py \
  && python /opt/b70-upstream/patch_fix_accepted_sync.py \
  && rm -rf /opt/b70-upstream
 

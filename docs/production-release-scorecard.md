@@ -66,8 +66,14 @@ as unittest module names. Regrading the saved project states gives task 1
 comes from the v1 prompt omitting the JSON restore argument key. The raw run
 and `coding-agent-qualification/regrade.json` remain local for audit. Fixture
 v2 states `command["snapshot"]` explicitly, and the runner now uses unittest
-discovery and saves each task's project state. A fresh v2 run is required
-before publishing any coding score.
+discovery and saves each task's project state. The fresh fixture v2
+prequalification finished successfully: both tasks passed 4/4 hidden
+acceptance tests. It made 14 model requests and 18 tool calls in 290.832 s,
+with 52,704 newly computed prompt tokens, 103,168 cached prompt tokens,
+19,507 generated tokens and zero preemptions. The ignored
+`coding-agent-qualification-v2/summary.json` records the exact image,
+policy, fixture and runner hashes. This is a prequalification run on the
+candidate service, not the final public benchmark after permanent deployment.
 
 ## Open gates
 

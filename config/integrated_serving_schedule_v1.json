@@ -1,0 +1,277 @@
+{
+  "schema": 1,
+  "description": "B70 C3 fixed 40-request serving trace across three fresh candidate workers",
+  "workers": [
+    {
+      "index": 1,
+      "groups": [
+        {
+          "id": "ordinary-1",
+          "kind": "ordinary",
+          "requests": [
+            {
+              "case": "4k",
+              "repeat": 1
+            },
+            {
+              "case": "4k",
+              "repeat": 2
+            },
+            {
+              "case": "4k",
+              "repeat": 3
+            },
+            {
+              "case": "4k",
+              "repeat": 4
+            }
+          ]
+        },
+        {
+          "id": "mixed-1",
+          "kind": "mixed",
+          "requests": [
+            {
+              "case": "32k",
+              "repeat": 1
+            },
+            {
+              "case": "128k",
+              "repeat": 1
+            }
+          ]
+        },
+        {
+          "id": "unequal-1",
+          "kind": "unequal",
+          "requests": [
+            {
+              "case": "4k",
+              "repeat": 5
+            },
+            {
+              "case": "8k",
+              "repeat": 1
+            },
+            {
+              "case": "32k",
+              "repeat": 4
+            },
+            {
+              "case": "128k",
+              "repeat": 2
+            }
+          ]
+        },
+        {
+          "id": "capacity-1",
+          "kind": "capacity",
+          "requests": [
+            {
+              "case": "199k",
+              "repeat": 1
+            },
+            {
+              "case": "4k",
+              "repeat": 1
+            }
+          ]
+        },
+        {
+          "id": "cancel-1",
+          "kind": "cancel",
+          "cancel": {
+            "case": "128k",
+            "repeat": 3
+          },
+          "recovery": [
+            {
+              "case": "4k",
+              "repeat": 3
+            },
+            {
+              "case": "32k",
+              "repeat": 3
+            }
+          ]
+        },
+        {
+          "id": "prefix-exact",
+          "kind": "prefix",
+          "requests": [
+            {
+              "case": "64k",
+              "repeat": 1,
+              "variant": "exact"
+            },
+            {
+              "case": "64k",
+              "repeat": 1,
+              "variant": "exact"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "groups": [
+        {
+          "id": "ordinary-2",
+          "kind": "ordinary",
+          "requests": [
+            {
+              "case": "4k",
+              "repeat": 2
+            },
+            {
+              "case": "4k",
+              "repeat": 3
+            },
+            {
+              "case": "4k",
+              "repeat": 4
+            },
+            {
+              "case": "4k",
+              "repeat": 5
+            }
+          ]
+        },
+        {
+          "id": "mixed-2",
+          "kind": "mixed",
+          "requests": [
+            {
+              "case": "32k",
+              "repeat": 2
+            },
+            {
+              "case": "128k",
+              "repeat": 2
+            }
+          ]
+        },
+        {
+          "id": "unequal-2",
+          "kind": "unequal",
+          "requests": [
+            {
+              "case": "4k",
+              "repeat": 4
+            },
+            {
+              "case": "8k",
+              "repeat": 2
+            },
+            {
+              "case": "32k",
+              "repeat": 5
+            },
+            {
+              "case": "128k",
+              "repeat": 3
+            }
+          ]
+        },
+        {
+          "id": "capacity-2",
+          "kind": "capacity",
+          "requests": [
+            {
+              "case": "199k",
+              "repeat": 1
+            },
+            {
+              "case": "4k",
+              "repeat": 2
+            }
+          ]
+        },
+        {
+          "id": "cancel-2",
+          "kind": "cancel",
+          "cancel": {
+            "case": "128k",
+            "repeat": 1
+          },
+          "recovery": [
+            {
+              "case": "4k",
+              "repeat": 5
+            },
+            {
+              "case": "32k",
+              "repeat": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "groups": [
+        {
+          "id": "ordinary-3",
+          "kind": "ordinary",
+          "requests": [
+            {
+              "case": "4k",
+              "repeat": 1
+            },
+            {
+              "case": "4k",
+              "repeat": 3
+            },
+            {
+              "case": "4k",
+              "repeat": 4
+            },
+            {
+              "case": "4k",
+              "repeat": 5
+            }
+          ]
+        },
+        {
+          "id": "mixed-3",
+          "kind": "mixed",
+          "requests": [
+            {
+              "case": "32k",
+              "repeat": 3
+            },
+            {
+              "case": "128k",
+              "repeat": 3
+            }
+          ]
+        },
+        {
+          "id": "prefix-modified",
+          "kind": "prefix",
+          "requests": [
+            {
+              "case": "64k",
+              "repeat": 1,
+              "variant": "exact"
+            },
+            {
+              "case": "64k",
+              "repeat": 1,
+              "variant": "modified"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "ordinary": 12,
+    "mixed": 6,
+    "unequal": 8,
+    "capacity": 4,
+    "cancel": 6,
+    "prefix": 4
+  }
+}

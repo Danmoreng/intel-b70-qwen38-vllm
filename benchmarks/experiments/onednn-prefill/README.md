@@ -256,6 +256,24 @@ all concurrency patterns; the exact mixed-metadata route still needs a
 dedicated trace before enabling a new attention arm there. Raw timestamps
 and response hashes are in `staggered-*.json`.
 
+An unequal cold C2 pair started 32K and 128K frozen requests within 2 ms,
+with identical forced 1,024-token continuations on the two profiles. Both
+requests completed without prefix hits or preemptions. The reference versus
+196,608-capped performance profile gave 128K TTFT 193.84 versus 192.47 s,
+32K wall time 213.05 versus 211.80 s, and total native prefill 206.73
+versus 204.37 s. The 32K request, already decoding while the 128K prefill
+ran, experienced a maximum streamed-bundle gap of 10.31 versus 10.30 s;
+its empirical 95th-percentile bundle gap was 6.78 versus 6.80 s. The
+reported KV-cache gauge peaked at 92.47% on both arms. This is not a
+measured full-server VRAM peak. Route logs show only two early oneDNN
+signatures on the performance arm; the mixed metadata did not select the
+new path for the long 128K work. The near-identical stall is therefore an
+unresolved serving bottleneck, not evidence that faster pure-prefill oneDNN
+cannot help a separately qualified mixed path. One pair cannot establish
+p95/p99 service-level latency across requests. Raw timestamps, metrics,
+route logs, and pair checks are in `concurrent-32k-128k-*.json` and
+`concurrent-32k-128k-*-routes.txt`.
+
 In a fresh performance-profile server, a 128K prefill was cancelled after
 30 seconds, after oneDNN had dispatched through at least KV length 59,904.
 The server stayed healthy. Subsequent cold 4K and 32K recovery requests each

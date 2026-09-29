@@ -1,0 +1,79 @@
+{
+  "image_id": "sha256:47c9d5fc5eb28fd12ef6219fbbfe7cf3863e00aa0535da377cadfc9a181bcd41",
+  "same_fixed_output": true,
+  "prefill_s": {
+    "reference": 206.72652288500103,
+    "performance": 204.37419240600138
+  },
+  "kv_cache_peak_fraction": {
+    "reference": 0.9246575342465754,
+    "performance": 0.9246575342465754
+  },
+  "requests": {
+    "short": {
+      "ttft_s": {
+        "reference": 25.011558400001377,
+        "performance": 23.309088981997775,
+        "delta": -1.7024694180036022
+      },
+      "wall_s": {
+        "reference": 213.0528186440024,
+        "performance": 211.8047819909989,
+        "delta": -1.2480366530035099
+      },
+      "piece_gap_p95_s": {
+        "reference": 6.775487867998891,
+        "performance": 6.797046067000338,
+        "delta": 0.021558199001447065
+      },
+      "piece_gap_p99_s": {
+        "reference": 9.336563133998425,
+        "performance": 9.3673147720001,
+        "delta": 0.03075163800167502
+      },
+      "piece_gap_max_s": {
+        "reference": 10.312483189001796,
+        "performance": 10.303142667999055,
+        "delta": -0.009340521002741298
+      }
+    },
+    "long": {
+      "ttft_s": {
+        "reference": 193.83706097899994,
+        "performance": 192.47027486200022,
+        "delta": -1.3667861169997195
+      },
+      "wall_s": {
+        "reference": 214.89282457599984,
+        "performance": 213.62006058000043,
+        "delta": -1.2727639959994121
+      },
+      "piece_gap_p95_s": {
+        "reference": 0.10715895799876307,
+        "performance": 0.10709947199939052,
+        "delta": -5.948599937255494e-05
+      },
+      "piece_gap_p99_s": {
+        "reference": 0.10774930900151958,
+        "performance": 0.10802425200017751,
+        "delta": 0.00027494299865793437
+      },
+      "piece_gap_max_s": {
+        "reference": 0.1108016010002757,
+        "performance": 0.11060940400057007,
+        "delta": -0.00019219699970562942
+      }
+    }
+  },
+  "route_signatures": {
+    "reference": {
+      "onednn_unique_signatures": 0,
+      "q128_unique_signatures": 4
+    },
+    "performance": {
+      "onednn_unique_signatures": 2,
+      "q128_unique_signatures": 2
+    }
+  },
+  "limitation": "One fresh-start unequal C2 pair. Stream pieces can contain multiple tokens; gap quantiles are bundle gaps. Mixed metadata fallback was not extended to oneDNN."
+}

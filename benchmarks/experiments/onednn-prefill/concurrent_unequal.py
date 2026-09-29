@@ -3,6 +3,7 @@
 
 import argparse
 import json
+import os
 import re
 import statistics
 import subprocess
@@ -16,7 +17,6 @@ from staggered_serving import payload, stream
 
 
 GAUGES = ("vllm:gpu_cache_usage_perc", "vllm:kv_cache_usage_perc")
-IMAGE = "local/b70-qwen38-vllm:onednn-poc-20260929"
 
 
 def cache_gauges(base):
@@ -108,8 +108,9 @@ def main():
         raise RuntimeError({label: row.get("error") for label, row in results.items()})
     after = snapshot(args.base)
     metrics = {key: after[key] - before[key] for key in METRICS}
+    container = os.environ.get("VLLM_CONTAINER", "b70-qwen38-vllm")
     image_id = subprocess.check_output(
-        ["docker", "image", "inspect", IMAGE, "--format", "{{.Id}}"],
+        ["docker", "inspect", container, "--format", "{{.Image}}"],
         text=True).strip()
     described = {label: describe_request(row) for label, row in results.items()}
     peaks = {name: max((row[name] for row in gauge_samples if name in row),

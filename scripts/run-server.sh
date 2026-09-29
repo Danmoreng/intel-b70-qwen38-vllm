@@ -80,6 +80,8 @@ exec docker run --rm --name "$container" \
   -e B70_ONEDNN_PROFILE="$onednn_profile" \
   -e B70_ONEDNN_VALIDATE="${B70_ONEDNN_VALIDATE:-0}" \
   -e B70_ONEDNN_VALIDATE_FP32="${B70_ONEDNN_VALIDATE_FP32:-0}" \
+  -e B70_ONEDNN_MIXED_TRACE="${B70_ONEDNN_MIXED_TRACE:-0}" \
+  -e B70_ONEDNN_MIXED_VALIDATE="${B70_ONEDNN_MIXED_VALIDATE:-0}" \
   -e B70_ONEDNN_MIN_KV="$onednn_min_kv" \
   -e B70_ONEDNN_MAX_KV="$onednn_max_kv" \
   -e B70_ONEDNN_SHORT_CHUNK_ONLY="$onednn_short" \

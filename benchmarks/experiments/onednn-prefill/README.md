@@ -274,6 +274,42 @@ p95/p99 service-level latency across requests. Raw timestamps, metrics,
 route logs, and pair checks are in `concurrent-32k-128k-*.json` and
 `concurrent-32k-128k-*-routes.txt`.
 
+### Mixed-metadata investigation
+
+The pinned vLLM builder supplies device `query_start_loc` and exact device
+`seq_lens` to the XPU attention call. Its CPU query offsets are exact; its
+CPU sequence-length upper bound is exact for prefill rows but can be
+optimistic for async speculative decode rows. The adapter therefore cannot
+use the batch-level `max_seqlen_k` or a decode-row CPU upper bound as an
+exact per-request active KV length. The current Q128/oneDNN guard requires
+one request, so a mixed batch falls through to the existing XPU attention.
+The source paths and SHA-256 values from the measured image are in
+`mixed-source-manifest.json`.
+
+An isolated probe image (not the scored candidate image) captured a real
+4K/32K mixed call with `cu_seqlens_q=[0,5,4997]`,
+`seqused_k=[4096,8320]`, and a two-row block table. The first five Q rows
+were the shorter request's MTP/decode work; the next 4,992 Q rows belonged
+to the longer request's prefill. Eight real mixed signatures were checked
+for cumulative query offsets, row counts, active KV lengths, and contiguous
+Q layout. Five long-prefill subcalls fell within the oneDNN experiment's
+KV limit. Warmup metadata had a 200,704 `max_seqlen_k` upper bound even
+with tiny actual `seqused_k` values; the probe filters warmup before
+counting real shapes. See `mixed-metadata-contract-4k-32k.json`.
+
+In a second isolated diagnostic image, the existing full mixed-batch path
+still produced the response. For each of those five real long-prefill
+subcalls, the probe sliced Q, block-table row, exact active KV length, and
+scales, ran oneDNN separately, then compared its output to the corresponding
+rows of the existing batch result. All five passed
+`torch.allclose(rtol=.01, atol=.002)`; the largest relative L2 error was
+6.77e-5 and largest absolute difference 0.001953125. This validates those
+prefill row slices and masks numerically. It does not yet validate a split
+decode/MTP fallback or prove a speed gain: the diagnostic performs extra
+work and a device-to-host synchronization. The probe source is separate
+from the scored adapter in `b70_attention_mixed_probe.py`; trace logs and
+checks are in `mixed-validation-summary.json`. Mixed routing remains off.
+
 In a fresh performance-profile server, a 128K prefill was cancelled after
 30 seconds, after oneDNN had dispatched through at least KV length 59,904.
 The server stayed healthy. Subsequent cold 4K and 32K recovery requests each

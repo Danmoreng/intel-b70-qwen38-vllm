@@ -1,0 +1,249 @@
+{
+  "source": "mixed-trace-4k-32k-routes.txt",
+  "trace_image_id": "sha256:6d588d55732c1edf2020ca441f106d8d447aa3a6978ae653549d7a3bfd69dbe1",
+  "all_signatures": 12,
+  "real_mixed_signatures": 8,
+  "captured_real_shapes": [
+    {
+      "total_q": 5755,
+      "max_seqlen_k": 4091,
+      "query_lengths": [
+        2427,
+        3328
+      ],
+      "active_kv_lengths": [
+        4091,
+        3328
+      ],
+      "block_table_shape": [
+        2,
+        121
+      ],
+      "block_table_stride": [
+        121,
+        1
+      ],
+      "q_stride": [
+        6144,
+        256,
+        1
+      ],
+      "scheduler_metadata": false
+    },
+    {
+      "total_q": 4997,
+      "max_seqlen_k": 8320,
+      "query_lengths": [
+        5,
+        4992
+      ],
+      "active_kv_lengths": [
+        4096,
+        8320
+      ],
+      "block_table_shape": [
+        2,
+        121
+      ],
+      "block_table_stride": [
+        121,
+        1
+      ],
+      "q_stride": [
+        6144,
+        256,
+        1
+      ],
+      "scheduler_metadata": false
+    },
+    {
+      "total_q": 4997,
+      "max_seqlen_k": 13312,
+      "query_lengths": [
+        5,
+        4992
+      ],
+      "active_kv_lengths": [
+        4097,
+        13312
+      ],
+      "block_table_shape": [
+        2,
+        121
+      ],
+      "block_table_stride": [
+        121,
+        1
+      ],
+      "q_stride": [
+        6144,
+        256,
+        1
+      ],
+      "scheduler_metadata": false
+    },
+    {
+      "total_q": 4997,
+      "max_seqlen_k": 18304,
+      "query_lengths": [
+        5,
+        4992
+      ],
+      "active_kv_lengths": [
+        4098,
+        18304
+      ],
+      "block_table_shape": [
+        2,
+        121
+      ],
+      "block_table_stride": [
+        121,
+        1
+      ],
+      "q_stride": [
+        6144,
+        256,
+        1
+      ],
+      "scheduler_metadata": false
+    },
+    {
+      "total_q": 4997,
+      "max_seqlen_k": 23296,
+      "query_lengths": [
+        5,
+        4992
+      ],
+      "active_kv_lengths": [
+        4101,
+        23296
+      ],
+      "block_table_shape": [
+        2,
+        121
+      ],
+      "block_table_stride": [
+        121,
+        1
+      ],
+      "q_stride": [
+        6144,
+        256,
+        1
+      ],
+      "scheduler_metadata": false
+    },
+    {
+      "total_q": 4997,
+      "max_seqlen_k": 28288,
+      "query_lengths": [
+        5,
+        4992
+      ],
+      "active_kv_lengths": [
+        4106,
+        28288
+      ],
+      "block_table_shape": [
+        2,
+        121
+      ],
+      "block_table_stride": [
+        121,
+        1
+      ],
+      "q_stride": [
+        6144,
+        256,
+        1
+      ],
+      "scheduler_metadata": false
+    },
+    {
+      "total_q": 1669,
+      "max_seqlen_k": 29952,
+      "query_lengths": [
+        5,
+        1664
+      ],
+      "active_kv_lengths": [
+        4111,
+        29952
+      ],
+      "block_table_shape": [
+        2,
+        121
+      ],
+      "block_table_stride": [
+        121,
+        1
+      ],
+      "q_stride": [
+        6144,
+        256,
+        1
+      ],
+      "scheduler_metadata": false
+    },
+    {
+      "total_q": 2775,
+      "max_seqlen_k": 32722,
+      "query_lengths": [
+        5,
+        2770
+      ],
+      "active_kv_lengths": [
+        4116,
+        32722
+      ],
+      "block_table_shape": [
+        2,
+        121
+      ],
+      "block_table_stride": [
+        121,
+        1
+      ],
+      "q_stride": [
+        6144,
+        256,
+        1
+      ],
+      "scheduler_metadata": false
+    }
+  ],
+  "potential_single_request_onednn_subcalls": [
+    {
+      "total_q": 4997,
+      "request_index": 1,
+      "query_rows": 4992,
+      "active_kv": 18304
+    },
+    {
+      "total_q": 4997,
+      "request_index": 1,
+      "query_rows": 4992,
+      "active_kv": 23296
+    },
+    {
+      "total_q": 4997,
+      "request_index": 1,
+      "query_rows": 4992,
+      "active_kv": 28288
+    },
+    {
+      "total_q": 1669,
+      "request_index": 1,
+      "query_rows": 1664,
+      "active_kv": 29952
+    },
+    {
+      "total_q": 2775,
+      "request_index": 1,
+      "query_rows": 2770,
+      "active_kv": 32722
+    }
+  ],
+  "caveat": "The trace proves shape/layout facts for this diagnostic C2 run only. It does not prove a split implementation numerically correct or faster."
+}

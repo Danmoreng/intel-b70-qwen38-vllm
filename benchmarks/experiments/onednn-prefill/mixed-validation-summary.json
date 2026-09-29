@@ -1,0 +1,61 @@
+{
+  "diagnostic_image_id": "sha256:7eb9d378764c9cb6d86660ddf369afdc8be40d841a4a57a5433704817389de6f",
+  "comparison": "oneDNN per-request prefill subcall versus the existing full mixed-batch output",
+  "server_response_source": "existing fallback; diagnostic oneDNN output was not returned",
+  "validated_shapes": [
+    {
+      "signature": [
+        1,
+        4992,
+        18304
+      ],
+      "allclose": true,
+      "relative_l2": 6.766564911231399e-05,
+      "max_abs": 0.001953125
+    },
+    {
+      "signature": [
+        1,
+        4992,
+        23296
+      ],
+      "allclose": true,
+      "relative_l2": 6.600590131711215e-05,
+      "max_abs": 0.0009765625
+    },
+    {
+      "signature": [
+        1,
+        4992,
+        28288
+      ],
+      "allclose": true,
+      "relative_l2": 6.286390271270648e-05,
+      "max_abs": 0.0009765625
+    },
+    {
+      "signature": [
+        1,
+        1664,
+        29952
+      ],
+      "allclose": true,
+      "relative_l2": 6.197771290317178e-05,
+      "max_abs": 0.0009765625
+    },
+    {
+      "signature": [
+        1,
+        2770,
+        32722
+      ],
+      "allclose": true,
+      "relative_l2": 6.56676129437983e-05,
+      "max_abs": 0.0009765625
+    }
+  ],
+  "max_relative_l2": 6.766564911231399e-05,
+  "max_absolute_error": 0.001953125,
+  "allclose_count": 5,
+  "limit": "Five shapes from one 4K/32K C2 scenario; decode/MTP subcall numerics and split-route latency are not established."
+}

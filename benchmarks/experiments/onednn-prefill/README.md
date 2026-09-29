@@ -304,11 +304,31 @@ scales, ran oneDNN separately, then compared its output to the corresponding
 rows of the existing batch result. All five passed
 `torch.allclose(rtol=.01, atol=.002)`; the largest relative L2 error was
 6.77e-5 and largest absolute difference 0.001953125. This validates those
-prefill row slices and masks numerically. It does not yet validate a split
-decode/MTP fallback or prove a speed gain: the diagnostic performs extra
-work and a device-to-host synchronization. The probe source is separate
-from the scored adapter in `b70_attention_mixed_probe.py`; trace logs and
-checks are in `mixed-validation-summary.json`. Mixed routing remains off.
+prefill row slices and masks numerically. The diagnostic performs extra work
+and a device-to-host synchronization, so it is not a speed test. A later
+diagnostic checked seven sliced decode/MTP fallback subcalls against
+full-batch rows. All seven passed `torch.allclose(rtol=.01, atol=.002)`;
+their largest relative L2 error was 3.00e-4 and largest absolute difference
+0.0009765625. See `mixed-validation-summary.json` and
+`mixed-decode-validation-summary.json`.
+
+An opt-in mixed route in the isolated probe then served a simultaneous cold
+4K/32K pair with two fixed 1,024-token continuations. It made five oneDNN
+long-prefill subcalls while serving the shorter request's decode/MTP rows
+through the existing fallback. Both route-off and route-on requests finished
+with matching output hashes, no prefix hits, and no preemptions. Route-off
+versus route-on long TTFT was 24.49 versus 22.14 s; short TTFT was 4.41
+versus 6.93 s. Both requests' wall times fell by 2.36 s (long: 38.11 to
+35.76 s; short: 37.74 to 35.38 s). The short request's largest streamed
+bundle gap fell from 3.87 to 3.18 s, while total native prefill time rose
+slightly from 27.47 to 27.63 s. The same probe image ID was used on both
+arms, with separate AOT cache variants. This single paired test is a
+feasibility result, not a promotion: the route synchronizes device metadata
+to the host at each attention layer, short-request TTFT regressed, and
+quality/concurrency at 128K and 199K remain untested. The scored adapter
+and default launcher keep mixed routing disabled. Raw evidence is in
+`mixed-route-4k-32k-*.json`, `mixed-route-4k-32k-*-routes.txt`, and
+`mixed-route-manifest.json`.
 
 In a fresh performance-profile server, a 128K prefill was cancelled after
 30 seconds, after oneDNN had dispatched through at least KV length 59,904.

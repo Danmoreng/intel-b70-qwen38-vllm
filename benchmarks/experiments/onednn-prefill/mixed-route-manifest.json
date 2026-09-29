@@ -1,0 +1,37 @@
+{
+  "status": "isolated experimental route; not promoted to scored adapter",
+  "image_id": "sha256:3ca59d2575375e35af076a74b93922ba3fefd8f385bc5d6869643adc25a1a9e4",
+  "probe_source_sha256": "2a04208acad0e205e173f66f9380268ddba91e7f99ea9b8e4607e6e92b23db9b",
+  "launcher_source_sha256": "b610d755930c7463f16c2e0a7f35be530f4f701c7ec11fd55434edbfdcbe994a",
+  "build_script_sha256": "74c05d7b5d7510b3c270a26f261c2e7788325754561e0371fcfca266f405a336",
+  "scored_adapter_unchanged": true,
+  "arm_settings": {
+    "both": "W4A8=1, oneDNN=1, performance profile, KV ceiling 196608, same probe image",
+    "control": "B70_ONEDNN_MIXED_ROUTE=0",
+    "candidate": "B70_ONEDNN_MIXED_ROUTE=1; distinct AOT cache variant"
+  },
+  "requests": "simultaneous cold 4K and 32K, 1024 fixed output tokens each",
+  "off": {
+    "short_ttft_s": 4.410402499001066,
+    "long_ttft_s": 24.49264903600124,
+    "short_wall_s": 37.74083882500054,
+    "long_wall_s": 38.112702336999064,
+    "short_max_bundle_gap_s": 3.8729266980008106,
+    "total_native_prefill_s": 27.466645257998607
+  },
+  "on": {
+    "short_ttft_s": 6.9341012710028735,
+    "long_ttft_s": 22.136737848999473,
+    "short_wall_s": 35.38410528800159,
+    "long_wall_s": 35.75534918800258,
+    "short_max_bundle_gap_s": 3.1760128979985893,
+    "total_native_prefill_s": 27.62721166799747,
+    "onednn_mixed_prefill_dispatches": 5
+  },
+  "both_output_hashes_equal": true,
+  "both_completion_tokens_per_request": 1024,
+  "both_cached_tokens": 0,
+  "both_preemptions": 0,
+  "evidence": "mixed-route-4k-32k-control.json; mixed-route-4k-32k-candidate.json; mixed-route-4k-32k-control-routes.txt; mixed-route-4k-32k-candidate-routes.txt",
+  "limit": "One pair only; forced outputs do not prove quality, and the per-layer device-to-host metadata synchronization needs optimization and wider serving tests"
+}

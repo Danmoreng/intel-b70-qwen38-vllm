@@ -17,6 +17,9 @@ VALIDATE = os.environ.get("B70_ONEDNN_VALIDATE") == "1"
 VALIDATE_FP32 = os.environ.get("B70_ONEDNN_VALIDATE_FP32") == "1"
 MIXED_TRACE = os.environ.get("B70_ONEDNN_MIXED_TRACE") == "1"
 MIXED_VALIDATE = os.environ.get("B70_ONEDNN_MIXED_VALIDATE") == "1"
+MIXED_ROUTE = os.environ.get("B70_ONEDNN_MIXED_ROUTE") == "1"
+if MIXED_VALIDATE and MIXED_ROUTE:
+    raise ValueError("mixed validation and routing are separate experiments")
 PROFILE = os.environ.get("B70_ONEDNN_PROFILE", "reference")
 if PROFILE not in ("reference", "performance"):
     raise ValueError("B70_ONEDNN_PROFILE must be reference or performance")
@@ -38,6 +41,7 @@ if MAX_KV < MIN_KV:
 _seen = set()
 _seen_mixed = set()
 _validated_mixed = set()
+_validated_mixed_decode = set()
 _validated = {}
 _validated_fp32 = {}
 if ENABLED:
@@ -62,6 +66,24 @@ def eligible(d):
         and k.stride(3) == v.stride(3) == 1
         and k.shape[1:] == v.shape[1:] == (1664, 4, 256)
     )
+
+
+def mixed_subcall(d, starts, used, index, out):
+    q_rows = starts[index + 1] - starts[index]
+    sub = dict(d)
+    sub["q"] = d["q"][starts[index]:starts[index + 1]]
+    sub["out"] = out
+    sub["cu_seqlens_q"] = torch.tensor(
+        [0, q_rows], device=d["cu_seqlens_q"].device,
+        dtype=d["cu_seqlens_q"].dtype)
+    sub["seqused_k"] = d["seqused_k"][index:index + 1].contiguous()
+    sub["block_table"] = d["block_table"][index:index + 1].contiguous()
+    sub["max_seqlen_q"] = q_rows
+    sub["max_seqlen_k"] = used[index]
+    for scale in ("k_descale", "v_descale"):
+        if d.get(scale) is not None and d[scale].ndim > 1:
+            sub[scale] = d[scale][index:index + 1]
+    return sub
 
 
 def flash_attn_varlen_func(**d):
@@ -90,6 +112,35 @@ def flash_attn_varlen_func(**d):
                         "scheduler_metadata": d.get("scheduler_metadata") is not None,
                     }, flush=True)
                     _seen_mixed.add(signature)
+        if (MIXED_ROUTE and ENABLED and
+                not torch.xpu.is_current_stream_capturing() and
+                d["q"].shape[0] >= 256):
+            cu = d.get("cu_seqlens_q")
+            used = d.get("seqused_k")
+            table = d.get("block_table")
+            if (cu is not None and used is not None and table is not None and
+                    cu.numel() > 2 and table.shape[0] == used.numel() and
+                    d.get("scheduler_metadata") is None):
+                starts = cu.tolist()
+                lengths = used.tolist()
+                if (starts[0] == 0 and starts[-1] == d["q"].shape[0] and
+                        all(left <= right for left, right in zip(starts, starts[1:])) and
+                        all(starts[i + 1] - starts[i] <= length
+                            for i, length in enumerate(lengths))):
+                    subs = [mixed_subcall(d, starts, lengths, i, None)
+                            for i in range(len(lengths))]
+                    long_indices = {i for i, sub in enumerate(subs) if eligible(sub)}
+                    if long_indices:
+                        output = d.get("out")
+                        if output is None:
+                            output = torch.empty_like(d["q"])
+                        for i, sub in enumerate(subs):
+                            sub["out"] = output[starts[i]:starts[i + 1]]
+                            if i in long_indices:
+                                flash_attn_varlen_func(**sub)
+                            else:
+                                fallback(**sub)
+                        return output
         reference = fallback(**d)
         if (MIXED_VALIDATE and ENABLED and
                 not torch.xpu.is_current_stream_capturing()):
@@ -98,30 +149,30 @@ def flash_attn_varlen_func(**d):
             table = d.get("block_table")
             if (cu is not None and used is not None and table is not None and
                     cu.numel() > 2 and table.shape[0] == used.numel() and
-                    d["q"].shape[0] >= 256 and len(_validated_mixed) < 8):
+                    d["q"].shape[0] >= 256 and
+                    (len(_validated_mixed) < 8 or
+                     len(_validated_mixed_decode) < 8)):
                 starts = cu.tolist()
                 lengths = used.tolist()
                 for index, length in enumerate(lengths):
                     q_rows = starts[index + 1] - starts[index]
                     signature = (index, q_rows, length)
-                    if (signature in _validated_mixed or q_rows < 256 or
-                            not MIN_KV <= length <= MAX_KV):
+                    long_prefill = (q_rows >= 256 and
+                                    MIN_KV <= length <= MAX_KV and
+                                    signature not in _validated_mixed and
+                                    len(_validated_mixed) < 8)
+                    short_decode = (1 <= q_rows <= 5 and
+                                    signature not in _validated_mixed_decode and
+                                    len(_validated_mixed_decode) < 8)
+                    if not long_prefill and not short_decode:
                         continue
-                    sub = dict(d)
-                    sub["q"] = d["q"][starts[index]:starts[index + 1]]
-                    sub["out"] = None
-                    sub["cu_seqlens_q"] = torch.tensor(
-                        [0, q_rows], device=cu.device, dtype=cu.dtype)
-                    sub["seqused_k"] = used[index:index + 1].contiguous()
-                    sub["block_table"] = table[index:index + 1].contiguous()
-                    sub["max_seqlen_q"] = q_rows
-                    sub["max_seqlen_k"] = length
-                    for scale in ("k_descale", "v_descale"):
-                        if d.get(scale) is not None and d[scale].ndim > 1:
-                            sub[scale] = d[scale][index:index + 1]
-                    if not eligible(sub):
-                        raise RuntimeError(f"mixed oneDNN subcall rejected: {signature}")
-                    candidate = flash_attn_varlen_func(**sub)
+                    sub = mixed_subcall(d, starts, lengths, index, None)
+                    if long_prefill:
+                        if not eligible(sub):
+                            raise RuntimeError(f"mixed oneDNN subcall rejected: {signature}")
+                        candidate = flash_attn_varlen_func(**sub)
+                    else:
+                        candidate = fallback(**sub)
                     control = reference[starts[index]:starts[index + 1]]
                     torch.xpu.synchronize()
                     delta = (candidate.float() - control.float()).abs()
@@ -133,10 +184,14 @@ def flash_attn_varlen_func(**d):
                                               control.float().norm()).item()),
                         "max_abs": float(delta.max().item()),
                     }
-                    print("B70_ONEDNN_MIXED_VALIDATE", report, flush=True)
-                    _validated_mixed.add(signature)
+                    marker = ("B70_ONEDNN_MIXED_VALIDATE" if long_prefill else
+                              "B70_ONEDNN_MIXED_DECODE_VALIDATE")
+                    print(marker, report, flush=True)
+                    validated = (_validated_mixed if long_prefill else
+                                 _validated_mixed_decode)
+                    validated.add(signature)
                     if not report["allclose"]:
-                        raise RuntimeError("mixed oneDNN subcall failed validation")
+                        raise RuntimeError("mixed attention subcall failed validation")
         return reference
     q, k, v = d["q"], d["k"], d["v"]
     length = d["max_seqlen_k"]

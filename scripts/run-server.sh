@@ -32,10 +32,12 @@ case "$onednn_profile" in
   *) echo "B70_ONEDNN_PROFILE must be reference or performance" >&2; exit 2 ;;
 esac
 onednn_short="${B70_ONEDNN_SHORT_CHUNK_ONLY:-$onednn_short_default}"
+onednn_mixed_route="${B70_ONEDNN_MIXED_ROUTE:-0}"
 onednn_min_kv="${B70_ONEDNN_MIN_KV:-16384}"
 onednn_max_kv="${B70_ONEDNN_MAX_KV:-$onednn_max_default}"
 [[ "$w4a8_prefill" =~ ^[01]$ && "$onednn_prefill" =~ ^[01]$ &&
-   "$onednn_short" =~ ^[01]$ && "$onednn_min_kv" =~ ^[1-9][0-9]*$ &&
+   "$onednn_short" =~ ^[01]$ && "$onednn_mixed_route" =~ ^[01]$ &&
+   "$onednn_min_kv" =~ ^[1-9][0-9]*$ &&
    "$onednn_max_kv" =~ ^[1-9][0-9]*$ ]] || {
   echo "Invalid W4A8/oneDNN cache variant flags" >&2; exit 2;
 }
@@ -45,6 +47,9 @@ if [[ "$image" != "$default_image" || "$w4a8_prefill" == 1 || "$onednn_prefill" 
   # selections. Keep the unchanged production cache path, isolate experiments.
   image_id="$(docker image inspect "$image" --format '{{.Id}}')"
   cache_variant="w4a8${w4a8_prefill}-onednn${onednn_prefill}-${onednn_profile}-short${onednn_short}-min${onednn_min_kv}-max${onednn_max_kv}"
+  if [[ "$onednn_mixed_route" == 1 ]]; then
+    cache_variant+="-mixed1"
+  fi
   cache_root="${XDG_CACHE_HOME:-$HOME/.cache}/b70-qwen38-vllm-experiment/${image_id#sha256:}/$cache_variant"
 fi
 [[ "$speculative_tokens" =~ ^[1-9][0-9]*$ ]] || { echo "SPECULATIVE_TOKENS must be positive" >&2; exit 2; }
@@ -82,6 +87,7 @@ exec docker run --rm --name "$container" \
   -e B70_ONEDNN_VALIDATE_FP32="${B70_ONEDNN_VALIDATE_FP32:-0}" \
   -e B70_ONEDNN_MIXED_TRACE="${B70_ONEDNN_MIXED_TRACE:-0}" \
   -e B70_ONEDNN_MIXED_VALIDATE="${B70_ONEDNN_MIXED_VALIDATE:-0}" \
+  -e B70_ONEDNN_MIXED_ROUTE="$onednn_mixed_route" \
   -e B70_ONEDNN_MIN_KV="$onednn_min_kv" \
   -e B70_ONEDNN_MAX_KV="$onednn_max_kv" \
   -e B70_ONEDNN_SHORT_CHUNK_ONLY="$onednn_short" \

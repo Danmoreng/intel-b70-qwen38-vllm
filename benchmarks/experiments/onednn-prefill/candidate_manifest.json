@@ -19,7 +19,7 @@
     "attention_adapter": "3f9e91844121671a00fb52f3595970131b030fe670faeea8144f449507e05918",
     "dockerfile": "7c5e5a67d5ceb69f4f91321ff913ab775dd911dc0c79e090de4d11ab5010a3d1",
     "build_image_sh": "92a812d2089721463366b3af716625fbf22db99eb167ece5b12a735da88650ec",
-    "run_server_sh": "bc232c98922f39018e410a4134496f61d60c16b14b6f44f2adb4597a0fb2e63f"
+    "run_server_sh": "b610d755930c7463f16c2e0a7f35be530f4f701c7ec11fd55434edbfdcbe994a"
   },
   "w4a16_attention_isolation": {
     "arms": "R0 W4A16+Q128 versus R2 W4A16+oneDNN performance",
@@ -55,14 +55,14 @@
     "limit": "One unequal C2 pair; mixed metadata used existing fallback, so the long prefill did not receive the full oneDNN speedup"
   },
   "mixed_metadata_probe": {
-    "status": "diagnostic only; mixed routing disabled",
+    "status": "isolated mixed-route feasibility probe; scored adapter and default launcher keep route disabled",
     "source": "docker/onednn-prefill/b70_attention_mixed_probe.py",
-    "source_sha256": "c3f63f70b5f818b47578c3368482f8f59f344cf814f37aac4e334b68d2c6991e",
+    "source_sha256": "2a04208acad0e205e173f66f9380268ddba91e7f99ea9b8e4607e6e92b23db9b",
     "real_mixed_signatures": 8,
     "validated_prefill_subcalls": 5,
     "max_relative_l2": 0.00006766564911231399,
-    "evidence": "mixed-metadata-contract-4k-32k.json; mixed-validation-summary.json; mixed-source-manifest.json",
-    "limit": "Prefill slices compared numerically against existing full-batch output; split decode/MTP fallback and latency not qualified"
+    "evidence": "mixed-metadata-contract-4k-32k.json; mixed-validation-summary.json; mixed-decode-validation-summary.json; mixed-route-manifest.json",
+    "limit": "One same-image 4K/32K paired route-on/off test; short TTFT regressed and broad quality, memory, 128K/199K concurrency remain open"
   },
   "qualification": "See README and paired JSON fixtures. A complete four-arm 32K practical screen found R0/R1/R2/R3 passed 27/28/27/29 of 30 tasks, with summed wall times 237.26/193.24/208.68/164.45 seconds. W4A8 and oneDNN prefill gains were nearly additive on those contexts. A three-prompt R0/R2 fixed-continuation screen isolated a W4A16 oneDNN prefill-time gain of 27.95 to 25.29 seconds median with sampled mean NLL delta -0.00296. Unrestricted oneDNN performance nevertheless failed the original 32K W4A8 NLL gate. At 128K it passed 12/12 paired practical tasks versus 12/12 for reference. At 199K, unrestricted performance reduced six-task wall time from 721.55 to 427.10 seconds but regressed one code-review task (5/6 versus 6/6); a repeat failed the same task. Capping oneDNN at KV length 196608 restored 6/6 on a fresh-start 199K replay and reduced wall time to 458.18 seconds, with two cold code-prefill times 208.17 and 203.78 seconds versus about 336 seconds each for reference. Warm-prefix prefill was approximately reference speed because the last chunks fell back to Q128. The capped candidate has not passed broad quality or serving gates; all oneDNN profiles remain experimental and opt-in. A 128K cancellation/recovery smoke test passed. One staggered 4K-decode plus 32K-prefill pair showed no material difference between profiles. The launcher isolates experimental AOT compile caches by image ID and flags after discovering a cross-W4A8/W4A16 cache confounder. An exact archived W4A16 control image reproduced isolated W4A16 NLL on one 32K prompt. Broader source-review and coding quality, long-context W4A8 interaction, memory/concurrency, and mixed-serving gates remain open."
 }

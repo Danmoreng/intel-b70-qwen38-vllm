@@ -28,7 +28,7 @@ onednn_prefill="${B70_ONEDNN_PREFILL:-0}"
 onednn_profile="${B70_ONEDNN_PROFILE:-reference}"
 case "$onednn_profile" in
   reference) onednn_short_default=1; onednn_max_default=131072 ;;
-  performance) onednn_short_default=0; onednn_max_default=200704 ;;
+  performance) onednn_short_default=0; onednn_max_default=196608 ;;
   *) echo "B70_ONEDNN_PROFILE must be reference or performance" >&2; exit 2 ;;
 esac
 onednn_short="${B70_ONEDNN_SHORT_CHUNK_ONLY:-$onednn_short_default}"

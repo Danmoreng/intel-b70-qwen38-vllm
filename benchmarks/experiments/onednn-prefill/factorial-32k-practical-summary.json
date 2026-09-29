@@ -1,0 +1,218 @@
+{
+  "image": "sha256:47c9d5fc5eb28fd12ef6219fbbfe7cf3863e00aa0535da377cadfc9a181bcd41",
+  "arms": {
+    "R0_w4a16_q128": {
+      "count": 30,
+      "passed": 27,
+      "by_kind": {
+        "code": {
+          "count": 10,
+          "passed": 9
+        },
+        "retrieval": {
+          "count": 10,
+          "passed": 10
+        },
+        "review": {
+          "count": 5,
+          "passed": 5
+        },
+        "structured": {
+          "count": 5,
+          "passed": 3
+        }
+      },
+      "ttft_s": {
+        "median": 2.981302150499687,
+        "sum": 216.4904238090021
+      },
+      "wall_s": {
+        "median": 3.2380929369992373,
+        "sum": 237.2568225030045
+      },
+      "prefill_tokens": 233707.0,
+      "prefill_s": 215.15249705800306,
+      "decode_s": 20.969044491001114,
+      "cached_tokens": 748800.0,
+      "preemptions": 0.0,
+      "draft_tokens": 1724.0,
+      "accepted_tokens": 1400.0,
+      "prefill_tps": 1086.2388454501406,
+      "mtp_acceptance": 0.8120649651972158,
+      "cold_prefill_s": 141.78170735299864,
+      "warm_prefill_s": 73.37078970500443,
+      "code_wall_s": 173.47155428800033
+    },
+    "R1_w4a8_q128": {
+      "count": 30,
+      "passed": 28,
+      "by_kind": {
+        "code": {
+          "count": 10,
+          "passed": 9
+        },
+        "retrieval": {
+          "count": 10,
+          "passed": 10
+        },
+        "review": {
+          "count": 5,
+          "passed": 5
+        },
+        "structured": {
+          "count": 5,
+          "passed": 4
+        }
+      },
+      "ttft_s": {
+        "median": 2.393482085499272,
+        "sum": 166.4561710849921
+      },
+      "wall_s": {
+        "median": 2.666654884500531,
+        "sum": 193.23859523799183
+      },
+      "prefill_tokens": 233707.0,
+      "prefill_s": 165.1254286020012,
+      "decode_s": 26.979016010009218,
+      "cached_tokens": 748800.0,
+      "preemptions": 0.0,
+      "draft_tokens": 2072.0,
+      "accepted_tokens": 1562.0,
+      "prefill_tps": 1415.3301643401012,
+      "mtp_acceptance": 0.7538610038610039,
+      "cold_prefill_s": 106.31197592199896,
+      "warm_prefill_s": 58.81345268000223,
+      "code_wall_s": 140.8392427899962
+    },
+    "R2_w4a16_onednn": {
+      "count": 30,
+      "passed": 27,
+      "by_kind": {
+        "code": {
+          "count": 10,
+          "passed": 9
+        },
+        "retrieval": {
+          "count": 10,
+          "passed": 10
+        },
+        "review": {
+          "count": 5,
+          "passed": 5
+        },
+        "structured": {
+          "count": 5,
+          "passed": 3
+        }
+      },
+      "ttft_s": {
+        "median": 2.407181049000428,
+        "sum": 187.834804042006
+      },
+      "wall_s": {
+        "median": 2.672602137501599,
+        "sum": 208.67588391400932
+      },
+      "prefill_tokens": 233707.0,
+      "prefill_s": 186.51053857099032,
+      "decode_s": 21.04837526600022,
+      "cached_tokens": 748800.0,
+      "preemptions": 0.0,
+      "draft_tokens": 1720.0,
+      "accepted_tokens": 1399.0,
+      "prefill_tps": 1253.0498372404065,
+      "mtp_acceptance": 0.8133720930232559,
+      "cold_prefill_s": 127.51426880699728,
+      "warm_prefill_s": 58.99626976399304,
+      "code_wall_s": 156.3669643389985
+    },
+    "R3_w4a8_onednn": {
+      "count": 30,
+      "passed": 29,
+      "by_kind": {
+        "code": {
+          "count": 10,
+          "passed": 10
+        },
+        "retrieval": {
+          "count": 10,
+          "passed": 10
+        },
+        "review": {
+          "count": 5,
+          "passed": 5
+        },
+        "structured": {
+          "count": 5,
+          "passed": 4
+        }
+      },
+      "ttft_s": {
+        "median": 1.818051630500122,
+        "sum": 136.85910039700138
+      },
+      "wall_s": {
+        "median": 2.0978128839997225,
+        "sum": 164.44672504900154
+      },
+      "prefill_tokens": 233707.0,
+      "prefill_s": 135.5316738240017,
+      "decode_s": 27.78771154899914,
+      "cached_tokens": 748800.0,
+      "preemptions": 0.0,
+      "draft_tokens": 2128.0,
+      "accepted_tokens": 1652.0,
+      "prefill_tps": 1724.3718269390408,
+      "mtp_acceptance": 0.7763157894736842,
+      "cold_prefill_s": 91.21793433900166,
+      "warm_prefill_s": 44.31373948500004,
+      "code_wall_s": 123.62241163100225
+    }
+  },
+  "contrasts": {
+    "w4a8_at_q128": {
+      "passed": 1,
+      "wall_s": -44.01822726501268,
+      "prefill_s": -50.02706845600187,
+      "decode_s": 6.009971519008104
+    },
+    "w4a8_at_onednn": {
+      "passed": 2,
+      "wall_s": -44.229158865007776,
+      "prefill_s": -50.97886474698862,
+      "decode_s": 6.73933628299892
+    },
+    "onednn_at_w4a16": {
+      "passed": 0,
+      "wall_s": -28.580938588995195,
+      "prefill_s": -28.641958487012744,
+      "decode_s": 0.07933077499910723
+    },
+    "onednn_at_w4a8": {
+      "passed": 1,
+      "wall_s": -28.791870188990288,
+      "prefill_s": -29.593754777999493,
+      "decode_s": 0.8086955389899231
+    }
+  },
+  "interaction": {
+    "prefill_s": -0.9517962909867492,
+    "wall_s": -0.21093159999509226
+  },
+  "onednn_outcomes": {
+    "onednn_at_w4a16": {
+      "improved": [],
+      "regressed": [],
+      "same_output_count": 29
+    },
+    "onednn_at_w4a8": {
+      "improved": [
+        "context-1-code-2"
+      ],
+      "regressed": [],
+      "same_output_count": 17
+    }
+  },
+  "note": "Decode time includes different generated outputs across some arms; it is not an isolated kernel-speed measure."
+}

@@ -10,7 +10,7 @@
     "B70_ONEDNN_PROFILE": "reference by default; performance explicitly opt-in",
     "B70_ONEDNN_SHORT_CHUNK_ONLY": "1 for reference, 0 for performance",
     "B70_ONEDNN_MIN_KV": "16384",
-    "B70_ONEDNN_MAX_KV": "131072 for reference, 200704 for unrestricted performance; 196608 is the better observed 199K performance candidate"
+    "B70_ONEDNN_MAX_KV": "131072 for reference; 196608 for performance in the recipe launcher; explicit 200704 reproduces unrestricted performance"
   },
   "native_contract": "one request; reference Q<6656 and active KV length 16384..131072, performance Q>=256 and active KV length 16384..200704; FP16 Q/output; FP8 E4M3FN paged K/V; 24 Q heads, 4 KV heads, D=256; 1664-token pages; bottom-right causal mask; existing Q128/M04/native fallback otherwise",
   "source_sha256": {
@@ -19,7 +19,7 @@
     "attention_adapter": "3f9e91844121671a00fb52f3595970131b030fe670faeea8144f449507e05918",
     "dockerfile": "7c5e5a67d5ceb69f4f91321ff913ab775dd911dc0c79e090de4d11ab5010a3d1",
     "build_image_sh": "92a812d2089721463366b3af716625fbf22db99eb167ece5b12a735da88650ec",
-    "run_server_sh": "84def2ea21c0337335093f204f349f0a9da1d6e03867f1d9ef21e7ba8e71e3a5"
+    "run_server_sh": "bfb2ba13a850d851abc515c16807b767a0e2b67f5c8eba4b58fdfc4238c365fe"
   },
   "w4a16_attention_isolation": {
     "arms": "R0 W4A16+Q128 versus R2 W4A16+oneDNN performance",
@@ -33,7 +33,17 @@
       "onednn": 35.287188685997535
     },
     "evidence": "factorial-32k-w4a16-attention-summary.json; fixed continuation and paired NLL fixtures",
-    "limit": "Three prompts at 32K with fixed continuations; code quality and wider serving not established"
+    "limit": "Three prompts at 32K with fixed continuations; a separate 30-task 32K screen follows, while wider code quality and serving remain open"
   },
-  "qualification": "See README and paired JSON fixtures. Unrestricted oneDNN performance failed the original 32K NLL gate but passed 29/30 paired practical 32K tasks versus 28/30 for reference, and 12/12 paired 128K tasks versus 12/12. At 199K, unrestricted performance reduced six-task wall time from 721.55 to 427.10 seconds but regressed one code-review task (5/6 versus 6/6); a repeat failed the same task. Capping oneDNN at KV length 196608 restored 6/6 on a fresh-start 199K replay and reduced wall time to 458.18 seconds, with two cold code-prefill times 208.17 and 203.78 seconds versus about 336 seconds each for reference. Warm-prefix prefill was approximately reference speed because the last chunks fell back to Q128. The capped candidate has not passed broad quality or serving gates; all oneDNN profiles remain experimental and opt-in. A 128K cancellation/recovery smoke test passed. One staggered 4K-decode plus 32K-prefill pair showed no material difference between profiles. The launcher isolates experimental AOT compile caches by image ID and flags after discovering a cross-W4A8/W4A16 cache confounder. An exact archived W4A16 control image reproduced isolated W4A16 NLL on one 32K prompt. A three-prompt R0/R2 fixed-continuation screen isolated a W4A16 oneDNN 32K prefill-time gain of 27.95 to 25.29 seconds median with sampled mean NLL delta -0.00296. Broader source-review and coding quality, W4A8 interaction, memory/concurrency, and mixed-serving gates remain open."
+  "factorial_32k_practical": {
+    "arms": {
+      "R0_w4a16_q128": {"passed": 27, "wall_s": 237.2568225030045},
+      "R1_w4a8_q128": {"passed": 28, "wall_s": 193.23859523799183},
+      "R2_w4a16_onednn": {"passed": 27, "wall_s": 208.67588391400932},
+      "R3_w4a8_onednn": {"passed": 29, "wall_s": 164.44672504900154}
+    },
+    "evidence": "factorial-32k-practical-summary.json; 30 identical frozen tasks per arm",
+    "limit": "Five 32K source contexts; not a broad code-quality or long-context gate"
+  },
+  "qualification": "See README and paired JSON fixtures. A complete four-arm 32K practical screen found R0/R1/R2/R3 passed 27/28/27/29 of 30 tasks, with summed wall times 237.26/193.24/208.68/164.45 seconds. W4A8 and oneDNN prefill gains were nearly additive on those contexts. A three-prompt R0/R2 fixed-continuation screen isolated a W4A16 oneDNN prefill-time gain of 27.95 to 25.29 seconds median with sampled mean NLL delta -0.00296. Unrestricted oneDNN performance nevertheless failed the original 32K W4A8 NLL gate. At 128K it passed 12/12 paired practical tasks versus 12/12 for reference. At 199K, unrestricted performance reduced six-task wall time from 721.55 to 427.10 seconds but regressed one code-review task (5/6 versus 6/6); a repeat failed the same task. Capping oneDNN at KV length 196608 restored 6/6 on a fresh-start 199K replay and reduced wall time to 458.18 seconds, with two cold code-prefill times 208.17 and 203.78 seconds versus about 336 seconds each for reference. Warm-prefix prefill was approximately reference speed because the last chunks fell back to Q128. The capped candidate has not passed broad quality or serving gates; all oneDNN profiles remain experimental and opt-in. A 128K cancellation/recovery smoke test passed. One staggered 4K-decode plus 32K-prefill pair showed no material difference between profiles. The launcher isolates experimental AOT compile caches by image ID and flags after discovering a cross-W4A8/W4A16 cache confounder. An exact archived W4A16 control image reproduced isolated W4A16 NLL on one 32K prompt. Broader source-review and coding quality, long-context W4A8 interaction, memory/concurrency, and mixed-serving gates remain open."
 }

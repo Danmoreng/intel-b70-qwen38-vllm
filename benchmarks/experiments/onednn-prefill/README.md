@@ -62,12 +62,18 @@ prompts. It **failed** the pre-existing teacher-forced NLL gate: changes were
 +0.10767, -0.02108, and +0.03766 nats/token, mean +0.04141. Its sampled
 output hashes differed from the control. Do not promote this broad route.
 
-The broad route remains available as an explicit **performance-profile
+The faster route remains available as an explicit **performance-profile
 candidate** with `B70_ONEDNN_PREFILL=1 B70_ONEDNN_PROFILE=performance`. The
 reference profile remains the default and retains the frozen NLL limits.
-The performance profile changes the default route to all eligible long
-chunks through 200,704 KV tokens; it does not change the exact mask, page,
-scale, or fallback requirements. Its NLL exceedance is a diagnostic warning,
+The performance profile changes the route to eligible long chunks. The
+original unrestricted screen used `B70_ONEDNN_MAX_KV=200704`; after the
+199K review regression, the recipe launcher now defaults this profile to
+`B70_ONEDNN_MAX_KV=196608`, so the final chunks use Q128. Explicitly setting
+200704 reproduces the unrestricted diagnostic arm. The packaged adapter's
+own fallback default remains 200704, while the recipe launcher always
+passes its resolved limit as an environment variable. Neither limit changes
+the exact mask, page, scale, or fallback requirements. The original broad
+route's NLL exceedance is a diagnostic warning,
 not an automatic claim of acceptable task quality. No production promotion
 is implied by choosing the profile. Run paired functional code tasks, source
 review, long-context retrieval, and structured-output checks before judging
@@ -77,7 +83,7 @@ the old NLL bounds as the reference-profile gate; do not relabel a failing
 candidate as passing that gate.
 Moving the first full oneDNN chunk later, to KV length 26,624, still failed:
 NLL changes were +0.01950, -0.00889, +0.05110, mean +0.02057. The frozen
-limits are at most +0.02 per prompt and +0.01 on average. The broad route
+limits are at most +0.02 per prompt and +0.01 on average. The faster route
 therefore remains opt-in through `B70_ONEDNN_PROFILE=performance` (which
 sets `B70_ONEDNN_SHORT_CHUNK_ONLY=0` by default).
 Real-operand diagnostics found finite, `allclose` attention outputs with
@@ -265,7 +271,8 @@ single-request chunk with fewer than 6656 query rows and active KV length
 between 16,384 and 131,072 tokens. The upper bound keeps the 199K case on
 Q128 after its sampled decode penalty; `B70_ONEDNN_MAX_KV` can override it
 for explicit experiments. The performance profile sets short-chunk-only to
-`0` as an opt-in evaluation of the NLL-failing broad path. The historical
+`0` and defaults to a 196,608-KV cap in the recipe launcher as an opt-in
+evaluation of the faster path. The historical
 `B70_ONEDNN_FINAL_CHUNK_ONLY=1` flag is an alias for reproducing earlier runs.
 It is **not** a final-chunk detector: a 32K teacher-forced request dispatched
 at both `(Q,L)=(3328,29952)` and `(2759,32711)`, so the first dispatch was
@@ -376,7 +383,37 @@ This isolates a roughly 9.5% prefill-time gain from oneDNN on W4A16 at
 32K; the much larger R0/R1 W4A16/W4A8 difference cannot be attributed to
 attention. The R2 data and pair checks are in
 `factorial-32k-w4a16-attention-summary.json` and its summarizer. R2 still
-needs functional code/review checks and wider context/serving qualification.
+needs wider context and serving qualification; the functional 32K task screen
+follows.
+
+The complete 2-by-2 practical screen ran the same 30 frozen 32K tasks on all
+four arms, with five cold contexts and 25 prefix-reuse requests per arm.
+Every pair used the same image ID, prompt hash, tokenized length, computed
+prefill tokens, and cached tokens, with zero preemptions. The W4A8+Q128
+compile graph contains `int4_gemm_w4a8`; the W4A16+oneDNN graph contains
+`int4_gemm_w4a16`. Dispatch traces confirm the selected attention routes.
+
+| Arm | Passed / 30 | Code / 10 | Sum wall, s | Sum prefill, s | Five cold prefills, s | 25 warm prefills, s |
+|---|---:|---:|---:|---:|---:|---:|
+| R0 W4A16 + Q128 | 27 | 9 | 237.26 | 215.15 | 141.78 | 73.37 |
+| R1 W4A8 + Q128 | 28 | 9 | 193.24 | 165.13 | 106.31 | 58.81 |
+| R2 W4A16 + oneDNN | 27 | 9 | 208.68 | 186.51 | 127.51 | 59.00 |
+| R3 W4A8 + oneDNN | 29 | 10 | 164.45 | 135.53 | 91.22 | 44.31 |
+
+On these requests, W4A8 reduced summed prefill by 50.03 s with Q128 and
+50.98 s with oneDNN. oneDNN reduced it by 28.64 s with W4A16 and 29.59 s
+with W4A8; the measured interaction was -0.95 s on a 215.15 s R0 total.
+The combined arm reduced summed wall time by 72.81 s (30.7%) versus R0.
+R0 and R2 had identical pass/fail outcomes and 29/30 identical output
+hashes. R1 and R3 differed on more outputs; R3 fixed one R1 coding failure
+and introduced no observed regression in this task set. The summed decode
+times differ across W4A16/W4A8 arms because the generated outputs and MTP
+acceptance differ; they do not isolate decode-kernel speed. The full pair
+checks, per-task scores, and factor contrasts are in
+`factorial-32k-practical-summary.json` and its summarizer. This 32K screen
+does not erase the observed broad-route 199K review regression or prove
+general agentic code quality. The W4A8+Q128 arm here is distinct from the
+earlier short-chunk reference profile, which already used oneDNN selectively.
 
 C2 with two 16K requests and C4 with four 4K requests completed 1024 output
 tokens per request with no preemptions; their mixed metadata used the existing

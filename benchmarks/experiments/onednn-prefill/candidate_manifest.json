@@ -1,0 +1,24 @@
+{
+  "status": "experimental opt-in; no production promotion",
+  "scored_image_before_guard_and_default_update": "sha256:b2d83a7fd589fc87544b78b6d65643fd159add57f8063ec3f5438ca49c44699e",
+  "final_image": "sha256:5fb8609d627035aae7ecdd847c62c176a4dca67b53df1d9b94f0b53517ee1383",
+  "base_w4a8_image": "sha256:f0d7bc4ea6040cf4dc8d139b01e0fb348cad80dfaecdaf8d56cd560fb9103559",
+  "model_revision": "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+  "flags": {
+    "B70_GPTQ_W4A8_PREFILL": "1",
+    "B70_ONEDNN_PREFILL": "1 (opt-in; default 0)",
+    "B70_ONEDNN_SHORT_CHUNK_ONLY": "1",
+    "B70_ONEDNN_MIN_KV": "16384",
+    "B70_ONEDNN_MAX_KV": "131072"
+  },
+  "native_contract": "one request; Q<6656; exact active KV length 16384..131072; FP16 Q/output; FP8 E4M3FN paged K/V; 24 Q heads, 4 KV heads, D=256; 1664-token pages; bottom-right causal mask; existing Q128/M04/native fallback otherwise",
+  "source_sha256": {
+    "native_sdpa_cpp": "0edb287273aba2e676b5d4738e13f2cfeb9b10458a3467eae87c48fa590966d3",
+    "native_sdpa_so": "f00c4a6e60bac96f66ac2e1c4c10437d67b1d9b95ee9988f1517e7b6c50af3ea",
+    "attention_adapter": "0468be522264a8ca18ba5e7d493f6ecb707505c3dc09be38f9f8c1da93cc1b2b",
+    "dockerfile": "7c5e5a67d5ceb69f4f91321ff913ab775dd911dc0c79e090de4d11ab5010a3d1",
+    "build_image_sh": "92a812d2089721463366b3af716625fbf22db99eb167ece5b12a735da88650ec",
+    "run_server_sh": "926bacfcd33f728a46b6c04e55f8deeb025438c72109c2875f3ce028b8bbfe43"
+  },
+  "qualification": "See README and paired JSON fixtures. The broad oneDNN route failed 32K NLL; short-chunk route passed sampled 32K/64K/128K/199K teacher-forced checks. 199K oneDNN remained disabled by default because one freely sampled request had slower decode. The final image was rebuilt with stricter defaults and device guards; its native gather and dispatch gates and one paired cold/warm 32K fixed-continuation serving replay passed smoke checks. Wider code-quality and mixed-serving gates remain open."
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "qualification-16k-c2",
+    "group": "concurrency",
+    "prompt_tokens": 16384,
+    "output_tokens": 1024,
+    "concurrency": 2,
+    "repeats": 1,
+    "warmups": 0
+  },
+  {
+    "name": "qualification-4k-c4",
+    "group": "concurrency",
+    "prompt_tokens": 4096,
+    "output_tokens": 1024,
+    "concurrency": 4,
+    "repeats": 1,
+    "warmups": 0
+  },
+  {
+    "name": "qualification-prefix-16k",
+    "group": "prefix",
+    "prompt_tokens": 16384,
+    "output_tokens": 1024,
+    "concurrency": 1,
+    "repeats": 2,
+    "shared_prefix_fraction": 1.0,
+    "warmups": 0
+  }
+]

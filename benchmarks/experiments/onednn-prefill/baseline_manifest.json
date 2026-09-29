@@ -1,0 +1,30 @@
+{
+  "status": "operator feasibility experiment; no serving promotion",
+  "target_git_base": "906be5bbcdd7756b514b32e3043fb1060bf867cd",
+  "donor_git_commit": "15ded2f3add148c4db3c900cba7de878238f53bc",
+  "model": "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+  "model_revision": "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+  "gpu": "Intel Arc Pro B70",
+  "power_limit_watts": 180,
+  "runtime": {"vllm": "0.30.0+xpu", "torch": "2.13.0+xpu", "xpu_kernels": "0.1.15.4"},
+  "images": {
+    "archived_control": "sha256:648132c9b9da4bb244d7304b956c1a9bb825be640a92755a5ffe32f2bbd679b4",
+    "w4a8_candidate": "sha256:f0d7bc4ea6040cf4dc8d139b01e0fb348cad80dfaecdaf8d56cd560fb9103559"
+  },
+  "onednn": {
+    "version": "3.13",
+    "local_source_commit": "0e2a5bfeef1bfbffc3137464606540233086ce9b",
+    "library_sha256": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20"
+  },
+  "source_sha256": {
+    "w4a8_dockerfile": "307b84b1bff4b3655fadd65fd6d534817c1f44570dde7883bd7fcd0a71ec51af",
+    "w4a8_patch": "d03ec66fb276a4551f945aff183bd0235b7399e888c766766bf9ffbc78cfe933",
+    "w4a8_measurements": "baf2f73caf9d5162b69aad893af3cd34c9de5e54079ea7a02e02a1cc50b733c6",
+    "attention_adapter": "d288bb54f52f5be166e851b2d7862da81c041bd7eff6b90e6eaca68c92333b64",
+    "q128_library": "f38f23c4535407b6c3f083c5e81c89c7f704bae374571cf2e32f9da13abe0873",
+    "m04_library": "784916abd42b614794becac634a6a154f854c73d6dfcb1a50cd939b563020c6a",
+    "exl3_fp8kv_prefill": "59613b2f1c42c70be8a0daf7839f0f79c5b9ef33d2f3c61e556f941c02601a1a",
+    "exl3_native_source": "8ab31b1f6a1c65c1f05e7ac2325b08450b70eaf90def41942cca17542a375ecb"
+  },
+  "control_policy": "Use archived prompt-matched W4A16 measurements unless a specific causal question requires a current replay."
+}

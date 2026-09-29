@@ -57,11 +57,23 @@ remainder is one token. The known 199K page-review case passed. No quality
 claim is made from this regression set alone; the held-out and serving gates
 below remain open.
 
+The first coding-agent prequalification used frozen fixture v1 and made 25
+model requests in 499.18 s, with 33 tool calls, 90,309 newly computed prompt
+tokens, 377,728 cached prompt tokens and zero preemptions. Its recorded
+acceptance scores are invalid because the runner passed absolute test paths
+as unittest module names. Regrading the saved project states gives task 1
+4/4 and task 2 2/4: one task 2 failure is nested payload aliasing; the other
+comes from the v1 prompt omitting the JSON restore argument key. The raw run
+and `coding-agent-qualification/regrade.json` remain local for audit. Fixture
+v2 states `command["snapshot"]` explicitly, and the runner now uses unittest
+discovery and saves each task's project state. A fresh v2 run is required
+before publishing any coding score.
+
 ## Open gates
 
 - C2: 48 new held-out tasks across at least 12 contexts, candidate/control
-  pairing, new near-199K contexts and NLL diagnostics. A repeatable two-stage
-  coding-agent fixture is frozen and is being prequalified separately.
+  pairing, new near-199K contexts and NLL diagnostics. The revised repeatable
+  two-stage coding-agent fixture v2 is frozen for prequalification.
 - C3: fixed 40-request integrated serving/resource trace and matched route-off
   and decode comparisons.
 - C4: advertised API paths, permanent service deployment, then complete

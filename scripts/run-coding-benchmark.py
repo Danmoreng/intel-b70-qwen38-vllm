@@ -17,7 +17,7 @@ import urllib.request
 
 
 REPO = Path(__file__).resolve().parents[1]
-FIXTURE = REPO / "benchmarks/coding-fixture/v1"
+FIXTURES = REPO / "benchmarks/coding-fixture"
 MODEL = "Qwen3.8-27B"
 METRICS = {
     "prompt_tokens": "vllm:prompt_tokens_total",
@@ -63,15 +63,15 @@ def tree_hash(root: Path) -> str:
     return digest.hexdigest()
 
 
-def verify_fixture():
-    manifest = json.loads((FIXTURE / "manifest.json").read_text())
+def verify_fixture(fixture: Path):
+    manifest = json.loads((fixture / "manifest.json").read_text())
     expected = manifest["files"]
-    actual = {str(p.relative_to(FIXTURE)): sha(p)
-              for p in FIXTURE.rglob("*") if p.is_file() and
+    actual = {str(p.relative_to(fixture)): sha(p)
+              for p in fixture.rglob("*") if p.is_file() and
               p.name != "manifest.json" and "__pycache__" not in p.parts}
     if actual != expected:
         raise RuntimeError("coding fixture differs from its frozen manifest")
-    return sha(FIXTURE / "manifest.json")
+    return manifest["fixture_id"], sha(fixture / "manifest.json")
 
 
 def http_json(url: str, payload=None, timeout=60):
@@ -144,16 +144,23 @@ def execute_tool(project: Path, name: str, arguments: dict):
 def acceptance(project: Path, task_path: Path):
     environment = dict(os.environ)
     environment["PYTHONPATH"] = str(project)
-    done = subprocess.run([sys.executable, "-m", "unittest", "-v", str(task_path)],
+    done = subprocess.run([sys.executable, "-m", "unittest", "discover",
+                           "-s", str(task_path.parent), "-p", task_path.name,
+                           "-v"],
                           cwd=project, env=environment, capture_output=True,
                           text=True, timeout=30)
+    output = (done.stdout + done.stderr)[-12000:]
+    count = re.search(r"Ran (\d+) tests? in ", output)
+    if not count or int(count.group(1)) == 0 or "No module named '/" in output:
+        raise RuntimeError(f"acceptance harness failed for {task_path}: {output}")
     return {"passed": done.returncode == 0, "exit_code": done.returncode,
-            "output": (done.stdout + done.stderr)[-12000:]}
+            "tests_run": int(count.group(1)), "output": output}
 
 
 def run(args):
-    manifest_sha = verify_fixture()
-    tasks = json.loads((FIXTURE / "tasks.json").read_text())["tasks"]
+    fixture = FIXTURES / args.fixture_version
+    fixture_id, manifest_sha = verify_fixture(fixture)
+    tasks = json.loads((fixture / "tasks.json").read_text())["tasks"]
     expected_policy = (REPO / "config/production_policy.sha256").read_text().split()[0]
     identity = live_identity(args.container)
     if identity["policy_sha256"] != expected_policy:
@@ -165,8 +172,8 @@ def run(args):
         raise ValueError("output directory already exists; use a fresh run")
     args.output_root.mkdir(parents=True)
     project = args.output_root / "project"
-    shutil.copytree(FIXTURE / "project", project)
-    original_hash = tree_hash(FIXTURE / "project")
+    shutil.copytree(fixture / "project", project)
+    original_hash = tree_hash(fixture / "project")
     if tree_hash(project) != original_hash:
         raise RuntimeError("fixture copy changed")
     start = time.monotonic()
@@ -217,17 +224,20 @@ def run(args):
             if not calls and choice.get("finish_reason") == "length":
                 messages.append({"role": "user", "content":
                                  "Continue the implementation and use tools as needed."})
-        check = acceptance(project, FIXTURE / task["acceptance"])
+        check = acceptance(project, fixture / task["acceptance"])
         results.append({"task": task["id"], "acceptance": check,
                         "project_sha256": tree_hash(project)})
+        shutil.copytree(project, args.output_root / f"project-after-{task['id']}",
+                        ignore=shutil.ignore_patterns("__pycache__"))
         print(json.dumps({"task": task["id"], "passed": check["passed"]}),
               flush=True)
     after = snapshot(args.base)
     deltas = {key: after[key] - before[key] for key in METRICS}
-    summary = {"fixture_id": "queuekit-agent-v1",
+    summary = {"fixture_id": fixture_id,
                "fixture_manifest_sha256": manifest_sha,
                "fixture_project_sha256": original_hash,
-               "tasks_sha256": sha(FIXTURE / "tasks.json"),
+               "tasks_sha256": sha(fixture / "tasks.json"),
+               "runner_sha256": sha(Path(__file__)),
                "identity": identity,
                "wall_s": time.monotonic() - start,
                "requests": len(records),
@@ -250,4 +260,5 @@ if __name__ == "__main__":
     parser.add_argument("--container", default="b70-qwen38-vllm")
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--max-requests-per-task", type=int, default=40)
+    parser.add_argument("--fixture-version", choices=("v1", "v2"), default="v2")
     run(parser.parse_args())

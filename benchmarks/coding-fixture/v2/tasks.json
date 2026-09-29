@@ -1,0 +1,15 @@
+{
+  "fixture_id": "queuekit-agent-v2",
+  "tasks": [
+    {
+      "id": "priority-retry-cancel",
+      "instruction": "Extend this Python QueueKit project across queuekit/queue.py, queuekit/models.py and queuekit/api.py. JobQueue accepts max_attempts=3 by default and rejects nonpositive values. claim() chooses the highest numeric priority pending job; ties preserve submission order, and a retried job joins the tail of its priority group. fail(id) on a running job increments no counter beyond the increment already made by claim(): it requeues with state 'pending' while attempts < max_attempts, otherwise becomes 'failed'. Add cancel(id): pending or running jobs become 'cancelled' and are never claimed again; cancelling a terminal job raises ValueError. Add status(id) returning the Job, and JSON adapter actions cancel/status. Keep existing action responses compatible and include id, state and attempts for cancel/status. Reject an empty/non-string ID and a non-dict payload on submit. Unknown IDs raise KeyError. Preserve the visible baseline tests. Inspect the project, edit its source, and run tests. Tell me when done.",
+      "acceptance": "acceptance/test_task1.py"
+    },
+    {
+      "id": "snapshot-restore-metrics",
+      "instruction": "Continue in the same QueueKit checkout and conversation. Add JobQueue.snapshot() returning a detached JSON-serializable dict with max_attempts, jobs in original submission order (each id,payload,priority,attempts,state), and pending IDs in actual claim order. Add JobQueue.from_snapshot(data): validate all fields and IDs before returning a new queue; reject malformed or duplicate entries and references, and never mutate the input. Jobs saved as 'running' must return as pending after restore, preserving attempt counts and ordered after already pending jobs at their priority. Add QueueAPI actions snapshot, restore and metrics. The restore action reads the snapshot from command[\"snapshot\"] and returns the restored queue snapshot; it replaces the live queue only after full validation; a failed restore leaves it unchanged. metrics returns counts for pending, running, done, failed, cancelled and total_attempts. Keep all previous behavior and tests. Inspect code, edit source and run tests. Tell me when done.",
+      "acceptance": "acceptance/test_task2.py"
+    }
+  ]
+}

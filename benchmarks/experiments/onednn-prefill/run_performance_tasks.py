@@ -177,6 +177,7 @@ def main():
     parser.add_argument("--base", default="http://127.0.0.1:8081")
     parser.add_argument("--arm", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--container", default="b70-qwen38-vllm")
     parser.add_argument("--task-set", choices=("32k", "128k", "199k"), default="32k")
     parser.add_argument("--limit", type=int)
     args = parser.parse_args()
@@ -192,8 +193,8 @@ def main():
             raise ValueError("output file contains a different arm")
     completed = {row["id"]: row for row in previous}
     image = subprocess.check_output(
-        ["docker", "image", "inspect", "local/b70-qwen38-vllm:onednn-poc-20260929",
-         "--format", "{{.Id}}"], text=True).strip()
+        ["docker", "inspect", args.container, "--format", "{{.Image}}"],
+        text=True).strip()
     for task in selected:
         prompt_hash = hashlib.sha256(task["prompt"].encode()).hexdigest()
         if task["id"] in completed:

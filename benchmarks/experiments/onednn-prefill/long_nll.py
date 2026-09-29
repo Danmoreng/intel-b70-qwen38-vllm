@@ -7,11 +7,7 @@ import json
 import urllib.request
 from pathlib import Path
 
-from replay_frozen import snapshot
-
-
-FROZEN = (Path(__file__).resolve().parents[4] / "intel-b70-qwen38-vllm"
-          / "benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00")
+from replay_frozen import FROZEN, snapshot
 
 
 def main():

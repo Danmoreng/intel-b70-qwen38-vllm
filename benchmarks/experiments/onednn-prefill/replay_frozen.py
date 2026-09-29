@@ -4,6 +4,7 @@
 import argparse
 import hashlib
 import json
+import os
 import re
 import subprocess
 import time
@@ -11,8 +12,7 @@ import urllib.request
 from pathlib import Path
 
 
-FROZEN = (Path(__file__).resolve().parents[4] / "intel-b70-qwen38-vllm"
-          / "benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00")
+FROZEN = Path(os.environ["B70_FROZEN_FIXTURE_ROOT"]).resolve()
 METRICS = {
     "prefill_tokens": "vllm:request_prefill_kv_computed_tokens_sum",
     "prefill_s": "vllm:request_prefill_time_seconds_sum",
@@ -40,6 +40,7 @@ def snapshot(base):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--base", default="http://127.0.0.1:8081")
+    parser.add_argument("--container", default="b70-qwen38-vllm")
     parser.add_argument("--case", default="phase-32k-c1")
     parser.add_argument("--repeat", type=int, default=1)
     parser.add_argument("--arm", default="", help="label the active server flags")
@@ -87,11 +88,12 @@ def main():
     end = time.monotonic()
     after = snapshot(args.base)
     counts = {key: after[key] - before[key] for key in METRICS}
-    image = "local/b70-qwen38-vllm:onednn-poc-20260929"
+    image = subprocess.check_output(
+        ["docker", "inspect", args.container, "--format", "{{.Config.Image}}"],
+        text=True).strip()
     image_id = subprocess.check_output(
-        ["docker", "image", "inspect", image, "--format", "{{.Id}}"],
-        text=True,
-    ).strip()
+        ["docker", "inspect", args.container, "--format", "{{.Image}}"],
+        text=True).strip()
     result = {
         "case": args.case, "repeat": args.repeat, "prompt_sha256": digest,
         "arm": args.arm,

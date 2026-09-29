@@ -1,8 +1,4 @@
-"""Experimental long-prefill route; leave Q128/M04/native as fallback.
-
-This adapter is for qualification runs only. The native operator and route
-still require serving and quality qualification.
-"""
+"""Production B70 attention dispatch: Q128/M04, exact-length oneDNN, mixed rows."""
 
 import os
 
@@ -12,131 +8,156 @@ from b70_attention_base import flash_attn_varlen_func as fallback
 from b70_attention_base import q128_eligible
 
 
-ENABLED = os.environ.get("B70_ONEDNN_PREFILL") == "1"
-VALIDATE = os.environ.get("B70_ONEDNN_VALIDATE") == "1"
-VALIDATE_FP32 = os.environ.get("B70_ONEDNN_VALIDATE_FP32") == "1"
-PROFILE = os.environ.get("B70_ONEDNN_PROFILE", "reference")
-if PROFILE not in ("reference", "performance"):
-    raise ValueError("B70_ONEDNN_PROFILE must be reference or performance")
-# The old flag is retained only so frozen qualification runs stay reproducible.
-# A short prefill chunk may also occur before the prompt's final chunk.
-_short_policy = os.environ.get("B70_ONEDNN_SHORT_CHUNK_ONLY",
-                               "0" if PROFILE == "performance" else "1")
-if _short_policy not in ("0", "1"):
-    raise ValueError("B70_ONEDNN_SHORT_CHUNK_ONLY must be 0 or 1")
-SHORT_CHUNK_ONLY = (_short_policy == "1" or
-                    os.environ.get("B70_ONEDNN_FINAL_CHUNK_ONLY") == "1")
-MIN_KV = int(os.environ.get("B70_ONEDNN_MIN_KV", "16384"))
-if MIN_KV < 1:
-    raise ValueError("B70_ONEDNN_MIN_KV must be positive")
-MAX_KV = int(os.environ.get("B70_ONEDNN_MAX_KV",
-                            "200704" if PROFILE == "performance" else "131072"))
-if MAX_KV < MIN_KV:
-    raise ValueError("B70_ONEDNN_MAX_KV must be at least B70_ONEDNN_MIN_KV")
-_seen = set()
-_validated = {}
-_validated_fp32 = {}
-if ENABLED:
-    torch.ops.load_library("/opt/b70/native_sdpa.so")
+MIN_KV = 16384
+MAX_KV = 196608
+PAGE = 1664
+QUALIFICATION_ROUTE_OFF = os.environ.get("B70_QUALIFICATION_ROUTE_OFF") == "1"
+if QUALIFICATION_ROUTE_OFF and os.environ.get("B70_QUALIFICATION_CONTROL") != "1":
+    raise RuntimeError("route-off control requires explicit offline qualification")
+_COUNTERS = {name: {"calls": 0, "query_tokens": 0, "kv_tokens": 0} for name in (
+    "onednn_single", "onednn_mixed", "base_single", "base_mixed",
+    "capture", "unsupported_mixed", "empty_mixed")}
+
+
+def _required_flag(name, value):
+    if os.environ.get(name) != value:
+        raise RuntimeError(f"production policy requires {name}={value}")
+
+
+for _name, _value in (
+    ("B70_ONEDNN_PREFILL", "1"),
+    ("B70_ONEDNN_MIXED_ROUTE", "1"),
+    ("B70_ONEDNN_MIN_KV", str(MIN_KV)),
+    ("B70_ONEDNN_MAX_KV", str(MAX_KV)),
+):
+    _required_flag(_name, _value)
+for _name in ("B70_ONEDNN_PROFILE", "B70_ONEDNN_SHORT_CHUNK_ONLY",
+              "B70_ONEDNN_FINAL_CHUNK_ONLY", "B70_ONEDNN_VALIDATE",
+              "B70_ONEDNN_VALIDATE_FP32", "B70_ONEDNN_MIXED_TRACE",
+              "B70_ONEDNN_MIXED_VALIDATE"):
+    if os.environ.get(_name) not in (None, "0"):
+        raise RuntimeError(f"{_name} is not part of the production policy")
+torch.ops.load_library("/opt/b70/native_sdpa.so")
+
+
+def _count(name, query_tokens, kv_tokens=0):
+    """Power-of-two reports keep telemetry bounded as serving runs indefinitely."""
+    row = _COUNTERS[name]
+    row["calls"] += 1
+    row["query_tokens"] += query_tokens
+    row["kv_tokens"] += kv_tokens
+    if row["calls"] & (row["calls"] - 1) == 0:
+        print("B70_ATTENTION_ROUTE", name, dict(row), flush=True)
 
 
 def eligible(d):
-    if not ENABLED or not q128_eligible(d):
+    if not q128_eligible(d) or torch.xpu.is_current_stream_capturing():
         return False
-    if torch.xpu.is_current_stream_capturing():
-        return False
-    q = d["q"]
-    k, v = d["k"], d["v"]
+    q, k, v = d["q"], d["k"], d["v"]
     length = d["max_seqlen_k"]
-    if SHORT_CHUNK_ONLY and q.shape[0] >= 6656:
-        return False
     return (
-        q.shape[0] >= 256 and MIN_KV <= length <= MAX_KV and q.shape[0] <= length
-        and d["block_table"].shape[1] >= (length + 1663) // 1664
-        and d["block_table"].dtype == torch.int32
-        and k.dtype == v.dtype == torch.float8_e4m3fn
-        and k.stride(3) == v.stride(3) == 1
-        and k.shape[1:] == v.shape[1:] == (1664, 4, 256)
+        MIN_KV <= length <= MAX_KV and q.shape[0] <= length and
+        d["block_table"].shape[1] >= (length + PAGE - 1) // PAGE and
+        k.dtype == v.dtype == torch.float8_e4m3fn and
+        k.shape[1:] == v.shape[1:] == (PAGE, 4, 256)
     )
 
 
-def flash_attn_varlen_func(**d):
-    if not eligible(d):
-        return fallback(**d)
+def _onednn(d):
     q, k, v = d["q"], d["k"], d["v"]
     length = d["max_seqlen_k"]
-    q_rows = q.shape[0]
-    pages = d["block_table"][0, :(length + 1663) // 1664].contiguous()
+    rows = q.shape[0]
+    pages = d["block_table"][0, :(length + PAGE - 1) // PAGE].contiguous()
     k_scale = d["k_descale"].as_strided((1,), (1,))
     v_scale = d["v_descale"].as_strided((1,), (1,))
     divisor = torch.full((1,), 16.0, device=q.device, dtype=torch.float16)
-    negative_inf = torch.full((1,), float("-inf"), device=q.device, dtype=torch.float32)
+    negative_inf = torch.full((1,), float("-inf"), device=q.device,
+                              dtype=torch.float32)
     out = d.get("out")
     if out is None:
         out = torch.empty_like(q)
     key = torch.empty((1, length, 256), device=q.device, dtype=torch.float16)
     value = torch.empty_like(key)
-    query = torch.empty((6, q_rows, 256), device=q.device, dtype=torch.float16)
+    query = torch.empty((6, rows, 256), device=q.device, dtype=torch.float16)
     result = torch.empty_like(query)
     for head in range(4):
         torch.ops.b70_sdpa_probe.gather_dequant(k, pages, k_scale, key[0], head)
         torch.ops.b70_sdpa_probe.gather_dequant(v, pages, v_scale, value[0], head)
         query.copy_(q[:, head * 6:(head + 1) * 6].permute(1, 0, 2))
-        torch.ops.b70_sdpa_probe.forward(query, key, value, result, divisor, negative_inf)
+        torch.ops.b70_sdpa_probe.forward(query, key, value, result, divisor,
+                                         negative_inf)
         out[:, head * 6:(head + 1) * 6].copy_(result.permute(1, 0, 2))
-    signature = (q_rows, length)
-    check_fp32 = VALIDATE_FP32 and _validated_fp32.get(signature, 0) < 2
-    check_regular = VALIDATE and _validated.get(signature, 0) < 2
-    if check_regular or check_fp32:
-        reference = fallback(**{**d, "out": None})
-        torch.xpu.synchronize()
-        difference = (out.float() - reference.float()).abs()
-        if check_regular:
-            row_max = difference.amax(dim=(1, 2))
-            worst = torch.topk(row_max, min(4, q_rows))
-            print("B70_ONEDNN_VALIDATE", {
-                "signature": signature,
-                "used_k": int(d["seqused_k"].item()),
-                "k_scale": float(k_scale.item()),
-                "v_scale": float(v_scale.item()),
-                "max_abs": float(difference.max().item()),
-                "mean_abs": float(difference.mean().item()),
-                "relative_l2": float((difference.norm() / reference.float().norm()).item()),
-                "allclose": bool(torch.allclose(out, reference, rtol=.01, atol=.002)),
-                "worst_rows": worst.indices.tolist(),
-                "worst_row_abs": worst.values.tolist(),
-            }, flush=True)
-            _validated[signature] = _validated.get(signature, 0) + 1
-        if check_fp32:
-            # Diagnostic only: recompute selected real rows over their exact
-            # visible FP8->FP16 KV prefix with FP32 QK, softmax, and PV.
-            head_difference = difference[:, :6].amax(dim=(1, 2))
-            worst_rows = torch.topk(head_difference, min(4, q_rows)).indices.tolist()
-            rows_host = sorted(set([0, q_rows // 2, q_rows - 1, *worst_rows]))
-            rows = torch.tensor(rows_host, device=q.device, dtype=torch.long)
-            torch.ops.b70_sdpa_probe.gather_dequant(k, pages, k_scale, key[0], 0)
-            torch.ops.b70_sdpa_probe.gather_dequant(v, pages, v_scale, value[0], 0)
-            selected_q = q.index_select(0, rows)[:, :6].permute(1, 0, 2).float()
-            scores = torch.matmul(selected_q, key[0].float().T) * .0625
-            columns = torch.arange(length, device=q.device)
-            last_visible = length - q_rows + rows
-            scores.masked_fill_(columns[None, None, :] > last_visible[None, :, None],
-                                float("-inf"))
-            selected_fp32 = torch.matmul(torch.softmax(scores, dim=-1),
-                                         value[0].float()).permute(1, 0, 2)
-            selected_onednn = out.index_select(0, rows)[:, :6].float()
-            selected_q128 = reference.index_select(0, rows)[:, :6].float()
-            denom = selected_fp32.norm()
-            print("B70_ONEDNN_FP32_DIAGNOSTIC", {
-                "signature": signature, "head": 0, "rows": rows_host,
-                "k_scale": float(k_scale.item()), "v_scale": float(v_scale.item()),
-                "onednn_relative_l2": float(((selected_onednn - selected_fp32).norm() / denom).item()),
-                "q128_relative_l2": float(((selected_q128 - selected_fp32).norm() / denom).item()),
-                "onednn_max_abs": float((selected_onednn - selected_fp32).abs().max().item()),
-                "q128_max_abs": float((selected_q128 - selected_fp32).abs().max().item()),
-            }, flush=True)
-            _validated_fp32[signature] = _validated_fp32.get(signature, 0) + 1
-    if signature not in _seen:
-        print("B70_ONEDNN_PREFILL_DISPATCH", signature, flush=True)
-        _seen.add(signature)
+    return out
+
+
+def _subcall(d, starts, lengths, index, out):
+    first, last = starts[index:index + 2]
+    sub = dict(d)
+    sub["q"] = d["q"][first:last]
+    sub["out"] = out
+    sub["cu_seqlens_q"] = torch.tensor([0, last - first],
+                                        device=d["cu_seqlens_q"].device,
+                                        dtype=d["cu_seqlens_q"].dtype)
+    sub["seqused_k"] = d["seqused_k"][index:index + 1].contiguous()
+    sub["block_table"] = d["block_table"][index:index + 1].contiguous()
+    sub["max_seqlen_q"] = last - first
+    sub["max_seqlen_k"] = lengths[index]
+    for scale in ("k_descale", "v_descale"):
+        if d.get(scale) is not None and d[scale].ndim > 1:
+            sub[scale] = d[scale][index:index + 1]
+    return sub
+
+
+def flash_attn_varlen_func(**d):
+    q = d["q"]
+    if torch.xpu.is_current_stream_capturing():
+        _count("capture", q.shape[0])
+        return fallback(**d)
+    if eligible(d):
+        _count("onednn_single", q.shape[0], d["max_seqlen_k"])
+        return _onednn(d)
+
+    if QUALIFICATION_ROUTE_OFF:
+        _count("base_mixed", q.shape[0])
+        return fallback(**d)
+
+    cu, used, table = (d.get(name) for name in
+                       ("cu_seqlens_q", "seqused_k", "block_table"))
+    if (q.shape[0] < 256 or d.get("max_seqlen_q", 0) < 256 or
+            d.get("max_seqlen_k", 0) < MIN_KV or
+            cu is None or used is None or table is None or
+            cu.numel() <= 2 or table.shape[0] != used.numel() or
+            cu.numel() != used.numel() + 1 or
+            d.get("scheduler_metadata") is not None):
+        _count("base_single", q.shape[0])
+        return fallback(**d)
+
+    # These transfers synchronize once per attention layer. Qualification
+    # measures their end-to-end cost; lengths must remain exact for each row.
+    starts, lengths = cu.tolist(), used.tolist()
+    if (starts[0] != 0 or starts[-1] != q.shape[0] or
+            any(a > b for a, b in zip(starts, starts[1:])) or
+            any(starts[i + 1] - starts[i] > length or length < 0
+                for i, length in enumerate(lengths))):
+        _count("unsupported_mixed", q.shape[0])
+        return fallback(**d)
+    subs = [_subcall(d, starts, lengths, i, None)
+            for i in range(len(lengths)) if starts[i] != starts[i + 1]]
+    if not any(eligible(sub) for sub in subs):
+        _count("base_mixed", q.shape[0])
+        return fallback(**d)
+    out = d.get("out")
+    if out is None:
+        out = torch.empty_like(q)
+    for i, (first, last) in enumerate(zip(starts, starts[1:])):
+        if first == last:
+            _count("empty_mixed", 0)
+            continue
+        sub = _subcall(d, starts, lengths, i, out[first:last])
+        if eligible(sub):
+            _count("onednn_mixed", last - first, lengths[i])
+            _onednn(sub)
+        else:
+            _count("base_mixed", last - first, lengths[i])
+            fallback(**sub)
     return out

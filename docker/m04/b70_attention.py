@@ -25,7 +25,8 @@ def control():
     _validate = False
 
 
-threading.Thread(target=control, daemon=True).start()
+if os.environ.get("B70_Q128_DIAGNOSTIC_VALIDATE") == "1":
+    threading.Thread(target=control, daemon=True).start()
 
 
 def common(d):
@@ -102,7 +103,7 @@ def run_m04(d):
         out.copy_(result)
         result = out
     key = (q_len, d["max_seqlen_k"], num_splits)
-    if key not in _logged:
+    if key not in _logged and len(_logged) < 16:
         print("B70_M04_SHARED_KV_DISPATCH", key, flush=True)
         _logged.add(key)
     return result
@@ -132,7 +133,7 @@ def flash_attn_varlen_func(**d):
             handle.write(json.dumps(row) + "\n")
         assert ok and row["finite"], row
         _seen.add(key)
-    if key not in _logged:
+    if key not in _logged and len(_logged) < 16:
         print("B70_Q128_DISPATCH", key, "kv_stride", k.stride(), flush=True)
         _logged.add(key)
     out = d.get("out")

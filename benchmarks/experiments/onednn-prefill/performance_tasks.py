@@ -7,12 +7,12 @@ same context is deliberately reused within a group to exercise prefix caching.
 
 import hashlib
 import json
+import os
 import re
 from pathlib import Path
 
 
-FROZEN = (Path(__file__).resolve().parents[4] / "intel-b70-qwen38-vllm"
-          / "benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00")
+FROZEN = Path(os.environ["B70_FROZEN_FIXTURE_ROOT"]).resolve()
 
 CODE = [
     ("Define solve(events). Each event is [request_id, emitted_tokens]. Sum tokens "

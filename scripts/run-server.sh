@@ -9,65 +9,77 @@ if [[ -f "$repo_dir/.env" ]]; then
   set +a
 fi
 
-default_image="local/b70-qwen38-vllm:vllm-0.30.0-xpu-kernels-0.1.15.4"
-image="${VLLM_IMAGE:-$default_image}"
-model="${MODEL_ID:-mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16}"
-revision="${MODEL_REVISION:-a47b0c6f0d756bc394c4cc629d5b0ded1acc7001}"
-served_name="${SERVED_MODEL_NAME:-Qwen3.8-27B}"
-render_node="${RENDER_NODE:-/dev/dri/renderD128}"
-hf_home="${HF_HOME:-$HOME/.cache/huggingface}"
-container="${VLLM_CONTAINER:-b70-qwen38-vllm}"
-
-[[ -e "$render_node" ]] || { echo "Render node not found: $render_node" >&2; exit 2; }
-speculative_tokens="${SPECULATIVE_TOKENS:-4}"
-max_num_batched_tokens="${MAX_NUM_BATCHED_TOKENS:-6656}"
-max_num_seqs="${MAX_NUM_SEQS:-4}"
-scheduler_watermark="${SCHEDULER_WATERMARK:-0.0}"
-w4a8_prefill="${B70_GPTQ_W4A8_PREFILL:-0}"
-onednn_prefill="${B70_ONEDNN_PREFILL:-0}"
-onednn_profile="${B70_ONEDNN_PROFILE:-reference}"
-case "$onednn_profile" in
-  reference) onednn_short_default=1; onednn_max_default=131072 ;;
-  performance) onednn_short_default=0; onednn_max_default=196608 ;;
-  *) echo "B70_ONEDNN_PROFILE must be reference or performance" >&2; exit 2 ;;
-esac
-onednn_short="${B70_ONEDNN_SHORT_CHUNK_ONLY:-$onednn_short_default}"
-onednn_mixed_route="${B70_ONEDNN_MIXED_ROUTE:-0}"
-onednn_min_kv="${B70_ONEDNN_MIN_KV:-16384}"
-onednn_max_kv="${B70_ONEDNN_MAX_KV:-$onednn_max_default}"
-[[ "$w4a8_prefill" =~ ^[01]$ && "$onednn_prefill" =~ ^[01]$ &&
-   "$onednn_short" =~ ^[01]$ && "$onednn_mixed_route" =~ ^[01]$ &&
-   "$onednn_min_kv" =~ ^[1-9][0-9]*$ &&
-   "$onednn_max_kv" =~ ^[1-9][0-9]*$ ]] || {
-  echo "Invalid W4A8/oneDNN cache variant flags" >&2; exit 2;
+require_value() {
+  local name="$1" expected="$2" actual="${!1:-$2}"
+  [[ "$actual" == "$expected" ]] || {
+    echo "Production policy requires $name=$expected (got $actual)" >&2
+    exit 2
+  }
 }
-cache_root="${XDG_CACHE_HOME:-$HOME/.cache}/b70-qwen38-vllm"
-if [[ "$image" != "$default_image" || "$w4a8_prefill" == 1 || "$onednn_prefill" == 1 ]]; then
-  # AOT artifacts can otherwise be reused across different linear/attention
-  # selections. Keep the unchanged production cache path, isolate experiments.
-  image_id="$(docker image inspect "$image" --format '{{.Id}}')"
-  cache_variant="w4a8${w4a8_prefill}-onednn${onednn_prefill}-${onednn_profile}-short${onednn_short}-min${onednn_min_kv}-max${onednn_max_kv}"
-  if [[ "$onednn_mixed_route" == 1 ]]; then
-    cache_variant+="-mixed1"
-  fi
-  cache_root="${XDG_CACHE_HOME:-$HOME/.cache}/b70-qwen38-vllm-experiment/${image_id#sha256:}/$cache_variant"
-fi
-[[ "$speculative_tokens" =~ ^[1-9][0-9]*$ ]] || { echo "SPECULATIVE_TOKENS must be positive" >&2; exit 2; }
-[[ "$max_num_batched_tokens" =~ ^[1-9][0-9]*$ ]] || { echo "MAX_NUM_BATCHED_TOKENS must be positive" >&2; exit 2; }
-[[ "$max_num_seqs" =~ ^[1-9][0-9]*$ ]] || { echo "MAX_NUM_SEQS must be positive" >&2; exit 2; }
-[[ "$scheduler_watermark" =~ ^0(\.[0-9]+)?$ ]] || { echo "SCHEDULER_WATERMARK must be in [0.0, 1.0)" >&2; exit 2; }
+reject_value() {
+  local name="$1"
+  [[ -z "${!name:-}" || "${!name:-}" == 0 ]] || {
+    echo "$name is a diagnostic/experimental override and cannot be used in production" >&2
+    exit 2
+  }
+}
 
-mkdir -p "$hf_home" "$cache_root/vllm" "$cache_root/triton"
+[[ "$#" == 0 ]] || { echo "Production launcher accepts no vLLM overrides" >&2; exit 2; }
+require_value VLLM_IMAGE local/b70-qwen38-vllm:production-onednn-v1
+require_value MODEL_ID mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16
+require_value MODEL_REVISION a47b0c6f0d756bc394c4cc629d5b0ded1acc7001
+require_value SERVED_MODEL_NAME Qwen3.8-27B
+require_value CONTEXT_SIZE 200704
+require_value GPU_MEMORY_UTILIZATION 0.93
+require_value MAX_NUM_BATCHED_TOKENS 6656
+require_value MAX_NUM_SEQS 4
+require_value SPECULATIVE_TOKENS 4
+require_value SCHEDULER_WATERMARK 0.0
+require_value PREFIX_CACHING 1
+require_value B70_POWER_LIMIT_W 180
+require_value B70_GPTQ_W4A8_PREFILL 1
+require_value B70_GPTQ_W4A8_MIN_TOKENS 512
+require_value B70_ONEDNN_PREFILL 1
+require_value B70_ONEDNN_MIXED_ROUTE 1
+require_value B70_ONEDNN_MIN_KV 16384
+require_value B70_ONEDNN_MAX_KV 196608
+require_value B70_DRAFT_VOCAB_ENABLED 0
+require_value B70_DRAFT_LMHEAD_INT4 1
+require_value B70_DRAFT_MTP_INT4 1
+for flag in B70_ONEDNN_PROFILE B70_ONEDNN_SHORT_CHUNK_ONLY \
+            B70_ONEDNN_FINAL_CHUNK_ONLY B70_ONEDNN_VALIDATE \
+            B70_ONEDNN_VALIDATE_FP32 B70_ONEDNN_MIXED_TRACE \
+            B70_ONEDNN_MIXED_VALIDATE B70_QUALIFICATION_ROUTE_OFF \
+            B70_QUALIFICATION_CONTROL; do
+  reject_value "$flag"
+done
+
+policy_sha="$(sha256sum "$repo_dir/config/production_policy.json" | cut -d' ' -f1)"
+expected_policy_sha="$(cut -d' ' -f1 "$repo_dir/config/production_policy.sha256")"
+[[ "$policy_sha" == "$expected_policy_sha" ]] || {
+  echo "Production policy hash mismatch" >&2; exit 2;
+}
+image="${VLLM_IMAGE:-local/b70-qwen38-vllm:production-onednn-v1}"
+image_id="$(docker image inspect "$image" --format '{{.Id}}')"
+image_policy_sha="$(docker image inspect "$image" --format '{{index .Config.Labels "org.local.b70.policy.sha256"}}')"
+[[ "$image_policy_sha" == "$policy_sha" ]] || {
+  echo "Image policy hash mismatch: $image_policy_sha" >&2; exit 2;
+}
+
+render_node="${RENDER_NODE:-/dev/dri/renderD128}"
+[[ -e "$render_node" ]] || { echo "Render node not found: $render_node" >&2; exit 2; }
+power_caps=(/sys/bus/pci/devices/0000:03:00.0/hwmon/hwmon*/power1_cap)
+[[ "${#power_caps[@]}" == 1 && -f "${power_caps[0]}" &&
+   "$(cat "${power_caps[0]}")" == 180000000 ]] || {
+  echo "B70 card power limit must be verified at 180 W" >&2; exit 2;
+}
 render_gid="$(stat -c '%g' "$render_node")"
+hf_home="${HF_HOME:-$HOME/.cache/huggingface}"
+cache_root="${XDG_CACHE_HOME:-$HOME/.cache}/b70-qwen38-vllm-production/${policy_sha}/${image_id#sha256:}"
+mkdir -p "$hf_home" "$cache_root/vllm" "$cache_root/triton"
+echo "B70_PRODUCTION_LAUNCH policy=$policy_sha image=$image_id cache=$cache_root" >&2
 
-cache_args=(--enable-prefix-caching)
-if [[ "${PREFIX_CACHING:-1}" != "1" ]]; then
-  cache_args=(--no-enable-prefix-caching)
-fi
-
-speculative_config="{\"method\":\"mtp\",\"num_speculative_tokens\":$speculative_tokens}"
-
-exec docker run --rm --name "$container" \
+exec docker run --rm --name "${VLLM_CONTAINER:-b70-qwen38-vllm}" \
   --device /dev/dri --group-add "$render_gid" \
   -v /dev/dri:/dev/dri:ro --shm-size 8g \
   -p "${VLLM_HOST:-127.0.0.1}:${PORT:-8081}:8000" \
@@ -80,18 +92,14 @@ exec docker run --rm --name "$container" \
   -e ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE \
   -e ZE_AFFINITY_MASK="${ZE_AFFINITY_MASK:-0}" \
   -e VLLM_WORKER_MULTIPROC_METHOD=spawn \
-  -e B70_GPTQ_W4A8_PREFILL="$w4a8_prefill" \
-  -e B70_ONEDNN_PREFILL="$onednn_prefill" \
-  -e B70_ONEDNN_PROFILE="$onednn_profile" \
-  -e B70_ONEDNN_VALIDATE="${B70_ONEDNN_VALIDATE:-0}" \
-  -e B70_ONEDNN_VALIDATE_FP32="${B70_ONEDNN_VALIDATE_FP32:-0}" \
-  -e B70_ONEDNN_MIXED_TRACE="${B70_ONEDNN_MIXED_TRACE:-0}" \
-  -e B70_ONEDNN_MIXED_VALIDATE="${B70_ONEDNN_MIXED_VALIDATE:-0}" \
-  -e B70_ONEDNN_MIXED_ROUTE="$onednn_mixed_route" \
-  -e B70_ONEDNN_MIN_KV="$onednn_min_kv" \
-  -e B70_ONEDNN_MAX_KV="$onednn_max_kv" \
-  -e B70_ONEDNN_SHORT_CHUNK_ONLY="$onednn_short" \
-  -e B70_ONEDNN_FINAL_CHUNK_ONLY="${B70_ONEDNN_FINAL_CHUNK_ONLY:-0}" \
+  -e MODEL_ID=mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16 \
+  -e MODEL_REVISION=a47b0c6f0d756bc394c4cc629d5b0ded1acc7001 \
+  -e B70_GPTQ_W4A8_PREFILL=1 \
+  -e B70_GPTQ_W4A8_MIN_TOKENS=512 \
+  -e B70_ONEDNN_PREFILL=1 \
+  -e B70_ONEDNN_MIXED_ROUTE=1 \
+  -e B70_ONEDNN_MIN_KV=16384 \
+  -e B70_ONEDNN_MAX_KV=196608 \
   -e B70_XPU_SINGLE_SEED_SAMPLER=0 \
   -e B70_MTP_BF16_DRAFT=1 \
   -e B70_DRAFT_LMHEAD_INT4=1 \
@@ -101,27 +109,19 @@ exec docker run --rm --name "$container" \
   -e VLLM_XPU_ENABLE_XPU_GRAPH=1 \
   -e PYTORCH_ALLOC_CONF=expandable_segments:True \
   -e PYTHONPATH=/opt/b70-runtime \
-  --entrypoint vllm "$image" serve "$model" \
-  --revision "$revision" \
-  --quantization gptq \
-  --dtype float16 \
-  --max-model-len "${CONTEXT_SIZE:-200704}" \
-  --gpu-memory-utilization "${GPU_MEMORY_UTILIZATION:-0.93}" \
-  --kv-cache-dtype fp8 \
-  --max-num-seqs "$max_num_seqs" \
-  --max-num-batched-tokens "$max_num_batched_tokens" \
-  --scheduler-reserve-full-isl \
-  --watermark "$scheduler_watermark" \
-  "${cache_args[@]}" \
-  --mamba-cache-mode align \
-  --served-model-name "$served_name" \
-  --speculative-config "$speculative_config" \
+  "$image" "${MODEL_ID:-mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16}" \
+  --revision "${MODEL_REVISION:-a47b0c6f0d756bc394c4cc629d5b0ded1acc7001}" \
+  --quantization gptq --dtype float16 \
+  --max-model-len 200704 --gpu-memory-utilization 0.93 --kv-cache-dtype fp8 \
+  --max-num-seqs 4 --max-num-batched-tokens 6656 \
+  --scheduler-reserve-full-isl --watermark 0.0 \
+  --enable-prefix-caching --mamba-cache-mode align \
+  --served-model-name Qwen3.8-27B \
+  --speculative-config '{"method":"mtp","num_speculative_tokens":4}' \
   --middleware request_defaults.ChatDefaults \
   --reasoning-config '{"reasoning_start_str":"<think>","reasoning_end_str":"</think>"}' \
   --override-generation-config '{"max_new_tokens":16384}' \
-  --enable-auto-tool-choice \
-  --tool-call-parser qwen3_xml \
+  --enable-auto-tool-choice --tool-call-parser qwen3_xml \
   --reasoning-parser qwen3 \
   --limit-mm-per-prompt '{"image":1,"video":0}' \
-  --mm-processor-kwargs '{"max_pixels":4194304}' \
-  "$@"
+  --mm-processor-kwargs '{"max_pixels":4194304}'

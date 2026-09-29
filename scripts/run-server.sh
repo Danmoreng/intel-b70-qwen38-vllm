@@ -9,13 +9,13 @@ if [[ -f "$repo_dir/.env" ]]; then
   set +a
 fi
 
-image="${VLLM_IMAGE:-local/b70-qwen38-vllm:vllm-0.30.0-xpu-kernels-0.1.15.4}"
+default_image="local/b70-qwen38-vllm:vllm-0.30.0-xpu-kernels-0.1.15.4"
+image="${VLLM_IMAGE:-$default_image}"
 model="${MODEL_ID:-mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16}"
 revision="${MODEL_REVISION:-a47b0c6f0d756bc394c4cc629d5b0ded1acc7001}"
 served_name="${SERVED_MODEL_NAME:-Qwen3.8-27B}"
 render_node="${RENDER_NODE:-/dev/dri/renderD128}"
 hf_home="${HF_HOME:-$HOME/.cache/huggingface}"
-cache_root="${XDG_CACHE_HOME:-$HOME/.cache}/b70-qwen38-vllm"
 container="${VLLM_CONTAINER:-b70-qwen38-vllm}"
 
 [[ -e "$render_node" ]] || { echo "Render node not found: $render_node" >&2; exit 2; }
@@ -23,6 +23,30 @@ speculative_tokens="${SPECULATIVE_TOKENS:-4}"
 max_num_batched_tokens="${MAX_NUM_BATCHED_TOKENS:-6656}"
 max_num_seqs="${MAX_NUM_SEQS:-4}"
 scheduler_watermark="${SCHEDULER_WATERMARK:-0.0}"
+w4a8_prefill="${B70_GPTQ_W4A8_PREFILL:-0}"
+onednn_prefill="${B70_ONEDNN_PREFILL:-0}"
+onednn_profile="${B70_ONEDNN_PROFILE:-reference}"
+case "$onednn_profile" in
+  reference) onednn_short_default=1; onednn_max_default=131072 ;;
+  performance) onednn_short_default=0; onednn_max_default=200704 ;;
+  *) echo "B70_ONEDNN_PROFILE must be reference or performance" >&2; exit 2 ;;
+esac
+onednn_short="${B70_ONEDNN_SHORT_CHUNK_ONLY:-$onednn_short_default}"
+onednn_min_kv="${B70_ONEDNN_MIN_KV:-16384}"
+onednn_max_kv="${B70_ONEDNN_MAX_KV:-$onednn_max_default}"
+[[ "$w4a8_prefill" =~ ^[01]$ && "$onednn_prefill" =~ ^[01]$ &&
+   "$onednn_short" =~ ^[01]$ && "$onednn_min_kv" =~ ^[1-9][0-9]*$ &&
+   "$onednn_max_kv" =~ ^[1-9][0-9]*$ ]] || {
+  echo "Invalid W4A8/oneDNN cache variant flags" >&2; exit 2;
+}
+cache_root="${XDG_CACHE_HOME:-$HOME/.cache}/b70-qwen38-vllm"
+if [[ "$image" != "$default_image" || "$w4a8_prefill" == 1 || "$onednn_prefill" == 1 ]]; then
+  # AOT artifacts can otherwise be reused across different linear/attention
+  # selections. Keep the unchanged production cache path, isolate experiments.
+  image_id="$(docker image inspect "$image" --format '{{.Id}}')"
+  cache_variant="w4a8${w4a8_prefill}-onednn${onednn_prefill}-${onednn_profile}-short${onednn_short}-min${onednn_min_kv}-max${onednn_max_kv}"
+  cache_root="${XDG_CACHE_HOME:-$HOME/.cache}/b70-qwen38-vllm-experiment/${image_id#sha256:}/$cache_variant"
+fi
 [[ "$speculative_tokens" =~ ^[1-9][0-9]*$ ]] || { echo "SPECULATIVE_TOKENS must be positive" >&2; exit 2; }
 [[ "$max_num_batched_tokens" =~ ^[1-9][0-9]*$ ]] || { echo "MAX_NUM_BATCHED_TOKENS must be positive" >&2; exit 2; }
 [[ "$max_num_seqs" =~ ^[1-9][0-9]*$ ]] || { echo "MAX_NUM_SEQS must be positive" >&2; exit 2; }
@@ -51,12 +75,14 @@ exec docker run --rm --name "$container" \
   -e ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE \
   -e ZE_AFFINITY_MASK="${ZE_AFFINITY_MASK:-0}" \
   -e VLLM_WORKER_MULTIPROC_METHOD=spawn \
-  -e B70_GPTQ_W4A8_PREFILL="${B70_GPTQ_W4A8_PREFILL:-0}" \
-  -e B70_ONEDNN_PREFILL="${B70_ONEDNN_PREFILL:-0}" \
+  -e B70_GPTQ_W4A8_PREFILL="$w4a8_prefill" \
+  -e B70_ONEDNN_PREFILL="$onednn_prefill" \
+  -e B70_ONEDNN_PROFILE="$onednn_profile" \
   -e B70_ONEDNN_VALIDATE="${B70_ONEDNN_VALIDATE:-0}" \
-  -e B70_ONEDNN_MIN_KV="${B70_ONEDNN_MIN_KV:-16384}" \
-  -e B70_ONEDNN_MAX_KV="${B70_ONEDNN_MAX_KV:-131072}" \
-  -e B70_ONEDNN_SHORT_CHUNK_ONLY="${B70_ONEDNN_SHORT_CHUNK_ONLY:-1}" \
+  -e B70_ONEDNN_VALIDATE_FP32="${B70_ONEDNN_VALIDATE_FP32:-0}" \
+  -e B70_ONEDNN_MIN_KV="$onednn_min_kv" \
+  -e B70_ONEDNN_MAX_KV="$onednn_max_kv" \
+  -e B70_ONEDNN_SHORT_CHUNK_ONLY="$onednn_short" \
   -e B70_ONEDNN_FINAL_CHUNK_ONLY="${B70_ONEDNN_FINAL_CHUNK_ONLY:-0}" \
   -e B70_XPU_SINGLE_SEED_SAMPLER=0 \
   -e B70_MTP_BF16_DRAFT=1 \

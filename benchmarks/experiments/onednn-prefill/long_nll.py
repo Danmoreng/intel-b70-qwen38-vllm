@@ -44,12 +44,19 @@ def main():
         token_ids = choice.get("prompt_token_ids") or data.get("prompt_token_ids")
         if entries is None or token_ids is None:
             raise RuntimeError(f"prompt logprobs missing; response keys={list(data)}, choice keys={list(choice)}")
-        values = [entry[str(token)]["logprob"]
-                  for token, entry in zip(token_ids, entries, strict=True)
+        scored = [(position, entry[str(token)]["logprob"])
+                  for position, (token, entry) in
+                  enumerate(zip(token_ids, entries, strict=True))
                   if entry is not None]
+        positions = [position for position, _ in scored]
+        values = [value for _, value in scored]
         row = {
             "case": args.case, "repeat": repeat,
             "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
+            "token_ids_sha256": hashlib.sha256(
+                json.dumps(token_ids, separators=(",", ":")).encode()).hexdigest(),
+            "first_scored_position": positions[0],
+            "last_scored_position": positions[-1],
             "tokens": len(values), "nll": -sum(values) / len(values),
             "cached_tokens": after["cached_tokens"] - before["cached_tokens"],
             "prefill_tokens": after["prefill_tokens"] - before["prefill_tokens"],
@@ -58,10 +65,12 @@ def main():
         if row["cached_tokens"] or row["preemptions"]:
             raise RuntimeError(f"NLL prompt was cached or preempted: {row}")
         if args.include_token_logprobs:
+            row["token_positions"] = positions
             row["token_logprobs"] = values
         rows.append(row)
         print(json.dumps({key: value for key, value in row.items()
-                          if key != "token_logprobs"}), flush=True)
+                          if key not in ("token_logprobs", "token_positions")}),
+              flush=True)
     args.output.write_text(json.dumps(rows, indent=2) + "\n")
 
 

@@ -61,22 +61,131 @@ to 1793.3 tokens/s and wall time from 38.36 to 34.63 s across three paired
 prompts. It **failed** the pre-existing teacher-forced NLL gate: changes were
 +0.10767, -0.02108, and +0.03766 nats/token, mean +0.04141. Its sampled
 output hashes differed from the control. Do not promote this broad route.
+
+The broad route remains available as an explicit **performance-profile
+candidate** with `B70_ONEDNN_PREFILL=1 B70_ONEDNN_PROFILE=performance`. The
+reference profile remains the default and retains the frozen NLL limits.
+The performance profile changes the default route to all eligible long
+chunks through 200,704 KV tokens; it does not change the exact mask, page,
+scale, or fallback requirements. Its NLL exceedance is a diagnostic warning,
+not an automatic claim of acceptable task quality. No production promotion
+is implied by choosing the profile. Run paired functional code tasks, source
+review, long-context retrieval, and structured-output checks before judging
+whether its extra speed compensates for any practical quality loss; the
+first paired screen appears below. Retain
+the old NLL bounds as the reference-profile gate; do not relabel a failing
+candidate as passing that gate.
 Moving the first full oneDNN chunk later, to KV length 26,624, still failed:
 NLL changes were +0.01950, -0.00889, +0.05110, mean +0.02057. The frozen
 limits are at most +0.02 per prompt and +0.01 on average. The broad route
-therefore requires an explicit `B70_ONEDNN_SHORT_CHUNK_ONLY=0` research flag.
+therefore remains opt-in through `B70_ONEDNN_PROFILE=performance` (which
+sets `B70_ONEDNN_SHORT_CHUNK_ONLY=0` by default).
 Real-operand diagnostics found finite, `allclose` attention outputs with
 relative L2 around 7e-5; per-token logprobs first diverged at token 13312,
 the first chunk using the new route. Small local operator errors can therefore
 have a material long-context model effect.
 
+The paired per-token NLL analyzer now verifies prompt hash, token-ID hash,
+scored positions, cache-hit count, and preemptions before reporting whole-
+prompt and post-dispatch windows. On the first 32K development prompt, the
+Q128 control and performance profile were identical before position 13,312.
+From that position through the end, the performance profile worsened mean
+NLL by **+0.18155 nats/token**, a 1.1991 perplexity ratio; whole-prompt
+change was +0.10767. On the second development prompt, the post-dispatch
+change was -0.03555 nats/token, while whole-prompt change was -0.02108.
+These opposite outcomes prevent a universal interpretation of the mean.
+Two additional 32K prompts, unused when tuning the route, changed NLL by
++0.02856 and -0.02478 nats/token under the broad route, relative to Q128.
+The corresponding perplexity ratios were 1.0290 and 0.9755. A 16K pair
+was an explicit negative control: its active KV length never reached the
+16,384-token dispatch minimum, so both arms had identical NLL. It cannot
+support a broad-route quality claim.
+
+The selected-real-operand FP32 diagnostic used the exact visible KV prefix,
+dequantized to FP16, then FP32 QK/softmax/PV. Across eight sampled attention
+records from the first 32K prompt, median relative L2 error against this
+reference was about 0.000222 for oneDNN and 0.000221 for Q128. Q128 was
+closer in six records and oneDNN in two. These rows provide no sign of a
+gross mask or page-layout error in the sampled call, but do not prove all
+rows, heads, contexts, or concurrent executions correct. The diagnostic
+does not run in scored timing measurements.
+
+An additional cache-isolation check exposed a vLLM AOT-artifact confounder:
+reusing a compile-cache directory across W4A8 and W4A16 flags produced
+W4A16-labeled runs with W4A8 graph artifacts and W4A8-identical NLL.
+With fresh separate caches, the W4A8 graph contained `int4_gemm_w4a8`
+while the W4A16 graph contained `int4_gemm_w4a16`. On the first 32K prompt,
+their Q128 NLL values were 3.14749 and 4.67535, respectively. The latter
+also restored the slower archived W4A16 prefill range in a targeted serving
+replay. The launcher now isolates experimental compile caches by image ID
+and runtime arm. Any earlier cross-arm W4A16 result from a shared cache
+must be discarded; within-W4A8 oneDNN comparisons used the same W4A8
+graph and remain useful. A fresh-cache run of the exact archived control
+image `sha256:648132c9...` reproduced the isolated W4A16 NLL 4.67535
+exactly, with the same token IDs and scored positions. A fresh-cache run of
+the current production tag (`sha256:2d289fbe...`) gave 4.65996. This
+confirms the large single-prompt W4A8/Q128 versus W4A16/Q128 NLL gap is
+not an artifact of the experimental oneDNN image. It does not establish
+that W4A8 improves general model quality; more prompts, real activations,
+and functional tasks are needed for that attribution.
+
+The first practical performance-profile screen used 30 frozen, paired tasks
+across five distinct 32K source contexts: ten executable Python coding tasks,
+ten exact source retrievals, five snippet reviews, and five structured-output
+tasks. Each arm began with an empty prefix cache and used the same image,
+model revision, prompts, deterministic sampling settings, and task order.
+The two review prompts with page numbering explicitly define zero-based
+pages; the ambiguous pilot was excluded and both arms rerun from a fresh
+server. All 30 requests finished normally on both arms, with identical
+computed-prefill and cache-hit token counts and zero preemptions.
+
+| Paired 32K task screen | Reference profile | Performance profile |
+|---|---:|---:|
+| Passed / 30 | 28 | 29 |
+| Coding / 10 | 9 | 10 |
+| Retrieval / 10 | 10 | 10 |
+| Review / 5 | 5 | 5 |
+| Structured / 5 | 4 | 4 |
+| Sum of wall time, s | 173.95 | 164.45 |
+| Sum of prefill time, s | 144.65 | 135.53 |
+| Sum of decode time, s | 28.18 | 27.79 |
+| Median cold 32K TTFT, s | 20.03 | 18.19 |
+| Sum of five cold-prefill times, s | 100.32 | 91.22 |
+| Sum of 25 warm-prefill times, s | 44.32 | 44.31 |
+
+Seventeen of 30 output hashes matched. The one improved coding case passed
+its executable examples on the performance arm; the reference arm emitted a
+nonterminating loop. Both arms failed the same numerical page-remainder
+task. The task count is too small to rule out a modest or task-specific
+regression, especially at 128K/199K, under concurrency, or on less
+structured coding requests. The observed 9.50-second sum-of-request-time
+gain is dominated by the five cold 32K prefills; warm prefix reuse leaves
+little room for this route to help. Decode totals include different generated
+outputs and MTP acceptance, so they do not isolate decode kernel speed.
+The broad route remains an opt-in performance candidate pending wider
+quality and serving checks. The frozen tasks, raw responses and per-request
+timing are in `performance_tasks.py` and `practical-*.jsonl`.
+
+One fresh-start staggered pair put a 4K request into 1,024-token decode,
+then admitted a cold 32K request. Both profiles emitted 1,024 tokens from
+each request, with no cache hits or preemptions. Reference versus performance
+long-request TTFT was 21.65 versus 21.59 s; the largest observed gap between
+streamed pieces of the already-decoding request was 3.99 versus 3.98 s.
+Total measured prefill was 24.44 versus 24.37 s. The broad route showed no
+material benefit in this mixed schedule. A stream piece can contain more
+than one token under MTP, so this is a bundle-gap measurement, not token
+interarrival latency. The one pair does not characterize p95/p99 stalls or
+all concurrency patterns; the exact mixed-metadata route still needs a
+dedicated trace before enabling a new attention arm there. Raw timestamps
+and response hashes are in `staggered-*.json`.
+
 The narrower `B70_ONEDNN_SHORT_CHUNK_ONLY=1` policy is the default when the
-experimental oneDNN flag is enabled. It selects only an eligible
+experimental oneDNN flag uses the reference profile. It selects only an eligible
 single-request chunk with fewer than 6656 query rows and active KV length
 between 16,384 and 131,072 tokens. The upper bound keeps the 199K case on
 Q128 after its sampled decode penalty; `B70_ONEDNN_MAX_KV` can override it
-for explicit experiments. Setting short-chunk-only to `0` is
-reserved for explicit research on the quality-failing broad path. The historical
+for explicit experiments. The performance profile sets short-chunk-only to
+`0` as an opt-in evaluation of the NLL-failing broad path. The historical
 `B70_ONEDNN_FINAL_CHUNK_ONLY=1` flag is an alias for reproducing earlier runs.
 It is **not** a final-chunk detector: a 32K teacher-forced request dispatched
 at both `(Q,L)=(3328,29952)` and `(2759,32711)`, so the first dispatch was

@@ -33,5 +33,61 @@
   "both_cached_tokens": 0,
   "both_preemptions": 0,
   "evidence": "mixed-route-4k-32k-control.json; mixed-route-4k-32k-candidate.json; mixed-route-4k-32k-control-routes.txt; mixed-route-4k-32k-candidate-routes.txt",
-  "limit": "One pair only; forced outputs do not prove quality, and the per-layer device-to-host metadata synchronization needs optimization and wider serving tests"
+  "unequal_32k_128k": {
+    "requests": "simultaneous cold 32K and 128K, 1024 fixed output tokens each",
+    "off": {
+      "short_ttft_s": 23.236626932000945,
+      "long_ttft_s": 192.12037555699862,
+      "short_wall_s": 211.43192217999967,
+      "long_wall_s": 213.16394218599817,
+      "short_gap_p95_s": 6.776141966001887,
+      "short_gap_max_s": 10.313859124998999,
+      "total_native_prefill_s": 203.97430199399605,
+      "onednn_dispatches": 2,
+      "peak_kv_cache_fraction": 0.9246575342465754
+    },
+    "on": {
+      "short_ttft_s": 25.25846259500031,
+      "long_ttft_s": 128.06435271100054,
+      "short_wall_s": 147.5123149430001,
+      "long_wall_s": 149.18675086400253,
+      "short_gap_p95_s": 4.204389442002139,
+      "short_gap_max_s": 5.790183728000557,
+      "total_native_prefill_s": 141.8823116809981,
+      "onednn_dispatches": 29,
+      "peak_kv_cache_fraction": 0.9178082191780822
+    },
+    "same_image_id": true,
+    "both_output_hashes_equal": true,
+    "both_completion_tokens_per_request": 1024,
+    "both_cached_tokens": 0,
+    "both_preemptions": 0,
+    "evidence": "mixed-route-32k-128k-control.json; mixed-route-32k-128k-candidate.json; mixed-route-32k-128k-control-routes.txt; mixed-route-32k-128k-candidate-routes.txt"
+  },
+  "mixed_128k_tail_numerical_validation": {
+    "same_image_id": true,
+    "diagnostic_min_kv": 95000,
+    "prefill_allclose_count": 8,
+    "prefill_min_kv": 96512,
+    "prefill_max_kv": 128128,
+    "prefill_max_relative_l2": 0.00007040345371933654,
+    "decode_allclose_count": 8,
+    "decode_max_relative_l2": 0.00031568657141178846,
+    "tolerance": "rtol=0.01, atol=0.002",
+    "evidence": "mixed-tail-validation-summary.json; mixed-validate-32k-128k-tail.json; mixed-validate-32k-128k-tail-results.txt"
+  },
+  "mixed_128k_coding": {
+    "contexts": 2,
+    "frozen_code_tasks_per_context": 1,
+    "route_off_passed": 2,
+    "route_on_passed": 2,
+    "route_off_ttft_s": [192.30879781100157, 192.56921120399784],
+    "route_on_ttft_s": [128.19833007499983, 128.17483162699864],
+    "route_off_background_max_gap_s": [10.30641082999864, 10.317427475998556],
+    "route_on_background_max_gap_s": [5.789352959000098, 5.792159755998],
+    "all_runs_cached_tokens": 0,
+    "all_runs_preemptions": 0,
+    "evidence": "mixed-practical-128k-summary.json; mixed-practical-128k-code-{control,candidate}.json; mixed-practical-128k-context2-code-{control,candidate}.json"
+  },
+  "limit": "One fixed-output serving pair per context mix and two cold 128K coding tasks; sampled attention-row allclose and 2/2 coding do not prove broad task quality, and per-layer device-to-host metadata synchronization needs optimization"
 }

@@ -325,10 +325,53 @@ slightly from 27.47 to 27.63 s. The same probe image ID was used on both
 arms, with separate AOT cache variants. This single paired test is a
 feasibility result, not a promotion: the route synchronizes device metadata
 to the host at each attention layer, short-request TTFT regressed, and
-quality/concurrency at 128K and 199K remain untested. The scored adapter
+wider quality/concurrency at 128K and 199K remain untested. The scored adapter
 and default launcher keep mixed routing disabled. Raw evidence is in
 `mixed-route-4k-32k-*.json`, `mixed-route-4k-32k-*-routes.txt`, and
 `mixed-route-manifest.json`.
+
+The same-image, simultaneous cold 32K/128K pair then exercised the longer
+mixed route at high KV lengths. Route-off selected oneDNN only twice before
+the mixed batch and reached at most KV 26,624; route-on selected it 29 times,
+through KV 131,070. Both arms finished both fixed 1,024-token continuations
+with matching output hashes, no cache hits, and no preemptions. Route-off
+versus route-on 128K TTFT was 192.12 versus 128.06 s, and 128K wall time
+was 213.16 versus 149.19 s. The parallel 32K request finished in 211.43
+versus 147.51 s; its maximum streamed-bundle gap fell from 10.31 to 5.79 s
+and empirical p95 gap from 6.78 to 4.20 s. Its own TTFT rose from 23.24 to
+25.26 s. Summed native prefill time was 203.97 versus 141.88 s, while
+the KV-cache gauge peaked at 92.47% versus 91.78%. These are paired
+single-run results with forced continuations; neither output hashes nor
+the earlier 4K/32K numerical validation establishes 128K mixed-route task
+quality. The probe remains isolated pending broader numerical and practical
+quality checks. See `mixed-route-32k-128k-*.json` and the route
+logs named alongside them.
+
+A separate diagnostic replay of the same 32K/128K frozen pair kept the
+full-batch fallback as the served result and compared sliced subcalls with
+it. The probe raised its minimum eligible KV length to 95,000, so its eight
+sampled oneDNN prefill checks covered exact lengths 96,512 through 128,128.
+All eight passed `torch.allclose(rtol=.01, atol=.002)`; their largest relative
+L2 error was 7.04e-5 and largest absolute difference 0.001953125. Eight
+short decode/MTP fallback slices also passed, with largest relative L2
+3.16e-4. This narrows the 128K mixed numerical risk but checks one layer
+per sampled signature and does not establish freely generated task quality.
+Diagnostic timing is excluded from performance comparisons. See
+`mixed-tail-validation-summary.json` and its raw log and request JSON.
+
+Two cold 128K coding tasks from independent frozen source contexts were each
+paired with the same 32K fixed decoder on fresh route-off and route-on
+servers. Both generated Python solutions passed all three functional checks
+on both arms (2/2 each). Their text and token counts differed: passing both
+is a task-level observation, not output equivalence. Route-off versus
+route-on coding TTFT was 192.31 versus 128.20 s in context 1 and 192.57
+versus 128.17 s in context 2. Coding wall times were 194.32 versus 130.11 s
+and 195.43 versus 130.94 s. The background decoder completed 1,024 tokens
+on every run; its largest streamed-bundle gap fell from 10.31 to 5.79 s
+and 10.32 to 5.79 s. Every arm had zero cache hits and preemptions. Two
+coding tasks from two contexts remain too narrow to establish a broad
+code-quality distribution. See `mixed-practical-128k-summary.json`, the
+paired `mixed-practical-128k-*.json` files, and matching route logs.
 
 In a fresh performance-profile server, a 128K prefill was cancelled after
 30 seconds, after oneDNN had dispatched through at least KV length 59,904.

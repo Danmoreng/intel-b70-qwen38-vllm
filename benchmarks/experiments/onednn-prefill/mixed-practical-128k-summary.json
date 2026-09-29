@@ -1,0 +1,58 @@
+{
+  "image_id": "sha256:3ca59d2575375e35af076a74b93922ba3fefd8f385bc5d6869643adc25a1a9e4",
+  "code_tasks_passed": {
+    "off": 2,
+    "on": 2
+  },
+  "pairs": [
+    {
+      "task_id": "context-128k-1-code-1",
+      "code_passed": {
+        "off": true,
+        "on": true
+      },
+      "output_hashes_equal": false,
+      "task_ttft_s": {
+        "off": 192.30879781100157,
+        "on": 128.19833007499983
+      },
+      "task_wall_s": {
+        "off": 194.32475268000053,
+        "on": 130.10730282200166
+      },
+      "background_max_gap_s": {
+        "off": 10.30641082999864,
+        "on": 5.789352959000098
+      },
+      "background_wall_s": {
+        "off": 202.7214362199993,
+        "on": 138.55236691000027
+      }
+    },
+    {
+      "task_id": "context-128k-2-code-1",
+      "code_passed": {
+        "off": true,
+        "on": true
+      },
+      "output_hashes_equal": false,
+      "task_ttft_s": {
+        "off": 192.56921120399784,
+        "on": 128.17483162699864
+      },
+      "task_wall_s": {
+        "off": 195.43330281399903,
+        "on": 130.93914835000032
+      },
+      "background_max_gap_s": {
+        "off": 10.317427475998556,
+        "on": 5.792159755998
+      },
+      "background_wall_s": {
+        "off": 203.40897693900115,
+        "on": 139.015508530003
+      }
+    }
+  ],
+  "limit": "Two cold 128K coding tasks with a parallel fixed 32K decoder; broader free-generation quality and service distributions remain unmeasured."
+}

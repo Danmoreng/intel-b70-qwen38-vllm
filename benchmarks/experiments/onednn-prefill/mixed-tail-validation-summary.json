@@ -1,0 +1,186 @@
+{
+  "image_id": "sha256:3ca59d2575375e35af076a74b93922ba3fefd8f385bc5d6869643adc25a1a9e4",
+  "attention_result_served": "existing full-batch fallback",
+  "diagnostic_min_kv": 95000,
+  "tolerance": {
+    "rtol": 0.01,
+    "atol": 0.002
+  },
+  "decode": {
+    "allclose_count": 8,
+    "max_relative_l2": 0.00031568657141178846,
+    "max_absolute_error": 0.0009765625,
+    "shapes": [
+      {
+        "signature": [
+          0,
+          5,
+          32727
+        ],
+        "allclose": true,
+        "relative_l2": 0.00024480928550474346,
+        "max_abs": 0.0009765625
+      },
+      {
+        "signature": [
+          0,
+          5,
+          32728
+        ],
+        "allclose": true,
+        "relative_l2": 0.0002476526715327054,
+        "max_abs": 0.0009765625
+      },
+      {
+        "signature": [
+          0,
+          5,
+          32729
+        ],
+        "allclose": true,
+        "relative_l2": 0.00025233509950339794,
+        "max_abs": 0.0009765625
+      },
+      {
+        "signature": [
+          0,
+          5,
+          32731
+        ],
+        "allclose": true,
+        "relative_l2": 0.0002962571452371776,
+        "max_abs": 0.0009765625
+      },
+      {
+        "signature": [
+          0,
+          5,
+          32736
+        ],
+        "allclose": true,
+        "relative_l2": 0.00029205044847913086,
+        "max_abs": 0.0009765625
+      },
+      {
+        "signature": [
+          0,
+          5,
+          32741
+        ],
+        "allclose": true,
+        "relative_l2": 0.00031568657141178846,
+        "max_abs": 0.0009765625
+      },
+      {
+        "signature": [
+          0,
+          5,
+          32746
+        ],
+        "allclose": true,
+        "relative_l2": 0.00030291936127468944,
+        "max_abs": 0.0009765625
+      },
+      {
+        "signature": [
+          0,
+          5,
+          32751
+        ],
+        "allclose": true,
+        "relative_l2": 0.0003148656978737563,
+        "max_abs": 0.0009765625
+      }
+    ]
+  },
+  "prefill": {
+    "allclose_count": 8,
+    "min_kv": 96512,
+    "max_kv": 128128,
+    "max_relative_l2": 7.040345371933654e-05,
+    "max_absolute_error": 0.001953125,
+    "shapes": [
+      {
+        "signature": [
+          1,
+          4992,
+          96512
+        ],
+        "allclose": true,
+        "relative_l2": 6.104271596996114e-05,
+        "max_abs": 0.0009765625
+      },
+      {
+        "signature": [
+          1,
+          4992,
+          101504
+        ],
+        "allclose": true,
+        "relative_l2": 6.761352415196598e-05,
+        "max_abs": 0.001953125
+      },
+      {
+        "signature": [
+          1,
+          4992,
+          106496
+        ],
+        "allclose": true,
+        "relative_l2": 6.978639430599287e-05,
+        "max_abs": 0.0009765625
+      },
+      {
+        "signature": [
+          1,
+          4992,
+          111488
+        ],
+        "allclose": true,
+        "relative_l2": 7.040345371933654e-05,
+        "max_abs": 0.001953125
+      },
+      {
+        "signature": [
+          1,
+          4992,
+          116480
+        ],
+        "allclose": true,
+        "relative_l2": 6.928195216460153e-05,
+        "max_abs": 0.0009765625
+      },
+      {
+        "signature": [
+          1,
+          4992,
+          121472
+        ],
+        "allclose": true,
+        "relative_l2": 6.905110058141872e-05,
+        "max_abs": 0.001953125
+      },
+      {
+        "signature": [
+          1,
+          4992,
+          126464
+        ],
+        "allclose": true,
+        "relative_l2": 6.668344576610252e-05,
+        "max_abs": 0.001953125
+      },
+      {
+        "signature": [
+          1,
+          1664,
+          128128
+        ],
+        "allclose": true,
+        "relative_l2": 6.556415610248223e-05,
+        "max_abs": 0.0009765625
+      }
+    ]
+  },
+  "limit": "One 32K/128K mixed serving trace; eight sampled late-prefill signatures and eight short decode/MTP signatures, not broad task quality."
+}

@@ -15,7 +15,7 @@ import urllib.request
 
 
 REPO = Path(__file__).resolve().parents[1]
-ROOT = REPO / "benchmark-results/production-release-v1/heldout-quality-v1"
+ROOT = REPO / "benchmark-results/production-release-v1/heldout-quality-v2"
 BASE = "http://127.0.0.1:8081"
 CANDIDATE = "sha256:a42cda993bf6492acc39d23e9382e27a17efca4657bea07d80d0c28228a1623a"
 CONTROL = "sha256:f0d7bc4ea6040cf4dc8d139b01e0fb348cad80dfaecdaf8d56cd560fb9103559"

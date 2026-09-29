@@ -13,7 +13,7 @@ is live.
 - Model revision: `a47b0c6f0d756bc394c4cc629d5b0ded1acc7001`.
 - Frozen regression fixture archive: `benchmark-results/production-release-v1/fixtures/frozen-source-prompts.tar.zst`, SHA-256 `aa45983807418efe708193814abf974ca2813c7e8293620231bdd1ce27e0b963`.
 - New held-out context archive: `benchmark-results/production-release-v1/fixtures/heldout-contexts-v1.tar.zst`, SHA-256 `b98440d9762a02c19709d7c234409713969ce1bf7578d39af9d7508630e9861f`; twelve contexts, including two previously unused near-199K prompt arrangements. The tracked context manifest SHA-256 is `3285e4f8edc1d8e70966e405d8e01f3b8accc31797ec2f4f37c273f27e04056c`.
-- Held-out task manifest SHA-256: `a77a9e7a37a293c1adf0c128195ac7e744a9e97ce90969bbafcf0b3e8fdedbdb`; 20 code tasks (eight multi-step repository edits), twelve reviews, eight retrievals and eight required tool calls. Candidate/control evaluation is pending.
+- Held-out task manifest v2 SHA-256: `cac6f02aa5fd19bb5de5aae281631efbc00609904bf32d6069801ef84588a86b`; 20 code tasks (eight multi-step repository edits), twelve reviews, eight retrievals and eight required tool calls. Candidate/control evaluation is pending. The first v1 attempt stopped after 40 candidate items because its 4096-token output reservation exceeded the 200704-token context limit on the first new near-199K code task. The v1 review line and tool-marker instructions were also ambiguous, so its partial results are retained locally but are not a release score.
 - The image entry point verified the installed oneDNN, Q128, M04 and W4A8
   binary/source hashes on both starts. The runtime AOT cache path includes the
   policy hash and image ID.

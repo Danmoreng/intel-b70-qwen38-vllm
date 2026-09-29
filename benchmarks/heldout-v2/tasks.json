@@ -1,0 +1,975 @@
+{
+  "schema": 1,
+  "context_manifest_sha256": "3285e4f8edc1d8e70966e405d8e01f3b8accc31797ec2f4f37c273f27e04056c",
+  "tasks": [
+    {
+      "id": "batch-claim",
+      "kind": "agent_code",
+      "context_id": "context-01",
+      "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.claim_batch(limit) and QueueAPI action batch_claim reading limit. Require a positive integer limit (bool is invalid). Claim up to limit pending jobs in FIFO order, increment each attempts once, and return a list of Jobs. The API returns {\"jobs\": [{\"id\": ..., \"state\": ..., \"attempts\": ...}, ...]}. Invalid limits must leave state unchanged. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+      "acceptance": "acceptance/test_batch_claim.py",
+      "critical": true
+    },
+    {
+      "id": "move-pending",
+      "kind": "agent_code",
+      "context_id": "context-02",
+      "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.move_pending(job_id, before_id) and QueueAPI action move_pending reading id and before_id. Both IDs must refer to distinct pending jobs. Move job_id immediately before before_id in FIFO order; return the moved Job. Unknown IDs raise KeyError and invalid states or same IDs raise ValueError. The API returns id, state and the new pending ID order. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+      "acceptance": "acceptance/test_move_pending.py",
+      "critical": true
+    },
+    {
+      "id": "submit-many",
+      "kind": "agent_code",
+      "context_id": "context-03",
+      "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.submit_many(items) and QueueAPI action submit_many reading items. Each item is a dict with id, optional payload (default {}), optional priority (default 0). Validate the entire nonempty list before mutating the queue: duplicate IDs, invalid non-string/empty IDs, non-dict payloads and malformed items raise ValueError. Commit in order. The API returns a jobs list with id and state. A failed batch leaves queue and pending order unchanged. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+      "acceptance": "acceptance/test_submit_many.py",
+      "critical": true
+    },
+    {
+      "id": "claim-matching",
+      "kind": "agent_code",
+      "context_id": "context-04",
+      "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.claim_matching(key, value) and QueueAPI action claim_matching reading key and value. Claim the first pending job whose payload dict contains key with value exactly equal; preserve order of all other jobs. Reject an empty or non-string key with ValueError. Return None if no match. The API returns id, state and attempts for a match, or {\"id\": null} otherwise. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+      "acceptance": "acceptance/test_claim_matching.py",
+      "critical": true
+    },
+    {
+      "id": "ack-many",
+      "kind": "agent_code",
+      "context_id": "context-05",
+      "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.ack_many(ids) and QueueAPI action ack_many reading ids. Require a nonempty list of unique nonempty string IDs, all currently running. Validate the complete batch first; any error leaves every job unchanged. Unknown IDs raise KeyError, malformed or duplicate IDs and wrong states raise ValueError. Return the acknowledged Jobs in input order. API returns a jobs list with id and state. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+      "acceptance": "acceptance/test_ack_many.py",
+      "critical": true
+    },
+    {
+      "id": "rename-id",
+      "kind": "agent_code",
+      "context_id": "context-06",
+      "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.rename_id(old_id, new_id) and QueueAPI action rename_id reading old_id and new_id. Require existing old_id, a new nonempty string ID distinct from and unused by any job. Preserve the renamed Job object, its state, attempts and position in pending order. The API returns old_id, id (new ID) and state. Errors must leave the queue unchanged. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done. An unknown old_id raises KeyError; all invalid new IDs raise ValueError.",
+      "acceptance": "acceptance/test_rename_id.py",
+      "critical": true
+    },
+    {
+      "id": "drop-terminal",
+      "kind": "agent_code",
+      "context_id": "context-07",
+      "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.drop_terminal(job_id) and QueueAPI action drop_terminal reading id. Only done or failed jobs may be removed from the jobs map; pending/running jobs raise ValueError and unknown IDs raise KeyError. Return a detached dict with id, state, attempts and payload; deleting the returned payload must not mutate another job. The API returns that dict. Preserve all pending order. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+      "acceptance": "acceptance/test_drop_terminal.py",
+      "critical": true
+    },
+    {
+      "id": "replace-payload",
+      "kind": "agent_code",
+      "context_id": "context-08",
+      "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.replace_payload(job_id, payload) and QueueAPI action replace_payload reading id and payload. Allow only pending jobs; reject other states and non-dict payload with ValueError, unknown ID with KeyError. Store a deep detached copy so mutations of the caller payload or the API response do not alter the job. Return the Job; the API returns id, state and a detached payload copy. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+      "acceptance": "acceptance/test_replace_payload.py",
+      "critical": true
+    },
+    {
+      "id": "code-01",
+      "kind": "code",
+      "context_id": "context-01",
+      "critical": false,
+      "instruction": "Define solve(text): return [character, longest_consecutive_run_length]. Ties use the earliest run; empty text returns ['', 0]. Instead of returning that value directly, return a dict with exactly keys source_file and result: result is the specified value; source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"Compact evidence from already recorded traces; never launches GPU work.\\\"\\\"\\\"\". Return only Python code defining solve.\n",
+      "expected_source_file": "benchmarks/experiments/m11-pro-review/profile-summary.py",
+      "cases": [
+        [
+          [
+            "aaabbc"
+          ],
+          [
+            "a",
+            3
+          ]
+        ],
+        [
+          [
+            "abbbcc"
+          ],
+          [
+            "b",
+            3
+          ]
+        ],
+        [
+          [
+            ""
+          ],
+          [
+            "",
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "review-01",
+      "kind": "review",
+      "context_id": "context-01",
+      "critical": false,
+      "instruction": "Review the separate proposed Python snippet below. Return only a JSON object with keys issue, line, source_file. issue must be one of mutable_default, off_by_one, zero_division, missing_device, shallow_copy, wrong_order, double_count; line is the one-based line number within the proposed snippet below (the def line is line 1). source_file is the FILE path in the supplied source containing this exact line: \"Host-specific harness prepared and started on 2026-09-19. The run directory is\"\ndef add(item, seen=[]):\n    seen.append(item)\n    return seen\n",
+      "expected": {
+        "issue": "mutable_default",
+        "line": 1,
+        "source_file": "benchmarks/experiments/m06-target-head-int4/coding/README.md"
+      }
+    },
+    {
+      "id": "tool-01",
+      "kind": "tool",
+      "context_id": "context-01",
+      "critical": false,
+      "instruction": "Find the supplied FILE containing this exact line: \"\\\"\\\"\\\"Frozen semantics clarification; existing assertions are unchanged.\\\"\\\"\\\"\". Call identify_source exactly once with its path and as marker exactly the quoted line above after removing leading and trailing whitespace, including indentation. Do not invent a path.\n",
+      "expected": {
+        "path": "benchmarks/experiments/m11-pro-review/quality.py",
+        "marker": "\"\"\"Frozen semantics clarification; existing assertions are unchanged.\"\"\""
+      }
+    },
+    {
+      "id": "code-02",
+      "kind": "code",
+      "context_id": "context-02",
+      "critical": false,
+      "instruction": "Define solve(items): remove duplicate strings while preserving the order of each item's last appearance. Instead of returning that value directly, return a dict with exactly keys source_file and result: result is the specified value; source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"Validate the installed vLLM configuration without loading model weights.\\\"\\\"\\\"\". Return only Python code defining solve.\n",
+      "expected_source_file": "benchmarks/experiments/m08-dflash2-current/check-config.py",
+      "cases": [
+        [
+          [
+            [
+              "a",
+              "b",
+              "a",
+              "c",
+              "b"
+            ]
+          ],
+          [
+            "a",
+            "c",
+            "b"
+          ]
+        ],
+        [
+          [
+            []
+          ],
+          []
+        ],
+        [
+          [
+            [
+              "x",
+              "x",
+              "y"
+            ]
+          ],
+          [
+            "x",
+            "y"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "review-02",
+      "kind": "review",
+      "context_id": "context-02",
+      "critical": false,
+      "instruction": "Review the separate proposed Python snippet below. Return only a JSON object with keys issue, line, source_file. issue must be one of mutable_default, off_by_one, zero_division, missing_device, shallow_copy, wrong_order, double_count; line is the one-based line number within the proposed snippet below (the def line is line 1). source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"Validate the installed vLLM configuration without loading model weights.\\\"\\\"\\\"\"\ndef page_index(token, size):  # zero-based token and page\n    return token // size + 1\n",
+      "expected": {
+        "issue": "off_by_one",
+        "line": 2,
+        "source_file": "benchmarks/experiments/m08-dflash2-current/check-config.py"
+      }
+    },
+    {
+      "id": "tool-02",
+      "kind": "tool",
+      "context_id": "context-02",
+      "critical": false,
+      "instruction": "Find the supplied FILE containing this exact line: \"\\\"\\\"\\\"Validate the installed vLLM configuration without loading model weights.\\\"\\\"\\\"\". Call identify_source exactly once with its path and as marker exactly the quoted line above after removing leading and trailing whitespace, including indentation. Do not invent a path.\n",
+      "expected": {
+        "path": "benchmarks/experiments/m08-dflash2-current/check-config.py",
+        "marker": "\"\"\"Validate the installed vLLM configuration without loading model weights.\"\"\""
+      }
+    },
+    {
+      "id": "code-03",
+      "kind": "code",
+      "context_id": "context-03",
+      "critical": false,
+      "instruction": "Define solve(spans): return the number of integer positions covered by the union of half-open spans [start,end]. Empty or reversed spans cover nothing. Instead of returning that value directly, return a dict with exactly keys source_file and result: result is the specified value; source_file is the FILE path in the supplied source containing this exact line: \"A deployment recipe for **one 32 GB Intel Arc Pro B70 at 180 W**, with\". Return only Python code defining solve.\n",
+      "expected_source_file": "README.md",
+      "cases": [
+        [
+          [
+            [
+              [
+                1,
+                4
+              ],
+              [
+                3,
+                6
+              ],
+              [
+                9,
+                10
+              ]
+            ]
+          ],
+          6
+        ],
+        [
+          [
+            []
+          ],
+          0
+        ],
+        [
+          [
+            [
+              [
+                5,
+                5
+              ],
+              [
+                7,
+                4
+              ],
+              [
+                -2,
+                1
+              ]
+            ]
+          ],
+          3
+        ]
+      ]
+    },
+    {
+      "id": "review-03",
+      "kind": "review",
+      "context_id": "context-03",
+      "critical": false,
+      "instruction": "Review the separate proposed Python snippet below. Return only a JSON object with keys issue, line, source_file. issue must be one of mutable_default, off_by_one, zero_division, missing_device, shallow_copy, wrong_order, double_count; line is the one-based line number within the proposed snippet below (the def line is line 1). source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"M04 gate: split-K decode versus shared-KV chunk verification attention.\\\"\\\"\\\"\"\ndef ratio(done, total):  # total may be zero\n    return done / total\n",
+      "expected": {
+        "issue": "zero_division",
+        "line": 2,
+        "source_file": "b70_ops/probe_shared_kv_verification.py"
+      }
+    },
+    {
+      "id": "retrieval-03",
+      "kind": "retrieval",
+      "context_id": "context-03",
+      "critical": false,
+      "instruction": "Which supplied FILE contains this exact line? \"run_dir=\\\"$repo_dir/benchmarks/experiments/m07-direct-output/runs/run-$stamp\\\"\" Return only its path.\n",
+      "expected": "scripts/start-direct-output-study.sh"
+    },
+    {
+      "id": "code-04",
+      "kind": "code",
+      "context_id": "context-04",
+      "critical": false,
+      "instruction": "Define solve(capacities, budget): repeatedly visit capacities from left to right, assigning one unit to each unfinished item per round until the budget is exhausted. Return assigned counts; nonpositive budget gives zeros. Instead of returning that value directly, return a dict with exactly keys source_file and result: result is the specified value; source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"Current-profile phase, concurrency, prefix-cache and context benchmark.\". Return only Python code defining solve.\n",
+      "expected_source_file": "scripts/current-profile-benchmark.py",
+      "cases": [
+        [
+          [
+            [
+              2,
+              1,
+              3
+            ],
+            4
+          ],
+          [
+            2,
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            [
+              0,
+              2
+            ],
+            3
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "review-04",
+      "kind": "review",
+      "context_id": "context-04",
+      "critical": false,
+      "instruction": "Review the separate proposed Python snippet below. Return only a JSON object with keys issue, line, source_file. issue must be one of mutable_default, off_by_one, zero_division, missing_device, shallow_copy, wrong_order, double_count; line is the one-based line number within the proposed snippet below (the def line is line 1). source_file is the FILE path in the supplied source containing this exact line: \"unit_dir=\\\"${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user\\\"\"\ndef graph_key(device, query_rows, kv_rows):\n    return (query_rows, kv_rows)\n",
+      "expected": {
+        "issue": "missing_device",
+        "line": 2,
+        "source_file": "scripts/install-user-service.sh"
+      }
+    },
+    {
+      "id": "tool-04",
+      "kind": "tool",
+      "context_id": "context-04",
+      "critical": false,
+      "instruction": "Find the supplied FILE containing this exact line: \"-v \\\"$hf_home:/root/.cache/huggingface\\\" \\\\\". Call identify_source exactly once with its path and as marker exactly the quoted line above after removing leading and trailing whitespace, including indentation. Do not invent a path.\n",
+      "expected": {
+        "path": "scripts/download-model.sh",
+        "marker": "-v \"$hf_home:/root/.cache/huggingface\" \\"
+      }
+    },
+    {
+      "id": "code-05",
+      "kind": "code",
+      "context_id": "context-05",
+      "critical": false,
+      "instruction": "Define solve(lines): parse lines of form key=value with nonempty trimmed key. Trim surrounding whitespace, ignore lines without '=', and let the last occurrence win. Return a dict. Instead of returning that value directly, return a dict with exactly keys source_file and result: result is the specified value; source_file is the FILE path in the supplied source containing this exact line: \"using VerifyPolicy = decode_policy_qpacked_head<_16, _256, _64>;\". Return only Python code defining solve.\n",
+      "expected_source_file": "b70_ops/csrc/shared_kv_verification.cpp",
+      "cases": [
+        [
+          [
+            [
+              " a = 1 ",
+              "bad",
+              "a=2",
+              "b = yes"
+            ]
+          ],
+          {
+            "a": "2",
+            "b": "yes"
+          }
+        ],
+        [
+          [
+            []
+          ],
+          {}
+        ],
+        [
+          [
+            [
+              "=x",
+              "k=",
+              "k=v"
+            ]
+          ],
+          {
+            "k": "v"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "review-05",
+      "kind": "review",
+      "context_id": "context-05",
+      "critical": false,
+      "instruction": "Review the separate proposed Python snippet below. Return only a JSON object with keys issue, line, source_file. issue must be one of mutable_default, off_by_one, zero_division, missing_device, shallow_copy, wrong_order, double_count; line is the one-based line number within the proposed snippet below (the def line is line 1). source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"Isolate the Q128 temporary-allocation/copy cost on a B70 GPU.\\\"\\\"\\\"\"\ndef copy_payload(payload):  # nested values must be detached\n    return dict(payload)\n",
+      "expected": {
+        "issue": "shallow_copy",
+        "line": 2,
+        "source_file": "b70_ops/probe.py"
+      }
+    },
+    {
+      "id": "retrieval-05",
+      "kind": "retrieval",
+      "context_id": "context-05",
+      "critical": false,
+      "instruction": "Which supplied FILE contains this exact line? \"\\\"\\\"\\\"Q128 prefill adapter; writes directly into vLLM's output when supplied.\\\"\\\"\\\"\" Return only its path.\n",
+      "expected": "b70_ops/python/b70_ops/q128_attention.py"
+    },
+    {
+      "id": "code-06",
+      "kind": "code",
+      "context_id": "context-06",
+      "critical": false,
+      "instruction": "Define solve(values, width): return sums of each consecutive window of positive width. Return [] if width exceeds input or is nonpositive. Instead of returning that value directly, return a dict with exactly keys source_file and result: result is the specified value; source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"Run M04 65K ABBA serving and the gated 196K maximum-context arm.\\\"\\\"\\\"\". Return only Python code defining solve.\n",
+      "expected_source_file": "scripts/run-shared-kv-verification-serving.py",
+      "cases": [
+        [
+          [
+            [
+              2,
+              -1,
+              3,
+              4
+            ],
+            2
+          ],
+          [
+            1,
+            2,
+            7
+          ]
+        ],
+        [
+          [
+            [],
+            1
+          ],
+          []
+        ],
+        [
+          [
+            [
+              5,
+              6
+            ],
+            0
+          ],
+          []
+        ],
+        [
+          [
+            [
+              1,
+              2,
+              3
+            ],
+            3
+          ],
+          [
+            6
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "review-06",
+      "kind": "review",
+      "context_id": "context-06",
+      "critical": false,
+      "instruction": "Review the separate proposed Python snippet below. Return only a JSON object with keys issue, line, source_file. issue must be one of mutable_default, off_by_one, zero_division, missing_device, shallow_copy, wrong_order, double_count; line is the one-based line number within the proposed snippet below (the def line is line 1). source_file is the FILE path in the supplied source containing this exact line: \"Reproducible, narrow B70 operator experiments. Version 0.1 exposes the deployed\"\ndef read_page(table, page):  # page is a zero-based logical index\n    return table[page - 1]\n",
+      "expected": {
+        "issue": "off_by_one",
+        "line": 2,
+        "source_file": "b70_ops/README.md"
+      }
+    },
+    {
+      "id": "tool-06",
+      "kind": "tool",
+      "context_id": "context-06",
+      "critical": false,
+      "instruction": "Find the supplied FILE containing this exact line: \"\\\"\\\"\\\"Run a fresh full-context control/M04 comparison and restore production.\\\"\\\"\\\"\". Call identify_source exactly once with its path and as marker exactly the quoted line above after removing leading and trailing whitespace, including indentation. Do not invent a path.\n",
+      "expected": {
+        "path": "scripts/run-shared-kv-verification-long.py",
+        "marker": "\"\"\"Run a fresh full-context control/M04 comparison and restore production.\"\"\""
+      }
+    },
+    {
+      "id": "code-07",
+      "kind": "code",
+      "context_id": "context-07",
+      "critical": false,
+      "instruction": "Define solve(value): flatten nested Python lists depth-first into one list; non-list elements remain unchanged. Instead of returning that value directly, return a dict with exactly keys source_file and result: result is the specified value; source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"Shared exclusive GPU lifecycle; each experiment records its own frozen base.\\\"\\\"\\\"\". Return only Python code defining solve.\n",
+      "expected_source_file": "benchmarks/experiments/m11-pro-review/common.py",
+      "cases": [
+        [
+          [
+            [
+              [
+                1,
+                [
+                  2,
+                  3
+                ]
+              ],
+              4
+            ]
+          ],
+          [
+            1,
+            2,
+            3,
+            4
+          ]
+        ],
+        [
+          [
+            []
+          ],
+          []
+        ],
+        [
+          [
+            [
+              "a",
+              [
+                "b",
+                [
+                  "c"
+                ]
+              ]
+            ]
+          ],
+          [
+            "a",
+            "b",
+            "c"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "review-07",
+      "kind": "review",
+      "context_id": "context-07",
+      "critical": false,
+      "instruction": "Review the separate proposed Python snippet below. Return only a JSON object with keys issue, line, source_file. issue must be one of mutable_default, off_by_one, zero_division, missing_device, shallow_copy, wrong_order, double_count; line is the one-based line number within the proposed snippet below (the def line is line 1). source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"First operator screen: real norm weights, explicitly synthetic QKV inputs.\"\ndef pick(jobs):  # highest numeric priority must come first\n    return sorted(jobs, key=lambda job: job.priority)[0]\n",
+      "expected": {
+        "issue": "wrong_order",
+        "line": 2,
+        "source_file": "benchmarks/experiments/m11-pro-review/e01/probe.py"
+      }
+    },
+    {
+      "id": "retrieval-07",
+      "kind": "retrieval",
+      "context_id": "context-07",
+      "critical": false,
+      "instruction": "Which supplied FILE contains this exact line? \"\\\"\\\"\\\"Shared exclusive GPU lifecycle; each experiment records its own frozen base.\\\"\\\"\\\"\" Return only its path.\n",
+      "expected": "benchmarks/experiments/m11-pro-review/common.py"
+    },
+    {
+      "id": "code-08",
+      "kind": "code",
+      "context_id": "context-08",
+      "critical": false,
+      "instruction": "Define solve(commands): process ['push', value] and ['pop'] commands on a stack. Ignore pops on an empty stack. Return the final stack, bottom first. Instead of returning that value directly, return a dict with exactly keys source_file and result: result is the specified value; source_file is the FILE path in the supplied source containing this exact line: \"Measurements were collected on one Intel Arc Pro B70 32 GB. Native vLLM\". Return only Python code defining solve.\n",
+      "expected_source_file": "benchmarks/RESULTS.md",
+      "cases": [
+        [
+          [
+            [
+              [
+                "push",
+                1
+              ],
+              [
+                "push",
+                2
+              ],
+              [
+                "pop"
+              ],
+              [
+                "push",
+                3
+              ]
+            ]
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        [
+          [
+            []
+          ],
+          []
+        ],
+        [
+          [
+            [
+              [
+                "pop"
+              ],
+              [
+                "push",
+                "x"
+              ]
+            ]
+          ],
+          [
+            "x"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "review-08",
+      "kind": "review",
+      "context_id": "context-08",
+      "critical": false,
+      "instruction": "Review the separate proposed Python snippet below. Return only a JSON object with keys issue, line, source_file. issue must be one of mutable_default, off_by_one, zero_division, missing_device, shallow_copy, wrong_order, double_count; line is the one-based line number within the proposed snippet below (the def line is line 1). source_file is the FILE path in the supplied source containing this exact line: \"Measurements were collected on one Intel Arc Pro B70 32 GB. Native vLLM\"\ndef claim(job):  # attempts counts claims, not completions\n    job.attempts += 1\n    job.attempts += 1\n    return job\n",
+      "expected": {
+        "issue": "double_count",
+        "line": 3,
+        "source_file": "benchmarks/RESULTS.md"
+      }
+    },
+    {
+      "id": "retrieval-08",
+      "kind": "retrieval",
+      "context_id": "context-08",
+      "critical": false,
+      "instruction": "Which supplied FILE contains this exact line? \"This experiment tests whether the five MTP4 verification rows should share\" Return only its path.\n",
+      "expected": "benchmarks/experiments/m04-shared-kv-verification/README.md"
+    },
+    {
+      "id": "code-09",
+      "kind": "code",
+      "context_id": "context-09",
+      "critical": false,
+      "instruction": "Define solve(ids, prefix): keep only strings starting with prefix, then deduplicate in first-appearance order. Instead of returning that value directly, return a dict with exactly keys source_file and result: result is the specified value; source_file is the FILE path in the supplied source containing this exact line: \"This experiment evaluates a full-vocabulary INT2/G128 shortlist with eight\". Return only Python code defining solve.\n",
+      "expected_source_file": "benchmarks/experiments/m05-int2-draft-head/README.md",
+      "cases": [
+        [
+          [
+            [
+              "ab",
+              "x",
+              "abc",
+              "ab"
+            ],
+            "ab"
+          ],
+          [
+            "ab",
+            "abc"
+          ]
+        ],
+        [
+          [
+            [],
+            "x"
+          ],
+          []
+        ],
+        [
+          [
+            [
+              "a",
+              "b",
+              "a"
+            ],
+            ""
+          ],
+          [
+            "a",
+            "b"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "review-09",
+      "kind": "review",
+      "context_id": "context-09",
+      "critical": false,
+      "instruction": "Review the separate proposed Python snippet below. Return only a JSON object with keys issue, line, source_file. issue must be one of mutable_default, off_by_one, zero_division, missing_device, shallow_copy, wrong_order, double_count; line is the one-based line number within the proposed snippet below (the def line is line 1). source_file is the FILE path in the supplied source containing this exact line: \"Sequential experiment programme based on the attached review. The review is\"\ndef accepted_fraction(accepted, proposed):  # proposed can be zero\n    return accepted / proposed\n",
+      "expected": {
+        "issue": "zero_division",
+        "line": 2,
+        "source_file": "benchmarks/experiments/m11-pro-review/README.md"
+      }
+    },
+    {
+      "id": "retrieval-09",
+      "kind": "retrieval",
+      "context_id": "context-09",
+      "critical": false,
+      "instruction": "Which supplied FILE contains this exact line? \"Reproducible, narrow B70 operator experiments. Version 0.1 exposes the deployed\" Return only its path.\n",
+      "expected": "b70_ops/README.md"
+    },
+    {
+      "id": "tool-09",
+      "kind": "tool",
+      "context_id": "context-09",
+      "critical": false,
+      "instruction": "Find the supplied FILE containing this exact line: \"\\\"\\\"\\\"M04 gate: split-K decode versus shared-KV chunk verification attention.\\\"\\\"\\\"\". Call identify_source exactly once with its path and as marker exactly the quoted line above after removing leading and trailing whitespace, including indentation. Do not invent a path.\n",
+      "expected": {
+        "path": "b70_ops/probe_shared_kv_verification.py",
+        "marker": "\"\"\"M04 gate: split-K decode versus shared-KV chunk verification attention.\"\"\""
+      }
+    },
+    {
+      "id": "code-10",
+      "kind": "code",
+      "context_id": "context-10",
+      "critical": false,
+      "instruction": "Define solve(edges, start): edges are directed [from,to] string pairs. Return all reachable node IDs including start in lexicographic order. Instead of returning that value directly, return a dict with exactly keys source_file and result: result is the specified value; source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"B70 real-world vLLM harness for exact-token scheduler and context tests.\". Return only Python code defining solve.\n",
+      "expected_source_file": "scripts/context-benchmark.py",
+      "cases": [
+        [
+          [
+            [
+              [
+                "a",
+                "b"
+              ],
+              [
+                "b",
+                "c"
+              ],
+              [
+                "z",
+                "x"
+              ]
+            ],
+            "a"
+          ],
+          [
+            "a",
+            "b",
+            "c"
+          ]
+        ],
+        [
+          [
+            [],
+            "q"
+          ],
+          [
+            "q"
+          ]
+        ],
+        [
+          [
+            [
+              [
+                "x",
+                "x"
+              ],
+              [
+                "x",
+                "a"
+              ]
+            ],
+            "x"
+          ],
+          [
+            "a",
+            "x"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "review-10",
+      "kind": "review",
+      "context_id": "context-10",
+      "critical": false,
+      "instruction": "Review the separate proposed Python snippet below. Return only a JSON object with keys issue, line, source_file. issue must be one of mutable_default, off_by_one, zero_division, missing_device, shallow_copy, wrong_order, double_count; line is the one-based line number within the proposed snippet below (the def line is line 1). source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"Run M04 65K ABBA serving and the gated 196K maximum-context arm.\\\"\\\"\\\"\"\ndef graph_key(device, image_id, query_rows):  # include device identity\n    return (image_id, query_rows)\n",
+      "expected": {
+        "issue": "missing_device",
+        "line": 2,
+        "source_file": "scripts/run-shared-kv-verification-serving.py"
+      }
+    },
+    {
+      "id": "retrieval-10",
+      "kind": "retrieval",
+      "context_id": "context-10",
+      "critical": false,
+      "instruction": "Which supplied FILE contains this exact line? \"\\\"\\\"\\\"Current-profile phase, concurrency, prefix-cache and context benchmark.\" Return only its path.\n",
+      "expected": "scripts/current-profile-benchmark.py"
+    },
+    {
+      "id": "tool-10",
+      "kind": "tool",
+      "context_id": "context-10",
+      "critical": false,
+      "instruction": "Find the supplied FILE containing this exact line: \"download \\\"$model\\\" --revision \\\"$revision\\\"\". Call identify_source exactly once with its path and as marker exactly the quoted line above after removing leading and trailing whitespace, including indentation. Do not invent a path.\n",
+      "expected": {
+        "path": "scripts/download-model.sh",
+        "marker": "download \"$model\" --revision \"$revision\""
+      }
+    },
+    {
+      "id": "code-11",
+      "kind": "code",
+      "context_id": "context-11",
+      "critical": true,
+      "instruction": "Define solve(values, threshold): return [count, sum] for integer values strictly greater than threshold. Instead of returning that value directly, return a dict with exactly keys source_file and result: result is the specified value; source_file is the FILE path in the supplied source containing this exact line: \"run_dir=\\\"$repo_dir/benchmarks/experiments/m07-direct-output/runs/serving-$stamp\\\"\". Return only Python code defining solve.\n",
+      "expected_source_file": "scripts/start-direct-output-serving.sh",
+      "cases": [
+        [
+          [
+            [
+              1,
+              3,
+              3,
+              -2
+            ],
+            2
+          ],
+          [
+            2,
+            6
+          ]
+        ],
+        [
+          [
+            [],
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        [
+          [
+            [
+              -1,
+              0,
+              1
+            ],
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "review-11",
+      "kind": "review",
+      "context_id": "context-11",
+      "critical": true,
+      "instruction": "Review the separate proposed Python snippet below. Return only a JSON object with keys issue, line, source_file. issue must be one of mutable_default, off_by_one, zero_division, missing_device, shallow_copy, wrong_order, double_count; line is the one-based line number within the proposed snippet below (the def line is line 1). source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"M04 custom split-K shared-KV verification kernel gate.\\\"\\\"\\\"\"\ndef page_of(token, page_size):  # positive page_size; zero-based page IDs\n    return token // page_size + 1\n",
+      "expected": {
+        "issue": "off_by_one",
+        "line": 2,
+        "source_file": "b70_ops/probe_shared_kv_split.py"
+      }
+    },
+    {
+      "id": "retrieval-11",
+      "kind": "retrieval",
+      "context_id": "context-11",
+      "critical": true,
+      "instruction": "Which supplied FILE contains this exact line? \"import { writeFile } from 'node:fs/promises';\" Return only its path.\n",
+      "expected": "benchmarks/experiments/m06-target-head-int4/coding/runtime/cockpit-extension.js"
+    },
+    {
+      "id": "tool-11",
+      "kind": "tool",
+      "context_id": "context-11",
+      "critical": true,
+      "instruction": "Find the supplied FILE containing this exact line: \"\\\"\\\"\\\"Minimal capability probe for the Intel Triton backend used by M05.\\\"\\\"\\\"\". Call identify_source exactly once with its path and as marker exactly the quoted line above after removing leading and trailing whitespace, including indentation. Do not invent a path.\n",
+      "expected": {
+        "path": "benchmarks/experiments/m05-int2-draft-head/probe_triton_xpu.py",
+        "marker": "\"\"\"Minimal capability probe for the Intel Triton backend used by M05.\"\"\""
+      }
+    },
+    {
+      "id": "code-12",
+      "kind": "code",
+      "context_id": "context-12",
+      "critical": true,
+      "instruction": "Define solve(values, width): return the number of distinct values in each consecutive window of positive width. Return [] when width is invalid. Instead of returning that value directly, return a dict with exactly keys source_file and result: result is the specified value; source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"Shared exclusive GPU lifecycle; each experiment records its own frozen base.\\\"\\\"\\\"\". Return only Python code defining solve.\n",
+      "expected_source_file": "benchmarks/experiments/m11-pro-review/common.py",
+      "cases": [
+        [
+          [
+            [
+              1,
+              2,
+              1,
+              3
+            ],
+            2
+          ],
+          [
+            2,
+            2,
+            2
+          ]
+        ],
+        [
+          [
+            [],
+            1
+          ],
+          []
+        ],
+        [
+          [
+            [
+              2,
+              2,
+              2
+            ],
+            3
+          ],
+          [
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              2
+            ],
+            0
+          ],
+          []
+        ]
+      ]
+    },
+    {
+      "id": "review-12",
+      "kind": "review",
+      "context_id": "context-12",
+      "critical": true,
+      "instruction": "Review the separate proposed Python snippet below. Return only a JSON object with keys issue, line, source_file. issue must be one of mutable_default, off_by_one, zero_division, missing_device, shallow_copy, wrong_order, double_count; line is the one-based line number within the proposed snippet below (the def line is line 1). source_file is the FILE path in the supplied source containing this exact line: \"\\\"\\\"\\\"Current-profile phase, concurrency, prefix-cache and context benchmark.\"\ndef restore_payload(saved):  # restored nested values must be independent\n    return dict(saved)\n",
+      "expected": {
+        "issue": "shallow_copy",
+        "line": 2,
+        "source_file": "scripts/current-profile-benchmark.py"
+      }
+    },
+    {
+      "id": "retrieval-12",
+      "kind": "retrieval",
+      "context_id": "context-12",
+      "critical": true,
+      "instruction": "Which supplied FILE contains this exact line? \"\\\"\\\"\\\"Validate the installed vLLM configuration without loading model weights.\\\"\\\"\\\"\" Return only its path.\n",
+      "expected": "benchmarks/experiments/m08-dflash2-current/check-config.py"
+    },
+    {
+      "id": "tool-12",
+      "kind": "tool",
+      "context_id": "context-12",
+      "critical": true,
+      "instruction": "Find the supplied FILE containing this exact line: \"void launch(sycl::queue& q, const sycl::half* x, const int32_t* w,\". Call identify_source exactly once with its path and as marker exactly the quoted line above after removing leading and trailing whitespace, including indentation. Do not invent a path.\n",
+      "expected": {
+        "path": "benchmarks/experiments/m10-gdn-projection/gdn_projection.cpp",
+        "marker": "void launch(sycl::queue& q, const sycl::half* x, const int32_t* w,"
+      }
+    }
+  ]
+}

@@ -10,7 +10,7 @@
     "B70_ONEDNN_PROFILE": "reference by default; performance explicitly opt-in",
     "B70_ONEDNN_SHORT_CHUNK_ONLY": "1 for reference, 0 for performance",
     "B70_ONEDNN_MIN_KV": "16384",
-    "B70_ONEDNN_MAX_KV": "131072 for reference, 200704 for performance"
+    "B70_ONEDNN_MAX_KV": "131072 for reference, 200704 for unrestricted performance; 196608 is the better observed 199K performance candidate"
   },
   "native_contract": "one request; reference Q<6656 and active KV length 16384..131072, performance Q>=256 and active KV length 16384..200704; FP16 Q/output; FP8 E4M3FN paged K/V; 24 Q heads, 4 KV heads, D=256; 1664-token pages; bottom-right causal mask; existing Q128/M04/native fallback otherwise",
   "source_sha256": {
@@ -21,5 +21,5 @@
     "build_image_sh": "92a812d2089721463366b3af716625fbf22db99eb167ece5b12a735da88650ec",
     "run_server_sh": "84def2ea21c0337335093f204f349f0a9da1d6e03867f1d9ef21e7ba8e71e3a5"
   },
-  "qualification": "See README and paired JSON fixtures. The broad oneDNN performance route failed the original 32K NLL gate, but passed 29/30 paired practical 32K tasks versus 28/30 for the reference short-chunk route, with 9.50 seconds less summed wall time. This small task screen is not a general quality or serving release gate. One staggered 4K-decode plus 32K-prefill pair showed no material difference between profiles. Reference passed sampled 32K/64K/128K/199K teacher-forced checks; broad profile remains experimental. The launcher isolates experimental AOT compile caches by image ID and flags after discovering a cross-W4A8/W4A16 cache confounder. An exact archived W4A16 control image reproduced isolated W4A16 NLL on one 32K prompt. Wider code quality, 128K/199K, and mixed-serving gates remain open."
+  "qualification": "See README and paired JSON fixtures. Unrestricted oneDNN performance failed the original 32K NLL gate but passed 29/30 paired practical 32K tasks versus 28/30 for reference, and 12/12 paired 128K tasks versus 12/12. At 199K, unrestricted performance reduced six-task wall time from 721.55 to 427.10 seconds but regressed one code-review task (5/6 versus 6/6); a repeat failed the same task. Capping oneDNN at KV length 196608 restored 6/6 on a fresh-start 199K replay and reduced wall time to 458.18 seconds, with two cold code-prefill times 208.17 and 203.78 seconds versus about 336 seconds each for reference. Warm-prefix prefill was approximately reference speed because the last chunks fell back to Q128. The capped candidate has not passed broad quality or serving gates; all oneDNN profiles remain experimental and opt-in. A 128K cancellation/recovery smoke test passed. One staggered 4K-decode plus 32K-prefill pair showed no material difference between profiles. The launcher isolates experimental AOT compile caches by image ID and flags after discovering a cross-W4A8/W4A16 cache confounder. An exact archived W4A16 control image reproduced isolated W4A16 NLL on one 32K prompt. Broader source-review and coding quality, W4A8 factor isolation, memory/concurrency, and mixed-serving gates remain open."
 }

@@ -166,6 +166,77 @@ The broad route remains an opt-in performance candidate pending wider
 quality and serving checks. The frozen tasks, raw responses and per-request
 timing are in `performance_tasks.py` and `practical-*.jsonl`.
 
+A second paired screen used two frozen 128K source contexts and 12 tasks of
+the same four kinds. Both profiles passed all 12, including four executable
+coding tasks and four exact retrievals. Nine output hashes matched. Prompt
+hashes, image ID, computed tokens, and prefix-hit tokens matched pairwise;
+there were no preemptions. The performance profile reduced summed request
+wall time from 390.23 to 263.59 s. Two cold-prefill times summed to 325.74
+versus 212.74 s (median cold TTFT 163.07 versus 106.57 s); ten warm-prefill
+times summed to 47.15 versus 36.87 s. At 128K, several warm prompts lie
+just above the reference profile's 131,072-KV-token cap and fall back to
+Q128, while the performance profile uses oneDNN. Output lengths differed,
+so the decode-time sums cannot isolate decode speed. This is a strong speed
+result on two contexts, not evidence of broad 128K task-quality equivalence.
+Raw responses and paired timing are in `practical-128k-*.jsonl`.
+
+A third practical screen used one frozen near-maximum 199K source context and
+six tasks: two executable coding tasks, two exact retrievals, one snippet
+review, and one structured-output task. The reference profile passed 6/6;
+the broad performance profile passed 5/6. Both passed the coding, retrieval,
+and structured tasks, but the performance profile labeled a defined
+zero-based page-numbering off-by-one bug as `zero_division`. The same exact
+review prompt failed again on a warm-cache repeat. Image ID, prompt hashes,
+tokenized lengths, computed-prefill and cache-hit counts matched pairwise;
+there were no preemptions. Both arms had two cold 199K requests followed by
+four warm-prefix requests. The broad profile reduced summed wall time from
+721.55 to 427.10 s and the two cold-prefill times from about 672.56 to
+398.76 s. Its review failure blocks promotion at this length even though
+the speed gain is large. The data and per-task outputs are in
+`practical-199k-*.jsonl` and `practical-199k-summary.json`.
+
+On the same frozen 199K teacher-forced prompt, reference NLL was 2.16401345
+and broad-performance NLL was 2.15622920 (delta -0.00778425 nats/token).
+All 199,661 scored positions and token IDs matched, without cache hits or
+preemptions. The first 13,311 scored positions were identical, and some later
+windows worsened despite the better whole-prompt mean. This case shows why
+aggregate NLL alone cannot overrule the observed task regression. See
+`nll-199k-*-paired-r1.json` and `nll-windows-199k-performance-r1.json`.
+
+A targeted 199K review experiment capped performance-profile oneDNN at KV
+length 196,608, making only the final two prompt chunks use Q128. Route logs
+confirmed oneDNN through L=193,024 and Q128 at L=198,016 and 199,717. The
+formerly failing review returned `off_by_one` on both a cold request and a
+warm-prefix repeat. The cold prefill was 207.47 s versus about 199.37 s for
+the broad performance profile and 336.35 s for the reference profile's
+prompt-matched cold request. A fresh-start replay of all six paired tasks
+passed 6/6, including both executable code tasks and the review, with no
+preemptions and identical per-task prompt/prefix counts. The two cold
+prefills took 411.95 s combined versus 672.56 s for the reference and
+398.76 s for unrestricted performance. Summed six-request wall time was
+458.18 s versus 721.55 s for reference and 427.10 s for unrestricted
+performance. The four warm-prefix prefill times summed to 39.82 s, about
+the reference profile's 39.78 s: the late Q128 fallback gives up most of
+the broad route's warm-prefix gain. Different outputs and token counts make
+decode-time sums unsuitable as a kernel-speed comparison. This cap is the
+better observed 199K performance candidate, but six tasks on one source
+context do not establish general code/review quality or serving safety.
+The targeted responses are in
+`practical-199k-review-max196608*.json`.
+The full replay is in `practical-199k-max196608.jsonl` and
+`practical-199k-max196608-summary.json`.
+
+On a third frozen 128K context unused in route selection or the practical
+screen, teacher-forced NLL was 1.35621671 for reference and 1.34465623 for
+performance (delta -0.01156048 nats/token). Token IDs and all 131,053
+scored positions matched; neither arm had a cache hit or preemption. The
+first 13,311 scored positions were identical. From position 13,312 onward,
+mean delta was -0.01286742; however the later 65K-token half worsened by
+about +0.00227. The whole-prompt improvement therefore does not justify a
+universal NLL or task-quality claim. Compact summaries and token-window
+analysis are in `nll-heldout-128k-*.json` and
+`nll-windows-128k-performance-r3.json`.
+
 One fresh-start staggered pair put a 4K request into 1,024-token decode,
 then admitted a cold 32K request. Both profiles emitted 1,024 tokens from
 each request, with no cache hits or preemptions. Reference versus performance
@@ -178,6 +249,15 @@ interarrival latency. The one pair does not characterize p95/p99 stalls or
 all concurrency patterns; the exact mixed-metadata route still needs a
 dedicated trace before enabling a new attention arm there. Raw timestamps
 and response hashes are in `staggered-*.json`.
+
+In a fresh performance-profile server, a 128K prefill was cancelled after
+30 seconds, after oneDNN had dispatched through at least KV length 59,904.
+The server stayed healthy. Subsequent cold 4K and 32K recovery requests each
+emitted 128 tokens, with no prompt-cache hits or preemptions; the 32K request
+used the oneDNN route. This is one cancellation/recovery smoke test, not a
+stress or leak test. The request and route evidence is in
+`cancel-recovery-performance.json` and
+`cancel-route-signatures-performance.txt`.
 
 The narrower `B70_ONEDNN_SHORT_CHUNK_ONLY=1` policy is the default when the
 experimental oneDNN flag uses the reference profile. It selects only an eligible

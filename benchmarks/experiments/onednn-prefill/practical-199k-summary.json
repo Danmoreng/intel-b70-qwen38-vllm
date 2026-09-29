@@ -1,0 +1,96 @@
+{
+  "image": "sha256:47c9d5fc5eb28fd12ef6219fbbfe7cf3863e00aa0535da377cadfc9a181bcd41",
+  "reference": {
+    "count": 6,
+    "passed": 6,
+    "by_kind": {
+      "code": {
+        "count": 2,
+        "passed": 2
+      },
+      "retrieval": {
+        "count": 2,
+        "passed": 2
+      },
+      "review": {
+        "count": 1,
+        "passed": 1
+      },
+      "structured": {
+        "count": 1,
+        "passed": 1
+      }
+    },
+    "ttft_s": {
+      "median": 10.518015399999058,
+      "sum": 714.1008875129919
+    },
+    "wall_s": {
+      "median": 12.282319522499165,
+      "sum": 721.5450828699941
+    },
+    "prefill_tokens": 412745.0,
+    "prefill_s": 712.3383747910011,
+    "decode_s": 7.662510928999836,
+    "cached_tokens": 785408.0,
+    "preemptions": 0.0,
+    "draft_tokens": 364.0,
+    "accepted_tokens": 298.0,
+    "prefill_tps": 579.4226656974625,
+    "mtp_acceptance": 0.8186813186813187
+  },
+  "performance": {
+    "count": 6,
+    "passed": 5,
+    "by_kind": {
+      "code": {
+        "count": 2,
+        "passed": 2
+      },
+      "retrieval": {
+        "count": 2,
+        "passed": 2
+      },
+      "review": {
+        "count": 1,
+        "passed": 0
+      },
+      "structured": {
+        "count": 1,
+        "passed": 1
+      }
+    },
+    "ttft_s": {
+      "median": 6.1692757079999865,
+      "sum": 422.79652925999835
+    },
+    "wall_s": {
+      "median": 6.568115330497676,
+      "sum": 427.10326566199365
+    },
+    "prefill_tokens": 412745.0,
+    "prefill_s": 421.0672249220006,
+    "decode_s": 4.528020887999446,
+    "cached_tokens": 785408.0,
+    "preemptions": 0.0,
+    "draft_tokens": 212.0,
+    "accepted_tokens": 197.0,
+    "prefill_tps": 980.2354008352414,
+    "mtp_acceptance": 0.9292452830188679
+  },
+  "outcome_changes": {
+    "improved": [],
+    "regressed": [
+      "context-199k-review"
+    ]
+  },
+  "same_output_count": 2,
+  "finish_reasons": {
+    "reference": {
+      "stop": 6
+    },
+    "performance": {
+      "stop": 6
+    }
+  }
+}

@@ -14,7 +14,9 @@ import urllib.request
 import uuid
 from pathlib import Path
 
-from performance_tasks import tasks
+from performance_tasks import tasks as tasks_32k
+from performance_tasks_128k import tasks as tasks_128k
+from performance_tasks_199k import tasks as tasks_199k
 from replay_frozen import METRICS, snapshot
 
 
@@ -175,11 +177,14 @@ def main():
     parser.add_argument("--base", default="http://127.0.0.1:8081")
     parser.add_argument("--arm", required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--limit", type=int, default=30)
+    parser.add_argument("--task-set", choices=("32k", "128k", "199k"), default="32k")
+    parser.add_argument("--limit", type=int)
     args = parser.parse_args()
-    if not 1 <= args.limit <= 30:
-        parser.error("limit must be between 1 and 30")
-    selected = tasks()[:args.limit]
+    all_tasks = {"32k": tasks_32k, "128k": tasks_128k,
+                 "199k": tasks_199k}[args.task_set]()
+    if args.limit is not None and not 1 <= args.limit <= len(all_tasks):
+        parser.error(f"limit must be between 1 and {len(all_tasks)}")
+    selected = all_tasks[:args.limit]
     previous = []
     if args.output.exists():
         previous = [json.loads(line) for line in args.output.read_text().splitlines()]

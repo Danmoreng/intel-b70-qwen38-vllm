@@ -53,6 +53,11 @@ def main():
         for field in ("kind", "context_sha256", "prompt_sha256", "image"):
             if a[field] != b[field]:
                 raise ValueError(f"{key}: {field} differs")
+        for field in ("prefill_tokens", "cached_tokens"):
+            if a["metrics"][field] != b["metrics"][field]:
+                raise ValueError(f"{key}: {field} differs")
+        if a["usage"]["prompt_tokens"] != b["usage"]["prompt_tokens"]:
+            raise ValueError(f"{key}: tokenized prompt length differs")
         if a["metrics"]["preemptions"] or b["metrics"]["preemptions"]:
             raise ValueError(f"{key}: preemption occurred")
     left = list(reference.values())

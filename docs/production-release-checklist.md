@@ -16,19 +16,19 @@ deploy an image merely because one preceding stage passed.
 
 ## C1 — Integrate and package
 
-- [ ] Install the mixed route in the canonical adapter and one release image.
-- [ ] Enforce one policy at launcher and adapter entry points; incompatible
+- [x] Install the mixed route in the canonical adapter and one release image.
+- [x] Enforce one policy at launcher and adapter entry points; incompatible
   flags, image, model revision and library hashes fail startup.
-- [ ] Namespace AOT caches by image ID and policy hash; record actual running
+- [x] Namespace AOT caches by image ID and policy hash; record actual running
   worker/image identity and active operator selection.
-- [ ] Keep diagnostics opt-in and bounded route counters on by default.
-- [ ] Verify W4A8 dispatch at 511/512/513 rows and real/mixed row errors.
-- [ ] Verify mixed padding, ordering, boundaries and capture fallback.
-- [ ] Record cold compilation and subsequent warm starts separately.
+- [x] Keep diagnostics opt-in and bounded route counters on by default.
+- [x] Verify W4A8 dispatch at 511/512/513 rows and real/mixed row errors.
+- [x] Verify mixed padding, ordering, boundaries and capture fallback.
+- [x] Record cold compilation and subsequent warm starts separately.
 
 ## C2 — Practical quality
 
-- [ ] Reuse the existing 30/12/6 regression tasks on the final image.
+- [x] Reuse the existing 30/12/6 regression tasks on the final image.
 - [ ] Freeze a held-out set of 48 work items from at least 12 source contexts:
   20 executable code/repository edits (at least eight multi-file or multi-step),
   12 reviews, eight exact retrievals and eight real structured/tool tasks.

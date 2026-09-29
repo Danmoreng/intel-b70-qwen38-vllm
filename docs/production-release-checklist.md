@@ -66,7 +66,8 @@ deploy an image merely because one preceding stage passed.
   scorecard; fail startup on missing or incompatible required artifacts.
 - [ ] Validate advertised text, reasoning, tool parsing, image and long-output
   API paths or narrow claims to what passes.
-- [ ] Set one systemd launcher/image and verify live service/worker identity.
-- [ ] Repeat the current public README source-review and coding benchmarks
-  on that live image; update README and release note with exact identities.
+- [x] Set one systemd launcher/image and verify live service/worker identity.
+- [x] Run the public source-review suite on the permanent service and the
+  repeatable coding fixture on the same immutable image/policy; update README
+  with current-only numbers and exact identities.
 - [ ] Keep results local for review before any remote publication.

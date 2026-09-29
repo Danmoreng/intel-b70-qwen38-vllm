@@ -1,9 +1,10 @@
 # B70 oneDNN production candidate: qualification scorecard
 
-This scorecard records the current release gate. **The candidate is not yet
-deployed as the permanent production service.** The public README will be
-rewritten with current measurements only after all gates pass and deployment
-is live.
+This scorecard records the release investigation. On 2026-09-29 the user
+narrowed the closeout to the public README benchmarks. The final image is now
+running under the permanent `b70-qwen38-vllm.service`, and the README reports
+only measurements from that image. The uncompleted C2/C3 research gates are
+not represented as passing.
 
 ## Identity
 
@@ -13,7 +14,7 @@ is live.
 - Model revision: `a47b0c6f0d756bc394c4cc629d5b0ded1acc7001`.
 - Frozen regression fixture archive: `benchmark-results/production-release-v1/fixtures/frozen-source-prompts.tar.zst`, SHA-256 `aa45983807418efe708193814abf974ca2813c7e8293620231bdd1ce27e0b963`.
 - New held-out context archive: `benchmark-results/production-release-v1/fixtures/heldout-contexts-v1.tar.zst`, SHA-256 `b98440d9762a02c19709d7c234409713969ce1bf7578d39af9d7508630e9861f`; twelve contexts, including two previously unused near-199K prompt arrangements. The tracked context manifest SHA-256 is `3285e4f8edc1d8e70966e405d8e01f3b8accc31797ec2f4f37c273f27e04056c`.
-- Held-out task manifest v2 SHA-256: `cac6f02aa5fd19bb5de5aae281631efbc00609904bf32d6069801ef84588a86b`; 20 code tasks (eight multi-step repository edits), twelve reviews, eight retrievals and eight required tool calls. Candidate/control evaluation is pending. The first v1 attempt stopped after 40 candidate items because its 4096-token output reservation exceeded the 200704-token context limit on the first new near-199K code task. The v1 review line and tool-marker instructions were also ambiguous, so its partial results are retained locally but are not a release score.
+- Held-out task manifest v2 SHA-256: `cac6f02aa5fd19bb5de5aae281631efbc00609904bf32d6069801ef84588a86b`; 20 code tasks (eight multi-step repository edits), twelve reviews, eight retrievals and eight required tool calls. The candidate finished 47/48; the control was stopped at 38/48 after the scope change. This is not a paired release score. The first v1 attempt stopped after 40 candidate items because its 4096-token output reservation exceeded the 200704-token context limit on the first new near-199K code task. The v1 review line and tool-marker instructions were also ambiguous, so its partial results are retained locally but are not a release score.
 - The image entry point verified the installed oneDNN, Q128, M04 and W4A8
   binary/source hashes on both starts. The runtime AOT cache path includes the
   policy hash and image ID.
@@ -74,17 +75,20 @@ acceptance tests. It made 14 model requests and 18 tool calls in 290.832 s,
 with 52,704 newly computed prompt tokens, 103,168 cached prompt tokens,
 19,507 generated tokens and zero preemptions. The ignored
 `coding-agent-qualification-v2/summary.json` records the exact image,
-policy, fixture and runner hashes. This is a prequalification run on the
-candidate service, not the final public benchmark after permanent deployment.
+policy, fixture and runner hashes. It ran on the same immutable image and
+policy as the permanent service and is reused as the current public coding
+benchmark under the narrowed scope.
 
-## Open gates
+## Scope closeout
 
-- C2: 48 new held-out tasks across at least 12 contexts, candidate/control
-  pairing, new near-199K contexts and NLL diagnostics. The revised repeatable
-  two-stage coding-agent fixture v2 is frozen for prequalification.
-- C3: fixed 40-request integrated serving/resource trace and matched route-off
-  and decode comparisons.
-- C4: advertised API paths, permanent service deployment, then complete
-  public source-review and repeatable coding benchmarks on the live image.
-  Replace historical README measurements with those current results before
-  any remote publication.
+- C2 paired evaluation and NLL diagnostics remain incomplete because the
+  control run was stopped at 38/48. The 48-item candidate result is retained
+  locally and is not a passing comparison.
+- C3's proposed 40-request integrated serving trace was canceled before any
+  request. Its presence in the plan does not imply it was measured.
+- The repeatable coding fixture v2 passed on the final image. The full public
+  source-review suite passed on the same image after the permanent service
+  started: 20 scenarios, 70 waves, 124 requests, zero preemptions.
+- The current-only README and machine-readable public benchmark summary are
+  in `README.md` and `benchmarks/runs/2026-09-29-production/summary.json`.
+  No remote publication is recorded here.

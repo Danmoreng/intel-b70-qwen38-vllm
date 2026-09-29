@@ -29,10 +29,10 @@ deploy an image merely because one preceding stage passed.
 ## C2 — Practical quality
 
 - [x] Reuse the existing 30/12/6 regression tasks on the final image.
-- [ ] Freeze a held-out set of 48 work items from at least 12 source contexts:
+- [x] Freeze a held-out set of 48 work items from at least 12 source contexts:
   20 executable code/repository edits (at least eight multi-file or multi-step),
   12 reviews, eight exact retrievals and eight real structured/tool tasks.
-- [ ] Include at least eight long continuations or multi-step histories; at
+- [x] Include at least eight long continuations or multi-step histories; at
   least two unused near-199K contexts and cold/warm prefix histories.
 - [ ] Run candidate and frozen offline control on identical fixtures/histories.
 - [ ] Pass every technical correctness/isolation/boundary check. No repeat of

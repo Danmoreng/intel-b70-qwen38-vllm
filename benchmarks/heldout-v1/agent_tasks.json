@@ -1,0 +1,50 @@
+[
+  {
+    "id": "batch-claim",
+    "context_index": 1,
+    "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.claim_batch(limit) and QueueAPI action batch_claim reading limit. Require a positive integer limit (bool is invalid). Claim up to limit pending jobs in FIFO order, increment each attempts once, and return a list of Jobs. The API returns {\"jobs\": [{\"id\": ..., \"state\": ..., \"attempts\": ...}, ...]}. Invalid limits must leave state unchanged. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+    "acceptance": "acceptance/test_batch_claim.py"
+  },
+  {
+    "id": "move-pending",
+    "context_index": 2,
+    "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.move_pending(job_id, before_id) and QueueAPI action move_pending reading id and before_id. Both IDs must refer to distinct pending jobs. Move job_id immediately before before_id in FIFO order; return the moved Job. Unknown IDs raise KeyError and invalid states or same IDs raise ValueError. The API returns id, state and the new pending ID order. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+    "acceptance": "acceptance/test_move_pending.py"
+  },
+  {
+    "id": "submit-many",
+    "context_index": 3,
+    "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.submit_many(items) and QueueAPI action submit_many reading items. Each item is a dict with id, optional payload (default {}), optional priority (default 0). Validate the entire nonempty list before mutating the queue: duplicate IDs, invalid non-string/empty IDs, non-dict payloads and malformed items raise ValueError. Commit in order. The API returns a jobs list with id and state. A failed batch leaves queue and pending order unchanged. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+    "acceptance": "acceptance/test_submit_many.py"
+  },
+  {
+    "id": "claim-matching",
+    "context_index": 4,
+    "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.claim_matching(key, value) and QueueAPI action claim_matching reading key and value. Claim the first pending job whose payload dict contains key with value exactly equal; preserve order of all other jobs. Reject an empty or non-string key with ValueError. Return None if no match. The API returns id, state and attempts for a match, or {\"id\": null} otherwise. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+    "acceptance": "acceptance/test_claim_matching.py"
+  },
+  {
+    "id": "ack-many",
+    "context_index": 5,
+    "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.ack_many(ids) and QueueAPI action ack_many reading ids. Require a nonempty list of unique nonempty string IDs, all currently running. Validate the complete batch first; any error leaves every job unchanged. Unknown IDs raise KeyError, malformed or duplicate IDs and wrong states raise ValueError. Return the acknowledged Jobs in input order. API returns a jobs list with id and state. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+    "acceptance": "acceptance/test_ack_many.py"
+  },
+  {
+    "id": "rename-id",
+    "context_index": 6,
+    "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.rename_id(old_id, new_id) and QueueAPI action rename_id reading old_id and new_id. Require existing old_id, a new nonempty string ID distinct from and unused by any job. Preserve the renamed Job object, its state, attempts and position in pending order. The API returns old_id, id (new ID) and state. Errors must leave the queue unchanged. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+    "acceptance": "acceptance/test_rename_id.py"
+  },
+  {
+    "id": "drop-terminal",
+    "context_index": 7,
+    "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.drop_terminal(job_id) and QueueAPI action drop_terminal reading id. Only done or failed jobs may be removed from the jobs map; pending/running jobs raise ValueError and unknown IDs raise KeyError. Return a detached dict with id, state, attempts and payload; deleting the returned payload must not mutate another job. The API returns that dict. Preserve all pending order. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+    "acceptance": "acceptance/test_drop_terminal.py"
+  },
+  {
+    "id": "replace-payload",
+    "context_index": 8,
+    "instruction": "Work in the supplied QueueKit checkout. Add JobQueue.replace_payload(job_id, payload) and QueueAPI action replace_payload reading id and payload. Allow only pending jobs; reject other states and non-dict payload with ValueError, unknown ID with KeyError. Store a deep detached copy so mutations of the caller payload or the API response do not alter the job. Return the Job; the API returns id, state and a detached payload copy. Preserve existing behavior and visible tests. Inspect files, edit the necessary modules and run tests. Tell me when done.",
+    "acceptance": "acceptance/test_replace_payload.py"
+  }
+]

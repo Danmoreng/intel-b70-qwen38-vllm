@@ -12,6 +12,8 @@ is live.
 - Policy SHA-256: `4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368`.
 - Model revision: `a47b0c6f0d756bc394c4cc629d5b0ded1acc7001`.
 - Frozen regression fixture archive: `benchmark-results/production-release-v1/fixtures/frozen-source-prompts.tar.zst`, SHA-256 `aa45983807418efe708193814abf974ca2813c7e8293620231bdd1ce27e0b963`.
+- New held-out context archive: `benchmark-results/production-release-v1/fixtures/heldout-contexts-v1.tar.zst`, SHA-256 `b98440d9762a02c19709d7c234409713969ce1bf7578d39af9d7508630e9861f`; twelve contexts, including two previously unused near-199K prompt arrangements. The tracked context manifest SHA-256 is `3285e4f8edc1d8e70966e405d8e01f3b8accc31797ec2f4f37c273f27e04056c`.
+- Held-out task manifest SHA-256: `a77a9e7a37a293c1adf0c128195ac7e744a9e97ce90969bbafcf0b3e8fdedbdb`; 20 code tasks (eight multi-step repository edits), twelve reviews, eight retrievals and eight required tool calls. Candidate/control evaluation is pending.
 - The image entry point verified the installed oneDNN, Q128, M04 and W4A8
   binary/source hashes on both starts. The runtime AOT cache path includes the
   policy hash and image ID.

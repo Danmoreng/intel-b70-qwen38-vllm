@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 import re
+import subprocess
 import time
 import urllib.request
 from pathlib import Path
@@ -86,11 +87,16 @@ def main():
     end = time.monotonic()
     after = snapshot(args.base)
     counts = {key: after[key] - before[key] for key in METRICS}
+    image = "local/b70-qwen38-vllm:onednn-poc-20260929"
+    image_id = subprocess.check_output(
+        ["docker", "image", "inspect", image, "--format", "{{.Id}}"],
+        text=True,
+    ).strip()
     result = {
         "case": args.case, "repeat": args.repeat, "prompt_sha256": digest,
         "arm": args.arm,
         "forced_token_id": args.forced_token_id,
-        "image": "local/b70-qwen38-vllm:onednn-poc-20260929",
+        "image": image, "image_id": image_id,
         "usage": usage, "finish_reason": finish_reason,
         "output_sha256": hashlib.sha256("".join(pieces).encode()).hexdigest(),
         "ttft_s": None if first is None else first - start,

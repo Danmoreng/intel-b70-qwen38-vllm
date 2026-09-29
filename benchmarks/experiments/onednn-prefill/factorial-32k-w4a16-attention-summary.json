@@ -1,0 +1,66 @@
+{
+  "image_id": "sha256:47c9d5fc5eb28fd12ef6219fbbfe7cf3863e00aa0535da377cadfc9a181bcd41",
+  "arms": {
+    "control": "W4A16 + Q128",
+    "candidate": "W4A16 + oneDNN performance"
+  },
+  "cases": [
+    {
+      "repeat": 1,
+      "prompt_sha256": "12e77a588e47c5aa865da72dbfc12830741604d06d1595777a5968f8c6c49d7d",
+      "control_nll": 4.675352941470458,
+      "candidate_nll": 4.65809206595689,
+      "delta_nll": -0.017260875513568585,
+      "control_prefill_s": 27.947272110002814,
+      "candidate_prefill_s": 25.90316290299961,
+      "control_wall_s": 37.88336379100292,
+      "candidate_wall_s": 35.86917346300106,
+      "control_decode_s": 9.894034299999475,
+      "candidate_decode_s": 9.90748426600112
+    },
+    {
+      "repeat": 2,
+      "prompt_sha256": "cd0f4910df1b4f2a0b94b358e602f9e1722ec1fb0169338455ee403c43cae34b",
+      "control_nll": 2.06038280555909,
+      "candidate_nll": 2.067750385341353,
+      "delta_nll": 0.00736757978226299,
+      "control_prefill_s": 28.06806890000007,
+      "candidate_prefill_s": 25.194144255001447,
+      "control_wall_s": 38.05834480900012,
+      "candidate_wall_s": 35.19326802100113,
+      "control_decode_s": 9.948236172000179,
+      "candidate_decode_s": 9.958869745998527
+    },
+    {
+      "repeat": 3,
+      "prompt_sha256": "8edd2b4209144e503784f023e633ea11611f668c5c3d47ea598d8b367d36de07",
+      "control_nll": 4.153149160753316,
+      "candidate_nll": 4.154157930027021,
+      "delta_nll": 0.001008769273704857,
+      "control_prefill_s": 27.896746853000877,
+      "candidate_prefill_s": 25.28574759100229,
+      "control_wall_s": 37.792605557999195,
+      "candidate_wall_s": 35.287188685997535,
+      "control_decode_s": 9.848893964999661,
+      "candidate_decode_s": 9.956212401997618
+    }
+  ],
+  "mean_delta_nll": -0.002961508819200246,
+  "sampled_frozen_nll_gate": true,
+  "median_prefill_s": {
+    "control": 27.947272110002814,
+    "candidate": 25.28574759100229
+  },
+  "median_native_prefill_tps": {
+    "control": 1170.8477260751408,
+    "candidate": 1295.6706097809054
+  },
+  "median_wall_s": {
+    "control": 37.88336379100292,
+    "candidate": 35.287188685997535
+  },
+  "median_decode_s": {
+    "control": 9.894034299999475,
+    "candidate": 9.956212401997618
+  }
+}

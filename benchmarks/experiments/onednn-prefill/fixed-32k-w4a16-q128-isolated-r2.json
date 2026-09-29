@@ -1,0 +1,30 @@
+{
+  "case": "phase-32k-c1",
+  "repeat": 2,
+  "prompt_sha256": "cd0f4910df1b4f2a0b94b358e602f9e1722ec1fb0169338455ee403c43cae34b",
+  "arm": "w4a16-q128-isolated",
+  "forced_token_id": 264,
+  "image": "local/b70-qwen38-vllm:onednn-poc-20260929",
+  "usage": {
+    "prompt_tokens": 32723,
+    "total_tokens": 33747,
+    "completion_tokens": 1024,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "finish_reason": "length",
+  "output_sha256": "ebe2e7da27ee59df56baa97a596936e6cb8f5f147e6d0a45c9fab8f089c7b226",
+  "ttft_s": 28.116623024998262,
+  "wall_s": 38.05834480900012,
+  "metrics": {
+    "prefill_tokens": 32723.0,
+    "prefill_s": 28.06806890000007,
+    "decode_s": 9.948236172000179,
+    "cached_tokens": 0.0,
+    "preemptions": 0.0,
+    "draft_tokens": 832.0,
+    "accepted_tokens": 815.0
+  },
+  "native_prefill_tps": 1165.844366300523
+}

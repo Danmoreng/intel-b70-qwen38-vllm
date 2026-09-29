@@ -359,6 +359,25 @@ error against W4A16 was about 0.88% for typical rows and 1.33% with an
 outlier. The current dispatch still uses total matrix rows, so a mixed batch
 can quantize decode rows; no mixed-row quality claim is made.
 
+The A3 factorial screen now includes an isolated W4A16 + oneDNN performance
+arm (R2) beside W4A16 + Q128 (R0). On three prompt-matched 32K contexts,
+the oneDNN-minus-Q128 teacher-forced NLL changes were -0.01726, +0.00737,
+and +0.00101 nats/token (mean -0.00296). This passes the frozen sampled
+NLL bounds for this arm, but three contexts are not a task-quality gate.
+The same model image used separate compile caches, and the R2 cache graph
+contains `int4_gemm_w4a16`; route logs confirm oneDNN dispatch at long
+prefill shapes. Each fixed-continuation serving pair emitted 1,024 identical
+tokens with no cache hits or preemptions. Median native prefill fell from
+27.95 to 25.29 s, median native throughput rose from 1,170.85 to 1,295.67
+tokens/s, and median wall time fell from 37.88 to 35.29 s. Median decode
+was 9.89 versus 9.96 s, a small difference in these three fixed-output
+replays. The output hash and token count are identical across each pair.
+This isolates a roughly 9.5% prefill-time gain from oneDNN on W4A16 at
+32K; the much larger R0/R1 W4A16/W4A8 difference cannot be attributed to
+attention. The R2 data and pair checks are in
+`factorial-32k-w4a16-attention-summary.json` and its summarizer. R2 still
+needs functional code/review checks and wider context/serving qualification.
+
 C2 with two 16K requests and C4 with four 4K requests completed 1024 output
 tokens per request with no preemptions; their mixed metadata used the existing
 attention fallback. A 16K prefix replay reused 13,312 tokens. A 32K replay

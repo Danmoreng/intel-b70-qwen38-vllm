@@ -16,9 +16,19 @@ recorded; the token budget is an upper bound, not an artificial exact target.
 The prefix-cache scenarios resend the same complete source prompt to compare
 the cold request with a warm request. Exact resend avoids mistaking a boundary
 or Mamba-state eligibility effect for a failure to construct shared text.
-Each run gets a fresh prompt namespace at the start of the input to avoid
-reusing a previous run's cache. Pass the same `--prompt-namespace` to both arms
-of an A/B comparison to keep prompt hashes identical.
+The current runner pins the prompt namespace to `20260923-201101`. A timestamp
+still gives every output directory a unique run ID. The namespace is included
+in each case ID; its hash selects the source-file rotation and task wording.
+Changing it therefore changes the workload, not just the result label. Keep
+the namespace fixed across configurations, and use an idle or freshly started
+worker to control prefix-cache state. Override `--prompt-namespace` only when
+intentionally defining another fixture.
+The original full run constructed its 16K prefix prompt without a scenario
+suffix; use `--legacy-prefix-namespace` to reproduce that prompt. Its separate
+64K prefix measurement used namespace `20260923-212648` with the suffix, so
+reproduce it with `--only prefix-64k-cold-warm --prompt-namespace
+20260923-212648` and without the legacy flag. The published production
+benchmark uses those exact original prompts for both prefix rows.
 
 Short serving sweeps use the production coding sampling values: temperature
 1.0, top-p 0.95, top-k 20 and a recorded per-request seed. Thinking is off so
@@ -43,6 +53,6 @@ For a short cold-cache context sweep:
 ./scripts/run-context-benchmark.sh benchmark-results/source-review
 ```
 
-For a product-level coding benchmark, use the real agent workflow and its
-temperature 1/top-p 0.95/top-k 20 sampler with medium reasoning and an 8,192
-token thinking budget, as documented in the [production coding run](runs/2026-09-19-production-coding/README.md).
+For a repeatable coding-agent workload, use the
+[QueueKit fixture v2](coding-fixture/v2/README.md), which keeps the project,
+tasks, tools and hidden acceptance tests fixed.

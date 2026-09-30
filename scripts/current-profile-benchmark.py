@@ -32,6 +32,9 @@ from meaningful_benchmark import (
 ROOT = Path(__file__).resolve().parent
 DEFAULT_BASE = "http://127.0.0.1:8081"
 MODEL = "Qwen3.8-27B"
+# Pin the prompt selection used by the original public source-review run. Run IDs remain
+# unique, while identical source files and review tasks can be replayed.
+DEFAULT_PROMPT_NAMESPACE = "20260923-201101"
 METRIC_NAMES = {
     "running": "vllm:num_requests_running",
     "waiting": "vllm:num_requests_waiting",
@@ -303,6 +306,7 @@ def run_once(
     run_dir: Path,
     sources: list[dict[str, str]],
     namespace: str,
+    legacy_prefix_namespace: bool = False,
 ) -> dict[str, Any]:
     wait_idle(base)
     case_dir = run_dir / f"{scenario.name}-r{repeat + 1}"
@@ -320,7 +324,8 @@ def run_once(
             sources, scenario.prompt_tokens, marker,
             lambda content: token_count(base, content),
             scenario.shared_prefix_fraction,
-            f"{namespace}-{scenario.name}" if scenario.shared_prefix_fraction == 1.0 else namespace,
+            (namespace if legacy_prefix_namespace else f"{namespace}-{scenario.name}")
+            if scenario.shared_prefix_fraction == 1.0 else namespace,
         )
         prompts.append((prompt, actual, marker, included))
 
@@ -723,7 +728,10 @@ def main() -> int:
         default=ROOT.parent / "benchmarks" / "current-profile-scenarios.json",
     )
     parser.add_argument("--only", action="append", default=[], help="scenario name or group")
-    parser.add_argument("--prompt-namespace", help="Pin this value across A/B arms for identical prompts; defaults to a fresh run ID")
+    parser.add_argument("--prompt-namespace", default=DEFAULT_PROMPT_NAMESPACE,
+                        help="Fixed source-review fixture namespace; override explicitly for another fixture")
+    parser.add_argument("--legacy-prefix-namespace", action="store_true",
+                        help="Replay original 2026-09-23 prefix prompts without the later scenario suffix")
     parser.add_argument(
         "--output-root",
         type=Path,
@@ -738,11 +746,11 @@ def main() -> int:
     if not scenarios:
         raise SystemExit("no scenarios selected")
     timestamp = datetime.now().astimezone().strftime("%Y%m%d-%H%M%S")
-    namespace = args.prompt_namespace or timestamp
+    namespace = args.prompt_namespace
     sources, corpus_sha256 = load_corpus(CORPUS)
     plan = [scenario.__dict__ for scenario in scenarios]
     if not args.execute:
-        print(json.dumps({"execute": False, "note": "dry plan only; no API calls made", "corpus_sha256": corpus_sha256, "sampling": SAMPLING, "prompt_namespace": namespace, "plan": plan}, indent=2))
+        print(json.dumps({"execute": False, "note": "dry plan only; no API calls made", "corpus_sha256": corpus_sha256, "sampling": SAMPLING, "prompt_namespace": namespace, "legacy_prefix_namespace": args.legacy_prefix_namespace, "plan": plan}, indent=2))
         return 0
 
     inspect = inspect_container(args.container)
@@ -769,6 +777,7 @@ def main() -> int:
         "models": models,
         "corpus_sha256": corpus_sha256,
         "prompt_namespace": namespace,
+        "legacy_prefix_namespace": args.legacy_prefix_namespace,
         "corpus_sources": len(sources),
         "sampling": SAMPLING,
         "chat_template_kwargs": CHAT_TEMPLATE_KWARGS,
@@ -803,10 +812,12 @@ def main() -> int:
                     run_dir / "warmups",
                     sources,
                     namespace,
+                    args.legacy_prefix_namespace,
                 )
             for repeat in range(scenario.repeats):
                 print(f"START {scenario.name} repeat {repeat + 1}/{scenario.repeats}", flush=True)
-                row = run_once(args.base, args.container, scenario, repeat, run_dir, sources, namespace)
+                row = run_once(args.base, args.container, scenario, repeat, run_dir,
+                               sources, namespace, args.legacy_prefix_namespace)
                 rows.append(row)
                 write_aggregate(run_dir, manifest, rows)
                 print(

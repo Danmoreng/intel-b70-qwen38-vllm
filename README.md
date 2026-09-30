@@ -35,19 +35,23 @@ policy. The source-review run used the permanent `b70-qwen38-vllm.service`.
 
 ## Source-review serving benchmark
 
-Measured **2026-09-29** on the permanent service with the
+Measured **2026-09-29–30** on the permanent service with the
 [frozen public corpus](benchmarks/meaningful-corpus.json). The complete
 [current summary](benchmarks/runs/2026-09-29-production/summary.json) records
-scenario results, fixture hash and image identity. The raw results, prompts,
+scenario results, fixture hash, fixed prompt namespace `20260923-201101` and
+image identity. The raw results, prompts,
 responses and stream events remain local under `benchmark-results/`.
 
 The fixed run covered **20 scenarios, 70 measured waves and 124 successful
-requests** in **63.3 minutes**. Each request sampled at temperature 1.0,
+requests** in **62.8 minutes**. Each request sampled at temperature 1.0,
 top-p 0.95 and top-k 20 with thinking disabled. `ignore_eos=true` forced
 exactly 1,024 output tokens, so these are throughput measurements rather than
 semantic answer scores. All prompt and output counts matched, all requests
 finished at the output cap, and there were **0 preemptions** and **0 excess
-recomputed prefill tokens**.
+recomputed prefill tokens**. The public prefix-cache figures use six separate
+exact-resend requests with the original prefix prompts; all 124 prompts
+behind the published figures were verified byte-for-byte against the frozen
+source-review fixture.
 
 ### One request: context sweep
 
@@ -59,14 +63,14 @@ tokens.
 
 | Input / output budget | Waves | Actual input | Prefill tok/s | Decode tok/s | MTP accepted | TTFT | End to end |
 |---:|---:|---:|---:|---:|---:|---:|---:|
-| 512 / 1,024 | 5 | 494–510 | 2,280.8 | 67.8 | 50.0% | 0.23 s | 15.32 s |
-| 2,048 / 1,024 | 5 | 2,022–2,047 | 2,306.1 | 62.6 | 46.0% | 0.89 s | 17.23 s |
-| 4,096 / 1,024 | 5 | 4,037–4,086 | 2,146.2 | 62.4 | 46.8% | 1.91 s | 18.30 s |
-| 8,192 / 1,024 | 5 | 8,178–8,191 | 2,037.8 | 63.0 | 46.5% | 4.03 s | 20.27 s |
-| 16,384 / 1,024 | 5 | 16,362–16,384 | 1,843.6 | 56.7 | 43.9% | 8.91 s | 26.63 s |
-| 32,768 / 1,024 | 5 | 32,717–32,765 | 1,808.5 | 58.1 | 50.4% | 18.16 s | 35.77 s |
-| 65,536 / 1,024 | 3 | 65,475–65,529 | 1,579.7 | 47.7 | 44.4% | 41.57 s | 63.01 s |
-| 131,072 / 1,024 | 3 | 131,018–131,068 | 1,234.6 | 40.1 | 45.0% | 106.31 s | 131.88 s |
+| 512 / 1,024 | 5 | 479–507 | 2,224.0 | 65.8 | 49.2% | 0.23 s | 15.78 s |
+| 2,048 / 1,024 | 5 | 1,992–2,047 | 2,344.5 | 66.3 | 50.7% | 0.87 s | 16.29 s |
+| 4,096 / 1,024 | 5 | 4,052–4,094 | 2,155.3 | 56.2 | 41.9% | 1.91 s | 20.10 s |
+| 8,192 / 1,024 | 5 | 8,167–8,186 | 2,039.8 | 58.0 | 41.4% | 4.03 s | 21.67 s |
+| 16,384 / 1,024 | 5 | 16,335–16,379 | 1,842.2 | 65.2 | 51.7% | 8.91 s | 24.59 s |
+| 32,768 / 1,024 | 5 | 32,704–32,762 | 1,806.0 | 61.1 | 50.4% | 18.17 s | 34.90 s |
+| 65,536 / 1,024 | 3 | 65,491–65,532 | 1,579.7 | 50.4 | 50.7% | 41.56 s | 61.87 s |
+| 131,072 / 1,024 | 3 | 131,034–131,070 | 1,234.5 | 44.0 | 54.5% | 106.34 s | 129.55 s |
 
 ### One to four simultaneous requests
 
@@ -77,9 +81,9 @@ These are separate serving load points, not paired scaling measurements.
 
 | Input / output per request | C1 | C2 | C3 | C4 |
 |---|---:|---:|---:|---:|
-| 2,048 / 1,024 | 61.7 tok/s | 100.8 tok/s | 142.4 tok/s | 181.0 tok/s |
-| 4,096 / 1,024 | 61.9 tok/s | 99.5 tok/s | 139.2 tok/s | 179.4 tok/s |
-| 16,384 / 1,024 | 56.6 tok/s | 88.0 tok/s | 123.0 tok/s | 139.2 tok/s |
+| 2,048 / 1,024 | 66.2 tok/s | 99.0 tok/s | 147.3 tok/s | 178.3 tok/s |
+| 4,096 / 1,024 | 57.7 tok/s | 105.6 tok/s | 138.2 tok/s | 174.7 tok/s |
+| 16,384 / 1,024 | 63.1 tok/s | 86.0 tok/s | 118.8 tok/s | 152.3 tok/s |
 
 At C4 the scheduler queued some work when capacity was tight. It did not
 preempt any request in this run.
@@ -88,9 +92,9 @@ preempt any request in this run.
 
 | Scenario | Measured result |
 |---|---|
-| 16K exact resend | 13,312 / 16,328 prompt tokens cached; TTFT **8.89 s cold → 1.89 s warm** |
-| 64K exact resend | 63,232 / 65,475 prompt tokens cached; TTFT **41.56 s cold → 2.00 s warm** |
-| Maximum context | **199,678 input + 1,024 output**; 981.5 prefill tok/s, 31.0 decode tok/s, 203.70 s TTFT, 236.64 s end to end |
+| 16K exact resend | 13,312 / 16,382 prompt tokens cached; TTFT **9.56 s cold → 1.86–1.87 s warm** |
+| 64K exact resend | 63,232 / 65,476 prompt tokens cached; TTFT **40.83 s cold → 1.98 s warm** |
+| Maximum context | **199,673 input + 1,024 output**; 982.7 prefill tok/s, 33.9 decode tok/s, 203.46 s TTFT, 233.64 s end to end |
 
 The maximum-context row is one capacity and throughput observation. The
 16K/64K resends reused the same prompt on the same worker.
@@ -174,7 +178,10 @@ and image digest aligned when rebuilding or changing the configuration.
 Run on an exclusive engine with the current image and policy:
 
 ```bash
-python3 scripts/current-profile-benchmark.py --container b70-qwen38-vllm --execute
+python3 scripts/current-profile-benchmark.py --container b70-qwen38-vllm \
+  --legacy-prefix-namespace --execute
+python3 scripts/current-profile-benchmark.py --container b70-qwen38-vllm \
+  --only prefix-64k-cold-warm --prompt-namespace 20260923-212648 --execute
 python3 scripts/run-coding-benchmark.py \
   --output-root benchmark-results/coding-agent-v2-$(date +%Y%m%d-%H%M%S)
 ```
@@ -186,6 +193,12 @@ responses and native metrics locally. The coding runner verifies the complete
 [fixture manifest](benchmarks/coding-fixture/v2/manifest.json), records the
 live container identity and runs the hidden acceptance tests. Use a fresh
 output directory for each coding run.
+
+The source-review runner pins the prompt namespace to `20260923-201101` by
+default. The first command replays the original 16K prefix prompt; the second
+replays the separately measured original 64K prefix prompt. The timestamp
+still gives each result directory a unique run ID. The namespace is part of
+prompt selection, so keep it fixed across configurations.
 
 ## Sources and acknowledgements
 

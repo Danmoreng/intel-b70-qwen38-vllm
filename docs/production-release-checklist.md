@@ -62,7 +62,7 @@ deploy an image merely because one preceding stage passed.
 
 ## C4 — Freeze and deploy
 
-- [ ] Freeze image digest, loaded file hashes, policy hash, release tag and
+- [x] Freeze image digest, loaded file hashes, policy hash, release tag and
   scorecard; fail startup on missing or incompatible required artifacts.
 - [ ] Validate advertised text, reasoning, tool parsing, image and long-output
   API paths or narrow claims to what passes.
@@ -70,4 +70,4 @@ deploy an image merely because one preceding stage passed.
 - [x] Run the public source-review suite on the permanent service and the
   repeatable coding fixture on the same immutable image/policy; update README
   with current-only numbers and exact identities.
-- [ ] Keep results local for review before any remote publication.
+- [x] Review results locally before user-authorized remote publication.

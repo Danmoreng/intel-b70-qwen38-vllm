@@ -1,0 +1,7 @@
+ARG B70_ROW_DISPATCH_BASE=sha256:a42cda993bf6492acc39d23e9382e27a17efca4657bea07d80d0c28228a1623a
+FROM ${B70_ROW_DISPATCH_BASE}
+
+COPY docker/w4a8-current/b70_gptq_row_dispatch.py /opt/venv/lib/python3.12/site-packages/
+COPY docker/w4a8-current/patch_gptq_row_dispatch.py /opt/b70/patch_gptq_row_dispatch.py
+RUN python /opt/b70/patch_gptq_row_dispatch.py \
+ && python /opt/b70/verify_production.py --files-only

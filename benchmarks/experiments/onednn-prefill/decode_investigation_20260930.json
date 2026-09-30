@@ -1,0 +1,1082 @@
+{
+  "status": "validated",
+  "source_commit": "1ceb3f6",
+  "production_policy_sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+  "production_image": "sha256:a42cda993bf6492acc39d23e9382e27a17efca4657bea07d80d0c28228a1623a",
+  "candidate_image": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
+  "diagnosis": "vLLM shape-specialized compilation freezes large-M W4A8 branch into small-M target decode graphs; native W4A16 binary and oneDNN provider unchanged.",
+  "fix": "Opaque runtime row dispatch preserves 512-row threshold; separate compiled per-token quantization preserves large-M fusion.",
+  "quality_reference": {
+    "image_id": "sha256:a42cda993bf6492acc39d23e9382e27a17efca4657bea07d80d0c28228a1623a",
+    "task_sets": {
+      "32k": {
+        "passed": 29,
+        "count": 30,
+        "wall_sum_s": 164.16428247099248,
+        "failures": [
+          "context-5-structured"
+        ]
+      },
+      "128k": {
+        "passed": 12,
+        "count": 12,
+        "wall_sum_s": 263.5189849939852,
+        "failures": []
+      },
+      "199k": {
+        "passed": 6,
+        "count": 6,
+        "wall_sum_s": 458.1780225469993,
+        "failures": []
+      }
+    },
+    "known_199k_page_review_passed": true
+  },
+  "pending": [],
+  "raw_evidence": {
+    "t1-cold-20260930": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t1-cold-20260930",
+    "t2-v2-trace-20260930": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t2-v2-trace-20260930",
+    "loader-evidence": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/loader-evidence",
+    "t3-screen-20260930": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-screen-20260930",
+    "t3-prefill-screen-20260930": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-prefill-screen-20260930",
+    "t1-cycle-bytegate-20260930": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t1-cycle-bytegate-20260930",
+    "t2-linears-20260930": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t2-linears-20260930",
+    "t3-long-validation-20260930": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-long-validation-20260930",
+    "t3-serving-final-20260930": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-serving-final-20260930",
+    "t3-cycle-final-20260930": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-cycle-final-20260930"
+  },
+  "limitations": [
+    "C4 raw target hidden output is not bitwise repeatable even on old (maximum deviation 0.15625 in strict replay, same bound on candidate). Registered initial tensor/KV/GDN bytes and target inputs verified; canonical head/sampler/draft inputs and actual sampler commits hold complete-cycle work constant. Small-M real linear eager/graph gates and large-M quantization/output gates are bitwise equal; frozen quality has no new failures. Whole-model bitwise equality is not claimed.",
+    "Scored 32K and 128K prefill rates are 0.71% and 0.60% below current in the targeted comparison. They retain nearly all current prefill throughput.",
+    "128K sampled acceptance and output trajectories differ; faster round costs are not a claim of universal output-throughput improvement.",
+    "During T0-T3 the original production image was restored after diagnostic runs. The user subsequently authorized v2 production promotion, a complete README benchmark and publication on main; see production_promotion."
+  ],
+  "linear_gates": {
+    "current-original": {
+      "cases": 8,
+      "all_bitwise_equal": true,
+      "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t2-linears-20260930/linear-probes/current-original.json"
+    },
+    "current-patched-sdpa": {
+      "cases": 8,
+      "all_bitwise_equal": true,
+      "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t2-linears-20260930/linear-probes/current-patched-sdpa.json"
+    },
+    "current-patched": {
+      "cases": 8,
+      "all_bitwise_equal": true,
+      "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t2-linears-20260930/linear-probes/current-patched.json"
+    },
+    "fixed": {
+      "cases": 8,
+      "all_bitwise_equal": true,
+      "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t2-linears-20260930/linear-probes/fixed.json"
+    },
+    "fused": {
+      "cases": 8,
+      "all_bitwise_equal": true,
+      "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t2-linears-20260930/linear-probes/fused.json"
+    },
+    "old": {
+      "cases": 8,
+      "all_bitwise_equal": true,
+      "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t2-linears-20260930/linear-probes/old.json"
+    },
+    "prefill-numeric": {
+      "cases": 6,
+      "all_bitwise_equal": true,
+      "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t2-linears-20260930/linear-probes/prefill-numeric.json"
+    }
+  },
+  "trace_components": [
+    {
+      "arm": "arm-1-current",
+      "concurrency": 1,
+      "actual_and_padded_query_rows": 5,
+      "valid_steps": 40,
+      "min_true_kv": 4172,
+      "max_true_kv": 4249,
+      "boundaries": [
+        {
+          "kind": "execute_model",
+          "component": "target_and_prepare",
+          "count": 40,
+          "median_stream_ms": 37.73190099999999,
+          "median_host_ms": 45.6486625
+        },
+        {
+          "kind": "graph",
+          "component": "target_and_prepare",
+          "count": 40,
+          "median_stream_ms": 33.325312,
+          "median_host_ms": 0.42043549999999996
+        },
+        {
+          "kind": "sample_tokens",
+          "component": "sample_commit_draft",
+          "count": 40,
+          "median_stream_ms": 11.8742975,
+          "median_host_ms": 3.6518145
+        },
+        {
+          "kind": "propose",
+          "component": "draft",
+          "count": 40,
+          "median_stream_ms": 6.8672395,
+          "median_host_ms": 1.3634214999999998
+        },
+        {
+          "kind": "__call__",
+          "component": "rejection_sampler",
+          "count": 40,
+          "median_stream_ms": 0.6692704999999999,
+          "median_host_ms": 1.3277565
+        }
+      ],
+      "same_step_stream_residuals": {
+        "prepare_and_submission_outside_target_graph": {
+          "count": 40,
+          "median_ms": 4.399818
+        },
+        "target_head_commit_and_submission": {
+          "count": 40,
+          "median_ms": 4.3292445
+        }
+      }
+    },
+    {
+      "arm": "arm-1-current",
+      "concurrency": 4,
+      "actual_and_padded_query_rows": 20,
+      "valid_steps": 29,
+      "min_true_kv": 4111,
+      "max_true_kv": 4252,
+      "boundaries": [
+        {
+          "kind": "execute_model",
+          "component": "target_and_prepare",
+          "count": 29,
+          "median_stream_ms": 55.740728999999995,
+          "median_host_ms": 64.369073
+        },
+        {
+          "kind": "graph",
+          "component": "target_and_prepare",
+          "count": 29,
+          "median_stream_ms": 51.188438,
+          "median_host_ms": 0.420181
+        },
+        {
+          "kind": "sample_tokens",
+          "component": "sample_commit_draft",
+          "count": 29,
+          "median_stream_ms": 12.775521,
+          "median_host_ms": 3.697204
+        },
+        {
+          "kind": "propose",
+          "component": "draft",
+          "count": 29,
+          "median_stream_ms": 7.535156,
+          "median_host_ms": 1.363311
+        },
+        {
+          "kind": "__call__",
+          "component": "rejection_sampler",
+          "count": 29,
+          "median_stream_ms": 0.8365619999999999,
+          "median_host_ms": 1.364651
+        }
+      ],
+      "same_step_stream_residuals": {
+        "prepare_and_submission_outside_target_graph": {
+          "count": 29,
+          "median_ms": 4.561197999999997
+        },
+        "target_head_commit_and_submission": {
+          "count": 29,
+          "median_ms": 4.408072000000001
+        }
+      }
+    },
+    {
+      "arm": "arm-2-old",
+      "concurrency": 1,
+      "actual_and_padded_query_rows": 5,
+      "valid_steps": 43,
+      "min_true_kv": 4175,
+      "max_true_kv": 4286,
+      "boundaries": [
+        {
+          "kind": "execute_model",
+          "component": "target_and_prepare",
+          "count": 43,
+          "median_stream_ms": 34.012395,
+          "median_host_ms": 42.010272
+        },
+        {
+          "kind": "graph",
+          "component": "target_and_prepare",
+          "count": 43,
+          "median_stream_ms": 29.451874999999998,
+          "median_host_ms": 0.4139
+        },
+        {
+          "kind": "sample_tokens",
+          "component": "sample_commit_draft",
+          "count": 43,
+          "median_stream_ms": 11.970625,
+          "median_host_ms": 3.669074
+        },
+        {
+          "kind": "propose",
+          "component": "draft",
+          "count": 43,
+          "median_stream_ms": 6.8984369999999995,
+          "median_host_ms": 1.369732
+        },
+        {
+          "kind": "__call__",
+          "component": "rejection_sampler",
+          "count": 43,
+          "median_stream_ms": 0.705313,
+          "median_host_ms": 1.330152
+        }
+      ],
+      "same_step_stream_residuals": {
+        "prepare_and_submission_outside_target_graph": {
+          "count": 43,
+          "median_ms": 4.5798950000000005
+        },
+        "target_head_commit_and_submission": {
+          "count": 43,
+          "median_ms": 4.363281
+        }
+      }
+    },
+    {
+      "arm": "arm-2-old",
+      "concurrency": 4,
+      "actual_and_padded_query_rows": 20,
+      "valid_steps": 32,
+      "min_true_kv": 4123,
+      "max_true_kv": 4243,
+      "boundaries": [
+        {
+          "kind": "execute_model",
+          "component": "target_and_prepare",
+          "count": 32,
+          "median_stream_ms": 50.170052,
+          "median_host_ms": 58.985978
+        },
+        {
+          "kind": "graph",
+          "component": "target_and_prepare",
+          "count": 31,
+          "median_stream_ms": 45.59276,
+          "median_host_ms": 0.41928
+        },
+        {
+          "kind": "sample_tokens",
+          "component": "sample_commit_draft",
+          "count": 31,
+          "median_stream_ms": 12.949271,
+          "median_host_ms": 3.695344
+        },
+        {
+          "kind": "propose",
+          "component": "draft",
+          "count": 31,
+          "median_stream_ms": 7.613645,
+          "median_host_ms": 1.352651
+        },
+        {
+          "kind": "__call__",
+          "component": "rejection_sampler",
+          "count": 31,
+          "median_stream_ms": 0.8969269999999999,
+          "median_host_ms": 1.359751
+        }
+      ],
+      "same_step_stream_residuals": {
+        "prepare_and_submission_outside_target_graph": {
+          "count": 31,
+          "median_ms": 4.580886
+        },
+        "target_head_commit_and_submission": {
+          "count": 31,
+          "median_ms": 4.426512000000001
+        }
+      }
+    },
+    {
+      "arm": "arm-3-fixed",
+      "concurrency": 1,
+      "actual_and_padded_query_rows": 5,
+      "valid_steps": 43,
+      "min_true_kv": 4192,
+      "max_true_kv": 4304,
+      "boundaries": [
+        {
+          "kind": "execute_model",
+          "component": "target_and_prepare",
+          "count": 43,
+          "median_stream_ms": 33.939218,
+          "median_host_ms": 41.903224
+        },
+        {
+          "kind": "graph",
+          "component": "target_and_prepare",
+          "count": 43,
+          "median_stream_ms": 29.445417,
+          "median_host_ms": 0.417048
+        },
+        {
+          "kind": "sample_tokens",
+          "component": "sample_commit_draft",
+          "count": 43,
+          "median_stream_ms": 11.975624999999999,
+          "median_host_ms": 3.68741
+        },
+        {
+          "kind": "propose",
+          "component": "draft",
+          "count": 43,
+          "median_stream_ms": 6.907292,
+          "median_host_ms": 1.379143
+        },
+        {
+          "kind": "__call__",
+          "component": "rejection_sampler",
+          "count": 43,
+          "median_stream_ms": 0.6982809999999999,
+          "median_host_ms": 1.340012
+        }
+      ],
+      "same_step_stream_residuals": {
+        "prepare_and_submission_outside_target_graph": {
+          "count": 43,
+          "median_ms": 4.488282000000002
+        },
+        "target_head_commit_and_submission": {
+          "count": 43,
+          "median_ms": 4.361978999999999
+        }
+      }
+    },
+    {
+      "arm": "arm-3-fixed",
+      "concurrency": 4,
+      "actual_and_padded_query_rows": 20,
+      "valid_steps": 32,
+      "min_true_kv": 4131,
+      "max_true_kv": 4254,
+      "boundaries": [
+        {
+          "kind": "execute_model",
+          "component": "target_and_prepare",
+          "count": 32,
+          "median_stream_ms": 49.99388,
+          "median_host_ms": 58.787943
+        },
+        {
+          "kind": "graph",
+          "component": "target_and_prepare",
+          "count": 31,
+          "median_stream_ms": 45.437239999999996,
+          "median_host_ms": 0.429428
+        },
+        {
+          "kind": "sample_tokens",
+          "component": "sample_commit_draft",
+          "count": 31,
+          "median_stream_ms": 12.950156999999999,
+          "median_host_ms": 3.71163
+        },
+        {
+          "kind": "propose",
+          "component": "draft",
+          "count": 31,
+          "median_stream_ms": 7.619218999999999,
+          "median_host_ms": 1.360873
+        },
+        {
+          "kind": "__call__",
+          "component": "rejection_sampler",
+          "count": 31,
+          "median_stream_ms": 0.8982289999999999,
+          "median_host_ms": 1.373903
+        }
+      ],
+      "same_step_stream_residuals": {
+        "prepare_and_submission_outside_target_graph": {
+          "count": 31,
+          "median_ms": 4.57349
+        },
+        "target_head_commit_and_submission": {
+          "count": 31,
+          "median_ms": 4.428594
+        }
+      }
+    }
+  ],
+  "loader_evidence": {
+    "old-compiled-graph": {
+      "file": "/cache/vllm/torch_compile_cache/c73d72b24a/rank_0_0/backbone/computation_graph.py",
+      "sha256": "30c26b00666da7b0e7a44684488ad359732b135a23b21ff0d1901a720b31b114",
+      "w4a8_calls": 0,
+      "w4a16_calls": 256
+    },
+    "fused-compiled-graph": {
+      "file": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/compile-caches/ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68/plain-fused/vllm/torch_compile_cache/064a4c6425/rank_0_0/backbone/computation_graph.py",
+      "sha256": "7627a180e4b3d60b02f2822da1c54881dca05e22433f81c14726340855843286",
+      "opaque_row_dispatch_calls": 256,
+      "w4a8_calls": 0,
+      "w4a16_calls": 0,
+      "scope": "Dynamo target computation graph; concrete row selection occurs inside the opaque runtime op"
+    },
+    "current-compiled-graph": {
+      "file": "/cache/vllm/torch_compile_cache/31ade9b57a/rank_0_0/backbone/computation_graph.py",
+      "sha256": "effe73a8d18d25d7725a8202a9360c72bcaab902fdb608e43d73fe4895e75af7",
+      "w4a8_calls": 256,
+      "w4a16_calls": 0,
+      "runtime_python_if": 0,
+      "first_gemm_excerpt": "            view: \"i8[s18, 5120]\" = to_5.view(sym_size_int, 5120);  to_5 = sym_size_int = None\n\n            # File: /opt/venv/lib/python3.12/site-packages/vllm/_xpu_ops.py:953 in dynamic_per_token_int8_quant_ref, code: scale.view(original_sizes[:-1] + (1,)),\n            size = torch.Size([s18, 1])\n            view_1: \"f16[s18, 1]\" = to_3.view(size);  to_3 = size = None\n\n            # File: /opt/venv/lib/python3.12/site-packages/vllm/_xpu_ops.py:954 in dynamic_per_token_int8_quant_ref, code: zero_point.view(original_sizes[:-1] + (1,)),\n            size_1 = torch.Size([s18, 1])\n            view_2: \"i32[s18, 1]\" = to_2.view(size_1);  to_2 = size_1 = None\n\n            # File: /opt/venv/lib/python3.12/site-packages/vllm/model_executor/parameter.py:126 in __torch_function__, code: return super().__torch_function__(func, types, args, kwargs)\n            t: \"i32[640, 16384]\" = l_self_modules_layers_modules_0_modules_linear_attn_modules_in_proj_qkvz_parameters_qweight_.t();  l_self_modules_layers_modules_0_modules_linear_attn_modules_in_proj_qkvz_parameters_qweight_ = None\n            int4_gemm_w4a8: \"f16[s18, 16384]\" = torch.ops._xpu_C.int4_gemm_w4a8(view, view_1, view_2, t, l_self_modules_layers_modules_0_modules_linear_attn_modules_in_proj_qkvz_parameters_scales_, l_self_modules_layers_modules_0_modules_linear_attn_modules_in_proj_qkvz_parameters_qzeros_, 128, None, None);  view = view_1 = view_2 = t = l_self_modules_layers_modules_0_modules_linear_attn_modules_in_proj_qkvz_parameters_scales_ = l_self_modules_layers_modules_0_modules_linear_attn_modules_in_proj_qkvz_parameters_qzeros_ = None\n\n            # File: /opt/venv/lib/python3.12/site-packages/vllm/model_executor/kernels/linear/mixed_precision/xpu.py:227 in apply_weights, code: return out.to(x.dtype)"
+    },
+    "current": {
+      "xpu_extension_sha256": "9a103edaa1457c719671e2b20e9b28cbf86fc77e7e60429468661d1bbcda4289",
+      "bundled_onednn_before_sdpa": "3.13.0.0e2a5bfeef1bfbffc3137464606540233086ce9b",
+      "bundled_onednn_after_sdpa": "3.13.0.0e2a5bfeef1bfbffc3137464606540233086ce9b",
+      "dnnl_version_symbols": [
+        " 13276: 00000000024f50e8    32 OBJECT  LOCAL  DEFAULT   19 _ZZ12dnnl_versionE3ver",
+        " 21132: 000000000064d410    13 FUNC    LOCAL  DEFAULT   10 dnnl_version"
+      ],
+      "sdpa_dependencies": "\nDynamic section at offset 0x1eba0 contains 39 entries:\n  Tag        Type                         Name/Value\n 0x0000000000000001 (NEEDED)             Shared library: [libc10.so]\n 0x0000000000000001 (NEEDED)             Shared library: [libtorch.so]\n 0x0000000000000001 (NEEDED)             Shared library: [libtorch_cpu.so]\n 0x0000000000000001 (NEEDED)             Shared library: [libc10_xpu.so]\n 0x0000000000000001 (NEEDED)             Shared library: [libtorch_xpu.so]\n 0x0000000000000001 (NEEDED)             Shared library: [libdnnl.so.3]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvml.so]\n 0x0000000000000001 (NEEDED)             Shared library: [libirng.so]\n 0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libimf.so]\n 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libintlc.so.5]\n 0x0000000000000001 (NEEDED)             Shared library: [libsycl.so.9]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000001d (RUNPATH)            Library runpath: [/opt/venv/lib/python3.12/site-packages/torch/lib:/dnnl/lib]\n 0x000000000000000c (INIT)               0xa000\n 0x000000000000000d (FINI)               0x17db4\n 0x0000000000000019 (INIT_ARRAY)         0x1e4b8\n 0x000000000000001b (INIT_ARRAYSZ)       24 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x1e4d0\n 0x000000000000001c (FINI_ARRAYSZ)       16 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x200\n 0x0000000000000005 (STRTAB)             0x2558\n 0x0000000000000006 (SYMTAB)             0x740\n 0x000000000000000a (STRSZ)              20158 (bytes)\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000003 (PLTGOT)             0x1efe8\n 0x0000000000000002 (PLTRELSZ)           4320 (bytes)\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000017 (JMPREL)             0x8dd0\n 0x0000000000000007 (RELA)               0x7768\n 0x0000000000000008 (RELASZ)             5736 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffffe (VERNEED)            0x7698\n 0x000000006fffffff (VERNEEDNUM)         3\n 0x000000006ffffff0 (VERSYM)             0x7416\n 0x000000006ffffff9 (RELACOUNT)          40\n 0x0000000000000000 (NULL)               0x0\n"
+    },
+    "old": {
+      "xpu_extension_sha256": "9a103edaa1457c719671e2b20e9b28cbf86fc77e7e60429468661d1bbcda4289",
+      "bundled_onednn": "3.13.0.0e2a5bfeef1bfbffc3137464606540233086ce9b",
+      "dnnl_version_symbols": [
+        " 13276: 00000000024f50e8    32 OBJECT  LOCAL  DEFAULT   19 _ZZ12dnnl_versionE3ver",
+        " 21132: 000000000064d410    13 FUNC    LOCAL  DEFAULT   10 dnnl_version"
+      ]
+    }
+  },
+  "verification": {
+    "overlap_and_context_accounting": "4 unittest cases passed",
+    "compiled_runtime_row_dispatch": "CPU Dynamo regression including large-first tracing and threshold boundaries passed",
+    "cycle_snapshot": "2 tests for alias restoration, mutable bookkeeping, active KV pages, cross-capacity snapshot and local pointer preservation passed",
+    "syntax": "all edited Python files compiled",
+    "diff_whitespace": "git diff --check passed"
+  },
+  "long_context_validation": {
+    "prefill": [
+      {
+        "scenario": "phase-32k-c1",
+        "arms": {
+          "current": {
+            "prefill_tokens_per_s": 1800.1143911797312,
+            "ttft_s": 18.221858765000434,
+            "warmup_prefill_tokens_per_s": 1753.0883871645817,
+            "round_equivalent_ms": 51.70737590675385,
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-long-validation-20260930/arm-1-current/phase-32k-c1-r1/summary.json"
+          },
+          "fused": {
+            "prefill_tokens_per_s": 1787.3515304294676,
+            "ttft_s": 18.352280851000614,
+            "warmup_prefill_tokens_per_s": 1711.115570561904,
+            "round_equivalent_ms": 48.57891898095009,
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-long-validation-20260930/arm-2-fused/phase-32k-c1-r1/summary.json"
+          }
+        },
+        "candidate_prefill_rate_change_pct": -0.7090027618688821
+      },
+      {
+        "scenario": "phase-128k-c1",
+        "arms": {
+          "current": {
+            "prefill_tokens_per_s": 1232.1518701602433,
+            "ttft_s": 106.5357270200002,
+            "warmup_prefill_tokens_per_s": 1240.958585781792,
+            "round_equivalent_ms": 70.45199760943083,
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-long-validation-20260930/arm-1-current/phase-128k-c1-r1/summary.json"
+          },
+          "fused": {
+            "prefill_tokens_per_s": 1224.7398440741254,
+            "ttft_s": 107.19643939599882,
+            "warmup_prefill_tokens_per_s": 1229.7146206788307,
+            "round_equivalent_ms": 67.68731043431721,
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-long-validation-20260930/arm-2-fused/phase-128k-c1-r1/summary.json"
+          }
+        },
+        "candidate_prefill_rate_change_pct": -0.6015513400271066
+      }
+    ],
+    "mixed": {
+      "current": {
+        "image_id": "sha256:a42cda993bf6492acc39d23e9382e27a17efca4657bea07d80d0c28228a1623a",
+        "task_score": {
+          "passed": true,
+          "test_results": [
+            {
+              "passed": true,
+              "actual": [
+                [
+                  "a",
+                  6
+                ],
+                [
+                  "b",
+                  3
+                ]
+              ]
+            },
+            {
+              "passed": true,
+              "actual": []
+            },
+            {
+              "passed": true,
+              "actual": [
+                [
+                  "x",
+                  5
+                ],
+                [
+                  "z",
+                  -1
+                ]
+              ]
+            }
+          ]
+        },
+        "task_timing": {
+          "ttft_s": 127.74115159100074,
+          "wall_s": 129.7734409700006,
+          "usage": {
+            "prompt_tokens": 131111,
+            "total_tokens": 131194,
+            "completion_tokens": 83,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "stop",
+          "metrics": {
+            "prefill_tokens": 131111.0,
+            "prefill_s": 117.12192965299982,
+            "decode_s": 2.0571571349992155,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "draft_tokens": 256.0,
+            "accepted_tokens": 158.0
+          }
+        },
+        "metrics": {
+          "prefill_tokens": 163857.0,
+          "prefill_s": 141.39600276500096,
+          "decode_s": 121.61264423999819,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "draft_tokens": 1344.0,
+          "accepted_tokens": 774.0
+        },
+        "background": {
+          "start_s": 0.0004533889987214934,
+          "ttft_s": 24.32495526999992,
+          "wall_s": 143.87410279000142,
+          "usage": {
+            "prompt_tokens": 32746,
+            "total_tokens": 33770,
+            "completion_tokens": 1024,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "output_sha256": "c4b82aab122afc58d59b1c321fe8a1c242372d4681b8081ead36488cb578506c",
+          "stream_piece_count": 318,
+          "piece_gap_p50_s": 0.05168682799921953,
+          "piece_gap_p95_s": 3.6602694079992943,
+          "piece_gap_p99_s": 5.22855968100157,
+          "piece_gap_max_s": 5.801596117000372
+        }
+      },
+      "fused": {
+        "image_id": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
+        "task_score": {
+          "passed": true,
+          "test_results": [
+            {
+              "passed": true,
+              "actual": [
+                [
+                  "a",
+                  6
+                ],
+                [
+                  "b",
+                  3
+                ]
+              ]
+            },
+            {
+              "passed": true,
+              "actual": []
+            },
+            {
+              "passed": true,
+              "actual": [
+                [
+                  "x",
+                  5
+                ],
+                [
+                  "z",
+                  -1
+                ]
+              ]
+            }
+          ]
+        },
+        "task_timing": {
+          "ttft_s": 128.52558021200093,
+          "wall_s": 130.5069125129994,
+          "usage": {
+            "prompt_tokens": 131111,
+            "total_tokens": 131196,
+            "completion_tokens": 85,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "stop",
+          "metrics": {
+            "prefill_tokens": 131111.0,
+            "prefill_s": 117.82470798299983,
+            "decode_s": 2.005831718000991,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "draft_tokens": 264.0,
+            "accepted_tokens": 189.0
+          }
+        },
+        "metrics": {
+          "prefill_tokens": 163857.0,
+          "prefill_s": 142.2924042120012,
+          "decode_s": 121.17598704699958,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "draft_tokens": 1348.0,
+          "accepted_tokens": 774.0
+        },
+        "background": {
+          "start_s": 0.0005010289987694705,
+          "ttft_s": 24.513450080999974,
+          "wall_s": 143.6770529330006,
+          "usage": {
+            "prompt_tokens": 32746,
+            "total_tokens": 33770,
+            "completion_tokens": 1024,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "length",
+          "output_sha256": "19823b3ef4958a98407e731fb75f20b063b943645e3ccf91fd2b9a41d4e4053e",
+          "stream_piece_count": 318,
+          "piece_gap_p50_s": 0.04847250500097289,
+          "piece_gap_p95_s": 3.6791366249999555,
+          "piece_gap_p99_s": 5.254050753999763,
+          "piece_gap_max_s": 5.825785597000504
+        }
+      }
+    },
+    "quality": [
+      {
+        "task_set": "32k",
+        "count": 30,
+        "reference_passed": 29,
+        "candidate_passed": 29,
+        "new_failures": [],
+        "candidate_failures": [
+          "context-5-structured"
+        ],
+        "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-long-validation-20260930/arm-2-fused/quality-32k.jsonl"
+      },
+      {
+        "task_set": "128k",
+        "count": 12,
+        "reference_passed": 12,
+        "candidate_passed": 12,
+        "new_failures": [],
+        "candidate_failures": [],
+        "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-long-validation-20260930/arm-2-fused/quality-128k.jsonl"
+      }
+    ],
+    "quality_passed_without_new_failures": true,
+    "mixed_task_passed": true
+  },
+  "long_context_restoration": {
+    "image_id": "sha256:a42cda993bf6492acc39d23e9382e27a17efca4657bea07d80d0c28228a1623a",
+    "service": "b70-qwen38-vllm.service",
+    "health": 200,
+    "restored_unix": 1790795964.1217494,
+    "command_matches": true
+  },
+  "source_sha256": {
+    "benchmarks/experiments/onednn-prefill/mixed_practical_128k.py": "750f498da02cfa0bc392f20ef2b6a7556d5c31ee0c5c5c7436c454dd3ee78133",
+    "docker/w4a8-current/Dockerfile.row-dispatch": "dfc6436de24090f2eec04f3acbf2fad56d5c78d95b12ed395711925a3676bd39",
+    "docker/w4a8-current/b70_gptq_row_dispatch.py": "238f1735c8307712e07f9fb7f0ca94e90adfe100573e8d911a7127268a91c9b2",
+    "docker/w4a8-current/patch_gptq_row_dispatch.py": "11e5123cbf19feb6f44f247b49d2744c89d52f5e4c20af2586e15811b2140a83",
+    "scripts/analyze-cycle-replay.py": "39621aa31ef5b526c68703ddb8f95ae66350baf4a5c6de98f1ae6865be7544bd",
+    "scripts/analyze-decode-investigation.py": "d702dcddadea0315dc736ea6dfac36a677245f361b737aad6d6b57a05e31a816",
+    "scripts/analyze-decode-trace.py": "c6e27a85f2a2938f42a18ea29d95e42f05a0e239b3d779cf7a3e82b5fbef8307",
+    "scripts/analyze-decode-validation.py": "360e6714b21d16e18d3090ba04953d7b9b60d3103dac4a47ab3e6a7a961ae170",
+    "scripts/b70_cycle_replay.pth": "ec4f64d9880ed9c1932a640d114a5aad32c973eb4fc9d9daa59dc8a0f4bf743a",
+    "scripts/b70_cycle_replay.py": "bac51bc51636cd77729758a47b5a2da95b45884965f2ae3931e1c1c6a0a9ac48",
+    "scripts/b70_decode_trace.pth": "ad095ca3e27cad9986f66b787ab2570b3885f20002535ae28b85baa1811dd8a1",
+    "scripts/b70_decode_trace.py": "6a09fa2872c25aa391fc766190310f68909fc813116d06ae58a84b925c42ddcd",
+    "scripts/b70_linear_capture.pth": "4afe30b3d35e6dd8cbfedec87884d65a2795cf4ef9465ac4539c082dd7be373d",
+    "scripts/b70_linear_capture.py": "1fb3ae88badbae9c0dfd904be14e37f0d56e1abd05b9f29f38ac51e1c08b1cae",
+    "scripts/current-profile-benchmark.py": "bd7e6e382181b2b787508b3d363048199fd58ee09f1e1eeee9662e9c4ded3a10",
+    "scripts/decode_overlap.py": "233f5424137c9078e87a2bf974e956d826bb0ce54c6c5203ed47a8afee84d56f",
+    "scripts/probe-decode-linears.py": "5f1043459cbc9b8ed1ec9973418757052154648a9aa49690647a2dfe239889de",
+    "scripts/probe-prefill-row-dispatch.py": "85821bac3786073ff0d1a32c76fa3947be441e3a5bbd1af9c09f8b9270420695",
+    "scripts/run-decode-investigation.py": "6863e7e1b02eccb0ca7c84fb9341e57017c671d386cc0c363b67ff76765cb497",
+    "tests/unit/test_cycle_snapshot.py": "dc1bbebdbd418c19ab10a678c059d2e5635c4b6011fa0d381166b7561001e7a6",
+    "tests/unit/test_decode_overlap.py": "e88b15afbce3c0088394c516eaf827ee1aec2b460984cb327aba004e9869c390",
+    "tests/unit/test_gptq_compiled_row_dispatch.py": "18357baa3580e958ed053c6bb018655cc18a03f8e19a2b99a3f6355d29a9a286"
+  },
+  "completion_audit": {
+    "T0": {
+      "status": "proven",
+      "evidence": [
+        "scripts/decode_overlap.py adds same-window drafted, accepted, generation accounting residual and round costs; raw three-wave controls recomputed.",
+        "Trace includes actual/padded rows, device per-request KV lengths and target/draft FULL replay IDs outside scored runs.",
+        "Production policy file unchanged and original service restored after each completed diagnostic."
+      ]
+    },
+    "T1": {
+      "status": "proven",
+      "evidence": [
+        "t1-cold-20260930: three frozen old/current pairs, alternating order, exact paired prompt/request bytes, all 1024 outputs, zero cache hits/preemptions/recompute.",
+        "t3-cycle-final-20260930: identical target, head/sampler and draft inputs, accepted/rejected lengths, active sampled token IDs and positions; 155 registered tensors and 113 active KV/GDN views restored and byte-verified outside timing for each repeat; 15 repetitions per arm with identical actual/padded M5/M20."
+      ]
+    },
+    "T2": {
+      "status": "proven",
+      "evidence": [
+        "Static native extension and oneDNN provider unchanged; no isolated-loader intervention required.",
+        "256 W4A8 calls frozen in current compiled target versus 256 W4A16 in old; candidate has 256 opaque row-dispatch calls.",
+        "Target graph explains the added C4 time; draft/rejection and other boundaries remain stable.",
+        "Eight real small-M cases through original/patched wrappers, eager and graph, bitwise output equality; six real prefill cases with bitwise quantization/scales/output.",
+        "Small-query adapter bypass leaves library loaded and has <0.4% round-time effect; does not remove the regression."
+      ]
+    },
+    "T3": {
+      "status": "proven",
+      "evidence": [
+        "32K/128K prefill rates retain 99.29%/99.40% of current; paired mixed coding tasks passed with no cache hits/preemption.",
+        "All 42 frozen quality tasks match reference identities and outcomes: 29/30 at 32K, 12/12 at 128K, no new failures.",
+        "Strict identical-work full-cycle wall median improves 8.03% at C1 and 9.43% at C4; stream medians improve 8.11% and 9.72%, both above the proposed 3% gate.",
+        "Three sampled current/candidate pairs improve round equivalents 7.72% at C1 and 8.40% at C4, and sampled output rates 17.79% and 11.05%; acceptance changes reported separately.",
+        "Original production image, command and policy preserved; service active and HTTP health 200 after final unit exited successfully."
+      ]
+    }
+  },
+  "provisional_cycle_with_variable_sampler_input": {
+    "scope": "complete target/head/sampler/commit/MTP4 draft cycle; state restore outside timing",
+    "numeric_gate_note": "Identical restored registered state and frozen work are verified. Target output differences remain reported and require independent numeric and quality gates.",
+    "results": [
+      {
+        "concurrency": 1,
+        "actual_query_rows": 5,
+        "padded_query_rows": 5,
+        "fixture_sha256": "7bca0c71f01b4061e0a3e073f56a6916bb7292ad2a06372369de982f358f82c9",
+        "arms": {
+          "old": {
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t1-cycle-bytegate-20260930/arm-1-old/cycle-replay-c1.json",
+            "timed_repeats": 12,
+            "wall_median_ms": 43.21770750084397,
+            "stream_median_ms": 42.730339,
+            "wall_range_ms": [
+              43.09845200077689,
+              46.298973000375554
+            ],
+            "target_bitwise_repeatable": true,
+            "target_max_abs_reference": 0.0,
+            "registered_initial_state_bytes_verified_each_repeat": true
+          },
+          "fused": {
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t1-cycle-bytegate-20260930/arm-2-fused/cycle-replay-c1.json",
+            "timed_repeats": 12,
+            "wall_median_ms": 43.300889499732875,
+            "stream_median_ms": 42.8313535,
+            "wall_range_ms": [
+              43.22872400007327,
+              44.1773420006939
+            ],
+            "target_bitwise_repeatable": true,
+            "target_max_abs_reference": 0.03125,
+            "registered_initial_state_bytes_verified_each_repeat": true
+          },
+          "current": {
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t1-cycle-bytegate-20260930/arm-3-current/cycle-replay-c1.json",
+            "timed_repeats": 12,
+            "wall_median_ms": 47.101565000957635,
+            "stream_median_ms": 46.556979,
+            "wall_range_ms": [
+              46.915571998397354,
+              50.56289300046046
+            ],
+            "target_bitwise_repeatable": true,
+            "target_max_abs_reference": 2.1796875,
+            "registered_initial_state_bytes_verified_each_repeat": true
+          }
+        },
+        "wall_cycle_reduction_pct": 8.069106623415777,
+        "stream_cycle_reduction_pct": 8.002292201991889
+      },
+      {
+        "concurrency": 4,
+        "actual_query_rows": 20,
+        "padded_query_rows": 20,
+        "fixture_sha256": "1f9f85724b8a631e5cae61b2cb3a7421dd4a96b95f5c9ed43b55be1ec5e2bdfd",
+        "arms": {
+          "old": {
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t1-cycle-bytegate-20260930/arm-1-old/cycle-replay-c4.json",
+            "timed_repeats": 12,
+            "wall_median_ms": 58.17687099988689,
+            "stream_median_ms": 56.8236195,
+            "wall_range_ms": [
+              57.894576000762754,
+              58.38314500033448
+            ],
+            "target_bitwise_repeatable": false,
+            "target_max_abs_reference": 0.1533203125,
+            "registered_initial_state_bytes_verified_each_repeat": true
+          },
+          "fused": {
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t1-cycle-bytegate-20260930/arm-2-fused/cycle-replay-c4.json",
+            "timed_repeats": 12,
+            "wall_median_ms": 58.29361450014403,
+            "stream_median_ms": 56.986067999999996,
+            "wall_range_ms": [
+              58.19650000012189,
+              58.78058799862629
+            ],
+            "target_bitwise_repeatable": false,
+            "target_max_abs_reference": 0.1533203125,
+            "registered_initial_state_bytes_verified_each_repeat": true
+          },
+          "current": {
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t1-cycle-bytegate-20260930/arm-3-current/cycle-replay-c4.json",
+            "timed_repeats": 12,
+            "wall_median_ms": 64.22831700001552,
+            "stream_median_ms": 62.972005499999995,
+            "wall_range_ms": [
+              64.05111200001556,
+              64.3484920001356
+            ],
+            "target_bitwise_repeatable": false,
+            "target_max_abs_reference": 6.923828125,
+            "registered_initial_state_bytes_verified_each_repeat": true
+          }
+        },
+        "wall_cycle_reduction_pct": 9.240009355795598,
+        "stream_cycle_reduction_pct": 9.505712026274916
+      }
+    ],
+    "status": "superseded_by_strict_final_cycle; excluded from completion decision"
+  },
+  "full_cycle_status": "Strict complete-cycle comparison passed: head/sampler inputs frozen; actual active sampled tokens and accepted/rejected lengths matched reference in all 15 repetitions per arm and concurrency.",
+  "sampled_serving": {
+    "comparisons": [
+      {
+        "scenario": "phase-4k-c1",
+        "current_round_ms": 46.19433313665625,
+        "candidate_round_ms": 42.63005646881471,
+        "round_reduction_pct": 7.715830981469907,
+        "current_output_tokens_per_s": 60.165750301291126,
+        "candidate_output_tokens_per_s": 70.86846724618894,
+        "sampled_output_rate_change_pct": 17.788720146099692,
+        "current_acceptance": 0.4448291782086796,
+        "candidate_acceptance": 0.5052816901408451,
+        "bypass_round_ms": 46.1812286465484,
+        "bypass_round_change_pct": -0.028368176826110147
+      },
+      {
+        "scenario": "concurrency-4k-c4",
+        "current_round_ms": 66.2745531605857,
+        "candidate_round_ms": 60.71012565221752,
+        "round_reduction_pct": 8.396024179726059,
+        "current_output_tokens_per_s": 174.37809053619657,
+        "candidate_output_tokens_per_s": 193.63843884679844,
+        "sampled_output_rate_change_pct": 11.045165279295155,
+        "current_acceptance": 0.4723018769551616,
+        "candidate_acceptance": 0.48473837209302323,
+        "bypass_round_ms": 66.02394061993887,
+        "bypass_round_change_pct": -0.378142935252368
+      }
+    ],
+    "byte_identical_paired_files": 30,
+    "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-serving-final-20260930/analysis.json",
+    "scored_waves": 14,
+    "cache_hits": 0.0,
+    "preemptions": 0.0,
+    "recompute_tokens": 0.0,
+    "all_output_budgets_emitted": true,
+    "note": "Pooled same-window counters across three pairs. Output rates include changed acceptance and trajectories; round equivalents remain separate."
+  },
+  "serving_restoration": {
+    "image_id": "sha256:a42cda993bf6492acc39d23e9382e27a17efca4657bea07d80d0c28228a1623a",
+    "service": "b70-qwen38-vllm.service",
+    "health": 200,
+    "restored_unix": 1790797442.5876417,
+    "command_matches": true
+  },
+  "completed_at": "2026-09-30T20:14:08.599507+00:00",
+  "full_cycle": {
+    "scope": "complete target/head/sampler/commit/MTP4 draft cycle; state restore outside timing",
+    "numeric_gate_note": "Identical restored registered state and frozen work are verified. Target output differences remain reported and require independent numeric and quality gates.",
+    "results": [
+      {
+        "concurrency": 1,
+        "actual_query_rows": 5,
+        "padded_query_rows": 5,
+        "fixture_sha256": "7bca0c71f01b4061e0a3e073f56a6916bb7292ad2a06372369de982f358f82c9",
+        "arms": {
+          "old": {
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-cycle-final-20260930/arm-1-old/cycle-replay-c1.json",
+            "timed_repeats": 12,
+            "wall_median_ms": 43.25634249835275,
+            "stream_median_ms": 42.7282295,
+            "wall_range_ms": [
+              43.124047999299364,
+              46.152314000210026
+            ],
+            "target_bitwise_repeatable": true,
+            "target_max_abs_reference": 0.0,
+            "registered_initial_state_bytes_verified_each_repeat": true
+          },
+          "current": {
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-cycle-final-20260930/arm-2-current/cycle-replay-c1.json",
+            "timed_repeats": 12,
+            "wall_median_ms": 47.01148949970957,
+            "stream_median_ms": 46.497187,
+            "wall_range_ms": [
+              46.90893900260562,
+              47.37419099910767
+            ],
+            "target_bitwise_repeatable": true,
+            "target_max_abs_reference": 2.1796875,
+            "registered_initial_state_bytes_verified_each_repeat": true
+          },
+          "fused": {
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-cycle-final-20260930/arm-3-fused/cycle-replay-c1.json",
+            "timed_repeats": 12,
+            "wall_median_ms": 43.23756200210482,
+            "stream_median_ms": 42.727318,
+            "wall_range_ms": [
+              43.14555599921732,
+              43.94774699903792
+            ],
+            "target_bitwise_repeatable": true,
+            "target_max_abs_reference": 0.03125,
+            "registered_initial_state_bytes_verified_each_repeat": true
+          }
+        },
+        "wall_cycle_reduction_pct": 8.02767054983029,
+        "stream_cycle_reduction_pct": 8.107735635706304
+      },
+      {
+        "concurrency": 4,
+        "actual_query_rows": 20,
+        "padded_query_rows": 20,
+        "fixture_sha256": "1f9f85724b8a631e5cae61b2cb3a7421dd4a96b95f5c9ed43b55be1ec5e2bdfd",
+        "arms": {
+          "old": {
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-cycle-final-20260930/arm-1-old/cycle-replay-c4.json",
+            "timed_repeats": 12,
+            "wall_median_ms": 58.21897050009284,
+            "stream_median_ms": 56.8574215,
+            "wall_range_ms": [
+              57.895244000974344,
+              58.40549300046405
+            ],
+            "target_bitwise_repeatable": false,
+            "target_max_abs_reference": 0.15625,
+            "registered_initial_state_bytes_verified_each_repeat": true
+          },
+          "current": {
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-cycle-final-20260930/arm-2-current/cycle-replay-c4.json",
+            "timed_repeats": 12,
+            "wall_median_ms": 64.3243575013912,
+            "stream_median_ms": 63.099166499999995,
+            "wall_range_ms": [
+              64.11415800175746,
+              64.546188001259
+            ],
+            "target_bitwise_repeatable": false,
+            "target_max_abs_reference": 6.923828125,
+            "registered_initial_state_bytes_verified_each_repeat": true
+          },
+          "fused": {
+            "source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/decode-investigation/t3-cycle-final-20260930/arm-3-fused/cycle-replay-c4.json",
+            "timed_repeats": 12,
+            "wall_median_ms": 58.25956499938911,
+            "stream_median_ms": 56.9656245,
+            "wall_range_ms": [
+              58.03065600048285,
+              58.52277600206435
+            ],
+            "target_bitwise_repeatable": false,
+            "target_max_abs_reference": 0.15625,
+            "registered_initial_state_bytes_verified_each_repeat": true
+          }
+        },
+        "wall_cycle_reduction_pct": 9.428454068695402,
+        "stream_cycle_reduction_pct": 9.720480222191208
+      }
+    ],
+    "head_and_sampler_inputs_frozen": true,
+    "actual_sampler_commit_verified_each_repeat": true,
+    "gain_threshold_pct": 3,
+    "gain_threshold_passed_both_concurrencies": true,
+    "copies_in_timed_region": "Identical target-output observation clone, canonical head-input copy, actual commit observation copy and canonical commit/draft-input copies in every arm; restore and byte verification outside timing."
+  },
+  "final_restoration": {
+    "image_id": "sha256:a42cda993bf6492acc39d23e9382e27a17efca4657bea07d80d0c28228a1623a",
+    "service": "b70-qwen38-vllm.service",
+    "health": 200,
+    "restored_unix": 1790798369.5071867,
+    "command_matches": true,
+    "service_active": true,
+    "diagnostic_container_absent": true,
+    "production_tag_unchanged": true,
+    "power_limit_w": 180
+  },
+  "benchmark_scope": "Targeted T0-T3 only: frozen 4K C1/C4 serving and complete-cycle replay, numerical operand gates, 32K/128K prefill, mixed requests and frozen 32K/128K quality; full profile suite not rerun.",
+  "next_steps": {
+    "T4": "Not executed; first attribute native batched attention within the corrected target path and capture exact C2/C3/C4 Q2-Q5 operands. Pursue a batched implementation only after a meaningful complete-cycle opportunity is established.",
+    "T5": "Optional and not executed; current unintended small-M W4A8 path was slower than restored W4A16. Any new small-M INT8 experiment starts with full-path real-operand screening, not a global threshold change.",
+    "production": "Completed: latest candidate promoted, full README profile and fresh coding session measured on it, plus isolated 64K cold/warm prefix requests. Current public numbers are linked in production_promotion."
+  },
+  "production_promotion": {
+    "authorized": true,
+    "image_id": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
+    "image_tag": "local/b70-qwen38-vllm:production-onednn-v2",
+    "release_manifest": "config/production_image.json",
+    "policy_sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+    "public_benchmark_summary": "benchmarks/runs/2026-09-30-production/summary.json",
+    "public_summary_sha256": "7ac78f115714d96d6e40d2eeeb4fe893496a903cd859358bc5050793066995f4",
+    "full_profile_scenarios": 20,
+    "full_profile_waves": 70,
+    "full_profile_requests": 124,
+    "coding_tasks_passed": 2,
+    "coding_acceptance_tests_passed": 8,
+    "extra_isolated_prefix_requests": 3,
+    "production_service": "b70-qwen38-vllm.service"
+  }
+}

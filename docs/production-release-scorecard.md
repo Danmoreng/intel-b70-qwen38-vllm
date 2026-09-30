@@ -1,12 +1,26 @@
 # B70 oneDNN production candidate: qualification scorecard
 
-This scorecard records the release investigation. On 2026-09-29 the user
-narrowed the closeout to the public README benchmarks. The final image is now
-running under the permanent `b70-qwen38-vllm.service`, and the README reports
-only measurements from that image. The uncompleted C2/C3 research gates are
-not represented as passing.
+The current production image is v2,
+`sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68`,
+pinned in `config/production_image.json` and running under the permanent
+`b70-qwen38-vllm.service`. The 2026-09-30 full README run completed 20 scenarios,
+70 waves and 124 requests in 53.7 minutes, without preemption or recompute.
+Its fresh QueueKit v2 coding session passed 2/2 tasks and 8/8 tests in 452.03 s.
+An isolated 64K cold/warm prefix run completed on 2026-10-01. Current public
+numbers are in `benchmarks/runs/2026-09-30-production/summary.json`.
 
-## Identity
+The row-dispatch fix and targeted T0–T3 gates are recorded in
+`benchmarks/experiments/onednn-prefill/decode_investigation_20260930.json`.
+Complete fixed-work cycles improved 8.03% at C1 and 9.43% at C4; frozen 32K/
+128K quality added no failures. Policy, weights and native operators retain
+their v1 values. T4/T5 were deferred. The user authorized production promotion
+and publication of the full README benchmarks.
+
+The sections below preserve the original v1 qualification history. On
+2026-09-29 the user narrowed that closeout to the public README benchmarks.
+The uncompleted C2/C3 research gates are not represented as passing.
+
+## Historical v1 identity
 
 - Branch: `release/b70-onednn-v1`; integration commit `2020a8e`.
 - Candidate image ID: `sha256:a42cda993bf6492acc39d23e9382e27a17efca4657bea07d80d0c28228a1623a`.
@@ -89,6 +103,6 @@ benchmark under the narrowed scope.
 - The repeatable coding fixture v2 passed on the final image. The full public
   source-review suite passed on the same image after the permanent service
   started: 20 scenarios, 70 waves, 124 requests, zero preemptions.
-- The current-only README and machine-readable public benchmark summary are
-  in `README.md` and `benchmarks/runs/2026-09-29-production/summary.json`.
-  No remote publication is recorded here.
+- That v1 README snapshot and its machine-readable public benchmark summary
+  used `benchmarks/runs/2026-09-29-production/summary.json`. The current README
+  now uses the v2 measurements linked at the top of this scorecard.

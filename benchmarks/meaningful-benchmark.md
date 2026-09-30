@@ -23,12 +23,15 @@ Changing it therefore changes the workload, not just the result label. Keep
 the namespace fixed across configurations, and use an idle or freshly started
 worker to control prefix-cache state. Override `--prompt-namespace` only when
 intentionally defining another fixture.
-The original full run constructed its 16K prefix prompt without a scenario
-suffix; use `--legacy-prefix-namespace` to reproduce that prompt. Its separate
-64K prefix measurement used namespace `20260923-212648` with the suffix, so
-reproduce it with `--only prefix-64k-cold-warm --prompt-namespace
-20260923-212648` and without the legacy flag. The published production
-benchmark uses those exact original prompts for both prefix rows.
+The current production benchmark uses `--fixture-root` to replay the original
+full-run prompt bytes and request values for every measured request, including
+both prefix scenarios. The first 64K prefix request can reuse the earlier 16K
+prefix, so its cold/warm row is measured again on a fresh worker using the same
+frozen 64K prompt. The previous publication used a separate 64K fixture with
+namespace `20260923-212648`; its historical numbers remain in that run's summary.
+Without `--fixture-root`, `--legacy-prefix-namespace` reconstructs the original
+16K prompt style. Exact comparisons should use saved prompt bytes rather than
+assuming prompt generation is identical across harness versions.
 
 Short serving sweeps use the production coding sampling values: temperature
 1.0, top-p 0.95, top-k 20 and a recorded per-request seed. Thinking is off so

@@ -25,7 +25,7 @@ reject_value() {
 }
 
 [[ "$#" == 0 ]] || { echo "Production launcher accepts no vLLM overrides" >&2; exit 2; }
-require_value VLLM_IMAGE local/b70-qwen38-vllm:production-onednn-v1
+require_value VLLM_IMAGE local/b70-qwen38-vllm:production-onednn-v2
 require_value MODEL_ID mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16
 require_value MODEL_REVISION a47b0c6f0d756bc394c4cc629d5b0ded1acc7001
 require_value SERVED_MODEL_NAME Qwen3.8-27B
@@ -59,8 +59,15 @@ expected_policy_sha="$(cut -d' ' -f1 "$repo_dir/config/production_policy.sha256"
 [[ "$policy_sha" == "$expected_policy_sha" ]] || {
   echo "Production policy hash mismatch" >&2; exit 2;
 }
-image="${VLLM_IMAGE:-local/b70-qwen38-vllm:production-onednn-v1}"
+image="${VLLM_IMAGE:-local/b70-qwen38-vllm:production-onednn-v2}"
 image_id="$(docker image inspect "$image" --format '{{.Id}}')"
+python3 - "$repo_dir/config/production_image.json" "$image" "$image_id" "$policy_sha" <<'PY'
+import json, sys
+from pathlib import Path
+release = json.loads(Path(sys.argv[1]).read_text())
+if (release['image_tag'], release['image_id'], release['policy_sha256']) != tuple(sys.argv[2:]):
+    raise SystemExit('Production image differs from the frozen release identity')
+PY
 image_policy_sha="$(docker image inspect "$image" --format '{{index .Config.Labels "org.local.b70.policy.sha256"}}')"
 [[ "$image_policy_sha" == "$policy_sha" ]] || {
   echo "Image policy hash mismatch: $image_policy_sha" >&2; exit 2;

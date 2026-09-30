@@ -20,6 +20,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--base", default="http://127.0.0.1:8081")
     parser.add_argument("--arm", required=True)
+    parser.add_argument("--container", default="b70-qwen38-vllm")
+    parser.add_argument("--namespace", default="")
+    parser.add_argument("--sampled-background", action="store_true")
     parser.add_argument("--task-id", default="context-128k-1-code-1")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
@@ -29,8 +32,14 @@ def main():
     if task is None or task["kind"] != "code":
         parser.error("task ID must name a frozen 128K coding task")
     short_body, short_hash = payload("32k")
-    short_body["allowed_token_ids"] = [264]
-    short_body["temperature"] = 0
+    if not args.sampled_background:
+        short_body["allowed_token_ids"] = [264]
+        short_body["temperature"] = 0
+    if args.namespace:
+        marker = f"Independent mixed-request run: {args.namespace}\n\n"
+        short_body["messages"][0]["content"] = marker + short_body["messages"][0]["content"]
+        task = dict(task, prompt=marker + task["prompt"])
+        short_hash = hashlib.sha256(short_body["messages"][0]["content"].encode()).hexdigest()
     before = snapshot(args.base)
     started = time.monotonic()
     short = {"first_piece": threading.Event()}
@@ -62,7 +71,7 @@ def main():
     if short["usage"]["completion_tokens"] != 1024:
         raise RuntimeError("background 32K request did not emit 1024 tokens")
     image_id = subprocess.check_output(
-        ["docker", "inspect", "b70-qwen38-vllm", "--format", "{{.Image}}"],
+        ["docker", "inspect", args.container, "--format", "{{.Image}}"],
         text=True).strip()
     output = long["output"]
     result = {
@@ -71,7 +80,8 @@ def main():
         "task_context_sha256": task["context_sha256"],
         "task_prompt_sha256": hashlib.sha256(task["prompt"].encode()).hexdigest(),
         "background_prompt_sha256": short_hash,
-        "background_forced_token_id": 264,
+        "background_forced_token_id": None if args.sampled_background else 264,
+        "namespace": args.namespace,
         "task_output": output,
         "task_output_sha256": hashlib.sha256(output.encode()).hexdigest(),
         "task_score": score(task, output),

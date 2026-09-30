@@ -24,6 +24,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from decode_overlap import pool_overlap, summarize_overlap
+
 from meaningful_benchmark import (
     CHAT_TEMPLATE_KWARGS, CORPUS, SAMPLING, load_corpus, make_prompt,
 )
@@ -76,7 +78,8 @@ def http_json(base: str, path: str, data: dict[str, Any] | None = None, timeout:
         headers={"Content-Type": "application/json"},
     )
     with urllib.request.urlopen(request, timeout=timeout) as response:
-        return json.load(response)
+        body = response.read()
+        return json.loads(body) if body else None
 
 
 def parse_prometheus(text: str) -> list[tuple[str, dict[str, str], float]]:
@@ -215,6 +218,7 @@ def stream_completion(
                     text = reasoning + content
                     if text and first is None:
                         first = elapsed
+                        stream.flush()
                     if text:
                         token_event_times.append(elapsed)
                     output_parts.append(text)
@@ -307,12 +311,29 @@ def run_once(
     sources: list[dict[str, str]],
     namespace: str,
     legacy_prefix_namespace: bool = False,
+    fixture_root: Path | None = None,
 ) -> dict[str, Any]:
     wait_idle(base)
     case_dir = run_dir / f"{scenario.name}-r{repeat + 1}"
     case_dir.mkdir(parents=True)
     prompts: list[tuple[str, int, str, list[str]]] = []
+    frozen_payloads: list[dict[str, Any]] = []
     for index in range(scenario.concurrency):
+        if fixture_root is not None and repeat >= 0:
+            folder = fixture_root / f'{scenario.name}-r{repeat + 1}'
+            frozen = json.loads((folder / f'request-{index + 1}.json').read_text())
+            prompt = (folder / f'prompt-{index + 1}.txt').read_text()
+            if hashlib.sha256(prompt.encode()).hexdigest() != frozen['prompt_sha256']:
+                raise ValueError(f'frozen prompt hash mismatch: {folder}')
+            actual = token_count(base, prompt)
+            prompts.append((prompt, actual, frozen['marker'], frozen['source_paths']))
+            payload = {key: value for key, value in frozen.items()
+                       if key not in ('prompt_sha256', 'marker', 'source_paths', 'messages')}
+            payload['messages'] = [{'role': 'user', 'content': prompt}]
+            if payload['max_tokens'] != scenario.output_tokens:
+                raise ValueError('frozen output budget differs from scenario')
+            frozen_payloads.append(payload)
+            continue
         if scenario.shared_prefix_fraction == 1.0:
             marker = f"B70-{namespace}-{scenario.name}-Q{index + 1}"
         elif scenario.prompt_set:
@@ -366,6 +387,8 @@ def run_once(
                     "stream": True,
                     "stream_options": {"include_usage": True},
                 }
+                if frozen_payloads:
+                    payload = frozen_payloads[index]
                 (case_dir / f"request-{index + 1}.json").write_text(
                     json.dumps(
                         {
@@ -485,6 +508,8 @@ def run_once(
         energy_delta_j = (energy_after_uj - energy_before_uj) / 1_000_000
     peak_running = max((sample["running"] for sample in valid_samples), default=0)
     summary = {
+        **summarize_overlap(samples, full_overlap_start_s, full_overlap_end_s,
+                            scenario.concurrency),
         "scenario": scenario.__dict__,
         "repeat": repeat + 1,
         "batch_wall_s": batch_wall,
@@ -606,6 +631,7 @@ def write_aggregate(run_dir: Path, manifest: dict[str, Any], rows: list[dict[str
     for name, items in grouped.items():
         summary_rows.append(
             {
+                **pool_overlap(items),
                 "name": name,
                 "group": items[0]["scenario"]["group"],
                 "concurrency": items[0]["scenario"]["concurrency"],
@@ -728,6 +754,8 @@ def main() -> int:
         default=ROOT.parent / "benchmarks" / "current-profile-scenarios.json",
     )
     parser.add_argument("--only", action="append", default=[], help="scenario name or group")
+    parser.add_argument('--fixture-root', type=Path,
+                        help='Replay measured request metadata and prompt bytes; warmups remain separate')
     parser.add_argument("--prompt-namespace", default=DEFAULT_PROMPT_NAMESPACE,
                         help="Fixed source-review fixture namespace; override explicitly for another fixture")
     parser.add_argument("--legacy-prefix-namespace", action="store_true",
@@ -778,6 +806,7 @@ def main() -> int:
         "corpus_sha256": corpus_sha256,
         "prompt_namespace": namespace,
         "legacy_prefix_namespace": args.legacy_prefix_namespace,
+        'fixture_root': str(args.fixture_root.resolve()) if args.fixture_root else None,
         "corpus_sources": len(sources),
         "sampling": SAMPLING,
         "chat_template_kwargs": CHAT_TEMPLATE_KWARGS,
@@ -790,6 +819,7 @@ def main() -> int:
             "aggregate_decode_wave_tokens_per_s": "all post-first output tokens in the wave divided by time from the earliest first token until the final request completes",
             "effective_decode_concurrency": "summed native per-request decode seconds divided by aggregate decode-window seconds; aggregate decode equals weighted per-request decode multiplied by this occupancy",
             "fully_overlapped_aggregate_decode_tokens_per_s": "native generation-token counter delta divided by sampled wall time after every request emitted its first token and before any request completed",
+            'fully_overlapped_round_equivalent_ms': 'same-window wall ms divided by draft_tokens/(concurrency*4); includes host and device costs, requires constant occupancy, no prefill and exact token accounting; not GPU-only or a physical-iteration count',
             "tpot_s": "client time after first generated event divided by completion tokens minus one",
             "batch_wall_s": "elapsed time from simultaneous release until every request in the wave completed",
             "e2e_policy": "reported in seconds; legacy aggregate output tokens per wall second is retained only in per-case raw data",
@@ -817,7 +847,8 @@ def main() -> int:
             for repeat in range(scenario.repeats):
                 print(f"START {scenario.name} repeat {repeat + 1}/{scenario.repeats}", flush=True)
                 row = run_once(args.base, args.container, scenario, repeat, run_dir,
-                               sources, namespace, args.legacy_prefix_namespace)
+                               sources, namespace, args.legacy_prefix_namespace,
+                               args.fixture_root)
                 rows.append(row)
                 write_aggregate(run_dir, manifest, rows)
                 print(

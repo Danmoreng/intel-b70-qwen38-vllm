@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "status": "PASS_CAPACITY_WITH_RECORDED_C16_PRESSURE",
+  "image": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "settings": {
+    "gpu_memory_utilization": 0.965,
+    "limit_mm_per_prompt": {
+      "image": 32,
+      "video": 4
+    },
+    "mm_processor_kwargs": {
+      "max_pixels": 4194304
+    },
+    "max_model_len": 262144,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 4096
+  },
+  "cases": {
+    "regression": {
+      "result": "COMPLETE",
+      "preemptions": 0,
+      "allocation_rejections": 0,
+      "reused_from": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/results/exl3-migration/target-upstream-expanded-v1/regression",
+      "submitted_target_prefill_tokens": 22450
+    },
+    "smoke": {
+      "result": "PASS",
+      "preemptions": 0,
+      "allocation_rejections": 0,
+      "reused_from": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/results/exl3-migration/target-upstream-expanded-v1/smoke",
+      "submitted_target_prefill_tokens": 17174
+    },
+    "near-limit": {
+      "result": "COMPLETE",
+      "preemptions": 0,
+      "allocation_rejections": 0,
+      "reused_from": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/results/exl3-migration/target-upstream-expanded-v1/near-limit",
+      "submitted_target_prefill_tokens": 261120
+    },
+    "c16-long": {
+      "result": "PASS",
+      "preemptions": 4,
+      "allocation_rejections": 44,
+      "reused_from": null,
+      "submitted_target_prefill_tokens": 147072,
+      "native": {
+        "completed": 16.0,
+        "accepted_tokens": 2968.0,
+        "prefill_seconds": 133.97245704196393,
+        "prompt_tokens": 131072.0,
+        "draft_tokens": 3351.0,
+        "decode_seconds": 537.9133165130188,
+        "preemptions": 4.0,
+        "generation_tokens": 4096.0,
+        "prefill_tokens": 131072.0,
+        "cached_tokens": 0.0
+      },
+      "preempted_unique_requests": 2,
+      "extra_submitted_prefill_tokens": 16000.0
+    },
+    "image-long": {
+      "result": "PASS",
+      "preemptions": 0,
+      "allocation_rejections": 0,
+      "reused_from": null,
+      "submitted_target_prefill_tokens": 119093
+    },
+    "extension-abort-long": {
+      "result": "PASS",
+      "preemptions": 0,
+      "allocation_rejections": 0,
+      "reused_from": null,
+      "submitted_target_prefill_tokens": 56140,
+      "confirmed_abort_events": 1
+    }
+  },
+  "scope": "Instrumented functional/capacity proof, not throughput qualification; C16 preemptions explicitly permitted by user; no simultaneous maximum-context guarantee"
+}

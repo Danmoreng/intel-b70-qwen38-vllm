@@ -1,0 +1,337 @@
+{
+  "schema": 1,
+  "started_at": "2026-10-01T15:04:45.817869+00:00",
+  "image": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "cases": {
+    "smoke": {
+      "launch": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "b70-exl3-migration-contract",
+        "--device",
+        "/dev/dri",
+        "-v",
+        "/dev/dri/by-path:/dev/dri/by-path:ro",
+        "--shm-size",
+        "8g",
+        "-p",
+        "127.0.0.1:8082:8000",
+        "-e",
+        "HF_HUB_OFFLINE=1",
+        "-e",
+        "PYTHONPATH=/opt/b70-runtime",
+        "-e",
+        "EXL3_MIGRATION_TRACE=/results/trace",
+        "-e",
+        "EXL3_LOADER_REPORT_DIR=/results",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/results/exl3-migration/target-media965-v1/smoke:/results",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/runtime:/opt/b70-runtime:ro",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-target/046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088/vllm:/root/.cache/vllm",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-target/046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088/triton:/root/.triton/cache",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-target/046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088/neo_compiler_cache:/root/.cache/neo_compiler_cache",
+        "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+        "models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml",
+        "--gpu",
+        "0",
+        "--port",
+        "8000",
+        "--model-path",
+        "/models/checkpoint",
+        "--set",
+        "vllm.gpu_memory_utilization=0.965",
+        "--set",
+        "vllm.limit_mm_per_prompt={\"image\":32,\"video\":4}",
+        "--set",
+        "vllm.mm_processor_kwargs={\"max_pixels\":4194304}"
+      ],
+      "identity": {
+        "container_id": "d73b24a1882f620735bdae23725afad56366b165550e4e6a82f28d16faa06be3",
+        "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+        "image_tag": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+        "command": [
+          "models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml",
+          "--gpu",
+          "0",
+          "--port",
+          "8000",
+          "--model-path",
+          "/models/checkpoint",
+          "--set",
+          "vllm.gpu_memory_utilization=0.965",
+          "--set",
+          "vllm.limit_mm_per_prompt={\"image\":32,\"video\":4}",
+          "--set",
+          "vllm.mm_processor_kwargs={\"max_pixels\":4194304}"
+        ],
+        "labels": {
+          "org.local.b70.policy.sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "org.opencontainers.image.version": "24.04"
+        }
+      },
+      "result": {
+        "status": "PASS",
+        "checks": [
+          "text",
+          "stream",
+          "tool",
+          "reasoning",
+          "image",
+          "images_at_limit",
+          "over_image_limit",
+          "prefix_first",
+          "prefix_extension",
+          "prefix_native",
+          "after_abort",
+          "c4_usage",
+          "limits"
+        ],
+        "image_limit": 32,
+        "video_limit_configured": 4,
+        "abort_note": "client disconnected after first streamed content; correlate trace with scheduler abort",
+        "c4_note": "four simultaneous small requests; full long-context C4 load remains a separate release gate"
+      },
+      "runtime_manifest_sha256": "e62cb2299129358540eb299a2664cbae54ee6ef2890552717761b382bba4382e"
+    },
+    "media-expanded": {
+      "launch": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "b70-exl3-migration-contract",
+        "--device",
+        "/dev/dri",
+        "-v",
+        "/dev/dri/by-path:/dev/dri/by-path:ro",
+        "--shm-size",
+        "8g",
+        "-p",
+        "127.0.0.1:8082:8000",
+        "-e",
+        "HF_HUB_OFFLINE=1",
+        "-e",
+        "PYTHONPATH=/opt/b70-runtime",
+        "-e",
+        "EXL3_MIGRATION_TRACE=/results/trace",
+        "-e",
+        "EXL3_LOADER_REPORT_DIR=/results",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/results/exl3-migration/target-media965-v1/media-expanded:/results",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/runtime:/opt/b70-runtime:ro",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-target/046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088/vllm:/root/.cache/vllm",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-target/046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088/triton:/root/.triton/cache",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-target/046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088/neo_compiler_cache:/root/.cache/neo_compiler_cache",
+        "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+        "models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml",
+        "--gpu",
+        "0",
+        "--port",
+        "8000",
+        "--model-path",
+        "/models/checkpoint",
+        "--set",
+        "vllm.gpu_memory_utilization=0.965",
+        "--set",
+        "vllm.limit_mm_per_prompt={\"image\":32,\"video\":4}",
+        "--set",
+        "vllm.mm_processor_kwargs={\"max_pixels\":4194304}"
+      ],
+      "identity": {
+        "container_id": "fd8d8b954bdfd56b171067723679bef3f9d2233d5ef8064cd3a5597e43bf85bb",
+        "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+        "image_tag": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+        "command": [
+          "models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml",
+          "--gpu",
+          "0",
+          "--port",
+          "8000",
+          "--model-path",
+          "/models/checkpoint",
+          "--set",
+          "vllm.gpu_memory_utilization=0.965",
+          "--set",
+          "vllm.limit_mm_per_prompt={\"image\":32,\"video\":4}",
+          "--set",
+          "vllm.mm_processor_kwargs={\"max_pixels\":4194304}"
+        ],
+        "labels": {
+          "org.local.b70.policy.sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "org.opencontainers.image.version": "24.04"
+        }
+      },
+      "result": {
+        "status": "PASS",
+        "responses": {
+          "videos_1": {
+            "id": "chatcmpl-b51b556f4d392f74",
+            "object": "chat.completion",
+            "created": 1790867209,
+            "model": "Qwen3.8-27B",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "Red",
+                  "refusal": null,
+                  "annotations": null,
+                  "audio": null,
+                  "function_call": null,
+                  "reasoning": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop",
+                "stop_reason": null,
+                "token_ids": null,
+                "routed_experts": null
+              }
+            ],
+            "service_tier": null,
+            "system_fingerprint": "vllm-0.30.0-b75a0a8b",
+            "usage": {
+              "prompt_tokens": 202,
+              "total_tokens": 204,
+              "completion_tokens": 2,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "prompt_logprobs": null,
+            "prompt_token_ids": null,
+            "prompt_text": null,
+            "kv_transfer_params": null,
+            "ec_transfer_params": null,
+            "metrics": null
+          },
+          "videos_4": {
+            "id": "chatcmpl-a006c54a44b7ccbe",
+            "object": "chat.completion",
+            "created": 1790867210,
+            "model": "Qwen3.8-27B",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "Red",
+                  "refusal": null,
+                  "annotations": null,
+                  "audio": null,
+                  "function_call": null,
+                  "reasoning": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop",
+                "stop_reason": null,
+                "token_ids": null,
+                "routed_experts": null
+              }
+            ],
+            "service_tier": null,
+            "system_fingerprint": "vllm-0.30.0-b75a0a8b",
+            "usage": {
+              "prompt_tokens": 736,
+              "total_tokens": 738,
+              "completion_tokens": 2,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "prompt_logprobs": null,
+            "prompt_token_ids": null,
+            "prompt_text": null,
+            "kv_transfer_params": null,
+            "ec_transfer_params": null,
+            "metrics": null
+          },
+          "over_video_limit": {
+            "status": 400,
+            "error": "{\"error\":{\"message\":\"At most 4 video(s) may be provided in one prompt. (parameter=video)\",\"type\":\"BadRequestError\",\"param\":\"video\",\"code\":400}}"
+          },
+          "oversized_image": {
+            "id": "chatcmpl-99b36db6eb7c2d0e",
+            "object": "chat.completion",
+            "created": 1790867210,
+            "model": "Qwen3.8-27B",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "Red",
+                  "refusal": null,
+                  "annotations": null,
+                  "audio": null,
+                  "function_call": null,
+                  "reasoning": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop",
+                "stop_reason": null,
+                "token_ids": null,
+                "routed_experts": null
+              }
+            ],
+            "service_tier": null,
+            "system_fingerprint": "vllm-0.30.0-b75a0a8b",
+            "usage": {
+              "prompt_tokens": 4081,
+              "total_tokens": 4083,
+              "completion_tokens": 2,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "prompt_logprobs": null,
+            "prompt_token_ids": null,
+            "prompt_text": null,
+            "kv_transfer_params": null,
+            "ec_transfer_params": null,
+            "metrics": null
+          }
+        },
+        "video_fixture_sha256": "b860f60fd39a5e806d431e9ffd5e07033191e553fd885d45b2543f1ede28d344",
+        "fixture": "ffmpeg constant-red 320x240,4fps,2s; API decodes real H264 video",
+        "scope": "Small-media count limits and one 6.3MP image; does not promise 32 maximum-area images plus 4 long videos at maximum text context"
+      },
+      "runtime_manifest_sha256": "1b61beb42e966f66f1659ecc31a3fe0acbad68146e5e2f98728544af141f6165"
+    }
+  },
+  "status": "COMPLETE",
+  "purpose": "target-ABI instrumented contract diagnostics",
+  "settings_overrides": {
+    "gpu_memory_utilization": 0.965,
+    "limit_mm_per_prompt": {
+      "image": 32,
+      "video": 4
+    },
+    "mm_processor_kwargs": {
+      "max_pixels": 4194304
+    }
+  },
+  "settings_sha256": "21c18618525bd5a318d354737e6137bf167ec3ed9dd0e77d0ae73697e3d6c684",
+  "production_restored": false,
+  "restore_production_requested": false,
+  "phase": "media-expanded-startup",
+  "production_left_offline": true,
+  "finished_at": "2026-10-01T15:06:59.916125+00:00"
+}

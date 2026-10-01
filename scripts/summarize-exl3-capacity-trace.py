@@ -65,8 +65,12 @@ def summarize(root):
                 offset=event['computed_offsets'].get(request_id)
                 if offset is not None and request_id in prompt_lengths:
                     forward_prefill[request_id]+=min(n,max(0,prompt_lengths[request_id]-offset))
-    observation=root/'observation.json'
-    native=json.loads(observation.read_text()).get('native') if observation.exists() else None
+    native=None
+    for name in ('observation.json','operational.json','operational-progress.json'):
+        observation=root/name
+        if observation.exists():
+            native=json.loads(observation.read_text()).get('native')
+            if native is not None: break
     return {'schema':1,'trace_rows':len(events),'cache':cache,'memory_stages':memory_stages,
             'preemption_count':len(preemptions),'preemptions':preemptions,
             'allocation_failure_count':len(failures),'allocation_failures':failures,

@@ -11,13 +11,14 @@
     "1_safe_foundation": "initial gates passed; target ABI gate later",
     "2_existing_runtime_contract": "PASS old-runtime contract: 409/409 loader; API; fresh 103K/139K/188K/200704-total zero-preemption; C4 4x32K+256; image119K; prefix50K with48000 cache hit; confirmed FINISHED_ABORTED and restart; matchedgreedy22K",
     "3_runtime_port": "PASS functional target port: fresh Torch2.13 native409/409+INT8 gate/compiler failure; GDN CPU/XPU/graph; full V2 loader409/8; greedy identical; all nine target contract cases zero traced preemptions/rejections and confirmed abort/restart. Expanded profile and full numerical quality remain separate.",
-    "4_quality": "PASS short-panel acquisition/comparison: all five target arms complete; exact BF16 reference reuse, full vocabulary FP64 KL, API alignment, paired window bootstrap. MTP-configured PPL3.647060/KL0.033893 retains advantage over GPTQ3.801927/KL0.086369. Full expanded path/generated decode/long suffix probes remain; Gate E not complete.",
+    "4_quality": "PASS all six short-panel arms incl expanded full candidate; frozen BF16 integrity, full-vocabulary FP64/API alignment. Full candidate PPL3.647854/KL0.032727 vs GPTQ3.801927/KL0.086369; paired deltaNLL vsoldEXL0.0016114. Long BF16/suffix and generated decode quality remain; Gate E partial. CPU cached-layer validation passed;256-token GPU control quantifies chunk drift,4096-token control matches old BF16 exactly on512 suffix positions and17 sampled distributions.",
     "5_mtp3_mtp4": "not started",
     "6_attention": "not started",
     "7_kernels": "not started",
-    "8_release": "not started"
+    "8_release": "not started",
+    "3_expanded_capacity": "PASS functional expanded v2; C16 all16 completed, four preemption events on two requests,16000 extra target-prefill submitted rows; other capacity cases no preemptions"
   },
-  "next_action": "Inspect isolated .965 memory-profile/greedy/200704 boundary cases, then expanded media and262144/C16 capacity. Continue full-path and long-context quality probes; first performance experiment remains MTP3/MTP4.",
+  "next_action": "Validate 4096-token control, acquire untruncated BF16 long suffix references and full candidate native capture; then controlled MTP3/MTP4 first performance matrix.",
   "exl3_cache_retirement_commit": "fe39f23",
   "old_retirement_candidate_image_id": "sha256:3fcacd9c4971356b228fe638151b1d804e22fa5e7438f57a79864948068aa33f",
   "gpu_availability_policy": {
@@ -47,14 +48,18 @@
       "qualify 262144 total context and C16 admission, including mixed and long workloads",
       "compare 4096 versus 6656 batch tokens on matched mixed serving after quality/MTP stages"
     ],
-    "status": "candidate prepared; expanded settings not GPU-qualified or deployed"
+    "status": "PASS expanded functional capacity v2 with explicitly allowed C16 pressure: total262144, media32/4, long image, confirmed abort/restart; not full performance/quality qualification",
+    "concurrency_policy": "C16 preemptions allowed under real pressure; C4/C8 qualification sufficient; completion, recovery, memory stability and latency still required"
   },
   "exl3_functional_port_commit": "69797ba",
   "active_campaign": {
-    "session": 77930,
-    "path": "benchmarks/results/exl3-migration/target-memory965-v1",
-    "log": "/tmp/b70-exl3-target-memory965-v1.log",
-    "status": "RUNNING"
+    "session": 33312,
+    "path": "benchmark-results/exl3-long-quality-v1",
+    "status": "RUNNING",
+    "purpose": "Four original BF16 untruncated long prefix/suffix references"
   },
-  "gptq_functional_port_evidence_commit": "76cbbb3"
+  "gptq_functional_port_evidence_commit": "76cbbb3",
+  "additional_experiments": {
+    "full_draft_vocabulary": "After controlled MTP3/MTP4, compare 65536-row EXL3 draft with full248320 at matched MTP depth; measure throughput, acceptance and memory/context capacity"
+  }
 }

@@ -1,0 +1,7 @@
+/opt/venv/lib/python3.12/site-packages/torch/xpu/__init__.py:251: UserWarning: Can't initialize Level Zero Sysman
+  return _enum_zes_device_infos(visible_mask)
+/opt/venv/lib/python3.12/site-packages/torch/xpu/__init__.py:278: UserWarning: XPU device count is zero! (Triggered internally at /__w/pytorch/pytorch/c10/xpu/XPUFunctions.cpp:117.)
+  count = torch._C._xpu_getDeviceCount() if zes_count < 0 else zes_count
+/scripts/stream_long_reference.py:57: FutureWarning: `device` is deprecated and will be removed in version 5.18 for `Qwen3_5TextRotaryEmbedding.__init__`.
+  rotary = Qwen3_5TextRotaryEmbedding(cfg, device=device)
+{"status": "PASS", "ordinary_forward_matches_cached_stream": true, "both_attention_types": true, "two_distinct_full_attention_indices": true, "final_partial_chunk_and_single_token_state": true, "tolerance_atol": 3e-06, "tolerance_rtol": 3e-05, "maximum_logit_errors": {"chunk64-length257": 4.172325134277344e-07, "chunk64-length385": 4.172325134277344e-07, "chunk128-length257": 4.172325134277344e-07, "chunk128-length385": 4.172325134277344e-07}}

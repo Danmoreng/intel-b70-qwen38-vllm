@@ -1,0 +1,138 @@
+{
+  "status": "PASS",
+  "responses": {
+    "videos_1": {
+      "id": "chatcmpl-b51b556f4d392f74",
+      "object": "chat.completion",
+      "created": 1790867209,
+      "model": "Qwen3.8-27B",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "Red",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": null
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.30.0-b75a0a8b",
+      "usage": {
+        "prompt_tokens": 202,
+        "total_tokens": 204,
+        "completion_tokens": 2,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "videos_4": {
+      "id": "chatcmpl-a006c54a44b7ccbe",
+      "object": "chat.completion",
+      "created": 1790867210,
+      "model": "Qwen3.8-27B",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "Red",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": null
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.30.0-b75a0a8b",
+      "usage": {
+        "prompt_tokens": 736,
+        "total_tokens": 738,
+        "completion_tokens": 2,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "over_video_limit": {
+      "status": 400,
+      "error": "{\"error\":{\"message\":\"At most 4 video(s) may be provided in one prompt. (parameter=video)\",\"type\":\"BadRequestError\",\"param\":\"video\",\"code\":400}}"
+    },
+    "oversized_image": {
+      "id": "chatcmpl-99b36db6eb7c2d0e",
+      "object": "chat.completion",
+      "created": 1790867210,
+      "model": "Qwen3.8-27B",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "Red",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": null
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.30.0-b75a0a8b",
+      "usage": {
+        "prompt_tokens": 4081,
+        "total_tokens": 4083,
+        "completion_tokens": 2,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    }
+  },
+  "video_fixture_sha256": "b860f60fd39a5e806d431e9ffd5e07033191e553fd885d45b2543f1ede28d344",
+  "fixture": "ffmpeg constant-red 320x240,4fps,2s; API decodes real H264 video",
+  "scope": "Small-media count limits and one 6.3MP image; does not promise 32 maximum-area images plus 4 long videos at maximum text context"
+}

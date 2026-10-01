@@ -32,6 +32,15 @@ def run(command, **kwargs):
 
 
 def stage_config(stage):
+    if stage == 'target-full-candidate':
+        return dict(kv_cache_dtype='fp8', enforce_eager=False, enable_prefix_caching=True,
+                    max_model_len=262144, max_num_seqs=16, max_num_batched_tokens=4096,
+                    gpu_memory_utilization=.965, limit_mm_per_prompt={'image':32,'video':4},
+                    mm_processor_kwargs={'max_pixels':4194304}, mamba_cache_mode='align',
+                    scheduler_reserve_full_isl=True, watermark=0.0,
+                    speculative_config={'method':'mtp','num_speculative_tokens':3},
+                    compilation_config={'cudagraph_mode':'FULL_DECODE_ONLY',
+                        'cudagraph_capture_sizes':[1,2,4,8,12,16,24,32,40,48,56,64]}), True
     engine = dict(kv_cache_dtype='auto', enforce_eager=True,
                   enable_prefix_caching=False, max_model_len=2048,
                   max_num_seqs=1, max_num_batched_tokens=1024,
@@ -60,6 +69,7 @@ def main():
     parser.add_argument('--stages', nargs='+', default=['target-fp16', 'target-fp8', 'target-int8', 'target-graphs', 'target-mtp'])
     parser.add_argument('--windows', type=int, default=0, help='Nonzero is capture pilot only; no full-panel comparison')
     parser.add_argument('--reuse-completed', type=Path, help='Reuse completed matching arms from a terminal campaign; never repeat them')
+    parser.add_argument('--expanded-contract-campaign', type=Path, help='Required for the full expanded serving precision arm')
     args = parser.parse_args()
     configs = {stage: stage_config(stage) for stage in args.stages}
     if len(configs) != len(args.stages):
@@ -95,6 +105,26 @@ def main():
                 raise RuntimeError('Incomplete contract case: ' + case)
             if case in {'103k', '139k', '188k', 'near-limit', 'c4-long', 'image-long'} and result['native']['preemptions'] != 0:
                 raise RuntimeError('Unresolved preemption in contract case: ' + case)
+        if 'target-full-candidate' in configs:
+            if not args.expanded_contract_campaign:
+                raise RuntimeError('Expanded candidate requires its own completed capacity qualification')
+            expanded = json.loads((args.expanded_contract_campaign / 'campaign.json').read_text())
+            needed = {'regression','smoke','near-limit','c16-long','image-long','extension-abort-long'}
+            wanted = dict(max_model_len=262144,max_num_seqs=16,max_num_batched_tokens=4096,
+                          gpu_memory_utilization=.965,limit_mm_per_prompt={'image':32,'video':4})
+            if (expanded['status'] != 'COMPLETE' or expanded['image'] != image
+                    or not needed.issubset(expanded['cases'])
+                    or any(expanded['settings_overrides'].get(k) != v for k,v in wanted.items())):
+                raise RuntimeError('Expanded capacity qualification is incomplete or mismatched')
+            for case in needed:
+                result = expanded['cases'][case]['result']
+                if result['status'] not in {'COMPLETE', 'PASS'}:
+                    raise RuntimeError('Incomplete expanded capacity case: '+case)
+                if case in ('near-limit','c16-long','image-long') and result['native']['preemptions'] != 0:
+                    pressure_allowed = (case == 'c16-long' and expanded.get('allow_c16_preemptions')
+                                        and result.get('preemption_policy') == 'record-pressure')
+                    if not pressure_allowed:
+                        raise RuntimeError('Unresolved expanded-profile preemption: '+case)
         output.mkdir(parents=True)
         (output / 'panel.json').write_bytes((reference / 'panel.json').read_bytes())
         (output / 'configs').mkdir()
@@ -102,6 +132,7 @@ def main():
             (output / label).symlink_to(reference / label, target_is_directory=True)
         state = {'schema': 1, 'status': 'RUNNING', 'image_id': image,
                  'contract_campaign_sha256': sha(contract_file),
+                 'expanded_contract_campaign_sha256': sha(args.expanded_contract_campaign/'campaign.json') if args.expanded_contract_campaign else None,
                  'reference_panel_sha256': PANEL_SHA, 'reference_bundle_sha256': REFERENCE_SHA,
                  'reference_file_sha256': {str(p.relative_to(reference)): sha(p)
                      for p in sorted((reference / 'bf16').glob('window-*.npy'))},
@@ -149,8 +180,9 @@ def main():
                             or summary['panel_sha256'] != PANEL_SHA or len(summary['windows']) != 16
                             or sha(summary_file) != old['summary_sha256']):
                         raise RuntimeError('Completed-arm provenance mismatch: ' + stage)
-                    (output / stage).symlink_to(reuse / stage, target_is_directory=True)
-                    state['stages'][stage] = {'status': 'REUSED', 'source': str(reuse / stage),
+                    actual_source = (reuse / stage).resolve()
+                    (output / stage).symlink_to(actual_source, target_is_directory=True)
+                    state['stages'][stage] = {'status': 'REUSED', 'source': str(actual_source),
                                              'engine_config': config, 'int8_prefill': int8,
                                              'summary_sha256': sha(summary_file)}
                     save()
@@ -203,8 +235,9 @@ def main():
                          '-v', str(output) + ':' + str(output),
                          '-v', str(reference) + ':' + str(reference) + ':ro',
                          '-v', str(checkpoint / 'tokenizer.json') + ':/tokenizer.json:ro']
-                    if reuse:
-                        comparison_command += ['-v', str(reuse) + ':' + str(reuse) + ':ro']
+                    reused_roots = {Path(s['source']).parent for s in state['stages'].values() if s['status']=='REUSED'}
+                    for reused_root in sorted(reused_roots):
+                        comparison_command += ['-v', str(reused_root) + ':' + str(reused_root) + ':ro']
                     comparison_command += [
                          '--entrypoint', 'python', image, '/scripts/compare.py', '--root', str(output),
                          '--arms', 'fp16', 'gptq', 'exl3', *args.stages,

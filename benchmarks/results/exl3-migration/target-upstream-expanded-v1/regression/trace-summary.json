@@ -1,0 +1,419 @@
+{
+  "schema": 1,
+  "trace_rows": 259,
+  "cache": {
+    "total_blocks": 202,
+    "free_blocks": 201,
+    "watermark_blocks": 0,
+    "groups": [
+      {
+        "group": 0,
+        "type": "MambaManager",
+        "spec": "MambaSpec(block_size=1600, shapes=((6, 10240), (48, 128, 128)), dtypes=(torch.float16, torch.float32), page_size_padded=3276800, mamba_type=<MambaAttentionBackendEnum.GDN_ATTN: 'vllm.v1.attention.backends.gdn_attn.GDNAttentionBackend'>, mamba_cache_mode='align', num_speculative_blocks=3, num_prefill_checkpoint_blocks=0, prefill_checkpoint_alignment=None, num_heads=1, tokens_per_state=-1, tp_replicated=False)",
+        "block_size": 1600,
+        "num_speculative_blocks": 3,
+        "held_blocks": 0,
+        "non_null_blocks": 0,
+        "block_ids": [],
+        "ref_counts": []
+      },
+      {
+        "group": 1,
+        "type": "MambaManager",
+        "spec": "MambaSpec(block_size=1600, shapes=((6, 10240), (48, 128, 128)), dtypes=(torch.float16, torch.float32), page_size_padded=3276800, mamba_type=<MambaAttentionBackendEnum.GDN_ATTN: 'vllm.v1.attention.backends.gdn_attn.GDNAttentionBackend'>, mamba_cache_mode='align', num_speculative_blocks=3, num_prefill_checkpoint_blocks=0, prefill_checkpoint_alignment=None, num_heads=1, tokens_per_state=-1, tp_replicated=False)",
+        "block_size": 1600,
+        "num_speculative_blocks": 3,
+        "held_blocks": 0,
+        "non_null_blocks": 0,
+        "block_ids": [],
+        "ref_counts": []
+      },
+      {
+        "group": 2,
+        "type": "MambaManager",
+        "spec": "MambaSpec(block_size=1600, shapes=((6, 10240), (48, 128, 128)), dtypes=(torch.float16, torch.float32), page_size_padded=3276800, mamba_type=<MambaAttentionBackendEnum.GDN_ATTN: 'vllm.v1.attention.backends.gdn_attn.GDNAttentionBackend'>, mamba_cache_mode='align', num_speculative_blocks=3, num_prefill_checkpoint_blocks=0, prefill_checkpoint_alignment=None, num_heads=1, tokens_per_state=-1, tp_replicated=False)",
+        "block_size": 1600,
+        "num_speculative_blocks": 3,
+        "held_blocks": 0,
+        "non_null_blocks": 0,
+        "block_ids": [],
+        "ref_counts": []
+      },
+      {
+        "group": 3,
+        "type": "FullAttentionManager",
+        "spec": "FullAttentionSpec(block_size=1600, num_kv_heads=4, head_size=256, dtype=torch.uint8, head_size_v=256, kv_quant_mode=<KVQuantMode.FP8_PER_TENSOR: 1>, page_size_padded=None, num_head_slots=None, state_content_bytes=None, tokens_per_state=1, sliding_window=None, attention_chunk_size=None, non_causal=False)",
+        "block_size": 1600,
+        "num_speculative_blocks": null,
+        "held_blocks": 0,
+        "non_null_blocks": 0,
+        "block_ids": [],
+        "ref_counts": []
+      }
+    ]
+  },
+  "memory_stages": [
+    {
+      "event": "before_weights",
+      "pid": 67,
+      "unix": 1790867363.6683948,
+      "monotonic": 88135.176290427,
+      "memory": {
+        "allocated": 42059264,
+        "reserved": 44040192,
+        "max_allocated": 42059264,
+        "max_reserved": 44040192,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 33238269952,
+        "total": 34242297856
+      }
+    },
+    {
+      "event": "before_draft_weights",
+      "pid": 67,
+      "unix": 1790867369.649489,
+      "monotonic": 88141.157384489,
+      "memory": {
+        "allocated": 17236900864,
+        "reserved": 17435721728,
+        "max_allocated": 17236950016,
+        "max_reserved": 17435721728,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 15633321984,
+        "total": 34242297856
+      },
+      "target_tensor_storage": {
+        "unique_storage_bytes": 17034999012,
+        "named_parameter_buffer_bytes": 16782683364,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 1833,
+        "bytes_by_dtype": {
+          "torch.float16": 3665773536,
+          "torch.float32": 9472,
+          "torch.int16": 13368688640,
+          "torch.int32": 3076,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      }
+    },
+    {
+      "event": "after_draft_weights",
+      "pid": 67,
+      "unix": 1790867371.0437274,
+      "monotonic": 88142.551622877,
+      "memory": {
+        "allocated": 20038479872,
+        "reserved": 21386756096,
+        "max_allocated": 21203606016,
+        "max_reserved": 21386756096,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 11684372480,
+        "total": 34242297856
+      },
+      "draft_tensor_storage": {
+        "unique_storage_bytes": 4096022568,
+        "named_parameter_buffer_bytes": 3843706920,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 41,
+        "bytes_by_dtype": {
+          "torch.int16": 1417543680,
+          "torch.float16": 2677952512,
+          "torch.int32": 2072,
+          "torch.float32": 16,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      },
+      "proposer_class": "MTPSpeculator",
+      "shared_lm_head": true
+    },
+    {
+      "event": "after_weights_and_draft",
+      "pid": 67,
+      "unix": 1790867372.7970247,
+      "monotonic": 88144.304920582,
+      "memory": {
+        "allocated": 17556229632,
+        "reserved": 17693671424,
+        "max_allocated": 17556229632,
+        "max_reserved": 17693671424,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 15123701760,
+        "total": 34242297856
+      },
+      "runner_class": "XPUModelRunnerV2",
+      "runner_source": "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/xpu_model_runner.py",
+      "runner_mro": [
+        "<class 'vllm.v1.worker.xpu_model_runner.XPUModelRunnerV2'>",
+        "<class 'vllm.v1.worker.gpu.model_runner.GPUModelRunner'>",
+        "<class 'vllm.v1.worker.lora_model_runner_mixin.LoRAModelRunnerMixin'>",
+        "<class 'object'>"
+      ],
+      "model_tensor_storage": {
+        "unique_storage_bytes": 17247635720,
+        "named_parameter_buffer_bytes": 16995320072,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 1864,
+        "bytes_by_dtype": {
+          "torch.float16": 3666073568,
+          "torch.float32": 9488,
+          "torch.int16": 13581025280,
+          "torch.int32": 3096,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      },
+      "unowned_tensor_audit": {
+        "unowned_storage_bytes_over_1MiB": 210817024,
+        "largest_tensors": [
+          {
+            "shape": [
+              48,
+              262144
+            ],
+            "dtype": "torch.int32",
+            "bytes": 50331648,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "StagedWriteTensor"
+              },
+              {
+                "type": "UvaBuffer"
+              }
+            ]
+          },
+          {
+            "shape": [
+              4096,
+              5120
+            ],
+            "dtype": "torch.float16",
+            "bytes": 41943040,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "EncoderRunner"
+              }
+            ]
+          },
+          {
+            "shape": [
+              4096,
+              5120
+            ],
+            "dtype": "torch.float16",
+            "bytes": 41943040,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "dict",
+                "tensor_keys": [
+                  "hidden_states"
+                ]
+              }
+            ]
+          },
+          {
+            "shape": [
+              4096,
+              5120
+            ],
+            "dtype": "torch.float16",
+            "bytes": 41943040,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "dict",
+                "tensor_keys": [
+                  "inputs_embeds"
+                ]
+              }
+            ]
+          },
+          {
+            "shape": [
+              16,
+              262144
+            ],
+            "dtype": "torch.int32",
+            "bytes": 16777216,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "StagedWriteTensor"
+              },
+              {
+                "type": "UvaBuffer"
+              }
+            ]
+          },
+          {
+            "shape": [
+              16,
+              248320
+            ],
+            "dtype": "torch.int32",
+            "bytes": 15892480,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "PenaltiesState"
+              }
+            ]
+          },
+          {
+            "shape": [
+              64,
+              7760
+            ],
+            "dtype": "torch.int32",
+            "bytes": 1986560,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "StructuredOutputsWorker"
+              }
+            ]
+          }
+        ],
+        "unowned_exl3_heads": [],
+        "scope": "Python-GC-visible XPU storage not referenced by model parameters/buffers/direct attributes/dictionaries; host metadata only"
+      },
+      "draft_present": true
+    },
+    {
+      "event": "before_memory_profile",
+      "pid": 67,
+      "unix": 1790867372.7986927,
+      "monotonic": 88144.306588007,
+      "memory": {
+        "allocated": 17556229632,
+        "reserved": 17693671424,
+        "max_allocated": 17556229632,
+        "max_reserved": 17693671424,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 15123701760,
+        "total": 34242297856
+      },
+      "requested_memory": 31391625769
+    },
+    {
+      "event": "after_memory_profile",
+      "pid": 67,
+      "unix": 1790867435.806103,
+      "monotonic": 88207.313998591,
+      "memory": {
+        "allocated": 17556230144,
+        "reserved": 17693671424,
+        "max_allocated": 18568143360,
+        "max_reserved": 19040043008,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 14208823296,
+        "total": 34242297856
+      },
+      "available_kv_cache_memory_bytes": 11285438505,
+      "requested_memory": 31391625769,
+      "total_consumed": 19094274048,
+      "peak_activation_memory": 1011913216,
+      "cudagraph_memory_estimate": 0,
+      "model_memory_usage": 17452575232
+    },
+    {
+      "event": "before_graph_capture",
+      "pid": 67,
+      "unix": 1790867442.7026968,
+      "monotonic": 88214.210592,
+      "memory": {
+        "allocated": 28873369600,
+        "reserved": 29211230208,
+        "max_allocated": 28980775936,
+        "max_reserved": 29211230208,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 2322571264,
+        "total": 34242297856
+      }
+    },
+    {
+      "event": "after_graph_capture",
+      "pid": 67,
+      "unix": 1790867444.8288813,
+      "monotonic": 88216.336776615,
+      "memory": {
+        "allocated": 28874025984,
+        "reserved": 29062332416,
+        "max_allocated": 28980775936,
+        "max_reserved": 29211230208,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 2409930752,
+        "total": 34242297856
+      },
+      "reported_capture_bytes": 113967104
+    },
+    {
+      "event": "after_warmup",
+      "pid": 67,
+      "unix": 1790867447.9572778,
+      "monotonic": 88219.46517345,
+      "memory": {
+        "allocated": 28874025984,
+        "reserved": 29062332416,
+        "max_allocated": 28980775936,
+        "max_reserved": 29211230208,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 2409930752,
+        "total": 34242297856
+      }
+    }
+  ],
+  "preemption_count": 0,
+  "preemptions": [],
+  "allocation_failure_count": 0,
+  "allocation_failures": [],
+  "scheduled_tokens_by_request": {
+    "chatcmpl-85beb8e53319c278-8db2e24d": 22518
+  },
+  "scheduled_prefill_upper_bound_by_request": {
+    "chatcmpl-85beb8e53319c278-8db2e24d": 22450
+  },
+  "submitted_forward_tokens_by_request": {
+    "_warmup_0_": 19,
+    "_warmup_1_": 11,
+    "_warmup_2_": 9,
+    "_warmup_3_": 9,
+    "_warmup_4_": 9,
+    "_warmup_5_": 9,
+    "_warmup_6_": 9,
+    "_warmup_7_": 9,
+    "_warmup_8_": 9,
+    "_warmup_9_": 9,
+    "_warmup_10_": 9,
+    "_warmup_11_": 9,
+    "_warmup_12_": 9,
+    "_warmup_13_": 9,
+    "_warmup_14_": 9,
+    "chatcmpl-85beb8e53319c278-8db2e24d": 22518
+  },
+  "submitted_prefill_tokens_by_request": {
+    "chatcmpl-85beb8e53319c278-8db2e24d": 22450
+  },
+  "forward_work_note": "Actual Worker.execute_model calls with input offsets, excluding cache-hit token positions. Completion remains asynchronous; no per-kernel timing is inferred.",
+  "scheduled_work_limit": "Scheduling can include speculative/rejected/cancelled work. Prefix hits assigned inside schedule can inflate the prefill estimate. This is not a completed-GPU-compute counter.",
+  "native_logical_metrics": null,
+  "verdict": "No traced preemption",
+  "unmeasured": [
+    "oneDNN private workspace allocation",
+    "exact graph-pool ownership",
+    "completed GPU kernel token work"
+  ]
+}

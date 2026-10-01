@@ -295,3 +295,105 @@ immutable functional-port image plus tracked JSON overrides. The first
 campaign changes only GPU memory fraction and repeats the frozen greedy
 probe plus the 200704-total boundary. Media/context/concurrency changes
 follow as separate cases; no unchanged full GPTQ benchmark is running.
+
+## User steering: concurrency pressure and full draft vocabulary
+
+The user accepts preemption under genuine capacity pressure at C16 and allows
+C4/C8 as the qualified concurrency target. C16 is an admission ceiling, not
+a promise of sixteen simultaneous maximum-length contexts. Retain completion,
+correctness, accounting, no-OOM and recovery gates; report preemption counts,
+recompute work and latency. Investigate avoidable pressure without making
+zero-preemption C16 a mandatory release gate. The first expanded campaign
+failed its former zero-preemption assertion after all sixteen 8192+256 requests
+completed (four preemption events). Its remaining image/abort cases did not run;
+this failed campaign is preserved and cannot be relabeled as complete. Future
+controllers support explicit `--allow-c16-preemptions` with recorded policy.
+
+M04 shared-KV verification is not yet active in the target EXL3 runtime.
+It reuses historical KV loads across multiple speculative verification rows,
+with correct causal visibility per row. Porting requires actual EXL3 page
+size/strides/scales and graph/native fallback validation, not the GPTQ 1664
+page-size assumption.
+
+Current EXL3 draft pruning keeps 512 blocks of 128 tokens: 65536 draft rows,
+not 512 tokens. Target verification retains the full 248320-row model head.
+GPTQ production uses full draft vocabulary. After the plan's first controlled
+MTP3/MTP4 experiment, compare EXL3 pruned versus full draft vocabulary with
+the same selected MTP depth, prompts, output budgets, KV precision and runtime.
+Disable `EXL3_DRAFT_VOCAB` for the full arm and verify actual full-head dispatch.
+Measure end-to-end decode, accepted tokens per round, draft-head time, startup
+and steady-state memory, and retained context capacity. Fewer draft rows can
+reduce head cost but reduce acceptance; choose from measured net benefit.
+Disabling pruning removes the additional pruned-head allocation but increases
+full-head computation; do not assume it costs additional weight memory.
+
+## Expanded capacity — completed under the clarified pressure policy
+
+`target-memory965-v1` completes the unchanged C4/200704 contract at .965
+with no traced preemptions. `target-media965-v1` verifies actual 32-image
+and 4-video count limits, over-limit rejection and the 4.2MP image cap
+(an oversized image produces4081 prompt tokens). This does not guarantee
+32 maximum-area images plus4 long videos and maximum text all fit.
+
+`target-upstream-expanded-v2` reuses the identical image/settings' completed
+regression, smoke and261120+1024 boundary cases with checked runtime
+manifest hashes. Fresh C16, image119K and long extension/abort/restart
+cases pass. One FINISHED_ABORTED event is recorded. C16 completes all16
+8192+256 requests, with4 preemption events affecting2 distinct requests.
+Target-forward submission offsets account for147072 prefill tokens versus
+131072 logical prompt tokens:16000 additional submitted rows. This is
+submitted work, not completed GPU kernel timing. Waiting admission
+rejections are not themselves request preemptions. All other cases have
+zero traced preemptions. Full candidate precision and performance gates
+remain open; native diagnostic timings are not release throughput claims.
+
+Terminal trace files, including the earlier failed campaign, are compressed
+losslessly with per-file roundtrip/SHA256 receipts. Reused directories use
+relative links to preserved evidence in the same repository.
+
+The first chunked original BF16 GPU control finishes in75.27 seconds using
+2.57GiB peak allocated GPU memory and5.75GiB peak host RSS. With256-token
+chunks, mean full-vocabulary KL from the existing unchunked BF16 reference
+is0.0006482 for prose and0.0006462 for code; top1 agrees at all17 sampled
+positions. Individual suffix target NLL changes reach0.225nats. This is
+numerical reference drift, not quantization error or proof of long-context
+accuracy. CPU official cached-layer checks pass at<4.2e-7 logit difference.
+A4096-token control and actual untruncated long references follow.
+
+## Expanded full-candidate short precision — completed
+
+`exl3-quality-target-stages-v3` reuses five immutable completed arms and
+adds only the expanded full candidate at262144/C16/.965/4096/media32/4,
+FP8 KV, INT8 prefill, graph configuration and MTP3. All16 windows and
+16368 target NLL positions align with the independent API;512 full
+vocabulary distributions are compared with FP64 renormalization.
+The frozen BF16 bundle still validates bit-exactly.
+
+Full candidate PPL is3.647854, KL(BF16||candidate)0.032727nats; GPTQ
+is3.801927/0.086369. The candidate retains the measured short-panel
+EXL3 advantage. Paired deltaNLL versus oldEXL3 and its exploratory
+window-bootstrap interval are preserved in `target-quality-full-v1`;
+no effect is treated as zero or assigned a new post-hoc pass threshold.
+Configuring MTP/graphs during prompt scoring still does not prove
+generated acceptance/graph correctness. Long suffix and generated
+decode checks remain before Gate E can close.
+
+The4096-token control also finishes (73.24 seconds): on these1024-token
+windows it uses one cached prefill per layer and reproduces all512 suffix
+NLL values and17 sampled full-vocabulary distributions exactly (KL0).
+The256-token control therefore isolates a chunking numerical effect, not
+a layer-streaming/alignment defect. Long contexts necessarily use multiple
+chunks; their reference metadata records that limitation. The four original
+BF16 contexts now run without truncation in `exl3-long-quality-v1`.
+
+C16 pressure is explained by the shared hybrid block pool, not by sixteen
+maximum-length contexts: the recorded admission round requests4 blocks per
+GDN group (three groups, including3 speculative states each) plus6 full
+attention blocks for an8K prompt,18 pooled blocks in total. Only200 of201
+blocks are initially free. At a running prefill boundary, a request needs
+one additional block in each group (4 total) while the pool has0 or1 free;
+the scheduler preempts to make progress. This establishes block-pool
+pressure and hybrid/speculative overhead. It does not prove that every
+preemption is unavoidable or that improved admission could not reduce it;
+no speculative allocator rewrite is required before quality/performance
+work under the clarified user policy.

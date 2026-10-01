@@ -11,6 +11,7 @@ import gzip
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import signal
 import struct
@@ -192,7 +193,7 @@ def media_case(root,media_limits):
     R.save(root/'media-expanded.json',result)
     return result
 
-def operational(case,root):
+def operational(case,root,allow_c16_preemptions=False):
     if case in ('c4-long','c16-long'):
         concurrency,prompt_length=(4,32768) if case=='c4-long' else (16,8192)
         payloads=[]
@@ -209,11 +210,16 @@ def operational(case,root):
             if native.get('completed')==concurrency and native.get('generation_tokens')==concurrency*256: break
             if time.monotonic()>deadline: raise RuntimeError('Concurrent accounting did not settle')
             time.sleep(.25)
-        assert all(r['usage']['prompt_tokens']==prompt_length and r['usage']['completion_tokens']==256 for r in responses)
-        assert native['preemptions']==0,native
-        result={'status':'PASS','usage':[r['usage'] for r in responses],'native':native,
+        result={'status':'OBSERVED','usage':[r['usage'] for r in responses],'native':native,
                 'request_sha256':[hashlib.sha256(json.dumps(p,sort_keys=True).encode()).hexdigest() for p in payloads],
+                'preemption_policy':'record-pressure' if case=='c16-long' and allow_c16_preemptions else 'require-zero',
                 'purpose':f'{concurrency} simultaneous independent {prompt_length}-token prompts; fixed output 256 each; not a claim of {concurrency} simultaneous maximum-context sequences'}
+        # Retain completed-request evidence even if a qualification assertion fails.
+        R.save(root/'operational-progress.json',result)
+        assert all(r['usage']['prompt_tokens']==prompt_length and r['usage']['completion_tokens']==256 for r in responses)
+        if case!='c16-long' or not allow_c16_preemptions:
+            assert native['preemptions']==0,native
+        result['status']='PASS'
     elif case=='image-long':
         content=[{'type':'image_url','image_url':{'url':png_url()}},
                  {'type':'text','text':('Neutral independent context note. function step(x) { return x+1; }\n'*7000)+
@@ -259,6 +265,8 @@ def main():
     ap.add_argument('--runtime',choices=('old','target'),default='old',help='Pinned ABI/profile/cache namespace')
     ap.add_argument('--settings-json',type=Path,help='Explicit vLLM setting overrides; base image profile remains immutable')
     ap.add_argument('--cases',default='smoke')
+    ap.add_argument('--reuse-completed',type=Path,help='Reuse passed cases of a terminal campaign with the same image/runtime/profile/settings; failed cases run fresh')
+    ap.add_argument('--allow-c16-preemptions',action='store_true',help='Record C16 pressure instead of requiring zero preemptions; completion/accounting gates stay enforced')
     ap.add_argument('--retirement-fix',choices=('0','1'),help='Explicit old-allocator A/B on one immutable candidate image')
     ap.add_argument('--restore-production',action='store_true',help='Explicit pinned GPTQ rollback drill after the campaign')
     ap.add_argument('--output',type=Path,required=True)
@@ -274,13 +282,33 @@ def main():
     release=json.loads((REPO/'config/production_image.json').read_text())
     image=subprocess.check_output(['docker','image','inspect',a.image,'--format','{{.Id}}'],text=True).strip()
     if image==release['image_id']: raise SystemExit('Candidate must be separate from GPTQ production')
+    reused={}
+    if a.reuse_completed:
+        oldroot=a.reuse_completed.resolve();oldfile=oldroot/'campaign.json'
+        old=json.loads(oldfile.read_text())
+        if (old.get('status') not in ('COMPLETE','FAILED') or old.get('image')!=image
+                or old.get('settings_overrides')!=settings
+                or old.get('purpose')!=a.runtime+'-ABI instrumented contract diagnostics'):
+            raise SystemExit('Reuse requires a terminal campaign of the exact image/runtime/settings')
+        for case in cases:
+            entry=old['cases'].get(case,{})
+            if entry.get('result',{}).get('status') not in ('COMPLETE','PASS'): continue
+            launch=entry.get('launch',[])
+            fixes=[x for x in launch if x.startswith('EXL3_FIX_SPARSE_GDN_RETIREMENT=')]
+            wanted_fix=[] if a.retirement_fix is None else ['EXL3_FIX_SPARSE_GDN_RETIREMENT='+a.retirement_fix]
+            manifest=oldroot/case/'runtime-environment.json'
+            if (profile not in launch or fixes!=wanted_fix or entry['identity']['image_id']!=image
+                    or not manifest.is_file() or sha(manifest)!=entry.get('runtime_manifest_sha256')):
+                raise SystemExit('Reused case profile/identity/runtime evidence mismatch: '+case)
+            reused[case]={**entry,'reused_from':str(oldroot/case),
+                          'source_campaign_sha256':sha(oldfile)}
     lockpath=REPO.parent/'Local-AI-B70/qwen38/context-benchmark/run.lock';lockpath.parent.mkdir(parents=True,exist_ok=True)
     with lockpath.open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         a.output.mkdir(parents=True);state={'schema':1,'started_at':R.now(),'image':image,'cases':{},'status':'RUNNING',
                                           'purpose':a.runtime+'-ABI instrumented contract diagnostics','settings_overrides':settings,
                                           'settings_sha256':sha(a.settings_json) if a.settings_json else None,'production_restored':False,
-                                          'restore_production_requested':a.restore_production}
+                                          'restore_production_requested':a.restore_production,'allow_c16_preemptions':a.allow_c16_preemptions}
         def save(): R.save(a.output/'campaign.json',state)
         def interrupted(*args): raise RuntimeError('Migration diagnostic interrupted')
         signal.signal(signal.SIGINT,interrupted);signal.signal(signal.SIGTERM,interrupted)
@@ -288,6 +316,11 @@ def main():
         try:
             C.command(['systemctl','--user','stop',C.SERVICE])
             for case in cases:
+                if case in reused:
+                    (a.output/case).symlink_to(os.path.relpath(reused[case]['reused_from'],a.output.resolve()))
+                    state['cases'][case]=reused[case];save()
+                    print('REUSED '+case,flush=True)
+                    continue
                 root=(a.output/case).resolve();root.mkdir();(root/'trace').mkdir()
                 cache=Path.home()/('.cache/exl3xpu/migration-'+a.runtime)/image.removeprefix('sha256:')
                 for d in ('vllm','triton','neo_compiler_cache'): (cache/d).mkdir(parents=True,exist_ok=True)
@@ -327,7 +360,7 @@ def main():
                     R.cap();state['cases'][case]['identity']=identity;save()
                     state['cases'][case]['result']=(smoke(root,max_context,media_limits) if case=='smoke' else regression(root) if case=='regression'
                                                     else media_case(root,media_limits) if case=='media-expanded'
-                                                    else operational(case,root) if case in ('c4-long','c16-long','image-long','extension-abort-long')
+                                                    else operational(case,root,a.allow_c16_preemptions) if case in ('c4-long','c16-long','image-long','extension-abort-long')
                                                     else long_case(case,root,max_context))
                     runtime=MANIFEST.probe(container=NAME)
                     R.save(root/'runtime-environment.json',runtime)

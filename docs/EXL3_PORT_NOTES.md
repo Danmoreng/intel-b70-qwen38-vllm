@@ -466,3 +466,40 @@ CPU actual/padded rows and graph bucket metadata. Event synchronization is
 deferred until generation finishes. It is not an uninstrumented throughput
 arm; fused draft body/head/sampler decomposition remains explicitly missing.
 Actual XPU-event validation and profiling follow the completed serving study.
+
+
+## Compact depth screen and bounded profiling (2026-10-01)
+
+At the user's request the160-wave ABBA campaign was curtailed after31 completed
+MTP3 waves. All raw data and the original controller source are retained.
+The36-wave compact comparison reuses18 exact completed MTP3 waves and measures
+18 fresh MTP4 waves; all84 requests complete with zero preemptions. The fresh
+controller finishes in978.15s including startup/warmup. This is single-pass
+screening with a historical control, not completed ABBA qualification.
+
+See `benchmarks/results/exl3-migration/target-mtp-compact-serving-v1` for the
+full audited case table, input/output proof and source-result checksums.
+MTP4 helps short code C1 but gains only~1.1% at103K code C1. Prose cases
+remain mixed/negative. Warm48K C4 is dominated by unequal cache reuse:
+185600 versus93184 cached prompt tokens out of196608. Native zero-preemption
+counters do not establish identical cache residency or an isolated decode
+comparison. Only3/42 paired outputs are token-identical, including early prose
+divergences. Generated-path correctness remains open.
+
+The old queued broad component run was cancelled before GPU execution.
+`run-exl3-component-profile.py --compact` now follows the completed compact
+screen under the same exclusive GPU lock. It records only code4K C1,48K C4,
+103K C1 at128 output tokens for each depth, plus separate eight-cycle kernel
+traces for the two long cases. Trace generation reuses the preceding prompt/salt;
+actual cache hits and mixed/prefill metadata are retained, never presumed.
+CPU call-site/event/trace lifecycle guards and full/pruned head inventory tests
+pass on the exact target image; actual XPU validation is underway.
+
+The first actual MTP3 inventory reports both target and draft full heads at
+248320 rows/6bits and a65536-row pruned copy on each. Each pruned copy references
+252315648 logical tensor bytes (~240.63MiB), or~481.25MiB total. Logical bytes
+are not a unique allocator-residency measurement. The target-head copy appears
+unused by the target logits route in the inspected source; prove ownership and
+actual memory/output effects before removing it. Full-vocabulary ablation is
+still pending and must account for any removed duplicate head separately.
+GPTQ stays offline; the immutable serving image remains unchanged.

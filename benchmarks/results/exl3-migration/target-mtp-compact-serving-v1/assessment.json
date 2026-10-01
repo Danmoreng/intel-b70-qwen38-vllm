@@ -1,0 +1,1688 @@
+{
+  "status": "COMPLETE_SCREEN_NOT_RELEASE_QUALIFICATION",
+  "campaign_sha256": "92b7a95d6b834770f0dfe484d0631f82042cfe448edc681e8d7ce5f23eeedde9",
+  "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "panel_sha256": "537a7a1e50931287c565e4dcca74b017b9744a0d16ded7c000adc5d665db36fc",
+  "waves": 36,
+  "requests": 84,
+  "comparison_design": "Single-pass screening; reused MTP3 is historical, no ABBA/order-drift confidence. Repeat only ambiguous cells.",
+  "paired_cases": [
+    {
+      "window": "code-4096",
+      "domain": "code",
+      "context_tokens": 4096,
+      "concurrency": 1,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 69.29033770729475,
+          "mtp4": 93.6721423499123,
+          "mtp4_change_pct": 35.18788542439255
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 69.30430975395508,
+          "mtp4": 93.70059456569162,
+          "mtp4_change_pct": 35.2016850010461
+        },
+        "native_prefill_tps": {
+          "mtp3": 2295.699122860584,
+          "mtp4": 2272.12051830575,
+          "mtp4_change_pct": -1.027077299461332
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 55.666065688376655,
+          "mtp4": 70.4098059348787,
+          "mtp4_change_pct": 26.486046865677125
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 3.1411042944785277,
+          "mtp4": 4.530973451327434,
+          "mtp4_change_pct": 44.24778761061947
+        },
+        "joules_per_output_token": {
+          "mtp3": 3.23286426171875,
+          "mtp4": 2.5610343203125,
+          "mtp4_change_pct": -20.781260424743977
+        },
+        "wall_s": {
+          "mtp3": 9.197704088990577,
+          "mtp4": 7.271714404007071,
+          "mtp4_change_pct": -20.939896156138225
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 4096.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 1.7842059350077761,
+          "decode_seconds": 7.38919764199818,
+          "accepted_tokens": 349.0,
+          "draft_tokens": 489.0
+        },
+        "mtp4": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 4096.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 1.8027212760061957,
+          "decode_seconds": 5.465872639993904,
+          "accepted_tokens": 399.0,
+          "draft_tokens": 452.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          1.8094781229883665
+        ],
+        "mtp4": [
+          1.8070281899999827
+        ]
+      },
+      "first_output_difference_by_request": [
+        137
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.0,
+        "mtp4": 0.0
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "code-4096",
+      "domain": "code",
+      "context_tokens": 4096,
+      "concurrency": 1,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 69.38097109440888,
+          "mtp4": 80.02902518934651,
+          "mtp4_change_pct": 15.347225510073192
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 69.39507197986472,
+          "mtp4": 80.04503631418702,
+          "mtp4_change_pct": 15.346859698354987
+        },
+        "native_prefill_tps": {
+          "mtp3": 2337.497956786689,
+          "mtp4": 2257.4107656011147,
+          "mtp4_change_pct": -3.426192992085797
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 60.439224379976274,
+          "mtp4": 68.26314047497843,
+          "mtp4_change_pct": 12.945096789816258
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 3.1604938271604937,
+          "mtp4": 3.878787878787879,
+          "mtp4_change_pct": 22.72727272727273
+        },
+        "joules_per_output_token": {
+          "mtp3": 2.97792804296875,
+          "mtp4": 2.6370038984375,
+          "mtp4_change_pct": -11.448367442464335
+        },
+        "wall_s": {
+          "mtp3": 8.471319830001448,
+          "mtp4": 7.500387419000617,
+          "mtp4_change_pct": -11.461406610599722
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 1600.0,
+          "prefill_tokens": 2496.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 1.0678084200044395,
+          "decode_seconds": 7.379545023999526,
+          "accepted_tokens": 350.0,
+          "draft_tokens": 486.0
+        },
+        "mtp4": {
+          "cached_tokens": 1664.0,
+          "prefill_tokens": 2432.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 1.077340480987914,
+          "decode_seconds": 6.397678827008349,
+          "accepted_tokens": 379.0,
+          "draft_tokens": 528.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          1.092783241008874
+        ],
+        "mtp4": [
+          1.1034989090112504
+        ]
+      },
+      "first_output_difference_by_request": [
+        137
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.390625,
+        "mtp4": 0.40625
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "code-4096",
+      "domain": "code",
+      "context_tokens": 4096,
+      "concurrency": 4,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 45.586501490863846,
+          "mtp4": 47.715970228696555,
+          "mtp4_change_pct": 4.671270372128644
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 149.96638691260216,
+          "mtp4": 158.3678013705811,
+          "mtp4_change_pct": 5.602198353205079
+        },
+        "native_prefill_tps": {
+          "mtp3": 1191.7517745319708,
+          "mtp4": 1174.218651377871,
+          "mtp4_change_pct": -1.4712059615757944
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 123.52442452646366,
+          "mtp4": 128.73680177564333,
+          "mtp4_change_pct": 4.219713849436291
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 3.261146496815287,
+          "mtp4": 4.007827788649706,
+          "mtp4_change_pct": 22.89628180039138
+        },
+        "joules_per_output_token": {
+          "mtp3": 1.45752218359375,
+          "mtp4": 1.39858248828125,
+          "mtp4_change_pct": -4.043828353073486
+        },
+        "wall_s": {
+          "mtp3": 16.57971698998881,
+          "mtp4": 15.908426896989113,
+          "mtp4_change_pct": -4.048863399809766
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 16384.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 13.747829330008244,
+          "decode_seconds": 44.92557956899691,
+          "accepted_tokens": 1425.0,
+          "draft_tokens": 1884.0
+        },
+        "mtp4": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 16384.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 13.953108291010722,
+          "decode_seconds": 42.92064040999685,
+          "accepted_tokens": 1543.0,
+          "draft_tokens": 2044.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          4.026585476996843,
+          7.032455292996019,
+          5.138515486993128,
+          2.922101019008551
+        ],
+        "mtp4": [
+          7.1448709789983695,
+          5.212163424002938,
+          2.9751947069889866,
+          4.083928370004287
+        ]
+      },
+      "first_output_difference_by_request": [
+        137,
+        137,
+        185,
+        137
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.0,
+        "mtp4": 0.0
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "code-4096",
+      "domain": "code",
+      "context_tokens": 4096,
+      "concurrency": 4,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 46.583931926736305,
+          "mtp4": 49.79106771237971,
+          "mtp4_change_pct": 6.884639516233504
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 157.74515220846547,
+          "mtp4": 166.57423083313222,
+          "mtp4_change_pct": 5.597052271374281
+        },
+        "native_prefill_tps": {
+          "mtp3": 1299.8238435751443,
+          "mtp4": 936.5853871956219,
+          "mtp4_change_pct": -27.94520643508438
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 145.9711911506566,
+          "mtp4": 146.6534464619281,
+          "mtp4_change_pct": 0.46739038428982305
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 3.190031152647975,
+          "mtp4": 3.7785977859778597,
+          "mtp4_change_pct": 18.450184501845012
+        },
+        "joules_per_output_token": {
+          "mtp3": 1.2343302963867187,
+          "mtp4": 1.2269162236328126,
+          "mtp4_change_pct": -0.6006554951790033
+        },
+        "wall_s": {
+          "mtp3": 14.0301657050004,
+          "mtp4": 13.964895127995987,
+          "mtp4_change_pct": -0.46521600939574137
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 6400.0,
+          "prefill_tokens": 9984.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 7.681040818992187,
+          "decode_seconds": 43.96365689398954,
+          "accepted_tokens": 1408.0,
+          "draft_tokens": 1926.0
+        },
+        "mtp4": {
+          "cached_tokens": 6656.0,
+          "prefill_tokens": 9728.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 10.38666642998578,
+          "decode_seconds": 41.13187553700118,
+          "accepted_tokens": 1503.0,
+          "draft_tokens": 2168.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          4.439737410997623,
+          3.301648031003424,
+          2.1515567730093608,
+          1.0460037090088008
+        ],
+        "mtp4": [
+          3.1314949420047924,
+          4.269587007001974,
+          3.130841105012223,
+          1.6688510210078675
+        ]
+      },
+      "first_output_difference_by_request": [
+        null,
+        193,
+        185,
+        190
+      ],
+      "exact_output_matches": 1,
+      "cache_hit_fraction": {
+        "mtp3": 0.390625,
+        "mtp4": 0.40625
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "prose-4096",
+      "domain": "prose",
+      "context_tokens": 4096,
+      "concurrency": 1,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 52.154110159754076,
+          "mtp4": 57.759361577346795,
+          "mtp4_change_pct": 10.747477812243723
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 52.16339660146701,
+          "mtp4": 57.769381429489066,
+          "mtp4_change_pct": 10.746970468300376
+        },
+        "native_prefill_tps": {
+          "mtp3": 2266.098172352284,
+          "mtp4": 2254.0852557554213,
+          "mtp4_change_pct": -0.5301145706495647
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 43.9535651115779,
+          "mtp4": 47.82632205031082,
+          "mtp4_change_pct": 8.811018921677395
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 2.392523364485981,
+          "mtp4": 2.797814207650273,
+          "mtp4_change_pct": 16.93989071038253
+        },
+        "joules_per_output_token": {
+          "mtp3": 4.095524548828125,
+          "mtp4": 3.7635986796875,
+          "mtp4_change_pct": -8.104599671746593
+        },
+        "wall_s": {
+          "mtp3": 11.648656910998398,
+          "mtp4": 10.705401922008605,
+          "mtp4_change_pct": -8.097542885817099
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 4096.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 1.8075121589936316,
+          "decode_seconds": 9.817059449997032,
+          "accepted_tokens": 297.0,
+          "draft_tokens": 642.0
+        },
+        "mtp4": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 4096.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 1.817145109991543,
+          "decode_seconds": 8.864363906002836,
+          "accepted_tokens": 330.0,
+          "draft_tokens": 732.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          1.832851054990897
+        ],
+        "mtp4": [
+          1.8420494239981053
+        ]
+      },
+      "first_output_difference_by_request": [
+        3
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.0,
+        "mtp4": 0.0
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "prose-4096",
+      "domain": "prose",
+      "context_tokens": 4096,
+      "concurrency": 1,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 57.876658763071404,
+          "mtp4": 48.4998531866551,
+          "mtp4_change_pct": -16.20135954081585
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 57.88603837181005,
+          "mtp4": 48.50682946023354,
+          "mtp4_change_pct": -16.20288618013994
+        },
+        "native_prefill_tps": {
+          "mtp3": 2315.08640600433,
+          "mtp4": 2253.676971260862,
+          "mtp4_change_pct": -2.6525763610463327
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 51.46377026209168,
+          "mtp4": 43.908627071891374,
+          "mtp4_change_pct": -14.680508543629657
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 2.6666666666666665,
+          "mtp4": 2.3486238532110093,
+          "mtp4_change_pct": -11.926605504587151
+        },
+        "joules_per_output_token": {
+          "mtp3": 3.497566341796875,
+          "mtp4": 4.099794625,
+          "mtp4_change_pct": 17.218494929069173
+        },
+        "wall_s": {
+          "mtp3": 9.948746416994254,
+          "mtp4": 11.660578663999331,
+          "mtp4_change_pct": 17.20651200920107
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 1600.0,
+          "prefill_tokens": 2496.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 1.0781455039978027,
+          "decode_seconds": 8.846398720008438,
+          "accepted_tokens": 320.0,
+          "draft_tokens": 576.0
+        },
+        "mtp4": {
+          "cached_tokens": 1664.0,
+          "prefill_tokens": 2432.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 1.0791253720090026,
+          "decode_seconds": 10.556732986995485,
+          "accepted_tokens": 293.0,
+          "draft_tokens": 872.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          1.1033062530041207
+        ],
+        "mtp4": [
+          1.1048416629928397
+        ]
+      },
+      "first_output_difference_by_request": [
+        1
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.390625,
+        "mtp4": 0.40625
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "prose-4096",
+      "domain": "prose",
+      "context_tokens": 4096,
+      "concurrency": 4,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 35.651602797546346,
+          "mtp4": 33.001218532626694,
+          "mtp4_change_pct": -7.434123733427378
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 121.91068913717595,
+          "mtp4": 112.29083711050667,
+          "mtp4_change_pct": -7.8909011955833215
+        },
+        "native_prefill_tps": {
+          "mtp3": 1175.8338227667919,
+          "mtp4": 1172.5331685754202,
+          "mtp4_change_pct": -0.28070753940425686
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 103.6703694660351,
+          "mtp4": 96.51683922430433,
+          "mtp4_change_pct": -6.90026502131299
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 2.4645006016847173,
+          "mtp4": 2.5761006289308175,
+          "mtp4_change_pct": 4.528301886792452
+        },
+        "joules_per_output_token": {
+          "mtp3": 1.7365300659179688,
+          "mtp4": 1.8651111723632812,
+          "mtp4_change_pct": 7.404484895995256
+        },
+        "wall_s": {
+          "mtp3": 19.75492139700509,
+          "mtp4": 21.21909520099871,
+          "mtp4_change_pct": 7.411691368286544
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 16384.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 13.933941755007254,
+          "decode_seconds": 57.444822652993025,
+          "accepted_tokens": 1214.0,
+          "draft_tokens": 2493.0
+        },
+        "mtp4": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 16384.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 13.973165484014316,
+          "decode_seconds": 62.05831454299914,
+          "accepted_tokens": 1253.0,
+          "draft_tokens": 3180.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          7.1334614569932455,
+          4.078210318999481,
+          2.9543620699987514,
+          5.20873844801099
+        ],
+        "mtp4": [
+          4.090100487010204,
+          7.152906787989195,
+          2.979443354997784,
+          5.217222612001933
+        ]
+      },
+      "first_output_difference_by_request": [
+        1,
+        3,
+        167,
+        121
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.0,
+        "mtp4": 0.0
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "prose-4096",
+      "domain": "prose",
+      "context_tokens": 4096,
+      "concurrency": 4,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 37.31446582834311,
+          "mtp4": 34.694341769553816,
+          "mtp4_change_pct": -7.0217380863566214
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 125.72856510385837,
+          "mtp4": 116.12552215486718,
+          "mtp4_change_pct": -7.637916603166972
+        },
+        "native_prefill_tps": {
+          "mtp3": 934.3566784395306,
+          "mtp4": 935.0735606451751,
+          "mtp4_change_pct": 0.07672468364456897
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 114.11211265679158,
+          "mtp4": 106.14146725438437,
+          "mtp4_change_pct": -6.984924927628033
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 2.386946386946387,
+          "mtp4": 2.5036674816625917,
+          "mtp4_change_pct": 4.88997555012225
+        },
+        "joules_per_output_token": {
+          "mtp3": 1.5775166455078125,
+          "mtp4": 1.6958288549804688,
+          "mtp4_change_pct": 7.49990244537615
+        },
+        "wall_s": {
+          "mtp3": 17.94726214700495,
+          "mtp4": 19.295003667997662,
+          "mtp4_change_pct": 7.509454700964646
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 6400.0,
+          "prefill_tokens": 9984.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 10.685426914991695,
+          "decode_seconds": 54.88488055601192,
+          "accepted_tokens": 1189.0,
+          "draft_tokens": 2574.0
+        },
+        "mtp4": {
+          "cached_tokens": 6656.0,
+          "prefill_tokens": 9728.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 10.403459588022088,
+          "decode_seconds": 59.029798392002704,
+          "accepted_tokens": 1228.0,
+          "draft_tokens": 3272.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          3.220936059995438,
+          4.3671028620010475,
+          3.2203184140089434,
+          1.6569813310052268
+        ],
+        "mtp4": [
+          4.266245085003902,
+          3.125580940992222,
+          1.6575981710047927,
+          3.1263075579918223
+        ]
+      },
+      "first_output_difference_by_request": [
+        3,
+        19,
+        502,
+        1
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.390625,
+        "mtp4": 0.40625
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "code-49152",
+      "domain": "code",
+      "context_tokens": 49152,
+      "concurrency": 1,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 60.35908013113407,
+          "mtp4": 68.99764032705063,
+          "mtp4_change_pct": 14.311948056777402
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 60.46501564335734,
+          "mtp4": 69.13940119624523,
+          "mtp4_change_pct": 14.346123060733639
+        },
+        "native_prefill_tps": {
+          "mtp3": 1378.9148687292184,
+          "mtp4": 1429.1623831709057,
+          "mtp4_change_pct": 3.643989602345399
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 11.594908839449099,
+          "mtp4": 12.241389442786527,
+          "mtp4_change_pct": 5.575555722679959
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 3.390728476821192,
+          "mtp4": 4.162601626016261,
+          "mtp4_change_pct": 22.764227642276435
+        },
+        "joules_per_output_token": {
+          "mtp3": 15.524412751953125,
+          "mtp4": 14.701176287109375,
+          "mtp4_change_pct": -5.302850922590807
+        },
+        "wall_s": {
+          "mtp3": 44.1573113760096,
+          "mtp4": 41.8253174929996,
+          "mtp4_change_pct": -5.281104782744894
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 49152.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 35.64542026100389,
+          "decode_seconds": 8.482567972998368,
+          "accepted_tokens": 362.0,
+          "draft_tokens": 453.0
+        },
+        "mtp4": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 49152.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 34.39217305100465,
+          "decode_seconds": 7.420543624000857,
+          "accepted_tokens": 390.0,
+          "draft_tokens": 492.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          35.687869308996596
+        ],
+        "mtp4": [
+          34.41818082299142
+        ]
+      },
+      "first_output_difference_by_request": [
+        67
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.0,
+        "mtp4": 0.0
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "code-49152",
+      "domain": "code",
+      "context_tokens": 49152,
+      "concurrency": 1,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 60.37052229066464,
+          "mtp4": 65.80015659635616,
+          "mtp4_change_pct": 8.993850143534598
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 60.4749494481225,
+          "mtp4": 65.92344213198847,
+          "mtp4_change_pct": 9.009503494566573
+        },
+        "native_prefill_tps": {
+          "mtp3": 961.8716009254065,
+          "mtp4": 989.5212934126705,
+          "mtp4_change_pct": 2.8745720801677255
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 45.00826409789894,
+          "mtp4": 49.21351922508968,
+          "mtp4_change_pct": 9.343295529113838
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 3.390728476821192,
+          "mtp4": 3.9689922480620154,
+          "mtp4_change_pct": 17.054263565891482
+        },
+        "joules_per_output_token": {
+          "mtp3": 3.999849556640625,
+          "mtp4": 3.6580533984375,
+          "mtp4_change_pct": -8.545225348180118
+        },
+        "wall_s": {
+          "mtp3": 11.375688671003445,
+          "mtp4": 10.403645340993535,
+          "mtp4_change_pct": -8.544918537438907
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 46400.0,
+          "prefill_tokens": 2752.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 2.861088732999633,
+          "decode_seconds": 8.480960253000376,
+          "accepted_tokens": 362.0,
+          "draft_tokens": 453.0
+        },
+        "mtp4": {
+          "cached_tokens": 46592.0,
+          "prefill_tokens": 2560.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 2.587109562009573,
+          "decode_seconds": 7.7811364969966235,
+          "accepted_tokens": 385.0,
+          "draft_tokens": 516.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          2.907705135992728
+        ],
+        "mtp4": [
+          2.635386619993369
+        ]
+      },
+      "first_output_difference_by_request": [
+        null
+      ],
+      "exact_output_matches": 1,
+      "cache_hit_fraction": {
+        "mtp3": 0.9440104166666666,
+        "mtp4": 0.9479166666666666
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "code-49152",
+      "domain": "code",
+      "context_tokens": 49152,
+      "concurrency": 4,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 7.014683209630849,
+          "mtp4": 6.991174676961015,
+          "mtp4_change_pct": -0.33513320512547073
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 15.352298069121378,
+          "mtp4": 15.270612126765617,
+          "mtp4_change_pct": -0.532076318398611
+        },
+        "native_prefill_tps": {
+          "mtp3": 1114.6005484284817,
+          "mtp4": 1206.9336693620405,
+          "mtp4_change_pct": 8.283965144619998
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 12.081450627518464,
+          "mtp4": 12.159026099397687,
+          "mtp4_change_pct": 0.64210395151163
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 3.3851239669421487,
+          "mtp4": 3.8568738229755177,
+          "mtp4_change_pct": 13.935969868173249
+        },
+        "joules_per_output_token": {
+          "mtp3": 14.90096276953125,
+          "mtp4": 14.806068002929688,
+          "mtp4_change_pct": -0.6368364787515457
+        },
+        "wall_s": {
+          "mtp3": 169.51606749401253,
+          "mtp4": 168.43454264001048,
+          "mtp4_change_pct": -0.6380072815458937
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 196608.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 176.39323816698743,
+          "decode_seconds": 291.9590149400028,
+          "accepted_tokens": 1441.0,
+          "draft_tokens": 1815.0
+        },
+        "mtp4": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 196608.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 162.89876153999649,
+          "decode_seconds": 292.9407566870068,
+          "accepted_tokens": 1520.0,
+          "draft_tokens": 2124.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          114.60331656799826,
+          73.31784284400055,
+          156.3172990489984,
+          36.10966684599407
+        ],
+        "mtp4": [
+          72.21338050199847,
+          154.8349814670073,
+          34.314293877003365,
+          112.47738377000496
+        ]
+      },
+      "first_output_difference_by_request": [
+        303,
+        99,
+        99,
+        303
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.0,
+        "mtp4": 0.0
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "code-49152",
+      "domain": "code",
+      "context_tokens": 49152,
+      "concurrency": 4,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 26.8611718339131,
+          "mtp4": 7.872855504475437,
+          "mtp4_change_pct": -70.69057316950074
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 86.26793155627036,
+          "mtp4": 20.641550836299547,
+          "mtp4_change_pct": -76.07274167361298
+        },
+        "native_prefill_tps": {
+          "mtp3": 522.5232804930649,
+          "mtp4": 1077.060875369644,
+          "mtp4_change_pct": 106.12686852025135
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 77.22051921971921,
+          "mtp4": 20.130534619351227,
+          "mtp4_change_pct": -73.93110688355661
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 3.390728476821192,
+          "mtp4": 3.8568738229755177,
+          "mtp4_change_pct": 13.74764595103577
+        },
+        "joules_per_output_token": {
+          "mtp3": 2.330878466796875,
+          "mtp4": 8.943038731933594,
+          "mtp4_change_pct": 283.6767493168891
+        },
+        "wall_s": {
+          "mtp3": 26.521448194005643,
+          "mtp4": 101.73599652099074,
+          "mtp4_change_pct": 283.5989489592994
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 185600.0,
+          "prefill_tokens": 11008.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 21.06700392298808,
+          "decode_seconds": 76.2438814160123,
+          "accepted_tokens": 1442.0,
+          "draft_tokens": 1812.0
+        },
+        "mtp4": {
+          "cached_tokens": 93184.0,
+          "prefill_tokens": 103424.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 96.02428457398491,
+          "decode_seconds": 260.1343310360244,
+          "accepted_tokens": 1520.0,
+          "draft_tokens": 2124.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          5.706435582003905,
+          8.960387753992109,
+          12.248407464998309,
+          2.7754951549868565
+        ],
+        "mtp4": [
+          2.512199545002659,
+          87.90443994599627,
+          45.535630547994515,
+          5.336324105999665
+        ]
+      },
+      "first_output_difference_by_request": [
+        99,
+        99,
+        182,
+        303
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.9440104166666666,
+        "mtp4": 0.4739583333333333
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "prose-49152",
+      "domain": "prose",
+      "context_tokens": 49152,
+      "concurrency": 1,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 45.317876860425336,
+          "mtp4": 47.38340552758965,
+          "mtp4_change_pct": 4.557867248560532
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 45.377078808641535,
+          "mtp4": 47.44883914066024,
+          "mtp4_change_pct": 4.565653819972559
+        },
+        "native_prefill_tps": {
+          "mtp3": 1377.2172261242779,
+          "mtp4": 1428.002846375819,
+          "mtp4_change_pct": 3.687553371261587
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 10.883163076723642,
+          "mtp4": 11.312051657391798,
+          "mtp4_change_pct": 3.940844933082377
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 2.5472636815920398,
+          "mtp4": 2.8603351955307263,
+          "mtp4_change_pct": 12.290502793296088
+        },
+        "joules_per_output_token": {
+          "mtp3": 16.542239427734376,
+          "mtp4": 15.913047671875,
+          "mtp4_change_pct": -3.8035464219220882
+        },
+        "wall_s": {
+          "mtp3": 47.04514637799002,
+          "mtp4": 45.261462333000964,
+          "mtp4_change_pct": -3.7914305349542987
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 49152.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 35.689358996998635,
+          "decode_seconds": 11.297969708000892,
+          "accepted_tokens": 310.0,
+          "draft_tokens": 603.0
+        },
+        "mtp4": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 49152.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 34.42009945900645,
+          "decode_seconds": 10.805470698003774,
+          "accepted_tokens": 332.0,
+          "draft_tokens": 716.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          35.760220654003206
+        ],
+        "mtp4": [
+          34.46925506301341
+        ]
+      },
+      "first_output_difference_by_request": [
+        5
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.0,
+        "mtp4": 0.0
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "prose-49152",
+      "domain": "prose",
+      "context_tokens": 49152,
+      "concurrency": 1,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 45.32266591213026,
+          "mtp4": 41.195425194545706,
+          "mtp4_change_pct": -9.10635028748371
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 45.382039238448264,
+          "mtp4": 41.245190370357406,
+          "mtp4_change_pct": -9.115608151398503
+        },
+        "native_prefill_tps": {
+          "mtp3": 959.5270483390578,
+          "mtp4": 988.6204255060345,
+          "mtp4_change_pct": 3.0320538871037916
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 36.06106562374368,
+          "mtp4": 34.02389097870526,
+          "mtp4_change_pct": -5.649235844259359
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 2.5472636815920398,
+          "mtp4": 2.4854368932038833,
+          "mtp4_change_pct": -2.4271844660194275
+        },
+        "joules_per_output_token": {
+          "mtp3": 4.991350412109375,
+          "mtp4": 5.290787458984375,
+          "mtp4_change_pct": 5.999118918770852
+        },
+        "wall_s": {
+          "mtp3": 14.198138383988407,
+          "mtp4": 15.048249487997964,
+          "mtp4_change_pct": 5.987482872883176
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 46400.0,
+          "prefill_tokens": 2752.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 2.8680796489934437,
+          "decode_seconds": 11.296775900002103,
+          "accepted_tokens": 310.0,
+          "draft_tokens": 603.0
+        },
+        "mtp4": {
+          "cached_tokens": 46592.0,
+          "prefill_tokens": 2560.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 2.5894670330017107,
+          "decode_seconds": 12.428564520989312,
+          "accepted_tokens": 308.0,
+          "draft_tokens": 824.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          2.9144751400017412
+        ],
+        "mtp4": [
+          2.632999686000403
+        ]
+      },
+      "first_output_difference_by_request": [
+        88
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.9440104166666666,
+        "mtp4": 0.9479166666666666
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "prose-49152",
+      "domain": "prose",
+      "context_tokens": 49152,
+      "concurrency": 4,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 6.5417613946886295,
+          "mtp4": 6.4472236460209995,
+          "mtp4_change_pct": -1.445142110263864
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 14.768542269871448,
+          "mtp4": 14.581197580480987,
+          "mtp4_change_pct": -1.268538803404129
+        },
+        "native_prefill_tps": {
+          "mtp3": 1113.1196678047618,
+          "mtp4": 1207.0825167722444,
+          "mtp4_change_pct": 8.44139688527752
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 11.71485169741711,
+          "mtp4": 11.716686374097534,
+          "mtp4_change_pct": 0.015661117424370374
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 2.491484184914842,
+          "mtp4": 2.723404255319149,
+          "mtp4_change_pct": 9.308510638297873
+        },
+        "joules_per_output_token": {
+          "mtp3": 15.367100686035156,
+          "mtp4": 15.365889162109376,
+          "mtp4_change_pct": -0.007883880964487666
+        },
+        "wall_s": {
+          "mtp3": 174.82082171399088,
+          "mtp4": 174.79344710698933,
+          "mtp4_change_pct": -0.015658665102447067
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 196608.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 176.6279095469945,
+          "decode_seconds": 313.0655302810046,
+          "accepted_tokens": 1230.0,
+          "draft_tokens": 2466.0
+        },
+        "mtp4": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 196608.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 162.87867421502597,
+          "decode_seconds": 317.65611252898816,
+          "accepted_tokens": 1298.0,
+          "draft_tokens": 3008.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          114.77259029701236,
+          73.43763293999655,
+          156.5092446619965,
+          36.14170468298835
+        ],
+        "mtp4": [
+          112.45377123099752,
+          154.81499127599818,
+          34.3320944809966,
+          72.17674209999677
+        ]
+      },
+      "first_output_difference_by_request": [
+        96,
+        49,
+        84,
+        151
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.0,
+        "mtp4": 0.0
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "prose-49152",
+      "domain": "prose",
+      "context_tokens": 49152,
+      "concurrency": 4,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 21.223669568179993,
+          "mtp4": 7.3261434067516396,
+          "mtp4_change_pct": -65.48125957569795
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 70.86454474838351,
+          "mtp4": 19.514650835869443,
+          "mtp4_change_pct": -72.46203880211254
+        },
+        "native_prefill_tps": {
+          "mtp3": 521.59524946884,
+          "mtp4": 1075.6388134259653,
+          "mtp4_change_pct": 106.22097584694808
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 64.62962396784545,
+          "mtp4": 19.05698947373888,
+          "mtp4_change_pct": -70.51353805923408
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 2.5128834355828222,
+          "mtp4": 2.852367688022284,
+          "mtp4_change_pct": 13.509749303621167
+        },
+        "joules_per_output_token": {
+          "mtp3": 2.785045683105469,
+          "mtp4": 9.446927696289062,
+          "mtp4_change_pct": 239.20189365638174
+        },
+        "wall_s": {
+          "mtp3": 31.688254925000365,
+          "mtp4": 107.4671318269975,
+          "mtp4_change_pct": 239.13868744539667
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 185600.0,
+          "prefill_tokens": 11008.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 21.10448669003381,
+          "decode_seconds": 96.49603681497683,
+          "accepted_tokens": 1235.0,
+          "draft_tokens": 2445.0
+        },
+        "mtp4": {
+          "cached_tokens": 93184.0,
+          "prefill_tokens": 103424.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 96.15123469800164,
+          "decode_seconds": 279.54680741201446,
+          "accepted_tokens": 1342.0,
+          "draft_tokens": 2872.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          8.976118637001491,
+          5.716926020002575,
+          12.26867413900618,
+          2.7818529780051904
+        ],
+        "mtp4": [
+          88.02758892100246,
+          5.3407615999894915,
+          45.6352207519958,
+          2.5139169809990562
+        ]
+      },
+      "first_output_difference_by_request": [
+        96,
+        49,
+        null,
+        2
+      ],
+      "exact_output_matches": 1,
+      "cache_hit_fraction": {
+        "mtp3": 0.9440104166666666,
+        "mtp4": 0.4739583333333333
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "code-102752",
+      "domain": "code",
+      "context_tokens": 102752,
+      "concurrency": 1,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 43.93933575951434,
+          "mtp4": 44.403450877938184,
+          "mtp4_change_pct": 1.0562633922460707
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 44.049050542499764,
+          "mtp4": 44.515559019884684,
+          "mtp4_change_pct": 1.0590659086620269
+        },
+        "native_prefill_tps": {
+          "mtp3": 930.770553435665,
+          "mtp4": 964.645623486542,
+          "mtp4_change_pct": 3.6394651641951103
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 4.194406049977878,
+          "mtp4": 4.336434785884398,
+          "mtp4_change_pct": 3.3861465536287216
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 2.9767441860465116,
+          "mtp4": 3.303225806451613,
+          "mtp4_change_pct": 10.967741935483865
+        },
+        "joules_per_output_token": {
+          "mtp3": 42.918769955078126,
+          "mtp4": 41.51061868554687,
+          "mtp4_change_pct": -3.2809683758530994
+        },
+        "wall_s": {
+          "mtp3": 122.06734252700699,
+          "mtp4": 118.06934158600052,
+          "mtp4_change_pct": -3.275242057573202
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 102752.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 110.39455386799818,
+          "decode_seconds": 11.65242922201287,
+          "accepted_tokens": 339.0,
+          "draft_tokens": 516.0
+        },
+        "mtp4": {
+          "cached_tokens": 0.0,
+          "prefill_tokens": 102752.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 106.51787298699492,
+          "decode_seconds": 11.530635342001915,
+          "accepted_tokens": 357.0,
+          "draft_tokens": 620.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          110.44085856499441
+        ],
+        "mtp4": [
+          106.56446998599858
+        ]
+      },
+      "first_output_difference_by_request": [
+        312
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.0,
+        "mtp4": 0.0
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    },
+    {
+      "window": "code-102752",
+      "domain": "code",
+      "context_tokens": 102752,
+      "concurrency": 1,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "mtp3": 43.90363085320587,
+          "mtp4": 44.375053566899425,
+          "mtp4_change_pct": 1.0737670314097336
+        },
+        "client_aggregate_decode_tps": {
+          "mtp3": 44.01161936390756,
+          "mtp4": 44.48246677897556,
+          "mtp4_change_pct": 1.069825245862499
+        },
+        "native_prefill_tps": {
+          "mtp3": 572.9983840374391,
+          "mtp4": 576.7579449963588,
+          "mtp4_change_pct": 0.6561206913759943
+        },
+        "wave_aggregate_output_tps": {
+          "mtp3": 33.880361348651256,
+          "mtp4": 30.777681567798144,
+          "mtp4_change_pct": -9.157752920414552
+        },
+        "generated_tokens_per_round": {
+          "mtp3": 2.9767441860465116,
+          "mtp4": 3.303225806451613,
+          "mtp4_change_pct": 10.967741935483865
+        },
+        "joules_per_output_token": {
+          "mtp3": 5.3137764921875,
+          "mtp4": 5.8481270078125,
+          "mtp4_change_pct": 10.055946395386028
+        },
+        "wall_s": {
+          "mtp3": 15.111999389002449,
+          "mtp4": 16.635431062997668,
+          "mtp4_change_pct": 10.080940547839589
+        }
+      },
+      "native_accounting": {
+        "mtp3": {
+          "cached_tokens": 100800.0,
+          "prefill_tokens": 1952.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 3.406641369991121,
+          "decode_seconds": 11.661905633998686,
+          "accepted_tokens": 339.0,
+          "draft_tokens": 516.0
+        },
+        "mtp4": {
+          "cached_tokens": 99840.0,
+          "prefill_tokens": 2912.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 5.048911809994024,
+          "decode_seconds": 11.538014240999473,
+          "accepted_tokens": 357.0,
+          "draft_tokens": 620.0
+        }
+      },
+      "client_ttft_s": {
+        "mtp3": [
+          3.475645785991219
+        ],
+        "mtp4": [
+          5.122131577998516
+        ]
+      },
+      "first_output_difference_by_request": [
+        312
+      ],
+      "exact_output_matches": 0,
+      "cache_hit_fraction": {
+        "mtp3": 0.9810028028651511,
+        "mtp4": 0.97165991902834
+      },
+      "interpretation": "Observed serving performance, not isolated kernel speed. Cold C4 may mix decode with other prefills. Warm cache residency can differ between depths; report actual hits and misses. Output sequences can differ, changing acceptance work. No single-pass confidence interval."
+    }
+  ],
+  "raw_results": [
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/code-4096-c1-cold/result.json",
+      "sha256": "3b2f4981bf8c8f9d2d36dd04c8bc085f87862d88a94b590753bd58f4316b6f07"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/code-4096-c1-warm/result.json",
+      "sha256": "0e44d4ff87b1dcbfe12d2e0ade288a08a53490324b2c141136fea1a832ae74d1"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/code-4096-c4-cold/result.json",
+      "sha256": "ab36221a24de2b361cca9d28807a6c18ec391008085fe9c19de6de5d8b68fc9a"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/code-4096-c4-warm/result.json",
+      "sha256": "dc5062a2fb40803ae32ecf53298fe085ebc2fabb14c065449a33eaffcdf397a1"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/prose-4096-c1-cold/result.json",
+      "sha256": "6c23fc36cb1506547c703f7bc770d2bff6556728527659c8136793ce420dfca6"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/prose-4096-c1-warm/result.json",
+      "sha256": "1c2df3a7993c0b504800aad7b93880112e2c715348dd884821508290ec167aa4"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/prose-4096-c4-cold/result.json",
+      "sha256": "7528e2a9c03b416618757ab415a67655af1d34b779c85e6a55a1433347fe4f39"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/prose-4096-c4-warm/result.json",
+      "sha256": "42be983216df6d3a62b4fa2e22a563b8d6ded2892f32fdf364fdd66dad3dcdf0"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/code-49152-c1-cold/result.json",
+      "sha256": "72e92f1e222b6087583ce1e198eab34cde9480e672c4a22be0118a27278d8101"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/code-49152-c1-warm/result.json",
+      "sha256": "bb11eb217c1a10d491f972a4fc0f6557321150c23e443f8def8cb41476bbefbf"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/code-49152-c4-cold/result.json",
+      "sha256": "f62c3919d5023d5c9b18d15859b1644444fd0072aa4b91be3aa049c062d9a368"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/code-49152-c4-warm/result.json",
+      "sha256": "368992d54d4ca98f91cce066a82f7eb0fff67c4351f75a2d86d4badd6ac05d0f"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/prose-49152-c1-cold/result.json",
+      "sha256": "3ee0d757e3248937da4066a87c81428ac04dfb66a4dc848f408487b6c894ef1c"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/prose-49152-c1-warm/result.json",
+      "sha256": "3c767527e2df813bfd48dc90884ad1010f915f1c5fba345a2bf241712a745a9b"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/prose-49152-c4-cold/result.json",
+      "sha256": "afe3c921bc6df9f1e6140c585b91e5d0155e6e7f25ebeea2e7baa81f994034bd"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/prose-49152-c4-warm/result.json",
+      "sha256": "6c4024df1d2c80874bfaf14b9d7e9295e9f0df211c50a85316f687ed7defe64d"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/code-102752-c1-cold/result.json",
+      "sha256": "d5c6bac9dc5dcb2d51864b4b47191e671f4ed67e466db2b5b7c3340b70e92cdf"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/code-102752-c1-warm/result.json",
+      "sha256": "e2bd17a12160dbbff8d89b7bbe8f332521fe9f3d95dbbf4168fb4e1a1cdea636"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/code-4096-c1-cold/result.json",
+      "sha256": "ae9ad9430b6bf8b8bf8196562167e6e37c726b767b49599eb7c0ca666ba9f74b"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/code-4096-c1-warm/result.json",
+      "sha256": "bb1dfbee40edc18ae82c8b6d6a9d86d62ace10ca8b072106ab02e624188d2d0c"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/code-4096-c4-cold/result.json",
+      "sha256": "ce80f4970933b7180461605bd8727abce19b233c88538e44561886395aaf6b46"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/code-4096-c4-warm/result.json",
+      "sha256": "6792c95e1fc6f0fc27a64695d00f753fb179dd4713b6859925aec62fe3edf106"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/prose-4096-c1-cold/result.json",
+      "sha256": "3095a882cc50eeb88fb1b1ce43eb9fac1da8fc3411abdf1db8b63f4cde4a7cfd"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/prose-4096-c1-warm/result.json",
+      "sha256": "035032d8fddf90420ebb0c6dbe14aae39d6f9f57161dbaa99e19f6c691891c5e"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/prose-4096-c4-cold/result.json",
+      "sha256": "0dceb5303b7f72c027994d6e3f353b26667254e5f5e9859406570cfce489bcd5"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/prose-4096-c4-warm/result.json",
+      "sha256": "c35591ec39e9b2f315312bb41e5bf368ca595e8525151e18e81c548927e5d2df"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/code-49152-c1-cold/result.json",
+      "sha256": "da01785e935ddc1cb70a4f79523fc88c0badebe304eddb49f7f48f8f54928216"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/code-49152-c1-warm/result.json",
+      "sha256": "c8f0711d89fd5011cf79496f48f0296802685241ffed0bbc993f6544981fa46b"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/code-49152-c4-cold/result.json",
+      "sha256": "86a876bfe6c6e4945d594a8066a205a760eda7cae0a912033a418cd57bcd446c"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/code-49152-c4-warm/result.json",
+      "sha256": "3a711c9eda88d4321bb5e9d72b45041aaf2709d66fbf0d4500ca28d453d9fe50"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/prose-49152-c1-cold/result.json",
+      "sha256": "d24d90435c5682c72fb52c1019e54b630b747ed7232fa4a33b324b57a263be4d"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/prose-49152-c1-warm/result.json",
+      "sha256": "307cd73f7a035cf2f341804def92d75e11352db9786cb4f4ca9573ba622de93f"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/prose-49152-c4-cold/result.json",
+      "sha256": "b12bbbf23a9d4d7c20c73ee1274f17af4a872eeed781416ca42239e7daa9ce0e"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/prose-49152-c4-warm/result.json",
+      "sha256": "bce19d057b7f94845927f0568b9e01352089a7e364eb5a6add54a0ca45e84ecd"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/code-102752-c1-cold/result.json",
+      "sha256": "cfc1bd6491590cd04d9d7701407ade4352507fb99d1a2fc337ddb8ac95a4d4a4"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-compact-v1/arm-1-mtp4/code-102752-c1-warm/result.json",
+      "sha256": "e69cfd54c9a43fa9ec0289f66b025439fcaa0fef97e377be3f49e2215df4b0e2"
+    }
+  ],
+  "selection": "No universal depth selected from single-pass screening. Use component/row evidence and targeted repeats for ambiguous cells; generated-output correctness remains a release gate."
+}

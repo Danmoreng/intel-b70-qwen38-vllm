@@ -142,6 +142,7 @@ def inspect_container(container: str) -> dict[str, Any]:
         "max_model_len": int(arg_after(command, "--max-model-len", "-1")),
         "watermark": float(arg_after(command, "--watermark", "0.0")),
         "reserve_full_isl_explicit": "--scheduler-reserve-full-isl" in command,
+        "num_speculative_tokens": json.loads(arg_after(command, '--speculative-config', '{}')).get('num_speculative_tokens'),
     }
 
 
@@ -312,6 +313,7 @@ def run_once(
     namespace: str,
     legacy_prefix_namespace: bool = False,
     fixture_root: Path | None = None,
+    speculative_tokens: int = 4,
 ) -> dict[str, Any]:
     wait_idle(base)
     case_dir = run_dir / f"{scenario.name}-r{repeat + 1}"
@@ -509,7 +511,7 @@ def run_once(
     peak_running = max((sample["running"] for sample in valid_samples), default=0)
     summary = {
         **summarize_overlap(samples, full_overlap_start_s, full_overlap_end_s,
-                            scenario.concurrency),
+                            scenario.concurrency, speculative_tokens),
         "scenario": scenario.__dict__,
         "repeat": repeat + 1,
         "batch_wall_s": batch_wall,
@@ -790,6 +792,8 @@ def main() -> int:
         raise SystemExit(f"refusing benchmark: live max_num_seqs={inspect['max_num_seqs']}, expected {args.expected_max_num_seqs}")
     if not inspect["reserve_full_isl_explicit"]:
         raise SystemExit("refusing benchmark: --scheduler-reserve-full-isl is not explicit")
+    if type(inspect['num_speculative_tokens']) is not int or inspect['num_speculative_tokens'] <= 0:
+        raise SystemExit('refusing benchmark: speculative depth is not explicit')
     for scenario in scenarios:
         if scenario.prompt_tokens + scenario.output_tokens > inspect["max_model_len"]:
             raise SystemExit(f"scenario {scenario.name} exceeds the live model context limit")
@@ -821,7 +825,7 @@ def main() -> int:
             "aggregate_decode_wave_tokens_per_s": "all post-first output tokens in the wave divided by time from the earliest first token until the final request completes",
             "effective_decode_concurrency": "summed native per-request decode seconds divided by aggregate decode-window seconds; aggregate decode equals weighted per-request decode multiplied by this occupancy",
             "fully_overlapped_aggregate_decode_tokens_per_s": "native generation-token counter delta divided by sampled wall time after every request emitted its first token and before any request completed",
-            'fully_overlapped_round_equivalent_ms': 'same-window wall ms divided by draft_tokens/(concurrency*4); includes host and device costs, requires constant occupancy, no prefill and exact token accounting; not GPU-only or a physical-iteration count',
+            'fully_overlapped_round_equivalent_ms': 'same-window wall ms divided by draft_tokens/(concurrency*live_num_speculative_tokens); includes host and device costs, requires constant occupancy, no prefill and exact token accounting; not GPU-only or a physical-iteration count',
             "tpot_s": "client time after first generated event divided by completion tokens minus one",
             "batch_wall_s": "elapsed time from simultaneous release until every request in the wave completed",
             "e2e_policy": "reported in seconds; legacy aggregate output tokens per wall second is retained only in per-case raw data",
@@ -845,12 +849,13 @@ def main() -> int:
                     sources,
                     namespace,
                     args.legacy_prefix_namespace,
+                    speculative_tokens=inspect['num_speculative_tokens'],
                 )
             for repeat in range(scenario.repeats):
                 print(f"START {scenario.name} repeat {repeat + 1}/{scenario.repeats}", flush=True)
                 row = run_once(args.base, args.container, scenario, repeat, run_dir,
                                sources, namespace, args.legacy_prefix_namespace,
-                               args.fixture_root)
+                               args.fixture_root, inspect['num_speculative_tokens'])
                 rows.append(row)
                 write_aggregate(run_dir, manifest, rows)
                 print(

@@ -5,6 +5,10 @@ the vLLM container. The build downloads pinned upstream artifacts and verifies
 their SHA-256 digests before executing or installing them.
 
 - vLLM is licensed under Apache-2.0.
+- `engine/exl3xpu` publishes a pinned source snapshot and migration patch of
+  `0xSero/exl3xpu`, MIT License, copyright2026 0xSero. Its full license is
+  retained both beside the archive and within the source snapshot. Build and
+  native/M04 dependency pins are documented in that directory.
 - `mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16` declares Apache-2.0
   and is a quantized derivative of `Qwen/Qwen3.8-27B`.
 - The five MTP and prefix-cache patches fetched from

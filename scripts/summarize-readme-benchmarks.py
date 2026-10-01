@@ -228,6 +228,7 @@ def summarize(root):
             'tasks_passed': sum(row['acceptance']['passed'] for row in coding['task_results']),
             'tasks_total': len(coding['task_results']),
             'acceptance_tests_passed': sum(row['acceptance']['tests_run'] for row in coding['task_results']),
+            'weighted_decode_tps_post_first': (coding['metrics']['generation_tokens']-len(records))/coding['metrics']['decode_seconds'],
             'prompt_tokens_min': min(row['usage']['prompt_tokens'] for row in records),
             'prompt_tokens_max': max(row['usage']['prompt_tokens'] for row in records)},
     }
@@ -334,7 +335,7 @@ hashes. This is one adaptive session, not a multi-run distribution.
 | Newly computed / prefix-cached prompt tokens | {int(metrics['prefill_tokens']):,} / {int(metrics['cached_tokens']):,} |
 | Prefix-cache hit rate | **{100*metrics['cached_tokens']/metrics['prompt_tokens']:.1f}%** |
 | Weighted native prefill compute | **{metrics['prefill_tokens']/metrics['prefill_seconds']:,.1f} tok/s** |
-| Weighted native decode | **{metrics['generation_tokens']/metrics['decode_seconds']:.1f} tok/s** |
+| Weighted native decode after first token | **{coding['weighted_decode_tps_post_first']:.1f} tok/s** |
 | MTP accepted / drafted tokens | **{100*metrics['accepted_tokens']/metrics['draft_tokens']:.1f}%** |
 | Preemptions | **0** |
 

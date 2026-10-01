@@ -1,0 +1,21 @@
+{
+  "status": "PREPARED_CPU_OWNERSHIP_PASS_XPU_UNTESTED",
+  "depth": 3,
+  "depth_decision": "MTP3 target-profile default; no further depth matrix planned; production release gates remain open",
+  "vocabularies": [
+    "pruned65536",
+    "full248320"
+  ],
+  "waves": 24,
+  "measured_requests": 60,
+  "output_tokens_per_request": 512,
+  "design": "Fresh pruned then full single-pass screen, same image/profile; no ABBA/order confidence",
+  "contexts": "4K code/prose C1/C4, code49K C4, code103K C1; cold/warm",
+  "instrumentation": "Read-only startup inventory, shared module and tensor-storage deduplication; no per-step observers",
+  "cpu_checks": "Shared/distinct/full-head unique-storage accounting passes; Python compilation and diff-check",
+  "source_sha256": {
+    "scripts/run-exl3-vocabulary-study.py": "68941f8245158a6c30af606e873292929addbbb8fcaa364c5f5c7901a7259c09",
+    "scripts/run-exl3-mtp-study.py": "3da99c469de459e838ee895503531c30188cf2d8d69b0c38209b14e2ce590deb",
+    "benchmarks/experiments/quantization-reference/head_ownership_audit.py": "5b9272cfb5ebd2454c18d702f0e2816f135daef3b882ab2ca8bae3432638e2d1"
+  }
+}

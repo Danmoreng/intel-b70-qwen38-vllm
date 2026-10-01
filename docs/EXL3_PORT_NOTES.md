@@ -534,3 +534,28 @@ divergence cannot be recovered because that eager probe stored only its hash.
 Generated-path/logprob-margin checks now precede a default-depth selection or
 M04 release. Do not assume numerical rounding is harmless. All raw large trace
 files remain outside tracked fixtures; lean totals and raw SHA proofs are saved.
+
+
+## MTP decision and next vocabulary ablation
+
+The bounded generated-path diagnostic is complete:96 measured requests across
+four routes, with10,240 main token choices all selecting a reported maximum.
+Output rankings still differ across routes, including some one-token prefill
+controls. Gate E therefore remains partial; no blanket rounding explanation or
+sampler defect is established. See `target-generation-margin-v1`.
+
+Following the user's instruction to choose a depth and proceed, **MTP3 is the
+EXL3 target-profile default for further optimization**. At103K C1, MTP4 gains
+only~1.1%; short prose C4 regresses about8%, and long warm C4 has unequal cache
+residency. Further depth matrices are not planned. Production qualification is
+separate and remains open.
+
+Next is a fresh24-wave/60-request comparison of pruned65536 versus full draft
+vocabulary at fixed MTP3, covering4K code/prose C1/C4 and long code49K C4/103K
+C1, cold/warm,512 outputs per request. Startup-only read-only ownership metadata
+deduplicates shared target/MTP head storage. Earlier role inventories must not
+be interpreted as two independent physical pruned heads: source/loader evidence
+suggests a shared module, which the XPU ownership report will explicitly prove.
+No target-head removal or native kernel change is included. CPU shared/distinct/
+full-head unique-storage accounting passes; actual memory and serving effects
+must be measured. GPTQ remains offline.

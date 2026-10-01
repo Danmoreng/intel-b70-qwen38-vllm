@@ -1,0 +1,4029 @@
+{
+  "status": "COMPLETE_BOUNDED_DIAGNOSTIC_QUALITY_GATE_REMAINS_PARTIAL",
+  "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "campaign_sha256": "b2a3af07a71cce43fe8f869eab921188533728be0470172df04fbd97f7de7c1d",
+  "source_sha256": {
+    "scripts/run-exl3-generation-probe.py": "553310814471f3ae25102636fdf2f0cf754d0c79ed5384adcf79b3aff3407677",
+    "benchmarks/experiments/quantization-reference/run_generation_probe.py": "cb84eed9e8b6c2df9cdbf1304eb2c4e39d759f2bb2a0bb48b7c33dcdedd98aba",
+    "benchmarks/experiments/quantization-reference/profile_capture.py": "0ee5208b884cbe103b519071a6d405024a49160e061bca8d51f35bfb2830e1dc"
+  },
+  "audits": [
+    {
+      "variant": "graph-mtp3",
+      "summary_sha256": "d2c8b70cf64e5b7b369bfdd26bc38dd670e53cee257006f6732ed37a65fdaca6",
+      "generated_tokens": 2560,
+      "choices_below_reported_top_score": 0,
+      "pure_decode_graph_modes": {
+        "FULL": 331
+      }
+    },
+    {
+      "variant": "graph-mtp4",
+      "summary_sha256": "a364feb2087ca629b7f739ea3f2ec8bc7260de2e6064cb843c17b01282a232fc",
+      "generated_tokens": 2560,
+      "choices_below_reported_top_score": 0,
+      "pure_decode_graph_modes": {
+        "FULL": 302
+      }
+    },
+    {
+      "variant": "eager-mtp3",
+      "summary_sha256": "c9aa2ed0b628a04408bcd94ec6c67fd24a5b7f90ff67df3632f20c5b02ab654b",
+      "generated_tokens": 2560,
+      "choices_below_reported_top_score": 0,
+      "pure_decode_graph_modes": {
+        "NONE": 347
+      }
+    },
+    {
+      "variant": "graph-nospec",
+      "summary_sha256": "af6a065d19b9b131d62157c65548d96f127dd038db23c8598154018f2e51be68",
+      "generated_tokens": 2560,
+      "choices_below_reported_top_score": 0,
+      "pure_decode_graph_modes": {
+        "FULL": 1016
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "variant": "graph-mtp4",
+      "paired_requests": 20,
+      "exact_matches": 7,
+      "pairs": [
+        {
+          "window": "code-4096",
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "request": 0,
+          "first_difference": null,
+          "compared_tokens": 192
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "request": 0,
+          "first_difference": 137,
+          "token_a": 6892,
+          "token_b": 18958,
+          "scores_a": {
+            "chosen": {
+              "id": 6892,
+              "logprob": -1.0421561002731323,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 6892,
+                "logprob": -1.0421561002731323,
+                "rank": 1
+              },
+              {
+                "id": 18958,
+                "logprob": -1.0890311002731323,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -1.7921561002731323,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.370281219482422,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.487468719482422,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.046875,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 18958,
+              "logprob": -1.0324902534484863,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 18958,
+                "logprob": -1.0324902534484863,
+                "rank": 1
+              },
+              {
+                "id": 6892,
+                "logprob": -1.0637402534484863,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -1.9231152534484863,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.2903027534484863,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.5793652534484863,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            5206,
+            6892,
+            18958,
+            55661,
+            56552
+          ],
+          "max_common_top_logprob_difference": 0.130959153175354,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 0,
+          "first_difference": 184,
+          "token_a": 7873,
+          "token_b": 709,
+          "scores_a": {
+            "chosen": {
+              "id": 7873,
+              "logprob": -1.796648621559143,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 7873,
+                "logprob": -1.796648621559143,
+                "rank": 1
+              },
+              {
+                "id": 709,
+                "logprob": -1.827898621559143,
+                "rank": 2
+              },
+              {
+                "id": 5215,
+                "logprob": -2.0153985023498535,
+                "rank": 3
+              },
+              {
+                "id": 31626,
+                "logprob": -2.1716485023498535,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.6872735023498535,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 709,
+              "logprob": -1.8112143278121948,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 709,
+                "logprob": -1.8112143278121948,
+                "rank": 1
+              },
+              {
+                "id": 7873,
+                "logprob": -1.8424643278121948,
+                "rank": 2
+              },
+              {
+                "id": 31626,
+                "logprob": -2.0768394470214844,
+                "rank": 3
+              },
+              {
+                "id": 5215,
+                "logprob": -2.4362144470214844,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.6393394470214844,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            709,
+            5215,
+            7873,
+            11870,
+            31626
+          ],
+          "max_common_top_logprob_difference": 0.42081594467163086,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 1,
+          "first_difference": 137,
+          "token_a": 6892,
+          "token_b": 18958,
+          "scores_a": {
+            "chosen": {
+              "id": 6892,
+              "logprob": -0.968822181224823,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 6892,
+                "logprob": -0.968822181224823,
+                "rank": 1
+              },
+              {
+                "id": 18958,
+                "logprob": -1.0781972408294678,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -1.9688222408294678,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.2891347408294678,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.7344472408294678,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.10937505960464478,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 18958,
+              "logprob": -0.9768829345703125,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 18958,
+                "logprob": -0.9768829345703125,
+                "rank": 1
+              },
+              {
+                "id": 6892,
+                "logprob": -1.0862579345703125,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -2.0237579345703125,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.1018829345703125,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.6800079345703125,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.109375,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            5206,
+            6892,
+            18958,
+            55661,
+            56552
+          ],
+          "max_common_top_logprob_difference": 0.18725180625915527,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 2,
+          "first_difference": null,
+          "compared_tokens": 192
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 3,
+          "first_difference": 184,
+          "token_a": 7873,
+          "token_b": 709,
+          "scores_a": {
+            "chosen": {
+              "id": 7873,
+              "logprob": -1.834301233291626,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 7873,
+                "logprob": -1.834301233291626,
+                "rank": 1
+              },
+              {
+                "id": 709,
+                "logprob": -1.928051233291626,
+                "rank": 2
+              },
+              {
+                "id": 5215,
+                "logprob": -2.006176233291626,
+                "rank": 3
+              },
+              {
+                "id": 31626,
+                "logprob": -2.334301233291626,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.662426233291626,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.09375,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 709,
+              "logprob": -1.8619977235794067,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 709,
+                "logprob": -1.8619977235794067,
+                "rank": 1
+              },
+              {
+                "id": 7873,
+                "logprob": -1.8776227235794067,
+                "rank": 2
+              },
+              {
+                "id": 5215,
+                "logprob": -2.158872604370117,
+                "rank": 3
+              },
+              {
+                "id": 31626,
+                "logprob": -2.377622604370117,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.736997604370117,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.015625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            709,
+            5215,
+            7873,
+            11870,
+            31626
+          ],
+          "max_common_top_logprob_difference": 0.1526963710784912,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 0,
+          "first_difference": 184,
+          "token_a": 709,
+          "token_b": 7873,
+          "scores_a": {
+            "chosen": {
+              "id": 709,
+              "logprob": -1.8005664348602295,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 709,
+                "logprob": -1.8005664348602295,
+                "rank": 1
+              },
+              {
+                "id": 7873,
+                "logprob": -1.8005664348602295,
+                "rank": 2
+              },
+              {
+                "id": 5215,
+                "logprob": -2.0818164348602295,
+                "rank": 3
+              },
+              {
+                "id": 31626,
+                "logprob": -2.2068164348602295,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.6755664348602295,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 7873,
+              "logprob": -1.7891837358474731,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 7873,
+                "logprob": -1.7891837358474731,
+                "rank": 1
+              },
+              {
+                "id": 709,
+                "logprob": -1.8048087358474731,
+                "rank": 2
+              },
+              {
+                "id": 31626,
+                "logprob": -2.1329336166381836,
+                "rank": 3
+              },
+              {
+                "id": 5215,
+                "logprob": -2.3985586166381836,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.6173086166381836,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.015625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            709,
+            5215,
+            7873,
+            11870,
+            31626
+          ],
+          "max_common_top_logprob_difference": 0.3167421817779541,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 1,
+          "first_difference": 137,
+          "token_a": 18958,
+          "token_b": 6892,
+          "scores_a": {
+            "chosen": {
+              "id": 18958,
+              "logprob": -0.9514964818954468,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 18958,
+                "logprob": -0.9514964818954468,
+                "rank": 1
+              },
+              {
+                "id": 6892,
+                "logprob": -0.9827464818954468,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -2.3577466011047363,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.1858716011047363,
+                "rank": 4
+              },
+              {
+                "id": 7006,
+                "logprob": -4.099934101104736,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 6892,
+              "logprob": -0.9919556379318237,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 6892,
+                "logprob": -0.9919556379318237,
+                "rank": 1
+              },
+              {
+                "id": 18958,
+                "logprob": -1.1169556379318237,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -1.8357056379318237,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.2966432571411133,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.6403932571411133,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.125,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            5206,
+            6892,
+            18958,
+            55661
+          ],
+          "max_common_top_logprob_difference": 0.5220409631729126,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 2,
+          "first_difference": 137,
+          "token_a": 18958,
+          "token_b": 6892,
+          "scores_a": {
+            "chosen": {
+              "id": 18958,
+              "logprob": -0.9514964818954468,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 18958,
+                "logprob": -0.9514964818954468,
+                "rank": 1
+              },
+              {
+                "id": 6892,
+                "logprob": -0.9827464818954468,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -2.3577466011047363,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.1858716011047363,
+                "rank": 4
+              },
+              {
+                "id": 7006,
+                "logprob": -4.099934101104736,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 6892,
+              "logprob": -0.9990342855453491,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 6892,
+                "logprob": -0.9990342855453491,
+                "rank": 1
+              },
+              {
+                "id": 18958,
+                "logprob": -1.1240342855453491,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -1.8115342855453491,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.3037219047546387,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.5927844047546387,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.125,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            5206,
+            6892,
+            18958,
+            55661
+          ],
+          "max_common_top_logprob_difference": 0.5462123155593872,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 3,
+          "first_difference": null,
+          "compared_tokens": 192
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "request": 0,
+          "first_difference": null,
+          "compared_tokens": 64
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "request": 0,
+          "first_difference": 3,
+          "token_a": 220,
+          "token_b": 978,
+          "scores_a": {
+            "chosen": {
+              "id": 220,
+              "logprob": -2.3650553226470947,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 220,
+                "logprob": -2.3650553226470947,
+                "rank": 1
+              },
+              {
+                "id": 978,
+                "logprob": -2.4353678226470947,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.1384928226470947,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.2166178226470947,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.5056803226470947,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0703125,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 978,
+              "logprob": -2.427232265472412,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 978,
+                "logprob": -2.427232265472412,
+                "rank": 1
+              },
+              {
+                "id": 220,
+                "logprob": -2.442857265472412,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.106919765472412,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.192857265472412,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.505357265472412,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.015625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            220,
+            264,
+            874,
+            978,
+            1381
+          ],
+          "max_common_top_logprob_difference": 0.07780194282531738,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 0,
+          "first_difference": 1,
+          "token_a": 4400,
+          "token_b": 8323,
+          "scores_a": {
+            "chosen": {
+              "id": 4400,
+              "logprob": -2.1787431240081787,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 4400,
+                "logprob": -2.1787431240081787,
+                "rank": 1
+              },
+              {
+                "id": 8323,
+                "logprob": -2.2334306240081787,
+                "rank": 2
+              },
+              {
+                "id": 1118,
+                "logprob": -3.1865556240081787,
+                "rank": 3
+              },
+              {
+                "id": 2614,
+                "logprob": -3.4756181240081787,
+                "rank": 4
+              },
+              {
+                "id": 7796,
+                "logprob": -3.5146806240081787,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0546875,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 8323,
+              "logprob": -2.1121342182159424,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 8323,
+                "logprob": -2.1121342182159424,
+                "rank": 1
+              },
+              {
+                "id": 4400,
+                "logprob": -2.3308842182159424,
+                "rank": 2
+              },
+              {
+                "id": 1118,
+                "logprob": -3.0652592182159424,
+                "rank": 3
+              },
+              {
+                "id": 220,
+                "logprob": -3.4168217182159424,
+                "rank": 4
+              },
+              {
+                "id": 2614,
+                "logprob": -3.4715092182159424,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.21875,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            1118,
+            2614,
+            4400,
+            8323
+          ],
+          "max_common_top_logprob_difference": 0.15214109420776367,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 1,
+          "first_difference": 1,
+          "token_a": 4400,
+          "token_b": 8323,
+          "scores_a": {
+            "chosen": {
+              "id": 4400,
+              "logprob": -2.1796131134033203,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 4400,
+                "logprob": -2.1796131134033203,
+                "rank": 1
+              },
+              {
+                "id": 8323,
+                "logprob": -2.2655506134033203,
+                "rank": 2
+              },
+              {
+                "id": 1118,
+                "logprob": -3.1483631134033203,
+                "rank": 3
+              },
+              {
+                "id": 220,
+                "logprob": -3.4921131134033203,
+                "rank": 4
+              },
+              {
+                "id": 2614,
+                "logprob": -3.5311756134033203,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0859375,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 8323,
+              "logprob": -2.196977376937866,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 8323,
+                "logprob": -2.196977376937866,
+                "rank": 1
+              },
+              {
+                "id": 4400,
+                "logprob": -2.282914876937866,
+                "rank": 2
+              },
+              {
+                "id": 1118,
+                "logprob": -3.071977376937866,
+                "rank": 3
+              },
+              {
+                "id": 2614,
+                "logprob": -3.478227376937866,
+                "rank": 4
+              },
+              {
+                "id": 7796,
+                "logprob": -3.501664876937866,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0859375,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            1118,
+            2614,
+            4400,
+            8323
+          ],
+          "max_common_top_logprob_difference": 0.1033017635345459,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 2,
+          "first_difference": 19,
+          "token_a": 55064,
+          "token_b": 2018,
+          "scores_a": {
+            "chosen": {
+              "id": 55064,
+              "logprob": -1.6727298498153687,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 55064,
+                "logprob": -1.6727298498153687,
+                "rank": 1
+              },
+              {
+                "id": 2018,
+                "logprob": -1.8133548498153687,
+                "rank": 2
+              },
+              {
+                "id": 1274,
+                "logprob": -2.196167469024658,
+                "rank": 3
+              },
+              {
+                "id": 4945,
+                "logprob": -2.336792469024658,
+                "rank": 4
+              },
+              {
+                "id": 34606,
+                "logprob": -2.641479969024658,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.140625,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 2018,
+              "logprob": -1.7317200899124146,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 2018,
+                "logprob": -1.7317200899124146,
+                "rank": 1
+              },
+              {
+                "id": 55064,
+                "logprob": -1.7785950899124146,
+                "rank": 2
+              },
+              {
+                "id": 4945,
+                "logprob": -2.161407470703125,
+                "rank": 3
+              },
+              {
+                "id": 1274,
+                "logprob": -2.177032470703125,
+                "rank": 4
+              },
+              {
+                "id": 34606,
+                "logprob": -2.786407470703125,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.046875,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            1274,
+            2018,
+            4945,
+            34606,
+            55064
+          ],
+          "max_common_top_logprob_difference": 0.1753849983215332,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 3,
+          "first_difference": 3,
+          "token_a": 220,
+          "token_b": 978,
+          "scores_a": {
+            "chosen": {
+              "id": 220,
+              "logprob": -2.4042775630950928,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 220,
+                "logprob": -2.4042775630950928,
+                "rank": 1
+              },
+              {
+                "id": 978,
+                "logprob": -2.4042775630950928,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.1386525630950928,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.2324025630950928,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.4902150630950928,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 978,
+              "logprob": -2.4022634029388428,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 978,
+                "logprob": -2.4022634029388428,
+                "rank": 1
+              },
+              {
+                "id": 220,
+                "logprob": -2.4335134029388428,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.1366384029388428,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.2772634029388428,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.4569509029388428,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            220,
+            264,
+            874,
+            978,
+            1381
+          ],
+          "max_common_top_logprob_difference": 0.04486083984375,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 0,
+          "first_difference": null,
+          "compared_tokens": 64
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 1,
+          "first_difference": null,
+          "compared_tokens": 64
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 2,
+          "first_difference": null,
+          "compared_tokens": 64
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 3,
+          "first_difference": 3,
+          "token_a": 220,
+          "token_b": 978,
+          "scores_a": {
+            "chosen": {
+              "id": 220,
+              "logprob": -2.4124302864074707,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 220,
+                "logprob": -2.4124302864074707,
+                "rank": 1
+              },
+              {
+                "id": 978,
+                "logprob": -2.4124302864074707,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.0999302864074707,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.2093052864074707,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.5061802864074707,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 978,
+              "logprob": -2.3966896533966064,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 978,
+                "logprob": -2.3966896533966064,
+                "rank": 1
+              },
+              {
+                "id": 220,
+                "logprob": -2.4670021533966064,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.1466896533966064,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.2091896533966064,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.4591896533966064,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0703125,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            220,
+            264,
+            874,
+            978,
+            1381
+          ],
+          "max_common_top_logprob_difference": 0.05457186698913574,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        }
+      ],
+      "identical_prefix_one_token_controls": [
+        {
+          "window": "code-4096",
+          "position": 137,
+          "prompt_ids_sha256": "7b6fcdb140814f1c0827e35cc0b40e17b1d2e0c392d0d1b4e31d78a2d710725f",
+          "expected_reference_token": 6892,
+          "only_prefill_target_calls_a": true,
+          "only_prefill_target_calls_b": true,
+          "first_difference": null,
+          "compared_tokens": 1
+        },
+        {
+          "window": "prose-4096",
+          "position": 1,
+          "prompt_ids_sha256": "2e0793ed3ddb19b8ba091b0d49f60e1524d68d10b69cc172f31d86e285bb96c2",
+          "expected_reference_token": 8323,
+          "only_prefill_target_calls_a": true,
+          "only_prefill_target_calls_b": true,
+          "first_difference": null,
+          "compared_tokens": 1
+        },
+        {
+          "window": "prose-4096",
+          "position": 3,
+          "prompt_ids_sha256": "4646188b4abf49d8d901ef52551b98ef730ef9164df85700329306783cd035ca",
+          "expected_reference_token": 220,
+          "only_prefill_target_calls_a": true,
+          "only_prefill_target_calls_b": true,
+          "first_difference": null,
+          "compared_tokens": 1
+        },
+        {
+          "window": "prose-4096",
+          "position": 19,
+          "prompt_ids_sha256": "f325c74f9f75771f21591c6514d0039c5337ed80cac69c8d3543cbc33664168d",
+          "expected_reference_token": 220,
+          "only_prefill_target_calls_a": true,
+          "only_prefill_target_calls_b": true,
+          "first_difference": null,
+          "compared_tokens": 1
+        }
+      ]
+    },
+    {
+      "variant": "eager-mtp3",
+      "paired_requests": 20,
+      "exact_matches": 5,
+      "pairs": [
+        {
+          "window": "code-4096",
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "request": 0,
+          "first_difference": 185,
+          "token_a": 1220,
+          "token_b": 10695,
+          "scores_a": {
+            "chosen": {
+              "id": 1220,
+              "logprob": -1.2905665636062622,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 1220,
+                "logprob": -1.2905665636062622,
+                "rank": 1
+              },
+              {
+                "id": 10695,
+                "logprob": -1.4155665636062622,
+                "rank": 2
+              },
+              {
+                "id": 5533,
+                "logprob": -2.3061914443969727,
+                "rank": 3
+              },
+              {
+                "id": 369,
+                "logprob": -2.5249414443969727,
+                "rank": 4
+              },
+              {
+                "id": 11988,
+                "logprob": -2.7593164443969727,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.125,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 10695,
+              "logprob": -1.2751705646514893,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 10695,
+                "logprob": -1.2751705646514893,
+                "rank": 1
+              },
+              {
+                "id": 1220,
+                "logprob": -1.3376705646514893,
+                "rank": 2
+              },
+              {
+                "id": 5533,
+                "logprob": -2.4157955646514893,
+                "rank": 3
+              },
+              {
+                "id": 369,
+                "logprob": -2.5720455646514893,
+                "rank": 4
+              },
+              {
+                "id": 11988,
+                "logprob": -2.9314205646514893,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            369,
+            1220,
+            5533,
+            10695,
+            11988
+          ],
+          "max_common_top_logprob_difference": 0.1721041202545166,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "request": 0,
+          "first_difference": 184,
+          "token_a": 709,
+          "token_b": 7873,
+          "scores_a": {
+            "chosen": {
+              "id": 709,
+              "logprob": -1.8622519969940186,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 709,
+                "logprob": -1.8622519969940186,
+                "rank": 1
+              },
+              {
+                "id": 7873,
+                "logprob": -1.8778769969940186,
+                "rank": 2
+              },
+              {
+                "id": 5215,
+                "logprob": -2.0497519969940186,
+                "rank": 3
+              },
+              {
+                "id": 31626,
+                "logprob": -2.2841269969940186,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.7528769969940186,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.015625,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 7873,
+              "logprob": -1.8192468881607056,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 7873,
+                "logprob": -1.8192468881607056,
+                "rank": 1
+              },
+              {
+                "id": 709,
+                "logprob": -1.8348718881607056,
+                "rank": 2
+              },
+              {
+                "id": 5215,
+                "logprob": -2.131746768951416,
+                "rank": 3
+              },
+              {
+                "id": 31626,
+                "logprob": -2.178621768951416,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.678621768951416,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.015625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            709,
+            5215,
+            7873,
+            11870,
+            31626
+          ],
+          "max_common_top_logprob_difference": 0.10550522804260254,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 0,
+          "first_difference": 185,
+          "token_a": 10695,
+          "token_b": 1220,
+          "scores_a": {
+            "chosen": {
+              "id": 10695,
+              "logprob": -1.2931581735610962,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 10695,
+                "logprob": -1.2931581735610962,
+                "rank": 1
+              },
+              {
+                "id": 1220,
+                "logprob": -1.3400331735610962,
+                "rank": 2
+              },
+              {
+                "id": 5533,
+                "logprob": -2.3400330543518066,
+                "rank": 3
+              },
+              {
+                "id": 369,
+                "logprob": -2.6212830543518066,
+                "rank": 4
+              },
+              {
+                "id": 11988,
+                "logprob": -2.7931580543518066,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.046875,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 1220,
+              "logprob": -1.3472768068313599,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 1220,
+                "logprob": -1.3472768068313599,
+                "rank": 1
+              },
+              {
+                "id": 10695,
+                "logprob": -1.4566518068313599,
+                "rank": 2
+              },
+              {
+                "id": 5533,
+                "logprob": -2.2222766876220703,
+                "rank": 3
+              },
+              {
+                "id": 369,
+                "logprob": -2.4254016876220703,
+                "rank": 4
+              },
+              {
+                "id": 11988,
+                "logprob": -2.8629016876220703,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.109375,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            369,
+            1220,
+            5533,
+            10695,
+            11988
+          ],
+          "max_common_top_logprob_difference": 0.19588136672973633,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 1,
+          "first_difference": 137,
+          "token_a": 6892,
+          "token_b": 18958,
+          "scores_a": {
+            "chosen": {
+              "id": 6892,
+              "logprob": -0.968822181224823,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 6892,
+                "logprob": -0.968822181224823,
+                "rank": 1
+              },
+              {
+                "id": 18958,
+                "logprob": -1.0781972408294678,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -1.9688222408294678,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.2891347408294678,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.7344472408294678,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.10937505960464478,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 18958,
+              "logprob": -1.0258619785308838,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 18958,
+                "logprob": -1.0258619785308838,
+                "rank": 1
+              },
+              {
+                "id": 6892,
+                "logprob": -1.0571119785308838,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -2.010236978530884,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.135236978530884,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.502424478530884,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            5206,
+            6892,
+            18958,
+            55661,
+            56552
+          ],
+          "max_common_top_logprob_difference": 0.23202276229858398,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 2,
+          "first_difference": 137,
+          "token_a": 6892,
+          "token_b": 18958,
+          "scores_a": {
+            "chosen": {
+              "id": 6892,
+              "logprob": -1.0544344186782837,
+              "rank": 2
+            },
+            "top": [
+              {
+                "id": 6892,
+                "logprob": -1.0544344186782837,
+                "rank": 2
+              },
+              {
+                "id": 18958,
+                "logprob": -1.0544344186782837,
+                "rank": 1
+              },
+              {
+                "id": 55661,
+                "logprob": -1.8669344186782837,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.257559299468994,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.812246799468994,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 18958,
+              "logprob": -0.9102256298065186,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 18958,
+                "logprob": -0.9102256298065186,
+                "rank": 1
+              },
+              {
+                "id": 6892,
+                "logprob": -1.0508506298065186,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -2.3164756298065186,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.0039756298065186,
+                "rank": 4
+              },
+              {
+                "id": 853,
+                "logprob": -3.9727256298065186,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.140625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            5206,
+            6892,
+            18958,
+            55661
+          ],
+          "max_common_top_logprob_difference": 0.44954121112823486,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 3,
+          "first_difference": 137,
+          "token_a": 6892,
+          "token_b": 18958,
+          "scores_a": {
+            "chosen": {
+              "id": 6892,
+              "logprob": -1.027219295501709,
+              "rank": 2
+            },
+            "top": [
+              {
+                "id": 6892,
+                "logprob": -1.027219295501709,
+                "rank": 2
+              },
+              {
+                "id": 18958,
+                "logprob": -1.027219295501709,
+                "rank": 1
+              },
+              {
+                "id": 55661,
+                "logprob": -1.949094295501709,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.347531795501709,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.745969295501709,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 18958,
+              "logprob": -1.0886908769607544,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 18958,
+                "logprob": -1.0886908769607544,
+                "rank": 1
+              },
+              {
+                "id": 6892,
+                "logprob": -1.1043158769607544,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -1.7136908769607544,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.151190757751465,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.682440757751465,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.015625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            5206,
+            6892,
+            18958,
+            55661,
+            56552
+          ],
+          "max_common_top_logprob_difference": 0.2354034185409546,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 0,
+          "first_difference": 184,
+          "token_a": 709,
+          "token_b": 7873,
+          "scores_a": {
+            "chosen": {
+              "id": 709,
+              "logprob": -1.8005664348602295,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 709,
+                "logprob": -1.8005664348602295,
+                "rank": 1
+              },
+              {
+                "id": 7873,
+                "logprob": -1.8005664348602295,
+                "rank": 2
+              },
+              {
+                "id": 5215,
+                "logprob": -2.0818164348602295,
+                "rank": 3
+              },
+              {
+                "id": 31626,
+                "logprob": -2.2068164348602295,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.6755664348602295,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 7873,
+              "logprob": -1.8076848983764648,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 7873,
+                "logprob": -1.8076848983764648,
+                "rank": 1
+              },
+              {
+                "id": 709,
+                "logprob": -1.9014348983764648,
+                "rank": 2
+              },
+              {
+                "id": 31626,
+                "logprob": -2.182684898376465,
+                "rank": 3
+              },
+              {
+                "id": 5215,
+                "logprob": -2.354559898376465,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.604559898376465,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.09375,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            709,
+            5215,
+            7873,
+            11870,
+            31626
+          ],
+          "max_common_top_logprob_difference": 0.27274346351623535,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 1,
+          "first_difference": null,
+          "compared_tokens": 192
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 2,
+          "first_difference": 137,
+          "token_a": 18958,
+          "token_b": 6892,
+          "scores_a": {
+            "chosen": {
+              "id": 18958,
+              "logprob": -0.9514964818954468,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 18958,
+                "logprob": -0.9514964818954468,
+                "rank": 1
+              },
+              {
+                "id": 6892,
+                "logprob": -0.9827464818954468,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -2.3577466011047363,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.1858716011047363,
+                "rank": 4
+              },
+              {
+                "id": 7006,
+                "logprob": -4.099934101104736,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 6892,
+              "logprob": -1.0543453693389893,
+              "rank": 2
+            },
+            "top": [
+              {
+                "id": 6892,
+                "logprob": -1.0543453693389893,
+                "rank": 2
+              },
+              {
+                "id": 18958,
+                "logprob": -1.0543453693389893,
+                "rank": 1
+              },
+              {
+                "id": 55661,
+                "logprob": -1.7887203693389893,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.3902828693389893,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.7184078693389893,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            5206,
+            6892,
+            18958,
+            55661
+          ],
+          "max_common_top_logprob_difference": 0.5690262317657471,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 3,
+          "first_difference": 184,
+          "token_a": 7873,
+          "token_b": 709,
+          "scores_a": {
+            "chosen": {
+              "id": 7873,
+              "logprob": -1.8155572414398193,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 7873,
+                "logprob": -1.8155572414398193,
+                "rank": 1
+              },
+              {
+                "id": 709,
+                "logprob": -1.9405572414398193,
+                "rank": 2
+              },
+              {
+                "id": 5215,
+                "logprob": -2.0030572414398193,
+                "rank": 3
+              },
+              {
+                "id": 31626,
+                "logprob": -2.2374322414398193,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.7061822414398193,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.125,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 709,
+              "logprob": -1.752083420753479,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 709,
+                "logprob": -1.752083420753479,
+                "rank": 1
+              },
+              {
+                "id": 7873,
+                "logprob": -1.767708420753479,
+                "rank": 2
+              },
+              {
+                "id": 31626,
+                "logprob": -2.1739583015441895,
+                "rank": 3
+              },
+              {
+                "id": 5215,
+                "logprob": -2.2989583015441895,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.6583333015441895,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.015625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            709,
+            5215,
+            7873,
+            11870,
+            31626
+          ],
+          "max_common_top_logprob_difference": 0.2959010601043701,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "request": 0,
+          "first_difference": null,
+          "compared_tokens": 64
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "request": 0,
+          "first_difference": 3,
+          "token_a": 220,
+          "token_b": 978,
+          "scores_a": {
+            "chosen": {
+              "id": 220,
+              "logprob": -2.3650553226470947,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 220,
+                "logprob": -2.3650553226470947,
+                "rank": 1
+              },
+              {
+                "id": 978,
+                "logprob": -2.4353678226470947,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.1384928226470947,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.2166178226470947,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.5056803226470947,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0703125,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 978,
+              "logprob": -2.418217897415161,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 978,
+                "logprob": -2.418217897415161,
+                "rank": 1
+              },
+              {
+                "id": 220,
+                "logprob": -2.426030397415161,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.129155397415161,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.215092897415161,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.480717897415161,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0078125,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            220,
+            264,
+            874,
+            978,
+            1381
+          ],
+          "max_common_top_logprob_difference": 0.060975074768066406,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 0,
+          "first_difference": null,
+          "compared_tokens": 64
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 1,
+          "first_difference": 1,
+          "token_a": 4400,
+          "token_b": 8323,
+          "scores_a": {
+            "chosen": {
+              "id": 4400,
+              "logprob": -2.1796131134033203,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 4400,
+                "logprob": -2.1796131134033203,
+                "rank": 1
+              },
+              {
+                "id": 8323,
+                "logprob": -2.2655506134033203,
+                "rank": 2
+              },
+              {
+                "id": 1118,
+                "logprob": -3.1483631134033203,
+                "rank": 3
+              },
+              {
+                "id": 220,
+                "logprob": -3.4921131134033203,
+                "rank": 4
+              },
+              {
+                "id": 2614,
+                "logprob": -3.5311756134033203,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0859375,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 8323,
+              "logprob": -2.153101921081543,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 8323,
+                "logprob": -2.153101921081543,
+                "rank": 1
+              },
+              {
+                "id": 4400,
+                "logprob": -2.301539421081543,
+                "rank": 2
+              },
+              {
+                "id": 1118,
+                "logprob": -3.153101921081543,
+                "rank": 3
+              },
+              {
+                "id": 2614,
+                "logprob": -3.465601921081543,
+                "rank": 4
+              },
+              {
+                "id": 220,
+                "logprob": -3.535914421081543,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.1484375,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            220,
+            1118,
+            2614,
+            4400,
+            8323
+          ],
+          "max_common_top_logprob_difference": 0.12192630767822266,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 2,
+          "first_difference": 3,
+          "token_a": 978,
+          "token_b": 220,
+          "scores_a": {
+            "chosen": {
+              "id": 978,
+              "logprob": -2.402888536453247,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 978,
+                "logprob": -2.402888536453247,
+                "rank": 1
+              },
+              {
+                "id": 220,
+                "logprob": -2.449763536453247,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.113826036453247,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.238826036453247,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.512263536453247,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.046875,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 220,
+              "logprob": -2.349639892578125,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 220,
+                "logprob": -2.349639892578125,
+                "rank": 1
+              },
+              {
+                "id": 978,
+                "logprob": -2.451202392578125,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.107452392578125,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.232452392578125,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.466827392578125,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.1015625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            220,
+            264,
+            874,
+            978,
+            1381
+          ],
+          "max_common_top_logprob_difference": 0.10012364387512207,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 3,
+          "first_difference": 3,
+          "token_a": 220,
+          "token_b": 978,
+          "scores_a": {
+            "chosen": {
+              "id": 220,
+              "logprob": -2.4042775630950928,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 220,
+                "logprob": -2.4042775630950928,
+                "rank": 1
+              },
+              {
+                "id": 978,
+                "logprob": -2.4042775630950928,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.1386525630950928,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.2324025630950928,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.4902150630950928,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 978,
+              "logprob": -2.4165778160095215,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 978,
+                "logprob": -2.4165778160095215,
+                "rank": 1
+              },
+              {
+                "id": 220,
+                "logprob": -2.4400153160095215,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.1040778160095215,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.2134528160095215,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.4868903160095215,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0234375,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            220,
+            264,
+            874,
+            978,
+            1381
+          ],
+          "max_common_top_logprob_difference": 0.03573775291442871,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 0,
+          "first_difference": 1,
+          "token_a": 8323,
+          "token_b": 4400,
+          "scores_a": {
+            "chosen": {
+              "id": 8323,
+              "logprob": -2.1207780838012695,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 8323,
+                "logprob": -2.1207780838012695,
+                "rank": 1
+              },
+              {
+                "id": 4400,
+                "logprob": -2.2301530838012695,
+                "rank": 2
+              },
+              {
+                "id": 1118,
+                "logprob": -3.1207780838012695,
+                "rank": 3
+              },
+              {
+                "id": 2614,
+                "logprob": -3.5348405838012695,
+                "rank": 4
+              },
+              {
+                "id": 220,
+                "logprob": -3.5582780838012695,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.109375,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 4400,
+              "logprob": -2.2287755012512207,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 4400,
+                "logprob": -2.2287755012512207,
+                "rank": 1
+              },
+              {
+                "id": 8323,
+                "logprob": -2.2834630012512207,
+                "rank": 2
+              },
+              {
+                "id": 1118,
+                "logprob": -3.1272130012512207,
+                "rank": 3
+              },
+              {
+                "id": 2614,
+                "logprob": -3.4944005012512207,
+                "rank": 4
+              },
+              {
+                "id": 7796,
+                "logprob": -3.5022130012512207,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0546875,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            1118,
+            2614,
+            4400,
+            8323
+          ],
+          "max_common_top_logprob_difference": 0.16268491744995117,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 1,
+          "first_difference": 3,
+          "token_a": 978,
+          "token_b": 220,
+          "scores_a": {
+            "chosen": {
+              "id": 978,
+              "logprob": -2.361168622970581,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 978,
+                "logprob": -2.361168622970581,
+                "rank": 1
+              },
+              {
+                "id": 220,
+                "logprob": -2.525231122970581,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.158043622970581,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.165856122970581,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.470543622970581,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.1640625,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 220,
+              "logprob": -2.3892822265625,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 220,
+                "logprob": -2.3892822265625,
+                "rank": 1
+              },
+              {
+                "id": 978,
+                "logprob": -2.4127197265625,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.1002197265625,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.2252197265625,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.5142822265625,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0234375,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            220,
+            264,
+            874,
+            978,
+            1381
+          ],
+          "max_common_top_logprob_difference": 0.13594889640808105,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 2,
+          "first_difference": null,
+          "compared_tokens": 64
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 3,
+          "first_difference": null,
+          "compared_tokens": 64
+        }
+      ],
+      "identical_prefix_one_token_controls": [
+        {
+          "window": "code-4096",
+          "position": 137,
+          "prompt_ids_sha256": "7b6fcdb140814f1c0827e35cc0b40e17b1d2e0c392d0d1b4e31d78a2d710725f",
+          "expected_reference_token": 6892,
+          "only_prefill_target_calls_a": true,
+          "only_prefill_target_calls_b": true,
+          "first_difference": 0,
+          "token_a": 6892,
+          "token_b": 18958,
+          "scores_a": {
+            "chosen": {
+              "id": 6892,
+              "logprob": -1.0153570175170898,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 6892,
+                "logprob": -1.0153570175170898,
+                "rank": 1
+              },
+              {
+                "id": 18958,
+                "logprob": -1.2341070175170898,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -1.6247320175170898,
+                "rank": 3
+              },
+              {
+                "id": 56552,
+                "logprob": -3.15598201751709,
+                "rank": 4
+              },
+              {
+                "id": 5206,
+                "logprob": -3.51535701751709,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.21875,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 18958,
+              "logprob": -0.9013131856918335,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 18958,
+                "logprob": -0.9013131856918335,
+                "rank": 1
+              },
+              {
+                "id": 6892,
+                "logprob": -0.9169381856918335,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -2.354438304901123,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.870063304901123,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -4.127875804901123,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.015625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            5206,
+            6892,
+            18958,
+            55661,
+            56552
+          ],
+          "max_common_top_logprob_difference": 0.9718937873840332,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "position": 1,
+          "prompt_ids_sha256": "2e0793ed3ddb19b8ba091b0d49f60e1524d68d10b69cc172f31d86e285bb96c2",
+          "expected_reference_token": 8323,
+          "only_prefill_target_calls_a": true,
+          "only_prefill_target_calls_b": true,
+          "first_difference": null,
+          "compared_tokens": 1
+        },
+        {
+          "window": "prose-4096",
+          "position": 3,
+          "prompt_ids_sha256": "4646188b4abf49d8d901ef52551b98ef730ef9164df85700329306783cd035ca",
+          "expected_reference_token": 220,
+          "only_prefill_target_calls_a": true,
+          "only_prefill_target_calls_b": true,
+          "first_difference": null,
+          "compared_tokens": 1
+        },
+        {
+          "window": "prose-4096",
+          "position": 19,
+          "prompt_ids_sha256": "f325c74f9f75771f21591c6514d0039c5337ed80cac69c8d3543cbc33664168d",
+          "expected_reference_token": 220,
+          "only_prefill_target_calls_a": true,
+          "only_prefill_target_calls_b": true,
+          "first_difference": null,
+          "compared_tokens": 1
+        }
+      ]
+    },
+    {
+      "variant": "graph-nospec",
+      "paired_requests": 20,
+      "exact_matches": 9,
+      "pairs": [
+        {
+          "window": "code-4096",
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "request": 0,
+          "first_difference": 190,
+          "token_a": 25,
+          "token_b": 430,
+          "scores_a": {
+            "chosen": {
+              "id": 25,
+              "logprob": -1.040172815322876,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 25,
+                "logprob": -1.040172815322876,
+                "rank": 1
+              },
+              {
+                "id": 430,
+                "logprob": -1.243297815322876,
+                "rank": 2
+              },
+              {
+                "id": 13,
+                "logprob": -1.680797815322876,
+                "rank": 3
+              },
+              {
+                "id": 364,
+                "logprob": -3.212047815322876,
+                "rank": 4
+              },
+              {
+                "id": 1429,
+                "logprob": -3.399547815322876,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.203125,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 430,
+              "logprob": -1.1050952672958374,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 430,
+                "logprob": -1.1050952672958374,
+                "rank": 1
+              },
+              {
+                "id": 25,
+                "logprob": -1.1519702672958374,
+                "rank": 2
+              },
+              {
+                "id": 13,
+                "logprob": -1.6988452672958374,
+                "rank": 3
+              },
+              {
+                "id": 1429,
+                "logprob": -3.308220386505127,
+                "rank": 4
+              },
+              {
+                "id": 364,
+                "logprob": -3.355095386505127,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.046875,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            13,
+            25,
+            364,
+            430,
+            1429
+          ],
+          "max_common_top_logprob_difference": 0.14304757118225098,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "request": 0,
+          "first_difference": 184,
+          "token_a": 709,
+          "token_b": 7873,
+          "scores_a": {
+            "chosen": {
+              "id": 709,
+              "logprob": -1.8622519969940186,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 709,
+                "logprob": -1.8622519969940186,
+                "rank": 1
+              },
+              {
+                "id": 7873,
+                "logprob": -1.8778769969940186,
+                "rank": 2
+              },
+              {
+                "id": 5215,
+                "logprob": -2.0497519969940186,
+                "rank": 3
+              },
+              {
+                "id": 31626,
+                "logprob": -2.2841269969940186,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.7528769969940186,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.015625,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 7873,
+              "logprob": -1.7578781843185425,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 7873,
+                "logprob": -1.7578781843185425,
+                "rank": 1
+              },
+              {
+                "id": 709,
+                "logprob": -1.7735031843185425,
+                "rank": 2
+              },
+              {
+                "id": 31626,
+                "logprob": -2.132878303527832,
+                "rank": 3
+              },
+              {
+                "id": 5215,
+                "logprob": -2.211003303527832,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.726628303527832,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.015625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            709,
+            5215,
+            7873,
+            11870,
+            31626
+          ],
+          "max_common_top_logprob_difference": 0.16125130653381348,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 0,
+          "first_difference": 185,
+          "token_a": 10695,
+          "token_b": 1220,
+          "scores_a": {
+            "chosen": {
+              "id": 10695,
+              "logprob": -1.2931581735610962,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 10695,
+                "logprob": -1.2931581735610962,
+                "rank": 1
+              },
+              {
+                "id": 1220,
+                "logprob": -1.3400331735610962,
+                "rank": 2
+              },
+              {
+                "id": 5533,
+                "logprob": -2.3400330543518066,
+                "rank": 3
+              },
+              {
+                "id": 369,
+                "logprob": -2.6212830543518066,
+                "rank": 4
+              },
+              {
+                "id": 11988,
+                "logprob": -2.7931580543518066,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.046875,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 1220,
+              "logprob": -1.2805497646331787,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 1220,
+                "logprob": -1.2805497646331787,
+                "rank": 1
+              },
+              {
+                "id": 10695,
+                "logprob": -1.4524247646331787,
+                "rank": 2
+              },
+              {
+                "id": 5533,
+                "logprob": -2.2805497646331787,
+                "rank": 3
+              },
+              {
+                "id": 369,
+                "logprob": -2.4992997646331787,
+                "rank": 4
+              },
+              {
+                "id": 11988,
+                "logprob": -2.5617997646331787,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.171875,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            369,
+            1220,
+            5533,
+            10695,
+            11988
+          ],
+          "max_common_top_logprob_difference": 0.23135828971862793,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 1,
+          "first_difference": null,
+          "compared_tokens": 192
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 2,
+          "first_difference": 184,
+          "token_a": 7873,
+          "token_b": 709,
+          "scores_a": {
+            "chosen": {
+              "id": 7873,
+              "logprob": -1.754051685333252,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 7873,
+                "logprob": -1.754051685333252,
+                "rank": 1
+              },
+              {
+                "id": 709,
+                "logprob": -1.863426685333252,
+                "rank": 2
+              },
+              {
+                "id": 31626,
+                "logprob": -2.129051685333252,
+                "rank": 3
+              },
+              {
+                "id": 5215,
+                "logprob": -2.144676685333252,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.675926685333252,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.109375,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 709,
+              "logprob": -1.8764686584472656,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 709,
+                "logprob": -1.8764686584472656,
+                "rank": 1
+              },
+              {
+                "id": 7873,
+                "logprob": -1.8764686584472656,
+                "rank": 2
+              },
+              {
+                "id": 5215,
+                "logprob": -1.9389686584472656,
+                "rank": 3
+              },
+              {
+                "id": 31626,
+                "logprob": -2.1264686584472656,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.7827186584472656,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            709,
+            5215,
+            7873,
+            11870,
+            31626
+          ],
+          "max_common_top_logprob_difference": 0.20570802688598633,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 3,
+          "first_difference": null,
+          "compared_tokens": 192
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 0,
+          "first_difference": 184,
+          "token_a": 709,
+          "token_b": 7873,
+          "scores_a": {
+            "chosen": {
+              "id": 709,
+              "logprob": -1.8005664348602295,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 709,
+                "logprob": -1.8005664348602295,
+                "rank": 1
+              },
+              {
+                "id": 7873,
+                "logprob": -1.8005664348602295,
+                "rank": 2
+              },
+              {
+                "id": 5215,
+                "logprob": -2.0818164348602295,
+                "rank": 3
+              },
+              {
+                "id": 31626,
+                "logprob": -2.2068164348602295,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.6755664348602295,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 7873,
+              "logprob": -1.728291392326355,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 7873,
+                "logprob": -1.728291392326355,
+                "rank": 1
+              },
+              {
+                "id": 709,
+                "logprob": -1.743916392326355,
+                "rank": 2
+              },
+              {
+                "id": 31626,
+                "logprob": -2.1657915115356445,
+                "rank": 3
+              },
+              {
+                "id": 5215,
+                "logprob": -2.3845415115356445,
+                "rank": 4
+              },
+              {
+                "id": 11870,
+                "logprob": -2.6970415115356445,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.015625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            709,
+            5215,
+            7873,
+            11870,
+            31626
+          ],
+          "max_common_top_logprob_difference": 0.30272507667541504,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 1,
+          "first_difference": 137,
+          "token_a": 18958,
+          "token_b": 6892,
+          "scores_a": {
+            "chosen": {
+              "id": 18958,
+              "logprob": -0.9514964818954468,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 18958,
+                "logprob": -0.9514964818954468,
+                "rank": 1
+              },
+              {
+                "id": 6892,
+                "logprob": -0.9827464818954468,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -2.3577466011047363,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.1858716011047363,
+                "rank": 4
+              },
+              {
+                "id": 7006,
+                "logprob": -4.099934101104736,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 6892,
+              "logprob": -1.1217188835144043,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 6892,
+                "logprob": -1.1217188835144043,
+                "rank": 1
+              },
+              {
+                "id": 18958,
+                "logprob": -1.1842188835144043,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -1.5435938835144043,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.2935938835144043,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.5435938835144043,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            5206,
+            6892,
+            18958,
+            55661
+          ],
+          "max_common_top_logprob_difference": 0.814152717590332,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 2,
+          "first_difference": 137,
+          "token_a": 18958,
+          "token_b": 6892,
+          "scores_a": {
+            "chosen": {
+              "id": 18958,
+              "logprob": -0.9514964818954468,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 18958,
+                "logprob": -0.9514964818954468,
+                "rank": 1
+              },
+              {
+                "id": 6892,
+                "logprob": -0.9827464818954468,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -2.3577466011047363,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.1858716011047363,
+                "rank": 4
+              },
+              {
+                "id": 7006,
+                "logprob": -4.099934101104736,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 6892,
+              "logprob": -0.8883994817733765,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 6892,
+                "logprob": -0.8883994817733765,
+                "rank": 1
+              },
+              {
+                "id": 18958,
+                "logprob": -1.0446494817733765,
+                "rank": 2
+              },
+              {
+                "id": 55661,
+                "logprob": -2.372774600982666,
+                "rank": 3
+              },
+              {
+                "id": 5206,
+                "logprob": -3.341524600982666,
+                "rank": 4
+              },
+              {
+                "id": 56552,
+                "logprob": -3.732149600982666,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.15625,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            5206,
+            6892,
+            18958,
+            55661
+          ],
+          "max_common_top_logprob_difference": 0.1556529998779297,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "code-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 3,
+          "first_difference": null,
+          "compared_tokens": 192
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "request": 0,
+          "first_difference": null,
+          "compared_tokens": 64
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "request": 0,
+          "first_difference": null,
+          "compared_tokens": 64
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 0,
+          "first_difference": 1,
+          "token_a": 4400,
+          "token_b": 8323,
+          "scores_a": {
+            "chosen": {
+              "id": 4400,
+              "logprob": -2.1787431240081787,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 4400,
+                "logprob": -2.1787431240081787,
+                "rank": 1
+              },
+              {
+                "id": 8323,
+                "logprob": -2.2334306240081787,
+                "rank": 2
+              },
+              {
+                "id": 1118,
+                "logprob": -3.1865556240081787,
+                "rank": 3
+              },
+              {
+                "id": 2614,
+                "logprob": -3.4756181240081787,
+                "rank": 4
+              },
+              {
+                "id": 7796,
+                "logprob": -3.5146806240081787,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0546875,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 8323,
+              "logprob": -2.2174525260925293,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 8323,
+                "logprob": -2.2174525260925293,
+                "rank": 1
+              },
+              {
+                "id": 4400,
+                "logprob": -2.2487025260925293,
+                "rank": 2
+              },
+              {
+                "id": 1118,
+                "logprob": -3.1471400260925293,
+                "rank": 3
+              },
+              {
+                "id": 7796,
+                "logprob": -3.5065150260925293,
+                "rank": 4
+              },
+              {
+                "id": 220,
+                "logprob": -3.5143275260925293,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            1118,
+            4400,
+            7796,
+            8323
+          ],
+          "max_common_top_logprob_difference": 0.06995940208435059,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 1,
+          "first_difference": 1,
+          "token_a": 4400,
+          "token_b": 8323,
+          "scores_a": {
+            "chosen": {
+              "id": 4400,
+              "logprob": -2.1796131134033203,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 4400,
+                "logprob": -2.1796131134033203,
+                "rank": 1
+              },
+              {
+                "id": 8323,
+                "logprob": -2.2655506134033203,
+                "rank": 2
+              },
+              {
+                "id": 1118,
+                "logprob": -3.1483631134033203,
+                "rank": 3
+              },
+              {
+                "id": 220,
+                "logprob": -3.4921131134033203,
+                "rank": 4
+              },
+              {
+                "id": 2614,
+                "logprob": -3.5311756134033203,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0859375,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 8323,
+              "logprob": -2.2003722190856934,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 8323,
+                "logprob": -2.2003722190856934,
+                "rank": 1
+              },
+              {
+                "id": 4400,
+                "logprob": -2.2941222190856934,
+                "rank": 2
+              },
+              {
+                "id": 1118,
+                "logprob": -3.0831847190856934,
+                "rank": 3
+              },
+              {
+                "id": 7796,
+                "logprob": -3.4972472190856934,
+                "rank": 4
+              },
+              {
+                "id": 220,
+                "logprob": -3.5206847190856934,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.09375,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            220,
+            1118,
+            4400,
+            8323
+          ],
+          "max_common_top_logprob_difference": 0.11450910568237305,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 2,
+          "first_difference": 3,
+          "token_a": 978,
+          "token_b": 220,
+          "scores_a": {
+            "chosen": {
+              "id": 978,
+              "logprob": -2.402888536453247,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 978,
+                "logprob": -2.402888536453247,
+                "rank": 1
+              },
+              {
+                "id": 220,
+                "logprob": -2.449763536453247,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.113826036453247,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.238826036453247,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.512263536453247,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.046875,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 220,
+              "logprob": -2.388840436935425,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 220,
+                "logprob": -2.388840436935425,
+                "rank": 1
+              },
+              {
+                "id": 978,
+                "logprob": -2.412277936935425,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.107590436935425,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.271652936935425,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.513840436935425,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0234375,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            220,
+            264,
+            874,
+            978,
+            1381
+          ],
+          "max_common_top_logprob_difference": 0.060923099517822266,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "request": 3,
+          "first_difference": null,
+          "compared_tokens": 64
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 0,
+          "first_difference": null,
+          "compared_tokens": 64
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 1,
+          "first_difference": 3,
+          "token_a": 978,
+          "token_b": 220,
+          "scores_a": {
+            "chosen": {
+              "id": 978,
+              "logprob": -2.361168622970581,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 978,
+                "logprob": -2.361168622970581,
+                "rank": 1
+              },
+              {
+                "id": 220,
+                "logprob": -2.525231122970581,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.158043622970581,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.165856122970581,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.470543622970581,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.1640625,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 220,
+              "logprob": -2.3964121341705322,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 220,
+                "logprob": -2.3964121341705322,
+                "rank": 1
+              },
+              {
+                "id": 978,
+                "logprob": -2.4276621341705322,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.1542246341705322,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.1932871341705322,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.5057871341705322,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            220,
+            264,
+            874,
+            978,
+            1381
+          ],
+          "max_common_top_logprob_difference": 0.12881898880004883,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 2,
+          "first_difference": null,
+          "compared_tokens": 64
+        },
+        {
+          "window": "prose-4096",
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "request": 3,
+          "first_difference": null,
+          "compared_tokens": 64
+        }
+      ],
+      "identical_prefix_one_token_controls": [
+        {
+          "window": "code-4096",
+          "position": 137,
+          "prompt_ids_sha256": "7b6fcdb140814f1c0827e35cc0b40e17b1d2e0c392d0d1b4e31d78a2d710725f",
+          "expected_reference_token": 6892,
+          "only_prefill_target_calls_a": true,
+          "only_prefill_target_calls_b": true,
+          "first_difference": null,
+          "compared_tokens": 1
+        },
+        {
+          "window": "prose-4096",
+          "position": 1,
+          "prompt_ids_sha256": "2e0793ed3ddb19b8ba091b0d49f60e1524d68d10b69cc172f31d86e285bb96c2",
+          "expected_reference_token": 8323,
+          "only_prefill_target_calls_a": true,
+          "only_prefill_target_calls_b": true,
+          "first_difference": null,
+          "compared_tokens": 1
+        },
+        {
+          "window": "prose-4096",
+          "position": 3,
+          "prompt_ids_sha256": "4646188b4abf49d8d901ef52551b98ef730ef9164df85700329306783cd035ca",
+          "expected_reference_token": 220,
+          "only_prefill_target_calls_a": true,
+          "only_prefill_target_calls_b": true,
+          "first_difference": 0,
+          "token_a": 220,
+          "token_b": 978,
+          "scores_a": {
+            "chosen": {
+              "id": 220,
+              "logprob": -2.3710107803344727,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 220,
+                "logprob": -2.3710107803344727,
+                "rank": 1
+              },
+              {
+                "id": 978,
+                "logprob": -2.4569482803344727,
+                "rank": 2
+              },
+              {
+                "id": 264,
+                "logprob": -3.0897607803344727,
+                "rank": 3
+              },
+              {
+                "id": 874,
+                "logprob": -3.2303857803344727,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.4960107803344727,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.0859375,
+            "chosen_gap_from_top": 0.0
+          },
+          "scores_b": {
+            "chosen": {
+              "id": 978,
+              "logprob": -2.4194157123565674,
+              "rank": 1
+            },
+            "top": [
+              {
+                "id": 978,
+                "logprob": -2.4194157123565674,
+                "rank": 1
+              },
+              {
+                "id": 220,
+                "logprob": -2.4506657123565674,
+                "rank": 2
+              },
+              {
+                "id": 874,
+                "logprob": -3.1303532123565674,
+                "rank": 3
+              },
+              {
+                "id": 264,
+                "logprob": -3.1459782123565674,
+                "rank": 4
+              },
+              {
+                "id": 1381,
+                "logprob": -3.5444157123565674,
+                "rank": 5
+              }
+            ],
+            "top1_top2_margin": 0.03125,
+            "chosen_gap_from_top": 0.0
+          },
+          "common_top_logprob_ids": [
+            220,
+            264,
+            874,
+            978,
+            1381
+          ],
+          "max_common_top_logprob_difference": 0.10003256797790527,
+          "scope": "Predictions share exactly the generated history before this position. Top5 intersections are not full-vocabulary KL. No accepted error threshold is inferred from an observed margin."
+        },
+        {
+          "window": "prose-4096",
+          "position": 19,
+          "prompt_ids_sha256": "f325c74f9f75771f21591c6514d0039c5337ed80cac69c8d3543cbc33664168d",
+          "expected_reference_token": 220,
+          "only_prefill_target_calls_a": true,
+          "only_prefill_target_calls_b": true,
+          "first_difference": null,
+          "compared_tokens": 1
+        }
+      ]
+    }
+  ],
+  "interpretation": "All10240 main generated tokens select a reported maximum-score token. Different routes/batching/cache reuse change scores and can flip rankings. Some flips persist in one-token forced-prefix prefill controls, so they are not specific proof of speculative verification failure. No full-vocabulary KL or BF16 generated-path equivalence is established. Do not label all changes harmless rounding or a sampler bug."
+}

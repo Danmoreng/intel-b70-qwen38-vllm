@@ -25,7 +25,7 @@ C1 uses native request-weighted decode; C4 uses client aggregate decode over the
 | code-102752 | 1 | cold | 43.94 | 44.40 | +1.1% | 0.0% / 0.0% |
 | code-102752 | 1 | warm | 43.90 | 44.38 | +1.1% | 98.1% / 97.2% |
 
-No universal depth selected from single-pass screening. Use component/row evidence and targeted repeats for ambiguous cells; generated-output correctness remains a release gate.
+Decision after component profiling and generated-path diagnostics: use MTP3 as the EXL3 target-profile default for subsequent optimization. MTP4 gains only~1.1% at103K C1 and regresses about8% on4K prose C4; warm48K C4 also has unequal cache residency. No further depth matrix is planned. This practical default selection does not complete the production release gates.
 
 Exact output hashes and first differing token positions are retained in assessment.json. Sequence variation is not assumed to be harmless numerical rounding. Instrumented component traces remain separate from these throughput observations.
 

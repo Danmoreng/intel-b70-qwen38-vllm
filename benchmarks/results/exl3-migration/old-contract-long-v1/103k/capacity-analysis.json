@@ -1,0 +1,173 @@
+{
+  "schema": 1,
+  "trace_rows": 2723,
+  "cache": {
+    "total_blocks": 176,
+    "free_blocks": 175,
+    "watermark_blocks": 0,
+    "groups": [
+      {
+        "group": 0,
+        "type": "MambaManager",
+        "spec": "MambaSpec(block_size=1600, shapes=((6, 10240), (48, 128, 128)), dtypes=(torch.float16, torch.float32), page_size_padded=3276800, mamba_type=<MambaAttentionBackendEnum.GDN_ATTN: 'vllm.v1.attention.backends.gdn_attn.GDNAttentionBackend'>, mamba_cache_mode='align', num_speculative_blocks=3)",
+        "block_size": 1600,
+        "num_speculative_blocks": 3,
+        "held_blocks": 0,
+        "non_null_blocks": 0,
+        "block_ids": [],
+        "ref_counts": []
+      },
+      {
+        "group": 1,
+        "type": "MambaManager",
+        "spec": "MambaSpec(block_size=1600, shapes=((6, 10240), (48, 128, 128)), dtypes=(torch.float16, torch.float32), page_size_padded=3276800, mamba_type=<MambaAttentionBackendEnum.GDN_ATTN: 'vllm.v1.attention.backends.gdn_attn.GDNAttentionBackend'>, mamba_cache_mode='align', num_speculative_blocks=3)",
+        "block_size": 1600,
+        "num_speculative_blocks": 3,
+        "held_blocks": 0,
+        "non_null_blocks": 0,
+        "block_ids": [],
+        "ref_counts": []
+      },
+      {
+        "group": 2,
+        "type": "MambaManager",
+        "spec": "MambaSpec(block_size=1600, shapes=((6, 10240), (48, 128, 128)), dtypes=(torch.float16, torch.float32), page_size_padded=3276800, mamba_type=<MambaAttentionBackendEnum.GDN_ATTN: 'vllm.v1.attention.backends.gdn_attn.GDNAttentionBackend'>, mamba_cache_mode='align', num_speculative_blocks=3)",
+        "block_size": 1600,
+        "num_speculative_blocks": 3,
+        "held_blocks": 0,
+        "non_null_blocks": 0,
+        "block_ids": [],
+        "ref_counts": []
+      },
+      {
+        "group": 3,
+        "type": "FullAttentionManager",
+        "spec": "FullAttentionSpec(block_size=1600, num_kv_heads=4, head_size=256, dtype=torch.uint8, kv_quant_mode=<KVQuantMode.FP8_PER_TENSOR: 1>, page_size_padded=None, indexes_kv_by_block_stride=True, head_size_v=256, sliding_window=None, attention_chunk_size=None, non_causal=False)",
+        "block_size": 1600,
+        "num_speculative_blocks": null,
+        "held_blocks": 0,
+        "non_null_blocks": 0,
+        "block_ids": [],
+        "ref_counts": []
+      }
+    ]
+  },
+  "memory_stages": [
+    {
+      "event": "before_weights",
+      "pid": 66,
+      "unix": 1790855856.6541588,
+      "monotonic": 76628.162054683,
+      "memory": {
+        "allocated": 208501248,
+        "reserved": 209715200,
+        "max_allocated": 208501248,
+        "max_reserved": 209715200,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 33033568256,
+        "total": 34242297856
+      }
+    },
+    {
+      "event": "after_weights_and_draft",
+      "pid": 66,
+      "unix": 1790855874.868941,
+      "monotonic": 76646.376836373,
+      "memory": {
+        "allocated": 18826168832,
+        "reserved": 18962448384,
+        "max_allocated": 18826168832,
+        "max_reserved": 18962448384,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 14013353984,
+        "total": 34242297856
+      },
+      "runner_class": "XPUModelRunner",
+      "runner_source": "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/xpu_model_runner.py",
+      "draft_present": true
+    },
+    {
+      "event": "before_graph_capture",
+      "pid": 66,
+      "unix": 1790855879.6037698,
+      "monotonic": 76651.111665333,
+      "memory": {
+        "allocated": 28630467584,
+        "reserved": 28766633984,
+        "max_allocated": 28637022720,
+        "max_reserved": 28766633984,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 2695352320,
+        "total": 34242297856
+      }
+    },
+    {
+      "event": "after_graph_capture",
+      "pid": 66,
+      "unix": 1790855880.6332154,
+      "monotonic": 76652.141111101,
+      "memory": {
+        "allocated": 28630468608,
+        "reserved": 28793896960,
+        "max_allocated": 28645432832,
+        "max_reserved": 28816965632,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 2822664192,
+        "total": 34242297856
+      },
+      "reported_capture_bytes": -89563136
+    },
+    {
+      "event": "after_warmup",
+      "pid": 66,
+      "unix": 1790855886.6038377,
+      "monotonic": 76658.111733658,
+      "memory": {
+        "allocated": 28630468608,
+        "reserved": 28837937152,
+        "max_allocated": 28672349184,
+        "max_reserved": 28837937152,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 2780459008,
+        "total": 34242297856
+      }
+    }
+  ],
+  "preemption_count": 0,
+  "preemptions": [],
+  "allocation_failure_count": 0,
+  "allocation_failures": [],
+  "scheduled_tokens_by_request": {
+    "chatcmpl-a572277725355b45-91406688": 104232
+  },
+  "scheduled_prefill_upper_bound_by_request": {
+    "chatcmpl-a572277725355b45-91406688": 102752
+  },
+  "submitted_forward_tokens_by_request": {},
+  "submitted_prefill_tokens_by_request": {},
+  "forward_work_note": "Actual Worker.execute_model calls with input offsets, excluding cache-hit token positions. Completion remains asynchronous; no per-kernel timing is inferred.",
+  "scheduled_work_limit": "Scheduling can include speculative/rejected/cancelled work. Prefix hits assigned inside schedule can inflate the prefill estimate. This is not a completed-GPU-compute counter.",
+  "native_logical_metrics": {
+    "decode_seconds": 24.94196264698985,
+    "preemptions": 0.0,
+    "prompt_tokens": 102752.0,
+    "cached_tokens": 0.0,
+    "accepted_tokens": 656.0,
+    "prefill_tokens": 102752.0,
+    "completed": 1.0,
+    "prefill_seconds": 68.20775159400364,
+    "draft_tokens": 1110.0,
+    "generation_tokens": 1024.0
+  },
+  "verdict": "No traced preemption",
+  "unmeasured": [
+    "oneDNN private workspace allocation",
+    "exact graph-pool ownership",
+    "completed GPU kernel token work"
+  ]
+}

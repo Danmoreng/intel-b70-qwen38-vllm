@@ -1,0 +1,166 @@
+{
+  "schema": 1,
+  "trace_rows": 214,
+  "cache": {
+    "total_blocks": 176,
+    "free_blocks": 175,
+    "watermark_blocks": 0,
+    "groups": [
+      {
+        "group": 0,
+        "type": "MambaManager",
+        "spec": "MambaSpec(block_size=1600, shapes=((6, 10240), (48, 128, 128)), dtypes=(torch.float16, torch.float32), page_size_padded=3276800, mamba_type=<MambaAttentionBackendEnum.GDN_ATTN: 'vllm.v1.attention.backends.gdn_attn.GDNAttentionBackend'>, mamba_cache_mode='align', num_speculative_blocks=3)",
+        "block_size": 1600,
+        "num_speculative_blocks": 3,
+        "held_blocks": 0,
+        "non_null_blocks": 0,
+        "block_ids": [],
+        "ref_counts": []
+      },
+      {
+        "group": 1,
+        "type": "MambaManager",
+        "spec": "MambaSpec(block_size=1600, shapes=((6, 10240), (48, 128, 128)), dtypes=(torch.float16, torch.float32), page_size_padded=3276800, mamba_type=<MambaAttentionBackendEnum.GDN_ATTN: 'vllm.v1.attention.backends.gdn_attn.GDNAttentionBackend'>, mamba_cache_mode='align', num_speculative_blocks=3)",
+        "block_size": 1600,
+        "num_speculative_blocks": 3,
+        "held_blocks": 0,
+        "non_null_blocks": 0,
+        "block_ids": [],
+        "ref_counts": []
+      },
+      {
+        "group": 2,
+        "type": "MambaManager",
+        "spec": "MambaSpec(block_size=1600, shapes=((6, 10240), (48, 128, 128)), dtypes=(torch.float16, torch.float32), page_size_padded=3276800, mamba_type=<MambaAttentionBackendEnum.GDN_ATTN: 'vllm.v1.attention.backends.gdn_attn.GDNAttentionBackend'>, mamba_cache_mode='align', num_speculative_blocks=3)",
+        "block_size": 1600,
+        "num_speculative_blocks": 3,
+        "held_blocks": 0,
+        "non_null_blocks": 0,
+        "block_ids": [],
+        "ref_counts": []
+      },
+      {
+        "group": 3,
+        "type": "FullAttentionManager",
+        "spec": "FullAttentionSpec(block_size=1600, num_kv_heads=4, head_size=256, dtype=torch.uint8, kv_quant_mode=<KVQuantMode.FP8_PER_TENSOR: 1>, page_size_padded=None, indexes_kv_by_block_stride=True, head_size_v=256, sliding_window=None, attention_chunk_size=None, non_causal=False)",
+        "block_size": 1600,
+        "num_speculative_blocks": null,
+        "held_blocks": 0,
+        "non_null_blocks": 0,
+        "block_ids": [],
+        "ref_counts": []
+      }
+    ]
+  },
+  "memory_stages": [
+    {
+      "event": "before_weights",
+      "pid": 66,
+      "unix": 1790858224.9724078,
+      "monotonic": 78996.480303732,
+      "memory": {
+        "allocated": 208501248,
+        "reserved": 209715200,
+        "max_allocated": 208501248,
+        "max_reserved": 209715200,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 33033601024,
+        "total": 34242297856
+      }
+    },
+    {
+      "event": "after_weights_and_draft",
+      "pid": 66,
+      "unix": 1790858241.6608171,
+      "monotonic": 79013.168712528,
+      "memory": {
+        "allocated": 18826168832,
+        "reserved": 18962448384,
+        "max_allocated": 18826168832,
+        "max_reserved": 18962448384,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 14013386752,
+        "total": 34242297856
+      },
+      "runner_class": "XPUModelRunner",
+      "runner_source": "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/xpu_model_runner.py",
+      "draft_present": true
+    },
+    {
+      "event": "before_graph_capture",
+      "pid": 66,
+      "unix": 1790858246.492349,
+      "monotonic": 79018.000244474,
+      "memory": {
+        "allocated": 28630467584,
+        "reserved": 28766633984,
+        "max_allocated": 28637022720,
+        "max_reserved": 28766633984,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 2695385088,
+        "total": 34242297856
+      }
+    },
+    {
+      "event": "after_graph_capture",
+      "pid": 66,
+      "unix": 1790858247.498557,
+      "monotonic": 79019.006452486,
+      "memory": {
+        "allocated": 28630468608,
+        "reserved": 28793896960,
+        "max_allocated": 28645432832,
+        "max_reserved": 28816965632,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 2822701056,
+        "total": 34242297856
+      },
+      "reported_capture_bytes": -89567232
+    },
+    {
+      "event": "after_warmup",
+      "pid": 66,
+      "unix": 1790858253.637822,
+      "monotonic": 79025.145717516,
+      "memory": {
+        "allocated": 28630468608,
+        "reserved": 28837937152,
+        "max_allocated": 28672349184,
+        "max_reserved": 28837937152,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 2780495872,
+        "total": 34242297856
+      }
+    }
+  ],
+  "preemption_count": 0,
+  "preemptions": [],
+  "allocation_failure_count": 0,
+  "allocation_failures": [],
+  "scheduled_tokens_by_request": {
+    "chatcmpl-b590285b6b4c0a66-ae3aa8b2": 22518
+  },
+  "scheduled_prefill_upper_bound_by_request": {
+    "chatcmpl-b590285b6b4c0a66-ae3aa8b2": 22450
+  },
+  "submitted_forward_tokens_by_request": {
+    "chatcmpl-b590285b6b4c0a66-ae3aa8b2": 22518
+  },
+  "submitted_prefill_tokens_by_request": {
+    "chatcmpl-b590285b6b4c0a66-ae3aa8b2": 22450
+  },
+  "forward_work_note": "Actual Worker.execute_model calls with input offsets, excluding cache-hit token positions. Completion remains asynchronous; no per-kernel timing is inferred.",
+  "scheduled_work_limit": "Scheduling can include speculative/rejected/cancelled work. Prefix hits assigned inside schedule can inflate the prefill estimate. This is not a completed-GPU-compute counter.",
+  "native_logical_metrics": null,
+  "verdict": "No traced preemption",
+  "unmeasured": [
+    "oneDNN private workspace allocation",
+    "exact graph-pool ownership",
+    "completed GPU kernel token work"
+  ]
+}

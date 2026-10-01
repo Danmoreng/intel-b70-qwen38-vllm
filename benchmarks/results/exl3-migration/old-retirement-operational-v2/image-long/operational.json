@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "response": {
+    "id": "chatcmpl-9c908f794f476ba4",
+    "object": "chat.completion",
+    "created": 1790859756,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Red",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.26.1.dev0+g568afb3a1.d20260907-6738579d",
+    "usage": {
+      "prompt_tokens": 119093,
+      "total_tokens": 119095,
+      "completion_tokens": 2,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "native": {
+    "prefill_seconds": 85.24791393100168,
+    "cached_tokens": 0.0,
+    "preemptions": 0.0,
+    "prompt_tokens": 119093.0,
+    "draft_tokens": 3.0,
+    "accepted_tokens": 3.0,
+    "decode_seconds": 0.06159095698967576,
+    "completed": 1.0,
+    "prefill_tokens": 119093.0,
+    "generation_tokens": 2.0
+  },
+  "purpose": "One allowed image in a long context"
+}

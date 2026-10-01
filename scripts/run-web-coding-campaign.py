@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exclusive sequential GPTQ/EXL3 campaign; restore pinned production in finally."""
+"""Exclusive sequential GPTQ/EXL3 campaign; optional pinned production restoration."""
 
 import argparse
 import fcntl
@@ -154,6 +154,7 @@ def main():
     p.add_argument("--output", type=Path)
     p.add_argument("--engines", default="gptq,exl3")
     p.add_argument("--restore-production", action="store_true")
+    p.add_argument("--restore-after-campaign", action="store_true")
     p.add_argument("--max-wall-seconds", type=int, default=7200)
     p.add_argument("--thinking-token-budget", type=int, default=4096)
     a = p.parse_args()
@@ -299,7 +300,12 @@ def main():
             raise
         finally:
             signal.signal(signal.SIGTERM, signal.SIG_IGN)
-            R.save(a.output / "production-restored.json", restore())
+            if a.restore_after_campaign:
+                R.save(a.output / "production-restored.json", restore())
+            else:
+                stop_exl()
+                command(["systemctl", "--user", "stop", SERVICE])
+                R.save(a.output / "production-left-offline.json", {"unix": time.time(), "user_requested": True})
 
 
 if __name__ == "__main__":

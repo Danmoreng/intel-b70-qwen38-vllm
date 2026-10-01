@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "goal": "active",
+  "production": "GPTQ pinned; no release change",
+  "gptq_migration_branch": "work/exl3-migration-20261001",
+  "gptq_safe_foundation_commit": "8f3165e",
+  "exl3_safe_foundation_commit": "c96f551",
+  "exl3_loader_trace_commit": "c661709",
+  "old_candidate_image_id": "sha256:f07d223d6de11e72f7ac00006c3697cd3662267d8938f9c5c0c84a476797cad9",
+  "milestones": {
+    "1_safe_foundation": "initial gates passed; target ABI gate later",
+    "2_existing_runtime_contract": "PASS old-runtime contract: 409/409 loader; API; fresh 103K/139K/188K/200704-total zero-preemption; C4 4x32K+256; image119K; prefix50K with48000 cache hit; confirmed FINISHED_ABORTED and restart; matchedgreedy22K",
+    "3_runtime_port": "CPU source inspection started; implementation waits for old-runtime operational gates",
+    "4_quality": "not started; reuses preserved BF16 reference",
+    "5_mtp3_mtp4": "not started",
+    "6_attention": "not started",
+    "7_kernels": "not started",
+    "8_release": "not started"
+  },
+  "next_action": "Port actual installed vLLM0.30/Torch2.13 in separate candidate: native build on pinned local/b70-oneapi-2026.1.1-builder:vllm030; semantic GDN mask patch including non_spec_sequence_masks_cpu; target XPU block64 and sparse retirement already present, do not reapply old overrides; disable inherited GPTQ attention initially; production stays offline.",
+  "exl3_cache_retirement_commit": "fe39f23",
+  "old_retirement_candidate_image_id": "sha256:3fcacd9c4971356b228fe638151b1d804e22fa5e7438f57a79864948068aa33f",
+  "gpu_availability_policy": {
+    "user_requested": "GPTQ offline throughout EXL3 work; start only for GPTQ comparisons or explicit rollback drill",
+    "campaign_default": "leave production service stopped",
+    "existing_campaign_cleanup_watcher_session": 79940
+  },
+  "production_service": "offline per explicit user instruction; production artifact unchanged"
+}

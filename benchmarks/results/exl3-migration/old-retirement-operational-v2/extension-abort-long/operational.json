@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "first_usage": {
+    "prompt_tokens": 50033,
+    "total_tokens": 50061,
+    "completion_tokens": 28
+  },
+  "extension_usage": {
+    "prompt_tokens": 50038,
+    "total_tokens": 50075,
+    "completion_tokens": 37
+  },
+  "extension_native": {
+    "prefill_seconds": 1.4268522490019677,
+    "cached_tokens": 48000.0,
+    "preemptions": 0.0,
+    "prompt_tokens": 50038.0,
+    "draft_tokens": 30.0,
+    "accepted_tokens": 28.0,
+    "decode_seconds": 0.5698076209955616,
+    "completed": 1.0,
+    "prefill_tokens": 2038.0,
+    "generation_tokens": 37.0
+  },
+  "restart": {
+    "id": "chatcmpl-b9b9e8acaccc9657",
+    "object": "chat.completion",
+    "created": 1790859929,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```json\n{\n  \"ALPHA\": 17,\n  \"BETA\": 29,\n  \"sum\": 46\n}\n```",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.26.1.dev0+g568afb3a1.d20260907-6738579d",
+    "usage": {
+      "prompt_tokens": 50036,
+      "total_tokens": 50073,
+      "completion_tokens": 37,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "purpose": "Long prefix extension and client abort/restart; trace must confirm FINISHED_ABORTED"
+}

@@ -1,0 +1,295 @@
+{
+  "text": {
+    "id": "chatcmpl-a07845ec0cd5ddb7",
+    "object": "chat.completion",
+    "created": 1790858337,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Paris",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.26.1.dev0+g568afb3a1.d20260907-6738579d",
+    "usage": {
+      "prompt_tokens": 23,
+      "total_tokens": 25,
+      "completion_tokens": 2,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "stream": {
+    "message": {
+      "role": "assistant",
+      "content": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10"
+    },
+    "reasoning": "",
+    "usage": {
+      "prompt_tokens": 18,
+      "total_tokens": 48,
+      "completion_tokens": 30
+    },
+    "finish_reason": "stop",
+    "wall_s": 0.4247556640038965,
+    "ttft_s": 0.10479959000076633
+  },
+  "tool": {
+    "id": "chatcmpl-92cbcc7990aeb79f",
+    "object": "chat.completion",
+    "created": 1790858338,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": null,
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [
+            {
+              "id": "chatcmpl-tool-b32eb3e682a7fc58",
+              "type": "function",
+              "function": {
+                "name": "add",
+                "arguments": "{\"a\": 13, \"b\": 29}"
+              }
+            }
+          ],
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "tool_calls",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.26.1.dev0+g568afb3a1.d20260907-6738579d",
+    "usage": {
+      "prompt_tokens": 305,
+      "total_tokens": 342,
+      "completion_tokens": 37,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "reasoning": {
+    "id": "chatcmpl-9f34b299f931cbb7",
+    "object": "chat.completion",
+    "created": 1790858338,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "\n\n13 × 29 = **377**",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "The user wants me to calculate 13 × 29.\n\n13 × 29 = 13 × (30 - 1) = 13 × 30 - 13 × 1 = 390 - 13 = 377\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.26.1.dev0+g568afb3a1.d20260907-6738579d",
+    "usage": {
+      "prompt_tokens": 54,
+      "total_tokens": 132,
+      "completion_tokens": 78,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "image": {
+    "id": "chatcmpl-9a1a715ea62cc547",
+    "object": "chat.completion",
+    "created": 1790858340,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Red",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.26.1.dev0+g568afb3a1.d20260907-6738579d",
+    "usage": {
+      "prompt_tokens": 90,
+      "total_tokens": 92,
+      "completion_tokens": 2,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "over_image_limit": {
+    "status": 400,
+    "error": "{\"error\":{\"message\":\"At most 1 image(s) may be provided in one prompt. (parameter=image)\",\"type\":\"BadRequestError\",\"param\":\"image\",\"code\":400}}"
+  },
+  "prefix_first": {
+    "message": {
+      "role": "assistant",
+      "content": "The text provided consists of the phrase \"Stable independent sentence.\" repeated 500 times.\n\nIf you are looking for a specific analysis, such as"
+    },
+    "reasoning": "",
+    "usage": {
+      "prompt_tokens": 4816,
+      "total_tokens": 4848,
+      "completion_tokens": 32
+    },
+    "finish_reason": "length",
+    "wall_s": 2.6592245859937975,
+    "ttft_s": 2.1065757109900005
+  },
+  "prefix_extension": {
+    "message": {
+      "role": "assistant",
+      "content": "OK"
+    },
+    "reasoning": "",
+    "usage": {
+      "prompt_tokens": 4824,
+      "total_tokens": 4826,
+      "completion_tokens": 2
+    },
+    "finish_reason": "stop",
+    "wall_s": 0.8157039499928942,
+    "ttft_s": 0.7686299359920667
+  },
+  "prefix_native": {
+    "preemptions": 0.0,
+    "accepted_tokens": 3.0,
+    "generation_tokens": 2.0,
+    "completed": 1.0,
+    "decode_seconds": 0.04799882500083186,
+    "cached_tokens": 3200.0,
+    "draft_tokens": 3.0,
+    "prefill_seconds": 0.7583294040086912,
+    "prefill_tokens": 1624.0,
+    "prompt_tokens": 4824.0
+  },
+  "after_abort": {
+    "id": "chatcmpl-a93905321b1756fb",
+    "object": "chat.completion",
+    "created": 1790858346,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "OK",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.26.1.dev0+g568afb3a1.d20260907-6738579d",
+    "usage": {
+      "prompt_tokens": 15,
+      "total_tokens": 17,
+      "completion_tokens": 2,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "c4_usage": [
+    {
+      "prompt_tokens": 2018,
+      "total_tokens": 2146,
+      "completion_tokens": 128,
+      "prompt_tokens_details": null
+    },
+    {
+      "prompt_tokens": 2018,
+      "total_tokens": 2146,
+      "completion_tokens": 128,
+      "prompt_tokens_details": null
+    },
+    {
+      "prompt_tokens": 2018,
+      "total_tokens": 2146,
+      "completion_tokens": 128,
+      "prompt_tokens_details": null
+    },
+    {
+      "prompt_tokens": 2018,
+      "total_tokens": 2146,
+      "completion_tokens": 128,
+      "prompt_tokens_details": null
+    }
+  ],
+  "limits": 200704
+}

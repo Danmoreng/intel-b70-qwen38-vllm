@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run EXL3 native gates with exclusive GPU access and restore pinned GPTQ in finally."""
+"""Run EXL3 native gates; leave GPTQ offline unless a rollback drill is requested."""
 import argparse
 import hashlib
 import json
@@ -23,14 +23,18 @@ def stop_signal(signum,frame): raise KeyboardInterrupt(f'Signal {signum}')
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--output',type=Path,default=REPO/'benchmarks/results/exl3-migration/safe-foundation')
+    ap.add_argument('--restore-production',action='store_true')
     a=ap.parse_args();a.output.mkdir(parents=True,exist_ok=True)
     report=a.output/'campaign.json'
     if report.exists(): raise SystemExit('Choose a fresh output directory; evidence is immutable')
-    baseline=json.loads(subprocess.check_output(['docker','inspect','b70-qwen38-vllm']))[0]['Image']
+    baseline=json.loads((REPO/'config/production_image.json').read_text())['image_id']
+    installed=subprocess.check_output(['docker','image','inspect',baseline,'--format','{{.Id}}'],text=True).strip()
+    assert installed==baseline
     state={'schema':1,'started_unix':time.time(),'production_image':baseline,'candidate_image':IMAGE,
            'source_sha256':{str(p.relative_to(EXL)):sha(p) for name in ('exl3xpu','tests','scripts')
                             for p in (EXL/name).rglob('*') if p.is_file() and p.suffix in ('.py','.sh')},
-           'library_sha256':sha(EXL/'exl3xpu/_C.so'),'steps':[],'production_restored':False}
+           'library_sha256':sha(EXL/'exl3xpu/_C.so'),'steps':[],'production_restored':False,
+           'restore_production_requested':a.restore_production}
     def save(): report.write_text(json.dumps(state,indent=2)+'\n')
     for s in (signal.SIGTERM,signal.SIGINT): signal.signal(s,stop_signal)
     save(); stopped=False
@@ -65,7 +69,7 @@ def main():
     except BaseException as e:
         state['error']=repr(e);save();raise
     finally:
-        if stopped:
+        if stopped and a.restore_production:
             run(['systemctl','--user','start',SERVICE])
             for _ in range(240):
                 try:
@@ -77,9 +81,12 @@ def main():
             identity=subprocess.run(['docker','inspect','b70-qwen38-vllm','--format','{{.Image}}'],capture_output=True,text=True)
             state['restored_image']=identity.stdout.strip()
             state['production_restored']='restore_error' not in state and state['restored_image']==baseline
+        elif stopped:
+            run(['systemctl','--user','stop',SERVICE])
+            state['production_left_offline']=True
         state['finished_unix']=time.time();save()
         print(json.dumps({'native_gates':state.get('native_gates','FAIL'),
                           'production_restored':state['production_restored']}),flush=True)
-    if not state['production_restored']: raise SystemExit(2)
+    if a.restore_production and not state['production_restored']: raise SystemExit(2)
 
 if __name__=='__main__': main()

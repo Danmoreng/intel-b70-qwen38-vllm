@@ -1,0 +1,35 @@
+/opt/venv/lib/python3.12/site-packages/torch/xpu/__init__.py:74: UserWarning: XPU device count is zero! (Triggered internally at /pytorch/c10/xpu/XPUFunctions.cpp:113.)
+  return torch._C._xpu_getDeviceCount()
+INFO 10-01 11:43:27 [importing.py:53] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 10-01 11:43:27 [importing.py:88] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 10-01 11:43:28 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-01 11:43:28 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-01 11:43:28 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-01 11:43:28 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+test_draft_head_preserves_target_six_bit_trellis (test_loader_validation.LoaderTests.test_draft_head_preserves_target_six_bit_trellis) ... INFO 10-01 11:43:28 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+INFO 10-01 11:43:28 [vllm_plugin.py:333] exl3: MTP draft head uses 1 of 2 vocab blocks (50.0% of lm_head)
+ok
+test_gdn_combined_qkv_and_separate_z (test_loader_validation.LoaderTests.test_gdn_combined_qkv_and_separate_z) ... INFO 10-01 11:43:28 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+ok
+test_head_stays_six_bits (test_loader_validation.LoaderTests.test_head_stays_six_bits) ... INFO 10-01 11:43:28 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+ok
+test_invalid_fused_group_and_tp_rejected (test_loader_validation.LoaderTests.test_invalid_fused_group_and_tp_rejected) ... INFO 10-01 11:43:28 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+ok
+test_invalid_shape_and_duplicate_rejected (test_loader_validation.LoaderTests.test_invalid_shape_and_duplicate_rejected) ... INFO 10-01 11:43:28 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+ok
+test_missing_trellis_or_transform_rejected (test_loader_validation.LoaderTests.test_missing_trellis_or_transform_rejected) ... INFO 10-01 11:43:28 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+INFO 10-01 11:43:28 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+INFO 10-01 11:43:28 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+ok
+test_mtp_fc_is_four_bits (test_loader_validation.LoaderTests.test_mtp_fc_is_four_bits) ... INFO 10-01 11:43:28 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+ok
+test_qkv_keeps_independent_hadamard_shards (test_loader_validation.LoaderTests.test_qkv_keeps_independent_hadamard_shards) ... INFO 10-01 11:43:28 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+ok
+test_whole_model_missing_mtp_rejected (test_loader_validation.LoaderTests.test_whole_model_missing_mtp_rejected) ... INFO 10-01 11:43:28 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+INFO 10-01 11:43:28 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.029s
+
+OK

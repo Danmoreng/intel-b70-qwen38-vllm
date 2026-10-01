@@ -1,0 +1,3440 @@
+{
+  "status": "COMPLETE_COARSE_PROFILE_GRAPH_KERNEL_DECOMPOSITION_UNRESOLVED",
+  "campaign_evidence": {
+    "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/campaign.json",
+    "sha256": "cfe70dc07cdd59752d895f7e568f3ff0a37ef158eeee2e4d180311b9e68cc4a6"
+  },
+  "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "source_sha256": {
+    "scripts/run-exl3-component-profile.py": "78aae180f8a25f52df8f9c75a90fd972b602217b62868c15ce5a9f27ed00dc13",
+    "benchmarks/experiments/quantization-reference/profile_capture.py": "0ee5208b884cbe103b519071a6d405024a49160e061bca8d51f35bfb2830e1dc",
+    "benchmarks/experiments/quantization-reference/run_component_profile.py": "ce259da9dfad1e3b04a0f2a631afb14b085812a98b4bbb05f3f1076eed5d2d46"
+  },
+  "arms": [
+    {
+      "depth": 3,
+      "summary_evidence": {
+        "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp3/summary.json",
+        "sha256": "5b868840e61115afadee544f40e4108a012975d5cb93dc7cb85aece6f1640db0"
+      },
+      "engine_config": {
+        "kv_cache_dtype": "fp8",
+        "enforce_eager": false,
+        "enable_prefix_caching": true,
+        "max_model_len": 262144,
+        "max_num_seqs": 16,
+        "max_num_batched_tokens": 4096,
+        "gpu_memory_utilization": 0.965,
+        "limit_mm_per_prompt": {
+          "image": 32,
+          "video": 4
+        },
+        "mm_processor_kwargs": {
+          "max_pixels": 4194304
+        },
+        "mamba_cache_mode": "align",
+        "scheduler_reserve_full_isl": true,
+        "watermark": 0.0,
+        "speculative_config": {
+          "method": "mtp",
+          "num_speculative_tokens": 3
+        },
+        "compilation_config": {
+          "cudagraph_mode": "FULL_DECODE_ONLY",
+          "cudagraph_capture_sizes": [
+            1,
+            2,
+            4,
+            8,
+            12,
+            16,
+            24,
+            32,
+            40,
+            48,
+            56,
+            64
+          ]
+        },
+        "dtype": "float16",
+        "seed": 20261001
+      },
+      "head_inventory": [
+        {
+          "heads": [
+            {
+              "role": "target",
+              "module": "language_model.lm_head",
+              "bits": 6,
+              "full_rows": 248320,
+              "pruned_rows": 65536,
+              "pruned_tensor_logical_bytes": 252315648
+            },
+            {
+              "role": "draft",
+              "module": "lm_head",
+              "bits": 6,
+              "full_rows": 248320,
+              "pruned_rows": 65536,
+              "pruned_tensor_logical_bytes": 252315648
+            }
+          ],
+          "device_free_bytes": 1541763072,
+          "device_total_bytes": 34242297856,
+          "torch_allocated_bytes": 28874022912,
+          "torch_reserved_bytes": 30628904960,
+          "scope": "Post-load/capture inventory outside measurement; logical tensor bytes are not unique allocator residency."
+        }
+      ],
+      "event_waves": [
+        {
+          "name": "code-4096-c1",
+          "context_tokens": 4096,
+          "concurrency": 1,
+          "generated_tokens": 128,
+          "diagnostic_wall_s": 3.447659408004256,
+          "output_ids_sha256": "14a9c231571bfb1925139b3e7151093ede74971910a1c456044ee7aaf5bcbd1d",
+          "capture": [
+            {
+              "path": "/results/mtp3/code-4096-c1.json",
+              "cycles": 39
+            }
+          ],
+          "event_summary": {
+            "evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp3/code-4096-c1.json",
+              "sha256": "1491addcc096b06e78086ef70068ff44c9b1f0a734c856f891673c57146fe355"
+            },
+            "cycles": 39,
+            "cycles_without_target_body": 1,
+            "groups": [
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 1600,
+                "padded_rows": 1600,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 1600,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 713.421823,
+                  "min": 713.421823,
+                  "max": 713.421823
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 691.3432809999999,
+                    "min": 691.3432809999999,
+                    "max": 691.3432809999999
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 2.025781,
+                    "min": 2.025781,
+                    "max": 2.025781
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.037655999999999995,
+                    "min": 0.037655999999999995,
+                    "max": 0.037655999999999995
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.014530999999999999,
+                    "min": 0.014530999999999999,
+                    "max": 0.014530999999999999
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 16.061353999999998,
+                    "min": 16.061353999999998,
+                    "max": 16.061353999999998
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 2496,
+                "padded_rows": 2496,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 2496,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 1086.0044269999999,
+                  "min": 1086.0044269999999,
+                  "max": 1086.0044269999999
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 1056.975052,
+                    "min": 1056.975052,
+                    "max": 1056.975052
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 2.05625,
+                    "min": 2.05625,
+                    "max": 2.05625
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.038072999999999996,
+                    "min": 0.038072999999999996,
+                    "max": 0.038072999999999996
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.01474,
+                    "min": 0.01474,
+                    "max": 0.01474
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 25.83849,
+                    "min": 25.83849,
+                    "max": 25.83849
+                  }
+                }
+              },
+              {
+                "has_prefill": false,
+                "requests": 1,
+                "actual_rows": 4,
+                "padded_rows": 4,
+                "target_graph_mode": "FULL",
+                "graph_bucket_rows": 4,
+                "cycles": 36,
+                "cycle_gpu_timeline_ms": {
+                  "count": 36,
+                  "mean": 45.83603880555555,
+                  "min": 45.03,
+                  "max": 48.818749999999994
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 36,
+                    "mean": 39.31573358333333,
+                    "min": 38.686667,
+                    "max": 41.850103999999995
+                  },
+                  "target_head": {
+                    "count": 36,
+                    "mean": 2.1853588333333334,
+                    "min": 2.14901,
+                    "max": 2.340729
+                  },
+                  "verification_sampler": {
+                    "count": 36,
+                    "mean": 0.04438369444444444,
+                    "min": 0.038489999999999996,
+                    "max": 0.048645999999999995
+                  },
+                  "sampled_token_commit": {
+                    "count": 36,
+                    "mean": 0.016034444444444445,
+                    "min": 0.014322999999999999,
+                    "max": 0.017707999999999998
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 36,
+                    "mean": 4.0726431666666665,
+                    "min": 3.9326559999999997,
+                    "max": 4.352917
+                  }
+                }
+              }
+            ],
+            "scope": "Diagnostic event timeline spans, including dispatch gaps; not instrument-free serving throughput. GPU event results are synchronized only after generation finishes.",
+            "draft_scope": "Draft proposal includes input preparation and all captured draft body/head/sampler steps. It does not separately measure those components inside fused graphs.",
+            "missing_fine_components": [
+              "draft body/head/sampler decomposition inside captured graphs",
+              "other commit/state-update operations outside postprocess_sampled"
+            ]
+          }
+        },
+        {
+          "name": "code-49152-c4",
+          "context_tokens": 49152,
+          "concurrency": 4,
+          "generated_tokens": 512,
+          "diagnostic_wall_s": 158.33930632600095,
+          "output_ids_sha256": "f307410ca772ba067ac4df367295ed41840d541310498c90c117920f6948743e",
+          "capture": [
+            {
+              "path": "/results/mtp3/code-49152-c4.json",
+              "cycles": 105
+            }
+          ],
+          "event_summary": {
+            "evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp3/code-49152-c4.json",
+              "sha256": "1796c6ba3579338c7bdb89f2a24e1a65b1d96cd1a1288415cb899c91e4fae404"
+            },
+            "cycles": 105,
+            "cycles_without_target_body": 1,
+            "groups": [
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 3200,
+                "padded_rows": 3200,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 3200,
+                "cycles": 14,
+                "cycle_gpu_timeline_ms": {
+                  "count": 14,
+                  "mean": 2193.3532922857144,
+                  "min": 1312.227343,
+                  "max": 3065.417083
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 14,
+                    "mean": 2107.4968042142855,
+                    "min": 1266.120521,
+                    "max": 2928.954687
+                  },
+                  "target_head": {
+                    "count": 14,
+                    "mean": 1.9338132857142856,
+                    "min": 1.873437,
+                    "max": 2.082344
+                  },
+                  "verification_sampler": {
+                    "count": 14,
+                    "mean": 0.040528499999999995,
+                    "min": 0.035834,
+                    "max": 0.08520799999999999
+                  },
+                  "sampled_token_commit": {
+                    "count": 14,
+                    "mean": 0.013698,
+                    "min": 0.012291999999999999,
+                    "max": 0.014948
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 14,
+                    "mean": 81.68482507142856,
+                    "min": 29.003021,
+                    "max": 133.29036399999998
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 2,
+                "actual_rows": 3200,
+                "padded_rows": 3200,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 3200,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 2348.660312,
+                  "min": 2348.660312,
+                  "max": 2348.660312
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 2252.65099,
+                    "min": 2252.65099,
+                    "max": 2252.65099
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 2.017864,
+                    "min": 2.017864,
+                    "max": 2.017864
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.036615,
+                    "min": 0.036615,
+                    "max": 0.036615
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.015625,
+                    "min": 0.015625,
+                    "max": 0.015625
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 92.585937,
+                    "min": 92.585937,
+                    "max": 92.585937
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 2752,
+                "padded_rows": 2752,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 2752,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 2843.998646,
+                  "min": 2843.998646,
+                  "max": 2843.998646
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 2714.392552,
+                    "min": 2714.392552,
+                    "max": 2714.392552
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 1.808802,
+                    "min": 1.808802,
+                    "max": 1.808802
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.034582999999999996,
+                    "min": 0.034582999999999996,
+                    "max": 0.034582999999999996
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.014792,
+                    "min": 0.014792,
+                    "max": 0.014792
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 126.674167,
+                    "min": 126.674167,
+                    "max": 126.674167
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 2,
+                "actual_rows": 3204,
+                "padded_rows": 3204,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 3204,
+                "cycles": 14,
+                "cycle_gpu_timeline_ms": {
+                  "count": 14,
+                  "mean": 2444.7603794285715,
+                  "min": 1534.383645,
+                  "max": 3332.56526
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 14,
+                    "mean": 2343.716807928571,
+                    "min": 1486.1627079999998,
+                    "max": 3179.6963539999997
+                  },
+                  "target_head": {
+                    "count": 14,
+                    "mean": 2.2110454285714285,
+                    "min": 2.147865,
+                    "max": 2.336562
+                  },
+                  "verification_sampler": {
+                    "count": 14,
+                    "mean": 0.044311642857142855,
+                    "min": 0.04276,
+                    "max": 0.047446999999999996
+                  },
+                  "sampled_token_commit": {
+                    "count": 14,
+                    "mean": 0.017436642857142855,
+                    "min": 0.015937,
+                    "max": 0.018958
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 14,
+                    "mean": 97.02220985714285,
+                    "min": 44.112552,
+                    "max": 148.95458299999999
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 2,
+                "actual_rows": 2756,
+                "padded_rows": 2756,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 2756,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 2939.6845829999997,
+                  "min": 2939.6845829999997,
+                  "max": 2939.6845829999997
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 2803.236614,
+                    "min": 2803.236614,
+                    "max": 2803.236614
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 2.177969,
+                    "min": 2.177969,
+                    "max": 2.177969
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.041770999999999996,
+                    "min": 0.041770999999999996,
+                    "max": 0.041770999999999996
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.016562999999999998,
+                    "min": 0.016562999999999998,
+                    "max": 0.016562999999999998
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 132.657813,
+                    "min": 132.657813,
+                    "max": 132.657813
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 3,
+                "actual_rows": 3208,
+                "padded_rows": 3208,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 3208,
+                "cycles": 17,
+                "cycle_gpu_timeline_ms": {
+                  "count": 17,
+                  "mean": 2678.1260846470586,
+                  "min": 1643.466146,
+                  "max": 3496.672917
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 17,
+                    "mean": 2563.150438117647,
+                    "min": 1589.214479,
+                    "max": 3333.862969
+                  },
+                  "target_head": {
+                    "count": 17,
+                    "mean": 2.229901764705882,
+                    "min": 2.165625,
+                    "max": 2.335416
+                  },
+                  "verification_sampler": {
+                    "count": 17,
+                    "mean": 0.04443017647058824,
+                    "min": 0.041978999999999995,
+                    "max": 0.046197999999999996
+                  },
+                  "sampled_token_commit": {
+                    "count": 17,
+                    "mean": 0.020998764705882352,
+                    "min": 0.017239,
+                    "max": 0.036563
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 17,
+                    "mean": 110.9601778235294,
+                    "min": 50.557030999999995,
+                    "max": 158.897865
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 4,
+                "actual_rows": 3208,
+                "padded_rows": 3208,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 3208,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 2607.6980209999997,
+                  "min": 2607.6980209999997,
+                  "max": 2607.6980209999997
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 2495.7035929999997,
+                    "min": 2495.7035929999997,
+                    "max": 2495.7035929999997
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 2.2116659999999997,
+                    "min": 2.2116659999999997,
+                    "max": 2.2116659999999997
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.063073,
+                    "min": 0.063073,
+                    "max": 0.063073
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.021041999999999998,
+                    "min": 0.021041999999999998,
+                    "max": 0.021041999999999998
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 108.034323,
+                    "min": 108.034323,
+                    "max": 108.034323
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 3,
+                "actual_rows": 2760,
+                "padded_rows": 2760,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 2760,
+                "cycles": 2,
+                "cycle_gpu_timeline_ms": {
+                  "count": 2,
+                  "mean": 3116.4917185,
+                  "min": 3112.252187,
+                  "max": 3120.73125
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 2,
+                    "mean": 2969.5134639999997,
+                    "min": 2965.2860419999997,
+                    "max": 2973.740886
+                  },
+                  "target_head": {
+                    "count": 2,
+                    "mean": 2.1958855,
+                    "min": 2.19474,
+                    "max": 2.197031
+                  },
+                  "verification_sampler": {
+                    "count": 2,
+                    "mean": 0.04275999999999999,
+                    "min": 0.041978999999999995,
+                    "max": 0.043540999999999996
+                  },
+                  "sampled_token_commit": {
+                    "count": 2,
+                    "mean": 0.017786499999999997,
+                    "min": 0.017447999999999998,
+                    "max": 0.018125
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 2,
+                    "mean": 143.1916145,
+                    "min": 143.186615,
+                    "max": 143.19661399999998
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 4,
+                "actual_rows": 3212,
+                "padded_rows": 3212,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 3212,
+                "cycles": 11,
+                "cycle_gpu_timeline_ms": {
+                  "count": 11,
+                  "mean": 2546.572968909091,
+                  "min": 1855.293334,
+                  "max": 3219.4378119999997
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 11,
+                    "mean": 2438.8962025454543,
+                    "min": 1787.8358329999999,
+                    "max": 3072.228698
+                  },
+                  "target_head": {
+                    "count": 11,
+                    "mean": 2.244247090909091,
+                    "min": 2.207188,
+                    "max": 2.313125
+                  },
+                  "verification_sampler": {
+                    "count": 11,
+                    "mean": 0.050293454545454544,
+                    "min": 0.046458,
+                    "max": 0.06619799999999999
+                  },
+                  "sampled_token_commit": {
+                    "count": 11,
+                    "mean": 0.02107009090909091,
+                    "min": 0.02026,
+                    "max": 0.022448
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 11,
+                    "mean": 103.63721563636363,
+                    "min": 63.383385,
+                    "max": 143.196875
+                  }
+                }
+              },
+              {
+                "has_prefill": false,
+                "requests": 3,
+                "actual_rows": 12,
+                "padded_rows": 12,
+                "target_graph_mode": "FULL",
+                "graph_bucket_rows": 12,
+                "cycles": 11,
+                "cycle_gpu_timeline_ms": {
+                  "count": 11,
+                  "mean": 84.74691281818181,
+                  "min": 84.087864,
+                  "max": 86.294167
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 11,
+                    "mean": 74.84387327272727,
+                    "min": 74.24437499999999,
+                    "max": 76.135313
+                  },
+                  "target_head": {
+                    "count": 11,
+                    "mean": 2.1141335454545453,
+                    "min": 2.08474,
+                    "max": 2.162239
+                  },
+                  "verification_sampler": {
+                    "count": 11,
+                    "mean": 0.04633990909090909,
+                    "min": 0.041302,
+                    "max": 0.050261
+                  },
+                  "sampled_token_commit": {
+                    "count": 11,
+                    "mean": 0.01782209090909091,
+                    "min": 0.016406,
+                    "max": 0.019323
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 11,
+                    "mean": 7.517869454545454,
+                    "min": 7.4188019999999995,
+                    "max": 7.717865
+                  }
+                }
+              },
+              {
+                "has_prefill": false,
+                "requests": 2,
+                "actual_rows": 8,
+                "padded_rows": 8,
+                "target_graph_mode": "FULL",
+                "graph_bucket_rows": 8,
+                "cycles": 16,
+                "cycle_gpu_timeline_ms": {
+                  "count": 16,
+                  "mean": 69.26741862499999,
+                  "min": 68.606563,
+                  "max": 69.783438
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 16,
+                    "mean": 60.558277999999994,
+                    "min": 60.007968999999996,
+                    "max": 61.001563
+                  },
+                  "target_head": {
+                    "count": 16,
+                    "mean": 2.0841211875,
+                    "min": 2.0490619999999997,
+                    "max": 2.098386
+                  },
+                  "verification_sampler": {
+                    "count": 16,
+                    "mean": 0.043095749999999995,
+                    "min": 0.037084,
+                    "max": 0.046354
+                  },
+                  "sampled_token_commit": {
+                    "count": 16,
+                    "mean": 0.016813124999999998,
+                    "min": 0.015417,
+                    "max": 0.018071999999999998
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 16,
+                    "mean": 6.363518937499999,
+                    "min": 6.1759889999999995,
+                    "max": 6.431354
+                  }
+                }
+              },
+              {
+                "has_prefill": false,
+                "requests": 1,
+                "actual_rows": 4,
+                "padded_rows": 4,
+                "target_graph_mode": "FULL",
+                "graph_bucket_rows": 4,
+                "cycles": 15,
+                "cycle_gpu_timeline_ms": {
+                  "count": 15,
+                  "mean": 56.2047744,
+                  "min": 55.854375,
+                  "max": 56.379999999999995
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 15,
+                    "mean": 48.55972586666667,
+                    "min": 48.386770999999996,
+                    "max": 48.760417
+                  },
+                  "target_head": {
+                    "count": 15,
+                    "mean": 2.0768576,
+                    "min": 1.994063,
+                    "max": 2.108542
+                  },
+                  "verification_sampler": {
+                    "count": 15,
+                    "mean": 0.041614399999999996,
+                    "min": 0.035625,
+                    "max": 0.045468999999999996
+                  },
+                  "sampled_token_commit": {
+                    "count": 15,
+                    "mean": 0.014909666666666667,
+                    "min": 0.013385999999999999,
+                    "max": 0.016458
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 15,
+                    "mean": 5.313833266666666,
+                    "min": 5.222030999999999,
+                    "max": 5.354165999999999
+                  }
+                }
+              }
+            ],
+            "scope": "Diagnostic event timeline spans, including dispatch gaps; not instrument-free serving throughput. GPU event results are synchronized only after generation finishes.",
+            "draft_scope": "Draft proposal includes input preparation and all captured draft body/head/sampler steps. It does not separately measure those components inside fused graphs.",
+            "missing_fine_components": [
+              "draft body/head/sampler decomposition inside captured graphs",
+              "other commit/state-update operations outside postprocess_sampled"
+            ]
+          }
+        },
+        {
+          "name": "code-102752-c1",
+          "context_tokens": 102752,
+          "concurrency": 1,
+          "generated_tokens": 128,
+          "diagnostic_wall_s": 113.0621716559981,
+          "output_ids_sha256": "d1644bfd2ffdcdbd9cc2951d8dd6533ac8b229ea7fb53a732a36c966d0bdf642",
+          "capture": [
+            {
+              "path": "/results/mtp3/code-102752-c1.json",
+              "cycles": 78
+            }
+          ],
+          "event_summary": {
+            "evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp3/code-102752-c1.json",
+              "sha256": "98306b92f4d13a037273219a8ddff520ae6f5d8c8e9494452f1ec48cae35d5f6"
+            },
+            "cycles": 78,
+            "cycles_without_target_body": 1,
+            "groups": [
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 3200,
+                "padded_rows": 3200,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 3200,
+                "cycles": 31,
+                "cycle_gpu_timeline_ms": {
+                  "count": 31,
+                  "mean": 3342.409487612903,
+                  "min": 1326.223385,
+                  "max": 5334.114739
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 31,
+                    "mean": 3189.4358955161288,
+                    "min": 1273.707657,
+                    "max": 5064.6224999999995
+                  },
+                  "target_head": {
+                    "count": 31,
+                    "mean": 1.892930258064516,
+                    "min": 1.8050519999999999,
+                    "max": 2.111458
+                  },
+                  "verification_sampler": {
+                    "count": 31,
+                    "mean": 0.0369288064516129,
+                    "min": 0.034688,
+                    "max": 0.055729
+                  },
+                  "sampled_token_commit": {
+                    "count": 31,
+                    "mean": 0.013970225806451613,
+                    "min": 0.011979,
+                    "max": 0.029844
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 31,
+                    "mean": 149.20365751612903,
+                    "min": 29.332134999999997,
+                    "max": 266.412292
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 1600,
+                "padded_rows": 1600,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 1600,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 3127.5863019999997,
+                  "min": 3127.5863019999997,
+                  "max": 3127.5863019999997
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 2964.97125,
+                    "min": 2964.97125,
+                    "max": 2964.97125
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 1.7549469999999998,
+                    "min": 1.7549469999999998,
+                    "max": 1.7549469999999998
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.034688,
+                    "min": 0.034688,
+                    "max": 0.034688
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.013229999999999999,
+                    "min": 0.013229999999999999,
+                    "max": 0.013229999999999999
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 159.84625,
+                    "min": 159.84625,
+                    "max": 159.84625
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 1952,
+                "padded_rows": 1952,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 1952,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 3389.132552,
+                  "min": 3389.132552,
+                  "max": 3389.132552
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 3213.767552,
+                    "min": 3213.767552,
+                    "max": 3213.767552
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 1.837969,
+                    "min": 1.837969,
+                    "max": 1.837969
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.035937,
+                    "min": 0.035937,
+                    "max": 0.035937
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.014688,
+                    "min": 0.014688,
+                    "max": 0.014688
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 172.475313,
+                    "min": 172.475313,
+                    "max": 172.475313
+                  }
+                }
+              },
+              {
+                "has_prefill": false,
+                "requests": 1,
+                "actual_rows": 4,
+                "padded_rows": 4,
+                "target_graph_mode": "FULL",
+                "graph_bucket_rows": 4,
+                "cycles": 44,
+                "cycle_gpu_timeline_ms": {
+                  "count": 44,
+                  "mean": 67.90439268181818,
+                  "min": 67.57401,
+                  "max": 69.451563
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 44,
+                    "mean": 58.99489704545454,
+                    "min": 58.75599,
+                    "max": 60.289167
+                  },
+                  "target_head": {
+                    "count": 44,
+                    "mean": 2.03406725,
+                    "min": 2.021614,
+                    "max": 2.095625
+                  },
+                  "verification_sampler": {
+                    "count": 44,
+                    "mean": 0.04033368181818182,
+                    "min": 0.036458,
+                    "max": 0.045104
+                  },
+                  "sampled_token_commit": {
+                    "count": 44,
+                    "mean": 0.015194136363636363,
+                    "min": 0.012395999999999999,
+                    "max": 0.033125
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 44,
+                    "mean": 6.626331704545454,
+                    "min": 6.512344,
+                    "max": 6.813489
+                  }
+                }
+              }
+            ],
+            "scope": "Diagnostic event timeline spans, including dispatch gaps; not instrument-free serving throughput. GPU event results are synchronized only after generation finishes.",
+            "draft_scope": "Draft proposal includes input preparation and all captured draft body/head/sampler steps. It does not separately measure those components inside fused graphs.",
+            "missing_fine_components": [
+              "draft body/head/sampler decomposition inside captured graphs",
+              "other commit/state-update operations outside postprocess_sampled"
+            ]
+          }
+        }
+      ],
+      "kernel_traces": [
+        {
+          "name": "kernel-trace-code-49152-c4",
+          "concurrency": 4,
+          "context_tokens": 49152,
+          "output_tokens_per_request": 128,
+          "capture": [
+            {
+              "path": "/results/mtp3/kernel-trace-code-49152-c4.json",
+              "runner_cycles": 8,
+              "pure_decode_cycles": 8
+            }
+          ],
+          "observed_cached_tokens": [
+            46400,
+            46400,
+            46400,
+            46400
+          ],
+          "cache_mode": "same prompt and salt immediately after event wave; report actual observed hits",
+          "trace_summary": {
+            "evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp3/kernel-trace-code-49152-c4.json",
+              "sha256": "4bf83e7e1690cb3d71b2818ff72cf62766ffd4669c953b3ec54016227a01f641"
+            },
+            "metadata_evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp3/kernel-trace-code-49152-c4.json.meta.json",
+              "sha256": "f03bb1e8b11eb540d810c7649a819e4b953fa2da0a0021ea3e450325621a7d81"
+            },
+            "metadata": {
+              "status": "COMPLETE",
+              "runner_cycles": 8,
+              "pure_decode_cycles": 8,
+              "mixed_or_prefill_cycles": 0,
+              "batches": [
+                {
+                  "req_ids": [
+                    "10-866fb382",
+                    "11-aa3cda98",
+                    "12-8348ec2e",
+                    "13-a38fb26d"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 16,
+                  "padded_rows": 16,
+                  "scheduled_rows_by_request": [
+                    4,
+                    4,
+                    4,
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 12,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 16
+                },
+                {
+                  "req_ids": [
+                    "10-866fb382",
+                    "11-aa3cda98",
+                    "12-8348ec2e",
+                    "13-a38fb26d"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 16,
+                  "padded_rows": 16,
+                  "scheduled_rows_by_request": [
+                    4,
+                    4,
+                    4,
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 12,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 16
+                },
+                {
+                  "req_ids": [
+                    "10-866fb382",
+                    "11-aa3cda98",
+                    "12-8348ec2e",
+                    "13-a38fb26d"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 16,
+                  "padded_rows": 16,
+                  "scheduled_rows_by_request": [
+                    4,
+                    4,
+                    4,
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 12,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 16
+                },
+                {
+                  "req_ids": [
+                    "10-866fb382",
+                    "11-aa3cda98",
+                    "12-8348ec2e",
+                    "13-a38fb26d"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 16,
+                  "padded_rows": 16,
+                  "scheduled_rows_by_request": [
+                    4,
+                    4,
+                    4,
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 12,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 16
+                },
+                {
+                  "req_ids": [
+                    "10-866fb382",
+                    "11-aa3cda98",
+                    "12-8348ec2e",
+                    "13-a38fb26d"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 16,
+                  "padded_rows": 16,
+                  "scheduled_rows_by_request": [
+                    4,
+                    4,
+                    4,
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 12,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 16
+                },
+                {
+                  "req_ids": [
+                    "10-866fb382",
+                    "11-aa3cda98",
+                    "12-8348ec2e",
+                    "13-a38fb26d"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 16,
+                  "padded_rows": 16,
+                  "scheduled_rows_by_request": [
+                    4,
+                    4,
+                    4,
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 12,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 16
+                },
+                {
+                  "req_ids": [
+                    "10-866fb382",
+                    "11-aa3cda98",
+                    "12-8348ec2e",
+                    "13-a38fb26d"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 16,
+                  "padded_rows": 16,
+                  "scheduled_rows_by_request": [
+                    4,
+                    4,
+                    4,
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 12,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 16
+                },
+                {
+                  "req_ids": [
+                    "10-866fb382",
+                    "11-aa3cda98",
+                    "12-8348ec2e",
+                    "13-a38fb26d"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 16,
+                  "padded_rows": 16,
+                  "scheduled_rows_by_request": [
+                    4,
+                    4,
+                    4,
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 12,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 16
+                }
+              ],
+              "scope": "Bounded runner-cycle kernel trace starting at first pure decode; later mixed cycles are labeled by CPU metadata. Trace startup/stop perturb execution; no throughput claim."
+            },
+            "observed_kernel_events": 456,
+            "top_observed_kernels": [
+              {
+                "name": "exl3::DpasKernel<6, 2, 16, 4, false>",
+                "sum_duration_ms": 16.818747,
+                "count": 8
+              },
+              {
+                "name": "exl3::HadOutKernel<sycl::_V1::detail::half_impl::half, float>",
+                "sum_duration_ms": 0.263642,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::IndexSelectSmallIndexFunctor<c10::Half, long, unsigned int, 2, 2, -2>",
+                "sum_duration_ms": 0.131767,
+                "count": 7
+              },
+              {
+                "name": "_compute_slot_mappings_kernel",
+                "sum_duration_ms": 0.100309,
+                "count": 15
+              },
+              {
+                "name": "_compute_local_logits_stats_kernel",
+                "sum_duration_ms": 0.096352,
+                "count": 8
+              },
+              {
+                "name": "postprocess_mamba_fused_kernel",
+                "sum_duration_ms": 0.06593600000000001,
+                "count": 8
+              },
+              {
+                "name": "_resample_kernel",
+                "sum_duration_ms": 0.063539,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexFunctor<at::native::xpu::OpaqueType<8> >, char*, OffsetCalculator<3, unsigned int, false> >",
+                "sum_duration_ms": 0.061239999999999996,
+                "count": 16
+              },
+              {
+                "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexFunctor<at::native::xpu::OpaqueType<4> >, char*, OffsetCalculator<3, unsigned int, false> >",
+                "sum_duration_ms": 0.05915899999999999,
+                "count": 15
+              },
+              {
+                "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<int>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+                "sum_duration_ms": 0.051757999999999985,
+                "count": 28
+              },
+              {
+                "name": "precopy_mamba_align_fused_kernel",
+                "sum_duration_ms": 0.051556999999999985,
+                "count": 7
+              },
+              {
+                "name": "_rejection_kernel",
+                "sum_duration_ms": 0.05093499999999999,
+                "count": 8
+              },
+              {
+                "name": "exl3::HadInKernel<sycl::_V1::detail::half_impl::half>",
+                "sum_duration_ms": 0.049894,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexPutFunctor<at::native::xpu::OpaqueType<8> >, char*, OffsetCalculator<3, unsigned int, false> >",
+                "sum_duration_ms": 0.041976999999999993,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<int, int, int, at::native::xpu::DivFloorIntergerFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+                "sum_duration_ms": 0.03957199999999999,
+                "count": 21
+              },
+              {
+                "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<int, int, int, at::native::xpu::AddFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+                "sum_duration_ms": 0.038218,
+                "count": 29
+              },
+              {
+                "name": "at::native::xpu::ElementwiseKernelWithIndexFunctor<int, at::native::xpu::ArangeFunctor<int, long> >",
+                "sum_duration_ms": 0.03696199999999998,
+                "count": 42
+              },
+              {
+                "name": "at::native::xpu::ScatterGatherElementwiseKernelFunctor<at::native::xpu::ScatterGatherInternalKernelLoopFunctor<false, at::native::xpu::OpaqueType<4>, OffsetCalculator<3, unsigned int, false>, at::native::xpu::TensorAssign, long> >",
+                "sum_duration_ms": 0.03238699999999999,
+                "count": 21
+              },
+              {
+                "name": "_post_update_kernel",
+                "sum_duration_ms": 0.032080000000000004,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::VectorizedGatherKernel<16, long>",
+                "sum_duration_ms": 0.031768,
+                "count": 8
+              }
+            ],
+            "attention_named_events": 0,
+            "coverage_note": "Name matches are a heuristic. FULL graph body and draft kernels are not demonstrated as separately visible by these traces. Observing no attention-named kernel does not prove attention is cheap. Require a bounded eager trace or another profiler with proven graph-node coverage before M04 materiality conclusions."
+          }
+        },
+        {
+          "name": "kernel-trace-code-102752-c1",
+          "concurrency": 1,
+          "context_tokens": 102752,
+          "output_tokens_per_request": 128,
+          "capture": [
+            {
+              "path": "/results/mtp3/kernel-trace-code-102752-c1.json",
+              "runner_cycles": 8,
+              "pure_decode_cycles": 8
+            }
+          ],
+          "observed_cached_tokens": [
+            100800
+          ],
+          "cache_mode": "same prompt and salt immediately after event wave; report actual observed hits",
+          "trace_summary": {
+            "evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp3/kernel-trace-code-102752-c1.json",
+              "sha256": "ee983318ef6815990f30fbc91534cfabc3df3dddcd32f150048ad0ed0efedf1b"
+            },
+            "metadata_evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp3/kernel-trace-code-102752-c1.json.meta.json",
+              "sha256": "571c7369a192781ba29d39aca6511d2f36a44fe8b418bb06f6ba402c1af7c5ce"
+            },
+            "metadata": {
+              "status": "COMPLETE",
+              "runner_cycles": 8,
+              "pure_decode_cycles": 8,
+              "mixed_or_prefill_cycles": 0,
+              "batches": [
+                {
+                  "req_ids": [
+                    "15-bc3bfff2"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 4,
+                  "padded_rows": 4,
+                  "scheduled_rows_by_request": [
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 3,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 4
+                },
+                {
+                  "req_ids": [
+                    "15-bc3bfff2"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 4,
+                  "padded_rows": 4,
+                  "scheduled_rows_by_request": [
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 3,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 4
+                },
+                {
+                  "req_ids": [
+                    "15-bc3bfff2"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 4,
+                  "padded_rows": 4,
+                  "scheduled_rows_by_request": [
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 3,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 4
+                },
+                {
+                  "req_ids": [
+                    "15-bc3bfff2"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 4,
+                  "padded_rows": 4,
+                  "scheduled_rows_by_request": [
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 3,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 4
+                },
+                {
+                  "req_ids": [
+                    "15-bc3bfff2"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 4,
+                  "padded_rows": 4,
+                  "scheduled_rows_by_request": [
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 3,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 4
+                },
+                {
+                  "req_ids": [
+                    "15-bc3bfff2"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 4,
+                  "padded_rows": 4,
+                  "scheduled_rows_by_request": [
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 3,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 4
+                },
+                {
+                  "req_ids": [
+                    "15-bc3bfff2"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 4,
+                  "padded_rows": 4,
+                  "scheduled_rows_by_request": [
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 3,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 4
+                },
+                {
+                  "req_ids": [
+                    "15-bc3bfff2"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 4,
+                  "padded_rows": 4,
+                  "scheduled_rows_by_request": [
+                    4
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 3,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 4
+                }
+              ],
+              "scope": "Bounded runner-cycle kernel trace starting at first pure decode; later mixed cycles are labeled by CPU metadata. Trace startup/stop perturb execution; no throughput claim."
+            },
+            "observed_kernel_events": 464,
+            "top_observed_kernels": [
+              {
+                "name": "exl3::DpasKernel<6, 2, 8, 4, false>",
+                "sum_duration_ms": 16.199476999999998,
+                "count": 8
+              },
+              {
+                "name": "_compute_slot_mappings_kernel",
+                "sum_duration_ms": 0.09759499999999997,
+                "count": 15
+              },
+              {
+                "name": "exl3::HadOutKernel<sycl::_V1::detail::half_impl::half, float>",
+                "sum_duration_ms": 0.075208,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexFunctor<at::native::xpu::OpaqueType<4> >, char*, OffsetCalculator<3, unsigned int, false> >",
+                "sum_duration_ms": 0.062077,
+                "count": 15
+              },
+              {
+                "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexFunctor<at::native::xpu::OpaqueType<8> >, char*, OffsetCalculator<3, unsigned int, false> >",
+                "sum_duration_ms": 0.061034,
+                "count": 16
+              },
+              {
+                "name": "_compute_local_logits_stats_kernel",
+                "sum_duration_ms": 0.057811,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<int>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+                "sum_duration_ms": 0.051861999999999964,
+                "count": 28
+              },
+              {
+                "name": "at::native::xpu::IndexSelectSmallIndexFunctor<c10::Half, long, unsigned int, 2, 2, -2>",
+                "sum_duration_ms": 0.05104,
+                "count": 7
+              },
+              {
+                "name": "_rejection_kernel",
+                "sum_duration_ms": 0.04978699999999999,
+                "count": 8
+              },
+              {
+                "name": "exl3::HadInKernel<sycl::_V1::detail::half_impl::half>",
+                "sum_duration_ms": 0.04312,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexPutFunctor<at::native::xpu::OpaqueType<8> >, char*, OffsetCalculator<3, unsigned int, false> >",
+                "sum_duration_ms": 0.040415999999999994,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<int, int, int, at::native::xpu::DivFloorIntergerFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+                "sum_duration_ms": 0.04040699999999999,
+                "count": 21
+              },
+              {
+                "name": "_resample_kernel",
+                "sum_duration_ms": 0.034684,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::ElementwiseKernelWithIndexFunctor<int, at::native::xpu::ArangeFunctor<int, long> >",
+                "sum_duration_ms": 0.03404999999999999,
+                "count": 42
+              },
+              {
+                "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<int, int, int, at::native::xpu::AddFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+                "sum_duration_ms": 0.033948000000000006,
+                "count": 29
+              },
+              {
+                "name": "_gather_block_tables_kernel",
+                "sum_duration_ms": 0.031456000000000005,
+                "count": 7
+              },
+              {
+                "name": "_post_update_kernel",
+                "sum_duration_ms": 0.031455000000000004,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::VectorizedGatherKernel<16, long>",
+                "sum_duration_ms": 0.029578999999999998,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::ScatterGatherElementwiseKernelFunctor<at::native::xpu::ScatterGatherInternalKernelLoopFunctor<false, at::native::xpu::OpaqueType<4>, OffsetCalculator<3, unsigned int, false>, at::native::xpu::TensorAssign, long> >",
+                "sum_duration_ms": 0.029058000000000004,
+                "count": 21
+              },
+              {
+                "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<long>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+                "sum_duration_ms": 0.028641000000000003,
+                "count": 8
+              }
+            ],
+            "attention_named_events": 0,
+            "coverage_note": "Name matches are a heuristic. FULL graph body and draft kernels are not demonstrated as separately visible by these traces. Observing no attention-named kernel does not prove attention is cheap. Require a bounded eager trace or another profiler with proven graph-node coverage before M04 materiality conclusions."
+          }
+        }
+      ]
+    },
+    {
+      "depth": 4,
+      "summary_evidence": {
+        "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp4/summary.json",
+        "sha256": "ee749d00f2fa738d3d195884cd2137e13a86182737aef96e9d6d377ba74eff4d"
+      },
+      "engine_config": {
+        "kv_cache_dtype": "fp8",
+        "enforce_eager": false,
+        "enable_prefix_caching": true,
+        "max_model_len": 262144,
+        "max_num_seqs": 16,
+        "max_num_batched_tokens": 4096,
+        "gpu_memory_utilization": 0.965,
+        "limit_mm_per_prompt": {
+          "image": 32,
+          "video": 4
+        },
+        "mm_processor_kwargs": {
+          "max_pixels": 4194304
+        },
+        "mamba_cache_mode": "align",
+        "scheduler_reserve_full_isl": true,
+        "watermark": 0.0,
+        "speculative_config": {
+          "method": "mtp",
+          "num_speculative_tokens": 4
+        },
+        "compilation_config": {
+          "cudagraph_mode": "FULL_DECODE_ONLY",
+          "cudagraph_capture_sizes": [
+            1,
+            2,
+            4,
+            8,
+            12,
+            16,
+            24,
+            32,
+            40,
+            48,
+            56,
+            64
+          ]
+        },
+        "dtype": "float16",
+        "seed": 20261001
+      },
+      "head_inventory": [
+        {
+          "heads": [
+            {
+              "role": "target",
+              "module": "language_model.lm_head",
+              "bits": 6,
+              "full_rows": 248320,
+              "pruned_rows": 65536,
+              "pruned_tensor_logical_bytes": 252315648
+            },
+            {
+              "role": "draft",
+              "module": "lm_head",
+              "bits": 6,
+              "full_rows": 248320,
+              "pruned_rows": 65536,
+              "pruned_tensor_logical_bytes": 252315648
+            }
+          ],
+          "device_free_bytes": 1089892352,
+          "device_total_bytes": 34242297856,
+          "torch_allocated_bytes": 28860988928,
+          "torch_reserved_bytes": 31083986944,
+          "scope": "Post-load/capture inventory outside measurement; logical tensor bytes are not unique allocator residency."
+        }
+      ],
+      "event_waves": [
+        {
+          "name": "code-4096-c1",
+          "context_tokens": 4096,
+          "concurrency": 1,
+          "generated_tokens": 128,
+          "diagnostic_wall_s": 3.162196685996605,
+          "output_ids_sha256": "14a9c231571bfb1925139b3e7151093ede74971910a1c456044ee7aaf5bcbd1d",
+          "capture": [
+            {
+              "path": "/results/mtp4/code-4096-c1.json",
+              "cycles": 32
+            }
+          ],
+          "event_summary": {
+            "evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp4/code-4096-c1.json",
+              "sha256": "f7359218705420a2f93425d46e896eabac3740f4ae3fc2c86ae3cf2d0e235df8"
+            },
+            "cycles": 32,
+            "cycles_without_target_body": 1,
+            "groups": [
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 1664,
+                "padded_rows": 1664,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 1664,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 720.236145,
+                  "min": 720.236145,
+                  "max": 720.236145
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 696.725364,
+                    "min": 696.725364,
+                    "max": 696.725364
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 2.0367189999999997,
+                    "min": 2.0367189999999997,
+                    "max": 2.0367189999999997
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.039063,
+                    "min": 0.039063,
+                    "max": 0.039063
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.014636,
+                    "min": 0.014636,
+                    "max": 0.014636
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 17.742292,
+                    "min": 17.742292,
+                    "max": 17.742292
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 2432,
+                "padded_rows": 2432,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 2432,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 1084.298177,
+                  "min": 1084.298177,
+                  "max": 1084.298177
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 1053.913333,
+                    "min": 1053.913333,
+                    "max": 1053.913333
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 2.024791,
+                    "min": 2.024791,
+                    "max": 2.024791
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.03875,
+                    "min": 0.03875,
+                    "max": 0.03875
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.015781,
+                    "min": 0.015781,
+                    "max": 0.015781
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 27.179530999999997,
+                    "min": 27.179530999999997,
+                    "max": 27.179530999999997
+                  }
+                }
+              },
+              {
+                "has_prefill": false,
+                "requests": 1,
+                "actual_rows": 5,
+                "padded_rows": 5,
+                "target_graph_mode": "FULL",
+                "graph_bucket_rows": 5,
+                "cycles": 29,
+                "cycle_gpu_timeline_ms": {
+                  "count": 29,
+                  "mean": 48.375210103448275,
+                  "min": 47.580625,
+                  "max": 51.432552
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 29,
+                    "mean": 40.495454413793105,
+                    "min": 39.767448,
+                    "max": 43.05151
+                  },
+                  "target_head": {
+                    "count": 29,
+                    "mean": 2.1953089310344827,
+                    "min": 2.155573,
+                    "max": 2.344687
+                  },
+                  "verification_sampler": {
+                    "count": 29,
+                    "mean": 0.0467098275862069,
+                    "min": 0.040885,
+                    "max": 0.069063
+                  },
+                  "sampled_token_commit": {
+                    "count": 29,
+                    "mean": 0.016576827586206894,
+                    "min": 0.014894999999999999,
+                    "max": 0.018229
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 29,
+                    "mean": 5.413433793103448,
+                    "min": 5.272135,
+                    "max": 5.740417
+                  }
+                }
+              }
+            ],
+            "scope": "Diagnostic event timeline spans, including dispatch gaps; not instrument-free serving throughput. GPU event results are synchronized only after generation finishes.",
+            "draft_scope": "Draft proposal includes input preparation and all captured draft body/head/sampler steps. It does not separately measure those components inside fused graphs.",
+            "missing_fine_components": [
+              "draft body/head/sampler decomposition inside captured graphs",
+              "other commit/state-update operations outside postprocess_sampled"
+            ]
+          }
+        },
+        {
+          "name": "code-49152-c4",
+          "context_tokens": 49152,
+          "concurrency": 4,
+          "generated_tokens": 512,
+          "diagnostic_wall_s": 156.2814262210013,
+          "output_ids_sha256": "4b119cff9ff1ba28a80d5d011d52a70cff780c68f1a164dc72cc0283fde0d1ed",
+          "capture": [
+            {
+              "path": "/results/mtp4/code-49152-c4.json",
+              "cycles": 100
+            }
+          ],
+          "event_summary": {
+            "evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp4/code-49152-c4.json",
+              "sha256": "3def089bced6bf1fb33e6386142fc73ebbf0454ee62c6e4743038e7778b2f008"
+            },
+            "cycles": 100,
+            "cycles_without_target_body": 1,
+            "groups": [
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 3328,
+                "padded_rows": 3328,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 3328,
+                "cycles": 14,
+                "cycle_gpu_timeline_ms": {
+                  "count": 14,
+                  "mean": 2248.6428756428572,
+                  "min": 1334.933802,
+                  "max": 3158.98875
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 14,
+                    "mean": 2158.6328980714284,
+                    "min": 1284.375677,
+                    "max": 3016.5039589999997
+                  },
+                  "target_head": {
+                    "count": 14,
+                    "mean": 1.9404165714285713,
+                    "min": 1.881927,
+                    "max": 2.094531
+                  },
+                  "verification_sampler": {
+                    "count": 14,
+                    "mean": 0.03712421428571429,
+                    "min": 0.035677,
+                    "max": 0.039896
+                  },
+                  "sampled_token_commit": {
+                    "count": 14,
+                    "mean": 0.014252071428571428,
+                    "min": 0.012447,
+                    "max": 0.01526
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 14,
+                    "mean": 85.62196785714285,
+                    "min": 30.747031,
+                    "max": 139.360365
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 2560,
+                "padded_rows": 2560,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 2560,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 2571.454271,
+                  "min": 2571.454271,
+                  "max": 2571.454271
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 2452.31625,
+                    "min": 2452.31625,
+                    "max": 2452.31625
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 1.845208,
+                    "min": 1.845208,
+                    "max": 1.845208
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.035677,
+                    "min": 0.035677,
+                    "max": 0.035677
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.013437,
+                    "min": 0.013437,
+                    "max": 0.013437
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 116.185417,
+                    "min": 116.185417,
+                    "max": 116.185417
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 2,
+                "actual_rows": 3333,
+                "padded_rows": 3333,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 3333,
+                "cycles": 14,
+                "cycle_gpu_timeline_ms": {
+                  "count": 14,
+                  "mean": 2494.7274777142857,
+                  "min": 1545.2105729999998,
+                  "max": 3420.5157289999997
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 14,
+                    "mean": 2392.2747732142857,
+                    "min": 1498.327448,
+                    "max": 3264.130416
+                  },
+                  "target_head": {
+                    "count": 14,
+                    "mean": 2.2310715,
+                    "min": 2.164532,
+                    "max": 2.373125
+                  },
+                  "verification_sampler": {
+                    "count": 14,
+                    "mean": 0.043709071428571424,
+                    "min": 0.041302,
+                    "max": 0.045780999999999995
+                  },
+                  "sampled_token_commit": {
+                    "count": 14,
+                    "mean": 0.018820499999999997,
+                    "min": 0.014582999999999999,
+                    "max": 0.038280999999999996
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 14,
+                    "mean": 98.39417035714285,
+                    "min": 43.125104,
+                    "max": 152.376614
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 2,
+                "actual_rows": 2565,
+                "padded_rows": 2565,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 2565,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 2838.7811979999997,
+                  "min": 2838.7811979999997,
+                  "max": 2838.7811979999997
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 2705.64448,
+                    "min": 2705.64448,
+                    "max": 2705.64448
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 2.1047919999999998,
+                    "min": 2.1047919999999998,
+                    "max": 2.1047919999999998
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.042499999999999996,
+                    "min": 0.042499999999999996,
+                    "max": 0.042499999999999996
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.016614,
+                    "min": 0.016614,
+                    "max": 0.016614
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 129.428125,
+                    "min": 129.428125,
+                    "max": 129.428125
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 3,
+                "actual_rows": 3338,
+                "padded_rows": 3338,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 3338,
+                "cycles": 19,
+                "cycle_gpu_timeline_ms": {
+                  "count": 19,
+                  "mean": 2824.4198903157894,
+                  "min": 1717.7694789999998,
+                  "max": 3596.851562
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 19,
+                    "mean": 2702.2256222631577,
+                    "min": 1659.981615,
+                    "max": 3429.5914589999998
+                  },
+                  "target_head": {
+                    "count": 19,
+                    "mean": 2.2460004736842105,
+                    "min": 2.184531,
+                    "max": 2.359636
+                  },
+                  "verification_sampler": {
+                    "count": 19,
+                    "mean": 0.05075373684210526,
+                    "min": 0.046301999999999996,
+                    "max": 0.06770799999999999
+                  },
+                  "sampled_token_commit": {
+                    "count": 19,
+                    "mean": 0.019657421052631577,
+                    "min": 0.017655999999999998,
+                    "max": 0.020989
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 19,
+                    "mean": 118.13843463157895,
+                    "min": 54.055208,
+                    "max": 163.2775
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 3,
+                "actual_rows": 2570,
+                "padded_rows": 2570,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 2570,
+                "cycles": 2,
+                "cycle_gpu_timeline_ms": {
+                  "count": 2,
+                  "mean": 2924.243854,
+                  "min": 2922.038385,
+                  "max": 2926.449323
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 2,
+                    "mean": 2785.1860415,
+                    "min": 2783.063906,
+                    "max": 2787.308177
+                  },
+                  "target_head": {
+                    "count": 2,
+                    "mean": 2.2164319999999997,
+                    "min": 2.209843,
+                    "max": 2.2230209999999997
+                  },
+                  "verification_sampler": {
+                    "count": 2,
+                    "mean": 0.047995499999999996,
+                    "min": 0.047761,
+                    "max": 0.048229999999999995
+                  },
+                  "sampled_token_commit": {
+                    "count": 2,
+                    "mean": 0.019140499999999998,
+                    "min": 0.018958,
+                    "max": 0.019323
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 2,
+                    "mean": 135.23914050000002,
+                    "min": 135.14651,
+                    "max": 135.331771
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 4,
+                "actual_rows": 3343,
+                "padded_rows": 3343,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 3343,
+                "cycles": 9,
+                "cycle_gpu_timeline_ms": {
+                  "count": 9,
+                  "mean": 2455.0940798888887,
+                  "min": 1912.9689059999998,
+                  "max": 3025.856406
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 9,
+                    "mean": 2353.9925868888886,
+                    "min": 1843.415573,
+                    "max": 2891.113594
+                  },
+                  "target_head": {
+                    "count": 9,
+                    "mean": 2.2779284444444445,
+                    "min": 2.233698,
+                    "max": 2.334375
+                  },
+                  "verification_sampler": {
+                    "count": 9,
+                    "mean": 0.04963555555555555,
+                    "min": 0.047344,
+                    "max": 0.054063
+                  },
+                  "sampled_token_commit": {
+                    "count": 9,
+                    "mean": 0.021012777777777776,
+                    "min": 0.019271,
+                    "max": 0.022604
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 9,
+                    "mean": 97.01549766666666,
+                    "min": 65.79223999999999,
+                    "max": 130.641042
+                  }
+                }
+              },
+              {
+                "has_prefill": false,
+                "requests": 3,
+                "actual_rows": 15,
+                "padded_rows": 15,
+                "target_graph_mode": "FULL",
+                "graph_bucket_rows": 15,
+                "cycles": 8,
+                "cycle_gpu_timeline_ms": {
+                  "count": 8,
+                  "mean": 96.97074875,
+                  "min": 95.965417,
+                  "max": 99.526927
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 8,
+                    "mean": 84.49287774999999,
+                    "min": 83.567605,
+                    "max": 86.728698
+                  },
+                  "target_head": {
+                    "count": 8,
+                    "mean": 2.121133,
+                    "min": 2.093698,
+                    "max": 2.1836979999999997
+                  },
+                  "verification_sampler": {
+                    "count": 8,
+                    "mean": 0.050293124999999994,
+                    "min": 0.04349,
+                    "max": 0.055365
+                  },
+                  "sampled_token_commit": {
+                    "count": 8,
+                    "mean": 0.01854825,
+                    "min": 0.016302,
+                    "max": 0.019844
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 8,
+                    "mean": 10.07916025,
+                    "min": 9.930937,
+                    "max": 10.330625
+                  }
+                }
+              },
+              {
+                "has_prefill": false,
+                "requests": 2,
+                "actual_rows": 10,
+                "padded_rows": 10,
+                "target_graph_mode": "FULL",
+                "graph_bucket_rows": 10,
+                "cycles": 15,
+                "cycle_gpu_timeline_ms": {
+                  "count": 15,
+                  "mean": 77.85459019999999,
+                  "min": 77.58812499999999,
+                  "max": 78.238698
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 15,
+                    "mean": 67.15047919999999,
+                    "min": 66.89093799999999,
+                    "max": 67.483282
+                  },
+                  "target_head": {
+                    "count": 15,
+                    "mean": 2.1007674,
+                    "min": 2.080521,
+                    "max": 2.148698
+                  },
+                  "verification_sampler": {
+                    "count": 15,
+                    "mean": 0.04342346666666667,
+                    "min": 0.037760999999999996,
+                    "max": 0.046093999999999996
+                  },
+                  "sampled_token_commit": {
+                    "count": 15,
+                    "mean": 0.017211733333333333,
+                    "min": 0.014114,
+                    "max": 0.018646
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 15,
+                    "mean": 8.341975733333333,
+                    "min": 8.254375,
+                    "max": 8.440833
+                  }
+                }
+              },
+              {
+                "has_prefill": false,
+                "requests": 1,
+                "actual_rows": 5,
+                "padded_rows": 5,
+                "target_graph_mode": "FULL",
+                "graph_bucket_rows": 5,
+                "cycles": 16,
+                "cycle_gpu_timeline_ms": {
+                  "count": 16,
+                  "mean": 60.257659499999995,
+                  "min": 59.353072999999995,
+                  "max": 60.70599
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 16,
+                    "mean": 50.9612988125,
+                    "min": 50.377030999999995,
+                    "max": 51.308698
+                  },
+                  "target_head": {
+                    "count": 16,
+                    "mean": 2.0720215625,
+                    "min": 1.9195309999999999,
+                    "max": 2.1115109999999997
+                  },
+                  "verification_sampler": {
+                    "count": 16,
+                    "mean": 0.04223325,
+                    "min": 0.03625,
+                    "max": 0.046093999999999996
+                  },
+                  "sampled_token_commit": {
+                    "count": 16,
+                    "mean": 0.0156541875,
+                    "min": 0.013125,
+                    "max": 0.017239
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 16,
+                    "mean": 6.9686296875,
+                    "min": 6.814063,
+                    "max": 7.043385
+                  }
+                }
+              }
+            ],
+            "scope": "Diagnostic event timeline spans, including dispatch gaps; not instrument-free serving throughput. GPU event results are synchronized only after generation finishes.",
+            "draft_scope": "Draft proposal includes input preparation and all captured draft body/head/sampler steps. It does not separately measure those components inside fused graphs.",
+            "missing_fine_components": [
+              "draft body/head/sampler decomposition inside captured graphs",
+              "other commit/state-update operations outside postprocess_sampled"
+            ]
+          }
+        },
+        {
+          "name": "code-102752-c1",
+          "context_tokens": 102752,
+          "concurrency": 1,
+          "generated_tokens": 128,
+          "diagnostic_wall_s": 109.35489647000213,
+          "output_ids_sha256": "d1644bfd2ffdcdbd9cc2951d8dd6533ac8b229ea7fb53a732a36c966d0bdf642",
+          "capture": [
+            {
+              "path": "/results/mtp4/code-102752-c1.json",
+              "cycles": 74
+            }
+          ],
+          "event_summary": {
+            "evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp4/code-102752-c1.json",
+              "sha256": "a9e349d12136aa84b51b3f44b944177b3624a75ac8dca4c941de7ecd9fa014c8"
+            },
+            "cycles": 74,
+            "cycles_without_target_body": 1,
+            "groups": [
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 3328,
+                "padded_rows": 3328,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 3328,
+                "cycles": 30,
+                "cycle_gpu_timeline_ms": {
+                  "count": 30,
+                  "mean": 3375.752598933333,
+                  "min": 1342.807136,
+                  "max": 5385.035
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 30,
+                    "mean": 3219.8580851666666,
+                    "min": 1288.261771,
+                    "max": 5111.319531
+                  },
+                  "target_head": {
+                    "count": 30,
+                    "mean": 1.9000816,
+                    "min": 1.813229,
+                    "max": 2.117604
+                  },
+                  "verification_sampler": {
+                    "count": 30,
+                    "mean": 0.0365401,
+                    "min": 0.034323,
+                    "max": 0.039948
+                  },
+                  "sampled_token_commit": {
+                    "count": 30,
+                    "mean": 0.014650933333333333,
+                    "min": 0.012603999999999999,
+                    "max": 0.031719
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 30,
+                    "mean": 152.0657119,
+                    "min": 31.069530999999998,
+                    "max": 270.642032
+                  }
+                }
+              },
+              {
+                "has_prefill": true,
+                "requests": 1,
+                "actual_rows": 2912,
+                "padded_rows": 2912,
+                "target_graph_mode": "NONE",
+                "graph_bucket_rows": 2912,
+                "cycles": 1,
+                "cycle_gpu_timeline_ms": {
+                  "count": 1,
+                  "mean": 5017.0811459999995,
+                  "min": 5017.0811459999995,
+                  "max": 5017.0811459999995
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 1,
+                    "mean": 4760.377082999999,
+                    "min": 4760.377082999999,
+                    "max": 4760.377082999999
+                  },
+                  "target_head": {
+                    "count": 1,
+                    "mean": 1.8460409999999998,
+                    "min": 1.8460409999999998,
+                    "max": 1.8460409999999998
+                  },
+                  "verification_sampler": {
+                    "count": 1,
+                    "mean": 0.035469,
+                    "min": 0.035469,
+                    "max": 0.035469
+                  },
+                  "sampled_token_commit": {
+                    "count": 1,
+                    "mean": 0.015052,
+                    "min": 0.015052,
+                    "max": 0.015052
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 1,
+                    "mean": 253.70525999999998,
+                    "min": 253.70525999999998,
+                    "max": 253.70525999999998
+                  }
+                }
+              },
+              {
+                "has_prefill": false,
+                "requests": 1,
+                "actual_rows": 5,
+                "padded_rows": 5,
+                "target_graph_mode": "FULL",
+                "graph_bucket_rows": 5,
+                "cycles": 42,
+                "cycle_gpu_timeline_ms": {
+                  "count": 42,
+                  "mean": 74.49190228571429,
+                  "min": 74.157135,
+                  "max": 76.158177
+                },
+                "stage_gpu_timeline_ms": {
+                  "target_body": {
+                    "count": 42,
+                    "mean": 63.37578369047619,
+                    "min": 63.133229,
+                    "max": 64.760052
+                  },
+                  "target_head": {
+                    "count": 42,
+                    "mean": 2.0416828095238095,
+                    "min": 2.026407,
+                    "max": 2.100834
+                  },
+                  "verification_sampler": {
+                    "count": 42,
+                    "mean": 0.04141988095238095,
+                    "min": 0.036562,
+                    "max": 0.070833
+                  },
+                  "sampled_token_commit": {
+                    "count": 42,
+                    "mean": 0.014991380952380952,
+                    "min": 0.012707999999999999,
+                    "max": 0.017811999999999998
+                  },
+                  "draft_proposal_including_head_and_sampler": {
+                    "count": 42,
+                    "mean": 8.819277,
+                    "min": 8.674896,
+                    "max": 9.039166999999999
+                  }
+                }
+              }
+            ],
+            "scope": "Diagnostic event timeline spans, including dispatch gaps; not instrument-free serving throughput. GPU event results are synchronized only after generation finishes.",
+            "draft_scope": "Draft proposal includes input preparation and all captured draft body/head/sampler steps. It does not separately measure those components inside fused graphs.",
+            "missing_fine_components": [
+              "draft body/head/sampler decomposition inside captured graphs",
+              "other commit/state-update operations outside postprocess_sampled"
+            ]
+          }
+        }
+      ],
+      "kernel_traces": [
+        {
+          "name": "kernel-trace-code-49152-c4",
+          "concurrency": 4,
+          "context_tokens": 49152,
+          "output_tokens_per_request": 128,
+          "capture": [
+            {
+              "path": "/results/mtp4/kernel-trace-code-49152-c4.json",
+              "runner_cycles": 8,
+              "pure_decode_cycles": 8
+            }
+          ],
+          "observed_cached_tokens": [
+            46592,
+            46592,
+            46592,
+            46592
+          ],
+          "cache_mode": "same prompt and salt immediately after event wave; report actual observed hits",
+          "trace_summary": {
+            "evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp4/kernel-trace-code-49152-c4.json",
+              "sha256": "64e4e162534785c6c301db6c6cbaf7f3948c5372538a62981d2cb872a1ad94c0"
+            },
+            "metadata_evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp4/kernel-trace-code-49152-c4.json.meta.json",
+              "sha256": "dc31fd87209c6ed01c306eeaf904e10668981613dce90a5d4e9c3d04d7fe3275"
+            },
+            "metadata": {
+              "status": "COMPLETE",
+              "runner_cycles": 8,
+              "pure_decode_cycles": 8,
+              "mixed_or_prefill_cycles": 0,
+              "batches": [
+                {
+                  "req_ids": [
+                    "10-a4a8bd2d",
+                    "11-9ce88c3f",
+                    "12-9b7583d2",
+                    "13-aa4476a0"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 20,
+                  "padded_rows": 20,
+                  "scheduled_rows_by_request": [
+                    5,
+                    5,
+                    5,
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 16,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 20
+                },
+                {
+                  "req_ids": [
+                    "10-a4a8bd2d",
+                    "11-9ce88c3f",
+                    "12-9b7583d2",
+                    "13-aa4476a0"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 20,
+                  "padded_rows": 20,
+                  "scheduled_rows_by_request": [
+                    5,
+                    5,
+                    5,
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 16,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 20
+                },
+                {
+                  "req_ids": [
+                    "10-a4a8bd2d",
+                    "11-9ce88c3f",
+                    "12-9b7583d2",
+                    "13-aa4476a0"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 20,
+                  "padded_rows": 20,
+                  "scheduled_rows_by_request": [
+                    5,
+                    5,
+                    5,
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 16,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 20
+                },
+                {
+                  "req_ids": [
+                    "10-a4a8bd2d",
+                    "11-9ce88c3f",
+                    "12-9b7583d2",
+                    "13-aa4476a0"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 20,
+                  "padded_rows": 20,
+                  "scheduled_rows_by_request": [
+                    5,
+                    5,
+                    5,
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 16,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 20
+                },
+                {
+                  "req_ids": [
+                    "10-a4a8bd2d",
+                    "11-9ce88c3f",
+                    "12-9b7583d2",
+                    "13-aa4476a0"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 20,
+                  "padded_rows": 20,
+                  "scheduled_rows_by_request": [
+                    5,
+                    5,
+                    5,
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 16,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 20
+                },
+                {
+                  "req_ids": [
+                    "10-a4a8bd2d",
+                    "11-9ce88c3f",
+                    "12-9b7583d2",
+                    "13-aa4476a0"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 20,
+                  "padded_rows": 20,
+                  "scheduled_rows_by_request": [
+                    5,
+                    5,
+                    5,
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 16,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 20
+                },
+                {
+                  "req_ids": [
+                    "10-a4a8bd2d",
+                    "11-9ce88c3f",
+                    "12-9b7583d2",
+                    "13-aa4476a0"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 20,
+                  "padded_rows": 20,
+                  "scheduled_rows_by_request": [
+                    5,
+                    5,
+                    5,
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 16,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 20
+                },
+                {
+                  "req_ids": [
+                    "10-a4a8bd2d",
+                    "11-9ce88c3f",
+                    "12-9b7583d2",
+                    "13-aa4476a0"
+                  ],
+                  "requests": 4,
+                  "actual_rows": 20,
+                  "padded_rows": 20,
+                  "scheduled_rows_by_request": [
+                    5,
+                    5,
+                    5,
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "prefill_length_by_request": [
+                    49152,
+                    49152,
+                    49152,
+                    49152
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 16,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 20
+                }
+              ],
+              "scope": "Bounded runner-cycle kernel trace starting at first pure decode; later mixed cycles are labeled by CPU metadata. Trace startup/stop perturb execution; no throughput claim."
+            },
+            "observed_kernel_events": 464,
+            "top_observed_kernels": [
+              {
+                "name": "exl3::DpasKernel<6, 2, 24, 2, false>",
+                "sum_duration_ms": 17.759371,
+                "count": 8
+              },
+              {
+                "name": "exl3::HadOutKernel<sycl::_V1::detail::half_impl::half, float>",
+                "sum_duration_ms": 0.35801599999999995,
+                "count": 8
+              },
+              {
+                "name": "_compute_local_logits_stats_kernel",
+                "sum_duration_ms": 0.11093399999999998,
+                "count": 8
+              },
+              {
+                "name": "_compute_slot_mappings_kernel",
+                "sum_duration_ms": 0.09666099999999998,
+                "count": 15
+              },
+              {
+                "name": "postprocess_mamba_fused_kernel",
+                "sum_duration_ms": 0.06603999999999999,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexFunctor<at::native::xpu::OpaqueType<4> >, char*, OffsetCalculator<3, unsigned int, false> >",
+                "sum_duration_ms": 0.06322099999999999,
+                "count": 15
+              },
+              {
+                "name": "_resample_kernel",
+                "sum_duration_ms": 0.054894,
+                "count": 8
+              },
+              {
+                "name": "_rejection_kernel",
+                "sum_duration_ms": 0.054060000000000004,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::VectorizedGatherKernel<16, long>",
+                "sum_duration_ms": 0.05342999999999999,
+                "count": 23
+              },
+              {
+                "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<int>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+                "sum_duration_ms": 0.050717999999999985,
+                "count": 28
+              },
+              {
+                "name": "precopy_mamba_align_fused_kernel",
+                "sum_duration_ms": 0.047496,
+                "count": 7
+              },
+              {
+                "name": "exl3::HadInKernel<sycl::_V1::detail::half_impl::half>",
+                "sum_duration_ms": 0.045206,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<int, int, int, at::native::xpu::DivFloorIntergerFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+                "sum_duration_ms": 0.039263999999999986,
+                "count": 21
+              },
+              {
+                "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexPutFunctor<at::native::xpu::OpaqueType<8> >, char*, OffsetCalculator<3, unsigned int, false> >",
+                "sum_duration_ms": 0.038745,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::ElementwiseKernelWithIndexFunctor<int, at::native::xpu::ArangeFunctor<int, long> >",
+                "sum_duration_ms": 0.036028999999999985,
+                "count": 42
+              },
+              {
+                "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<int, int, int, at::native::xpu::AddFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+                "sum_duration_ms": 0.03582199999999999,
+                "count": 29
+              },
+              {
+                "name": "_post_update_kernel",
+                "sum_duration_ms": 0.034892000000000006,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::ScatterGatherElementwiseKernelFunctor<at::native::xpu::ScatterGatherInternalKernelLoopFunctor<false, at::native::xpu::OpaqueType<4>, OffsetCalculator<3, unsigned int, false>, at::native::xpu::TensorAssign, long> >",
+                "sum_duration_ms": 0.033428,
+                "count": 21
+              },
+              {
+                "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexFunctor<at::native::xpu::OpaqueType<8> >, char*, OffsetCalculator<3, unsigned int, false> >",
+                "sum_duration_ms": 0.03156,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<long>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+                "sum_duration_ms": 0.029163,
+                "count": 8
+              }
+            ],
+            "attention_named_events": 0,
+            "coverage_note": "Name matches are a heuristic. FULL graph body and draft kernels are not demonstrated as separately visible by these traces. Observing no attention-named kernel does not prove attention is cheap. Require a bounded eager trace or another profiler with proven graph-node coverage before M04 materiality conclusions."
+          }
+        },
+        {
+          "name": "kernel-trace-code-102752-c1",
+          "concurrency": 1,
+          "context_tokens": 102752,
+          "output_tokens_per_request": 128,
+          "capture": [
+            {
+              "path": "/results/mtp4/kernel-trace-code-102752-c1.json",
+              "runner_cycles": 8,
+              "pure_decode_cycles": 8
+            }
+          ],
+          "observed_cached_tokens": [
+            99840
+          ],
+          "cache_mode": "same prompt and salt immediately after event wave; report actual observed hits",
+          "trace_summary": {
+            "evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp4/kernel-trace-code-102752-c1.json",
+              "sha256": "134a6402abb4f819191bb385466aa89e12f7986689bd5bcb48820b90e9b5566d"
+            },
+            "metadata_evidence": {
+              "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-components-compact-v1/mtp4/kernel-trace-code-102752-c1.json.meta.json",
+              "sha256": "17d0182361368f940cf923a07976124f99c709828cc82356d805ca3030a2390c"
+            },
+            "metadata": {
+              "status": "COMPLETE",
+              "runner_cycles": 8,
+              "pure_decode_cycles": 8,
+              "mixed_or_prefill_cycles": 0,
+              "batches": [
+                {
+                  "req_ids": [
+                    "15-9ac19257"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 5,
+                  "padded_rows": 5,
+                  "scheduled_rows_by_request": [
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 4,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 5
+                },
+                {
+                  "req_ids": [
+                    "15-9ac19257"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 5,
+                  "padded_rows": 5,
+                  "scheduled_rows_by_request": [
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 4,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 5
+                },
+                {
+                  "req_ids": [
+                    "15-9ac19257"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 5,
+                  "padded_rows": 5,
+                  "scheduled_rows_by_request": [
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 4,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 5
+                },
+                {
+                  "req_ids": [
+                    "15-9ac19257"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 5,
+                  "padded_rows": 5,
+                  "scheduled_rows_by_request": [
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 4,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 5
+                },
+                {
+                  "req_ids": [
+                    "15-9ac19257"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 5,
+                  "padded_rows": 5,
+                  "scheduled_rows_by_request": [
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 4,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 5
+                },
+                {
+                  "req_ids": [
+                    "15-9ac19257"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 5,
+                  "padded_rows": 5,
+                  "scheduled_rows_by_request": [
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 4,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 5
+                },
+                {
+                  "req_ids": [
+                    "15-9ac19257"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 5,
+                  "padded_rows": 5,
+                  "scheduled_rows_by_request": [
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 4,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 5
+                },
+                {
+                  "req_ids": [
+                    "15-9ac19257"
+                  ],
+                  "requests": 1,
+                  "actual_rows": 5,
+                  "padded_rows": 5,
+                  "scheduled_rows_by_request": [
+                    5
+                  ],
+                  "computed_prefill_by_request": [
+                    102752
+                  ],
+                  "prefill_length_by_request": [
+                    102752
+                  ],
+                  "has_prefill": false,
+                  "draft_tokens": 4,
+                  "target_graph_mode": "FULL",
+                  "target_graph_bucket_rows": 5
+                }
+              ],
+              "scope": "Bounded runner-cycle kernel trace starting at first pure decode; later mixed cycles are labeled by CPU metadata. Trace startup/stop perturb execution; no throughput claim."
+            },
+            "observed_kernel_events": 464,
+            "top_observed_kernels": [
+              {
+                "name": "exl3::DpasKernel<6, 2, 8, 4, false>",
+                "sum_duration_ms": 16.279268,
+                "count": 8
+              },
+              {
+                "name": "_compute_slot_mappings_kernel",
+                "sum_duration_ms": 0.096872,
+                "count": 15
+              },
+              {
+                "name": "exl3::HadOutKernel<sycl::_V1::detail::half_impl::half, float>",
+                "sum_duration_ms": 0.08874499999999999,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::IndexSelectSmallIndexFunctor<c10::Half, long, unsigned int, 2, 2, -2>",
+                "sum_duration_ms": 0.07656,
+                "count": 7
+              },
+              {
+                "name": "_compute_local_logits_stats_kernel",
+                "sum_duration_ms": 0.064476,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexFunctor<at::native::xpu::OpaqueType<8> >, char*, OffsetCalculator<3, unsigned int, false> >",
+                "sum_duration_ms": 0.062597,
+                "count": 16
+              },
+              {
+                "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexFunctor<at::native::xpu::OpaqueType<4> >, char*, OffsetCalculator<3, unsigned int, false> >",
+                "sum_duration_ms": 0.06155699999999999,
+                "count": 15
+              },
+              {
+                "name": "_rejection_kernel",
+                "sum_duration_ms": 0.056663,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<int>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+                "sum_duration_ms": 0.051653999999999985,
+                "count": 28
+              },
+              {
+                "name": "exl3::HadInKernel<sycl::_V1::detail::half_impl::half>",
+                "sum_duration_ms": 0.04322499999999999,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexPutFunctor<at::native::xpu::OpaqueType<8> >, char*, OffsetCalculator<3, unsigned int, false> >",
+                "sum_duration_ms": 0.040832,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<int, int, int, at::native::xpu::DivFloorIntergerFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+                "sum_duration_ms": 0.038529,
+                "count": 21
+              },
+              {
+                "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<int, int, int, at::native::xpu::AddFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+                "sum_duration_ms": 0.035509,
+                "count": 29
+              },
+              {
+                "name": "at::native::xpu::ElementwiseKernelWithIndexFunctor<int, at::native::xpu::ArangeFunctor<int, long> >",
+                "sum_duration_ms": 0.03425799999999999,
+                "count": 42
+              },
+              {
+                "name": "_post_update_kernel",
+                "sum_duration_ms": 0.034162,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::ScatterGatherElementwiseKernelFunctor<at::native::xpu::ScatterGatherInternalKernelLoopFunctor<false, at::native::xpu::OpaqueType<4>, OffsetCalculator<3, unsigned int, false>, at::native::xpu::TensorAssign, long> >",
+                "sum_duration_ms": 0.030929999999999992,
+                "count": 21
+              },
+              {
+                "name": "_gather_block_tables_kernel",
+                "sum_duration_ms": 0.030205,
+                "count": 7
+              },
+              {
+                "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<long>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+                "sum_duration_ms": 0.029684000000000002,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::VectorizedGatherKernel<16, long>",
+                "sum_duration_ms": 0.029579,
+                "count": 8
+              },
+              {
+                "name": "at::native::xpu::ElementwiseGlobalRangeKernel<at::native::xpu::LegacyKernelScalarFunctor<int, 3, OffsetCalculator<3, unsigned int, false>, at::native::xpu::BinaryFunctor<int, int, int, at::native::xpu::AddFunctor<int> > > >",
+                "sum_duration_ms": 0.028739999999999998,
+                "count": 21
+              }
+            ],
+            "attention_named_events": 0,
+            "coverage_note": "Name matches are a heuristic. FULL graph body and draft kernels are not demonstrated as separately visible by these traces. Observing no attention-named kernel does not prove attention is cheap. Require a bounded eager trace or another profiler with proven graph-node coverage before M04 materiality conclusions."
+          }
+        }
+      ]
+    }
+  ],
+  "scope": "Instrumented event timeline spans including dispatch gaps, not instrument-free throughput. Group by actual active requests/rows; nominal C4 does not establish four simultaneous pure-decode requests.",
+  "remaining": [
+    "Fine target attention and fused draft body/head/sampler decomposition",
+    "Generated-path margin/correctness check",
+    "Depth decision and full-vocabulary ablation"
+  ]
+}

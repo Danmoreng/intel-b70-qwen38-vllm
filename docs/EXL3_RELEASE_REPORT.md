@@ -40,3 +40,29 @@ same RootFS. CPU production-launch preflight verifies native/M04/oneDNN/profile
 artifacts and all11 pinned checkpoint file hashes. Neither canonical production
 configuration nor production tag has been replaced. The final source snapshot
 and upstream patch are published under `engine/exl3xpu`.
+
+## Phase disposition before the final public run
+
+| Plan phase | Disposition |
+|---|---|
+|0 Baseline/pins |Complete, historical images/checkpoints/API arguments/power and source receipts preserved|
+|1 Build/validation |Complete, both ABI builds and fail-closed artifact/loader/numerical checks|
+|2 Loader semantics |Complete,409/409 reconstruction and8/8 actual MTP serving inventory|
+|3 Serving contract |Complete, existing200704/C4 contract then user-authorized expanded262144/.965/16 admission/32images/4videos|
+|4 Preemption diagnosis |Complete, pool/group accounting distinguishes true C16 pressure from clean C1/C4;16000 extra submitted prefill rows reported|
+|5 Runtime port |Complete, vLLM0.30/Torch2.13/oneAPI2026.1.1 and source-guarded V2 integration|
+|6 Precision-path quality |Complete finite-panel regression checks; natural short/engineered long/generated scope and limitations explicit|
+|7 MTP3/4 |Complete compact controlled study per user steering; MTP3 retained, full-vocabulary ablation separately complete|
+|8 Shared-KV/M04 |Complete rebuilt library, original-tolerance numerical/graph/causal tests and actual serving|
+|9 Guarded mixed attention |Complete numerical exact-page/mixed tests and real overlapping-prefill ABBA tails|
+|10 Host scalar |Complete cached host constant and thread/stream-owned oneDNN partition fix|
+|11 Native row dispatch |Complete tests retained EXL3 implementation; full head and supported capture/large-first scope verified|
+|12 Kernel tuning |Brief final profile complete per user instruction; no speculative rewrite. Captured body graph internals remain opaque to the bounded trace|
+|Final measured evaluation/release |Running70-wave frozen matrix, QueueKitv2, isolated prefix and corrected pairedFlappyv7/rollback; deployment/README/push pending results|
+
+The final whole-attention-pipeline ABBA independently repeats103K C1 cold/warm:
+native43.98/43.91→optimized49.24/49.24 tok/s (~12%). Cache reuse and output
+budgets match; both variants are stable across repeats. Output histories differ
+from token8 between variants, so this is end-to-end serving evidence, not an
+isolated kernel attribution or bit-exact-text claim. See the compact
+`optimized-performance-v1` evidence.

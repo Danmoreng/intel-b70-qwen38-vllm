@@ -77,7 +77,7 @@ def percentile(values,p):
     return values[i]+(values[j]-values[i])*(at-i)
 
 
-def stream(payload,barrier,output):
+def stream(payload,barrier,output,first_tokens_event=None):
     request=urllib.request.Request(BASE+'/v1/completions',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'})
     barrier.wait();started=time.monotonic();first=None;usage=None;times=[];ids=[];bursts=[];chunks=[];finish=None;prompt_verified=False
     with urllib.request.urlopen(request,timeout=3600) as response,output.open('w') as log:
@@ -97,6 +97,7 @@ def stream(payload,barrier,output):
                 if new:
                     if first is None:first=elapsed
                     ids.extend(new);times.extend([elapsed]*len(new));bursts.append({'elapsed_s':elapsed,'tokens':len(new)})
+                    if first_tokens_event is not None and len(ids)>=32:first_tokens_event.set()
                 chunks.append(choice.get('text') or '');finish=choice.get('finish_reason') or finish
             usage=event.get('usage') or usage
             log.write(json.dumps({'elapsed_s':elapsed,'event':event})+'\n')

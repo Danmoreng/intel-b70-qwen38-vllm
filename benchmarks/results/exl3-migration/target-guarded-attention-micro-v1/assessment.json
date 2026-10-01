@@ -1,0 +1,35 @@
+{
+  "status": "PASS_ATTENTION_MICRO_GATES_SERVING_UNQUALIFIED",
+  "scope": "Standalone attention correctness, not mixed serving or release qualification",
+  "tests": {
+    "eager": 31,
+    "graphs": 2,
+    "causal_poison": 3
+  },
+  "tolerance": {
+    "rtol": 0.01,
+    "atol": 0.003
+  },
+  "maximum_absolute_vs_native": 0.0001220703125,
+  "maximum_absolute_vs_fp32": 8.289515972137451e-05,
+  "kv_cache_unchanged": true,
+  "artifact": {
+    "standalone_probe_image_id": "sha256:6628e68a86c6b807965e29f7c47f7db5d9b1da98f3775ffb8de2f1e5bb2ca0a3",
+    "packaged_candidate_image_id": "sha256:6cf4899923749b221a008834f7fd42e0aa7e3f58546f408faf77cbf4da86554b",
+    "native_library_sha256": "48f879c16f3695dbb0fae7388f1e318591d6408acc7be15b0093a0bbb6d9053b",
+    "m04_library_sha256": "eaa18427db27d4fceeca8a17c8a3c6b019b7678f39bf98affc1736b9f2c2d631"
+  },
+  "raw_sha256": {
+    "benchmark-results/exl3-guarded-attn-probe-v2/probe/result.json": "718c5ebc346938bed35a2d6624ba33a1fb853fed5e91a8ea6975cba172dd2183",
+    "benchmark-results/exl3-guarded-attn-probe-v2/worker.log": "01973e3de23e999d093c42dee05a7d6ba4743d54bc23e7631b11f4c95f6bd2e5"
+  },
+  "source_sha256": {
+    "exl3xpu/attention_metadata.py": "c0a6d31d04d9f87b1f98b40722a9eddde1ec9d03e0a26aa17079000226323472",
+    "exl3xpu/shared_kv_verify.py": "cee079e82aab852083b3a266c46d18819fe0699f54c83c8308c77d1788e0b82a",
+    "tests/test_guarded_attention_xpu.py": "39b7800e121efecd9693d84c279ff968c74f963d025a4483127e5518793f2a0e"
+  },
+  "limitations": [
+    "The dispatcher install/build contract was strengthened after this isolated probe; the final packaged candidate requires its own serving and quality checks.",
+    "Initial mount attempt failed to find the library before executing XPU cases; it is excluded from numerical evidence."
+  ]
+}

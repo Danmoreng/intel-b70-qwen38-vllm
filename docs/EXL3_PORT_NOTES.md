@@ -620,3 +620,30 @@ call envelope is1.44→0.97ms; GPU-event windows include host gaps and must not
 be labeled GPU compute speedup or Decode gains. oneDNN serving stays disabled
 until the unified dispatcher and mixed/prefill tests pass. No new BF16 reference
 has been generated in these M04/SDPA experiments; GPTQ remains offline.
+
+## Unified attention candidate and overnight release scope
+
+A source-guarded adapter for the actual V2 CommonAttentionMetadata now prepares
+exact prefill lengths and contiguous native groups once per step. CPU decode
+lengths are only optimistic capacity bounds: the compute operation retains
+the original GPU lengths. Adaptive verification is explicitly excluded because
+it can change per-request GPU query boundaries. Unknown masks, sinks, windows,
+ALiBi, output formats, per-head scales and parallelism fall back unchanged.
+The oneDNN route requires exact K length, supported FP16/FP8 contracts and
+eager execution; M04 handles supported short verification groups. Native V2
+continues to own KV updates exactly once.
+
+Standalone gates pass31 XPU numerical cases, two mutable graph replays and
+three future-KV poison controls. See target-guarded-attention-micro-v1. The
+immutable packaged candidate is6cf4899923749b221a008834f7fd42e0aa7e3f58546f408faf77cbf4da86554b.
+It remains unqualified while the ABBA mixed-serving tails/API/media campaign
+and expanded real-checkpoint row/graph tests are in progress. Earlier package
+iterations lacked the M04 .so because of Docker-ignore filtering; that was
+caught before inference and fixed, with a new build-time operator/hash check.
+No failed packaging or CPU-without-XPU install attempt is a numerical pass.
+
+The user authorizes finishing and deploying/pushing a passed release overnight,
+with a brief final kernel profile and priority on correctness/quality. Final
+README measurements must include the full20-scenario70-wave124-request
+serving matrix, corrected Flappyv7 with10K context bands, and QueueKitv2.
+Eight hours is a planning deadline, not permission to waive failed gates.

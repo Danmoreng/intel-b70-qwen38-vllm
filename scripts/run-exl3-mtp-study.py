@@ -29,6 +29,34 @@ def sha(data):return hashlib.sha256(data).hexdigest()
 def save(path,value):path.write_text(json.dumps(value,indent=2)+'\n')
 
 
+def selected_cases(windows, compact=False):
+    return [(w, c, mode) for w in windows for c in [1,4] for mode in ['cold','warm']
+            if not compact or (w['context_tokens'] in [4096,49152]
+                               or (w['name']=='code-102752' and c==1))]
+
+
+def reuse_arm(source, image, panel_sha, settings, cases):
+    campaign=json.loads((source/'campaign.json').read_text())
+    assert campaign['status'] in ['FAILED','CURTAILED_BY_USER','COMPLETE'], 'Reuse requires a terminal campaign'
+    assert campaign['image_id']==image and campaign['panel_sha256']==panel_sha, 'Reuse identity mismatch'
+    arm=campaign['arms'][0]
+    assert arm['depth']==3 and arm['settings']=={**settings,'speculative_config':{'method':'mtp','num_speculative_tokens':3}}, 'Reuse settings mismatch'
+    rows=[]
+    for window,c,mode in cases:
+        key=(window['name'],c,mode)
+        matches=[r for r in arm['waves'] if (r['window'],r['concurrency'],r['cache_mode'])==key]
+        assert len(matches)==1, 'Missing or duplicated completed source wave: '+str(key)
+        path=source/'arm-0-mtp3'/f'{key[0]}-c{c}-{mode}'/'result.json'
+        row=json.loads(path.read_text());summary={k:v for k,v in row.items() if k!='responses'}
+        assert summary==matches[0], 'Raw result differs from persisted wave'
+        assert len(row['responses'])==c and row['native']['completed']==c
+        assert all(r['prompt_ids_verified'] and len(r['token_ids'])==512 and r['usage']['prompt_tokens']==len(window['ids']) for r in row['responses'])
+        rows.append({**summary,'reused_result':str(path.resolve()),'reused_result_sha256':sha(path.read_bytes())})
+    return {**arm,'waves':rows,'status':'COMPLETE_REUSED_SUBSET',
+            'source_campaign':str((source/'campaign.json').resolve()),
+            'source_campaign_sha256':sha((source/'campaign.json').read_bytes())}
+
+
 def metrics():
     with urllib.request.urlopen(BASE+'/metrics',timeout=15) as response:raw=response.read().decode()
     counters={}
@@ -142,6 +170,8 @@ def main():
     parser.add_argument('--image',required=True);parser.add_argument('--panel',type=Path,required=True)
     parser.add_argument('--manifest',type=Path,required=True);parser.add_argument('--long-campaign',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True);parser.add_argument('--pilot',action='store_true')
+    parser.add_argument('--compact',action='store_true')
+    parser.add_argument('--reuse-mtp3-campaign',type=Path)
     args=parser.parse_args();root=args.output.resolve()
     if root.exists():raise RuntimeError('Fresh study directory required')
     encoded=args.panel.read_bytes();panel_bytes=gzip.decompress(encoded);panel=json.loads(panel_bytes);manifest=json.loads(args.manifest.read_text())
@@ -149,7 +179,10 @@ def main():
         raise RuntimeError('Frozen performance panel identity mismatch')
     image=subprocess.check_output(['docker','image','inspect',args.image,'--format','{{.Id}}'],text=True).strip()
     windows=[w for w in panel['windows'] if not args.pilot or w['name']=='code-4096']
-    order=[3,4] if args.pilot else [3,4,4,3]
+    assert not (args.pilot and args.compact), 'Pilot and compact are exclusive'
+    assert args.compact or not args.reuse_mtp3_campaign, 'Reuse is restricted to compact screening'
+    order=[3,4] if args.pilot or args.compact else [3,4,4,3]
+    cases=selected_cases(windows,args.compact)
     lockpath=REPO.parent/'Local-AI-B70/qwen38/context-benchmark/run.lock'
     with lockpath.open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
@@ -159,11 +192,14 @@ def main():
         config=long['engine_config'];settings=json.loads((REPO/'config/experiments/exl3-migration/target-upstream-expanded.json').read_text())
         for key,value in settings.items():
             if config.get(key)!=value:raise RuntimeError('Serving profile differs from long quality: '+key)
-        root.mkdir();state={'schema':1,'status':'RUNNING','scope':'PILOT' if args.pilot else 'SERVING_ABBA',
+        reused=reuse_arm(args.reuse_mtp3_campaign.resolve(),image,sha(panel_bytes),settings,cases) if args.reuse_mtp3_campaign else None
+        root.mkdir();state={'schema':1,'status':'RUNNING','scope':'SERVING_COMPACT_SCREEN' if args.compact else ('PILOT' if args.pilot else 'SERVING_ABBA'),
             'image_id':image,'panel_sha256':sha(panel_bytes),'started_unix':time.time(),'arms':[],
             'order':order,'power_w':180,'production_restored':False,
             'source_sha256':sha(Path(__file__).read_bytes()),'long_campaign_sha256':sha((args.long_campaign/'candidate-campaign.json').read_bytes()),
             'unmeasured_required_component_metrics':['target/draft/head/sampler GPU latency','actual/padded rows and graph bucket','per-cycle GPU latency; require separate diagnostic profiling before MTP selection']}
+        state['planned_waves']=len(cases)*len(order)
+        state['comparison_design']='Single-pass screening; reused MTP3 is historical, no ABBA/order-drift confidence. Repeat only ambiguous cells.' if args.compact else 'Original protocol'
         def persist():save(root/'campaign.json',state)
         def interrupted(*args):raise InterruptedError('MTP study interrupted')
         signal.signal(signal.SIGINT,interrupted);signal.signal(signal.SIGTERM,interrupted);persist()
@@ -171,6 +207,8 @@ def main():
         try:
             subprocess.run(['systemctl','--user','stop','b70-qwen38-vllm.service'],check=True,timeout=90);R.cap()
             for index,depth in enumerate(order):
+                if index==0 and reused:
+                    state['arms'].append(reused);persist();continue
                 path=root/f'arm-{index}-mtp{depth}';path.mkdir();phase=path
                 cache=Path.home()/'.cache/exl3xpu/migration-mtp'/image.removeprefix('sha256:')/f'mtp{depth}'
                 command=['docker','run','-d','--name',NAME,'--device','/dev/dri','-v','/dev/dri/by-path:/dev/dri/by-path:ro','--shm-size','8g',
@@ -196,12 +234,10 @@ def main():
                     # The warmup uses unique salts and is excluded from all measured wave summaries.
                     short=next(w for w in panel['windows'] if w['name']=='code-4096')
                     for concurrency in [1,4]:wave(short,concurrency,'warmup',index,depth,phase,panel['sampling']['max_tokens'])
-                    for window in windows:
-                        for concurrency in [1,4]:
-                            for mode in ['cold','warm']:
-                                print(f'RUN arm{index} MTP{depth} {window["name"]} C{concurrency} {mode}',flush=True)
-                                row=wave(window,concurrency,mode,index,depth,phase,panel['sampling']['max_tokens'])
-                                arm['waves'].append(row);persist()
+                    for window,concurrency,mode in cases:
+                        print(f'RUN arm{index} MTP{depth} {window["name"]} C{concurrency} {mode}',flush=True)
+                        row=wave(window,concurrency,mode,index,depth,phase,panel['sampling']['max_tokens'])
+                        arm['waves'].append(row);persist()
                     arm['status']='COMPLETE';persist()
                 finally:
                     logs=subprocess.run(['docker','logs',NAME],capture_output=True,text=True)

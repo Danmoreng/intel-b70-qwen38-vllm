@@ -1,0 +1,1252 @@
+{
+  "status": "COMPLETE_SCREEN_NOT_RELEASE_QUALIFICATION",
+  "campaign_sha256": "d668965d2135b6288c8f8cb46b29a6196af2f9f576ca791f33d2696d271eeb9e",
+  "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "depth": 3,
+  "requests": 60,
+  "waves": 24,
+  "head_ownership": {
+    "pruned": {
+      "heads": [
+        {
+          "role": "target",
+          "module": "language_model.lm_head",
+          "module_object_id": 139701469036080,
+          "prefix": "language_model.lm_head",
+          "bits": 6,
+          "full_rows": 248320,
+          "pruned_rows": 65536,
+          "pruned_buffers": {
+            "trellis": {
+              "device": "xpu:0",
+              "storage_pointer": 18446697184519782400,
+              "storage_bytes": 251658240,
+              "logical_bytes": 251658240
+            },
+            "svh": {
+              "device": "xpu:0",
+              "storage_pointer": 18446697179844997120,
+              "storage_bytes": 131072,
+              "logical_bytes": 131072
+            },
+            "idx": {
+              "device": "xpu:0",
+              "storage_pointer": 18446697182844654592,
+              "storage_bytes": 524288,
+              "logical_bytes": 524288
+            },
+            "shard": {
+              "device": "xpu:0",
+              "storage_pointer": 18446697167144163840,
+              "storage_bytes": 2048,
+              "logical_bytes": 2048
+            }
+          }
+        },
+        {
+          "role": "draft",
+          "module": "lm_head",
+          "module_object_id": 139701469036080,
+          "prefix": "language_model.lm_head",
+          "bits": 6,
+          "full_rows": 248320,
+          "pruned_rows": 65536,
+          "pruned_buffers": {
+            "trellis": {
+              "device": "xpu:0",
+              "storage_pointer": 18446697184519782400,
+              "storage_bytes": 251658240,
+              "logical_bytes": 251658240
+            },
+            "svh": {
+              "device": "xpu:0",
+              "storage_pointer": 18446697179844997120,
+              "storage_bytes": 131072,
+              "logical_bytes": 131072
+            },
+            "idx": {
+              "device": "xpu:0",
+              "storage_pointer": 18446697182844654592,
+              "storage_bytes": 524288,
+              "logical_bytes": 524288
+            },
+            "shard": {
+              "device": "xpu:0",
+              "storage_pointer": 18446697167144163840,
+              "storage_bytes": 2048,
+              "logical_bytes": 2048
+            }
+          }
+        }
+      ],
+      "shared_head_module": true,
+      "unique_pruned_storage_bytes": 252315648,
+      "summed_pruned_role_logical_bytes": 504631296,
+      "model_memory_usage": 17452575232,
+      "torch_allocated_bytes": 17556229632,
+      "torch_reserved_bytes": 17693671424,
+      "scope": "Read-only post-load inventory before KV profiling/graphs. Storage pointers are worker-local identities, not tensor-content hashes. Role totals can double-count a shared target/MTP head."
+    },
+    "full": {
+      "heads": [
+        {
+          "role": "target",
+          "module": "language_model.lm_head",
+          "module_object_id": 140530393837072,
+          "prefix": "language_model.lm_head",
+          "bits": 6,
+          "full_rows": 248320,
+          "pruned_rows": null,
+          "pruned_buffers": {}
+        },
+        {
+          "role": "draft",
+          "module": "lm_head",
+          "module_object_id": 140530393837072,
+          "prefix": "language_model.lm_head",
+          "bits": 6,
+          "full_rows": 248320,
+          "pruned_rows": null,
+          "pruned_buffers": {}
+        }
+      ],
+      "shared_head_module": true,
+      "unique_pruned_storage_bytes": 0,
+      "summed_pruned_role_logical_bytes": 0,
+      "model_memory_usage": 17200259584,
+      "torch_allocated_bytes": 17303913984,
+      "torch_reserved_bytes": 17442013184,
+      "scope": "Read-only post-load inventory before KV profiling/graphs. Storage pointers are worker-local identities, not tensor-content hashes. Role totals can double-count a shared target/MTP head."
+    }
+  },
+  "model_memory_saved_bytes": 252315648,
+  "paired_cases": [
+    {
+      "window": "code-4096",
+      "concurrency": 1,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "pruned": 70.65969445949257,
+          "full": 61.60350447329109,
+          "full_change_pct": -12.816627718922803
+        },
+        "client_aggregate_decode_tps": {
+          "pruned": 70.6754360860315,
+          "full": 61.61762263885336,
+          "full_change_pct": -12.816070121098766
+        },
+        "native_prefill_tps": {
+          "pruned": 2295.2352224074816,
+          "full": 2251.784286984075,
+          "full_change_pct": -1.8930929169791444
+        },
+        "wall_s": {
+          "pruned": 9.053356514006737,
+          "full": 10.163931552000577,
+          "full_change_pct": 12.266997729246976
+        },
+        "generated_tokens_per_round": {
+          "pruned": 3.2,
+          "full": 3.0843373493975905,
+          "full_change_pct": -3.6144578313253017
+        },
+        "joules_per_output_token": {
+          "pruned": 3.182867646484375,
+          "full": 3.573192357421875,
+          "full_change_pct": 12.263303231242805
+        }
+      },
+      "cache_hit_fraction": {
+        "pruned": 0.0,
+        "full": 0.0
+      },
+      "native_accounting": {
+        "pruned": {
+          "prompt_tokens": 4096.0,
+          "draft_tokens": 480.0,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "decode_seconds": 7.24599793300149,
+          "prefill_tokens": 4096.0,
+          "generation_tokens": 512.0,
+          "completed": 1.0,
+          "accepted_tokens": 353.0,
+          "prefill_seconds": 1.784566549002193
+        },
+        "full": {
+          "prompt_tokens": 4096.0,
+          "draft_tokens": 498.0,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "decode_seconds": 8.311215479989187,
+          "prefill_tokens": 4096.0,
+          "generation_tokens": 512.0,
+          "completed": 1.0,
+          "accepted_tokens": 346.0,
+          "prefill_seconds": 1.8190019460016629
+        }
+      },
+      "accepted_per_round_by_position": {
+        "pruned": {
+          "0": 0.8875,
+          "1": 0.7375,
+          "2": 0.58125
+        },
+        "full": {
+          "0": 0.8614457831325302,
+          "1": 0.6807228915662651,
+          "2": 0.5421686746987951
+        }
+      },
+      "first_output_difference_by_request": [
+        185
+      ],
+      "exact_output_matches": 0
+    },
+    {
+      "window": "code-4096",
+      "concurrency": 1,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "pruned": 67.39631572258308,
+          "full": 65.47563832535889,
+          "full_change_pct": -2.84982550845968
+        },
+        "client_aggregate_decode_tps": {
+          "pruned": 67.409065029074,
+          "full": 65.48901151486085,
+          "full_change_pct": -2.848360993265553
+        },
+        "native_prefill_tps": {
+          "pruned": 2352.987213652983,
+          "full": 2294.941604912917,
+          "full_change_pct": -2.4668901047681935
+        },
+        "wall_s": {
+          "pruned": 8.660797700998955,
+          "full": 8.933616713999072,
+          "full_change_pct": 3.1500448621337718
+        },
+        "generated_tokens_per_round": {
+          "pruned": 3.065868263473054,
+          "full": 3.282051282051282,
+          "full_change_pct": 7.051282051282048
+        },
+        "joules_per_output_token": {
+          "pruned": 3.047426701171875,
+          "full": 3.14135515625,
+          "full_change_pct": 3.0822219626153835
+        }
+      },
+      "cache_hit_fraction": {
+        "pruned": 0.390625,
+        "full": 0.390625
+      },
+      "native_accounting": {
+        "pruned": {
+          "prompt_tokens": 4096.0,
+          "draft_tokens": 501.0,
+          "cached_tokens": 1600.0,
+          "preemptions": 0.0,
+          "decode_seconds": 7.596854435003479,
+          "prefill_tokens": 2496.0,
+          "generation_tokens": 512.0,
+          "completed": 1.0,
+          "accepted_tokens": 344.0,
+          "prefill_seconds": 1.0607792450027773
+        },
+        "full": {
+          "prompt_tokens": 4096.0,
+          "draft_tokens": 468.0,
+          "cached_tokens": 1600.0,
+          "preemptions": 0.0,
+          "decode_seconds": 7.819702306005638,
+          "prefill_tokens": 2496.0,
+          "generation_tokens": 512.0,
+          "completed": 1.0,
+          "accepted_tokens": 356.0,
+          "prefill_seconds": 1.087609373003943
+        }
+      },
+      "accepted_per_round_by_position": {
+        "pruned": {
+          "0": 0.8383233532934131,
+          "1": 0.6826347305389222,
+          "2": 0.5389221556886228
+        },
+        "full": {
+          "0": 0.9102564102564102,
+          "1": 0.75,
+          "2": 0.6217948717948718
+        }
+      },
+      "first_output_difference_by_request": [
+        185
+      ],
+      "exact_output_matches": 0
+    },
+    {
+      "window": "code-4096",
+      "concurrency": 4,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "pruned": 45.428649030427664,
+          "full": 40.66269116093414,
+          "full_change_pct": -10.491084307396715
+        },
+        "client_aggregate_decode_tps": {
+          "pruned": 151.90546500366267,
+          "full": 139.94678488933422,
+          "full_change_pct": -7.872448903691587
+        },
+        "native_prefill_tps": {
+          "pruned": 1190.5777194744242,
+          "full": 1171.9576670157953,
+          "full_change_pct": -1.563951025964827
+        },
+        "wall_s": {
+          "pruned": 16.40294223598903,
+          "full": 17.596335748996353,
+          "full_change_pct": 7.275484457836745
+        },
+        "generated_tokens_per_round": {
+          "pruned": 3.2559618441971385,
+          "full": 3.1459293394777266,
+          "full_change_pct": -3.3794162826421004
+        },
+        "joules_per_output_token": {
+          "pruned": 1.4418821040039063,
+          "full": 1.5470826923828125,
+          "full_change_pct": 7.2960603427131066
+        }
+      },
+      "cache_hit_fraction": {
+        "pruned": 0.0,
+        "full": 0.0
+      },
+      "native_accounting": {
+        "pruned": {
+          "prompt_tokens": 16384.0,
+          "draft_tokens": 1887.0,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "decode_seconds": 45.08168399699207,
+          "prefill_tokens": 16384.0,
+          "generation_tokens": 2048.0,
+          "completed": 4.0,
+          "accepted_tokens": 1422.0,
+          "prefill_seconds": 13.761386368991225
+        },
+        "full": {
+          "prompt_tokens": 16384.0,
+          "draft_tokens": 1953.0,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "decode_seconds": 50.36557939302293,
+          "prefill_tokens": 16384.0,
+          "generation_tokens": 2048.0,
+          "completed": 4.0,
+          "accepted_tokens": 1397.0,
+          "prefill_seconds": 13.980027146986686
+        }
+      },
+      "accepted_per_round_by_position": {
+        "pruned": {
+          "0": 0.8855325914149443,
+          "1": 0.7472178060413355,
+          "2": 0.6279809220985691
+        },
+        "full": {
+          "0": 0.8755760368663594,
+          "1": 0.7019969278033794,
+          "2": 0.5683563748079877
+        }
+      },
+      "first_output_difference_by_request": [
+        184,
+        193,
+        182,
+        185
+      ],
+      "exact_output_matches": 0
+    },
+    {
+      "window": "code-4096",
+      "concurrency": 4,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "pruned": 49.450045349321144,
+          "full": 45.33241584438553,
+          "full_change_pct": -8.326846772026553
+        },
+        "client_aggregate_decode_tps": {
+          "pruned": 170.13635821671025,
+          "full": 156.51270368103366,
+          "full_change_pct": -8.007491566454917
+        },
+        "native_prefill_tps": {
+          "pruned": 946.6620353843886,
+          "full": 929.2147337318327,
+          "full_change_pct": -1.843033838942476
+        },
+        "wall_s": {
+          "pruned": 13.676336094998987,
+          "full": 14.760707028995967,
+          "full_change_pct": 7.928811682198278
+        },
+        "generated_tokens_per_round": {
+          "pruned": 3.235387045813586,
+          "full": 3.2559618441971385,
+          "full_change_pct": 0.6359300476947549
+        },
+        "joules_per_output_token": {
+          "pruned": 1.202221333984375,
+          "full": 1.2973068354492188,
+          "full_change_pct": 7.909151067026365
+        }
+      },
+      "cache_hit_fraction": {
+        "pruned": 0.390625,
+        "full": 0.390625
+      },
+      "native_accounting": {
+        "pruned": {
+          "prompt_tokens": 16384.0,
+          "draft_tokens": 1899.0,
+          "cached_tokens": 6400.0,
+          "preemptions": 0.0,
+          "decode_seconds": 41.41553330300667,
+          "prefill_tokens": 9984.0,
+          "generation_tokens": 2048.0,
+          "completed": 4.0,
+          "accepted_tokens": 1411.0,
+          "prefill_seconds": 10.546530468971469
+        },
+        "full": {
+          "prompt_tokens": 16384.0,
+          "draft_tokens": 1887.0,
+          "cached_tokens": 6400.0,
+          "preemptions": 0.0,
+          "decode_seconds": 45.17738492098579,
+          "prefill_tokens": 9984.0,
+          "generation_tokens": 2048.0,
+          "completed": 4.0,
+          "accepted_tokens": 1418.0,
+          "prefill_seconds": 10.744556277000811
+        }
+      },
+      "accepted_per_round_by_position": {
+        "pruned": {
+          "0": 0.8925750394944708,
+          "1": 0.7345971563981043,
+          "2": 0.6018957345971564
+        },
+        "full": {
+          "0": 0.8950715421303657,
+          "1": 0.7360890302066773,
+          "2": 0.6232114467408585
+        }
+      },
+      "first_output_difference_by_request": [
+        190,
+        137,
+        185,
+        190
+      ],
+      "exact_output_matches": 0
+    },
+    {
+      "window": "prose-4096",
+      "concurrency": 1,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "pruned": 57.66542123512374,
+          "full": 50.26071596894473,
+          "full_change_pct": -12.840806687229811
+        },
+        "client_aggregate_decode_tps": {
+          "pruned": 57.67716129363135,
+          "full": 50.26970585255123,
+          "full_change_pct": -12.842961191118885
+        },
+        "native_prefill_tps": {
+          "pruned": 2274.2610676286236,
+          "full": 2238.7056863439307,
+          "full_change_pct": -1.563381697500832
+        },
+        "wall_s": {
+          "pruned": 10.708983531992999,
+          "full": 12.039190165000036,
+          "full_change_pct": 12.421408894999765
+        },
+        "generated_tokens_per_round": {
+          "pruned": 2.6256410256410256,
+          "full": 2.5346534653465347,
+          "full_change_pct": -3.4653465346534684
+        },
+        "joules_per_output_token": {
+          "pruned": 3.763447166015625,
+          "full": 4.231627107421875,
+          "full_change_pct": 12.440189027601377
+        }
+      },
+      "cache_hit_fraction": {
+        "pruned": 0.0,
+        "full": 0.0
+      },
+      "native_accounting": {
+        "pruned": {
+          "prompt_tokens": 4096.0,
+          "draft_tokens": 585.0,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "decode_seconds": 8.878804473002674,
+          "prefill_tokens": 4096.0,
+          "generation_tokens": 512.0,
+          "completed": 1.0,
+          "accepted_tokens": 318.0,
+          "prefill_seconds": 1.8010245430050418
+        },
+        "full": {
+          "prompt_tokens": 4096.0,
+          "draft_tokens": 606.0,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "decode_seconds": 10.186882341993623,
+          "prefill_tokens": 4096.0,
+          "generation_tokens": 512.0,
+          "completed": 1.0,
+          "accepted_tokens": 309.0,
+          "prefill_seconds": 1.8296286220138427
+        }
+      },
+      "accepted_per_round_by_position": {
+        "pruned": {
+          "0": 0.7692307692307693,
+          "1": 0.517948717948718,
+          "2": 0.3435897435897436
+        },
+        "full": {
+          "0": 0.7574257425742574,
+          "1": 0.4801980198019802,
+          "2": 0.29207920792079206
+        }
+      },
+      "first_output_difference_by_request": [
+        183
+      ],
+      "exact_output_matches": 0
+    },
+    {
+      "window": "prose-4096",
+      "concurrency": 1,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "pruned": 54.402541381733535,
+          "full": 44.26719628493023,
+          "full_change_pct": -18.630278732174077
+        },
+        "client_aggregate_decode_tps": {
+          "pruned": 54.41227189218603,
+          "full": 44.27254101993618,
+          "full_change_pct": -18.635007360731038
+        },
+        "native_prefill_tps": {
+          "pruned": 2324.44027163285,
+          "full": 2281.947377809806,
+          "full_change_pct": -1.8280914481486832
+        },
+        "wall_s": {
+          "pruned": 10.509481307002716,
+          "full": 12.68660432699835,
+          "full_change_pct": 20.71579896664324
+        },
+        "generated_tokens_per_round": {
+          "pruned": 2.4854368932038833,
+          "full": 2.2358078602620086,
+          "full_change_pct": -10.043668122270743
+        },
+        "joules_per_output_token": {
+          "pruned": 3.695617318359375,
+          "full": 4.459754466796875,
+          "full_change_pct": 20.676847265580236
+        }
+      },
+      "cache_hit_fraction": {
+        "pruned": 0.390625,
+        "full": 0.390625
+      },
+      "native_accounting": {
+        "pruned": {
+          "prompt_tokens": 4096.0,
+          "draft_tokens": 618.0,
+          "cached_tokens": 1600.0,
+          "preemptions": 0.0,
+          "decode_seconds": 9.411325041000964,
+          "prefill_tokens": 2496.0,
+          "generation_tokens": 512.0,
+          "completed": 1.0,
+          "accepted_tokens": 307.0,
+          "prefill_seconds": 1.0738068990031024
+        },
+        "full": {
+          "prompt_tokens": 4096.0,
+          "draft_tokens": 687.0,
+          "cached_tokens": 1600.0,
+          "preemptions": 0.0,
+          "decode_seconds": 11.566126680001616,
+          "prefill_tokens": 2496.0,
+          "generation_tokens": 512.0,
+          "completed": 1.0,
+          "accepted_tokens": 285.0,
+          "prefill_seconds": 1.0938026109943166
+        }
+      },
+      "accepted_per_round_by_position": {
+        "pruned": {
+          "0": 0.7330097087378641,
+          "1": 0.4563106796116505,
+          "2": 0.30097087378640774
+        },
+        "full": {
+          "0": 0.6724890829694323,
+          "1": 0.4148471615720524,
+          "2": 0.1572052401746725
+        }
+      },
+      "first_output_difference_by_request": [
+        3
+      ],
+      "exact_output_matches": 0
+    },
+    {
+      "window": "prose-4096",
+      "concurrency": 4,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "pruned": 34.833408426920556,
+          "full": 32.40347088357869,
+          "full_change_pct": -6.975882215028717
+        },
+        "client_aggregate_decode_tps": {
+          "pruned": 118.61878513107011,
+          "full": 108.3913865422078,
+          "full_change_pct": -8.622073289286647
+        },
+        "native_prefill_tps": {
+          "pruned": 1168.4785912003103,
+          "full": 1157.2504986470751,
+          "full_change_pct": -0.9609155561593363
+        },
+        "wall_s": {
+          "pruned": 19.62438756499614,
+          "full": 21.283936618012376,
+          "full_change_pct": 8.456564810085387
+        },
+        "generated_tokens_per_round": {
+          "pruned": 2.42080378250591,
+          "full": 2.4265402843601898,
+          "full_change_pct": 0.23696682464455776
+        },
+        "joules_per_output_token": {
+          "pruned": 1.726152896484375,
+          "full": 1.8715021904296876,
+          "full_change_pct": 8.420418274727748
+        }
+      },
+      "cache_hit_fraction": {
+        "pruned": 0.0,
+        "full": 0.0
+      },
+      "native_accounting": {
+        "pruned": {
+          "prompt_tokens": 16384.0,
+          "draft_tokens": 2538.0,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "decode_seconds": 58.79413162500714,
+          "prefill_tokens": 16384.0,
+          "generation_tokens": 2048.0,
+          "completed": 4.0,
+          "accepted_tokens": 1203.0,
+          "prefill_seconds": 14.02165185000922
+        },
+        "full": {
+          "prompt_tokens": 16384.0,
+          "draft_tokens": 2532.0,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "decode_seconds": 63.20310584499384,
+          "prefill_tokens": 16384.0,
+          "generation_tokens": 2048.0,
+          "completed": 4.0,
+          "accepted_tokens": 1203.0,
+          "prefill_seconds": 14.157695346992114
+        }
+      },
+      "accepted_per_round_by_position": {
+        "pruned": {
+          "0": 0.7198581560283688,
+          "1": 0.4432624113475177,
+          "2": 0.25886524822695034
+        },
+        "full": {
+          "0": 0.7298578199052133,
+          "1": 0.4514218009478673,
+          "2": 0.24407582938388625
+        }
+      },
+      "first_output_difference_by_request": [
+        66,
+        19,
+        66,
+        3
+      ],
+      "exact_output_matches": 0
+    },
+    {
+      "window": "prose-4096",
+      "concurrency": 4,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "pruned": 38.94720170955188,
+          "full": 36.981379980588024,
+          "full_change_pct": -5.047401719959077
+        },
+        "client_aggregate_decode_tps": {
+          "pruned": 136.64298760929043,
+          "full": 123.95391972671007,
+          "full_change_pct": -9.286292772566417
+        },
+        "native_prefill_tps": {
+          "pruned": 934.0601548136658,
+          "full": 929.2248951764151,
+          "full_change_pct": -0.5176604110915473
+        },
+        "wall_s": {
+          "pruned": 16.64656658700551,
+          "full": 18.18945422800607,
+          "full_change_pct": 9.268503705772924
+        },
+        "generated_tokens_per_round": {
+          "pruned": 2.5128834355828222,
+          "full": 2.5924050632911393,
+          "full_change_pct": 3.164556962025311
+        },
+        "joules_per_output_token": {
+          "pruned": 1.4633103608398437,
+          "full": 1.59864696875,
+          "full_change_pct": 9.248660539277665
+        }
+      },
+      "cache_hit_fraction": {
+        "pruned": 0.390625,
+        "full": 0.390625
+      },
+      "native_accounting": {
+        "pruned": {
+          "prompt_tokens": 16384.0,
+          "draft_tokens": 2445.0,
+          "cached_tokens": 6400.0,
+          "preemptions": 0.0,
+          "decode_seconds": 52.58400886597519,
+          "prefill_tokens": 9984.0,
+          "generation_tokens": 2048.0,
+          "completed": 4.0,
+          "accepted_tokens": 1232.0,
+          "prefill_seconds": 10.68881907503237
+        },
+        "full": {
+          "prompt_tokens": 16384.0,
+          "draft_tokens": 2370.0,
+          "cached_tokens": 6400.0,
+          "preemptions": 0.0,
+          "decode_seconds": 55.37922059898847,
+          "prefill_tokens": 9984.0,
+          "generation_tokens": 2048.0,
+          "completed": 4.0,
+          "accepted_tokens": 1257.0,
+          "prefill_seconds": 10.744438780995551
+        }
+      },
+      "accepted_per_round_by_position": {
+        "pruned": {
+          "0": 0.7570552147239263,
+          "1": 0.47116564417177914,
+          "2": 0.28343558282208586
+        },
+        "full": {
+          "0": 0.7810126582278482,
+          "1": 0.48860759493670886,
+          "2": 0.32151898734177214
+        }
+      },
+      "first_output_difference_by_request": [
+        26,
+        167,
+        1,
+        1
+      ],
+      "exact_output_matches": 0
+    },
+    {
+      "window": "code-49152",
+      "concurrency": 4,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "pruned": 7.013057562846633,
+          "full": 6.940670676955078,
+          "full_change_pct": -1.0321729893540632
+        },
+        "client_aggregate_decode_tps": {
+          "pruned": 15.34962723098696,
+          "full": 15.245326331292702,
+          "full_change_pct": -0.6795011899943804
+        },
+        "native_prefill_tps": {
+          "pruned": 1114.1876704426095,
+          "full": 1112.9409914224418,
+          "full_change_pct": -0.11189129562638733
+        },
+        "wall_s": {
+          "pruned": 169.564568916001,
+          "full": 170.58181617798982,
+          "full_change_pct": 0.5999173462309493
+        },
+        "generated_tokens_per_round": {
+          "pruned": 3.3851239669421487,
+          "full": 3.390728476821192,
+          "full_change_pct": 0.16556291390728006
+        },
+        "joules_per_output_token": {
+          "pruned": 14.903992325195313,
+          "full": 14.993879467285156,
+          "full_change_pct": 0.6031078125146916
+        }
+      },
+      "cache_hit_fraction": {
+        "pruned": 0.0,
+        "full": 0.0
+      },
+      "native_accounting": {
+        "pruned": {
+          "prompt_tokens": 196608.0,
+          "draft_tokens": 1815.0,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "decode_seconds": 292.0266918739944,
+          "prefill_tokens": 196608.0,
+          "generation_tokens": 2048.0,
+          "completed": 4.0,
+          "accepted_tokens": 1441.0,
+          "prefill_seconds": 176.45860317400366
+        },
+        "full": {
+          "prompt_tokens": 196608.0,
+          "draft_tokens": 1812.0,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "decode_seconds": 295.07234895900183,
+          "prefill_tokens": 196608.0,
+          "generation_tokens": 2048.0,
+          "completed": 4.0,
+          "accepted_tokens": 1442.0,
+          "prefill_seconds": 176.6562661590142
+        }
+      },
+      "accepted_per_round_by_position": {
+        "pruned": {
+          "0": 0.9173553719008265,
+          "1": 0.8049586776859504,
+          "2": 0.6595041322314049
+        },
+        "full": {
+          "0": 0.9188741721854304,
+          "1": 0.8062913907284768,
+          "2": 0.6622516556291391
+        }
+      },
+      "first_output_difference_by_request": [
+        182,
+        182,
+        303,
+        null
+      ],
+      "exact_output_matches": 1
+    },
+    {
+      "window": "code-49152",
+      "concurrency": 4,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "pruned": 26.851609774638398,
+          "full": 25.774385077829027,
+          "full_change_pct": -4.011769520897845
+        },
+        "client_aggregate_decode_tps": {
+          "pruned": 86.3126108472955,
+          "full": 83.26324812723477,
+          "full_change_pct": -3.5329283752702945
+        },
+        "native_prefill_tps": {
+          "pruned": 524.392788401874,
+          "full": 521.2744773385207,
+          "full_change_pct": -0.5946517824656938
+        },
+        "wall_s": {
+          "pruned": 26.50584963799338,
+          "full": 27.383044057001825,
+          "full_change_pct": 3.3094370902605474
+        },
+        "generated_tokens_per_round": {
+          "pruned": 3.390728476821192,
+          "full": 3.4019933554817277,
+          "full_change_pct": 0.33222591362127574
+        },
+        "joules_per_output_token": {
+          "pruned": 2.329437404785156,
+          "full": 2.4066014887695313,
+          "full_change_pct": 3.3125631032567826
+        }
+      },
+      "cache_hit_fraction": {
+        "pruned": 0.9440104166666666,
+        "full": 0.9440104166666666
+      },
+      "native_accounting": {
+        "pruned": {
+          "prompt_tokens": 196608.0,
+          "draft_tokens": 1812.0,
+          "cached_tokens": 185600.0,
+          "preemptions": 0.0,
+          "decode_seconds": 76.27103243301099,
+          "prefill_tokens": 11008.0,
+          "generation_tokens": 2048.0,
+          "completed": 4.0,
+          "accepted_tokens": 1442.0,
+          "prefill_seconds": 20.99189814098645
+        },
+        "full": {
+          "prompt_tokens": 196608.0,
+          "draft_tokens": 1806.0,
+          "cached_tokens": 185600.0,
+          "preemptions": 0.0,
+          "decode_seconds": 79.45873369299807,
+          "prefill_tokens": 11008.0,
+          "generation_tokens": 2048.0,
+          "completed": 4.0,
+          "accepted_tokens": 1444.0,
+          "prefill_seconds": 21.117473574006
+        }
+      },
+      "accepted_per_round_by_position": {
+        "pruned": {
+          "0": 0.9188741721854304,
+          "1": 0.8079470198675497,
+          "2": 0.6605960264900662
+        },
+        "full": {
+          "0": 0.9219269102990033,
+          "1": 0.8106312292358804,
+          "2": 0.6661129568106312
+        }
+      },
+      "first_output_difference_by_request": [
+        303,
+        182,
+        303,
+        182
+      ],
+      "exact_output_matches": 0
+    },
+    {
+      "window": "code-102752",
+      "concurrency": 1,
+      "cache_mode": "cold",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "pruned": 44.034679349689156,
+          "full": 43.32957427275436,
+          "full_change_pct": -1.60124948642274
+        },
+        "client_aggregate_decode_tps": {
+          "pruned": 44.148559198809096,
+          "full": 43.43701488247016,
+          "full_change_pct": -1.611704502370559
+        },
+        "native_prefill_tps": {
+          "pruned": 932.8803413002634,
+          "full": 930.1707490231179,
+          "full_change_pct": -0.29045442991850745
+        },
+        "wall_s": {
+          "pruned": 121.82940772699658,
+          "full": 122.3397866729938,
+          "full_change_pct": 0.41892918591619477
+        },
+        "generated_tokens_per_round": {
+          "pruned": 2.9767441860465116,
+          "full": 3.103030303030303,
+          "full_change_pct": 4.2424242424242475
+        },
+        "joules_per_output_token": {
+          "pruned": 42.83501434375,
+          "full": 43.014056681640625,
+          "full_change_pct": 0.4179812721756493
+        }
+      },
+      "cache_hit_fraction": {
+        "pruned": 0.0,
+        "full": 0.0
+      },
+      "native_accounting": {
+        "pruned": {
+          "prompt_tokens": 102752.0,
+          "draft_tokens": 516.0,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "decode_seconds": 11.627199460999691,
+          "prefill_tokens": 102752.0,
+          "generation_tokens": 512.0,
+          "completed": 1.0,
+          "accepted_tokens": 339.0,
+          "prefill_seconds": 110.14488723900286
+        },
+        "full": {
+          "prompt_tokens": 102752.0,
+          "draft_tokens": 495.0,
+          "cached_tokens": 0.0,
+          "preemptions": 0.0,
+          "decode_seconds": 11.816409659993951,
+          "prefill_tokens": 102752.0,
+          "generation_tokens": 512.0,
+          "completed": 1.0,
+          "accepted_tokens": 346.0,
+          "prefill_seconds": 110.46573987400916
+        }
+      },
+      "accepted_per_round_by_position": {
+        "pruned": {
+          "0": 0.8546511627906976,
+          "1": 0.6569767441860465,
+          "2": 0.45930232558139533
+        },
+        "full": {
+          "0": 0.8666666666666667,
+          "1": 0.703030303030303,
+          "2": 0.5272727272727272
+        }
+      },
+      "first_output_difference_by_request": [
+        null
+      ],
+      "exact_output_matches": 1
+    },
+    {
+      "window": "code-102752",
+      "concurrency": 1,
+      "cache_mode": "warm",
+      "metrics": {
+        "native_request_weighted_decode_tps": {
+          "pruned": 43.918660929541105,
+          "full": 43.29441806082947,
+          "full_change_pct": -1.4213613427629501
+        },
+        "client_aggregate_decode_tps": {
+          "pruned": 44.02958234740168,
+          "full": 43.4030734188454,
+          "full_change_pct": -1.4229272574357021
+        },
+        "native_prefill_tps": {
+          "pruned": 573.2795146004438,
+          "full": 571.5768547958057,
+          "full_change_pct": -0.2970034269975219
+        },
+        "wall_s": {
+          "pruned": 15.106354994000867,
+          "full": 15.284438750008121,
+          "full_change_pct": 1.178866484191432
+        },
+        "generated_tokens_per_round": {
+          "pruned": 2.9767441860465116,
+          "full": 3.103030303030303,
+          "full_change_pct": 4.2424242424242475
+        },
+        "joules_per_output_token": {
+          "pruned": 5.311255693359375,
+          "full": 5.373701095703125,
+          "full_change_pct": 1.175718247227775
+        }
+      },
+      "cache_hit_fraction": {
+        "pruned": 0.9810028028651511,
+        "full": 0.9810028028651511
+      },
+      "native_accounting": {
+        "pruned": {
+          "prompt_tokens": 102752.0,
+          "draft_tokens": 516.0,
+          "cached_tokens": 100800.0,
+          "preemptions": 0.0,
+          "decode_seconds": 11.657914634997724,
+          "prefill_tokens": 1952.0,
+          "generation_tokens": 512.0,
+          "completed": 1.0,
+          "accepted_tokens": 339.0,
+          "prefill_seconds": 3.404970786999911
+        },
+        "full": {
+          "prompt_tokens": 102752.0,
+          "draft_tokens": 495.0,
+          "cached_tokens": 100800.0,
+          "preemptions": 0.0,
+          "decode_seconds": 11.826004896996892,
+          "prefill_tokens": 1952.0,
+          "generation_tokens": 512.0,
+          "completed": 1.0,
+          "accepted_tokens": 346.0,
+          "prefill_seconds": 3.41511379199801
+        }
+      },
+      "accepted_per_round_by_position": {
+        "pruned": {
+          "0": 0.8546511627906976,
+          "1": 0.6569767441860465,
+          "2": 0.45930232558139533
+        },
+        "full": {
+          "0": 0.8666666666666667,
+          "1": 0.703030303030303,
+          "2": 0.5272727272727272
+        }
+      },
+      "first_output_difference_by_request": [
+        null
+      ],
+      "exact_output_matches": 1
+    }
+  ],
+  "raw_results": [
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/pruned/code-4096-c1-cold/result.json",
+      "sha256": "023f664a89f3486c689f4c130261655f138eec5303131642aab7e9bbde9e022a"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/pruned/code-4096-c1-warm/result.json",
+      "sha256": "e7e42ebb25b6102d553e11c73bc99632c2e942cf4d9198b25324957ab681c010"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/pruned/code-4096-c4-cold/result.json",
+      "sha256": "d6dea28736ce0de30f2db1bfd78f8b6c5ad636d0b45aed8a068fb47db3e5ecfb"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/pruned/code-4096-c4-warm/result.json",
+      "sha256": "71515c31e413aa310710152ae3f6879209eb3f0f8cb59de53096e13560a28994"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/pruned/prose-4096-c1-cold/result.json",
+      "sha256": "4a53be12ae2fe296c6584ba80d04de9eece73f916e8a7ffeb9c5ece7f4974b43"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/pruned/prose-4096-c1-warm/result.json",
+      "sha256": "38c2dd249b9c98081eaaed848ad6e4d5dcf9de84022cb62d530c9fc44c6e6914"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/pruned/prose-4096-c4-cold/result.json",
+      "sha256": "be4b004f08f24b4da0f998e3e8fab1c9f6274339f098843296909b64fae038a1"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/pruned/prose-4096-c4-warm/result.json",
+      "sha256": "8fb0336a89c6ac0a6c3ea9bbb931be19c61c0a42c9a83382c54f87f27f865765"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/pruned/code-49152-c4-cold/result.json",
+      "sha256": "da78213ae912bed33052d92786d86a8983b61f419dd40699cd890ee4dda14452"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/pruned/code-49152-c4-warm/result.json",
+      "sha256": "05656c6d468516e036d89435a0f2541ac0f10c2d1a22e8928672a76afd2b6b8f"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/pruned/code-102752-c1-cold/result.json",
+      "sha256": "341f7ab38d9ba2e6bb0d1f751c1ccca5f8e73e6d841c3b20ff5d724947d4adb1"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/pruned/code-102752-c1-warm/result.json",
+      "sha256": "ca29f7d2103fe58cbbb6b4dc90cb32a2079fbe49b3f723841d52c0918fbbb2ed"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/full/code-4096-c1-cold/result.json",
+      "sha256": "498b73f7571881d9b8d9f2e4f7cd087077e30d3762e526eb7b59d0f9b709a815"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/full/code-4096-c1-warm/result.json",
+      "sha256": "166d35ce58bf40add5e2a60448c299d86640b9fcf5bb9177f49c9aed16535ecc"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/full/code-4096-c4-cold/result.json",
+      "sha256": "d92ce51910efc16d806daef9282dbb42e896ae7ecc2683554c64c989652e796c"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/full/code-4096-c4-warm/result.json",
+      "sha256": "ff8850cd1f685cc2d6e8416460a5e87e3b4faaa4b20aa5857b64b979dbc832fa"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/full/prose-4096-c1-cold/result.json",
+      "sha256": "5e7b486172474335292528ecc8abffc1ecf6ccd9aa5aab90f166317d083ce820"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/full/prose-4096-c1-warm/result.json",
+      "sha256": "de5e69124a9dab83972c252d712a10d2cf1f00449c9ec875a546554c3005cbd5"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/full/prose-4096-c4-cold/result.json",
+      "sha256": "e8f123697696a09a33ada76aafa96ec69f10c2036f72cdc1b604b826a94e9037"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/full/prose-4096-c4-warm/result.json",
+      "sha256": "2208b44395b6f73e99b5ed87b44057ba8f341722601d1089e3d5bedb35e1b4f3"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/full/code-49152-c4-cold/result.json",
+      "sha256": "436b8811c74f93ab4f7197ad4d00f992673ad58c3af961265ec52b6e07dc4127"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/full/code-49152-c4-warm/result.json",
+      "sha256": "316e182a39c1daa80f8481928b265aa2982372790eda81ae9a28f2a899f850aa"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/full/code-102752-c1-cold/result.json",
+      "sha256": "54ff33a063125cf8807ed3ca66c2bafa5c58666e77aca506c7472f779d5d453a"
+    },
+    {
+      "path": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-vocabulary-serving-v1/full/code-102752-c1-warm/result.json",
+      "sha256": "dd94ccca13a14a14f5f3cffdbaa1f94d121999cdc95d198fab324b3360d06a8c"
+    }
+  ],
+  "comparison_design": "Fresh pruned then full, fixed depth3/profile/token budget; single-pass screen, no ABBA/order-drift confidence.",
+  "scope": "Measured serving effects, including changed generated sequences and acceptance work. Warm reuse is observed; no isolated kernel-speed or numeric-quality claim. Head roles share one physical module; full vocabulary removes one unique pruned head.",
+  "decision": "Retain65536-row draft pruning with MTP3; all12 measured serving cells favor pruning, equal paired cache-hit fractions.",
+  "startup_capacity": {
+    "pruned": {
+      "available_kv_gib_rounded": 10.51,
+      "reported_kv_tokens": 295827,
+      "worker_log_sha256": "f8e57ce4c9b3985d385f1f4ad5dc146609cef2bd1820f98339ae44b3913c4bc6"
+    },
+    "full": {
+      "available_kv_gib_rounded": 10.74,
+      "reported_kv_tokens": 303149,
+      "worker_log_sha256": "52278154f2b0e6bc392f81ecf4b3416d9e1be9c77c919390131337ca920866f8"
+    }
+  }
+}

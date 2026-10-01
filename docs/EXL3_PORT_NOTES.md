@@ -559,3 +559,32 @@ suggests a shared module, which the XPU ownership report will explicitly prove.
 No target-head removal or native kernel change is included. CPU shared/distinct/
 full-head unique-storage accounting passes; actual memory and serving effects
 must be measured. GPTQ remains offline.
+
+
+## Completed vocabulary ablation and rebuilt M04 micro gates
+
+`target-vocabulary-serving-v1` completes24 waves/60 requests with zero observed
+preemption. The XPU ownership audit proves target/draft share one full-head
+module and one252315648-byte pruned allocation. Removing pruning saves exactly
+that allocation, not two heads. Full vocabulary is slower in all12 matched
+cells (about1.4–18.6%) with equal cache-hit fractions. Startup KV capacity grows
+295827→303149 tokens, but the serving tradeoff selects **MTP3 +65536-row draft
+pruning** for further optimization. Output variation/acceptance work is retained;
+these are serving observations, not isolated head-kernel comparisons.
+
+`target-m04-micro-v1` passes actual eager/graph/causal/page/FP8 correctness on
+the separately rebuilt Torch2.13/SYCL9 extension. At103K/q4, isolated C1 attention
+is1.330833→0.777708ms, C4 is4.692969→3.411198ms, including pack/unpack. C4 uses
+one batched kernel launch. The dense-oracle maximum eager error is0.00193310;
+all predefined rtol0.01/atol0.003 checks pass. KV bytes are unchanged, future
+poisoning proves causal visibility, and graph replay sees changed device
+lengths/pages/queries. Unsupported q1/6/63/64/255/256 falls back to native.
+This does not prove an engine-level Decode improvement or close Gate D.
+
+An opt-in source/library-guarded worker overlay now scopes M04 to eligible
+FP8 decoder calls, preserving native cache updates and unsupported-layer
+fallbacks. First serving qualification optimizes batches1..4; C16 admission
+remains, with native compute above4 requests. CPU context scoping, native
+fallback and wrong library/source/duplicate rejection pass. The next candidate
+runs eight code C1/C4 cold/warm waves against the exact completed pruned-MTP3
+baseline, with512 outputs and fixed profile/image. GPTQ remains offline.

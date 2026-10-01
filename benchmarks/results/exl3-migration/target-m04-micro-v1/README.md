@@ -1,0 +1,5 @@
+# EXL3 Shared-KV verification micro gates — passed
+
+Actual Torch2.13/SYCL9 XPU tests complete:120 eager boundary cases, four causal-poison controls,24 long-context comparisons,12 graph cases and12 native fallbacks. C1/C4 and q2/3/4/5 use randomized distinct pages at64/1600/1664 tokens, non-unit FP8 scales, exact page boundaries, independent dense FP32 references on short histories and native references on long histories. Maximum eager dense-oracle absolute error is0.00193310; all checks satisfy the predefined historical rtol0.01/atol0.003. KV bytes remain unchanged. Poisoning future values keeps the first query bit-identical and changes the last visible query. Graph replay consumes changed query values, page tables and device sequence lengths correctly. q1/6/63/64/255/256 delegates to native.
+
+At103K/q4, median isolated attention time including pack/unpack is1.330833→0.777708ms for C1 and4.692969→3.411198ms for C4. The C4 candidate is one batched launch, not four Python C1 calls. These are micro timings, not total engine Decode gains. The serving graph/cycle benefit, mixed traffic, maximum media, final quality and release gates remain open.

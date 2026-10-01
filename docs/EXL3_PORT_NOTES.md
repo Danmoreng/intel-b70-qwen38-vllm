@@ -384,7 +384,11 @@ NLL values and17 sampled full-vocabulary distributions exactly (KL0).
 The256-token control therefore isolates a chunking numerical effect, not
 a layer-streaming/alignment defect. Long contexts necessarily use multiple
 chunks; their reference metadata records that limitation. The four original
-BF16 contexts now run without truncation in `exl3-long-quality-v1`.
+BF16 contexts completed without truncation in `exl3-long-quality-v1`:
+32K/100K/180K/262K prefixes plus128 fixed suffix tokens, in2020.82 seconds,
+with8.10GiB peak allocated GPU memory and5.93GiB peak host RSS. The original
+short BF16 corpus was reused; these are additional long-context regression
+probes, not a replacement corpus or an adaptive coding benchmark.
 
 C16 pressure is explained by the shared hybrid block pool, not by sixteen
 maximum-length contexts: the recorded admission round requests4 blocks per
@@ -397,3 +401,34 @@ pressure and hybrid/speculative overhead. It does not prove that every
 preemption is unavoidable or that improved admission could not reduce it;
 no speculative allocator rewrite is required before quality/performance
 work under the clarified user policy.
+
+## Long prompt measurement repair and first MTP protocol
+
+The initial native long-quality acquisition stopped after3200 prompt rows.
+Two scoped EngineCore stack samples located a blocking extra GPU-to-CPU
+request-ID read in the capture hook. Replacing that read with the original
+CPU request registration and the batch CPU prefill offset exposed a device
+OOM on the next prefill step. The measurement-only prompt scorer materializes
+1024-row full-vocabulary logits and normalization/top-k temporaries, unlike
+normal serving; the .965 KV reservation leaves limited space for that work.
+
+The capture helper now clones the scorer with128-row head chunks and leaves
+its original module helper unchanged. Scoring target IDs and normalization
+remain intact; immutable engine image, weights, full context and all profile
+settings are unchanged. CPU tests cover split prefill, head boundaries and
+the final unscored token, forbid extra device request-metadata reads, and
+reject changed frozen inputs. Acquisition `exl3-long-quality-v3` has passed
+the earlier3200-row boundary and completed the32K prompt. Remaining windows,
+independent API alignment and BF16 suffix comparisons are still pending.
+Both failed runs and the stack/source evidence are preserved. Frozen BF16
+arrays were copied with SHA checks into retries; they were not recomputed.
+
+The first MTP study is prepared in `target-mtp-protocol-v1`, with eight
+frozen code/prose inputs at4K/32K/103K/128K, C1/C4 and cold/warm cache modes.
+Only depth3/4 changes in an ABBA order; sampling and512 output-token budgets
+are fixed. The103K code input is the existing actual coding history rendered
+with tools and preserved reasoning. Three local HTTP/SSE integration tests
+verify accounting and reject unsupported/mismatched token-ID returns. No GPU
+performance samples have been acquired yet. Component/graph-row profiling
+and the requested full/pruned draft-vocabulary comparison remain separate
+requirements; the4K pilot cannot select a universal depth.

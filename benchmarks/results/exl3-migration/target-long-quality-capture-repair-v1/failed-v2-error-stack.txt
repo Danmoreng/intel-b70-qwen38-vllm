@@ -1,0 +1,50 @@
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368] EngineCore encountered a fatal error.
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368] Traceback (most recent call last):
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/engine/core.py", line 1352, in run_engine_core
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     engine_core.run_busy_loop()
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/fault_tolerance/engine_core_sentinel.py", line 179, in run_with_fault_tolerance
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     busy_loop_func(self)
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/engine/core.py", line 1411, in run_busy_loop
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     self._process_engine_step()
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/engine/core.py", line 1464, in _process_engine_step
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     outputs, model_executed = self.step_fn()
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]                               ^^^^^^^^^^^^^^
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/engine/core.py", line 660, in step_with_batch_queue
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     exec_future = self.model_executor.execute_model(
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/executor/uniproc_executor.py", line 131, in execute_model
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     output.result()
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     return self.__get_result()
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]            ^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     raise self._exception
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/executor/uniproc_executor.py", line 109, in collective_rpc
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     return func(*args, **kwargs)
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/worker_base.py", line 375, in execute_model
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     return self.worker.execute_model(scheduler_output)
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     return func(*args, **kwargs)
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/gpu_worker.py", line 1210, in execute_model
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     output = self.model_runner.execute_model(
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     return func(*args, **kwargs)
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/gpu/model_runner.py", line 1647, in execute_model
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     self.update_requests(scheduler_output)
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/gpu/model_runner.py", line 1206, in update_requests
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     self.kv_block_zeroer.zero_block_ids(scheduler_output.new_block_ids_to_zero)
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/utils.py", line 242, in zero_block_ids
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     idx = async_tensor_h2d(block_ids, device=self.device, dtype=torch.int64)
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]   File "/opt/venv/lib/python3.12/site-packages/vllm/utils/torch_utils.py", line 732, in async_tensor_h2d
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]     return t.to(device=device, dtype=dtype, non_blocking=True)
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=34) ERROR 10-01 17:01:21 [core.py:1368] RuntimeError: level_zero backend failed with error: 39 (UR_RESULT_ERROR_OUT_OF_DEVICE_MEMORY)

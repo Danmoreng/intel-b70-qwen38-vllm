@@ -58,65 +58,15 @@ def install_capture(runner, panel_path, output_dir):
         worker = runner.prompt_logprobs_worker
         assert worker is not None
         original_v2 = worker.compute_prompt_logprobs
-        # The normal serving profile does not materialize prompt distributions.
-        # Its .965 KV reservation leaves too little headroom for the scorer's
-        # default 1024 x 248320 logits plus FP32 top-k/normalization temporaries.
-        # Bound only this measurement's head batches, keeping the scorer and
-        # its target IDs/normalization otherwise unchanged.
-        head_chunk_tokens = 128
-        original_chunker = original_v2.__func__.__globals__["compute_prompt_logprobs_with_chunking"]
-        chunk_source = textwrap.dedent(inspect.getsource(original_chunker))
-        chunk_tree = ast.parse(chunk_source)
-        chunk_matches = 0
-        for node in ast.walk(chunk_tree):
-            if (isinstance(node, ast.Assign) and len(node.targets) == 1
-                    and isinstance(node.targets[0], ast.Name)
-                    and node.targets[0].id == "CHUNK_SIZE"):
-                assert isinstance(node.value, ast.Constant) and node.value.value == 1024, \
-                    "V2 prompt head chunk changed; refusing ambiguous instrumentation"
-                node.value = ast.Constant(head_chunk_tokens)
-                chunk_matches += 1
-        assert chunk_matches == 1, "V2 prompt head chunk definition changed"
-        chunk_namespace = dict(original_chunker.__globals__)
-        exec(compile(ast.fix_missing_locations(chunk_tree), original_chunker.__code__.co_filename
-                     + ":bounded-full-vocab-capture", "exec"), chunk_namespace)
-        scorer_namespace = dict(original_v2.__func__.__globals__)
-        scorer_namespace["compute_prompt_logprobs_with_chunking"] = chunk_namespace[original_chunker.__name__]
-        bounded_v2 = types.MethodType(types.FunctionType(original_v2.__func__.__code__,
-            scorer_namespace, original_v2.__name__, original_v2.__func__.__defaults__,
-            original_v2.__func__.__closure__), worker)
-        # V2 keeps request token IDs on the device, but receives the same IDs
-        # on the CPU at registration. Keep that immutable prompt copy instead
-        # of introducing a blocking device read into async prompt scoring.
-        original_add = runner.req_states.add_request
-        add_signature = inspect.signature(original_add)
-        assert {"req_id", "prompt_len", "all_token_ids"} <= set(add_signature.parameters), \
-            "V2 request registration changed; refusing ambiguous instrumentation"
-        registered_prompts = {}
-
-        def add_request(*args, **kwargs):
-            bound = add_signature.bind(*args, **kwargs)
-            length = int(bound.arguments["prompt_len"])
-            ids = tuple(bound.arguments["all_token_ids"][:length])
-            assert len(ids) == length and ids in lookup, \
-                "Registered prompt token IDs differ from frozen panel"
-            result = original_add(*args, **kwargs)
-            registered_prompts[bound.arguments["req_id"]] = ids
-            return result
-
-        runner.req_states.add_request = add_request
 
         def compute_prompt_logprobs(logits_fn, hidden_states, input_batch,
                                     all_token_ids, num_computed_tokens, prompt_lens):
             assert len(input_batch.req_ids) == 1, "Capture requires one request per batch"
             state = int(input_batch.idx_mapping_np[0])
             length = int(prompt_lens[state])
-            ids = registered_prompts[input_batch.req_ids[0]]
-            assert len(ids) == length, "Registered prompt length changed"
-            # This is the batch's pre-forward CPU prefill offset. The request
-            # state's optimistic computed-token count may already be ahead.
-            start = int(input_batch.num_computed_prefill_tokens_np[0])
-            assert start >= 0
+            ids = all_token_ids[state, :length].cpu().tolist()
+            assert tuple(ids) in lookup
+            start = int(num_computed_tokens[state].item())
             cursor = 0
 
             def captured_logits(h):
@@ -128,27 +78,13 @@ def install_capture(runner, panel_path, output_dir):
                 cursor += len(logits)
                 return logits
 
-            result = bounded_v2(captured_logits, hidden_states, input_batch,
+            return original_v2(captured_logits, hidden_states, input_batch,
                                all_token_ids, num_computed_tokens, prompt_lens)
-            if hasattr(torch, "xpu") and torch.xpu.is_initialized():
-                # Allocator counters are host metadata, not a device copy/sync.
-                (out / "capture-memory.json").write_text(json.dumps({
-                    "prompt_start": start, "prompt_length": length,
-                    "allocated_bytes": torch.xpu.memory_allocated(),
-                    "reserved_bytes": torch.xpu.memory_reserved(),
-                    "peak_allocated_bytes": torch.xpu.max_memory_allocated(),
-                    "peak_reserved_bytes": torch.xpu.max_memory_reserved(),
-                    "head_chunk_tokens": head_chunk_tokens}) + "\n")
-            return result
 
         worker.compute_prompt_logprobs = compute_prompt_logprobs
         source = inspect.getsource(original_v2)
         return {"capture_installed": True, "runner_type": type(runner).__name__,
                 "prompt_scorer_sha256": hashlib.sha256(source.encode()).hexdigest(),
-                "request_registration_sha256": hashlib.sha256(inspect.getsource(original_add).encode()).hexdigest(),
-                "original_head_chunker_sha256": hashlib.sha256(chunk_source.encode()).hexdigest(),
-                "measurement_head_chunk_tokens": head_chunk_tokens,
-                "prompt_metadata_source": "registered_cpu_ids_and_batch_cpu_prefill_offset",
                 "panel_sha256": hashlib.sha256(Path(panel_path).read_bytes()).hexdigest()}
 
     original = runner._get_prompt_logprobs_dict.__func__

@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "status": "CPU_PASS_GPU_PROGRESS_CONFIRMED",
+  "scope": "Measurement helper repair, immutable engine image and production profile unchanged",
+  "failed_v1": {
+    "status": "STOPPED_AFTER_STACK_DIAGNOSIS",
+    "captured_prefix_rows": 3200,
+    "observation": "Two EngineCore samples waiting in extra GPU-to-CPU request token-ID read",
+    "cause": "Wait point established; device-read deadlock not proved"
+  },
+  "failed_v2": {
+    "status": "FAILED_DEVICE_OOM",
+    "error": "UR_RESULT_ERROR_OUT_OF_DEVICE_MEMORY at allocating next-step zero-block index tensor, after first3200 prompt rows",
+    "observation": "With CPU request metadata, failure became explicit. Prompt scoring uses1024-row full-vocabulary logits and normalization temporaries in addition to normal serving memory."
+  },
+  "repair": {
+    "request_ids": "Retain original CPU prompt IDs at RequestState.add_request; fail on nonfrozen inputs",
+    "position": "Use InputBatch.num_computed_prefill_tokens_np, not optimistic request counter",
+    "head_chunk_tokens": 128,
+    "original_head_chunk_tokens": 1024,
+    "scorer": "Guarded AST clone changes only head chunk constant; original module helper unchanged; target selection and API scoring retained",
+    "allocator_telemetry": "Host allocator counters after prompt scoring; no extra device synchronization"
+  },
+  "validation": {
+    "cpu": "PASS V1 andV2 split prefill; forbidden device request metadata; reject changed prompt;128/128/2 head boundary/final logit exclusion; original scorer unchanged",
+    "gpu": "v3 completed32K prompt and passed the former3200-row failure boundary; full panel/API consolidation and BF16 comparison remain pending"
+  },
+  "reference": {
+    "source": "benchmark-results/exl3-long-quality-v1",
+    "status": "COMPLETE",
+    "seconds": 2020.816705035002,
+    "peak_xpu_gib": 8.10084056854248,
+    "contexts": [
+      32768,
+      102400,
+      184320,
+      262015
+    ],
+    "suffix_tokens": 128,
+    "context_truncated": false,
+    "reuse": "v2/v3 copied frozen BF16 arrays and verified SHA; no recomputation"
+  },
+  "current_campaign": "benchmark-results/exl3-long-quality-v3",
+  "next_performance_experiment": "Controlled MTP3/MTP4 after long quality; pending pilot was cancelled before acquiring GPU, no performance samples",
+  "source_sha256": {
+    "benchmarks/experiments/quantization-reference/native_capture.py": "a816b27e6d93d7cf0fd4a2ef55c15dc215c13be2ed125ea24b811066494fc089",
+    "benchmarks/experiments/quantization-reference/validate_capture.py": "dd5d9a0469578d1636bab83481af70e2a1b18fea8b2c76edd3b6b43c6bfd2043"
+  }
+}

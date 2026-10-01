@@ -1,0 +1,173 @@
+{
+  "kind": "native_vllm_teacher_forced",
+  "model_path": "/exl3",
+  "quantization": "exl3",
+  "dtype": "float16",
+  "panel_sha256": "cbf1a71bbda470859f2c0786cb7134e260111d2072c4753a6732021dadae6171",
+  "vocab_size": 248320,
+  "windows": [
+    {
+      "window": 0,
+      "name": "wikitext-test-00",
+      "domain": "prose",
+      "positions": 1023,
+      "nll_mean": 1.5613213777542114,
+      "perplexity": 4.765113830566406
+    },
+    {
+      "window": 1,
+      "name": "wikitext-test-01",
+      "domain": "prose",
+      "positions": 1023,
+      "nll_mean": 2.0035340785980225,
+      "perplexity": 7.415215969085693
+    },
+    {
+      "window": 2,
+      "name": "wikitext-test-02",
+      "domain": "prose",
+      "positions": 1023,
+      "nll_mean": 2.174091100692749,
+      "perplexity": 8.794188499450684
+    },
+    {
+      "window": 3,
+      "name": "wikitext-test-03",
+      "domain": "prose",
+      "positions": 1023,
+      "nll_mean": 2.320483922958374,
+      "perplexity": 10.180599212646484
+    },
+    {
+      "window": 4,
+      "name": "wikitext-test-04",
+      "domain": "prose",
+      "positions": 1023,
+      "nll_mean": 1.9548838138580322,
+      "perplexity": 7.063098430633545
+    },
+    {
+      "window": 5,
+      "name": "wikitext-test-05",
+      "domain": "prose",
+      "positions": 1023,
+      "nll_mean": 1.985726237297058,
+      "perplexity": 7.284335613250732
+    },
+    {
+      "window": 6,
+      "name": "wikitext-test-06",
+      "domain": "prose",
+      "positions": 1023,
+      "nll_mean": 1.9960529804229736,
+      "perplexity": 7.359948635101318
+    },
+    {
+      "window": 7,
+      "name": "wikitext-test-07",
+      "domain": "prose",
+      "positions": 1023,
+      "nll_mean": 1.6925809383392334,
+      "perplexity": 5.433485984802246
+    },
+    {
+      "window": 8,
+      "name": "python-ast.py",
+      "domain": "code",
+      "positions": 1023,
+      "nll_mean": 0.8067556023597717,
+      "perplexity": 2.240626573562622
+    },
+    {
+      "window": 9,
+      "name": "python-tokenize.py",
+      "domain": "code",
+      "positions": 1023,
+      "nll_mean": 0.7181164026260376,
+      "perplexity": 2.0505669116973877
+    },
+    {
+      "window": 10,
+      "name": "python-configparser.py",
+      "domain": "code",
+      "positions": 1023,
+      "nll_mean": 0.7240038514137268,
+      "perplexity": 2.0626754760742188
+    },
+    {
+      "window": 11,
+      "name": "python-pathlib.py",
+      "domain": "code",
+      "positions": 1023,
+      "nll_mean": 0.6493780016899109,
+      "perplexity": 1.9143497943878174
+    },
+    {
+      "window": 12,
+      "name": "vue-baseHandlers.ts",
+      "domain": "code",
+      "positions": 1023,
+      "nll_mean": 0.24780786037445068,
+      "perplexity": 1.281213641166687
+    },
+    {
+      "window": 13,
+      "name": "vue-reactive.ts",
+      "domain": "code",
+      "positions": 1023,
+      "nll_mean": 0.3474668562412262,
+      "perplexity": 1.4154772758483887
+    },
+    {
+      "window": 14,
+      "name": "vue-computed.ts",
+      "domain": "code",
+      "positions": 1023,
+      "nll_mean": 0.6392357349395752,
+      "perplexity": 1.8950320482254028
+    },
+    {
+      "window": 15,
+      "name": "vue-effect.ts",
+      "domain": "code",
+      "positions": 1023,
+      "nll_mean": 0.8751416206359863,
+      "perplexity": 2.39921498298645
+    }
+  ],
+  "positions": 16368,
+  "nll_mean": 1.2935360670089722,
+  "perplexity": 3.6456551551818848,
+  "seconds": 58.53884101098811,
+  "torch": "2.13.0+xpu",
+  "api_alignment_verified": true,
+  "engine_config": {
+    "dtype": "float16",
+    "max_model_len": 2048,
+    "max_num_seqs": 1,
+    "max_num_batched_tokens": 1024,
+    "gpu_memory_utilization": 0.8,
+    "enforce_eager": true,
+    "enable_prefix_caching": false,
+    "max_logprobs": 1,
+    "limit_mm_per_prompt": {
+      "image": 0,
+      "video": 0
+    },
+    "seed": 20261001,
+    "kv_cache_dtype": "fp8"
+  },
+  "capture_identity": [
+    {
+      "capture_installed": true,
+      "runner_type": "XPUModelRunnerV2",
+      "prompt_scorer_sha256": "ea18d7a518d1eb004f63bf2cdff7aeb4e4979ec75ef6f7469f1d301dd1173cfb",
+      "panel_sha256": "cbf1a71bbda470859f2c0786cb7134e260111d2072c4753a6732021dadae6171"
+    }
+  ],
+  "kv_cache_dtype": "fp8",
+  "speculation": false,
+  "prefix_cache": false,
+  "graphs": false,
+  "scope": "Teacher-forced prompt scoring. Configuring graphs/MTP does not by itself prove decode graph or draft acceptance correctness."
+}

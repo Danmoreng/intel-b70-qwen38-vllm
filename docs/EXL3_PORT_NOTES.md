@@ -254,3 +254,44 @@ Baseline vocabulary audit finds 248077 contiguous tokenizer IDs versus
 Mean probability mass on the 243 other rows is approximately 3.25e-8 for
 BF16, 4.35e-8 for GPTQ and 3.58e-8 for old EXL3; recomputed baseline PPL/KL
 match preserved measurements. See `baseline-vocabulary-audit.json`.
+
+## Staged short-panel quality — completed
+
+The corrected campaign `exl3-quality-target-stages-v2` reuses the first
+four completed arms and runs only the missing MTP arm. The initial MTP
+startup failed because the measurement runner pointed at a nonexistent
+checkpoint sidecar. The draft vocabulary actually resides in the image's
+model-profile directory; this runner error and failed campaign are preserved.
+All five arms now pass native capture/API NLL alignment for all 16368
+positions and provide 512 full-vocabulary distributions. Original arrays
+are bit-exact to the frozen BF16 bundle, including IDs and sample positions.
+
+| Arm | Mixed-panel PPL | KL(BF16 || arm), nats |
+|---|---:|---:|
+| Old EXL3 FP16 reference arm | 3.641980 | 0.031493 |
+| New port, FP16 KV / eager | 3.641900 | 0.031457 |
+| Add FP8 KV | 3.642457 | 0.031522 |
+| Add INT8 prefill | 3.645656 | 0.033853 |
+| Add graph configuration | 3.646181 | 0.033254 |
+| Add MTP3 configuration | 3.647060 | 0.033893 |
+| Existing GPTQ | 3.801927 | 0.086369 |
+
+Values are recomputed from stored arrays with FP64 normalization. The
+MTP-configured arm has PPL +1.180% versus BF16, compared with +5.476%
+for existing GPTQ. These results retain the short-panel EXL3 advantage;
+The MTP-configured PPL is 0.1395% above old EXL3. Its paired NLL
+delta is 0.001394 nats/token, exploratory 95% window-bootstrap interval
+[0.00000891, 0.002804]; this small effect is retained in the report rather
+than treated as zero. No new arbitrary release threshold is introduced.
+Short teacher-forced
+scoring does not itself qualify generated MTP acceptance/graph execution
+or long-context precision. Gate E remains open for those checks and the
+full expanded candidate profile. Lean acquisition/provenance/metric JSON
+is committed under `target-quality-stages-v1`; full arrays remain local
+and have a SHA256 manifest.
+
+The requested .965 profile qualification now runs independently using the
+immutable functional-port image plus tracked JSON overrides. The first
+campaign changes only GPU memory fraction and repeats the frozen greedy
+probe plus the 200704-total boundary. Media/context/concurrency changes
+follow as separate cases; no unchanged full GPTQ benchmark is running.

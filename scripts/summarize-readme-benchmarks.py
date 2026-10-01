@@ -19,15 +19,44 @@ def median(rows, key):
     return statistics.median(row[key] for row in rows)
 
 
+def worker_identity(path):
+    item=json.loads(path.read_text())
+    return {'container_id':item['Id'],'image_id':item['Image'],'image_tag':item['Config']['Image'],
+            'command':item['Config']['Cmd'],'policy_sha256':item['Config']['Labels'].get('org.local.b70.policy.sha256')}
+
+
+def same_runtime(left,right):
+    return all(left[k]==right[k] for k in ('image_id','image_tag','command','policy_sha256'))
+
+
 def summarize(root):
-    state = json.loads((root / 'state.json').read_text())
-    if state['status'] != 'complete':
-        raise RuntimeError('benchmark has not completed')
-    release = json.loads((REPO / 'config/production_image.json').read_text())
-    live = json.loads((root / 'production-identity.json').read_text())
-    restored = json.loads((root / 'production-serving.json').read_text())
-    if live != restored or live['image_id'] != release['image_id'] or live['policy_sha256'] != release['policy_sha256']:
+    final=(root/'campaign.json').exists()
+    if final:
+        state=json.loads((root/'campaign.json').read_text())
+        if state['status']!='COMPLETE_FINAL_README_MEASUREMENTS_REQUIRES_RELEASE_REVIEW':
+            raise RuntimeError('final measurement campaign has not completed')
+        release=state['image_receipt']
+        live=worker_identity(root/'source-review-worker/identity.json')
+        restored=worker_identity(root/'coding-agent-v2-worker/identity.json')
+        fixture_hashes=json.loads((REPO/'config/experiments/exl3-migration/full-serving-fixture-manifest.json').read_text())['files']
+        policy_path=REPO/'config/experiments/exl3-migration/final-candidate-policy.json'
+        release_path=root/'campaign.json'
+        provenance={'source_sha256':{'scripts/'+k:v for k,v in state['sources'].items()}}
+    else:
+        state = json.loads((root / 'state.json').read_text())
+        if state['status'] != 'complete':
+            raise RuntimeError('benchmark has not completed')
+        release_path=REPO/'config/production_image.json'
+        release = json.loads(release_path.read_text())
+        policy_path=REPO/'config/production_policy.json'
+        live = json.loads((root / 'production-identity.json').read_text())
+        restored = json.loads((root / 'production-serving.json').read_text())
+        fixture_hashes = json.loads((root / 'fixture-sha256.json').read_text())
+        provenance=json.loads((root/'provenance.json').read_text())
+    if not same_runtime(live,restored) or live['image_id'] != release['image_id'] or live['policy_sha256'] != release['policy_sha256']:
         raise RuntimeError('benchmark image/policy identity changed')
+    if sha(policy_path)!=release['policy_sha256']:
+        raise RuntimeError('frozen policy changed')
     paths = list((root / 'source-review').glob('*/results.json'))
     if len(paths) != 1:
         raise RuntimeError('expected one complete source-review run')
@@ -38,7 +67,6 @@ def summarize(root):
     expected = {(row['name'], repeat): row for row in plan for repeat in range(1, row['repeats'] + 1)}
     if len(cases) != len(expected) or {(row['scenario']['name'], row['repeat']) for row in cases} != set(expected):
         raise RuntimeError('scenario/wave coverage differs from the frozen full plan')
-    fixture_hashes = json.loads((root / 'fixture-sha256.json').read_text())
     manifest = data['manifest']
     groups = {}
     for case in cases:
@@ -99,13 +127,20 @@ def summarize(root):
     full_profile_prefix = list(prefix)
     supplementary = []
     if next(row for row in prefix if row['name'] == 'prefix-64k-cold-warm')['cached_tokens']:
+        preceding_cached=next(row for row in prefix if row['name']=='prefix-64k-cold-warm')['cached_tokens']
         isolated = root / 'prefix-64k-isolated'
-        if json.loads((isolated / 'state.json').read_text())['status'] != 'complete':
-            raise RuntimeError('isolated cold 64K prefix run has not completed')
-        separate_live = json.loads((isolated / 'production-identity.json').read_text())
+        if final:
+            if state['stages']['prefix-64k-isolated']['status']!='COMPLETE':
+                raise RuntimeError('isolated prefix run incomplete')
+            separate_live=worker_identity(root/'prefix-64k-isolated-worker/identity.json')
+            isolated= root/'prefix-64k-isolated'
+        else:
+            if json.loads((isolated / 'state.json').read_text())['status'] != 'complete':
+                raise RuntimeError('isolated cold 64K prefix run has not completed')
+            separate_live = json.loads((isolated / 'production-identity.json').read_text())
         if any(separate_live[key] != live[key] for key in ('image_id', 'image_tag', 'policy_sha256', 'command')):
             raise RuntimeError('isolated prefix used a different image or profile')
-        separate_paths = list((isolated / 'source-review').glob('*/results.json'))
+        separate_paths = list((isolated if final else isolated/'source-review').glob('*/results.json'))
         if len(separate_paths) != 1:
             raise RuntimeError('expected one isolated prefix run')
         separate_path = separate_paths[0]
@@ -133,8 +168,8 @@ def summarize(root):
             'raw_results_path': str(separate_path.relative_to(REPO)), 'raw_results_sha256': sha(separate_path),
             'image_id': separate_live['image_id'], 'requests': 3,
             'started_at': separate['manifest']['started_at'],
-            'finished_at': json.loads((isolated / 'state.json').read_text())['finished_at'],
-            'reason': 'The complete run reused 13312 prefix tokens from its preceding 16K requests. A fresh worker provides the cold 64K observation.'})
+            'finished_at': datetime.datetime.fromtimestamp(separate_path.stat().st_mtime,ZoneInfo('Europe/Berlin')).isoformat() if final else json.loads((isolated / 'state.json').read_text())['finished_at'],
+            'reason': f'The complete run reused {int(preceding_cached)} prefix tokens from preceding requests. A fresh worker provides the cold64K observation.'})
     for name in ('prefix-16k-cold-warm', 'prefix-64k-cold-warm'):
         rows = [row for row in prefix if row['name'] == name]
         if rows[0]['cached_tokens'] != 0 or any(row['cached_tokens'] <= 0 for row in rows[1:]):
@@ -144,7 +179,7 @@ def summarize(root):
             raise RuntimeError('prefix requests were not exact resends')
     coding_path = root / 'coding-agent-v2/summary.json'
     coding = json.loads(coding_path.read_text())
-    if coding['identity'] != live:
+    if not same_runtime(coding['identity'],live):
         raise RuntimeError('coding and source-review used different images')
     fixture = REPO / 'benchmarks/coding-fixture/v2'
     if coding['fixture_manifest_sha256'] != sha(fixture / 'manifest.json') or coding['tasks_sha256'] != sha(fixture / 'tasks.json'):
@@ -156,17 +191,18 @@ def summarize(root):
     started = datetime.datetime.fromisoformat(manifest['started_at'])
     return {
         'schema_version': 2, 'date': started.date().isoformat(),
-        'release_manifest_sha256': sha(REPO / 'config/production_image.json'),
+        'release_manifest_sha256': sha(release_path),
+        'worker_mode': 'fresh isolated same-image workers' if final else 'permanent production service',
         'summary_runner_sha256': sha(Path(__file__)),
         'image_id': release['image_id'], 'image_tag': release['image_tag'],
         'policy_sha256': release['policy_sha256'],
-        'model_revision': json.loads((REPO / 'config/production_policy.json').read_text())['model']['revision'],
+        'model_revision': json.loads(policy_path.read_text())['model']['revision'],
         'power_cap_w': 180,
         'source_review': {
             'run_id': path.parent.name, 'raw_results_path': str(path.relative_to(REPO)),
             'prompt_namespace': manifest['prompt_namespace'],
             'scenario_plan_sha256': sha(REPO / 'benchmarks/current-profile-scenarios.json'),
-            'runner_sha256': json.loads((root / 'provenance.json').read_text())['source_sha256']['scripts/current-profile-benchmark.py'],
+            'runner_sha256': provenance['source_sha256']['scripts/current-profile-benchmark.py'],
             'raw_results_sha256': sha(path), 'corpus_sha256': manifest['corpus_sha256'],
             'started_at': manifest['started_at'], 'finished_at': source_finished.isoformat(),
             'finish_time_source': 'final results.json modification time',
@@ -184,7 +220,7 @@ def summarize(root):
             'prompt_hash_verification': {'method': 'All measured prompt bytes verified against preflight SHA-256 of the frozen original full-run fixtures, including both prefix scenarios. Request JSON values match the frozen payloads; serialization key order may differ.',
                 'matched_requests': sum(len(row['requests']) for row in cases), 'matched_files': len(fixture_hashes), 'mismatched_requests': 0,
                 'request_comparison': 'parsed JSON equality; prompt files byte-identical',
-                'fixture_manifest_sha256': sha(root / 'fixture-sha256.json'),
+                'fixture_manifest_sha256': state['fixture_manifest_sha256'] if final else sha(root / 'fixture-sha256.json'),
                 'reference_main_results_path': str(Path(manifest['fixture_root']) / 'results.json')},
         },
         'coding': {**{key: coding[key] for key in ('fixture_id', 'fixture_manifest_sha256', 'fixture_project_sha256', 'tasks_sha256', 'runner_sha256', 'wall_s', 'requests', 'tool_calls', 'metrics')},
@@ -201,17 +237,21 @@ def readme_measurements(result, public_path):
     source = result['source_review']; coding = result['coding']; metrics = coding['metrics']
     reference = str(public_path.relative_to(REPO))
     rows = {row['name']: row for row in source['scenario_results']}
+    isolated=result.get('worker_mode')=='fresh isolated same-image workers'
+    worker='a fresh isolated worker' if isolated else 'the permanent service'
+    coding_worker='fresh workers with the same immutable image/profile' if isolated else 'the same permanent-service image and policy'
     if source['supplementary_prefix_runs']:
         date = source['supplementary_prefix_runs'][0]['started_at'][:10]
+        cached=next(x for x in source['full_profile_prefix_resends'] if x['name']=='prefix-64k-cold-warm')['cached_tokens']
         prefix_note = (f'Three additional 64K resends on a fresh worker on {date} supply the\n'
                        "cold/warm 64K row, because the complete run's first 64K prefix request\n"
-                       'reused 13,312 tokens from its 16K predecessor. Those extra prompts and\n'
+                       f'reused {int(cached):,} tokens from preceding requests. Those extra prompts and\n'
                        'payloads match the same frozen fixtures.')
     else:
         prefix_note = 'Both prefix scenarios are cold/warm exact resends within this complete run.'
     text = f'''## Source-review serving benchmark
 
-Measured **{source['started_at'][:10]}** on the permanent service with the
+Measured **{source['started_at'][:10]}** on {worker} with the
 [frozen public corpus](benchmarks/meaningful-corpus.json). The
 [current summary]({reference}) records scenario results, fixture hashes,
 fixed prompt namespace `20260923-201101` and image identity. Raw prompts,
@@ -269,9 +309,10 @@ separate serving load points, not paired scaling measurements.
         warm_time = f'{low:.2f}' if round(low, 2) == round(high, 2) else f'{low:.2f}–{high:.2f}'
         text += f"| {label} exact resend | {int(warm[0]['cached_tokens']):,} / {cold['prompt_tokens']:,} prompt tokens cached; TTFT **{cold['ttft_s']:.2f} s cold → {warm_time} s warm** |\n"
     row=rows['full-context-199680']
-    text += f"| Maximum context | **{row['actual_prompt_tokens_min']:,} input + 1,024 output**; {row['prefill_tps_median']:,.1f} prefill tok/s, {row['decode_tps_median']:.1f} decode tok/s, {row['ttft_s_median']:.2f} s TTFT, {row['batch_wall_s_median']:.2f} s end to end |\n"
+    capacity_label='Frozen200K comparison' if isolated else 'Maximum context'
+    text += f"| {capacity_label} | **{row['actual_prompt_tokens_min']:,} input + 1,024 output**; {row['prefill_tps_median']:,.1f} prefill tok/s, {row['decode_tps_median']:.1f} decode tok/s, {row['ttft_s_median']:.2f} s TTFT, {row['batch_wall_s_median']:.2f} s end to end |\n"
     text += f'''
-The maximum-context row is one capacity and throughput observation. The
+The longest-context row is one capacity and throughput observation. The
 16K/64K resends reused the same prompt on the same worker.
 
 ## Repeatable coding-agent benchmark
@@ -279,7 +320,7 @@ The maximum-context row is one capacity and throughput observation. The
 The [QueueKit fixture v2](benchmarks/coding-fixture/v2/README.md) copies a frozen
 Python repository and gives the model two linked editing tasks in one
 conversation, with file/test tools and hidden acceptance tests after each
-task. This fresh run used the same permanent-service image and policy as
+task. This fresh run used {coding_worker} as
 the source-review run. The [summary]({reference}) records fixture and runner
 hashes. This is one adaptive session, not a multi-run distribution.
 

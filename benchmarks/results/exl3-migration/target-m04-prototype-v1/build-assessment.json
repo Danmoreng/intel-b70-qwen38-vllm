@@ -1,0 +1,15 @@
+{
+  "status": "COMPILE_AND_CPU_IMPORT_PASS_XPU_UNTESTED",
+  "builder_image_id": "sha256:ae6950731b3c031f812a95c0eb615a572239426440bf67fd1b3c9c9cbfce9eca",
+  "build_manifest_sha256": "6da484432d0ffc18375812dcb9c0033d31c3104e30ecab5da3dc6f1de17d5dfc",
+  "torch": "2.13.0+xpu",
+  "library_sha256": "eaa18427db27d4fceeca8a17c8a3c6b019b7678f39bf98affc1736b9f2c2d631",
+  "compiler_version": "Intel(R) oneAPI DPC++/C++ Compiler 2026.1.1 (2026.1.1.20260724)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /opt/intel/oneapi/compiler/2026.1/bin/compiler\nConfiguration file: /opt/intel/oneapi/compiler/2026.1/bin/compiler/../icpx.cfg\n",
+  "compiled_source_sha256": {
+    "csrc/shared_kv_verification.cpp": "8e28d338b95ceee1d57c7828324d0f27ab81a6714099b233e47727ebedf331dd",
+    "patches/shared-kv-verification.patch": "1e904bb370ecaf4c521eda7070feb120a581a95db7a80ae240de9387190e63cf"
+  },
+  "cpu_checks": "51 supported/fallback guard cases and independently checked batched query-head packing pass",
+  "scope": "Separate extension, no installed model/image changes, no XPU gates passed yet. Runtime KV page size/strides and batch1..16; q2..5 only. Full XPU/serving gates pending.",
+  "build_script_followup": "After compilation, output chmod0644 was added to make the artifact user-readable; compiled C++/patch/library hashes unchanged."
+}

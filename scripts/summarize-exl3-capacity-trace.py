@@ -20,7 +20,8 @@ def summarize(root):
     for event in events:
         name=event['event'];request=event.get('request',{});rid=request.get('request_id')
         if rid and request.get('num_prompt_tokens') is not None: prompt_lengths[rid]=request['num_prompt_tokens']
-        if name in ('before_weights','after_weights_and_draft','before_graph_capture','after_graph_capture','after_warmup'):
+        if name in ('before_weights','after_weights_and_draft','before_draft_weights','after_draft_weights',
+                    'before_memory_profile','after_memory_profile','before_graph_capture','after_graph_capture','after_warmup'):
             memory_stages.append({k:v for k,v in event.items() if k not in ('native_libraries',)})
         if name=='cache_initialized': cache=event['cache']
         if name=='before_allocation':

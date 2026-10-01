@@ -166,3 +166,91 @@ request succeeds. GPTQ is now stopped; no model is resident between campaigns.
 The target installed 0.30 code already rounds GDN pages to multiples of 64 and
 scans sparse Mamba holes (with a retired-prefix watermark). Old platform and
 allocator overrides must not be installed there.
+
+## Serving-profile preference — user update 2026-10-01
+
+The user prefers the useful upstream 0xsero EXL3 serving settings rather than
+permanently retaining GPTQ limits. The Pro plan section 7 mandates 0.93 /
+200704 / C4 / one image as an initial comparison contract, not a final
+EXL3 ceiling. Its instruction not to raise the memory fraction merely to
+force a pass still explains the unchanged diagnostic campaign. The user
+steering establishes the expanded profile as the intended next qualification.
+
+| Setting | Port comparison profile | Upstream / desired candidate |
+|---|---:|---:|
+| GPU memory fraction | 0.93 | 0.965 |
+| Total context per request | 200704 | 262144 |
+| Max active sequences | 4 | 16 |
+| Prefill token budget | 6656 | 4096, pending mixed-serving comparison |
+| Media count per request | 1 image / 0 video | 32 images / 4 videos |
+| Image preprocessing area cap | 4194304 pixels | 4194304 pixels |
+
+Candidate: EXL3 worktree `models/qwen3.8-27b-exl3-4.00bpw/
+migration-target-upstream-expanded.yaml`. It retains the new-runtime MTP
+method, source-hash/loader guards, API alias/tool/reasoning/defaults and
+modern pixel-cap spelling. It is prepared, not GPU-qualified or deployed;
+no existing equal-contract result proves expanded capacity. The active
+image predates this additional YAML file.
+
+Finish the running equal-contract port campaign. Then isolate .965 at the
+existing C4/context/media settings, qualify expanded media using actual
+image/video requests and multimodal memory profiling, and qualify 262144
+context plus C16 admission. C16 is not a promise that sixteen independent
+262K contexts fit concurrently. Raising media limits can change startup
+vision-memory reservations; the extra approximately 1 GB of budget is not
+a guaranteed KV gain. Keep the image-area cap to bound encoder work.
+
+After staged numerical quality and the plan's first MTP3/MTP4 performance
+experiment, compare the upstream 4096 prefill budget with 6656 using matched
+mixed-serving requests and decode latency percentiles. Smaller chunks may
+reduce decode wait while changing prefill throughput. Do not silently
+choose a winner from old-runtime measurements.
+
+Keep beneficial EXL3 features (FP8 KV, prefix cache, graph capture, pruned
+MTP head and validated INT8 prefill) subject to their separate gates. Port
+oneDNN/verify attention separately. Do not copy old alignment/allocator
+patches onto 0.30, or enable the upstream two-GPU data-parallel example on
+this single-B70 setup. GPTQ stays offline.
+
+## Target-runtime port — current evidence
+
+Fresh Torch 2.13 native compilation passes all 409 reconstruction/linear
+checks, the INT8 numerical gate and deliberately injected test failure. An
+actual compiler failure preserves the installed library and manifest.
+Seven-site GDN semantic conversion passes CPU/XPU and graph checks. The
+active worker is XPUModelRunnerV2; full loader audit covers all 409 modules
+and all eight MTP modules.
+
+An initial warm-cache startup failed at the unchanged .93/200704 budget.
+Startup allocation tracing found discarded full/pruned EXL3 LM heads held
+by loader callback closures. Weak references remove those owners without
+changing model tensors, freeing 1209132544 bytes. Both cold and warm
+startups now pass at the original comparison budget; matched greedy
+output and API smoke pass. The current candidate is
+`sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088`.
+Long/operational qualification remains running in
+`target-contract-weakref-v4`; this is not throughput or full quality
+qualification.
+
+Target functional qualification has now completed. All nine cases in
+`target-contract-weakref-v4` pass with zero traced preemptions and allocation
+rejections; the long abort is explicitly FINISHED_ABORTED. The frozen greedy
+request and output hashes match the fixed old runtime. See
+`target-port-v1/target-contract-proof.json` and the per-case trace summaries.
+The port commit is EXL3 `69797ba`; no performance optimization is promoted.
+
+The short-panel quality campaign is now running at
+`benchmark-results/exl3-quality-target-stages-v1` under exclusive GPU lock.
+Five separately identified arms progressively add FP8 KV, INT8 prefill,
+graph configuration and MTP3 to the new FP16-KV port. They use identical
+1024-token windows and native full-vocabulary capture with independent API
+NLL alignment, FP64 normalization and paired window bootstrap. The staged
+short-panel scoring alone does not qualify generated decode graphs,
+speculative acceptance, long-context quality or the expanded production
+profile. Those remain explicit gates.
+
+Baseline vocabulary audit finds 248077 contiguous tokenizer IDs versus
+248320 model logit rows. No additional masking is applied to any arm.
+Mean probability mass on the 243 other rows is approximately 3.25e-8 for
+BF16, 4.35e-8 for GPTQ and 3.58e-8 for old EXL3; recomputed baseline PPL/KL
+match preserved measurements. See `baseline-vocabulary-audit.json`.

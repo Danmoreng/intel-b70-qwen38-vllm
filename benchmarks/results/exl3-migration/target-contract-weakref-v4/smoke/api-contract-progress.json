@@ -1,0 +1,198 @@
+{
+  "text": {
+    "id": "chatcmpl-b5cbdfe4baee5f6a",
+    "object": "chat.completion",
+    "created": 1790864029,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Paris",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.30.0-b75a0a8b",
+    "usage": {
+      "prompt_tokens": 23,
+      "total_tokens": 25,
+      "completion_tokens": 2,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "stream": {
+    "message": {
+      "role": "assistant",
+      "content": "1, 2, 3, 4, 5, 6, 7, 8, 9, 10"
+    },
+    "reasoning": "",
+    "usage": {
+      "prompt_tokens": 18,
+      "total_tokens": 48,
+      "completion_tokens": 30,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "finish_reason": "stop",
+    "wall_s": 0.42168895799841266,
+    "ttft_s": 0.10498074100178201
+  },
+  "tool": {
+    "id": "chatcmpl-9f5d3e5678ee1c43",
+    "object": "chat.completion",
+    "created": 1790864030,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": null,
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [
+            {
+              "id": "chatcmpl-tool-83a7d8f0fdab4281",
+              "type": "function",
+              "function": {
+                "name": "add",
+                "arguments": "{\"a\": 13, \"b\": 29}"
+              }
+            }
+          ],
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "tool_calls",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.30.0-b75a0a8b",
+    "usage": {
+      "prompt_tokens": 305,
+      "total_tokens": 342,
+      "completion_tokens": 37,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "reasoning": {
+    "id": "chatcmpl-80f4910a87e3e350",
+    "object": "chat.completion",
+    "created": 1790864031,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "\n\n13 × 29 = **377**",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "The user wants me to calculate 13 × 29.\n\n13 × 29 = 13 × (30 - 1) = 13 × 30 - 13 × 1 = 390 - 13 = 377\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.30.0-b75a0a8b",
+    "usage": {
+      "prompt_tokens": 54,
+      "total_tokens": 132,
+      "completion_tokens": 78,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "image": {
+    "id": "chatcmpl-9ae19126a73b91e5",
+    "object": "chat.completion",
+    "created": 1790864032,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Red",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.30.0-b75a0a8b",
+    "usage": {
+      "prompt_tokens": 90,
+      "total_tokens": 92,
+      "completion_tokens": 2,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  }
+}

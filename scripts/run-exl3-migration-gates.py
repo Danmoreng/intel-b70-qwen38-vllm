@@ -24,16 +24,20 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--output',type=Path,default=REPO/'benchmarks/results/exl3-migration/safe-foundation')
     ap.add_argument('--restore-production',action='store_true')
+    ap.add_argument('--image',default=IMAGE)
+    ap.add_argument('--library',type=Path,default=EXL/'exl3xpu/_C.so')
     a=ap.parse_args();a.output.mkdir(parents=True,exist_ok=True)
     report=a.output/'campaign.json'
     if report.exists(): raise SystemExit('Choose a fresh output directory; evidence is immutable')
     baseline=json.loads((REPO/'config/production_image.json').read_text())['image_id']
     installed=subprocess.check_output(['docker','image','inspect',baseline,'--format','{{.Id}}'],text=True).strip()
     assert installed==baseline
-    state={'schema':1,'started_unix':time.time(),'production_image':baseline,'candidate_image':IMAGE,
+    image=subprocess.check_output(['docker','image','inspect',a.image,'--format','{{.Id}}'],text=True).strip()
+    library=a.library.resolve()
+    state={'schema':1,'started_unix':time.time(),'production_image':baseline,'candidate_image':image,
            'source_sha256':{str(p.relative_to(EXL)):sha(p) for name in ('exl3xpu','tests','scripts')
                             for p in (EXL/name).rglob('*') if p.is_file() and p.suffix in ('.py','.sh')},
-           'library_sha256':sha(EXL/'exl3xpu/_C.so'),'steps':[],'production_restored':False,
+           'library_sha256':sha(library),'steps':[],'production_restored':False,
            'restore_production_requested':a.restore_production}
     def save(): report.write_text(json.dumps(state,indent=2)+'\n')
     for s in (signal.SIGTERM,signal.SIGINT): signal.signal(s,stop_signal)
@@ -48,11 +52,12 @@ def main():
             command=['docker','run','--rm','--name',name,'--memory=14g','--device','/dev/dri:/dev/dri',
                      '-v','/dev/dri/by-path:/dev/dri/by-path:ro',
                      '-v',str(EXL)+':/work:ro','-v',str(MODEL)+':/models/checkpoint:ro',
+                     '-v',str(library.parent)+':/native:ro',
                      '-v',str(a.output.resolve())+':/results','-w','/work',
                      '-e','PYTHONPATH=/work','-e','MODEL=/models/checkpoint',
-                     '-e','EXL3_LIB=/work/exl3xpu/_C.so',
+                     '-e','EXL3_LIB=/native/'+library.name,
                      '-e','EXL3_TEST_REPORT=/results/'+label+'.json',
-                     '--entrypoint','python',IMAGE,'tests/'+script]+extra
+                     '--entrypoint','python',image,'tests/'+script]+extra
             step={'name':label,'command':command,'started_unix':time.time(),'expected_exit':wanted}
             state['steps'].append(step);save()
             print('START '+label,flush=True)

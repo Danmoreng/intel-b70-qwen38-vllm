@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "status": "FAIL",
+  "tolerance": 0.002,
+  "seed": 20261001,
+  "fault_injected": true,
+  "diagnostics": [
+    {
+      "kind": "in_proj_qkvz",
+      "keys": [
+        "model.language_model.layers.0.linear_attn.in_proj_qkv",
+        "model.language_model.layers.0.linear_attn.in_proj_z"
+      ],
+      "count": 48,
+      "M": 8192,
+      "k": 5120,
+      "n": 16384,
+      "relative_error_vs_fp16": 0.012724194675683975,
+      "relative_error_vs_reference": 0.0909101590514183,
+      "max_absolute_error_vs_reference": 1.75,
+      "fp16_seconds": 0.011789303200202994,
+      "int8_seconds": 0.006407247399329208
+    },
+    {
+      "kind": "out_proj",
+      "keys": [
+        "model.language_model.layers.0.linear_attn.out_proj"
+      ],
+      "count": 48,
+      "M": 8192,
+      "k": 6144,
+      "n": 5120,
+      "relative_error_vs_fp16": 0.012918932363390923,
+      "relative_error_vs_reference": 0.09091048687696457,
+      "max_absolute_error_vs_reference": 8.6875,
+      "fp16_seconds": 0.0039871429995400835,
+      "int8_seconds": 0.0023561776004498826
+    },
+    {
+      "kind": "down_proj",
+      "keys": [
+        "model.language_model.layers.0.mlp.down_proj"
+      ],
+      "count": 65,
+      "M": 8192,
+      "k": 17408,
+      "n": 5120,
+      "relative_error_vs_fp16": 0.012881757691502571,
+      "relative_error_vs_reference": 0.09091170132160187,
+      "max_absolute_error_vs_reference": 5.625,
+      "fp16_seconds": 0.012984258998767473,
+      "int8_seconds": 0.007041125002433546
+    },
+    {
+      "kind": "gate_up",
+      "keys": [
+        "model.language_model.layers.0.mlp.gate_proj",
+        "model.language_model.layers.0.mlp.up_proj"
+      ],
+      "count": 65,
+      "M": 8192,
+      "k": 5120,
+      "n": 34816,
+      "relative_error_vs_fp16": 0.012406041845679283,
+      "relative_error_vs_reference": 0.09091118723154068,
+      "max_absolute_error_vs_reference": 0.71875,
+      "fp16_seconds": 0.028357083201990464,
+      "int8_seconds": 0.0173959843988996
+    },
+    {
+      "kind": "qkv",
+      "keys": [
+        "model.language_model.layers.11.self_attn.k_proj",
+        "model.language_model.layers.11.self_attn.q_proj",
+        "model.language_model.layers.11.self_attn.v_proj"
+      ],
+      "count": 17,
+      "M": 8192,
+      "k": 5120,
+      "n": 14336,
+      "relative_error_vs_fp16": 0.012495221570134163,
+      "relative_error_vs_reference": 0.09091051667928696,
+      "max_absolute_error_vs_reference": 2.328125,
+      "fp16_seconds": 0.012742759799584747,
+      "int8_seconds": 0.007531530398409814
+    },
+    {
+      "kind": "o_proj",
+      "keys": [
+        "model.language_model.layers.11.self_attn.o_proj"
+      ],
+      "count": 17,
+      "M": 8192,
+      "k": 6144,
+      "n": 5120,
+      "relative_error_vs_fp16": 0.012685206718742847,
+      "relative_error_vs_reference": 0.09091001749038696,
+      "max_absolute_error_vs_reference": 5.21875,
+      "fp16_seconds": 0.005334362600115128,
+      "int8_seconds": 0.0030315677984617652
+    },
+    {
+      "kind": "fc",
+      "keys": [
+        "mtp.fc"
+      ],
+      "count": 1,
+      "M": 8192,
+      "k": 10240,
+      "n": 5120,
+      "relative_error_vs_fp16": 0.04250121861696243,
+      "relative_error_vs_reference": 0.09091061353683472,
+      "max_absolute_error_vs_reference": 6.40625,
+      "fp16_seconds": 0.008840576000511646,
+      "int8_seconds": 0.004957314199418761
+    }
+  ]
+}

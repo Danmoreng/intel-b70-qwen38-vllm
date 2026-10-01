@@ -1,0 +1,180 @@
+{
+  "schema": 1,
+  "trace_rows": 8,
+  "cache": null,
+  "memory_stages": [
+    {
+      "event": "before_weights",
+      "pid": 67,
+      "unix": 1790862851.76593,
+      "monotonic": 83623.273825849,
+      "memory": {
+        "allocated": 69388800,
+        "reserved": 71303168,
+        "max_allocated": 69388800,
+        "max_reserved": 71303168,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 33211015168,
+        "total": 34242297856
+      }
+    },
+    {
+      "event": "before_draft_weights",
+      "pid": 67,
+      "unix": 1790862857.7889423,
+      "monotonic": 83629.296838129,
+      "memory": {
+        "allocated": 17264230400,
+        "reserved": 17462984704,
+        "max_allocated": 17264279552,
+        "max_reserved": 17462984704,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 15606067200,
+        "total": 34242297856
+      },
+      "target_tensor_storage": {
+        "unique_storage_bytes": 17034999012,
+        "named_parameter_buffer_bytes": 16782683364,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 1833,
+        "bytes_by_dtype": {
+          "torch.float16": 3665773536,
+          "torch.float32": 9472,
+          "torch.int16": 13368688640,
+          "torch.int32": 3076,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      }
+    },
+    {
+      "event": "after_draft_weights",
+      "pid": 67,
+      "unix": 1790862859.030597,
+      "monotonic": 83630.538492801,
+      "memory": {
+        "allocated": 21300107776,
+        "reserved": 21483225088,
+        "max_allocated": 21300107776,
+        "max_reserved": 21483225088,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 11587907584,
+        "total": 34242297856
+      },
+      "draft_tensor_storage": {
+        "unique_storage_bytes": 4096022568,
+        "named_parameter_buffer_bytes": 3843706920,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 41,
+        "bytes_by_dtype": {
+          "torch.int16": 1417543680,
+          "torch.float16": 2677952512,
+          "torch.int32": 2072,
+          "torch.float32": 16,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      },
+      "proposer_class": "MTPSpeculator",
+      "shared_lm_head": true
+    },
+    {
+      "event": "after_weights_and_draft",
+      "pid": 67,
+      "unix": 1790862859.6239393,
+      "monotonic": 83631.131834884,
+      "memory": {
+        "allocated": 18830300672,
+        "reserved": 18962448384,
+        "max_allocated": 18830300672,
+        "max_reserved": 18962448384,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 14062546944,
+        "total": 34242297856
+      },
+      "runner_class": "XPUModelRunnerV2",
+      "runner_source": "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/xpu_model_runner.py",
+      "runner_mro": [
+        "<class 'vllm.v1.worker.xpu_model_runner.XPUModelRunnerV2'>",
+        "<class 'vllm.v1.worker.gpu.model_runner.GPUModelRunner'>",
+        "<class 'vllm.v1.worker.lora_model_runner_mixin.LoRAModelRunnerMixin'>",
+        "<class 'object'>"
+      ],
+      "model_tensor_storage": {
+        "unique_storage_bytes": 17247635720,
+        "named_parameter_buffer_bytes": 16995320072,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 1864,
+        "bytes_by_dtype": {
+          "torch.float16": 3666073568,
+          "torch.float32": 9488,
+          "torch.int16": 13581025280,
+          "torch.int32": 3096,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      },
+      "draft_present": true
+    },
+    {
+      "event": "before_memory_profile",
+      "pid": 67,
+      "unix": 1790862859.6253605,
+      "monotonic": 83631.133255826,
+      "memory": {
+        "allocated": 18830300672,
+        "reserved": 18962448384,
+        "max_allocated": 18830300672,
+        "max_reserved": 18962448384,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 14062546944,
+        "total": 34242297856
+      },
+      "requested_memory": 30253069394
+    },
+    {
+      "event": "after_memory_profile",
+      "pid": 67,
+      "unix": 1790862867.775912,
+      "monotonic": 83639.283807651,
+      "memory": {
+        "allocated": 18830301184,
+        "reserved": 18962448384,
+        "max_allocated": 20409653760,
+        "max_reserved": 21655191552,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 12520701952,
+        "total": 34242297856
+      },
+      "available_kv_cache_memory_bytes": 7891317330,
+      "requested_memory": 30253069394,
+      "total_consumed": 20782399488,
+      "peak_activation_memory": 1579352576,
+      "cudagraph_memory_estimate": 0,
+      "model_memory_usage": 18686873600
+    }
+  ],
+  "preemption_count": 0,
+  "preemptions": [],
+  "allocation_failure_count": 0,
+  "allocation_failures": [],
+  "scheduled_tokens_by_request": {},
+  "scheduled_prefill_upper_bound_by_request": {},
+  "submitted_forward_tokens_by_request": {},
+  "submitted_prefill_tokens_by_request": {},
+  "forward_work_note": "Actual Worker.execute_model calls with input offsets, excluding cache-hit token positions. Completion remains asynchronous; no per-kernel timing is inferred.",
+  "scheduled_work_limit": "Scheduling can include speculative/rejected/cancelled work. Prefix hits assigned inside schedule can inflate the prefill estimate. This is not a completed-GPU-compute counter.",
+  "native_logical_metrics": null,
+  "verdict": "No traced preemption",
+  "unmeasured": [
+    "oneDNN private workspace allocation",
+    "exact graph-pool ownership",
+    "completed GPU kernel token work"
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "started_at": "2026-10-01T13:30:57.242349+00:00",
+  "image": "sha256:ee1104439aa5f4f85c9de7f3f015983a2b5017fa9e13c7da1a43190cd39aa77f",
+  "cases": {
+    "regression": {
+      "launch": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "b70-exl3-migration-contract",
+        "--device",
+        "/dev/dri",
+        "-v",
+        "/dev/dri/by-path:/dev/dri/by-path:ro",
+        "--shm-size",
+        "8g",
+        "-p",
+        "127.0.0.1:8082:8000",
+        "-e",
+        "HF_HUB_OFFLINE=1",
+        "-e",
+        "PYTHONPATH=/opt/b70-runtime",
+        "-e",
+        "EXL3_MIGRATION_TRACE=/results/trace",
+        "-e",
+        "EXL3_LOADER_REPORT_DIR=/results",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/results/exl3-migration/target-contract-smoke-v1/regression:/results",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/runtime:/opt/b70-runtime:ro",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-target/ee1104439aa5f4f85c9de7f3f015983a2b5017fa9e13c7da1a43190cd39aa77f/vllm:/root/.cache/vllm",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-target/ee1104439aa5f4f85c9de7f3f015983a2b5017fa9e13c7da1a43190cd39aa77f/triton:/root/.triton/cache",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-target/ee1104439aa5f4f85c9de7f3f015983a2b5017fa9e13c7da1a43190cd39aa77f/neo_compiler_cache:/root/.cache/neo_compiler_cache",
+        "sha256:ee1104439aa5f4f85c9de7f3f015983a2b5017fa9e13c7da1a43190cd39aa77f",
+        "models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml",
+        "--gpu",
+        "0",
+        "--port",
+        "8000",
+        "--model-path",
+        "/models/checkpoint"
+      ],
+      "identity": {
+        "container_id": "f6d49ead275c3ef35ef98ddbb40b898954df077caad685c1b45db4a88eaddc5c",
+        "image_id": "sha256:ee1104439aa5f4f85c9de7f3f015983a2b5017fa9e13c7da1a43190cd39aa77f",
+        "image_tag": "sha256:ee1104439aa5f4f85c9de7f3f015983a2b5017fa9e13c7da1a43190cd39aa77f",
+        "command": [
+          "models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml",
+          "--gpu",
+          "0",
+          "--port",
+          "8000",
+          "--model-path",
+          "/models/checkpoint"
+        ],
+        "labels": {
+          "org.local.b70.policy.sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "org.opencontainers.image.version": "24.04"
+        }
+      },
+      "result": {
+        "status": "COMPLETE",
+        "response": {
+          "message": {
+            "role": "assistant",
+            "content": "```json\n{\n  \"ALPHA\": 17,\n  \"BETA\": 29,\n  \"sum\": 46,\n  \"addFunction\": \"function add(a, b) { return a + b; }\"\n}\n```"
+          },
+          "reasoning": "",
+          "usage": {
+            "prompt_tokens": 22450,
+            "total_tokens": 22509,
+            "completion_tokens": 59,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "finish_reason": "stop",
+          "wall_s": 12.4801829289936,
+          "ttft_s": 11.701829161000205
+        },
+        "request_sha256": "e2709ba0b38a7ef0756b48695e8772312dc449a9203f831b74752e6a8358a867",
+        "message_sha256": "16c0d40b94e539759c0ecde2b1d23d95bdcb79b3dc0d1dc3315ee8af2ed4cd82",
+        "purpose": "Matched greedy output to detect semantic changes from GDN retirement; compare same frozen request across modes"
+      },
+      "runtime_manifest_sha256": "48dc2fb9b9f9c870a89d4ecc60594fa1f89285512c2783c3eb4923ed182bec7c"
+    },
+    "smoke": {
+      "launch": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "b70-exl3-migration-contract",
+        "--device",
+        "/dev/dri",
+        "-v",
+        "/dev/dri/by-path:/dev/dri/by-path:ro",
+        "--shm-size",
+        "8g",
+        "-p",
+        "127.0.0.1:8082:8000",
+        "-e",
+        "HF_HUB_OFFLINE=1",
+        "-e",
+        "PYTHONPATH=/opt/b70-runtime",
+        "-e",
+        "EXL3_MIGRATION_TRACE=/results/trace",
+        "-e",
+        "EXL3_LOADER_REPORT_DIR=/results",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/results/exl3-migration/target-contract-smoke-v1/smoke:/results",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/runtime:/opt/b70-runtime:ro",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-target/ee1104439aa5f4f85c9de7f3f015983a2b5017fa9e13c7da1a43190cd39aa77f/vllm:/root/.cache/vllm",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-target/ee1104439aa5f4f85c9de7f3f015983a2b5017fa9e13c7da1a43190cd39aa77f/triton:/root/.triton/cache",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-target/ee1104439aa5f4f85c9de7f3f015983a2b5017fa9e13c7da1a43190cd39aa77f/neo_compiler_cache:/root/.cache/neo_compiler_cache",
+        "sha256:ee1104439aa5f4f85c9de7f3f015983a2b5017fa9e13c7da1a43190cd39aa77f",
+        "models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml",
+        "--gpu",
+        "0",
+        "--port",
+        "8000",
+        "--model-path",
+        "/models/checkpoint"
+      ]
+    }
+  },
+  "status": "FAILED",
+  "purpose": "target-ABI equal-contract instrumented diagnostics",
+  "production_restored": false,
+  "restore_production_requested": false,
+  "phase": "smoke-startup",
+  "error": "RuntimeError('Candidate exited during startup; inspect worker.log')",
+  "production_left_offline": true,
+  "finished_at": "2026-10-01T13:34:38.971197+00:00"
+}

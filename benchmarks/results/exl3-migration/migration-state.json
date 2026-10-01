@@ -10,14 +10,14 @@
   "milestones": {
     "1_safe_foundation": "initial gates passed; target ABI gate later",
     "2_existing_runtime_contract": "PASS old-runtime contract: 409/409 loader; API; fresh 103K/139K/188K/200704-total zero-preemption; C4 4x32K+256; image119K; prefix50K with48000 cache hit; confirmed FINISHED_ABORTED and restart; matchedgreedy22K",
-    "3_runtime_port": "CPU source inspection started; implementation waits for old-runtime operational gates",
-    "4_quality": "not started; reuses preserved BF16 reference",
+    "3_runtime_port": "PASS functional target port: fresh Torch2.13 native409/409+INT8 gate/compiler failure; GDN CPU/XPU/graph; full V2 loader409/8; greedy identical; all nine target contract cases zero traced preemptions/rejections and confirmed abort/restart. Expanded profile and full numerical quality remain separate.",
+    "4_quality": "RUNNING target-fp16 first of five staged short-panel arms (FP16 KV, FP8 KV, INT8 prefill, graphs, MTP3), frozen BF16 reference reused; long-context suffix and full expanded profile remain.",
     "5_mtp3_mtp4": "not started",
     "6_attention": "not started",
     "7_kernels": "not started",
     "8_release": "not started"
   },
-  "next_action": "Port actual installed vLLM0.30/Torch2.13 in separate candidate: native build on pinned local/b70-oneapi-2026.1.1-builder:vllm030; semantic GDN mask patch including non_spec_sequence_masks_cpu; target XPU block64 and sparse retirement already present, do not reapply old overrides; disable inherited GPTQ attention initially; production stays offline.",
+  "next_action": "Inspect target-fp16 native capture/API alignment; complete staged quality session22337. Qualify isolated .965/media/expanded-context profiles using config/experiments/exl3-migration overlays. Then long suffix/reference and MTP3/MTP4 before attention/kernel performance work.",
   "exl3_cache_retirement_commit": "fe39f23",
   "old_retirement_candidate_image_id": "sha256:3fcacd9c4971356b228fe638151b1d804e22fa5e7438f57a79864948068aa33f",
   "gpu_availability_policy": {
@@ -25,5 +25,35 @@
     "campaign_default": "leave production service stopped",
     "existing_campaign_cleanup_watcher_session": 79940
   },
-  "production_service": "offline per explicit user instruction; production artifact unchanged"
+  "production_service": "offline per explicit user instruction; production artifact unchanged",
+  "target_initial_image": "sha256:ee1104439aa5f4f85c9de7f3f015983a2b5017fa9e13c7da1a43190cd39aa77f",
+  "target_current_image": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "user_profile_preference": {
+    "source": "explicit user steering 2026-10-01",
+    "desired": "Preserve good upstream EXL3 settings on vLLM0.30/Torch2.13; .93 is a comparison baseline, not the final target.",
+    "upstream": {
+      "gpu_memory_utilization": 0.965,
+      "max_model_len": 262144,
+      "max_num_seqs": 16,
+      "max_num_batched_tokens": 4096,
+      "images": 32,
+      "videos": 4,
+      "image_max_pixels": 4194304
+    },
+    "qualification_order": [
+      "finish unchanged equal-contract port campaign",
+      "startup and capacity with .965 at unchanged C4/context/media",
+      "qualify 32-image/4-video limits including multimodal memory profiling and real inputs",
+      "qualify 262144 total context and C16 admission, including mixed and long workloads",
+      "compare 4096 versus 6656 batch tokens on matched mixed serving after quality/MTP stages"
+    ],
+    "status": "candidate prepared; expanded settings not GPU-qualified or deployed"
+  },
+  "exl3_functional_port_commit": "69797ba",
+  "active_campaign": {
+    "session": 22337,
+    "path": "benchmark-results/exl3-quality-target-stages-v1",
+    "log": "/tmp/b70-exl3-quality-target-stages-v1.log",
+    "status": "RUNNING"
+  }
 }

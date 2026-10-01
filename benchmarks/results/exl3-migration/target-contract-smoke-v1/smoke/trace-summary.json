@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "trace_rows": 6,
+  "cache": null,
+  "memory_stages": [
+    {
+      "event": "before_weights",
+      "pid": 67,
+      "unix": 1790861657.5110269,
+      "monotonic": 82429.018922699,
+      "memory": {
+        "allocated": 69388800,
+        "reserved": 71303168,
+        "max_allocated": 69388800,
+        "max_reserved": 71303168,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 33211011072,
+        "total": 34242297856
+      }
+    },
+    {
+      "event": "before_draft_weights",
+      "pid": 67,
+      "unix": 1790861664.338516,
+      "monotonic": 82435.846411565,
+      "memory": {
+        "allocated": 17264230400,
+        "reserved": 17462984704,
+        "max_allocated": 17264279552,
+        "max_reserved": 17462984704,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 15606063104,
+        "total": 34242297856
+      },
+      "target_tensor_storage": {
+        "unique_storage_bytes": 17034999012,
+        "named_parameter_buffer_bytes": 16782683364,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 1833,
+        "bytes_by_dtype": {
+          "torch.float16": 3665773536,
+          "torch.float32": 9472,
+          "torch.int16": 13368688640,
+          "torch.int32": 3076,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      }
+    },
+    {
+      "event": "after_draft_weights",
+      "pid": 67,
+      "unix": 1790861665.320691,
+      "monotonic": 82436.828586813,
+      "memory": {
+        "allocated": 21300107776,
+        "reserved": 21483225088,
+        "max_allocated": 21300107776,
+        "max_reserved": 21483225088,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 11587903488,
+        "total": 34242297856
+      },
+      "draft_tensor_storage": {
+        "unique_storage_bytes": 4096022568,
+        "named_parameter_buffer_bytes": 3843706920,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 41,
+        "bytes_by_dtype": {
+          "torch.int16": 1417543680,
+          "torch.float16": 2677952512,
+          "torch.int32": 2072,
+          "torch.float32": 16,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      },
+      "shared_lm_head": false
+    },
+    {
+      "event": "after_weights_and_draft",
+      "pid": 67,
+      "unix": 1790861665.8691149,
+      "monotonic": 82437.377010257,
+      "memory": {
+        "allocated": 18830300672,
+        "reserved": 18962448384,
+        "max_allocated": 18830300672,
+        "max_reserved": 18962448384,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 14062546944,
+        "total": 34242297856
+      },
+      "runner_class": "XPUModelRunnerV2",
+      "runner_source": "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/xpu_model_runner.py",
+      "draft_present": true
+    }
+  ],
+  "preemption_count": 0,
+  "preemptions": [],
+  "allocation_failure_count": 0,
+  "allocation_failures": [],
+  "scheduled_tokens_by_request": {},
+  "scheduled_prefill_upper_bound_by_request": {},
+  "submitted_forward_tokens_by_request": {},
+  "submitted_prefill_tokens_by_request": {},
+  "forward_work_note": "Actual Worker.execute_model calls with input offsets, excluding cache-hit token positions. Completion remains asynchronous; no per-kernel timing is inferred.",
+  "scheduled_work_limit": "Scheduling can include speculative/rejected/cancelled work. Prefix hits assigned inside schedule can inflate the prefill estimate. This is not a completed-GPU-compute counter.",
+  "native_logical_metrics": null,
+  "verdict": "No traced preemption",
+  "unmeasured": [
+    "oneDNN private workspace allocation",
+    "exact graph-pool ownership",
+    "completed GPU kernel token work"
+  ]
+}

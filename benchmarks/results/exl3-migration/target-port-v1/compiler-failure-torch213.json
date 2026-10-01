@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "expected_compiler_exit": 1,
+  "actual_exit": 1,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--memory",
+    "12g",
+    "--entrypoint",
+    "/bin/bash",
+    "-v",
+    "/home/sebastian/LocalLLM/exl3xpu-migration:/work:ro",
+    "-v",
+    "/home/sebastian/LocalLLM/b70-onednn-3.13-install:/opt/intel/oneapi/dnnl/latest:ro",
+    "-v",
+    "/tmp/exl3-target-compile-negative-b04thdvf:/results",
+    "-w",
+    "/work",
+    "-e",
+    "EXL3_OUT=/results/_C.so",
+    "-e",
+    "EXL3_BUILD_LOG=/results/compiler-negative.log",
+    "-e",
+    "EXL3_FLAGS=-fb70-intentionally-invalid-compile-flag",
+    "sha256:ae6950731b3c031f812a95c0eb615a572239426440bf67fd1b3c9c9cbfce9eca",
+    "scripts/build_ext.sh"
+  ],
+  "before_sha256": {
+    "_C.so": "fbe5a54845e5e80848aa1a2091cd77629070e130d392a91e1c5a6c91835ee314",
+    "_C.so.manifest.json": "4fa72b9997c75babfd58a216f1ef6ceb93438cf4d90742c8a9ee9510b0e61e39"
+  },
+  "after_sha256": {
+    "_C.so": "fbe5a54845e5e80848aa1a2091cd77629070e130d392a91e1c5a6c91835ee314",
+    "_C.so.manifest.json": "4fa72b9997c75babfd58a216f1ef6ceb93438cf4d90742c8a9ee9510b0e61e39"
+  },
+  "pending_outputs": [],
+  "compiler_log_sha256": "f2b172c7bebf6e567b8ab975bb8ded114a863e66706c773253251c726f2562a5",
+  "torch": "2.13.0+xpu",
+  "builder_image": "sha256:ae6950731b3c031f812a95c0eb615a572239426440bf67fd1b3c9c9cbfce9eca"
+}

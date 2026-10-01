@@ -1,0 +1,363 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "Cold model-load storage comparison; not an unbiased throughput comparison",
+  "allocation_reduction_bytes": 1209132544,
+  "before": {
+    "file": "target-contract-memory-audit-v3/regression/trace/trace-168.jsonl",
+    "file_sha256": "ccfbcd45b0a1aaf92a3f4af40d5d8e8709603cadb37be4066a4e163deed44ef0",
+    "event": {
+      "event": "after_weights_and_draft",
+      "pid": 168,
+      "unix": 1790863370.033528,
+      "monotonic": 84141.541423741,
+      "memory": {
+        "allocated": 18830300672,
+        "reserved": 18962448384,
+        "max_allocated": 18830300672,
+        "max_reserved": 18962448384,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 14062542848,
+        "total": 34242297856
+      },
+      "runner_class": "XPUModelRunnerV2",
+      "runner_source": "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/xpu_model_runner.py",
+      "runner_mro": [
+        "<class 'vllm.v1.worker.xpu_model_runner.XPUModelRunnerV2'>",
+        "<class 'vllm.v1.worker.gpu.model_runner.GPUModelRunner'>",
+        "<class 'vllm.v1.worker.lora_model_runner_mixin.LoRAModelRunnerMixin'>",
+        "<class 'object'>"
+      ],
+      "model_tensor_storage": {
+        "unique_storage_bytes": 17247635720,
+        "named_parameter_buffer_bytes": 16995320072,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 1864,
+        "bytes_by_dtype": {
+          "torch.float16": 3666073568,
+          "torch.float32": 9488,
+          "torch.int16": 13581025280,
+          "torch.int32": 3096,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      },
+      "unowned_tensor_audit": {
+        "unowned_storage_bytes_over_1MiB": 1426497536,
+        "largest_tensors": [
+          {
+            "shape": [
+              320,
+              15520,
+              96
+            ],
+            "dtype": "torch.int16",
+            "bytes": 953548800,
+            "tensor_type": "Parameter",
+            "referrers": [
+              {
+                "type": "dict",
+                "tensor_keys": [
+                  "trellis"
+                ]
+              }
+            ]
+          },
+          {
+            "shape": [
+              320,
+              4096,
+              96
+            ],
+            "dtype": "torch.int16",
+            "bytes": 251658240,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "dict",
+                "tensor_keys": [
+                  "trellis"
+                ]
+              }
+            ]
+          },
+          {
+            "shape": [
+              6656,
+              5120
+            ],
+            "dtype": "torch.float16",
+            "bytes": 68157440,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "EncoderRunner"
+              }
+            ]
+          },
+          {
+            "shape": [
+              6656,
+              5120
+            ],
+            "dtype": "torch.float16",
+            "bytes": 68157440,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "dict",
+                "tensor_keys": [
+                  "hidden_states"
+                ]
+              }
+            ]
+          },
+          {
+            "shape": [
+              6656,
+              5120
+            ],
+            "dtype": "torch.float16",
+            "bytes": 68157440,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "dict",
+                "tensor_keys": [
+                  "inputs_embeds"
+                ]
+              }
+            ]
+          },
+          {
+            "shape": [
+              12,
+              200704
+            ],
+            "dtype": "torch.int32",
+            "bytes": 9633792,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "StagedWriteTensor"
+              },
+              {
+                "type": "UvaBuffer"
+              }
+            ]
+          },
+          {
+            "shape": [
+              4,
+              248320
+            ],
+            "dtype": "torch.int32",
+            "bytes": 3973120,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "PenaltiesState"
+              }
+            ]
+          },
+          {
+            "shape": [
+              4,
+              200704
+            ],
+            "dtype": "torch.int32",
+            "bytes": 3211264,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "StagedWriteTensor"
+              },
+              {
+                "type": "UvaBuffer"
+              }
+            ]
+          }
+        ],
+        "unowned_exl3_heads": [
+          {
+            "class": "ParallelLMHead",
+            "prefix": "lm_head",
+            "referrers": [
+              {
+                "type": "cell"
+              },
+              {
+                "type": "cell"
+              },
+              {
+                "type": "cell"
+              },
+              {
+                "type": "cell"
+              }
+            ]
+          }
+        ],
+        "scope": "Python-GC-visible XPU storage not referenced by model parameters/buffers/direct attributes/dictionaries; host metadata only"
+      },
+      "draft_present": true
+    }
+  },
+  "after": {
+    "file": "target-contract-weakref-v4/regression/trace/trace-168.jsonl",
+    "file_sha256": "c1a3b05a4b431f9c09b31ef75316d2a23041d8740097f22c99d366d45cfb742a",
+    "event": {
+      "event": "after_weights_and_draft",
+      "pid": 168,
+      "unix": 1790863861.7151222,
+      "monotonic": 84633.223017842,
+      "memory": {
+        "allocated": 17621168128,
+        "reserved": 17867735040,
+        "max_allocated": 17621168128,
+        "max_reserved": 17867735040,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 15155167232,
+        "total": 34242297856
+      },
+      "runner_class": "XPUModelRunnerV2",
+      "runner_source": "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/xpu_model_runner.py",
+      "runner_mro": [
+        "<class 'vllm.v1.worker.xpu_model_runner.XPUModelRunnerV2'>",
+        "<class 'vllm.v1.worker.gpu.model_runner.GPUModelRunner'>",
+        "<class 'vllm.v1.worker.lora_model_runner_mixin.LoRAModelRunnerMixin'>",
+        "<class 'object'>"
+      ],
+      "model_tensor_storage": {
+        "unique_storage_bytes": 17247635720,
+        "named_parameter_buffer_bytes": 16995320072,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 1864,
+        "bytes_by_dtype": {
+          "torch.float16": 3666073568,
+          "torch.float32": 9488,
+          "torch.int16": 13581025280,
+          "torch.int32": 3096,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      },
+      "unowned_tensor_audit": {
+        "unowned_storage_bytes_over_1MiB": 221290496,
+        "largest_tensors": [
+          {
+            "shape": [
+              6656,
+              5120
+            ],
+            "dtype": "torch.float16",
+            "bytes": 68157440,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "EncoderRunner"
+              }
+            ]
+          },
+          {
+            "shape": [
+              6656,
+              5120
+            ],
+            "dtype": "torch.float16",
+            "bytes": 68157440,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "dict",
+                "tensor_keys": [
+                  "hidden_states"
+                ]
+              }
+            ]
+          },
+          {
+            "shape": [
+              6656,
+              5120
+            ],
+            "dtype": "torch.float16",
+            "bytes": 68157440,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "dict",
+                "tensor_keys": [
+                  "inputs_embeds"
+                ]
+              }
+            ]
+          },
+          {
+            "shape": [
+              12,
+              200704
+            ],
+            "dtype": "torch.int32",
+            "bytes": 9633792,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "StagedWriteTensor"
+              },
+              {
+                "type": "UvaBuffer"
+              }
+            ]
+          },
+          {
+            "shape": [
+              4,
+              248320
+            ],
+            "dtype": "torch.int32",
+            "bytes": 3973120,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "PenaltiesState"
+              }
+            ]
+          },
+          {
+            "shape": [
+              4,
+              200704
+            ],
+            "dtype": "torch.int32",
+            "bytes": 3211264,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "StagedWriteTensor"
+              },
+              {
+                "type": "UvaBuffer"
+              }
+            ]
+          }
+        ],
+        "unowned_exl3_heads": [],
+        "scope": "Python-GC-visible XPU storage not referenced by model parameters/buffers/direct attributes/dictionaries; host metadata only"
+      },
+      "draft_present": true
+    }
+  },
+  "mechanism": "Four loader callbacks retain weak references to owner layers instead of keeping discarded target/pruned ParallelLMHead owners alive",
+  "unchanged_contract": {
+    "gpu_memory_utilization": 0.93,
+    "max_model_len": 200704,
+    "max_num_seqs": 4,
+    "mtp_depth": 3,
+    "draft_vocab_rows": 65536,
+    "target_head_bpw": 6
+  },
+  "cpu_callback_test": "loader-weakref-cpu-tests.txt"
+}

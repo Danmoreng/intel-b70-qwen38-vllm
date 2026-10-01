@@ -1,0 +1,226 @@
+/opt/venv/lib/python3.12/site-packages/torch/xpu/__init__.py:251: UserWarning: Can't initialize Level Zero Sysman
+  return _enum_zes_device_infos(visible_mask)
+/opt/venv/lib/python3.12/site-packages/torch/xpu/__init__.py:278: UserWarning: XPU device count is zero! (Triggered internally at /__w/pytorch/pytorch/c10/xpu/XPUFunctions.cpp:117.)
+  count = torch._C._xpu_getDeviceCount() if zes_count < 0 else zes_count
+/opt/venv/lib/python3.12/site-packages/torch/xpu/__init__.py:251: UserWarning: Can't initialize Level Zero Sysman
+  return _enum_zes_device_infos(visible_mask)
+/opt/venv/lib/python3.12/site-packages/torch/xpu/__init__.py:251: UserWarning: Can't initialize Level Zero Sysman
+  return _enum_zes_device_infos(visible_mask)
+INFO 10-01 13:29:30 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 10-01 13:29:30 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 10-01 13:29:30 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+INFO 10-01 13:29:31 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+EINFO 10-01 13:29:31 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+EINFO 10-01 13:29:31 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+EINFO 10-01 13:29:31 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+.INFO 10-01 13:29:31 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+.INFO 10-01 13:29:31 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+INFO 10-01 13:29:31 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+INFO 10-01 13:29:31 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+.INFO 10-01 13:29:31 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+EINFO 10-01 13:29:31 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+EINFO 10-01 13:29:31 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+INFO 10-01 13:29:31 [vllm_plugin.py:45] EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled
+E
+======================================================================
+ERROR: test_draft_head_preserves_target_six_bit_trellis (__main__.LoaderTests.test_draft_head_preserves_target_six_bit_trellis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.12/site-packages/torch/_ops.py", line 1516, in load_library
+    ctypes.CDLL(path)
+  File "/usr/lib/python3.12/ctypes/__init__.py", line 379, in __init__
+    self._handle = _dlopen(self._name, mode)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: libsycl.so.8: cannot open shared object file: No such file or directory
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/exl3xpu/ops.py", line 28, in _get_esimd
+    torch.ops.load_library(os.environ.get("EXL3_LIB") or os.path.join(os.path.dirname(__file__), "_C.so"))
+  File "/opt/venv/lib/python3.12/site-packages/torch/_ops.py", line 1518, in load_library
+    raise OSError(f"Could not load this library: {path}") from e
+OSError: Could not load this library: /work/exl3xpu/_C.so
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/tests/test_loader_validation.py", line 47, in test_draft_head_preserves_target_six_bit_trellis
+    m,l=self.layer(prefix='lm_head',bits=6,sizes=(256,));self.fill(m,l);m.process_weights_after_loading(l)
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/exl3xpu/vllm_plugin.py", line 279, in process_weights_after_loading
+    E = ops._get_esimd()
+        ^^^^^^^^^^^^^^^^
+  File "/work/exl3xpu/ops.py", line 47, in _get_esimd
+    raise RuntimeError(f"exl3xpu: failed to load the ESIMD op library: {e}") from e
+RuntimeError: exl3xpu: failed to load the ESIMD op library: Could not load this library: /work/exl3xpu/_C.so
+
+======================================================================
+ERROR: test_gdn_combined_qkv_and_separate_z (__main__.LoaderTests.test_gdn_combined_qkv_and_separate_z)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.12/site-packages/torch/_ops.py", line 1516, in load_library
+    ctypes.CDLL(path)
+  File "/usr/lib/python3.12/ctypes/__init__.py", line 379, in __init__
+    self._handle = _dlopen(self._name, mode)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: libsycl.so.8: cannot open shared object file: No such file or directory
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/exl3xpu/ops.py", line 28, in _get_esimd
+    torch.ops.load_library(os.environ.get("EXL3_LIB") or os.path.join(os.path.dirname(__file__), "_C.so"))
+  File "/opt/venv/lib/python3.12/site-packages/torch/_ops.py", line 1518, in load_library
+    raise OSError(f"Could not load this library: {path}") from e
+OSError: Could not load this library: /work/exl3xpu/_C.so
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/tests/test_loader_validation.py", line 37, in test_gdn_combined_qkv_and_separate_z
+    self.fill(m,l,[(0,1,2),(3,)]);m.process_weights_after_loading(l)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/exl3xpu/vllm_plugin.py", line 279, in process_weights_after_loading
+    E = ops._get_esimd()
+        ^^^^^^^^^^^^^^^^
+  File "/work/exl3xpu/ops.py", line 47, in _get_esimd
+    raise RuntimeError(f"exl3xpu: failed to load the ESIMD op library: {e}") from e
+RuntimeError: exl3xpu: failed to load the ESIMD op library: Could not load this library: /work/exl3xpu/_C.so
+
+======================================================================
+ERROR: test_head_stays_six_bits (__main__.LoaderTests.test_head_stays_six_bits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.12/site-packages/torch/_ops.py", line 1516, in load_library
+    ctypes.CDLL(path)
+  File "/usr/lib/python3.12/ctypes/__init__.py", line 379, in __init__
+    self._handle = _dlopen(self._name, mode)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: libsycl.so.8: cannot open shared object file: No such file or directory
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/exl3xpu/ops.py", line 28, in _get_esimd
+    torch.ops.load_library(os.environ.get("EXL3_LIB") or os.path.join(os.path.dirname(__file__), "_C.so"))
+  File "/opt/venv/lib/python3.12/site-packages/torch/_ops.py", line 1518, in load_library
+    raise OSError(f"Could not load this library: {path}") from e
+OSError: Could not load this library: /work/exl3xpu/_C.so
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/tests/test_loader_validation.py", line 41, in test_head_stays_six_bits
+    m,l=self.layer(prefix='lm_head',bits=6,sizes=(128,));self.fill(m,l);m.process_weights_after_loading(l)
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/exl3xpu/vllm_plugin.py", line 279, in process_weights_after_loading
+    E = ops._get_esimd()
+        ^^^^^^^^^^^^^^^^
+  File "/work/exl3xpu/ops.py", line 47, in _get_esimd
+    raise RuntimeError(f"exl3xpu: failed to load the ESIMD op library: {e}") from e
+RuntimeError: exl3xpu: failed to load the ESIMD op library: Could not load this library: /work/exl3xpu/_C.so
+
+======================================================================
+ERROR: test_mtp_fc_is_four_bits (__main__.LoaderTests.test_mtp_fc_is_four_bits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.12/site-packages/torch/_ops.py", line 1516, in load_library
+    ctypes.CDLL(path)
+  File "/usr/lib/python3.12/ctypes/__init__.py", line 379, in __init__
+    self._handle = _dlopen(self._name, mode)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: libsycl.so.8: cannot open shared object file: No such file or directory
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/exl3xpu/ops.py", line 28, in _get_esimd
+    torch.ops.load_library(os.environ.get("EXL3_LIB") or os.path.join(os.path.dirname(__file__), "_C.so"))
+  File "/opt/venv/lib/python3.12/site-packages/torch/_ops.py", line 1518, in load_library
+    raise OSError(f"Could not load this library: {path}") from e
+OSError: Could not load this library: /work/exl3xpu/_C.so
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/tests/test_loader_validation.py", line 44, in test_mtp_fc_is_four_bits
+    m,l=self.layer(prefix='mtp.fc',sizes=(128,));self.fill(m,l);m.process_weights_after_loading(l)
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/exl3xpu/vllm_plugin.py", line 279, in process_weights_after_loading
+    E = ops._get_esimd()
+        ^^^^^^^^^^^^^^^^
+  File "/work/exl3xpu/ops.py", line 47, in _get_esimd
+    raise RuntimeError(f"exl3xpu: failed to load the ESIMD op library: {e}") from e
+RuntimeError: exl3xpu: failed to load the ESIMD op library: Could not load this library: /work/exl3xpu/_C.so
+
+======================================================================
+ERROR: test_qkv_keeps_independent_hadamard_shards (__main__.LoaderTests.test_qkv_keeps_independent_hadamard_shards)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.12/site-packages/torch/_ops.py", line 1516, in load_library
+    ctypes.CDLL(path)
+  File "/usr/lib/python3.12/ctypes/__init__.py", line 379, in __init__
+    self._handle = _dlopen(self._name, mode)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: libsycl.so.8: cannot open shared object file: No such file or directory
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/exl3xpu/ops.py", line 28, in _get_esimd
+    torch.ops.load_library(os.environ.get("EXL3_LIB") or os.path.join(os.path.dirname(__file__), "_C.so"))
+  File "/opt/venv/lib/python3.12/site-packages/torch/_ops.py", line 1518, in load_library
+    raise OSError(f"Could not load this library: {path}") from e
+OSError: Could not load this library: /work/exl3xpu/_C.so
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/tests/test_loader_validation.py", line 31, in test_qkv_keeps_independent_hadamard_shards
+    m,l=self.layer();self.fill(m,l);m.process_weights_after_loading(l)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/exl3xpu/vllm_plugin.py", line 279, in process_weights_after_loading
+    E = ops._get_esimd()
+        ^^^^^^^^^^^^^^^^
+  File "/work/exl3xpu/ops.py", line 47, in _get_esimd
+    raise RuntimeError(f"exl3xpu: failed to load the ESIMD op library: {e}") from e
+RuntimeError: exl3xpu: failed to load the ESIMD op library: Could not load this library: /work/exl3xpu/_C.so
+
+======================================================================
+ERROR: test_whole_model_missing_mtp_rejected (__main__.LoaderTests.test_whole_model_missing_mtp_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.12/site-packages/torch/_ops.py", line 1516, in load_library
+    ctypes.CDLL(path)
+  File "/usr/lib/python3.12/ctypes/__init__.py", line 379, in __init__
+    self._handle = _dlopen(self._name, mode)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: libsycl.so.8: cannot open shared object file: No such file or directory
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/exl3xpu/ops.py", line 28, in _get_esimd
+    torch.ops.load_library(os.environ.get("EXL3_LIB") or os.path.join(os.path.dirname(__file__), "_C.so"))
+  File "/opt/venv/lib/python3.12/site-packages/torch/_ops.py", line 1518, in load_library
+    raise OSError(f"Could not load this library: {path}") from e
+OSError: Could not load this library: /work/exl3xpu/_C.so
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/tests/test_loader_validation.py", line 73, in test_whole_model_missing_mtp_rejected
+    m,l=self.layer(prefix='lm_head',bits=6,sizes=(128,));self.fill(m,l);m.process_weights_after_loading(l)
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/exl3xpu/vllm_plugin.py", line 279, in process_weights_after_loading
+    E = ops._get_esimd()
+        ^^^^^^^^^^^^^^^^
+  File "/work/exl3xpu/ops.py", line 47, in _get_esimd
+    raise RuntimeError(f"exl3xpu: failed to load the ESIMD op library: {e}") from e
+RuntimeError: exl3xpu: failed to load the ESIMD op library: Could not load this library: /work/exl3xpu/_C.so
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.030s
+
+FAILED (errors=6)

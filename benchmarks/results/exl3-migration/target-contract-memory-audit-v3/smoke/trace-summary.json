@@ -1,0 +1,338 @@
+{
+  "schema": 1,
+  "trace_rows": 8,
+  "cache": null,
+  "memory_stages": [
+    {
+      "event": "before_weights",
+      "pid": 67,
+      "unix": 1790863512.606633,
+      "monotonic": 84284.114528868,
+      "memory": {
+        "allocated": 69388800,
+        "reserved": 71303168,
+        "max_allocated": 69388800,
+        "max_reserved": 71303168,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 33211006976,
+        "total": 34242297856
+      }
+    },
+    {
+      "event": "before_draft_weights",
+      "pid": 67,
+      "unix": 1790863518.561898,
+      "monotonic": 84290.06979369,
+      "memory": {
+        "allocated": 17264230400,
+        "reserved": 17462984704,
+        "max_allocated": 17264279552,
+        "max_reserved": 17462984704,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 15606063104,
+        "total": 34242297856
+      },
+      "target_tensor_storage": {
+        "unique_storage_bytes": 17034999012,
+        "named_parameter_buffer_bytes": 16782683364,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 1833,
+        "bytes_by_dtype": {
+          "torch.float16": 3665773536,
+          "torch.float32": 9472,
+          "torch.int16": 13368688640,
+          "torch.int32": 3076,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      }
+    },
+    {
+      "event": "after_draft_weights",
+      "pid": 67,
+      "unix": 1790863519.5740826,
+      "monotonic": 84291.081978176,
+      "memory": {
+        "allocated": 21300107776,
+        "reserved": 21483225088,
+        "max_allocated": 21300107776,
+        "max_reserved": 21483225088,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 11587903488,
+        "total": 34242297856
+      },
+      "draft_tensor_storage": {
+        "unique_storage_bytes": 4096022568,
+        "named_parameter_buffer_bytes": 3843706920,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 41,
+        "bytes_by_dtype": {
+          "torch.int16": 1417543680,
+          "torch.float16": 2677952512,
+          "torch.int32": 2072,
+          "torch.float32": 16,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      },
+      "proposer_class": "MTPSpeculator",
+      "shared_lm_head": true
+    },
+    {
+      "event": "after_weights_and_draft",
+      "pid": 67,
+      "unix": 1790863521.3984337,
+      "monotonic": 84292.906329904,
+      "memory": {
+        "allocated": 18830300672,
+        "reserved": 18962448384,
+        "max_allocated": 18830300672,
+        "max_reserved": 18962448384,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 14062542848,
+        "total": 34242297856
+      },
+      "runner_class": "XPUModelRunnerV2",
+      "runner_source": "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/xpu_model_runner.py",
+      "runner_mro": [
+        "<class 'vllm.v1.worker.xpu_model_runner.XPUModelRunnerV2'>",
+        "<class 'vllm.v1.worker.gpu.model_runner.GPUModelRunner'>",
+        "<class 'vllm.v1.worker.lora_model_runner_mixin.LoRAModelRunnerMixin'>",
+        "<class 'object'>"
+      ],
+      "model_tensor_storage": {
+        "unique_storage_bytes": 17247635720,
+        "named_parameter_buffer_bytes": 16995320072,
+        "extra_pruned_draft_head_bytes": 252315648,
+        "storage_count": 1864,
+        "bytes_by_dtype": {
+          "torch.float16": 3666073568,
+          "torch.float32": 9488,
+          "torch.int16": 13581025280,
+          "torch.int32": 3096,
+          "torch.int64": 524288
+        },
+        "scope": "named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded"
+      },
+      "unowned_tensor_audit": {
+        "unowned_storage_bytes_over_1MiB": 1426497536,
+        "largest_tensors": [
+          {
+            "shape": [
+              320,
+              15520,
+              96
+            ],
+            "dtype": "torch.int16",
+            "bytes": 953548800,
+            "tensor_type": "Parameter",
+            "referrers": [
+              {
+                "type": "dict",
+                "tensor_keys": [
+                  "trellis"
+                ]
+              }
+            ]
+          },
+          {
+            "shape": [
+              320,
+              4096,
+              96
+            ],
+            "dtype": "torch.int16",
+            "bytes": 251658240,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "dict",
+                "tensor_keys": [
+                  "trellis"
+                ]
+              }
+            ]
+          },
+          {
+            "shape": [
+              6656,
+              5120
+            ],
+            "dtype": "torch.float16",
+            "bytes": 68157440,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "EncoderRunner"
+              }
+            ]
+          },
+          {
+            "shape": [
+              6656,
+              5120
+            ],
+            "dtype": "torch.float16",
+            "bytes": 68157440,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "dict",
+                "tensor_keys": [
+                  "hidden_states"
+                ]
+              }
+            ]
+          },
+          {
+            "shape": [
+              6656,
+              5120
+            ],
+            "dtype": "torch.float16",
+            "bytes": 68157440,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "dict",
+                "tensor_keys": [
+                  "inputs_embeds"
+                ]
+              }
+            ]
+          },
+          {
+            "shape": [
+              12,
+              200704
+            ],
+            "dtype": "torch.int32",
+            "bytes": 9633792,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "StagedWriteTensor"
+              },
+              {
+                "type": "UvaBuffer"
+              }
+            ]
+          },
+          {
+            "shape": [
+              4,
+              248320
+            ],
+            "dtype": "torch.int32",
+            "bytes": 3973120,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "PenaltiesState"
+              }
+            ]
+          },
+          {
+            "shape": [
+              4,
+              200704
+            ],
+            "dtype": "torch.int32",
+            "bytes": 3211264,
+            "tensor_type": "Tensor",
+            "referrers": [
+              {
+                "type": "StagedWriteTensor"
+              },
+              {
+                "type": "UvaBuffer"
+              }
+            ]
+          }
+        ],
+        "unowned_exl3_heads": [
+          {
+            "class": "ParallelLMHead",
+            "prefix": "lm_head",
+            "referrers": [
+              {
+                "type": "cell"
+              },
+              {
+                "type": "cell"
+              },
+              {
+                "type": "cell"
+              },
+              {
+                "type": "cell"
+              }
+            ]
+          }
+        ],
+        "scope": "Python-GC-visible XPU storage not referenced by model parameters/buffers/direct attributes/dictionaries; host metadata only"
+      },
+      "draft_present": true
+    },
+    {
+      "event": "before_memory_profile",
+      "pid": 67,
+      "unix": 1790863521.400294,
+      "monotonic": 84292.908189382,
+      "memory": {
+        "allocated": 18830300672,
+        "reserved": 18962448384,
+        "max_allocated": 18830300672,
+        "max_reserved": 18962448384,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 14062542848,
+        "total": 34242297856
+      },
+      "requested_memory": 30253069394
+    },
+    {
+      "event": "after_memory_profile",
+      "pid": 67,
+      "unix": 1790863529.8255951,
+      "monotonic": 84301.333490531,
+      "memory": {
+        "allocated": 18830301184,
+        "reserved": 18962448384,
+        "max_allocated": 20409653760,
+        "max_reserved": 21655191552,
+        "oneDNN_workspace_bytes": null,
+        "graph_pool_bytes": null,
+        "free": 12520685568,
+        "total": 34242297856
+      },
+      "available_kv_cache_memory_bytes": 7891309138,
+      "requested_memory": 30253069394,
+      "total_consumed": 20782407680,
+      "peak_activation_memory": 1579352576,
+      "cudagraph_memory_estimate": 0,
+      "model_memory_usage": 18686873600
+    }
+  ],
+  "preemption_count": 0,
+  "preemptions": [],
+  "allocation_failure_count": 0,
+  "allocation_failures": [],
+  "scheduled_tokens_by_request": {},
+  "scheduled_prefill_upper_bound_by_request": {},
+  "submitted_forward_tokens_by_request": {},
+  "submitted_prefill_tokens_by_request": {},
+  "forward_work_note": "Actual Worker.execute_model calls with input offsets, excluding cache-hit token positions. Completion remains asynchronous; no per-kernel timing is inferred.",
+  "scheduled_work_limit": "Scheduling can include speculative/rejected/cancelled work. Prefix hits assigned inside schedule can inflate the prefill estimate. This is not a completed-GPU-compute counter.",
+  "native_logical_metrics": null,
+  "verdict": "No traced preemption",
+  "unmeasured": [
+    "oneDNN private workspace allocation",
+    "exact graph-pool ownership",
+    "completed GPU kernel token work"
+  ]
+}

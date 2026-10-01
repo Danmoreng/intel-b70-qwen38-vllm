@@ -34,10 +34,10 @@ PROFILE='models/qwen3.8-27b-exl3-4.00bpw/migration-200704-c4.yaml'
 def sha(path):
     with Path(path).open('rb') as f: return hashlib.file_digest(f,'sha256').hexdigest()
 
-def png_url():
+def png_url(width=64,height=64):
     def chunk(kind,data): return struct.pack('>I',len(data))+kind+data+struct.pack('>I',zlib.crc32(kind+data)&0xffffffff)
-    data=b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('>IIBBBBB',64,64,8,2,0,0,0))
-    data+=chunk(b'IDAT',zlib.compress((b'\0'+b'\xff\0\0'*64)*64))+chunk(b'IEND',b'')
+    data=b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('>IIBBBBB',width,height,8,2,0,0,0))
+    data+=chunk(b'IDAT',zlib.compress((b'\0'+b'\xff\0\0'*width)*height))+chunk(b'IEND',b'')
     return 'data:image/png;base64,'+base64.b64encode(data).decode()
 
 def chat(text,**extra):
@@ -45,7 +45,9 @@ def chat(text,**extra):
             'temperature':0,'seed':20261001,'max_tokens':64,'reasoning_effort':'none',
             'chat_template_kwargs':{'enable_thinking':False},**extra}
 
-def smoke(root):
+def smoke(root,max_context=200704,media_limits=None):
+    media_limits=media_limits or {'image':1,'video':0}
+    image_limit=media_limits['image']
     records={}
     text=R.http(BASE,'/v1/chat/completions',chat('Name the capital of France. Answer with one word.'),timeout=180)
     assert 'paris' in text['choices'][0]['message']['content'].lower(),text
@@ -70,9 +72,13 @@ def smoke(root):
     records['image']=R.http(BASE,'/v1/chat/completions',image_payload,timeout=180)
     R.save(root/'api-contract-progress.json',records)
     assert 'red' in records['image']['choices'][0]['message']['content'].lower(),records['image']
+    if image_limit>1:
+        records['images_at_limit']=R.http(BASE,'/v1/chat/completions',
+            chat([image]*image_limit+[{'type':'text','text':'What color are all the squares? Answer with one word.'}]),timeout=600)
+        assert 'red' in records['images_at_limit']['choices'][0]['message']['content'].lower()
     try:
-        R.http(BASE,'/v1/chat/completions',chat([image,image,{'type':'text','text':'Describe.'}]),timeout=30)
-        raise AssertionError('Two-image request was accepted despite image limit 1')
+        R.http(BASE,'/v1/chat/completions',chat([image]*(image_limit+1)+[{'type':'text','text':'Describe.'}]),timeout=30)
+        raise AssertionError('Image request over configured count limit was accepted')
     except urllib.error.HTTPError as e:
         assert e.code==400,e.code
         records['over_image_limit']={'status':e.code,'error':e.read().decode()}
@@ -98,26 +104,27 @@ def smoke(root):
     assert all(x['usage']['completion_tokens']==128 for x in responses)
     records['c4_usage']=[x['usage'] for x in responses]
     records['limits']=R.http(BASE,'/tokenize',{'model':'Qwen3.8-27B','prompt':'hello'})['max_model_len']
-    assert records['limits']==200704
+    assert records['limits']==max_context
     R.save(root/'api-contract.json',records)
-    return {'status':'PASS','checks':list(records),'image_limit':1,'video_limit_configured':0,
+    return {'status':'PASS','checks':list(records),'image_limit':image_limit,'video_limit_configured':media_limits['video'],
             'abort_note':'client disconnected after first streamed content; correlate trace with scheduler abort',
             'c4_note':'four simultaneous small requests; full long-context C4 load remains a separate release gate'}
 
-def long_case(case,root):
+def long_case(case,root,max_context=200704):
     if case=='near-limit':
         ids=R.http(BASE,'/tokenize',{'model':'Qwen3.8-27B','prompt':'function step(x) { return x + 1; }\nStable repeatable context.\n','add_special_tokens':False})['tokens']
-        prompt=(ids*((199680+len(ids)-1)//len(ids)))[:199680]
+        prompt_length=max_context-1024
+        prompt=(ids*((prompt_length+len(ids)-1)//len(ids)))[:prompt_length]
         payload={'model':'Qwen3.8-27B','prompt':prompt,'temperature':0,'seed':20261001,
                  'max_tokens':1024,'ignore_eos':True}
         before=R.snapshot(BASE);start=time.monotonic()
         response=R.http(BASE,'/v1/completions',payload,timeout=1800)
         after,native=R.wait_accounted(BASE,before,response['usage'])
-        assert response['usage']['prompt_tokens']==199680
+        assert response['usage']['prompt_tokens']==prompt_length
         result={'status':'COMPLETE','usage':response['usage'],'native':native,'native_before':before,
                 'native_after':after,'wall_s':time.monotonic()-start,
                 'prompt_ids_sha256':hashlib.sha256(json.dumps(prompt).encode()).hexdigest(),
-                'prompt_recipe':'repeat frozen /tokenize code/prose token IDs to exactly 199680; output 1024; total 200704'}
+                'prompt_recipe':f'repeat frozen /tokenize code/prose token IDs to exactly {prompt_length}; output 1024; total {max_context}'}
     else:
         number={'103k':47,'139k':65,'188k':94}[case]
         source=SOURCE/f'cold-original-request-{number:04d}.json.gz'
@@ -151,27 +158,62 @@ def regression(root):
     R.save(root/'greedy-regression.json',result)
     return result
 
+def media_case(root,media_limits):
+    """Real count-limit, video decoding, and oversized-image preprocessing probes."""
+    video_limit=media_limits['video']
+    if video_limit<1: raise ValueError('media-expanded requires video support in the candidate profile')
+    clip=root/'red-2s.mp4'
+    subprocess.run(['ffmpeg','-y','-loglevel','error','-f','lavfi','-i',
+                    'color=c=red:s=320x240:r=4','-t','2','-threads','1',
+                    '-c:v','libx264','-pix_fmt','yuv420p',str(clip)],check=True)
+    video={'type':'video_url','video_url':{'url':'data:video/mp4;base64,'+base64.b64encode(clip.read_bytes()).decode()}}
+    question={'type':'text','text':'What color fills every video frame? Answer with one word.'}
+    responses={}
+    for count in sorted({1,video_limit}):
+        responses[f'videos_{count}']=R.http(BASE,'/v1/chat/completions',chat([video]*count+[question]),timeout=600)
+        assert 'red' in responses[f'videos_{count}']['choices'][0]['message']['content'].lower()
+        R.save(root/'media-progress.json',responses)
+    try:
+        R.http(BASE,'/v1/chat/completions',chat([video]*(video_limit+1)+[question]),timeout=30)
+        raise AssertionError('Video request over configured count limit was accepted')
+    except urllib.error.HTTPError as e:
+        assert e.code==400,e.code
+        responses['over_video_limit']={'status':e.code,'error':e.read().decode()}
+    large_image={'type':'image_url','image_url':{'url':png_url(3072,2048)}}
+    responses['oversized_image']=R.http(BASE,'/v1/chat/completions',
+        chat([large_image,{'type':'text','text':'What color is the image? Answer with one word.'}]),timeout=600)
+    assert 'red' in responses['oversized_image']['choices'][0]['message']['content'].lower()
+    # Qwen's image tokens represent 32x32 merged patches. An uncapped 3072x2048
+    # image contributes 6144 visual tokens; the 4.2MP cap should stay near 4096.
+    assert responses['oversized_image']['usage']['prompt_tokens']<4500,responses['oversized_image']['usage']
+    result={'status':'PASS','responses':responses,'video_fixture_sha256':sha(clip),
+            'fixture':'ffmpeg constant-red 320x240,4fps,2s; API decodes real H264 video',
+            'scope':'Small-media count limits and one 6.3MP image; does not promise 32 maximum-area images plus 4 long videos at maximum text context'}
+    R.save(root/'media-expanded.json',result)
+    return result
+
 def operational(case,root):
-    if case=='c4-long':
+    if case in ('c4-long','c16-long'):
+        concurrency,prompt_length=(4,32768) if case=='c4-long' else (16,8192)
         payloads=[]
-        for i in range(4):
+        for i in range(concurrency):
             ids=R.http(BASE,'/tokenize',{'model':'Qwen3.8-27B','prompt':f'Request {i}: unique independent notes. function step(x) {{ return x+1; }}\n','add_special_tokens':False})['tokens']
-            prompt=(ids*((32768+len(ids)-1)//len(ids)))[:32768]
+            prompt=(ids*((prompt_length+len(ids)-1)//len(ids)))[:prompt_length]
             payloads.append({'model':'Qwen3.8-27B','prompt':prompt,'max_tokens':256,'ignore_eos':True,'temperature':0,'seed':20261001})
         before=R.snapshot(BASE)
-        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=concurrency) as pool:
             responses=list(pool.map(lambda p:R.http(BASE,'/v1/completions',p,timeout=1800),payloads))
         deadline=time.monotonic()+45
         while True:
             after=R.snapshot(BASE);native=R.delta(after,before)
-            if native.get('completed')==4 and native.get('generation_tokens')==1024: break
-            if time.monotonic()>deadline: raise RuntimeError('C4 accounting did not settle')
+            if native.get('completed')==concurrency and native.get('generation_tokens')==concurrency*256: break
+            if time.monotonic()>deadline: raise RuntimeError('Concurrent accounting did not settle')
             time.sleep(.25)
-        assert all(r['usage']['prompt_tokens']==32768 and r['usage']['completion_tokens']==256 for r in responses)
+        assert all(r['usage']['prompt_tokens']==prompt_length and r['usage']['completion_tokens']==256 for r in responses)
         assert native['preemptions']==0,native
         result={'status':'PASS','usage':[r['usage'] for r in responses],'native':native,
                 'request_sha256':[hashlib.sha256(json.dumps(p,sort_keys=True).encode()).hexdigest() for p in payloads],
-                'purpose':'Four simultaneous independent 32K prompts; fixed output 256 each; not a claim of four simultaneous 200K sequences'}
+                'purpose':f'{concurrency} simultaneous independent {prompt_length}-token prompts; fixed output 256 each; not a claim of {concurrency} simultaneous maximum-context sequences'}
     elif case=='image-long':
         content=[{'type':'image_url','image_url':{'url':png_url()}},
                  {'type':'text','text':('Neutral independent context note. function step(x) { return x+1; }\n'*7000)+
@@ -214,12 +256,20 @@ def operational(case,root):
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--image',default='local/exl3xpu:migration-old-safe-20261001')
+    ap.add_argument('--runtime',choices=('old','target'),default='old',help='Pinned ABI/profile/cache namespace')
+    ap.add_argument('--settings-json',type=Path,help='Explicit vLLM setting overrides; base image profile remains immutable')
     ap.add_argument('--cases',default='smoke')
     ap.add_argument('--retirement-fix',choices=('0','1'),help='Explicit old-allocator A/B on one immutable candidate image')
     ap.add_argument('--restore-production',action='store_true',help='Explicit pinned GPTQ rollback drill after the campaign')
     ap.add_argument('--output',type=Path,required=True)
     a=ap.parse_args();cases=a.cases.split(',')
-    if any(c not in ('smoke','regression','103k','139k','188k','near-limit','c4-long','image-long','extension-abort-long') for c in cases): raise SystemExit('Unknown case')
+    settings=json.loads(a.settings_json.read_text()) if a.settings_json else {}
+    if not isinstance(settings,dict): raise SystemExit('Settings must be a JSON object')
+    max_context=settings.get('max_model_len',200704)
+    media_limits=settings.get('limit_mm_per_prompt',{'image':1,'video':0})
+    if any(not isinstance(v,int) or v<0 for v in media_limits.values()): raise SystemExit('Invalid media count limits')
+    profile=(PROFILE if a.runtime=='old' else 'models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml')
+    if any(c not in ('smoke','regression','103k','139k','188k','near-limit','c4-long','c16-long','image-long','extension-abort-long','media-expanded') for c in cases): raise SystemExit('Unknown case')
     if a.output.exists(): raise SystemExit('Fresh output directory required')
     release=json.loads((REPO/'config/production_image.json').read_text())
     image=subprocess.check_output(['docker','image','inspect',a.image,'--format','{{.Id}}'],text=True).strip()
@@ -228,7 +278,8 @@ def main():
     with lockpath.open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         a.output.mkdir(parents=True);state={'schema':1,'started_at':R.now(),'image':image,'cases':{},'status':'RUNNING',
-                                          'purpose':'Old-ABI equal-contract instrumented diagnostics','production_restored':False,
+                                          'purpose':a.runtime+'-ABI instrumented contract diagnostics','settings_overrides':settings,
+                                          'settings_sha256':sha(a.settings_json) if a.settings_json else None,'production_restored':False,
                                           'restore_production_requested':a.restore_production}
         def save(): R.save(a.output/'campaign.json',state)
         def interrupted(*args): raise RuntimeError('Migration diagnostic interrupted')
@@ -238,7 +289,7 @@ def main():
             C.command(['systemctl','--user','stop',C.SERVICE])
             for case in cases:
                 root=(a.output/case).resolve();root.mkdir();(root/'trace').mkdir()
-                cache=Path.home()/'.cache/exl3xpu/migration-old'/image.removeprefix('sha256:')
+                cache=Path.home()/('.cache/exl3xpu/migration-'+a.runtime)/image.removeprefix('sha256:')
                 for d in ('vllm','triton','neo_compiler_cache'): (cache/d).mkdir(parents=True,exist_ok=True)
                 launch=['docker','run','-d','--name',NAME,'--device','/dev/dri',
                         '-v','/dev/dri/by-path:/dev/dri/by-path:ro','--shm-size','8g',
@@ -250,7 +301,9 @@ def main():
                         '-v',str(cache/'vllm')+':/root/.cache/vllm',
                         '-v',str(cache/'triton')+':/root/.triton/cache',
                         '-v',str(cache/'neo_compiler_cache')+':/root/.cache/neo_compiler_cache',
-                        image,PROFILE,'--gpu','0','--port','8000','--model-path','/models/checkpoint']
+                        image,profile,'--gpu','0','--port','8000','--model-path','/models/checkpoint']
+                for key,value in settings.items():
+                    launch+=['--set','vllm.'+key+'='+json.dumps(value,separators=(',',':'))]
                 if a.retirement_fix is not None:
                     image_position=launch.index(image)
                     launch[image_position:image_position]=['-e','EXL3_FIX_SPARSE_GDN_RETIREMENT='+a.retirement_fix]
@@ -272,9 +325,10 @@ def main():
                             if time.monotonic()>deadline: raise RuntimeError('Candidate startup exceeded 900 seconds')
                             time.sleep(2)
                     R.cap();state['cases'][case]['identity']=identity;save()
-                    state['cases'][case]['result']=(smoke(root) if case=='smoke' else regression(root) if case=='regression'
-                                                    else operational(case,root) if case in ('c4-long','image-long','extension-abort-long')
-                                                    else long_case(case,root))
+                    state['cases'][case]['result']=(smoke(root,max_context,media_limits) if case=='smoke' else regression(root) if case=='regression'
+                                                    else media_case(root,media_limits) if case=='media-expanded'
+                                                    else operational(case,root) if case in ('c4-long','c16-long','image-long','extension-abort-long')
+                                                    else long_case(case,root,max_context))
                     runtime=MANIFEST.probe(container=NAME)
                     R.save(root/'runtime-environment.json',runtime)
                     state['cases'][case]['runtime_manifest_sha256']=sha(root/'runtime-environment.json')

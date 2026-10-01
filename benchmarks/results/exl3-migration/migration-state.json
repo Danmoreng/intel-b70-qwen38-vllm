@@ -11,14 +11,14 @@
     "1_safe_foundation": "initial gates passed; target ABI gate later",
     "2_existing_runtime_contract": "PASS old-runtime contract: 409/409 loader; API; fresh 103K/139K/188K/200704-total zero-preemption; C4 4x32K+256; image119K; prefix50K with48000 cache hit; confirmed FINISHED_ABORTED and restart; matchedgreedy22K",
     "3_runtime_port": "PASS functional target port: fresh Torch2.13 native409/409+INT8 gate/compiler failure; GDN CPU/XPU/graph; full V2 loader409/8; greedy identical; all nine target contract cases zero traced preemptions/rejections and confirmed abort/restart. Expanded profile and full numerical quality remain separate.",
-    "4_quality": "PASS all six short-panel arms incl expanded full candidate; frozen BF16 integrity, full-vocabulary FP64/API alignment. Full candidate PPL3.647854/KL0.032727 vs GPTQ3.801927/KL0.086369; paired deltaNLL vsoldEXL0.0016114. Long BF16/suffix and generated decode quality remain; Gate E partial. CPU cached-layer validation passed;256-token GPU control quantifies chunk drift,4096-token control matches old BF16 exactly on512 suffix positions and17 sampled distributions. Four untruncated original BF16 long contexts now complete; candidate acquisition v3 running after CPU metadata/bounded prompt-head repair; first32K prompt completed.",
-    "5_mtp3_mtp4": "Prepared eight frozen code/prose inputs incl102752-token original coding history, byte/SHA identities and tested HTTP accounting; GPU performance not yet measured.",
+    "4_quality": "All six short precision arms and all four untruncated long suffix probes complete; native/API alignment passes, long suffix PPL1.209323 vsBF161.210748, KL0.0015101, top1 all32 sampled positions match. Engineered-window/chunk-reference limitations retained. Generated decode/graph acceptance quality remains before Gate E can close.",
+    "5_mtp3_mtp4": "First4K code C1/C4 cold/warm pilot COMPLETE on both depths,20 measured requests all0 preempts. C1 favors4; C4 cache-dependent in single pass. Greedy output variation retained, no selection. Full ABBA serving on ten frozen windows running; component profiling/source guards and four CPU plumbing branches prepared; full draft ablation still pending.",
     "6_attention": "not started",
     "7_kernels": "not started",
     "8_release": "not started",
     "3_expanded_capacity": "PASS functional expanded v2; C16 all16 completed, four preemption events on two requests,16000 extra target-prefill submitted rows; other capacity cases no preemptions"
   },
-  "next_action": "Complete long candidate scoring/API alignment and FP64 suffix comparisons; execute frozen MTP3/MTP4 pilot, then servingABBA and component profiling; full draft vocabulary follows at matched depth.",
+  "next_action": "Finish uninstrumented MTP matrix; collect guarded actual/padded rows and XPU component spans, investigate generated greedy near-margin differences; select depth per observed serving profile, then full/pruned draft-vocabulary ablation. M04/attention/kernels/final release remain.",
   "exl3_cache_retirement_commit": "fe39f23",
   "old_retirement_candidate_image_id": "sha256:3fcacd9c4971356b228fe638151b1d804e22fa5e7438f57a79864948068aa33f",
   "gpu_availability_policy": {
@@ -53,23 +53,13 @@
   },
   "exl3_functional_port_commit": "69797ba",
   "active_campaign": {
-    "path": "benchmark-results/exl3-long-quality-v3",
-    "status": "RUNNING_CAPTURE_REPAIR",
-    "purpose": "Native long quality with CPU metadata and128-row prompt head batches; BF16 unchanged",
-    "previous_failed_path": "benchmark-results/exl3-long-quality-v1",
-    "diagnosis": "Two EngineCore samples blocked at the extra all_token_ids GPU-to-CPU read after3200 first-prefill rows. Stopped measurement, preserved source and stacks. Causal fix unproven until GPU retest.",
-    "session": 74370,
-    "note": "v1 extra-device-read stall; v2 explicit prompt-scoring OOM. CPU capture tests pass; v3 passed3200-row boundary and completed32K; full long quality remains pending."
+    "session": 44320,
+    "path": "benchmark-results/exl3-mtp-serving-v1",
+    "status": "RUNNING",
+    "purpose": "Controlled3-4-4-3 serving on frozen4K/32K/48K/103K/128K code+prose C1/C4 cold/warm;512 output tokens; classify pressure"
   },
   "gptq_functional_port_evidence_commit": "76cbbb3",
   "additional_experiments": {
     "full_draft_vocabulary": "After controlled MTP3/MTP4, compare 65536-row EXL3 draft with full248320 at matched MTP depth; measure throughput, acceptance and memory/context capacity"
-  },
-  "queued_campaign": {
-    "session": 98733,
-    "path": "benchmark-results/exl3-mtp-pilot-v1",
-    "status": "CANCELLED_BEFORE_GPU_RUN",
-    "purpose": "First MTP3/MTP4 C1/C4 4K pilot; requires completed long quality",
-    "note": "No performance data acquired; long-quality prerequisite did not complete."
   }
 }

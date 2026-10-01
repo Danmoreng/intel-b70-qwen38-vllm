@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "status": "PREPARED_NOT_GPU_RUN",
+  "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "order": [
+    3,
+    4,
+    4,
+    3
+  ],
+  "concurrency": [
+    1,
+    4
+  ],
+  "contexts": [
+    4096,
+    32768,
+    49152,
+    102752,
+    131072
+  ],
+  "domains": [
+    "code",
+    "prose"
+  ],
+  "output_tokens": 512,
+  "sampling": {
+    "temperature": 0,
+    "top_p": 1,
+    "top_k": -1,
+    "seed": 20261001,
+    "ignore_eos": true
+  },
+  "serving_profile": "Expanded .965/262144/C16/4096/media32/4, FP8 KV, INT8 prefill, graph buckets unchanged; vary only speculative token count3/4. Native per-depth speculative-state allocation remains automatic.",
+  "draft_vocabulary": "512x128=65536 rows, unchanged in this depth comparison; full-vocabulary test follows at selected depth",
+  "warmup": "One excluded4K code wave for C1 andC4 per fresh engine; separate salt namespace prevents contamination of cold measurement",
+  "cache_modes": [
+    "cold (private unique salt; require0 native cache hits)",
+    "warm (same salt/input after cold; report measured hits, never assume a full hit)"
+  ],
+  "performance_metrics": [
+    "native prefill rate",
+    "native request-weighted decode",
+    "client C4 aggregate decode over interval union",
+    "wave output/wall throughput",
+    "native/client TTFT",
+    "native speculative rounds/drafted/accepted and per-position counts",
+    "generated tokens/round",
+    "client token delivery p50/p95/max gaps with within-burst shared timestamps",
+    "preemptions and cache hits",
+    "stable energy J/output token when available"
+  ],
+  "measurement_boundaries": "Client token-ID return includes first-packet prompt-ID overhead; same setting in both arms. Native timings and client observations are separate. Full prompt IDs returned by API must match frozen IDs exactly.",
+  "additional_required_profiling": [
+    "actual vs padded rows/graph bucket",
+    "target/draft/LM-head/sampler GPU latency",
+    "full speculative-cycle GPU latency"
+  ],
+  "selection_policy": "Do not select a universal depth from acceptance alone or a4K pilot. Compare repeated end-to-end C1/C4 separately across contexts/domains/cache modes and retain pressure/queue/compilation effects. No new post-hoc speed threshold.",
+  "prerequisite": "Full-candidate long reference/acquisition/comparison complete on this exact image; then GPU pilot, followed by servingABBA and separate component profiling",
+  "local_http_tests": {
+    "status": "PASS",
+    "tests": 4,
+    "scope": "Warmup/cold/warm accounting, bad prompt IDs, missing output IDs and missing prompt-ID verification rejected"
+  },
+  "failed_preparation_note": "Offline rendering without converting JSON tool-call arguments initially failed. Dropping reasoning_content while normalizing aliases also failed the102752-token guard; final renderer preserves both reasoning aliases like vLLM chat_utils. No failed rendering supplied measured inputs.",
+  "source_sha256": {
+    "scripts/run-exl3-mtp-study.py": "6257a59aaa3636e1a4d5762774086ef778aac08ddca9d4e391e021e4516bf41c",
+    "scripts/test_exl3_mtp_study.py": "107333fe39183d7b9e18d3ffa7b7d1e1126643420b15c812d547befe49e21b8a",
+    "benchmarks/experiments/quantization-reference/freeze_mtp_panel.py": "3868f134c31050271bb8a097d1ff4df08bb46c302c3e7bde3228b49e82e7347a"
+  },
+  "preserved_v1_windows": "All original eight window dictionaries are byte-equivalent; only48K code/prose points added.",
+  "capacity_policy": "C4x103K/128K can exceed KV capacity; retain and classify pressure results. Added48K code/prose C4 point is a candidate for a clean long-concurrency comparison; require actual zero preemption and observe active rows, never presume fit."
+}

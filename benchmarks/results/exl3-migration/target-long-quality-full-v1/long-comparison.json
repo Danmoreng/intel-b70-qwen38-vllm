@@ -1,0 +1,422 @@
+{
+  "schema": 1,
+  "status": "MEASURED",
+  "panel_sha256": "fbb3be674583f1704573d19c55fe5a86187efd35bc4438df2ef100132efeba4d",
+  "arm": "target-full-candidate",
+  "reference": {
+    "kind": "original_layer_and_token_chunk_stream",
+    "dtype": "bfloat16",
+    "panel_sha256": "fbb3be674583f1704573d19c55fe5a86187efd35bc4438df2ef100132efeba4d",
+    "windows": [
+      {
+        "name": "code-prefix32768-suffix128",
+        "domain": "code",
+        "prefix_tokens": 32768,
+        "suffix_tokens": 128,
+        "nll_mean": 0.16944377443316228,
+        "perplexity": 1.1846457377824584
+      },
+      {
+        "name": "prose-prefix102400-suffix128",
+        "domain": "prose",
+        "prefix_tokens": 102400,
+        "suffix_tokens": 128,
+        "nll_mean": 0.1863431600608365,
+        "perplexity": 1.2048356409175627
+      },
+      {
+        "name": "code-prefix184320-suffix128",
+        "domain": "code",
+        "prefix_tokens": 184320,
+        "suffix_tokens": 128,
+        "nll_mean": 0.17287696943849795,
+        "perplexity": 1.1887198472168512
+      },
+      {
+        "name": "prose-prefix262015-suffix128",
+        "domain": "prose",
+        "prefix_tokens": 262015,
+        "suffix_tokens": 128,
+        "nll_mean": 0.23629085297494523,
+        "perplexity": 1.2665426342932786
+      }
+    ],
+    "vocab_size": 248320,
+    "chunk_tokens": 4096,
+    "seconds": 2020.816705035002,
+    "torch": "2.13.0+xpu",
+    "model_path": "/cache/hub/models--Qwen--Qwen3.8-27B/snapshots/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+    "context_truncated": false,
+    "peak_rss_gib": 5.930477142333984,
+    "peak_xpu_gib": 8.10084056854248
+  },
+  "candidate": {
+    "kind": "native_vllm_teacher_forced",
+    "model_path": "/exl3",
+    "quantization": "exl3",
+    "dtype": "float16",
+    "panel_sha256": "fbb3be674583f1704573d19c55fe5a86187efd35bc4438df2ef100132efeba4d",
+    "vocab_size": 248320,
+    "windows": [
+      {
+        "window": 0,
+        "name": "code-prefix32768-suffix128",
+        "domain": "code",
+        "positions": 32895,
+        "nll_mean": 0.1576121300458908,
+        "perplexity": 1.1707119941711426
+      },
+      {
+        "window": 1,
+        "name": "prose-prefix102400-suffix128",
+        "domain": "prose",
+        "positions": 102527,
+        "nll_mean": 3.4983127117156982,
+        "perplexity": 33.05962371826172
+      },
+      {
+        "window": 2,
+        "name": "code-prefix184320-suffix128",
+        "domain": "code",
+        "positions": 184447,
+        "nll_mean": 0.0281586404889822,
+        "perplexity": 1.0285588502883911
+      },
+      {
+        "window": 3,
+        "name": "prose-prefix262015-suffix128",
+        "domain": "prose",
+        "positions": 262142,
+        "nll_mean": 1.5749919414520264,
+        "perplexity": 4.830702781677246
+      }
+    ],
+    "positions": 582011,
+    "nll_mean": 1.343481421470642,
+    "perplexity": 3.832362174987793,
+    "seconds": 1075.4790725149942,
+    "torch": "2.13.0+xpu",
+    "api_alignment_verified": true,
+    "engine_config": {
+      "dtype": "float16",
+      "max_model_len": 262144,
+      "max_num_seqs": 16,
+      "max_num_batched_tokens": 4096,
+      "gpu_memory_utilization": 0.965,
+      "enforce_eager": false,
+      "enable_prefix_caching": true,
+      "max_logprobs": 1,
+      "limit_mm_per_prompt": {
+        "image": 32,
+        "video": 4
+      },
+      "seed": 20261001,
+      "kv_cache_dtype": "fp8",
+      "mm_processor_kwargs": {
+        "max_pixels": 4194304
+      },
+      "mamba_cache_mode": "align",
+      "scheduler_reserve_full_isl": true,
+      "watermark": 0.0,
+      "speculative_config": {
+        "method": "mtp",
+        "num_speculative_tokens": 3
+      },
+      "compilation_config": {
+        "cudagraph_mode": "FULL_DECODE_ONLY",
+        "cudagraph_capture_sizes": [
+          1,
+          2,
+          4,
+          8,
+          12,
+          16,
+          24,
+          32,
+          40,
+          48,
+          56,
+          64
+        ]
+      }
+    },
+    "capture_identity": [
+      {
+        "capture_installed": true,
+        "runner_type": "XPUModelRunnerV2",
+        "prompt_scorer_sha256": "ea18d7a518d1eb004f63bf2cdff7aeb4e4979ec75ef6f7469f1d301dd1173cfb",
+        "request_registration_sha256": "7feb34eb03ec8bcc81c901140f7e393774b7fdc5553a74aeb6640721ac19040d",
+        "original_head_chunker_sha256": "81b3b80cd8e32441f78ab5d27082519ed6d5a3bf1aa360c3f273865de9c6d4a7",
+        "measurement_head_chunk_tokens": 128,
+        "prompt_metadata_source": "registered_cpu_ids_and_batch_cpu_prefill_offset",
+        "panel_sha256": "fbb3be674583f1704573d19c55fe5a86187efd35bc4438df2ef100132efeba4d"
+      }
+    ],
+    "kv_cache_dtype": "fp8",
+    "speculation": true,
+    "prefix_cache": true,
+    "graphs": true,
+    "scope": "Teacher-forced prompt scoring. Configuring graphs/MTP does not by itself prove decode graph or draft acceptance correctness."
+  },
+  "windows": [
+    {
+      "name": "code-prefix32768-suffix128",
+      "domain": "code",
+      "prefix_tokens": 32768,
+      "suffix_tokens": 128,
+      "original_nll_mean": 0.16944377443316228,
+      "original_perplexity": 1.1846457377824584,
+      "nll_mean": 0.17402221431471077,
+      "perplexity": 1.190082002382859,
+      "delta_nll": 0.004578439881548491,
+      "perplexity_ratio_to_original": 1.0045889369513765,
+      "kl_positions": [
+        32786,
+        32798,
+        32805,
+        32815,
+        32827,
+        32849,
+        32859,
+        32867
+      ],
+      "kl_original_to_checkpoint": [
+        0.0020903390519477656,
+        0.00021828324028510594,
+        0.0005198858305486331,
+        0.001473491950256189,
+        0.0024917784854279266,
+        0.0006134779319475073,
+        2.3012708267851177e-05,
+        0.000156368267305885
+      ],
+      "kl_checkpoint_to_original": [
+        0.0016444634049662906,
+        0.00015115530943235467,
+        0.00027127257962810184,
+        0.0009385912721570544,
+        0.0017913705174683746,
+        0.0004932958522437568,
+        1.8188108609850425e-05,
+        9.138866575551227e-05
+      ],
+      "js_divergence": [
+        0.0004568756033860702,
+        4.372461534253835e-05,
+        8.29777709086914e-05,
+        0.00027627334225676574,
+        0.0005120927791282862,
+        0.00013583391227146863,
+        5.039311987183033e-06,
+        2.4953356787407524e-05
+      ],
+      "top1_agreement": 1.0,
+      "original_probability_outside_tokenizer_mean": 1.3049806019854336e-09,
+      "checkpoint_probability_outside_tokenizer_mean": 3.6519299039621707e-10
+    },
+    {
+      "name": "prose-prefix102400-suffix128",
+      "domain": "prose",
+      "prefix_tokens": 102400,
+      "suffix_tokens": 128,
+      "original_nll_mean": 0.1863431600608365,
+      "original_perplexity": 1.2048356409175627,
+      "nll_mean": 0.18341841786856605,
+      "perplexity": 1.2013169554160639,
+      "delta_nll": -0.0029247421922704575,
+      "perplexity_ratio_to_original": 0.9970795306994579,
+      "kl_positions": [
+        102422,
+        102435,
+        102440,
+        102480,
+        102489,
+        102493,
+        102502,
+        102526
+      ],
+      "kl_original_to_checkpoint": [
+        3.420296996271951e-05,
+        0.0023348539896788944,
+        4.355939895929844e-05,
+        1.1011498038602658e-05,
+        9.941838135442638e-07,
+        5.585095510495854e-05,
+        7.427707649923127e-06,
+        4.324076860394412e-06
+      ],
+      "kl_checkpoint_to_original": [
+        2.7834487538742482e-05,
+        0.0022409188351259074,
+        3.5134230382465444e-05,
+        8.553948615513412e-06,
+        1.0476538552583344e-06,
+        6.363657189623379e-05,
+        7.375996684191608e-06,
+        4.554337940164779e-06
+      ],
+      "js_divergence": [
+        7.594504198268096e-06,
+        0.0005648182902344548,
+        9.662182632169523e-06,
+        2.3589343058427226e-06,
+        2.543205967174149e-07,
+        1.4789713171955227e-05,
+        1.8368248328862067e-06,
+        1.1017975243388586e-06
+      ],
+      "top1_agreement": 1.0,
+      "original_probability_outside_tokenizer_mean": 4.2291762304284124e-10,
+      "checkpoint_probability_outside_tokenizer_mean": 7.321089024287524e-10
+    },
+    {
+      "name": "code-prefix184320-suffix128",
+      "domain": "code",
+      "prefix_tokens": 184320,
+      "suffix_tokens": 128,
+      "original_nll_mean": 0.17287696943849795,
+      "original_perplexity": 1.1887198472168512,
+      "nll_mean": 0.17252441011603992,
+      "perplexity": 1.1883008268220374,
+      "delta_nll": -0.0003525593224580348,
+      "perplexity_ratio_to_original": 0.9996475028192768,
+      "kl_positions": [
+        184320,
+        184326,
+        184346,
+        184355,
+        184392,
+        184405,
+        184418,
+        184446
+      ],
+      "kl_original_to_checkpoint": [
+        0.03106191679277214,
+        0.0064873703035651055,
+        2.4579760105122195e-06,
+        0.00017043641932375488,
+        3.23350820388224e-06,
+        1.5407211131635277e-05,
+        8.375377353080033e-06,
+        4.9807930763546836e-05
+      ],
+      "kl_checkpoint_to_original": [
+        0.032087621428301134,
+        0.005110139126671876,
+        2.3367584426407534e-06,
+        0.0001555365099938486,
+        2.7803317760605747e-06,
+        1.3237777441527146e-05,
+        7.475829397115932e-06,
+        5.695122292648499e-05
+      ],
+      "js_divergence": [
+        0.007846369349755472,
+        0.0014165222184252713,
+        5.966523311424503e-07,
+        4.0606356379821294e-05,
+        7.422089528856898e-07,
+        3.5428501442902638e-06,
+        1.97009365331881e-06,
+        1.3197520494485405e-05
+      ],
+      "top1_agreement": 1.0,
+      "original_probability_outside_tokenizer_mean": 1.3262072524952517e-07,
+      "checkpoint_probability_outside_tokenizer_mean": 1.1882112178014412e-07
+    },
+    {
+      "name": "prose-prefix262015-suffix128",
+      "domain": "prose",
+      "prefix_tokens": 262015,
+      "suffix_tokens": 128,
+      "original_nll_mean": 0.23629085297494523,
+      "original_perplexity": 1.2665426342932786,
+      "nll_mean": 0.23027641038127888,
+      "perplexity": 1.258947948122749,
+      "delta_nll": -0.006014442593666347,
+      "perplexity_ratio_to_original": 0.9940036079600533,
+      "kl_positions": [
+        262027,
+        262046,
+        262058,
+        262062,
+        262084,
+        262091,
+        262114,
+        262135
+      ],
+      "kl_original_to_checkpoint": [
+        3.869256237496837e-05,
+        3.246745212357249e-05,
+        7.570366779788536e-06,
+        6.335072040196415e-06,
+        6.003975605573618e-06,
+        2.6856047342356337e-06,
+        8.040072457808145e-07,
+        0.0003505620875784092
+      ],
+      "kl_checkpoint_to_original": [
+        2.8692336568774162e-05,
+        2.4980956599308685e-05,
+        8.89135072650582e-06,
+        5.0135428198781495e-06,
+        6.194746062071356e-06,
+        2.841510286956128e-06,
+        6.746315719814088e-07,
+        0.0001296316138662075
+      ],
+      "js_divergence": [
+        8.084205088865686e-06,
+        6.955741163150022e-06,
+        1.9966644104220225e-06,
+        1.387502480802598e-06,
+        1.4816794397970277e-06,
+        6.867314877112556e-07,
+        1.8233777474798047e-07,
+        2.7127589733289132e-05
+      ],
+      "top1_agreement": 1.0,
+      "original_probability_outside_tokenizer_mean": 5.432237625796469e-12,
+      "checkpoint_probability_outside_tokenizer_mean": 4.286875694078157e-12
+    }
+  ],
+  "array_sha256": {
+    "bf16/window-000-nll.npy": "80356ff617c5051f84df3a198af8e465c2b6f5da85b9615ab0a640f6953aae15",
+    "bf16/window-000-logprobs.npy": "0cd8aa32abb7aa3e58f9ff32f1d6bf94b4dd1c610aa4c619517d6af522e7d342",
+    "target-full-candidate/window-000-nll.npy": "019793f6d4e96f87a8930c709729ad6f2ba7f84d6345ad492e6559509498000a",
+    "target-full-candidate/window-000-logprobs.npy": "48325410331e96080966a2823b86e31db1443f8ad34febe3b44f1c519111cb57",
+    "bf16/window-001-nll.npy": "79d8e6777147e7298bbf9f6fb9ed8cb7c8750622af20fda5a4c9c417c4bcf125",
+    "bf16/window-001-logprobs.npy": "5ecd916b1fe2949dd3973bdfeca140ae853932ea736c8301e90ae6ffca5a480f",
+    "target-full-candidate/window-001-nll.npy": "a10c9828aa3c005dcc4390479d7470cf753286998f73472d6ffe6fc48ec06902",
+    "target-full-candidate/window-001-logprobs.npy": "1d580bfb3bac598706a32b780d7c25f738be438e224c8398e1fb9cea45738979",
+    "bf16/window-002-nll.npy": "aa033b14677123136bbb901b0f0db2c101b6237740a7b2fa3fd87cc5a58bf1ef",
+    "bf16/window-002-logprobs.npy": "76eecc4c3897629cf82b2c86f878254742b694a407e32bd1f272e3ec479d1455",
+    "target-full-candidate/window-002-nll.npy": "41e5b4e9338b5ebe185e7b96eeb2bf2981a23a35f245a3244f42f0fc8c67ba56",
+    "target-full-candidate/window-002-logprobs.npy": "44bbb596be0d166bd59fe0c010370858cc0c2b5b6fb077aa6948f463e99ba995",
+    "bf16/window-003-nll.npy": "848f9414c950253bb51ca7ae686cc51bd8a1177d54582838af10142d25ce63cd",
+    "bf16/window-003-logprobs.npy": "91101caa64b957bb94927ed3b990d65c1bdf4e1a3d3788f4093338b88a233882",
+    "target-full-candidate/window-003-nll.npy": "2394436df594186c3e027d21d97e5edafd30b2f8c867f3e8fb1e157624d3d606",
+    "target-full-candidate/window-003-logprobs.npy": "273fb66383d3ace13804ada330d7fb4087c7d843e91c3d35f4edb2f83042f3af"
+  },
+  "overall": {
+    "suffix_positions": 512,
+    "kl_positions": 32,
+    "original_perplexity": 1.2107484101962853,
+    "perplexity": 1.2093225939995904,
+    "delta_nll": -0.0011783260567115872,
+    "kl_mean": 0.001510093402926918,
+    "exploratory_delta_nll_window_ci95": [
+      -0.004598971775864269,
+      0.0027026443630937536
+    ]
+  },
+  "vocabulary": {
+    "tokenizer_sha256": "0997f410c57a1f4e53b09e4be8f4a172d90edd9564368fb0847030937229b9f3",
+    "valid_ids": 248077,
+    "logit_rows": 248320,
+    "masking": "No additional masking in any arm"
+  },
+  "scope": "Precision drift probes with repeated frozen code/prose prefixes; not a natural long-document or agent-quality benchmark",
+  "reference_precision_note": "Original BF16 official cached layers, bounded token chunks; chunk-control numerical drift reported separately; not a bit-exact unchunked long reference.",
+  "confidence_interval_note": "Exploratory window bootstrap; four engineered windows cannot establish general model quality. No post-hoc pass threshold."
+}

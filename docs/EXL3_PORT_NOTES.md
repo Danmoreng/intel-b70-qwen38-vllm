@@ -417,9 +417,16 @@ its original module helper unchanged. Scoring target IDs and normalization
 remain intact; immutable engine image, weights, full context and all profile
 settings are unchanged. CPU tests cover split prefill, head boundaries and
 the final unscored token, forbid extra device request-metadata reads, and
-reject changed frozen inputs. Acquisition `exl3-long-quality-v3` has passed
-the earlier3200-row boundary and completed the32K prompt. Remaining windows,
-independent API alignment and BF16 suffix comparisons are still pending.
+reject changed frozen inputs. Acquisition `exl3-long-quality-v3` completes
+all four contexts in1075.48 seconds, with27.58GiB peak allocated and27.94GiB
+peak reserved GPU memory. Every native prompt NLL position is covered exactly
+once and aligns with the independent API. The512 suffix target positions
+give pooled PPL1.209323 versus original BF161.210748, mean full-vocabulary
+KL0.0015101 over32 positions, with top1 agreement at all32. Per-window values
+are preserved in `target-long-quality-full-v1`. These engineered repeated
+prefixes are precision regression detectors; slightly lower pooled PPL does
+not rank general model quality, and the streamed-reference numerical caveat
+remains. Generated decode/graph checks remain before Gate E can close.
 Both failed runs and the stack/source evidence are preserved. Frozen BF16
 arrays were copied with SHA checks into retries; they were not recomputed.
 
@@ -432,3 +439,30 @@ verify accounting and reject unsupported/mismatched token-ID returns. No GPU
 performance samples have been acquired yet. Component/graph-row profiling
 and the requested full/pruned draft-vocabulary comparison remain separate
 requirements; the4K pilot cannot select a universal depth.
+
+That pilot now completes20 measured requests, with no preemptions and all
+returned prompt-ID hashes independently verified in the saved SSE logs.
+MTP4 improves C1 in both cache modes; C4 results differ by cache mode. This
+is one pass per point, not a robust depth selection. Generated sequences
+vary across depth/batching/cache (first divergence at137 or later in the
+512-token4K code output); the hashes/first differences are retained and
+generated numerical/quality checks must explain that variation rather
+than assuming bit-exactness. Both depths use full target vocabulary and
+the same65536-row draft head.
+
+The serving ABBA study uses `target-mtp-protocol-v2`, preserving all eight
+original window dictionaries and adding48K code/prose. C4x103K/128K may
+exceed the shared KV pool; pressure results remain in the study, explicitly
+classified instead of treated as clean kernel throughput. The48K C4 point
+is a candidate for a clean long comparison; fit is not presumed. Four HTTP
+tests now also reject an API that omits prompt-ID verification. Full study
+results and actual concurrent/padded rows remain pending.
+
+A guarded diagnostic event profiler is prepared against the exact V2 source
+hash, with actual call-site counts and four CPU event-plumbing branches
+validated. It times target body/head, verification sampling, sampled-token
+commit, complete draft proposal and full runner-cycle timeline spans, with
+CPU actual/padded rows and graph bucket metadata. Event synchronization is
+deferred until generation finishes. It is not an uninstrumented throughput
+arm; fused draft body/head/sampler decomposition remains explicitly missing.
+Actual XPU-event validation and profiling follow the completed serving study.

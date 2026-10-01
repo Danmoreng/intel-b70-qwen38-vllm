@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "status": "PREPARED_CPU_GUARDS_PASS_XPU_UNTESTED",
+  "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "depths": [
+    3,
+    4
+  ],
+  "contexts": [
+    4096,
+    49152,
+    102752
+  ],
+  "domains": [
+    "code",
+    "prose"
+  ],
+  "concurrency": [
+    1,
+    4
+  ],
+  "output_tokens": 512,
+  "power_w": 180,
+  "timings": [
+    "target body",
+    "target head",
+    "verification sampler",
+    "sampled-token commit",
+    "complete draft proposal",
+    "whole runner cycle"
+  ],
+  "rows": "CPU input-batch actual/padded/scheduled rows and target graph descriptor",
+  "synchronization": "Resolve recorded XPU events only after wave generation finishes",
+  "prerequisite": "Completed serving ABBA on matched image and full-candidate long quality; GPU-exclusive global lock",
+  "unmeasured": [
+    "draft body/head/sampler split within fused captured graphs",
+    "other state-commit operations outside postprocess_sampled"
+  ],
+  "source_sha256": {
+    "scripts/run-exl3-component-profile.py": "6d2498893b166d4226c42079b7109a2bb4fd1bdd8de579af4ab28249e28b88e5",
+    "benchmarks/experiments/quantization-reference/profile_capture.py": "ee7f4e36b84d0f1812d712e4567506400040e0701286dbdb7d2f5f1a457a5ee1",
+    "benchmarks/experiments/quantization-reference/run_component_profile.py": "530f2449ed5d871fa7752a1e750ba637c0138f5aeee93fed7480156d12ccea2c",
+    "benchmarks/experiments/quantization-reference/validate_profile_capture.py": "7596671f10e4e9a0f5e1d164b3338e72f63ac1725795225b21e973b349eefc1c"
+  }
+}

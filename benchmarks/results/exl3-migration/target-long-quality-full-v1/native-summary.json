@@ -1,0 +1,108 @@
+{
+  "kind": "native_vllm_teacher_forced",
+  "model_path": "/exl3",
+  "quantization": "exl3",
+  "dtype": "float16",
+  "panel_sha256": "fbb3be674583f1704573d19c55fe5a86187efd35bc4438df2ef100132efeba4d",
+  "vocab_size": 248320,
+  "windows": [
+    {
+      "window": 0,
+      "name": "code-prefix32768-suffix128",
+      "domain": "code",
+      "positions": 32895,
+      "nll_mean": 0.1576121300458908,
+      "perplexity": 1.1707119941711426
+    },
+    {
+      "window": 1,
+      "name": "prose-prefix102400-suffix128",
+      "domain": "prose",
+      "positions": 102527,
+      "nll_mean": 3.4983127117156982,
+      "perplexity": 33.05962371826172
+    },
+    {
+      "window": 2,
+      "name": "code-prefix184320-suffix128",
+      "domain": "code",
+      "positions": 184447,
+      "nll_mean": 0.0281586404889822,
+      "perplexity": 1.0285588502883911
+    },
+    {
+      "window": 3,
+      "name": "prose-prefix262015-suffix128",
+      "domain": "prose",
+      "positions": 262142,
+      "nll_mean": 1.5749919414520264,
+      "perplexity": 4.830702781677246
+    }
+  ],
+  "positions": 582011,
+  "nll_mean": 1.343481421470642,
+  "perplexity": 3.832362174987793,
+  "seconds": 1075.4790725149942,
+  "torch": "2.13.0+xpu",
+  "api_alignment_verified": true,
+  "engine_config": {
+    "dtype": "float16",
+    "max_model_len": 262144,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 4096,
+    "gpu_memory_utilization": 0.965,
+    "enforce_eager": false,
+    "enable_prefix_caching": true,
+    "max_logprobs": 1,
+    "limit_mm_per_prompt": {
+      "image": 32,
+      "video": 4
+    },
+    "seed": 20261001,
+    "kv_cache_dtype": "fp8",
+    "mm_processor_kwargs": {
+      "max_pixels": 4194304
+    },
+    "mamba_cache_mode": "align",
+    "scheduler_reserve_full_isl": true,
+    "watermark": 0.0,
+    "speculative_config": {
+      "method": "mtp",
+      "num_speculative_tokens": 3
+    },
+    "compilation_config": {
+      "cudagraph_mode": "FULL_DECODE_ONLY",
+      "cudagraph_capture_sizes": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        48,
+        56,
+        64
+      ]
+    }
+  },
+  "capture_identity": [
+    {
+      "capture_installed": true,
+      "runner_type": "XPUModelRunnerV2",
+      "prompt_scorer_sha256": "ea18d7a518d1eb004f63bf2cdff7aeb4e4979ec75ef6f7469f1d301dd1173cfb",
+      "request_registration_sha256": "7feb34eb03ec8bcc81c901140f7e393774b7fdc5553a74aeb6640721ac19040d",
+      "original_head_chunker_sha256": "81b3b80cd8e32441f78ab5d27082519ed6d5a3bf1aa360c3f273865de9c6d4a7",
+      "measurement_head_chunk_tokens": 128,
+      "prompt_metadata_source": "registered_cpu_ids_and_batch_cpu_prefill_offset",
+      "panel_sha256": "fbb3be674583f1704573d19c55fe5a86187efd35bc4438df2ef100132efeba4d"
+    }
+  ],
+  "kv_cache_dtype": "fp8",
+  "speculation": true,
+  "prefix_cache": true,
+  "graphs": true,
+  "scope": "Teacher-forced prompt scoring. Configuring graphs/MTP does not by itself prove decode graph or draft acceptance correctness."
+}

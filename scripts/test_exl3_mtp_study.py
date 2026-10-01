@@ -38,6 +38,7 @@ class Handler(BaseHTTPRequestHandler):
         events=[{'choices':[{'text':'ab','prompt_token_ids':prompt,'token_ids':token_ids}]},
                 {'choices':[{'text':'cd','token_ids':[] if self.server.missing_ids else [12,13],'finish_reason':'length'}]},
                 {'choices':[],'usage':{'prompt_tokens':count,'completion_tokens':4,'total_tokens':count+4}}]
+        if self.server.missing_prompt_ids:events[0]['choices'][0].pop('prompt_token_ids')
         self.send_response(200);self.send_header('Content-Type','text/event-stream');self.end_headers()
         try:
             for event in events:self.wfile.write(b'data: '+json.dumps(event).encode()+b'\n\n')
@@ -51,7 +52,7 @@ class WaveTests(unittest.TestCase):
     def setUp(self):
         self.server=ThreadingHTTPServer(('127.0.0.1',0),Handler)
         self.server.lock=threading.Lock();self.server.seen=set();self.server.stats={'completed':0}
-        self.server.bad_prompt=False;self.server.missing_ids=False
+        self.server.bad_prompt=False;self.server.missing_ids=False;self.server.missing_prompt_ids=False
         self.thread=threading.Thread(target=self.server.serve_forever,daemon=True);self.thread.start()
         self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name)
         self.base=patch.object(M,'BASE',f'http://127.0.0.1:{self.server.server_port}');self.base.start()
@@ -78,6 +79,9 @@ class WaveTests(unittest.TestCase):
     def test_ignored_return_ids_fail_instead_of_fabricating_token_timings(self):
         self.server.missing_ids=True
         with self.assertRaises(AssertionError):self.wave('cold')
+    def test_missing_prompt_ids_fail_instead_of_claiming_alignment(self):
+        self.server.missing_prompt_ids=True
+        with self.assertRaisesRegex(AssertionError,'did not return the frozen prompt IDs'):self.wave('cold')
 
 
 if __name__=='__main__':unittest.main()

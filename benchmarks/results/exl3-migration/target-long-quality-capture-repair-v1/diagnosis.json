@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "status": "CPU_PASS_GPU_PROGRESS_CONFIRMED",
+  "status": "GPU_COMPLETE_API_ALIGNMENT_VERIFIED",
   "scope": "Measurement helper repair, immutable engine image and production profile unchanged",
   "failed_v1": {
     "status": "STOPPED_AFTER_STACK_DIAGNOSIS",
@@ -23,7 +23,10 @@
   },
   "validation": {
     "cpu": "PASS V1 andV2 split prefill; forbidden device request metadata; reject changed prompt;128/128/2 head boundary/final logit exclusion; original scorer unchanged",
-    "gpu": "v3 completed32K prompt and passed the former3200-row failure boundary; full panel/API consolidation and BF16 comparison remain pending"
+    "gpu": "v3 completes all four untruncated contexts; every native prompt NLL position covered exactly once and independent API alignment passed. Full-vocabulary BF16 suffix comparison complete.",
+    "candidate_seconds": 1075.4790725149942,
+    "peak_allocated_gib": 27.581820011138916,
+    "peak_reserved_gib": 27.94140625
   },
   "reference": {
     "source": "benchmark-results/exl3-long-quality-v1",

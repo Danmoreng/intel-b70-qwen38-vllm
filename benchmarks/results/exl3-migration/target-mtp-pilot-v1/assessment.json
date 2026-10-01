@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "status": "PILOT_MEASURED_NOT_SELECTED",
+  "comparisons": [
+    {
+      "concurrency": 1,
+      "cache": "cold",
+      "mtp3_native_weighted_decode_tps": 67.30521719403222,
+      "mtp4_native_weighted_decode_tps": 75.64609468726533,
+      "native_decode_change_percent": 12.392616562230895,
+      "mtp3_client_aggregate_decode_tps": 67.31986798857932,
+      "mtp4_client_aggregate_decode_tps": 75.66288391146671,
+      "aggregate_decode_change_percent": 12.393096083169342,
+      "cached_tokens_mtp3": 0.0,
+      "cached_tokens_mtp4": 0.0,
+      "preemptions": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "concurrency": 1,
+      "cache": "warm",
+      "mtp3_native_weighted_decode_tps": 70.07499213655669,
+      "mtp4_native_weighted_decode_tps": 73.63803107548286,
+      "native_decode_change_percent": 5.0846084034983585,
+      "mtp3_client_aggregate_decode_tps": 70.0901928596906,
+      "mtp4_client_aggregate_decode_tps": 73.65311010677972,
+      "aggregate_decode_change_percent": 5.083332063619106,
+      "cached_tokens_mtp3": 1600.0,
+      "cached_tokens_mtp4": 1664.0,
+      "preemptions": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "concurrency": 4,
+      "cache": "cold",
+      "mtp3_native_weighted_decode_tps": 45.634027257956504,
+      "mtp4_native_weighted_decode_tps": 43.517020140017884,
+      "native_decode_change_percent": -4.639097719716401,
+      "mtp3_client_aggregate_decode_tps": 149.14858290754,
+      "mtp4_client_aggregate_decode_tps": 148.0430751966829,
+      "aggregate_decode_change_percent": -0.7412123463100051,
+      "cached_tokens_mtp3": 0.0,
+      "cached_tokens_mtp4": 0.0,
+      "preemptions": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "concurrency": 4,
+      "cache": "warm",
+      "mtp3_native_weighted_decode_tps": 45.469200233486475,
+      "mtp4_native_weighted_decode_tps": 50.72223089095853,
+      "native_decode_change_percent": 11.552942718362091,
+      "mtp3_client_aggregate_decode_tps": 156.39001630173374,
+      "mtp4_client_aggregate_decode_tps": 172.29984055639085,
+      "aggregate_decode_change_percent": 10.173171300117545,
+      "cached_tokens_mtp3": 6400.0,
+      "cached_tokens_mtp4": 6656.0,
+      "preemptions": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "interpretation": "Single pass only: MTP4 faster in C1; C4 cache-dependent. Full ABBA and component/row measurements required before per-profile depth selection. All20 measured frozen prompt IDs independently verified; greedy sequence variation documented separately."
+}

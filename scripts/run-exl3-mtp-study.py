@@ -51,7 +51,7 @@ def percentile(values,p):
 
 def stream(payload,barrier,output):
     request=urllib.request.Request(BASE+'/v1/completions',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'})
-    barrier.wait();started=time.monotonic();first=None;usage=None;times=[];ids=[];bursts=[];chunks=[];finish=None
+    barrier.wait();started=time.monotonic();first=None;usage=None;times=[];ids=[];bursts=[];chunks=[];finish=None;prompt_verified=False
     with urllib.request.urlopen(request,timeout=3600) as response,output.open('w') as log:
         for line in response:
             if not line.startswith(b'data: '):continue
@@ -63,6 +63,7 @@ def stream(payload,barrier,output):
                 returned=choice.pop('prompt_token_ids',None)
                 if returned is not None:
                     assert returned==payload['prompt'],'API prompt IDs differ from the frozen inputs'
+                    prompt_verified=True
                     choice['prompt_ids_sha256']=sha(json.dumps(returned,separators=(',',':')).encode())
                 new=choice.get('token_ids') or []
                 if new:
@@ -72,12 +73,13 @@ def stream(payload,barrier,output):
             usage=event.get('usage') or usage
             log.write(json.dumps({'elapsed_s':elapsed,'event':event})+'\n')
     wall=time.monotonic()-started
+    assert prompt_verified,'API did not return the frozen prompt IDs for verification'
     assert usage and usage['completion_tokens']==payload['max_tokens']==len(ids)
     assert usage['prompt_tokens']==len(payload['prompt'])
     gaps=[b-a for a,b in zip(times,times[1:])]
     return {'wall_s':wall,'ttft_client_s':first,'started_monotonic':started,'finished_monotonic':started+wall,
             'first_token_monotonic':started+first if first is not None else None,'usage':usage,'finish_reason':finish,
-            'output_ids_sha256':sha(json.dumps(ids,separators=(',',':')).encode()),
+            'prompt_ids_verified':prompt_verified,'output_ids_sha256':sha(json.dumps(ids,separators=(',',':')).encode()),
             'output_text_sha256':sha(''.join(chunks).encode()),'token_ids':ids,'bursts':bursts,
             'client_token_delivery_gaps_s':{'p50':percentile(gaps,.5),'p95':percentile(gaps,.95),'max':max(gaps,default=0)},
             'delivery_note':'Tokens in one SSE burst share the observed delivery timestamp. These are client gaps, not separate GPU-step timings. Returning prompt IDs adds identical first-packet overhead to both arms.'}
@@ -129,6 +131,8 @@ def wave(window,concurrency,mode,index,depth,phase,output_tokens):
             'energy_j':(energy_after-energy_before)/1e6 if energy_before is not None and energy_after is not None and energy_after>=energy_before else None,
             'metrics_note':'Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.'}
     result['joules_per_output_token']=result['energy_j']/native['generation_tokens'] if result['energy_j'] is not None else None
+    result['load_classification']='preempting_pressure' if native['preemptions'] else 'no_observed_preemption'
+    result['comparison_note']='Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows.'
     save(root/'result.json',result);(root/'metrics-before.prom').write_text(raw_before);(root/'metrics-after.prom').write_text(raw_after)
     return {k:v for k,v in result.items() if k!='responses'}
 

@@ -1,0 +1,617 @@
+{
+  "schema": 1,
+  "status": "COMPLETE",
+  "scope": "PILOT",
+  "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "panel_sha256": "70bf06b19e9c9d498961d4163615d290f03ffa6a83ad124748ca9a8a5d2f63e4",
+  "started_unix": 1790875403.9102888,
+  "arms": [
+    {
+      "depth": 3,
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "b70-exl3-mtp-study",
+        "--device",
+        "/dev/dri",
+        "-v",
+        "/dev/dri/by-path:/dev/dri/by-path:ro",
+        "--shm-size",
+        "8g",
+        "-p",
+        "127.0.0.1:8082:8000",
+        "-e",
+        "HF_HUB_OFFLINE=1",
+        "-e",
+        "PYTHONPATH=/opt/b70-runtime",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/runtime:/opt/b70-runtime:ro",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-mtp/046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088/mtp3/vllm:/root/.cache/vllm",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-mtp/046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088/mtp3/triton:/root/.triton/cache",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-mtp/046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088/mtp3/neo_compiler_cache:/root/.cache/neo_compiler_cache",
+        "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+        "models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml",
+        "--gpu",
+        "0",
+        "--port",
+        "8000",
+        "--model-path",
+        "/models/checkpoint",
+        "--set",
+        "vllm.gpu_memory_utilization=0.965",
+        "--set",
+        "vllm.limit_mm_per_prompt={\"image\":32,\"video\":4}",
+        "--set",
+        "vllm.mm_processor_kwargs={\"max_pixels\":4194304}",
+        "--set",
+        "vllm.max_model_len=262144",
+        "--set",
+        "vllm.max_num_seqs=16",
+        "--set",
+        "vllm.max_num_batched_tokens=4096",
+        "--set",
+        "vllm.speculative_config={\"method\":\"mtp\",\"num_speculative_tokens\":3}"
+      ],
+      "settings": {
+        "gpu_memory_utilization": 0.965,
+        "limit_mm_per_prompt": {
+          "image": 32,
+          "video": 4
+        },
+        "mm_processor_kwargs": {
+          "max_pixels": 4194304
+        },
+        "max_model_len": 262144,
+        "max_num_seqs": 16,
+        "max_num_batched_tokens": 4096,
+        "speculative_config": {
+          "method": "mtp",
+          "num_speculative_tokens": 3
+        }
+      },
+      "waves": [
+        {
+          "window": "code-4096",
+          "domain": "code",
+          "context_tokens": 4096,
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "wall_s": 9.40692917999695,
+          "native": {
+            "decode_seconds": 7.607136880993494,
+            "cached_tokens": 0.0,
+            "prefill_seconds": 1.7967235910036834,
+            "generation_tokens": 512.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 4096.0,
+            "draft_tokens": 501.0,
+            "accepted_tokens": 347.0,
+            "prompt_tokens": 4096.0,
+            "completed": 1.0
+          },
+          "speculative_rounds_sum": 167.0,
+          "accepted_tokens_by_position": {
+            "0": 140.0,
+            "1": 115.0,
+            "2": 92.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.8383233532934131,
+            "1": 0.688622754491018,
+            "2": 0.5508982035928144
+          },
+          "generated_tokens_per_round": 3.065868263473054,
+          "mean_acceptance_length": 3.0778443113772456,
+          "native_prefill_tps": 2279.7051368997154,
+          "native_request_weighted_decode_tps": 67.30521719403222,
+          "wave_aggregate_output_tps": 54.427963706660535,
+          "client_decode_interval_union_s": 7.605481342994608,
+          "client_aggregate_decode_tps": 67.31986798857932,
+          "native_ttft_seconds_sum": 1.7980461120605469,
+          "client_ttft_s": [
+            1.8009611040033633
+          ],
+          "energy_j": 1694.100464,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": 3.30878996875
+        },
+        {
+          "window": "code-4096",
+          "domain": "code",
+          "context_tokens": 4096,
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "wall_s": 8.37554226400971,
+          "native": {
+            "decode_seconds": 7.306458186998498,
+            "cached_tokens": 1600.0,
+            "prefill_seconds": 1.0660069480072707,
+            "generation_tokens": 512.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 2496.0,
+            "draft_tokens": 477.0,
+            "accepted_tokens": 354.0,
+            "prompt_tokens": 4096.0,
+            "completed": 1.0
+          },
+          "speculative_rounds_sum": 159.0,
+          "accepted_tokens_by_position": {
+            "0": 143.0,
+            "1": 119.0,
+            "2": 92.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.89937106918239,
+            "1": 0.7484276729559748,
+            "2": 0.5786163522012578
+          },
+          "generated_tokens_per_round": 3.220125786163522,
+          "mean_acceptance_length": 3.2264150943396226,
+          "native_prefill_tps": 2341.4481534720503,
+          "native_request_weighted_decode_tps": 70.07499213655669,
+          "wave_aggregate_output_tps": 61.13037029257195,
+          "client_decode_interval_union_s": 7.304873607994523,
+          "client_aggregate_decode_tps": 70.0901928596906,
+          "native_ttft_seconds_sum": 1.067444086074829,
+          "client_ttft_s": [
+            1.0701803929987364
+          ],
+          "energy_j": 1509.429688,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": 2.948104859375
+        },
+        {
+          "window": "code-4096",
+          "domain": "code",
+          "context_tokens": 4096,
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "wall_s": 16.086161162995268,
+          "native": {
+            "decode_seconds": 44.87879161800083,
+            "cached_tokens": 0.0,
+            "prefill_seconds": 13.958224726011395,
+            "generation_tokens": 2048.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 16384.0,
+            "draft_tokens": 1839.0,
+            "accepted_tokens": 1434.0,
+            "prompt_tokens": 16384.0,
+            "completed": 4.0
+          },
+          "speculative_rounds_sum": 613.0,
+          "accepted_tokens_by_position": {
+            "0": 554.0,
+            "1": 472.0,
+            "2": 408.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.9037520391517129,
+            "1": 0.7699836867862969,
+            "2": 0.6655791190864601
+          },
+          "generated_tokens_per_round": 3.34094616639478,
+          "mean_acceptance_length": 3.33931484502447,
+          "native_prefill_tps": 1173.788237516203,
+          "native_request_weighted_decode_tps": 45.634027257956504,
+          "wave_aggregate_output_tps": 127.31440268740036,
+          "client_decode_interval_union_s": 13.73127360700164,
+          "client_aggregate_decode_tps": 149.14858290754,
+          "native_ttft_seconds_sum": 18.71491050720215,
+          "client_ttft_s": [
+            5.905926210994949,
+            7.035197193996282,
+            3.4345977999910247,
+            2.3536783019953873
+          ],
+          "energy_j": 2897.172791,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": 1.4146351518554687
+        },
+        {
+          "window": "code-4096",
+          "domain": "code",
+          "context_tokens": 4096,
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "wall_s": 14.148738956995658,
+          "native": {
+            "decode_seconds": 45.04147839600046,
+            "cached_tokens": 6400.0,
+            "prefill_seconds": 7.699915916018654,
+            "generation_tokens": 2048.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 9984.0,
+            "draft_tokens": 1965.0,
+            "accepted_tokens": 1391.0,
+            "prompt_tokens": 16384.0,
+            "completed": 4.0
+          },
+          "speculative_rounds_sum": 655.0,
+          "accepted_tokens_by_position": {
+            "0": 560.0,
+            "1": 462.0,
+            "2": 369.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.8549618320610687,
+            "1": 0.7053435114503817,
+            "2": 0.5633587786259542
+          },
+          "generated_tokens_per_round": 3.1267175572519084,
+          "mean_acceptance_length": 3.1236641221374044,
+          "native_prefill_tps": 1296.6375359021274,
+          "native_request_weighted_decode_tps": 45.469200233486475,
+          "wave_aggregate_output_tps": 144.747882212315,
+          "client_decode_interval_union_s": 13.095465097008855,
+          "client_aggregate_decode_tps": 156.39001630173374,
+          "native_ttft_seconds_sum": 10.961678981781006,
+          "client_ttft_s": [
+            3.3131189510022523,
+            4.450929868995445,
+            1.0519632479990833,
+            2.1604619159916183
+          ],
+          "energy_j": 2548.541809,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": 1.2444051801757812
+        }
+      ],
+      "identity": {
+        "container_id": "9bba53aa73277a496b2de4eb22abf26930bfdc7806e474ed85220c3d90f2bed9",
+        "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+        "image_tag": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+        "command": [
+          "models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml",
+          "--gpu",
+          "0",
+          "--port",
+          "8000",
+          "--model-path",
+          "/models/checkpoint",
+          "--set",
+          "vllm.gpu_memory_utilization=0.965",
+          "--set",
+          "vllm.limit_mm_per_prompt={\"image\":32,\"video\":4}",
+          "--set",
+          "vllm.mm_processor_kwargs={\"max_pixels\":4194304}",
+          "--set",
+          "vllm.max_model_len=262144",
+          "--set",
+          "vllm.max_num_seqs=16",
+          "--set",
+          "vllm.max_num_batched_tokens=4096",
+          "--set",
+          "vllm.speculative_config={\"method\":\"mtp\",\"num_speculative_tokens\":3}"
+        ],
+        "labels": {
+          "org.local.b70.policy.sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "org.opencontainers.image.version": "24.04"
+        }
+      },
+      "status": "COMPLETE"
+    },
+    {
+      "depth": 4,
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "b70-exl3-mtp-study",
+        "--device",
+        "/dev/dri",
+        "-v",
+        "/dev/dri/by-path:/dev/dri/by-path:ro",
+        "--shm-size",
+        "8g",
+        "-p",
+        "127.0.0.1:8082:8000",
+        "-e",
+        "HF_HUB_OFFLINE=1",
+        "-e",
+        "PYTHONPATH=/opt/b70-runtime",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/runtime:/opt/b70-runtime:ro",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-mtp/046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088/mtp4/vllm:/root/.cache/vllm",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-mtp/046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088/mtp4/triton:/root/.triton/cache",
+        "-v",
+        "/home/sebastian/.cache/exl3xpu/migration-mtp/046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088/mtp4/neo_compiler_cache:/root/.cache/neo_compiler_cache",
+        "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+        "models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml",
+        "--gpu",
+        "0",
+        "--port",
+        "8000",
+        "--model-path",
+        "/models/checkpoint",
+        "--set",
+        "vllm.gpu_memory_utilization=0.965",
+        "--set",
+        "vllm.limit_mm_per_prompt={\"image\":32,\"video\":4}",
+        "--set",
+        "vllm.mm_processor_kwargs={\"max_pixels\":4194304}",
+        "--set",
+        "vllm.max_model_len=262144",
+        "--set",
+        "vllm.max_num_seqs=16",
+        "--set",
+        "vllm.max_num_batched_tokens=4096",
+        "--set",
+        "vllm.speculative_config={\"method\":\"mtp\",\"num_speculative_tokens\":4}"
+      ],
+      "settings": {
+        "gpu_memory_utilization": 0.965,
+        "limit_mm_per_prompt": {
+          "image": 32,
+          "video": 4
+        },
+        "mm_processor_kwargs": {
+          "max_pixels": 4194304
+        },
+        "max_model_len": 262144,
+        "max_num_seqs": 16,
+        "max_num_batched_tokens": 4096,
+        "speculative_config": {
+          "method": "mtp",
+          "num_speculative_tokens": 4
+        }
+      },
+      "waves": [
+        {
+          "window": "code-4096",
+          "domain": "code",
+          "context_tokens": 4096,
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "wall_s": 8.597445191000588,
+          "native": {
+            "decode_seconds": 6.768359980997047,
+            "cached_tokens": 0.0,
+            "prefill_seconds": 1.8040454709989717,
+            "generation_tokens": 512.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 4096.0,
+            "draft_tokens": 564.0,
+            "accepted_tokens": 371.0,
+            "prompt_tokens": 4096.0,
+            "completed": 1.0
+          },
+          "speculative_rounds_sum": 141.0,
+          "accepted_tokens_by_position": {
+            "0": 122.0,
+            "1": 104.0,
+            "2": 82.0,
+            "3": 63.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.8652482269503546,
+            "1": 0.7375886524822695,
+            "2": 0.5815602836879432,
+            "3": 0.44680851063829785
+          },
+          "generated_tokens_per_round": 3.631205673758865,
+          "mean_acceptance_length": 3.631205673758865,
+          "native_prefill_tps": 2270.452749581684,
+          "native_request_weighted_decode_tps": 75.64609468726533,
+          "wave_aggregate_output_tps": 59.55257505287014,
+          "client_decode_interval_union_s": 6.766858114991919,
+          "client_aggregate_decode_tps": 75.66288391146671,
+          "native_ttft_seconds_sum": 1.827282190322876,
+          "client_ttft_s": [
+            1.830123010004172
+          ],
+          "energy_j": 1547.469909,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": 3.022402166015625
+        },
+        {
+          "window": "code-4096",
+          "domain": "code",
+          "context_tokens": 4096,
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "wall_s": 8.052268801009632,
+          "native": {
+            "decode_seconds": 6.952928975995746,
+            "cached_tokens": 1664.0,
+            "prefill_seconds": 1.072741666008369,
+            "generation_tokens": 512.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 2432.0,
+            "draft_tokens": 580.0,
+            "accepted_tokens": 366.0,
+            "prompt_tokens": 4096.0,
+            "completed": 1.0
+          },
+          "speculative_rounds_sum": 145.0,
+          "accepted_tokens_by_position": {
+            "0": 123.0,
+            "1": 103.0,
+            "2": 80.0,
+            "3": 60.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.8482758620689655,
+            "1": 0.7103448275862069,
+            "2": 0.5517241379310345,
+            "3": 0.41379310344827586
+          },
+          "generated_tokens_per_round": 3.5310344827586206,
+          "mean_acceptance_length": 3.524137931034483,
+          "native_prefill_tps": 2267.088225489907,
+          "native_request_weighted_decode_tps": 73.63803107548286,
+          "wave_aggregate_output_tps": 63.584563885373896,
+          "client_decode_interval_union_s": 6.951505500008352,
+          "client_aggregate_decode_tps": 73.65311010677972,
+          "native_ttft_seconds_sum": 1.097486972808838,
+          "client_ttft_s": [
+            1.1002085560030537
+          ],
+          "energy_j": 1449.256226,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": 2.83057856640625
+        },
+        {
+          "window": "code-4096",
+          "domain": "code",
+          "context_tokens": 4096,
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "wall_s": 16.800000076997094,
+          "native": {
+            "decode_seconds": 47.0620459169877,
+            "cached_tokens": 0.0,
+            "prefill_seconds": 13.878979364017141,
+            "generation_tokens": 2048.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 16384.0,
+            "draft_tokens": 2296.0,
+            "accepted_tokens": 1477.0,
+            "prompt_tokens": 16384.0,
+            "completed": 4.0
+          },
+          "speculative_rounds_sum": 574.0,
+          "accepted_tokens_by_position": {
+            "0": 502.0,
+            "1": 397.0,
+            "2": 324.0,
+            "3": 254.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.8745644599303136,
+            "1": 0.6916376306620209,
+            "2": 0.5644599303135889,
+            "3": 0.4425087108013937
+          },
+          "generated_tokens_per_round": 3.56794425087108,
+          "mean_acceptance_length": 3.573170731707317,
+          "native_prefill_tps": 1180.4902630288084,
+          "native_request_weighted_decode_tps": 43.517020140017884,
+          "wave_aggregate_output_tps": 121.90476134605284,
+          "client_decode_interval_union_s": 13.83381152599759,
+          "client_aggregate_decode_tps": 148.0430751966829,
+          "native_ttft_seconds_sum": 19.302577018737793,
+          "client_ttft_s": [
+            4.065349234995665,
+            5.187258604011731,
+            7.100290524002048,
+            2.964957392003271
+          ],
+          "energy_j": 3024.812317,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": 1.4769591391601562
+        },
+        {
+          "window": "code-4096",
+          "domain": "code",
+          "context_tokens": 4096,
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "wall_s": 13.544507429003716,
+          "native": {
+            "decode_seconds": 40.376772946023266,
+            "cached_tokens": 6656.0,
+            "prefill_seconds": 10.38601647298492,
+            "generation_tokens": 2048.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 9728.0,
+            "draft_tokens": 2124.0,
+            "accepted_tokens": 1524.0,
+            "prompt_tokens": 16384.0,
+            "completed": 4.0
+          },
+          "speculative_rounds_sum": 531.0,
+          "accepted_tokens_by_position": {
+            "0": 474.0,
+            "1": 394.0,
+            "2": 352.0,
+            "3": 304.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.8926553672316384,
+            "1": 0.7419962335216572,
+            "2": 0.6629001883239172,
+            "3": 0.5725047080979284
+          },
+          "generated_tokens_per_round": 3.8568738229755177,
+          "mean_acceptance_length": 3.8700564971751414,
+          "native_prefill_tps": 936.6439987172669,
+          "native_request_weighted_decode_tps": 50.72223089095853,
+          "wave_aggregate_output_tps": 151.20520334423438,
+          "client_decode_interval_union_s": 11.886255920995609,
+          "client_aggregate_decode_tps": 172.29984055639085,
+          "native_ttft_seconds_sum": 12.158207178115845,
+          "client_ttft_s": [
+            3.125469805992907,
+            4.267344747000607,
+            3.126063542003976,
+            1.6571123890025774
+          ],
+          "energy_j": 2438.077209,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": 1.1904673872070313
+        }
+      ],
+      "identity": {
+        "container_id": "162032af6ecde91dfb4a2257c7b60cb0b181f0c4711dca053c4eb58dcffc3708",
+        "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+        "image_tag": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+        "command": [
+          "models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml",
+          "--gpu",
+          "0",
+          "--port",
+          "8000",
+          "--model-path",
+          "/models/checkpoint",
+          "--set",
+          "vllm.gpu_memory_utilization=0.965",
+          "--set",
+          "vllm.limit_mm_per_prompt={\"image\":32,\"video\":4}",
+          "--set",
+          "vllm.mm_processor_kwargs={\"max_pixels\":4194304}",
+          "--set",
+          "vllm.max_model_len=262144",
+          "--set",
+          "vllm.max_num_seqs=16",
+          "--set",
+          "vllm.max_num_batched_tokens=4096",
+          "--set",
+          "vllm.speculative_config={\"method\":\"mtp\",\"num_speculative_tokens\":4}"
+        ],
+        "labels": {
+          "org.local.b70.policy.sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "org.opencontainers.image.version": "24.04"
+        }
+      },
+      "status": "COMPLETE"
+    }
+  ],
+  "order": [
+    3,
+    4
+  ],
+  "power_w": 180,
+  "production_restored": false,
+  "source_sha256": "aedad5d74193f6c929b7ec5712ca42fdda5d295887688344ae2ff80e03560b0d",
+  "long_campaign_sha256": "33c8e0f82d7c2e9d95862836a42fdf0736b2855ba6df8e83f5f904e401b6c6c2",
+  "unmeasured_required_component_metrics": [
+    "target/draft/head/sampler GPU latency",
+    "actual/padded rows and graph bucket",
+    "per-cycle GPU latency; require separate diagnostic profiling before MTP selection"
+  ],
+  "production_left_offline": true,
+  "finished_unix": 1790875847.2009726
+}

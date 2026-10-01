@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "seed": 20261001,
+  "source_panel_sha256": "cbf1a71bbda470859f2c0786cb7134e260111d2072c4753a6732021dadae6171",
+  "coding_history_sha256": "2ed3e08b96389bb8f8dccb9cfc0838908aecc07a42536e4806848be0325e30ca",
+  "tokenizer_sha256": "0997f410c57a1f4e53b09e4be8f4a172d90edd9564368fb0847030937229b9f3",
+  "chat_template_sha256": "c3cf9e34abf4f9e36c2d72165aa9c132d3e2a725b6c2586aaa3a8af9d7a81041",
+  "sampling": {
+    "temperature": 0,
+    "seed": 20261001,
+    "max_tokens": 512,
+    "ignore_eos": true
+  },
+  "scope": "Fixed-output performance inputs, not an adaptive coding task or code-quality score. C4 uses independent cache salts for identical frozen token inputs. Nonhistorical windows use repeated source material.",
+  "builder_sha256": "3868f134c31050271bb8a097d1ff4df08bb46c302c3e7bde3228b49e82e7347a",
+  "panel_raw_sha256": "537a7a1e50931287c565e4dcca74b017b9744a0d16ded7c000adc5d665db36fc",
+  "panel_gzip_sha256": "e82311dbf9607f5b740df9e0d7305e50babd62c74d2e42f9171c8c1d59b976af",
+  "windows": [
+    {
+      "name": "code-4096",
+      "domain": "code",
+      "context_tokens": 4096,
+      "ids_sha256": "d67715375ac906a521a9394361a5594f499688cf545594c9e420e87f19b7018e",
+      "recipe": "Repeat eight frozen code source windows, followed by a fixed continuation instruction"
+    },
+    {
+      "name": "prose-4096",
+      "domain": "prose",
+      "context_tokens": 4096,
+      "ids_sha256": "73b06277a1b1e04ce45f7da4f3c73ead0caafc8c9e2e63efc009597983ea1a58",
+      "recipe": "Repeat eight frozen prose source windows, followed by a fixed continuation instruction"
+    },
+    {
+      "name": "code-32768",
+      "domain": "code",
+      "context_tokens": 32768,
+      "ids_sha256": "3c71be2ad8458121fa10055d5a6072cf1d991e7154aee4d94adce594008e8bad",
+      "recipe": "Repeat eight frozen code source windows, followed by a fixed continuation instruction"
+    },
+    {
+      "name": "prose-32768",
+      "domain": "prose",
+      "context_tokens": 32768,
+      "ids_sha256": "b67588b06a5f1cf21394860b10c073e00bee54716690c23e54c209ba550187ed",
+      "recipe": "Repeat eight frozen prose source windows, followed by a fixed continuation instruction"
+    },
+    {
+      "name": "code-49152",
+      "domain": "code",
+      "context_tokens": 49152,
+      "ids_sha256": "be3400b561f630066c783ee1b06d52ef01d766714bd31acffb99dfd8f6775b71",
+      "recipe": "Repeat eight frozen code source windows, followed by a fixed continuation instruction"
+    },
+    {
+      "name": "prose-49152",
+      "domain": "prose",
+      "context_tokens": 49152,
+      "ids_sha256": "8b21fa8232164b9ad303e23e76ceac6c42b2e62a530808e4ff7695ac26fd7110",
+      "recipe": "Repeat eight frozen prose source windows, followed by a fixed continuation instruction"
+    },
+    {
+      "name": "code-102752",
+      "domain": "code",
+      "context_tokens": 102752,
+      "ids_sha256": "499f3cc608227a3f92fd0e3de03e84ed7df08f72d26b38e99a5d69d3de9bffc4",
+      "recipe": "Exact existing 103K coding history rendered with tools and preserved reasoning"
+    },
+    {
+      "name": "prose-102752",
+      "domain": "prose",
+      "context_tokens": 102752,
+      "ids_sha256": "a78e691b9d0b1341c505bffe5756b9e7bbfc23bbd4dcf548b5168faabb9520ce",
+      "recipe": "Repeat eight frozen prose source windows, followed by a fixed continuation instruction"
+    },
+    {
+      "name": "code-131072",
+      "domain": "code",
+      "context_tokens": 131072,
+      "ids_sha256": "5cc0cc2c5170852d71c376d4d567c8617bac8e5a29c894e4da013da73af1f6e7",
+      "recipe": "Repeat eight frozen code source windows, followed by a fixed continuation instruction"
+    },
+    {
+      "name": "prose-131072",
+      "domain": "prose",
+      "context_tokens": 131072,
+      "ids_sha256": "4fac482a3e3081d61b797bda08afed190db0ee4e3f7b624ee8ce8a7398076829",
+      "recipe": "Repeat eight frozen prose source windows, followed by a fixed continuation instruction"
+    }
+  ]
+}

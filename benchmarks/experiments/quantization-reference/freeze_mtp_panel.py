@@ -22,6 +22,7 @@ def main():
     parser.add_argument('--coding-history',type=Path,required=True)
     parser.add_argument('--model',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--contexts',type=int,nargs='+',default=[4096,32768,102752,131072])
     args=parser.parse_args()
     if args.output.exists():raise RuntimeError('Frozen output must be fresh')
     panel_bytes=args.panel.read_bytes();assert sha(panel_bytes)==PANEL_SHA
@@ -45,8 +46,10 @@ def main():
         tokenize=True,add_generation_prompt=True,**history['chat_template_kwargs'])
     clean=rendered['input_ids'] if isinstance(rendered,Mapping) else rendered
     assert len(clean)==102752,'Existing API 103K-history count differs from frozen rendering'
+    assert len(set(args.contexts))==len(args.contexts) and all(c>=4096 for c in args.contexts)
+    assert 102752 in args.contexts, 'The qualified103K coding history must remain in the study'
     windows=[]
-    for context in (4096,32768,102752,131072):
+    for context in args.contexts:
         for domain in ('code','prose'):
             if domain=='code' and context==102752:
                 ids=clean;recipe='Exact existing 103K coding history rendered with tools and preserved reasoning'

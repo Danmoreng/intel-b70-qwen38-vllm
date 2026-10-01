@@ -503,3 +503,21 @@ unused by the target logits route in the inspected source; prove ownership and
 actual memory/output effects before removing it. Full-vocabulary ablation is
 still pending and must account for any removed duplicate head separately.
 GPTQ stays offline; the immutable serving image remains unchanged.
+
+
+The bounded component campaign subsequently completed both arms. Audited
+coarse timelines are in `target-mtp-components-compact-v1`. C1 code4K/103K
+uses actual/padded4/4 rows under MTP3 and5/5 under MTP4, both FULL graph modes.
+At103K the mean instrumented cycle envelope is67.90/74.49ms; target body
+58.99/63.38ms and complete draft proposal6.63/8.82ms. The first128-token C1
+outputs agree across depths in both contexts. Actual warm C4 trace rows/buckets
+are16/16 and20/20, not an inferred24-row padded bucket. Cold C4 pure groups
+have only1/2/3 active requests and must not be treated as cleanC4 decode.
+
+The traces do not demonstrate individual kernels inside target/draft FULL graph
+replay. No attention-named trace event is not evidence that attention is cheap.
+`run-exl3-eager-trace.py` follows under the GPU lock with one103K C1/MTP3 request,
+128 outputs and8 traced pure-decode cycles, graph capture explicitly disabled.
+Its kernel results are diagnostic only; final gains must be tested on the actual
+serving graph path. GPTQ remains offline and all release gates stay open where
+not yet proved.

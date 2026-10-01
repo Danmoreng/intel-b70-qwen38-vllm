@@ -1,0 +1,192 @@
+{
+  "status": "COMPLETE",
+  "kind": "diagnostic_xpu_event_spans",
+  "panel_sha256": "537a7a1e50931287c565e4dcca74b017b9744a0d16ded7c000adc5d665db36fc",
+  "engine_config": {
+    "kv_cache_dtype": "fp8",
+    "enforce_eager": false,
+    "enable_prefix_caching": true,
+    "max_model_len": 262144,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 4096,
+    "gpu_memory_utilization": 0.965,
+    "limit_mm_per_prompt": {
+      "image": 32,
+      "video": 4
+    },
+    "mm_processor_kwargs": {
+      "max_pixels": 4194304
+    },
+    "mamba_cache_mode": "align",
+    "scheduler_reserve_full_isl": true,
+    "watermark": 0.0,
+    "speculative_config": {
+      "method": "mtp",
+      "num_speculative_tokens": 3
+    },
+    "compilation_config": {
+      "cudagraph_mode": "FULL_DECODE_ONLY",
+      "cudagraph_capture_sizes": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        48,
+        56,
+        64
+      ]
+    },
+    "dtype": "float16",
+    "seed": 20261001
+  },
+  "capture_identity": [
+    {
+      "installed": true,
+      "model_runner_sha256": "174c93db921c23cf0396eee4764be25b2bd2d4b6a06e9fa41ce3598b884ce8ce",
+      "call_sites": {
+        "execute_model": {
+          "original_source_sha256": "16b8dd942526b81afcd78a76e5c1c7c07a10a2234a7916d550f13c845916a2e7",
+          "call_sites": {
+            "self.cudagraph_manager.run_fullgraph": 1,
+            "self.cudagraph_manager.run_pw_graph": 1,
+            "self.model": 1
+          }
+        },
+        "sample": {
+          "original_source_sha256": "6a152f0c6da19fe51f94ff6bed2f5456263f15d20da5d908966595849a15f997",
+          "call_sites": {
+            "self.model.compute_logits_local": 1,
+            "self.model.compute_logits": 1,
+            "self.sampler": 1,
+            "self.rejection_sampler": 1
+          }
+        },
+        "sample_tokens": {
+          "original_source_sha256": "709bf1f0b05be1734d25649993af1eca09a1e1c8881c3b840752e13b661910a6",
+          "call_sites": {
+            "self.postprocess_sampled": 1,
+            "self.speculator.propose": 1
+          }
+        }
+      },
+      "graphs_already_captured": true
+    }
+  ],
+  "waves": [
+    {
+      "name": "code-4096-c1",
+      "context_tokens": 4096,
+      "concurrency": 1,
+      "generated_tokens": 128,
+      "diagnostic_wall_s": 3.4060563889943296,
+      "output_ids_sha256": "14a9c231571bfb1925139b3e7151093ede74971910a1c456044ee7aaf5bcbd1d",
+      "capture": [
+        {
+          "path": "/results/brief-components/code-4096-c1.json",
+          "cycles": 39
+        }
+      ]
+    },
+    {
+      "name": "code-49152-c4",
+      "context_tokens": 49152,
+      "concurrency": 4,
+      "generated_tokens": 512,
+      "diagnostic_wall_s": 111.3025306060008,
+      "output_ids_sha256": "3b63dd38e438dc83efd7a81aa546a34f4ab51e57b1e37240b1a44c83bedbe58b",
+      "capture": [
+        {
+          "path": "/results/brief-components/code-49152-c4.json",
+          "cycles": 104
+        }
+      ]
+    },
+    {
+      "name": "code-102752-c1",
+      "context_tokens": 102752,
+      "concurrency": 1,
+      "generated_tokens": 128,
+      "diagnostic_wall_s": 75.30420034501003,
+      "output_ids_sha256": "29ca3e1bb96147b56c125d23c63e49095a66637dc5d28a9d7c8e07cd373f3ab3",
+      "capture": [
+        {
+          "path": "/results/brief-components/code-102752-c1.json",
+          "cycles": 78
+        }
+      ]
+    }
+  ],
+  "kernel_traces": [
+    {
+      "name": "kernel-trace-code-49152-c4",
+      "concurrency": 4,
+      "context_tokens": 49152,
+      "output_tokens_per_request": 128,
+      "capture": [
+        {
+          "path": "/results/brief-components/kernel-trace-code-49152-c4.json",
+          "runner_cycles": 8,
+          "pure_decode_cycles": 8
+        }
+      ],
+      "observed_cached_tokens": [
+        46400,
+        46400,
+        46400,
+        46400
+      ],
+      "cache_mode": "same prompt and salt immediately after event wave; report actual observed hits"
+    },
+    {
+      "name": "kernel-trace-code-102752-c1",
+      "concurrency": 1,
+      "context_tokens": 102752,
+      "output_tokens_per_request": 128,
+      "capture": [
+        {
+          "path": "/results/brief-components/kernel-trace-code-102752-c1.json",
+          "runner_cycles": 8,
+          "pure_decode_cycles": 8
+        }
+      ],
+      "observed_cached_tokens": [
+        100800
+      ],
+      "cache_mode": "same prompt and salt immediately after event wave; report actual observed hits"
+    }
+  ],
+  "compact": true,
+  "vocabulary_inventory": [
+    {
+      "heads": [
+        {
+          "role": "target",
+          "module": "language_model.lm_head",
+          "bits": 6,
+          "full_rows": 248320,
+          "pruned_rows": 65536,
+          "pruned_tensor_logical_bytes": 252315648
+        },
+        {
+          "role": "draft",
+          "module": "lm_head",
+          "bits": 6,
+          "full_rows": 248320,
+          "pruned_rows": 65536,
+          "pruned_tensor_logical_bytes": 252315648
+        }
+      ],
+      "device_free_bytes": 1291481088,
+      "device_total_bytes": 34242297856,
+      "torch_allocated_bytes": 28874023936,
+      "torch_reserved_bytes": 30628904960,
+      "scope": "Post-load/capture inventory outside measurement; logical tensor bytes are not unique allocator residency."
+    }
+  ],
+  "scope": "Instrumented diagnostic; not unbiased throughput. Fused draft graphs are timed as a complete proposal, not decomposed into body/head/sampler."
+}

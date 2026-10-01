@@ -1,0 +1,4676 @@
+{
+  "torch": "2.13.0+xpu",
+  "seed": 20261001,
+  "rows": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    12,
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64,
+    128,
+    129,
+    256,
+    512
+  ],
+  "tolerance": 0.002,
+  "native_library_sha256": "48f879c16f3695dbb0fae7388f1e318591d6408acc7be15b0093a0bbb6d9053b",
+  "checkpoint_index_sha256": "c3111b8308db5396b1eed054967cf7dfbfc2508764f8813aebbaaf4a05860bc2",
+  "status": "PASS_EXPANDED_ROW_PADDING_GRAPH_GATE",
+  "groups": [
+    {
+      "name": "gdn-qkvz",
+      "keys": [
+        "model.language_model.layers.0.linear_attn.in_proj_qkv",
+        "model.language_model.layers.0.linear_attn.in_proj_z"
+      ],
+      "bits": 4,
+      "k": 5120,
+      "n": 16384,
+      "head_slice_start": null,
+      "cases": [
+        {
+          "rows": 1,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0004903516382910311,
+            "maximum_absolute": 0.0035414695739746094,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0004903516382910311,
+            "maximum_absolute": 0.0035414695739746094,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 2,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0004906650283373892,
+            "maximum_absolute": 0.0035414695739746094,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0004906650283373892,
+            "maximum_absolute": 0.0035414695739746094,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 3,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036432690103538334,
+            "maximum_absolute": 0.0023479461669921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036432690103538334,
+            "maximum_absolute": 0.0023479461669921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036496229586191475,
+            "maximum_absolute": 0.0023479461669921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036496229586191475,
+            "maximum_absolute": 0.0023479461669921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 5,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003635770990513265,
+            "maximum_absolute": 0.0027413368225097656,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003635770990513265,
+            "maximum_absolute": 0.0027413368225097656,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 8,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036103298771195114,
+            "maximum_absolute": 0.003319263458251953,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036103298771195114,
+            "maximum_absolute": 0.003319263458251953,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 12,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035916530760005116,
+            "maximum_absolute": 0.003319263458251953,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035916530760005116,
+            "maximum_absolute": 0.003319263458251953,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 16,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003600131021812558,
+            "maximum_absolute": 0.003319263458251953,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003600131021812558,
+            "maximum_absolute": 0.003319263458251953,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003636199689935893,
+            "maximum_absolute": 0.003319263458251953,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003636199689935893,
+            "maximum_absolute": 0.003319263458251953,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 24,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036437573726288974,
+            "maximum_absolute": 0.004480838775634766,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036437573726288974,
+            "maximum_absolute": 0.004480838775634766,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 32,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036187126534059644,
+            "maximum_absolute": 0.004480838775634766,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036187126534059644,
+            "maximum_absolute": 0.004480838775634766,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 40,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036246090894564986,
+            "maximum_absolute": 0.004974365234375,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036246090894564986,
+            "maximum_absolute": 0.004974365234375,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 48,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036189763341099024,
+            "maximum_absolute": 0.004974365234375,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036189763341099024,
+            "maximum_absolute": 0.004974365234375,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003609945415519178,
+            "maximum_absolute": 0.004974365234375,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003609945415519178,
+            "maximum_absolute": 0.004974365234375,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003606012323871255,
+            "maximum_absolute": 0.005217552185058594,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003606012323871255,
+            "maximum_absolute": 0.005217552185058594,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.00023139154654927552,
+            "maximum_absolute": 0.0078125,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 256,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.0002370920847170055,
+            "maximum_absolute": 0.0078125,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 512,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.00022309529595077038,
+            "maximum_absolute": 0.0087890625,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        }
+      ],
+      "padding": [
+        {
+          "actual": 1,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.00042800759547390044,
+            "maximum_absolute": 0.00390625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 2,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.00043201897642575204,
+            "maximum_absolute": 0.00390625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 3,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.0944888344965875e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 4,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.0479981028765906e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 5,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 9.62441845331341e-06,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 8,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 9.206006325257476e-06,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 12,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 8.819874892651569e-06,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 16,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 9.726618372951634e-06,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 20,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 24,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 32,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 40,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 9.752281584951561e-06,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 48,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.014942245092243e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 64,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.0497447874513455e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 128,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 129,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 256,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 512,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      "compiled": [
+        {
+          "rows": 1,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 512,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "attention-qkv",
+      "keys": [
+        "model.language_model.layers.3.self_attn.q_proj",
+        "model.language_model.layers.3.self_attn.k_proj",
+        "model.language_model.layers.3.self_attn.v_proj"
+      ],
+      "bits": 4,
+      "k": 5120,
+      "n": 14336,
+      "head_slice_start": null,
+      "cases": [
+        {
+          "rows": 1,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0004788911319337785,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0004788911319337785,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 2,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0004859226173721254,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0004859226173721254,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 3,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035740583552978933,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035740583552978933,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003567762323655188,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003567762323655188,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 5,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.000358366291038692,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.000358366291038692,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 8,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035902290255762637,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035902290255762637,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 12,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.000357721874024719,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.000357721874024719,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 16,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035651252255775034,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035651252255775034,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003575119189918041,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003575119189918041,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 24,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035813963040709496,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035813963040709496,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 32,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035902427043765783,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035902427043765783,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 40,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003589894331526011,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003589894331526011,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 48,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035842598299495876,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035842598299495876,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035864143865182996,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035864143865182996,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003588173713069409,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003588173713069409,
+            "maximum_absolute": 0.003364086151123047,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.0001853345602285117,
+            "maximum_absolute": 0.005859375,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 256,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.00021779717644676566,
+            "maximum_absolute": 0.005859375,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 512,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.00022162268578540534,
+            "maximum_absolute": 0.00634765625,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        }
+      ],
+      "padding": [
+        {
+          "actual": 1,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.00041572278132662177,
+            "maximum_absolute": 0.00390625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 2,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0004238767141941935,
+            "maximum_absolute": 0.00390625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 3,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.0998184734489769e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 4,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.0840945833479054e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 5,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1045591236324981e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 8,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1986347089987248e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 12,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1849642760353163e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 16,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1750038538593799e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 20,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 24,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 32,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 40,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.0906061106652487e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 48,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.0793376532092225e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 64,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.0751236004580278e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 128,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 129,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 256,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 512,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      "compiled": [
+        {
+          "rows": 1,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 512,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      "trace_sha256": "3ec116cf18677c3073b12c8694c08ae0a798fbeac9b6f63973a5f4ddf82caf8b",
+      "events": [
+        {
+          "name": "aten::slice",
+          "count": 7,
+          "device_time_total": 0
+        },
+        {
+          "name": "aten::as_strided",
+          "count": 7,
+          "device_time_total": 0
+        },
+        {
+          "name": "TorchDynamo Cache Lookup",
+          "count": 5,
+          "device_time_total": 0
+        },
+        {
+          "name": "Torch-Compiled Region: 0/2",
+          "count": 4,
+          "device_time_total": 1494.1559999999995
+        },
+        {
+          "name": "Pregraph bytecode",
+          "count": 5,
+          "device_time_total": 0
+        },
+        {
+          "name": "AOTDispatcher Runtime Wrapper Prologue",
+          "count": 5,
+          "device_time_total": 0
+        },
+        {
+          "name": "## Call CompiledFxGraph f5kg3seauz4dwqs4sip5pvfmzikxyqrxijehd7yfrx56n4mexayh ##",
+          "count": 4,
+          "device_time_total": 1494.1559999999995
+        },
+        {
+          "name": "exl3xpu_C::linear",
+          "count": 5,
+          "device_time_total": 1609.3629999999998
+        },
+        {
+          "name": "aten::reshape",
+          "count": 5,
+          "device_time_total": 0
+        },
+        {
+          "name": "aten::view",
+          "count": 10,
+          "device_time_total": 0
+        },
+        {
+          "name": "aten::empty",
+          "count": 29,
+          "device_time_total": 0
+        },
+        {
+          "name": "urEnqueueKernelLaunchWithArgsExp",
+          "count": 26,
+          "device_time_total": 0
+        },
+        {
+          "name": "zeKernelSetGroupSize",
+          "count": 26,
+          "device_time_total": 0
+        },
+        {
+          "name": "zeCommandListAppendLaunchKernelWithArguments",
+          "count": 26,
+          "device_time_total": 0
+        },
+        {
+          "name": "exl3::HadInQ8WgKernel<sycl::_V1::detail::half_impl::half, 8, 6>",
+          "count": 2,
+          "device_time_total": 63.64499999999998
+        },
+        {
+          "name": "exl3::ReconstructKernel<4, 2, 8, signed char>",
+          "count": 6,
+          "device_time_total": 390.93499999999995
+        },
+        {
+          "name": "zeMemGetAllocProperties",
+          "count": 72,
+          "device_time_total": 0
+        },
+        {
+          "name": "gemm_kernel",
+          "count": 6,
+          "device_time_total": 547.8099999999995
+        },
+        {
+          "name": "aten::narrow",
+          "count": 2,
+          "device_time_total": 0
+        },
+        {
+          "name": "Torch-Compiled Region: 0/3",
+          "count": 1,
+          "device_time_total": 115.20700000000033
+        },
+        {
+          "name": "## Call CompiledFxGraph ffs3b6qppgqr74kpip5i7p42ybfrtbgkkiffmodv2sepnmmmz3re ##",
+          "count": 1,
+          "device_time_total": 115.20700000000033
+        },
+        {
+          "name": "exl3::HadOutKernel<sycl::_V1::detail::half_impl::half, sycl::_V1::detail::half_impl::half>",
+          "count": 2,
+          "device_time_total": 64.9989999999998
+        },
+        {
+          "name": "exl3::HadInKernel<sycl::_V1::detail::half_impl::half>",
+          "count": 3,
+          "device_time_total": 29.47800000000052
+        },
+        {
+          "name": "exl3::GemvKernel<4, 2, 1, 8, false>",
+          "count": 1,
+          "device_time_total": 106.25
+        },
+        {
+          "name": "aten::zeros",
+          "count": 1,
+          "device_time_total": 1.1449999999999818
+        },
+        {
+          "name": "aten::zero_",
+          "count": 1,
+          "device_time_total": 1.1449999999999818
+        },
+        {
+          "name": "aten::fill_",
+          "count": 1,
+          "device_time_total": 1.1449999999999818
+        },
+        {
+          "name": "exl3::HadOutKernel<sycl::_V1::detail::half_impl::half, float>",
+          "count": 3,
+          "device_time_total": 47.39400000000023
+        },
+        {
+          "name": "at::native::xpu::VectorizedElementwiseKernel<8, at::native::xpu::FillFunctor<c10::Half>, at::detail::Array<char*, 1>, TrivialOffsetCalculator<0, unsigned int> >",
+          "count": 1,
+          "device_time_total": 1.1449999999999818
+        },
+        {
+          "name": "exl3::DpasKernel<4, 2, 24, 2, false>",
+          "count": 1,
+          "device_time_total": 98.4369999999999
+        },
+        {
+          "name": "exl3::DpasKernel<4, 2, 64, 2, false>",
+          "count": 1,
+          "device_time_total": 259.27
+        },
+        {
+          "name": "zeCommandListHostSynchronize",
+          "count": 192,
+          "device_time_total": 0
+        }
+      ]
+    },
+    {
+      "name": "gate-up",
+      "keys": [
+        "model.language_model.layers.0.mlp.gate_proj",
+        "model.language_model.layers.0.mlp.up_proj"
+      ],
+      "bits": 4,
+      "k": 5120,
+      "n": 34816,
+      "head_slice_start": null,
+      "cases": [
+        {
+          "rows": 1,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0004930536961182952,
+            "maximum_absolute": 0.0018694400787353516,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0004930536961182952,
+            "maximum_absolute": 0.0018694400787353516,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 2,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0004876574093941599,
+            "maximum_absolute": 0.0019042491912841797,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0004876574093941599,
+            "maximum_absolute": 0.0019042491912841797,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 3,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035961371031589806,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035961371031589806,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035742856562137604,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035742856562137604,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 5,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003563302452675998,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003563302452675998,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 8,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035811428097076714,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035811428097076714,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 12,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035800994373857975,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035800994373857975,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 16,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003588033723644912,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003588033723644912,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035926559939980507,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035926559939980507,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 24,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003590723208617419,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003590723208617419,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 32,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003589996777009219,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003589996777009219,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 40,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003590910346247256,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003590910346247256,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 48,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035931632737629116,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035931632737629116,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003587962419260293,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003587962419260293,
+            "maximum_absolute": 0.00188446044921875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.000358700257493183,
+            "maximum_absolute": 0.002162456512451172,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.000358700257493183,
+            "maximum_absolute": 0.002162456512451172,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.00020076298096682876,
+            "maximum_absolute": 0.00341796875,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 256,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.0002185444172937423,
+            "maximum_absolute": 0.00341796875,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 512,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.0002119674754794687,
+            "maximum_absolute": 0.00390625,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        }
+      ],
+      "padding": [
+        {
+          "actual": 1,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.00043102915515191853,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 2,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.00042698983452282846,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 3,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.2483185855671763e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 4,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1916654329979792e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 5,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.161052659881534e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 8,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.2433472875272855e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 12,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.2887934644822963e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 16,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.2972932381671853e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 20,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 24,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 32,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 40,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.2086716196790803e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 48,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1970777450187597e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 64,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.2102281289116945e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 128,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 129,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 256,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 512,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      "compiled": [
+        {
+          "rows": 1,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 512,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "down",
+      "keys": [
+        "model.language_model.layers.0.mlp.down_proj"
+      ],
+      "bits": 4,
+      "k": 17408,
+      "n": 5120,
+      "head_slice_start": null,
+      "cases": [
+        {
+          "rows": 1,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.000482732430100441,
+            "maximum_absolute": 0.0025930404663085938,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.000482732430100441,
+            "maximum_absolute": 0.0025930404663085938,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 2,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0004894110606983304,
+            "maximum_absolute": 0.0033617019653320312,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0004894110606983304,
+            "maximum_absolute": 0.0033617019653320312,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 3,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003617884067352861,
+            "maximum_absolute": 0.007786750793457031,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003617884067352861,
+            "maximum_absolute": 0.007786750793457031,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003628134436439723,
+            "maximum_absolute": 0.007786750793457031,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003628134436439723,
+            "maximum_absolute": 0.007786750793457031,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 5,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003624703676905483,
+            "maximum_absolute": 0.007786750793457031,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003624703676905483,
+            "maximum_absolute": 0.007786750793457031,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 8,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035994622157886624,
+            "maximum_absolute": 0.009124755859375,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035994622157886624,
+            "maximum_absolute": 0.009124755859375,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 12,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035924738040193915,
+            "maximum_absolute": 0.009124755859375,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035924738040193915,
+            "maximum_absolute": 0.009124755859375,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 16,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003590924898162484,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003590924898162484,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003612013824749738,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003612013824749738,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 24,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003616883768700063,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003616883768700063,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 32,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003610847925301641,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003610847925301641,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 40,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003601936623454094,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003601936623454094,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 48,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003601259959395975,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003601259959395975,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035966074210591614,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035966074210591614,
+            "maximum_absolute": 0.01244354248046875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003599582414608449,
+            "maximum_absolute": 0.01831817626953125,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003599582414608449,
+            "maximum_absolute": 0.01831817626953125,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.0003540234174579382,
+            "maximum_absolute": 0.03125,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 256,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.0004182328702881932,
+            "maximum_absolute": 0.03125,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 512,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.0003350511542521417,
+            "maximum_absolute": 0.03125,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        }
+      ],
+      "padding": [
+        {
+          "actual": 1,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0004186989099252969,
+            "maximum_absolute": 0.00390625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 2,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.00042659943574108183,
+            "maximum_absolute": 0.00390625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 3,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1347295185260009e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 4,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.0316577572666574e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 5,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.043699467118131e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 8,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1013883522537071e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 12,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1185511539224535e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 16,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1133180123579223e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 20,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 24,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 32,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 40,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1480320608825423e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 48,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1803342204075307e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 64,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1813154742412735e-05,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 128,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 129,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 256,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 512,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      "compiled": [
+        {
+          "rows": 1,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 512,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "head-first",
+      "keys": [
+        "lm_head"
+      ],
+      "bits": 6,
+      "k": 5120,
+      "n": 512,
+      "head_slice_start": 0,
+      "cases": [
+        {
+          "rows": 1,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0005117579712532461,
+            "maximum_absolute": 0.002124965190887451,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0005117579712532461,
+            "maximum_absolute": 0.002124965190887451,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 2,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0005335890455171466,
+            "maximum_absolute": 0.002124965190887451,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0005335890455171466,
+            "maximum_absolute": 0.002124965190887451,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 3,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003636913315858692,
+            "maximum_absolute": 0.0015010833740234375,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003636913315858692,
+            "maximum_absolute": 0.0015010833740234375,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003621959185693413,
+            "maximum_absolute": 0.0015010833740234375,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003621959185693413,
+            "maximum_absolute": 0.0015010833740234375,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 5,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036166259087622166,
+            "maximum_absolute": 0.0015010833740234375,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036166259087622166,
+            "maximum_absolute": 0.0015010833740234375,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 8,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035381439374759793,
+            "maximum_absolute": 0.0015010833740234375,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035381439374759793,
+            "maximum_absolute": 0.0015010833740234375,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 12,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003548777604009956,
+            "maximum_absolute": 0.0016971826553344727,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003548777604009956,
+            "maximum_absolute": 0.0016971826553344727,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 16,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003567624662537128,
+            "maximum_absolute": 0.0017056465148925781,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003567624662537128,
+            "maximum_absolute": 0.0017056465148925781,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003573988506104797,
+            "maximum_absolute": 0.0018575191497802734,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003573988506104797,
+            "maximum_absolute": 0.0018575191497802734,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 24,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035877121263183653,
+            "maximum_absolute": 0.0018575191497802734,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035877121263183653,
+            "maximum_absolute": 0.0018575191497802734,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 32,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003579776966944337,
+            "maximum_absolute": 0.0023627281188964844,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003579776966944337,
+            "maximum_absolute": 0.0023627281188964844,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 40,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003589661209844053,
+            "maximum_absolute": 0.0023627281188964844,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003589661209844053,
+            "maximum_absolute": 0.0023627281188964844,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 48,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003585308149922639,
+            "maximum_absolute": 0.0023627281188964844,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003585308149922639,
+            "maximum_absolute": 0.0023627281188964844,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036029546754434705,
+            "maximum_absolute": 0.0023627281188964844,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036029546754434705,
+            "maximum_absolute": 0.0023627281188964844,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003586919337976724,
+            "maximum_absolute": 0.0023627281188964844,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003586919337976724,
+            "maximum_absolute": 0.0023627281188964844,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.00027186470106244087,
+            "maximum_absolute": 0.003173828125,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 256,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.000284707173705101,
+            "maximum_absolute": 0.008544921875,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 512,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.00024531339295208454,
+            "maximum_absolute": 0.008544921875,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        }
+      ],
+      "padding": [
+        {
+          "actual": 1,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.00048659148160368204,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 2,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0005047792801633477,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 3,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 4.143991645833012e-06,
+            "maximum_absolute": 0.0001220703125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 4,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 3.622833219196764e-06,
+            "maximum_absolute": 0.0001220703125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 5,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 3.241842250645277e-06,
+            "maximum_absolute": 0.0001220703125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 8,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 2.5210363219230203e-06,
+            "maximum_absolute": 0.0001220703125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 12,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 6.2525364228349645e-06,
+            "maximum_absolute": 0.00048828125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 16,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1539958904904779e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 20,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 24,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 32,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 40,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.060070553648984e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 48,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 9.696361303213052e-06,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 64,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.2825585145037621e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 128,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 129,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 256,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 512,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      "compiled": [
+        {
+          "rows": 1,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 512,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "head-last",
+      "keys": [
+        "lm_head"
+      ],
+      "bits": 6,
+      "k": 5120,
+      "n": 512,
+      "head_slice_start": -512,
+      "cases": [
+        {
+          "rows": 1,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0006432041991502047,
+            "maximum_absolute": 0.001643061637878418,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0006432041991502047,
+            "maximum_absolute": 0.001643061637878418,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 2,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0006157642928883433,
+            "maximum_absolute": 0.002087831497192383,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0006157642928883433,
+            "maximum_absolute": 0.002087831497192383,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 3,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003931047976948321,
+            "maximum_absolute": 0.0014789104461669922,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003931047976948321,
+            "maximum_absolute": 0.0014789104461669922,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00039345695404335856,
+            "maximum_absolute": 0.0014789104461669922,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00039345695404335856,
+            "maximum_absolute": 0.0014789104461669922,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 5,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003900707233697176,
+            "maximum_absolute": 0.0014789104461669922,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003900707233697176,
+            "maximum_absolute": 0.0014789104461669922,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 8,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003910835075657815,
+            "maximum_absolute": 0.0014789104461669922,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003910835075657815,
+            "maximum_absolute": 0.0014789104461669922,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 12,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036157359136268497,
+            "maximum_absolute": 0.0014789104461669922,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036157359136268497,
+            "maximum_absolute": 0.0014789104461669922,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 16,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003601057396735996,
+            "maximum_absolute": 0.0015115365386009216,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003601057396735996,
+            "maximum_absolute": 0.0015115365386009216,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036364715197123587,
+            "maximum_absolute": 0.0015115365386009216,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036364715197123587,
+            "maximum_absolute": 0.0015115365386009216,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 24,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003599580959416926,
+            "maximum_absolute": 0.0015115365386009216,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003599580959416926,
+            "maximum_absolute": 0.0015115365386009216,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 32,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003566832165233791,
+            "maximum_absolute": 0.002147674560546875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003566832165233791,
+            "maximum_absolute": 0.002147674560546875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 40,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003542157937772572,
+            "maximum_absolute": 0.002147674560546875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003542157937772572,
+            "maximum_absolute": 0.002147674560546875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 48,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003509685629978776,
+            "maximum_absolute": 0.002147674560546875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003509685629978776,
+            "maximum_absolute": 0.002147674560546875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003551191184669733,
+            "maximum_absolute": 0.002147674560546875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003551191184669733,
+            "maximum_absolute": 0.002147674560546875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003562324563972652,
+            "maximum_absolute": 0.002147674560546875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003562324563972652,
+            "maximum_absolute": 0.002147674560546875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.00022563833044841886,
+            "maximum_absolute": 0.0029296875,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 256,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.00020603729353751987,
+            "maximum_absolute": 0.0029296875,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 512,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.00025505138910375535,
+            "maximum_absolute": 0.0078125,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        }
+      ],
+      "padding": [
+        {
+          "actual": 1,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0006017505656927824,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 2,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0005693236016668379,
+            "maximum_absolute": 0.001953125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 3,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1326628737151623e-06,
+            "maximum_absolute": 3.0517578125e-05,
+            "finite": true
+          }
+        },
+        {
+          "actual": 4,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 9.833081549004419e-07,
+            "maximum_absolute": 3.0517578125e-05,
+            "finite": true
+          }
+        },
+        {
+          "actual": 5,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 8.917094760363398e-07,
+            "maximum_absolute": 3.0517578125e-05,
+            "finite": true
+          }
+        },
+        {
+          "actual": 8,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 2.3893722755019553e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 12,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.873923793027643e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 16,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.6060101188486442e-05,
+            "maximum_absolute": 0.0009765625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 20,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 24,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 32,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 40,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.1261479812674224e-05,
+            "maximum_absolute": 0.00048828125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 48,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 1.0488627594895661e-05,
+            "maximum_absolute": 0.00048828125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 64,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 9.212585609930102e-06,
+            "maximum_absolute": 0.00048828125,
+            "finite": true
+          }
+        },
+        {
+          "actual": 128,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 129,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 256,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 512,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      "compiled": [
+        {
+          "rows": 1,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 512,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "head-full",
+      "keys": [
+        "lm_head"
+      ],
+      "bits": 6,
+      "k": 5120,
+      "n": 248320,
+      "head_slice_start": null,
+      "cases": [
+        {
+          "rows": 1,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.000589792849496007,
+            "maximum_absolute": 0.0028786659240722656,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.000589792849496007,
+            "maximum_absolute": 0.0028786659240722656,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 2,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0005881868419237435,
+            "maximum_absolute": 0.003013432025909424,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0005881868419237435,
+            "maximum_absolute": 0.003013432025909424,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 3,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.000374760536942631,
+            "maximum_absolute": 0.0023212432861328125,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.000374760536942631,
+            "maximum_absolute": 0.0023212432861328125,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00037092503043822944,
+            "maximum_absolute": 0.0023212432861328125,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00037092503043822944,
+            "maximum_absolute": 0.0023212432861328125,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 5,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003694789484143257,
+            "maximum_absolute": 0.0023212432861328125,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003694789484143257,
+            "maximum_absolute": 0.0023212432861328125,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 8,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036458135582506657,
+            "maximum_absolute": 0.0023212432861328125,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036458135582506657,
+            "maximum_absolute": 0.0023212432861328125,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 12,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036091881338506937,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036091881338506937,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 16,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003609999257605523,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003609999257605523,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036101602017879486,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036101602017879486,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 24,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036045064916834235,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036045064916834235,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 32,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036026386078447104,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036026386078447104,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 40,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.0003589708067011088,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.0003589708067011088,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 48,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035907881101593375,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035907881101593375,
+            "maximum_absolute": 0.0027213096618652344,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00035975780338048935,
+            "maximum_absolute": 0.0028820037841796875,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00035975780338048935,
+            "maximum_absolute": 0.0028820037841796875,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "expected_family": "SmallM",
+          "reference": {
+            "relative_norm": 0.00036023498978465796,
+            "maximum_absolute": 0.002918720245361328,
+            "finite": true
+          },
+          "graph": {
+            "relative_norm": 0.00036023498978465796,
+            "maximum_absolute": 0.002918720245361328,
+            "finite": true
+          },
+          "mutated_graph": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.00026336495648138225,
+            "maximum_absolute": 0.0048828125,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 256,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.0002436913928249851,
+            "maximum_absolute": 0.005859375,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        },
+        {
+          "rows": 512,
+          "expected_family": "INT8-prefill",
+          "reference": {
+            "relative_norm": 0.00024399183166678995,
+            "maximum_absolute": 0.005859375,
+            "finite": true
+          },
+          "graph_applicability": "Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required."
+        }
+      ],
+      "padding": [
+        {
+          "actual": 1,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0005353462765924633,
+            "maximum_absolute": 0.0029296875,
+            "finite": true
+          }
+        },
+        {
+          "actual": 2,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0005355136818252504,
+            "maximum_absolute": 0.00390625,
+            "finite": true
+          }
+        },
+        {
+          "actual": 3,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 4,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 5,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 8,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 12,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 16,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 20,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 24,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 32,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 40,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 48,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 64,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 128,
+          "padded": 128,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 129,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 256,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "actual": 512,
+          "padded": 512,
+          "tail_poison": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          },
+          "same_family_active": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      "compiled": [
+        {
+          "rows": 1,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 4,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 20,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 64,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 128,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 129,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "rows": 512,
+          "after_large_first": {
+            "relative_norm": 0.0,
+            "maximum_absolute": 0.0,
+            "finite": true
+          }
+        }
+      ]
+    }
+  ],
+  "source_evidence": {
+    "benchmark-results/exl3-optimized-rows-v2/probe/result.json": "4410545ce98f9c47a67f4208bef3b8cb23f2746245e8d2f05356836047083573",
+    "benchmark-results/exl3-optimized-head-rows-v3/probe/result.json": "4b85914c7324b53b04e7fd7f5f457caae4a8f030be2084d71e28be04216c6e74"
+  },
+  "qualification_contract": "Frozen FULL_DECODE_ONLY graph profile, maximum64 target rows. Native SmallM graphs tested additionally through128. M129/256/512 are eager INT8-prefill; unsupported large-prefill capture remains explicitly outside the production contract.",
+  "reuse_note": "Four complete passed classes reused from a terminal probe whose later head closure hit the harness Dynamo recompile limit. No failed/incomplete head data is reused. Head classes rerun with isolated compiler state, including all248320 columns."
+}

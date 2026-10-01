@@ -1,0 +1,422 @@
+{
+  "schema": 1,
+  "status": "MEASURED",
+  "panel_sha256": "fbb3be674583f1704573d19c55fe5a86187efd35bc4438df2ef100132efeba4d",
+  "arm": "target-full-candidate",
+  "reference": {
+    "kind": "original_layer_and_token_chunk_stream",
+    "dtype": "bfloat16",
+    "panel_sha256": "fbb3be674583f1704573d19c55fe5a86187efd35bc4438df2ef100132efeba4d",
+    "windows": [
+      {
+        "name": "code-prefix32768-suffix128",
+        "domain": "code",
+        "prefix_tokens": 32768,
+        "suffix_tokens": 128,
+        "nll_mean": 0.16944377443316228,
+        "perplexity": 1.1846457377824584
+      },
+      {
+        "name": "prose-prefix102400-suffix128",
+        "domain": "prose",
+        "prefix_tokens": 102400,
+        "suffix_tokens": 128,
+        "nll_mean": 0.1863431600608365,
+        "perplexity": 1.2048356409175627
+      },
+      {
+        "name": "code-prefix184320-suffix128",
+        "domain": "code",
+        "prefix_tokens": 184320,
+        "suffix_tokens": 128,
+        "nll_mean": 0.17287696943849795,
+        "perplexity": 1.1887198472168512
+      },
+      {
+        "name": "prose-prefix262015-suffix128",
+        "domain": "prose",
+        "prefix_tokens": 262015,
+        "suffix_tokens": 128,
+        "nll_mean": 0.23629085297494523,
+        "perplexity": 1.2665426342932786
+      }
+    ],
+    "vocab_size": 248320,
+    "chunk_tokens": 4096,
+    "seconds": 2020.816705035002,
+    "torch": "2.13.0+xpu",
+    "model_path": "/cache/hub/models--Qwen--Qwen3.8-27B/snapshots/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+    "context_truncated": false,
+    "peak_rss_gib": 5.930477142333984,
+    "peak_xpu_gib": 8.10084056854248
+  },
+  "candidate": {
+    "kind": "native_vllm_teacher_forced",
+    "model_path": "/models/checkpoint",
+    "quantization": "exl3",
+    "dtype": "float16",
+    "panel_sha256": "fbb3be674583f1704573d19c55fe5a86187efd35bc4438df2ef100132efeba4d",
+    "vocab_size": 248320,
+    "windows": [
+      {
+        "window": 0,
+        "name": "code-prefix32768-suffix128",
+        "domain": "code",
+        "positions": 32895,
+        "nll_mean": 0.15707382559776306,
+        "perplexity": 1.1700819730758667
+      },
+      {
+        "window": 1,
+        "name": "prose-prefix102400-suffix128",
+        "domain": "prose",
+        "positions": 102527,
+        "nll_mean": 3.634697198867798,
+        "perplexity": 37.890377044677734
+      },
+      {
+        "window": 2,
+        "name": "code-prefix184320-suffix128",
+        "domain": "code",
+        "positions": 184447,
+        "nll_mean": 0.028062833473086357,
+        "perplexity": 1.0284602642059326
+      },
+      {
+        "window": 3,
+        "name": "prose-prefix262015-suffix128",
+        "domain": "prose",
+        "positions": 262142,
+        "nll_mean": 1.6333428621292114,
+        "perplexity": 5.120965003967285
+      }
+    ],
+    "positions": 582011,
+    "nll_mean": 1.393728256225586,
+    "perplexity": 4.029846668243408,
+    "seconds": 665.6947986730083,
+    "torch": "2.13.0+xpu",
+    "api_alignment_verified": true,
+    "engine_config": {
+      "dtype": "float16",
+      "max_model_len": 262144,
+      "max_num_seqs": 16,
+      "max_num_batched_tokens": 4096,
+      "gpu_memory_utilization": 0.965,
+      "enforce_eager": false,
+      "enable_prefix_caching": true,
+      "max_logprobs": 1,
+      "limit_mm_per_prompt": {
+        "image": 32,
+        "video": 4
+      },
+      "seed": 20261001,
+      "kv_cache_dtype": "fp8",
+      "mm_processor_kwargs": {
+        "max_pixels": 4194304
+      },
+      "mamba_cache_mode": "align",
+      "scheduler_reserve_full_isl": true,
+      "watermark": 0.0,
+      "speculative_config": {
+        "method": "mtp",
+        "num_speculative_tokens": 3
+      },
+      "compilation_config": {
+        "cudagraph_mode": "FULL_DECODE_ONLY",
+        "cudagraph_capture_sizes": [
+          1,
+          2,
+          4,
+          8,
+          12,
+          16,
+          24,
+          32,
+          40,
+          48,
+          56,
+          64
+        ]
+      }
+    },
+    "capture_identity": [
+      {
+        "capture_installed": true,
+        "runner_type": "XPUModelRunnerV2",
+        "prompt_scorer_sha256": "ea18d7a518d1eb004f63bf2cdff7aeb4e4979ec75ef6f7469f1d301dd1173cfb",
+        "request_registration_sha256": "7feb34eb03ec8bcc81c901140f7e393774b7fdc5553a74aeb6640721ac19040d",
+        "original_head_chunker_sha256": "81b3b80cd8e32441f78ab5d27082519ed6d5a3bf1aa360c3f273865de9c6d4a7",
+        "measurement_head_chunk_tokens": 128,
+        "prompt_metadata_source": "registered_cpu_ids_and_batch_cpu_prefill_offset",
+        "panel_sha256": "fbb3be674583f1704573d19c55fe5a86187efd35bc4438df2ef100132efeba4d"
+      }
+    ],
+    "kv_cache_dtype": "fp8",
+    "speculation": true,
+    "prefix_cache": true,
+    "graphs": true,
+    "scope": "Teacher-forced prompt scoring. Configuring graphs/MTP does not by itself prove decode graph or draft acceptance correctness."
+  },
+  "windows": [
+    {
+      "name": "code-prefix32768-suffix128",
+      "domain": "code",
+      "prefix_tokens": 32768,
+      "suffix_tokens": 128,
+      "original_nll_mean": 0.16944377443316228,
+      "original_perplexity": 1.1846457377824584,
+      "nll_mean": 0.17431888399792683,
+      "perplexity": 1.190435116009971,
+      "delta_nll": 0.004875109564764557,
+      "perplexity_ratio_to_original": 1.0048870122458298,
+      "kl_positions": [
+        32786,
+        32798,
+        32805,
+        32815,
+        32827,
+        32849,
+        32859,
+        32867
+      ],
+      "kl_original_to_checkpoint": [
+        0.002323093226588687,
+        0.00014721116760761557,
+        0.00037845495575204507,
+        0.001098906876832222,
+        0.0019324823428736643,
+        0.0006031617150755593,
+        1.9360881788882507e-05,
+        8.662053623295642e-05
+      ],
+      "kl_checkpoint_to_original": [
+        0.0018001165473220644,
+        0.00010770569912114925,
+        0.0002068062972289548,
+        0.0007307401836382059,
+        0.0014764556446748285,
+        0.00048599971591171384,
+        1.5676849914428732e-05,
+        5.197749139845211e-05
+      ],
+      "js_divergence": [
+        0.0005029826576488154,
+        3.0598520864778196e-05,
+        6.298869375320552e-05,
+        0.00021239872002734684,
+        0.00041388486944440194,
+        0.0001337332072402364,
+        4.299189244003014e-06,
+        1.5422640418908994e-05
+      ],
+      "top1_agreement": 1.0,
+      "original_probability_outside_tokenizer_mean": 1.3049806019854336e-09,
+      "checkpoint_probability_outside_tokenizer_mean": 4.5902362672405507e-10
+    },
+    {
+      "name": "prose-prefix102400-suffix128",
+      "domain": "prose",
+      "prefix_tokens": 102400,
+      "suffix_tokens": 128,
+      "original_nll_mean": 0.1863431600608365,
+      "original_perplexity": 1.2048356409175627,
+      "nll_mean": 0.18526867719569395,
+      "perplexity": 1.2035417609165127,
+      "delta_nll": -0.0010744828651425564,
+      "perplexity_ratio_to_original": 0.9989260941848759,
+      "kl_positions": [
+        102422,
+        102435,
+        102440,
+        102480,
+        102489,
+        102493,
+        102502,
+        102526
+      ],
+      "kl_original_to_checkpoint": [
+        3.473335882627226e-05,
+        0.0023347098964760947,
+        4.39280943234714e-05,
+        9.816052047889074e-06,
+        1.7648396034482033e-06,
+        8.681804319138989e-05,
+        8.230265109216952e-06,
+        3.4141204802986933e-06
+      ],
+      "kl_checkpoint_to_original": [
+        2.9121920560030447e-05,
+        0.0021254457191582123,
+        3.5027618887174265e-05,
+        7.677053003242142e-06,
+        1.9587743289938465e-06,
+        0.00010450843874819067,
+        7.01219818381876e-06,
+        3.373006727148071e-06
+      ],
+      "js_divergence": [
+        7.82425572985425e-06,
+        0.0005447835994301083,
+        9.67540712955385e-06,
+        2.11475809124952e-06,
+        4.6345715170631387e-07,
+        2.344844301759275e-05,
+        1.877044254892756e-06,
+        8.41050260102317e-07
+      ],
+      "top1_agreement": 1.0,
+      "original_probability_outside_tokenizer_mean": 4.2291762304284124e-10,
+      "checkpoint_probability_outside_tokenizer_mean": 6.832566921827166e-10
+    },
+    {
+      "name": "code-prefix184320-suffix128",
+      "domain": "code",
+      "prefix_tokens": 184320,
+      "suffix_tokens": 128,
+      "original_nll_mean": 0.17287696943849795,
+      "original_perplexity": 1.1887198472168512,
+      "nll_mean": 0.17058168424244613,
+      "perplexity": 1.1859945250415953,
+      "delta_nll": -0.0022952851960518217,
+      "perplexity_ratio_to_original": 0.9977073469567815,
+      "kl_positions": [
+        184320,
+        184326,
+        184346,
+        184355,
+        184392,
+        184405,
+        184418,
+        184446
+      ],
+      "kl_original_to_checkpoint": [
+        0.022831045835579926,
+        0.004972630487445026,
+        2.8926405304534315e-06,
+        0.00025082249328917144,
+        1.948081217547859e-06,
+        1.2838774487976793e-05,
+        1.0395013369101668e-05,
+        4.143078190865945e-05
+      ],
+      "kl_checkpoint_to_original": [
+        0.023520946599440352,
+        0.004024352794986329,
+        2.637014290493097e-06,
+        0.00022423508382816117,
+        1.9142812963670473e-06,
+        1.1223783619630101e-05,
+        9.044727615934028e-06,
+        4.6719443854486535e-05
+      ],
+      "js_divergence": [
+        0.0057639133119462135,
+        0.0011039774766620461,
+        6.870447852084965e-07,
+        5.908758221732963e-05,
+        4.789801545181634e-07,
+        2.981496675104824e-06,
+        2.4089680323297476e-06,
+        1.0916484986028502e-05
+      ],
+      "top1_agreement": 1.0,
+      "original_probability_outside_tokenizer_mean": 1.3262072524952517e-07,
+      "checkpoint_probability_outside_tokenizer_mean": 1.1453077780453507e-07
+    },
+    {
+      "name": "prose-prefix262015-suffix128",
+      "domain": "prose",
+      "prefix_tokens": 262015,
+      "suffix_tokens": 128,
+      "original_nll_mean": 0.23629085297494523,
+      "original_perplexity": 1.2665426342932786,
+      "nll_mean": 0.2276110679242293,
+      "perplexity": 1.255596888549921,
+      "delta_nll": -0.008679785050715927,
+      "perplexity_ratio_to_original": 0.9913577755323925,
+      "kl_positions": [
+        262027,
+        262046,
+        262058,
+        262062,
+        262084,
+        262091,
+        262114,
+        262135
+      ],
+      "kl_original_to_checkpoint": [
+        8.152300553142506e-05,
+        2.9234970042188507e-05,
+        1.703442785273395e-05,
+        7.83948008492357e-06,
+        5.3667934806829695e-06,
+        5.018663484818659e-06,
+        1.0573458881094841e-06,
+        0.0003025177692301611
+      ],
+      "kl_checkpoint_to_original": [
+        5.7975112311568946e-05,
+        2.3009186771560372e-05,
+        2.1238655414764113e-05,
+        6.046470053317527e-06,
+        4.814089762548199e-06,
+        5.626688258150795e-06,
+        8.775315903328574e-07,
+        8.717349362428923e-05
+      ],
+      "js_divergence": [
+        1.6637041320038344e-05,
+        6.374133993020464e-06,
+        4.6852204520012686e-06,
+        1.689654313320847e-06,
+        1.2584563391555343e-06,
+        1.3166675073417702e-06,
+        2.3812585792547628e-07,
+        2.2485061917264358e-05
+      ],
+      "top1_agreement": 1.0,
+      "original_probability_outside_tokenizer_mean": 5.432237625796469e-12,
+      "checkpoint_probability_outside_tokenizer_mean": 3.6294631661236823e-12
+    }
+  ],
+  "array_sha256": {
+    "bf16/window-000-nll.npy": "80356ff617c5051f84df3a198af8e465c2b6f5da85b9615ab0a640f6953aae15",
+    "bf16/window-000-logprobs.npy": "0cd8aa32abb7aa3e58f9ff32f1d6bf94b4dd1c610aa4c619517d6af522e7d342",
+    "target-full-candidate/window-000-nll.npy": "afe96dd57f85eb7963301188d5c67e972bf3d754972fa7fd45e1912fbbed104a",
+    "target-full-candidate/window-000-logprobs.npy": "08ba5d9ab2739a9eec333912da449306bcbafd967355601bb1141dc347f5c4ba",
+    "bf16/window-001-nll.npy": "79d8e6777147e7298bbf9f6fb9ed8cb7c8750622af20fda5a4c9c417c4bcf125",
+    "bf16/window-001-logprobs.npy": "5ecd916b1fe2949dd3973bdfeca140ae853932ea736c8301e90ae6ffca5a480f",
+    "target-full-candidate/window-001-nll.npy": "9455fdca1af43fc1022f2dec22f3c18c5d2e7a7febeb865ac1987bc4eb512751",
+    "target-full-candidate/window-001-logprobs.npy": "1553d6a1fd4bdb7b5ae10b3b9c4c72b3098840d46ede1fb8968f6259d4faaac5",
+    "bf16/window-002-nll.npy": "aa033b14677123136bbb901b0f0db2c101b6237740a7b2fa3fd87cc5a58bf1ef",
+    "bf16/window-002-logprobs.npy": "76eecc4c3897629cf82b2c86f878254742b694a407e32bd1f272e3ec479d1455",
+    "target-full-candidate/window-002-nll.npy": "1a9d91e7f0aa47ca433e3178e7c6841f6238ad5a1fc6de0315bfb9a4a0f9485d",
+    "target-full-candidate/window-002-logprobs.npy": "7a0556d9cee1b2741e8995378a33f08b993b45338b24407c8bb91a0c44606449",
+    "bf16/window-003-nll.npy": "848f9414c950253bb51ca7ae686cc51bd8a1177d54582838af10142d25ce63cd",
+    "bf16/window-003-logprobs.npy": "91101caa64b957bb94927ed3b990d65c1bdf4e1a3d3788f4093338b88a233882",
+    "target-full-candidate/window-003-nll.npy": "73513840d2ce7f3f19e9e8b7bf5ff090f75ad6778a89f716f0199edd901591fd",
+    "target-full-candidate/window-003-logprobs.npy": "18d8b91b4f9b61453d34f8f7d6ac80322f0f3f4afa4da14db74ba9b7f7f5ccf8"
+  },
+  "overall": {
+    "suffix_positions": 512,
+    "kl_positions": 32,
+    "original_perplexity": 1.2107484101962853,
+    "perplexity": 1.2085787450158005,
+    "delta_nll": -0.0017936108867864231,
+    "kl_mean": 0.0011776969667572693,
+    "exploratory_delta_nll_window_ci95": [
+      -0.006778459504322584,
+      0.0030825108745604624
+    ]
+  },
+  "vocabulary": {
+    "tokenizer_sha256": "0997f410c57a1f4e53b09e4be8f4a172d90edd9564368fb0847030937229b9f3",
+    "valid_ids": 248077,
+    "logit_rows": 248320,
+    "masking": "No additional masking in any arm"
+  },
+  "scope": "Precision drift probes with repeated frozen code/prose prefixes; not a natural long-document or agent-quality benchmark",
+  "reference_precision_note": "Original BF16 official cached layers, bounded token chunks; chunk-control numerical drift reported separately; not a bit-exact unchunked long reference.",
+  "confidence_interval_note": "Exploratory window bootstrap; four engineered windows cannot establish general model quality. No post-hoc pass threshold."
+}

@@ -2,8 +2,8 @@
 """Current-profile phase, concurrency, prefix-cache and context benchmark.
 
 The script never starts, stops or restarts the model service. Without
-``--execute`` it only prints the selected plan. Execution is refused unless the
-live container advertises ``--max-num-seqs 4`` and is idle at preflight.
+``--execute`` it only prints the selected plan. The live admission limit must
+match the explicitly expected profile; benchmark concurrency remains C1..C4.
 """
 
 from __future__ import annotations
@@ -748,6 +748,8 @@ def main() -> int:
     parser.add_argument("--execute", action="store_true", help="actually send inference requests")
     parser.add_argument("--base", default=DEFAULT_BASE)
     parser.add_argument("--container", default="qwen38-vllm-production")
+    parser.add_argument('--expected-max-num-seqs', type=int, choices=(4,8,16), default=4,
+                        help='Attested live admission limit; workload matrix remains unchanged')
     parser.add_argument(
         "--scenarios",
         type=Path,
@@ -784,8 +786,8 @@ def main() -> int:
     inspect = inspect_container(args.container)
     models = http_json(args.base, "/v1/models")
     metrics, _ = metric_snapshot(args.base)
-    if inspect["max_num_seqs"] != 4:
-        raise SystemExit(f"refusing benchmark: live max_num_seqs={inspect['max_num_seqs']}, expected 4")
+    if inspect["max_num_seqs"] != args.expected_max_num_seqs:
+        raise SystemExit(f"refusing benchmark: live max_num_seqs={inspect['max_num_seqs']}, expected {args.expected_max_num_seqs}")
     if not inspect["reserve_full_isl_explicit"]:
         raise SystemExit("refusing benchmark: --scheduler-reserve-full-isl is not explicit")
     for scenario in scenarios:

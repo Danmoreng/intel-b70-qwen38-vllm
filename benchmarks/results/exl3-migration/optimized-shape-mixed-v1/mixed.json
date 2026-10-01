@@ -1,0 +1,431 @@
+{
+  "status": "COMPLETE_MIXED_AND_API_MEDIA_GATES",
+  "image_id": "sha256:6cf4899923749b221a008834f7fd42e0aa7e3f58546f408faf77cbf4da86554b",
+  "order": [
+    false,
+    true,
+    true,
+    false
+  ],
+  "wall_s": 1215.7896506786346,
+  "raw_sha256": "20c8540ec1311e1c667fbc74f4038ccfaaa897dfdaba404516d07d6aede64c36",
+  "arms": [
+    {
+      "prefill": false,
+      "mixed": [
+        {
+          "status": "COMPLETE",
+          "decoders": 1,
+          "total_admitted": 2,
+          "wall_s": 86.64689606399043,
+          "native": {
+            "draft_tokens": 3513.0,
+            "generation_tokens": 4352.0,
+            "decode_seconds": 89.48330467600317,
+            "accepted_tokens": 3184.0,
+            "prompt_tokens": 53248.0,
+            "completed": 2.0,
+            "preemptions": 0.0,
+            "prefill_seconds": 37.18908217900025,
+            "cached_tokens": 0.0,
+            "prefill_tokens": 53248.0
+          },
+          "incoming_prefill_client_s": 35.45925793700735,
+          "during_incoming_prefill_burst_gaps_s": {
+            "count": 19,
+            "p50": 1.9881434370036004,
+            "p95": 2.9368913629019513,
+            "maximum": 3.0582176980096847
+          },
+          "note": "SSE burst gaps on existing decode streams during cold49K prefill; not per-token GPU timing. ABBA changes only guarded prefill, M04 remains on."
+        },
+        {
+          "status": "COMPLETE",
+          "decoders": 3,
+          "total_admitted": 4,
+          "wall_s": 105.68813230399974,
+          "native": {
+            "draft_tokens": 10545.0,
+            "generation_tokens": 12544.0,
+            "decode_seconds": 307.6619614669762,
+            "accepted_tokens": 9034.0,
+            "prompt_tokens": 61440.0,
+            "completed": 4.0,
+            "preemptions": 0.0,
+            "prefill_seconds": 47.24473588200635,
+            "cached_tokens": 0.0,
+            "prefill_tokens": 61440.0
+          },
+          "incoming_prefill_client_s": 36.435907078004675,
+          "during_incoming_prefill_burst_gaps_s": {
+            "count": 57,
+            "p50": 2.0579689300066093,
+            "p95": 3.0032080345961725,
+            "maximum": 3.1097315520019038
+          },
+          "note": "SSE burst gaps on existing decode streams during cold49K prefill; not per-token GPU timing. ABBA changes only guarded prefill, M04 remains on."
+        }
+      ],
+      "status": "COMPLETE"
+    },
+    {
+      "prefill": true,
+      "mixed": [
+        {
+          "status": "COMPLETE",
+          "decoders": 1,
+          "total_admitted": 2,
+          "wall_s": 79.2268407530064,
+          "native": {
+            "draft_tokens": 3552.0,
+            "generation_tokens": 4352.0,
+            "decode_seconds": 82.08013246100745,
+            "accepted_tokens": 3169.0,
+            "prompt_tokens": 53248.0,
+            "completed": 2.0,
+            "preemptions": 0.0,
+            "prefill_seconds": 28.850334315997316,
+            "cached_tokens": 0.0,
+            "prefill_tokens": 53248.0
+          },
+          "incoming_prefill_client_s": 27.141592749001575,
+          "during_incoming_prefill_burst_gaps_s": {
+            "count": 19,
+            "p50": 1.611822286999086,
+            "p95": 2.034823096601758,
+            "maximum": 2.0906121040025027
+          },
+          "note": "SSE burst gaps on existing decode streams during cold49K prefill; not per-token GPU timing. ABBA changes only guarded prefill, M04 remains on."
+        },
+        {
+          "status": "COMPLETE",
+          "decoders": 3,
+          "total_admitted": 4,
+          "wall_s": 96.4723785600072,
+          "native": {
+            "draft_tokens": 10452.0,
+            "generation_tokens": 12544.0,
+            "decode_seconds": 277.97916248500405,
+            "accepted_tokens": 9062.0,
+            "prompt_tokens": 61440.0,
+            "completed": 4.0,
+            "preemptions": 0.0,
+            "prefill_seconds": 37.994772617006674,
+            "cached_tokens": 0.0,
+            "prefill_tokens": 61440.0
+          },
+          "incoming_prefill_client_s": 27.40503831699607,
+          "during_incoming_prefill_burst_gaps_s": {
+            "count": 54,
+            "p50": 1.659398001000227,
+            "p95": 2.0653194344449726,
+            "maximum": 2.1057069240050623
+          },
+          "note": "SSE burst gaps on existing decode streams during cold49K prefill; not per-token GPU timing. ABBA changes only guarded prefill, M04 remains on."
+        }
+      ],
+      "status": "COMPLETE"
+    },
+    {
+      "prefill": true,
+      "mixed": [
+        {
+          "status": "COMPLETE",
+          "decoders": 1,
+          "total_admitted": 2,
+          "wall_s": 89.64306327099621,
+          "native": {
+            "draft_tokens": 4233.0,
+            "generation_tokens": 4352.0,
+            "decode_seconds": 92.49966074699478,
+            "accepted_tokens": 2942.0,
+            "prompt_tokens": 53248.0,
+            "completed": 2.0,
+            "preemptions": 0.0,
+            "prefill_seconds": 28.848603478007135,
+            "cached_tokens": 0.0,
+            "prefill_tokens": 53248.0
+          },
+          "incoming_prefill_client_s": 27.139052801998332,
+          "during_incoming_prefill_burst_gaps_s": {
+            "count": 18,
+            "p50": 1.6445784285024274,
+            "p95": 2.039643339601753,
+            "maximum": 2.0901641980017303
+          },
+          "note": "SSE burst gaps on existing decode streams during cold49K prefill; not per-token GPU timing. ABBA changes only guarded prefill, M04 remains on."
+        },
+        {
+          "status": "COMPLETE",
+          "decoders": 3,
+          "total_admitted": 4,
+          "wall_s": 104.13630666300014,
+          "native": {
+            "draft_tokens": 10866.0,
+            "generation_tokens": 12544.0,
+            "decode_seconds": 284.19881790698855,
+            "accepted_tokens": 8923.0,
+            "prompt_tokens": 61440.0,
+            "completed": 4.0,
+            "preemptions": 0.0,
+            "prefill_seconds": 38.026289603003534,
+            "cached_tokens": 0.0,
+            "prefill_tokens": 61440.0
+          },
+          "incoming_prefill_client_s": 27.4407934040064,
+          "during_incoming_prefill_burst_gaps_s": {
+            "count": 57,
+            "p50": 1.6381337069906294,
+            "p95": 2.0542924145964205,
+            "maximum": 2.1024255150114186
+          },
+          "note": "SSE burst gaps on existing decode streams during cold49K prefill; not per-token GPU timing. ABBA changes only guarded prefill, M04 remains on."
+        }
+      ],
+      "status": "COMPLETE"
+    },
+    {
+      "prefill": false,
+      "mixed": [
+        {
+          "status": "COMPLETE",
+          "decoders": 1,
+          "total_admitted": 2,
+          "wall_s": 98.21944530800101,
+          "native": {
+            "draft_tokens": 4203.0,
+            "generation_tokens": 4352.0,
+            "decode_seconds": 101.08749434900528,
+            "accepted_tokens": 2952.0,
+            "prompt_tokens": 53248.0,
+            "completed": 2.0,
+            "preemptions": 0.0,
+            "prefill_seconds": 37.73642233699502,
+            "cached_tokens": 0.0,
+            "prefill_tokens": 53248.0
+          },
+          "incoming_prefill_client_s": 35.98326179399737,
+          "during_incoming_prefill_burst_gaps_s": {
+            "count": 19,
+            "p50": 2.0258094129967503,
+            "p95": 2.9836508402018804,
+            "maximum": 3.1069155980076175
+          },
+          "note": "SSE burst gaps on existing decode streams during cold49K prefill; not per-token GPU timing. ABBA changes only guarded prefill, M04 remains on."
+        },
+        {
+          "status": "COMPLETE",
+          "decoders": 3,
+          "total_admitted": 4,
+          "wall_s": 104.20360866999545,
+          "native": {
+            "draft_tokens": 10284.0,
+            "generation_tokens": 12544.0,
+            "decode_seconds": 303.40072533200146,
+            "accepted_tokens": 9120.0,
+            "prompt_tokens": 61440.0,
+            "completed": 4.0,
+            "preemptions": 0.0,
+            "prefill_seconds": 47.490063580000424,
+            "cached_tokens": 0.0,
+            "prefill_tokens": 61440.0
+          },
+          "incoming_prefill_client_s": 36.63590696299798,
+          "during_incoming_prefill_burst_gaps_s": {
+            "count": 56,
+            "p50": 2.0672670995045337,
+            "p95": 3.0406960497530235,
+            "maximum": 3.141764868007158
+          },
+          "note": "SSE burst gaps on existing decode streams during cold49K prefill; not per-token GPU timing. ABBA changes only guarded prefill, M04 remains on."
+        }
+      ],
+      "status": "COMPLETE"
+    }
+  ],
+  "api": {
+    "status": "PASS",
+    "checks": [
+      "text",
+      "stream",
+      "tool",
+      "reasoning",
+      "image",
+      "images_at_limit",
+      "over_image_limit",
+      "prefix_first",
+      "prefix_extension",
+      "prefix_native",
+      "after_abort",
+      "c4_usage",
+      "limits"
+    ],
+    "image_limit": 32,
+    "video_limit_configured": 4,
+    "abort_note": "client disconnected after first streamed content; correlate trace with scheduler abort",
+    "c4_note": "four simultaneous small requests; full long-context C4 load remains a separate release gate"
+  },
+  "media": {
+    "status": "PASS",
+    "responses": {
+      "videos_1": {
+        "id": "chatcmpl-8c7b05cf7c960943",
+        "object": "chat.completion",
+        "created": 1790891034,
+        "model": "Qwen3.8-27B",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Red",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.30.0-07c92e33",
+        "usage": {
+          "prompt_tokens": 202,
+          "total_tokens": 204,
+          "completion_tokens": 2,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      },
+      "videos_4": {
+        "id": "chatcmpl-b57e874811b07ced",
+        "object": "chat.completion",
+        "created": 1790891035,
+        "model": "Qwen3.8-27B",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Red",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.30.0-07c92e33",
+        "usage": {
+          "prompt_tokens": 736,
+          "total_tokens": 738,
+          "completion_tokens": 2,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      },
+      "over_video_limit": {
+        "status": 400,
+        "error": "{\"error\":{\"message\":\"At most 4 video(s) may be provided in one prompt. (parameter=video)\",\"type\":\"BadRequestError\",\"param\":\"video\",\"code\":400}}"
+      },
+      "oversized_image": {
+        "id": "chatcmpl-801521b8fa049d6e",
+        "object": "chat.completion",
+        "created": 1790891035,
+        "model": "Qwen3.8-27B",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Red",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.30.0-07c92e33",
+        "usage": {
+          "prompt_tokens": 4081,
+          "total_tokens": 4083,
+          "completion_tokens": 2,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    },
+    "video_fixture_sha256": "b860f60fd39a5e806d431e9ffd5e07033191e553fd885d45b2543f1ede28d344",
+    "fixture": "ffmpeg constant-red 320x240,4fps,2s; API decodes real H264 video",
+    "scope": "Small-media count limits and one 6.3MP image; does not promise 32 maximum-area images plus 4 long videos at maximum text context"
+  },
+  "maximum_area_images": {
+    "status": "PASS",
+    "usage": {
+      "prompt_tokens": 131161,
+      "total_tokens": 131163,
+      "completion_tokens": 2,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "native": {
+      "draft_tokens": 3.0,
+      "generation_tokens": 2.0,
+      "decode_seconds": 0.06359357900510076,
+      "accepted_tokens": 3.0,
+      "prompt_tokens": 131161.0,
+      "completed": 1.0,
+      "preemptions": 0.0,
+      "prefill_seconds": 105.01197310700081,
+      "cached_tokens": 0.0,
+      "prefill_tokens": 131161.0
+    },
+    "reply": "red"
+  }
+}

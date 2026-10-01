@@ -161,7 +161,7 @@ def run(args):
     fixture = FIXTURES / args.fixture_version
     fixture_id, manifest_sha = verify_fixture(fixture)
     tasks = json.loads((fixture / "tasks.json").read_text())["tasks"]
-    expected_policy = (REPO / "config/production_policy.sha256").read_text().split()[0]
+    expected_policy = args.policy_sha256_file.read_text().split()[0]
     identity = live_identity(args.container)
     if identity["policy_sha256"] != expected_policy:
         raise RuntimeError("live image does not have the production policy")
@@ -261,4 +261,7 @@ if __name__ == "__main__":
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--max-requests-per-task", type=int, default=40)
     parser.add_argument("--fixture-version", choices=("v1", "v2"), default="v2")
+    parser.add_argument('--policy-sha256-file', type=Path,
+                        default=REPO/'config/production_policy.sha256',
+                        help='Explicit frozen candidate policy; production policy remains the default')
     run(parser.parse_args())

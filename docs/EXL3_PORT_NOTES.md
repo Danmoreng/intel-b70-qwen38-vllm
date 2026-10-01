@@ -647,3 +647,15 @@ with a brief final kernel profile and priority on correctness/quality. Final
 README measurements must include the full20-scenario70-wave124-request
 serving matrix, corrected Flappyv7 with10K context bands, and QueueKitv2.
 Eight hours is a planning deadline, not permission to waive failed gates.
+
+## Final immutable candidate gates —2026-10-02
+
+Candidate6cf48999 packages exact native48f879c1 and M04 eaa18427; release metadata child c09015ce has identical RootFS, with policy cbe1755c. All409 tensors including8 MTP reconstruct bit-exactly. Expanded row/fullhead gate passes at unchanged RMS2e-3, with graph scope explicit: production FULL_DECODE_ONLYmax64, SmallM tested through128, large INT8-prefill eager/compiled only. Passed body groups are reused after a later harness-only Dynamo closure-limit failure; corrected head probes rerun all248320 columns.
+
+ABBA mixed-serving completes8waves/24requests: cold incoming49K TTFT~36→27s, overlapping SSE gap p95~3.0→2.05s; no observed preemption or cache hits. API/tool/reasoning/media-limit tests pass;32 unique maximum-area images remain in the final operation campaign.
+
+Final short quality uses identical128-row capture batches in both arms: all272 arrays bit-identical, PPL3.646722/KL0.0324807. Existing BF16 arrays reused after integrity validation. Four long suffix windows retain PPL1.208579 versus BF161.210748/KL0.00117770 with32/32 top1 agreement. Generated controls produce2560 tokens each:9/20 histories differ, all optimized choices match each path's reported logits maximum; no blanket bit-exact-text/tiny-tie claim. Final functional coding remains a separate gate.
+
+Kernel profiling is limited, per user steering, to three128-token event waves and two eight-cycle pure-decode traces. Captured body graphs are not decomposed by the trace. No speculative linear rewrite is justified by this limited diagnostic. Final clean decode is checked by a small ABBA then the existing70-wave README matrix.
+
+Final README matrix replays the original frozen2026-09-23 fixture bytes that also drove2026-09-30 GPTQ. The later run saves normalized request metadata, so its request JSON is not substituted for the original manifest. The corrected Flappyv7 assignment is six stages with identical40-minute budgets/seed/sampling/tool limits, plus independent QueueKitv2. No production image/profile is changed before the measurements and release review finish.

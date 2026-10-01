@@ -1,0 +1,3 @@
+# random public API contract
+
+Export createRng(seed), hashSeed(text). Seeds are unsigned 32-bit integers, including zero; reject other inputs. createRng returns {next,uint32,snapshot,restore}. uint32 advances xorshift32: x ^= x<<13; x ^= x>>>17; x ^= x<<5, truncating unsigned after the sequence. Zero initializes to 0x6d2b79f5. next() = uint32()/4294967296. snapshot returns the unsigned current state; restore accepts only a nonzero uint32 and returns nothing. Invalid restore cannot change state. hashSeed is FNV-1a over JavaScript UTF-16 code units, initial 2166136261, Math.imul(hash ^ codeUnit,16777619), final unsigned. Reproducibility must not depend on Date.now or Math.random. Return separate stateful instances.

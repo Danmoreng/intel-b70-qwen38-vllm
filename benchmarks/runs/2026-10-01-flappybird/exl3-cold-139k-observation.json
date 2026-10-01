@@ -1,0 +1,84 @@
+{
+  "identity": {
+    "container_id": "9c3dd5716499133d1bc299579dbe10515daec27263b958a6d9a8434f98826d2d",
+    "image_id": "sha256:cba73584f4ab0a2b37eac1356f34f16655ac5e740d845e110997b03be78279b7",
+    "image_tag": "sha256:cba73584f4ab0a2b37eac1356f34f16655ac5e740d845e110997b03be78279b7",
+    "command": [
+      "models/qwen3.8-27b-exl3-4.00bpw",
+      "--gpu",
+      "0",
+      "--port",
+      "8000",
+      "--model-path",
+      "/models",
+      "--",
+      "--enable-auto-tool-choice",
+      "--tool-call-parser",
+      "qwen3_coder",
+      "--reasoning-parser",
+      "qwen3",
+      "--reasoning-config",
+      "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}"
+    ],
+    "labels": {
+      "image.omix.version": "0.1.0",
+      "org.opencontainers.image.authors": "Intel Corporation",
+      "org.opencontainers.image.created": "2026-06-08T12:53:11+00:00",
+      "org.opencontainers.image.description": "Open Middleware X<sup>e</sup> is a set of highly optimized deep learning frameworks and tools for Intel GPUs to accelerate AI workloads.",
+      "org.opencontainers.image.documentation": "https://github.com/intel/containers",
+      "org.opencontainers.image.licenses": "MIT",
+      "org.opencontainers.image.revision": "ac12083301cbdbe06135882d401f7877b0b512db",
+      "org.opencontainers.image.source": "https://github.com/intel/containers",
+      "org.opencontainers.image.title": "Open Middleware X<sup>e</sup>",
+      "org.opencontainers.image.url": "https://www.intel.com",
+      "org.opencontainers.image.version": "20260608"
+    }
+  },
+  "usage": {
+    "prompt_tokens": 139193,
+    "total_tokens": 140217,
+    "completion_tokens": 1024
+  },
+  "native": {
+    "preemptions": 1.0,
+    "decode_seconds": 30.359095152998634,
+    "accepted_tokens": 620.0,
+    "draft_tokens": 1209.0,
+    "completed": 1.0,
+    "cached_tokens": 0.0,
+    "prefill_tokens": 139193.0,
+    "prompt_tokens": 139193.0,
+    "prefill_seconds": 118.34697873100231,
+    "generation_tokens": 1024.0
+  },
+  "native_before": {
+    "draft_tokens": 63.0,
+    "accepted_tokens": 43.0,
+    "preemptions": 0.0,
+    "prompt_tokens": 7478.0,
+    "cached_tokens": 0.0,
+    "generation_tokens": 64.0,
+    "completed": 1.0,
+    "prefill_seconds": 3.4308502440035227,
+    "decode_seconds": 0.9766832489985973,
+    "prefill_tokens": 7478.0
+  },
+  "native_after": {
+    "draft_tokens": 1272.0,
+    "accepted_tokens": 663.0,
+    "preemptions": 1.0,
+    "prompt_tokens": 146671.0,
+    "cached_tokens": 0.0,
+    "generation_tokens": 1088.0,
+    "completed": 2.0,
+    "prefill_seconds": 121.77782897500583,
+    "decode_seconds": 31.33577840199723,
+    "prefill_tokens": 146671.0
+  },
+  "tokenize_preflight": {
+    "prompt_tokens": 139193,
+    "context_limit": 200704,
+    "max_output_tokens": 1024,
+    "wall_s": 0.16565529299987247
+  }
+}

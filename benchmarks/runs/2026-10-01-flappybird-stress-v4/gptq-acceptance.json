@@ -1,0 +1,266 @@
+{
+  "purpose": "Independent final-output grading after timed session; no model feedback or source repairs; excluded from native and session timing",
+  "graded_at": "2026-10-01T04:23:30.874019+00:00",
+  "wall_s": 64.14846365099947,
+  "fixture_manifest_sha256": "58b09f4db9b6c3c702156294c54aa206a2315a328914add92f297bf2bbb8e331",
+  "harness_files": {
+    "checks.mjs": "03c0d0aaf2dc8ed096a51968971d98e8f69173a7d00bd2b79174f4c6959af2bc",
+    "browser.mjs": "ad35c54e4c412b0715023b333bfc7b4319698654ed904ad550a46a4fba58d041",
+    "package.json": "89ee7d37083d11091fd6a2cfb0308b9af466f9010c1f91eb9f0140cdf4ebb901",
+    "package-lock.json": "b7bd5012db625f36b65c68f3414deaaa2649baa2beb11cd579a3987b6f0f0f79"
+  },
+  "project_sha256": "23554d5064bcf38b62686acd0a22c517944d3c4c2fd2f2526f874b1a60a90a21",
+  "acceptance": {
+    "exit_code": 1,
+    "mode": "acceptance",
+    "checks": [
+      {
+        "name": "rng exact xorshift",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "rng zero and restore",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "hash FNV-1a",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "rng invalid seeds",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "rng invalid restore atomic",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "config defaults and detached",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "config JSON roundtrip",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "config reject invalid",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "config coupled and prototype edge",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "game initial and pure flap",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game fixed-step flight",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game paused and restarted",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game seeded pipes",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game lower boundary and no points on crash",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game passing one pipe once",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game snapshot roundtrip",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game pipe and bird collision edges",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "game top boundary inclusive",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "game strict passing edge",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "game removes offscreen pipes",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "game restore rejects corrupt snapshots",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "game no-op transitions detached",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "input edge queue and release",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "input ignore repeat and disposal",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "pointer mapping/clamp",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "ticker first frame and backlog cap",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "ticker pause fresh base and invalid time",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "input custom binding validation",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "pointer bad dimensions and values",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "ticker fractional remainder",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "ticker invalid options",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "app import has no DOM side effects",
+        "passed": false,
+        "sealed": false,
+        "error": "SyntaxError: Invalid left-hand side in assignment\n    at compileSourceTextModule (node:internal/modules/esm/utils:319:16)\n    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:89:18)\n    at #translate (node:internal/modules/esm/loader:438:20)\n    at afterLoad (node:internal/modules/esm/loader:506:29)\n    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:511:12)\n    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)\n    at afterResolve (node:internal/modules/esm/loader:611:52)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:617:12)\n    at node:internal/modules/esm/loader:636:32\n    at TracingChannel.tracePromise (node:diagnostics_channel:361:14)"
+      }
+    ],
+    "passed": 31,
+    "total": 32
+  },
+  "browser": {
+    "checks": [
+      {
+        "name": "WebGL2 procedural renderer and colors",
+        "passed": false,
+        "error": "Error: at least four drawn colors/regions required: {\"info\":{\"backend\":\"webgl2\",\"width\":480,\"height\":720,\"dpr\":1,\"contextLost\":false,\"destroyed\":false},\"colors\":1,\"gl\":true,\"gpu\":\"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\",\"error\":0}"
+      },
+      {
+        "name": "renderer DPR resize and state immutability",
+        "passed": true
+      },
+      {
+        "name": "renderer context loss and restore",
+        "passed": true
+      },
+      {
+        "name": "renderer destroy idempotent and commands reject",
+        "passed": true
+      },
+      {
+        "name": "app mounts ready with accessible controls",
+        "passed": false,
+        "error": "Error: page.evaluate: SyntaxError: Invalid left-hand side in assignment"
+      },
+      {
+        "name": "app buttons start pause restart",
+        "passed": false,
+        "error": "TimeoutError: page.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"start\"]')\u001b[22m\n"
+      },
+      {
+        "name": "app keyboard and canvas pointer",
+        "passed": false,
+        "error": "Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'getState')\n    at eval (eval at evaluate (:311:30), <anonymous>:1:20)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+      },
+      {
+        "name": "app snapshot detached and invalid count",
+        "passed": false,
+        "error": "Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'getState')\n    at eval (eval at evaluate (:311:30), <anonymous>:2:32)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+      },
+      {
+        "name": "app gameover and score/status text",
+        "passed": false,
+        "error": "Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'restart')\n    at eval (eval at evaluate (:311:30), <anonymous>:2:22)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+      },
+      {
+        "name": "app responsive mobile canvas",
+        "passed": false,
+        "error": "TimeoutError: locator.boundingBox: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"game-canvas\"]')\u001b[22m\n"
+      },
+      {
+        "name": "app destroy idempotent and removes input",
+        "passed": false,
+        "error": "Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'destroy')\n    at eval (eval at evaluate (:311:30), <anonymous>:2:22)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+      },
+      {
+        "name": "real entry point loads without JavaScript errors",
+        "passed": false,
+        "error": "TimeoutError: page.waitForSelector: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"game-canvas\"]') to be visible\u001b[22m\n"
+      },
+      {
+        "name": "app has no external runtime requests",
+        "passed": true
+      }
+    ],
+    "passed": 4,
+    "total": 13,
+    "page_errors": [
+      "Error: SMOKE-FAIL: only 1 colors on smoke canvas (grid 6x8): [[.26,26,31.,48]]; other canvas: none",
+      "Error: SMOKE-FAIL: sky===ground (26,26,31)",
+      "Error: SMOKE-FAIL: bird===sky (26,26,31)",
+      "Error: SMOKE-FAIL: pipeTop===sky at (475,352)",
+      "Error: SMOKE-FAIL: pipeBottom===sky at (475,552)",
+      "Error: SMOKE-FAIL: pipe bodies not distinguishable",
+      "Error: SMOKE-FAIL: paused overlay missing",
+      "Error: SMOKE-FAIL: gameover overlay same as paused",
+      "Error: SMOKE-FAIL: ready phase does not draw the bird",
+      "SyntaxError: Invalid left-hand side in assignment",
+      "Error: SMOKE-FAIL: buffer collapsed after composite: smoke=1 (was 1); none; top=[[.26,26,31.,48]]"
+    ],
+    "browser_version": "153.0.8010.12",
+    "software_rendering": true
+  },
+  "passed": 35,
+  "total": 45
+}

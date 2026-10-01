@@ -1,0 +1,49 @@
+{
+  "fixture_id": "flappybird-webgl2-v6",
+  "tasks": [
+    {
+      "id": "01-foundation",
+      "modules": [
+        "random",
+        "config"
+      ],
+      "instruction": "Implement seeded random and validated game configuration. Read the applicable specs and current source before editing. After changes, inspect relevant interactions and use the supplied run_tests. Additional self-written tests are optional and limited to at most three small cases per pure module. Use the real browser tool instead of DOM/WebGL mocks. Use efficient edits for small corrections. Browser stages must also use browser_test. Do not change protected specs or acceptance harness. All prior functionality must remain working."
+    },
+    {
+      "id": "02-physics",
+      "modules": [
+        "simulation"
+      ],
+      "instruction": "Implement deterministic fixed-step flight, seeded pipes, collision, scoring and pure state transitions. Include pause/resume/restart and detached snapshots. Read the applicable specs and current source before editing. After changes, inspect relevant interactions and use the supplied run_tests. Additional self-written tests are optional and limited to at most three small cases per pure module. Use the real browser tool instead of DOM/WebGL mocks. Use efficient edits for small corrections. Browser stages must also use browser_test. Do not change protected specs or acceptance harness. All prior functionality must remain working."
+    },
+    {
+      "id": "03-controls",
+      "modules": [
+        "input"
+      ],
+      "instruction": "Implement edge-triggered keyboard input, pointer mapping and bounded fixed-step ticker. Read the applicable specs and current source before editing. After changes, inspect relevant interactions and use the supplied run_tests. Additional self-written tests are optional and limited to at most three small cases per pure module. Use the real browser tool instead of DOM/WebGL mocks. Use efficient edits for small corrections. Browser stages must also use browser_test. Do not change protected specs or acceptance harness. All prior functionality must remain working."
+    },
+    {
+      "id": "04-webgl",
+      "modules": [
+        "renderer"
+      ],
+      "instruction": "Implement procedural WebGL2 bird/pipes/ground/sky, resize/DPR and context loss/destroy lifecycle. Use browser_test to verify rendering. Read the applicable specs and current source before editing. After changes, inspect relevant interactions and use the supplied run_tests. Additional self-written tests are optional and limited to at most three small cases per pure module. Use the real browser tool instead of DOM/WebGL mocks. Use efficient edits for small corrections. Browser stages must also use browser_test. Do not change protected specs or acceptance harness. All prior functionality must remain working. Coordinate reference for this stage: logical pixel coordinates have a top-left origin. Convert every vertex exactly once to clip coordinates: clipX = 2*x/logicalWidth - 1; clipY = 1 - 2*y/logicalHeight. Pass the actual state.config.width and height when using helpers, or perform this conversion explicitly in the vertex shader. Vertex counts are counts of vertices: two floats per XY position means length/2; use the complete stride for interleaved attributes. The ready scene also draws the bird and enough details for at least four distinguishable colors. If a real browser color check fails, inspect finite vertex values, conversion, attribute stride and draw count. Fix your geometry rather than modifying browser prototypes, getContext or readPixels. Keep real WebGL drawing and all lifecycle requirements."
+    },
+    {
+      "id": "05-game",
+      "modules": [
+        "app"
+      ],
+      "instruction": "Build a small playable responsive app with keyboard/touch, start/pause/restart, score/status and accessible controls. Integrate the physics and renderer and verify in the browser. Read the applicable specs and current source before editing. After changes, inspect relevant interactions and use the supplied run_tests. Additional self-written tests are optional and limited to at most three small cases per pure module. Use the real browser tool instead of DOM/WebGL mocks. Use efficient edits for small corrections. Browser stages must also use browser_test. Do not change protected specs or acceptance harness. All prior functionality must remain working."
+    },
+    {
+      "id": "06-release",
+      "modules": [
+        "app",
+        "scores"
+      ],
+      "instruction": "Complete the existing game with the settings and local highscore extension in specs/app.md and specs/scores.md. Implement createScoreStore as a small pure persistence adapter; integrate labelled settings/player inputs, atomic config validation/reset, score rows, persistence and clearing. Save a result exactly once per gameover and ignore game hotkeys while editing inputs. Use the supplied visible checks and actual browser. Inspect only relevant app/config/input source; no DOM/WebGL mocks or broad self-test suite. Keep all prior behavior working and finish USER_GUIDE.md for the whole application. No editor, replay system or external services. After relevant checks pass, finish concisely."
+    }
+  ]
+}

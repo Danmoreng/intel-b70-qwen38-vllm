@@ -1,0 +1,81 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createInput, normalizePointer, createTicker} from '../src/input.js';
+
+test('edge-triggered keys: queue once while held, release, repeat suppression, dispose', () => {
+  const input = createInput();
+  assert.equal(input.handle({code: 'Space'}), true);
+  assert.equal(input.handle({code: 'Space'}), true, 'second held keydown recognized, not queued');
+  assert.equal(input.handle({code: 'ArrowUp'}), true);
+  assert.equal(input.handle({code: 'KeyP', repeat: true}), true);
+  assert.equal(input.handle({code: 'F5'}), false);
+  assert.deepEqual(input.consume(), ['flap', 'flap'], 'held keys queued in order');
+  assert.deepEqual(input.consume(), []);
+  assert.equal(input.release({code: 'Space'}), true);
+  assert.equal(input.release({code: 'Space'}), true, 'recognized even when not held');
+  assert.equal(input.release({code: 'F5'}), false);
+  assert.equal(input.handle({code: 'Space', repeat: true}), true, 'repeat after release does not queue');
+  assert.deepEqual(input.consume(), []);
+  input.handle({code: 'Space'});
+  input.reset();
+  assert.deepEqual(input.consume(), [], 'reset clears held and queue');
+  assert.equal(input.handle({code: 'Space'}), true, 'fresh keydown after reset queues');
+  assert.equal(input.handle({code: 'KeyP', type: 'keyup'}), true, 'keyup delegates to release');
+  assert.equal(input.handle({code: 'KeyP'}), true, 'keyup actually released the key');
+  input.dispose();
+  assert.equal(input.handle({code: 'KeyP'}), false);
+  assert.equal(input.release({code: 'KeyP'}), false);
+  assert.deepEqual(input.consume(), []);
+  assert.throws(() => createInput({flap: ['Space'], pause: ['Space']}));
+  assert.throws(() => createInput({flap: ['Space'], jump: ['KeyZ']}));
+  assert.throws(() => createInput({flap: ['Space', '']}));
+});
+
+test('normalizePointer maps and clamps finite client coordinates; malformed input throws', () => {
+  const rect = {left: 10, top: 20, width: 480, height: 720};
+  assert.deepEqual(normalizePointer({clientX: 100, clientY: 200}, rect, 480, 720), {x: 90, y: 180});
+  assert.deepEqual(normalizePointer({clientX: 499, clientY: 800}, rect, 480, 720), {x: 480, y: 720});
+  assert.deepEqual(normalizePointer({clientX: -1, clientY: 19}, rect, 480, 720), {x: 0, y: 0});
+  assert.deepEqual(normalizePointer({clientX: 0, clientY: 0}, rect, 100, 100), {x: 0, y: 0});
+  // Rect dimensions scale into logical coordinates (canvas resize).
+  assert.deepEqual(normalizePointer({clientX: 50, clientY: 100}, {left: 0, top: 0, width: 100, height: 200}, 480, 720), {x: 240, y: 360});
+  assert.throws(() => normalizePointer({clientX: NaN, clientY: 1}, rect, 480, 720));
+  assert.throws(() => normalizePointer({clientX: 1}, {...rect, width: 0}, 480, 720));
+  assert.throws(() => normalizePointer({clientX: 1, clientY: 1}, rect, -1, 720));
+  assert.throws(() => normalizePointer({clientX: 1, clientY: 1}, rect, 480, NaN));
+});
+
+test('ticker: fixed dt steps, backlog bounded by maxSteps, atomic backward rejection, pause/resume', () => {
+  const calls = [];
+  const t = createTicker((s) => calls.push(s), {hz: 20, maxSteps: 5});
+  const dt = 1000 / 20;
+  t.update(0);
+  assert.deepEqual(calls, []);
+  t.update(19);
+  assert.deepEqual(calls, []);
+  t.update(50);
+  assert.deepEqual(calls, [0.05], 'exactly one step at one dt');
+  t.update(150);
+  assert.equal(calls.length, 3, 'two more steps, remainder retained');
+  t.update(150 + 1023);
+  assert.equal(calls.length, 8, 'backlog beyond maxSteps is dropped');
+  assert.throws(() => t.update(1149), 'decreasing timestamp rejected atomically');
+  assert.equal(calls.length, 8);
+  t.update(1200);
+  assert.equal(calls.length, 9, '23ms remainder retained; 50ms total elapses one step');
+  t.pause();
+  t.update(5000);
+  assert.equal(calls.length, 9, 'paused: no callbacks, base cleared');
+  t.resume();
+  t.update(5000);
+  t.update(5050);
+  assert.equal(calls.length, 10, 'resume re-initializes the base');
+  t.reset();
+  t.update(5100);
+  t.update(5150);
+  assert.equal(calls.length, 11);
+  assert.throws(() => t.update(NaN));
+  assert.throws(() => createTicker(() => {}, {hz: 0}));
+  assert.throws(() => createTicker(() => {}, {hz: 241}));
+  assert.throws(() => createTicker(() => {}, {hz: 60, maxSteps: 0}));
+});

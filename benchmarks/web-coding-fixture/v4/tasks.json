@@ -1,0 +1,48 @@
+{
+  "fixture_id": "flappybird-webgl2-v4",
+  "tasks": [
+    {
+      "id": "01-foundation",
+      "modules": [
+        "random",
+        "config"
+      ],
+      "instruction": "Implement seeded random and validated game configuration. Read the applicable specs and current source before editing. After changes, inspect relevant interactions and use the supplied run_tests. Additional self-written tests are optional and limited to at most three small cases per pure module. Use the real browser tool instead of DOM/WebGL mocks. Use efficient edits for small corrections. Browser stages must also use browser_test. Do not change protected specs or acceptance harness. All prior functionality must remain working."
+    },
+    {
+      "id": "02-physics",
+      "modules": [
+        "simulation"
+      ],
+      "instruction": "Implement deterministic fixed-step flight, seeded pipes, collision, scoring and pure state transitions. Include pause/resume/restart and detached snapshots. Read the applicable specs and current source before editing. After changes, inspect relevant interactions and use the supplied run_tests. Additional self-written tests are optional and limited to at most three small cases per pure module. Use the real browser tool instead of DOM/WebGL mocks. Use efficient edits for small corrections. Browser stages must also use browser_test. Do not change protected specs or acceptance harness. All prior functionality must remain working."
+    },
+    {
+      "id": "03-controls",
+      "modules": [
+        "input"
+      ],
+      "instruction": "Implement edge-triggered keyboard input, pointer mapping and bounded fixed-step ticker. Read the applicable specs and current source before editing. After changes, inspect relevant interactions and use the supplied run_tests. Additional self-written tests are optional and limited to at most three small cases per pure module. Use the real browser tool instead of DOM/WebGL mocks. Use efficient edits for small corrections. Browser stages must also use browser_test. Do not change protected specs or acceptance harness. All prior functionality must remain working."
+    },
+    {
+      "id": "04-webgl",
+      "modules": [
+        "renderer"
+      ],
+      "instruction": "Implement procedural WebGL2 bird/pipes/ground/sky, resize/DPR and context loss/destroy lifecycle. Use browser_test to verify rendering. Read the applicable specs and current source before editing. After changes, inspect relevant interactions and use the supplied run_tests. Additional self-written tests are optional and limited to at most three small cases per pure module. Use the real browser tool instead of DOM/WebGL mocks. Use efficient edits for small corrections. Browser stages must also use browser_test. Do not change protected specs or acceptance harness. All prior functionality must remain working."
+    },
+    {
+      "id": "05-game",
+      "modules": [
+        "app"
+      ],
+      "instruction": "Build a small playable responsive app with keyboard/touch, start/pause/restart, score/status and accessible controls. Integrate the physics and renderer and verify in the browser. Read the applicable specs and current source before editing. After changes, inspect relevant interactions and use the supplied run_tests. Additional self-written tests are optional and limited to at most three small cases per pure module. Use the real browser tool instead of DOM/WebGL mocks. Use efficient edits for small corrections. Browser stages must also use browser_test. Do not change protected specs or acceptance harness. All prior functionality must remain working."
+    },
+    {
+      "id": "06-release",
+      "modules": [
+        "app"
+      ],
+      "instruction": "Finish the already validated small game. Write the short USER_GUIDE.md with controls, seed 12345 and static-server instructions. Run run_tests and browser_test. If a check fails, inspect only the relevant source snippets using read_file line ranges and fix that issue. Avoid whole-file audits, duplicate regression tests and replacing whole files for small corrections. Stop with a brief final status when the game is complete. No editor, replay or extra features. Keep all earlier contracts working; specifications and the external harness are protected."
+    }
+  ]
+}

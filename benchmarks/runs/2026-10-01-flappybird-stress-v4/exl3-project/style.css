@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #101828;
+  color: #eef2ff;
+}
+
+.flappy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.flappy canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  touch-action: manipulation;
+}
+
+.flappy-score {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.flappy-status {
+  font-size: 1rem;
+}
+
+.flappy-live {
+  font-size: 0.9rem;
+  min-height: 1.2em;
+}
+
+.flappy button {
+  min-width: 96px;
+  min-height: 44px;
+  font-size: 1rem;
+  border: 2px solid #3b82f6;
+  border-radius: 8px;
+  background: #1d4ed8;
+  color: #fff;
+  cursor: pointer;
+}
+
+.flappy button:hover {
+  background: #2563eb;
+}
+
+button:focus-visible,
+canvas:focus-visible {
+  outline: 3px solid #facc15;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flappy,
+  .flappy button,
+  .flappy canvas {
+    transition: none !important;
+    animation: none !important;
+  }
+}

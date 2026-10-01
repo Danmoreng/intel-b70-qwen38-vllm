@@ -32,7 +32,8 @@ The measured image is
 [production_image.json](config/production_image.json). The launcher checks the
 exact image ID, policy and image label before serving; the image verifies its
 required native libraries, GPTQ wrapper and row-dispatch helper at startup.
-Both benchmarks below used this image and policy under the permanent
+The source-review and QueueKit measurements below used this image and policy
+under the permanent
 `b70-qwen38-vllm.service`.
 
 This release fixes a shape-specialization regression that compiled the large-row
@@ -108,7 +109,9 @@ The scheduler queued some work when capacity was tight; no request was preempted
 The maximum-context row is one capacity and throughput observation. The
 16K/64K resends reused the same prompt on the same worker.
 
-## Repeatable coding-agent benchmark
+## Coding-agent benchmarks
+
+### Short Python fixture
 
 The [QueueKit fixture v2](benchmarks/coding-fixture/v2/README.md) copies a frozen
 Python repository and gives the model two linked editing tasks in one
@@ -134,6 +137,65 @@ hashes. This is one adaptive session, not a multi-run distribution.
 The coding rates exclude tool execution; end-to-end time includes it.
 Generated tokens include reasoning. Prefix caching remained enabled between
 agent turns. Raw generated code and conversation records remain local.
+
+### Long WebGL2 coding task
+
+The [Flappy Bird v6 task](benchmarks/web-coding-fixture/v6/README.md) builds a
+small deterministic browser game in one continuous conversation: physics,
+controls, procedural WebGL2 graphics, a responsive app, then settings and local
+highscores. There is **no level editor or replay system**. The first successful
+small version stopped at 83K context; the final-stage extension was added only
+then. Both profiles received the same frozen task, tools and sampling seeds,
+with a 4K thinking budget, retained reasoning and an equal 40-minute task budget.
+
+| Coding result, 1 October 2026 | GPTQ production v2 | Local EXL3 4.00 bpw |
+|---|---:|---:|
+| End-to-end time / outcome | **40 min 19 s; budget stop, incomplete** | **28 min 8 s; completed** |
+| Requests / maximum input context | 107 / **152,762** | 87 / **106,434** |
+| Weighted native prefill, new KV tokens | 1,069.5 tok/s | 1,241.6 tok/s |
+| Weighted native decode after first token | **52.6 tok/s** | **50.7 tok/s** |
+| Frozen checks / contract-reviewed checks | 51/54 / **52/54** | 54/54 / **54/54** |
+| Actual game: 1,500 ticks, 12 points | Passed | Passed |
+| Prefix-cache hit rate / preemptions | 95.0% / 0 | 94.4% / 0 |
+
+[All 10K context bands and request records](benchmarks/runs/2026-10-01-flappybird/README.md)
+show how native rates change with context. Prefill counts newly computed tokens;
+cached input is separate. The agents produced different histories, so overall
+rates and completion time are different measurements. EXL3 completed more
+quickly in this pair despite a slightly lower overall decode rate.
+
+![Native rates across the growing coding context](benchmarks/runs/2026-10-01-flappybird/context-rates.png)
+
+The [quality review](benchmarks/runs/2026-10-01-flappybird/QUALITY_REVIEW.md)
+explains an overstrict storage-error test and GPTQ's missing name-field test
+attribute. The raw timed results are retained; the correction accepts eager or
+lazy storage access on both unchanged outputs. The corrected
+[fixture v7](benchmarks/web-coding-fixture/v7/README.md) is ready for future
+repetitions and has not been timed here. A brief CPU-only review overlapped two
+early EXL3 requests; exact spans are documented in the report.
+
+This compares complete serving profiles on the same B70 at 180 W. GPTQ uses
+MTP4 with a full draft vocabulary; EXL3 uses the existing 4.00-bpw checkpoint,
+6-bpw head and MTP3 with a pruned vocabulary. The vLLM versions also differ.
+One pair does not isolate quantization or establish a general coding ranking.
+
+The following additional requests use **identical archived coding prompts**
+on both profiles, full cold prefill and 1,024 output tokens. They are separate
+from the adaptive task and have no code-quality score.
+
+| Actual input | GPTQ cold prefill | EXL3 cold prefill | GPTQ decode | EXL3 decode | Preemptions GPTQ / EXL3 |
+|---|---:|---:|---:|---:|---:|
+| 102,752 | 1,373.4 | 1,397.2 | **64.5** | 46.1 | 0 / 0 |
+| 139,193 | 1,196.5 | 1,176.1 | **37.5** | 33.7 | 0 / 1 |
+| 187,695 | 1,030.6 | 1,002.3 | **29.8** | 24.4 | 0 / 1 |
+
+Rates are native tok/s. EXL3 at 139K and 188K triggered one preemption each,
+also on fresh workers; these are **preempted diagnostics**, outside the clean
+zero-preemption control. Token accounting is exact and cache hits are zero.
+[Full cold comparison and native counters](benchmarks/runs/2026-10-01-flappybird/COLD_COMPARISON.md)
+retain the rejected strict attempts and this qualification. Across these
+three observations, cold prefill differs by less than 3%; GPTQ decode is
+higher. This is one observation per context and compares the complete recipes.
 
 ## Install and serve
 

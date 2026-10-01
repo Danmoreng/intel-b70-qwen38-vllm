@@ -1,0 +1,20 @@
+{
+  "source_files": {
+    "models/qwen3.8-27b-exl3-4.00bpw/model.yaml": {
+      "sha256": "bd019b4053e60e280782d1122d35fcb12f5ea1caf742195048b0437aa98f17e1",
+      "content": "# Serving config for one model. Everything model-specific lives here; the engine core\n# (exl3xpu/, csrc/) knows nothing about Qwen. Consumed by scripts/serve.py.\n\nid: qwen3.8-27b-exl3-4.00bpw\nserved_model_name: qwen3.8-27b-exl3\n\nsource:\n  repo: turboderp/Qwen3.8-27B-exl3\n  revision: 113cf7ab958054860e43fb7f3063b1af19171095   # branch 4.00bpw\n  quant: exl3 1.4.2, 4.00 bpw (lm_head 6 bpw), codebook mul1\n  notes: >\n    Hybrid Qwen3.5-architecture dense model: 64 layers (48 Gated DeltaNet + 16 gated full attention),\n    hidden 5120. EXL3: all main linears (4 bpw), lm_head (6 bpw), MTP head incl. mtp.fc (4 bpw; not listed in\n    quantization_config.json's tensor_storage, detected from the weight index). bf16: norms, in_proj_a/b,\n    embeddings, the 27-block vision tower.\n\n# One B70: MTP (the EXL3 repo ships the MTP head quantized to EXL3 4-bit), vision (bf16 tower in the repo),\n# 256K context with fp8 KV. Weights 14.9 GiB + MTP head + vision; KV fp8 256K ~8.4 GiB.\nvllm:\n  dtype: float16\n  max_model_len: 262144\n  kv_cache_dtype: fp8\n  gpu_memory_utilization: 0.965\n  max_num_seqs: 16\n  max_num_batched_tokens: 4096   # prefill chunk: decode waits ~3.7 s behind a long prompt (8192: ~7 s); keeps 128K prefill >= 1000\n  trust_remote_code: true\n  enable_prefix_caching: true   # must be explicit: vLLM 0.26 leaves it off for hybrid (GDN) models\n  mamba_cache_mode: align\n  speculative_config:\n    method: qwen3_5_mtp\n    num_speculative_tokens: 3\n  limit_mm_per_prompt: {image: 32, video: 4}\n  # cap image area at preprocessing (the processor default allows 16.7 MP, whose ~65K ViT patches crash the\n  # vision encoder with UR OUT_OF_RESOURCES); larger images are downscaled to <= 4.2 MP (~4K tokens)\n  mm_processor_kwargs: {size: {longest_edge: 4194304, shortest_edge: 65536}}\n  compilation_config:\n    cudagraph_mode: FULL_DECODE_ONLY\n    cudagraph_capture_sizes: [1, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64]\n\nenv:\n  VLLM_XPU_ENABLE_XPU_GRAPH: \"1\"\n  EXL3_DRAFT_VOCAB: \"{model_dir}/draft_vocab.json\"   # pruned MTP draft head (scripts/draft_vocab.py)\n  EXL3_KV_BLOCK_EXACT: \"1\"   # keep 1600-token KV blocks (not 2048): C16 thinking 10 -> 14 streams, +17% agg\n  VLLM_WORKER_MULTIPROC_METHOD: spawn\n  EXL3_ONEDNN_ATTN: \"1\"    # oneDNN Graph fused SDPA for long-prefix prefill: 128K 1234 -> 1415, 254K 769 -> 911 tok/s; needle 6/6 at 131K/240K\n  EXL3_INT8_PREFILL: \"1\"   # W8A8 prefill linears: 32K 1434 -> 1979 tok/s, omp replay TTFT p50 4.65 -> 3.78 s; NLL +0.17%\n\n# Data parallel: one replica per GPU behind scripts/lb.py (the model fits one 32 GB B70).\nparallel:\n  mode: data\n  gpus: [0, 1]\n  base_port: 8100\n  lb_port: 8000\n"
+    },
+    "models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json": {
+      "sha256": "b4eadc088059190983fe0498af11864f5aaa2eaf2ec58ae9864f0715634d313d",
+      "content": null
+    },
+    "scripts/serve.py": {
+      "sha256": "fe706c6ff8439c1b4c270855f8e589aa06970debe1480799cb936857cb23a656",
+      "content": null
+    }
+  },
+  "versions": {
+    "vllm": "0.26.1.dev0+g568afb3a1.d20260907.xpu",
+    "torch": "2.12.0+xpu"
+  }
+}

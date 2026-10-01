@@ -1,0 +1,1991 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-01T04:24:20.575999+00:00",
+  "comparison_scope": "Two complete serving profiles and quantized checkpoints; adaptive coding histories; one fixed seed. Not an isolated quantization or engine-kernel experiment.",
+  "measurement": {
+    "context_bands": "10000 tokens, lower inclusive, upper exclusive, full rendered input including retained reasoning and tool history",
+    "prefill": "sum(native newly computed KV tokens)/sum(native prefill seconds); cached tokens separate",
+    "decode": "sum(max(completion_tokens-1,0))/sum(native decode seconds), includes generated reasoning",
+    "cache": "fresh worker before excluded warmup; prefix caching enabled throughout each session",
+    "quality": "independent final API/physics/input/WebGL/browser checks; renderer identity is metadata, not a quality case"
+  },
+  "engines": {
+    "gptq": {
+      "fixture_id": "flappybird-webgl2-v4",
+      "fixture_manifest_sha256": "58b09f4db9b6c3c702156294c54aa206a2315a328914add92f297bf2bbb8e331",
+      "runner_sha256": "a520cd59ac86c3e8631883dacb85c824ce467aed21e9964d70c27cc572d98e82",
+      "identity": {
+        "container_id": "de452f3bf7cf6b74288c7022abaf19d40d87b6113f52c385625c7da66923dd77",
+        "image_id": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
+        "image_tag": "local/b70-qwen38-vllm:production-onednn-v2",
+        "command": [
+          "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+          "--revision",
+          "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+          "--quantization",
+          "gptq",
+          "--dtype",
+          "float16",
+          "--max-model-len",
+          "200704",
+          "--gpu-memory-utilization",
+          "0.93",
+          "--kv-cache-dtype",
+          "fp8",
+          "--max-num-seqs",
+          "4",
+          "--max-num-batched-tokens",
+          "6656",
+          "--scheduler-reserve-full-isl",
+          "--watermark",
+          "0.0",
+          "--enable-prefix-caching",
+          "--mamba-cache-mode",
+          "align",
+          "--served-model-name",
+          "Qwen3.8-27B",
+          "--speculative-config",
+          "{\"method\":\"mtp\",\"num_speculative_tokens\":4}",
+          "--middleware",
+          "request_defaults.ChatDefaults",
+          "--reasoning-config",
+          "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+          "--override-generation-config",
+          "{\"max_new_tokens\":16384}",
+          "--enable-auto-tool-choice",
+          "--tool-call-parser",
+          "qwen3_xml",
+          "--reasoning-parser",
+          "qwen3",
+          "--limit-mm-per-prompt",
+          "{\"image\":1,\"video\":0}",
+          "--mm-processor-kwargs",
+          "{\"max_pixels\":4194304}"
+        ],
+        "labels": {
+          "org.local.b70.policy.sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "org.opencontainers.image.version": "24.04"
+        }
+      },
+      "provenance": {
+        "fixture_id": "flappybird-webgl2-v4",
+        "fixture_manifest_sha256": "58b09f4db9b6c3c702156294c54aa206a2315a328914add92f297bf2bbb8e331",
+        "fixture_files": {
+          "README.md": "e8997faf161ae2823a171ec32424082cf1c6928791edaa8ad104ec845d826117",
+          "project/README.md": "435bd9f33be4e7344835276d4b6c77bebe54d1c8086974ed8b3c0c32bf34e63d",
+          "project/index.html": "ffd1cbfd30492ae40ec2bb1ce4e0bc31aee65dcd9e1065527a8d222aff227d42",
+          "project/main.js": "c58ef221adbe37a9a4ada60895d59b835a071f98aa1a5fbd0818801cf2b3229d",
+          "project/package.json": "6cab776a7f920178f6f096fb791ac0426dfbd50363325aee992e8530a8e605f7",
+          "project/specs/app.md": "666daadf3b3b80de813c3c51ffaba3b4f435e9be555780d7e20c83637ca284a0",
+          "project/specs/config.md": "570ab99926405a336b344f7559a8bfb014b99e018359bf0075fe68c27ae13dc6",
+          "project/specs/input.md": "9816b4a98e4c13792d4eaa006515d65ada66eba85311d9af735daa7b62868996",
+          "project/specs/random.md": "0eb208f2b2e5ebf03820edd8725c1e66b13b72c0bb84f99d4c9e101fd3a5158b",
+          "project/specs/renderer.md": "c2bb5892eb20b9bffa8a6b379f071dcc75f6ae49f6dacfee181b04b96e5a42d9",
+          "project/specs/simulation.md": "3c366b5d0a7dd69b236def5b921b7850daca74040c52f41b9b21283b3cec109a",
+          "project/src/app.js": "b9c3e093e9bc2a956cf934a7037ea001abde5c51214fc48088a988825a38249d",
+          "project/src/config.js": "7b25978fdf17322b1a3d67eeccd275ade7a9d52bfc6ef0a60454ae28b9bc7a7e",
+          "project/src/input.js": "8c1337929e07afb36e6dfac02435d3d0ceef958b691b6dabc46a91f00e7d2814",
+          "project/src/random.js": "8ab78c6d041c206c1155f2f13316c6d30465703db42109480ee9d1087c4e975f",
+          "project/src/renderer.js": "5790649fe8191094abc3e6702cd098aa1fca26ade179f83d73a8346826bb3c04",
+          "project/src/simulation.js": "d2276b36daa14d9214d4185620ede49f348a9eba4f07b679883b31544f08de6a",
+          "project/style.css": "28e08d310e6f0fbfaebd30ff8585f0b2eef1b4167a12dc176ad3cc2b8bf4e7d7",
+          "tasks.json": "66a827d6166f71999047ab5afb245ba57298b5052881646324e87dcda2024503"
+        },
+        "harness_files": {
+          "checks.mjs": "03c0d0aaf2dc8ed096a51968971d98e8f69173a7d00bd2b79174f4c6959af2bc",
+          "browser.mjs": "ad35c54e4c412b0715023b333bfc7b4319698654ed904ad550a46a4fba58d041",
+          "package.json": "89ee7d37083d11091fd6a2cfb0308b9af466f9010c1f91eb9f0140cdf4ebb901",
+          "package-lock.json": "b7bd5012db625f36b65c68f3414deaaa2649baa2beb11cd579a3987b6f0f0f79"
+        },
+        "runner_sha256": "a520cd59ac86c3e8631883dacb85c824ce467aed21e9964d70c27cc572d98e82",
+        "identity": {
+          "container_id": "de452f3bf7cf6b74288c7022abaf19d40d87b6113f52c385625c7da66923dd77",
+          "image_id": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
+          "image_tag": "local/b70-qwen38-vllm:production-onednn-v2",
+          "command": [
+            "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+            "--revision",
+            "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+            "--quantization",
+            "gptq",
+            "--dtype",
+            "float16",
+            "--max-model-len",
+            "200704",
+            "--gpu-memory-utilization",
+            "0.93",
+            "--kv-cache-dtype",
+            "fp8",
+            "--max-num-seqs",
+            "4",
+            "--max-num-batched-tokens",
+            "6656",
+            "--scheduler-reserve-full-isl",
+            "--watermark",
+            "0.0",
+            "--enable-prefix-caching",
+            "--mamba-cache-mode",
+            "align",
+            "--served-model-name",
+            "Qwen3.8-27B",
+            "--speculative-config",
+            "{\"method\":\"mtp\",\"num_speculative_tokens\":4}",
+            "--middleware",
+            "request_defaults.ChatDefaults",
+            "--reasoning-config",
+            "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+            "--override-generation-config",
+            "{\"max_new_tokens\":16384}",
+            "--enable-auto-tool-choice",
+            "--tool-call-parser",
+            "qwen3_xml",
+            "--reasoning-parser",
+            "qwen3",
+            "--limit-mm-per-prompt",
+            "{\"image\":1,\"video\":0}",
+            "--mm-processor-kwargs",
+            "{\"max_pixels\":4194304}"
+          ],
+          "labels": {
+            "org.local.b70.policy.sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+            "org.opencontainers.image.version": "24.04"
+          }
+        },
+        "model_info": {
+          "object": "list",
+          "data": [
+            {
+              "id": "Qwen3.8-27B",
+              "object": "model",
+              "created": 1790821355,
+              "owned_by": "vllm",
+              "root": "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+              "parent": null,
+              "max_model_len": 200704,
+              "permission": [
+                {
+                  "id": "modelperm-85fd944861994b87",
+                  "object": "model_permission",
+                  "created": 1790821355,
+                  "allow_create_engine": false,
+                  "allow_sampling": true,
+                  "allow_logprobs": true,
+                  "allow_search_indices": false,
+                  "allow_view": true,
+                  "allow_fine_tuning": false,
+                  "organization": "*",
+                  "group": null,
+                  "is_blocking": false
+                }
+              ]
+            }
+          ]
+        },
+        "node_version": "v24.20.0",
+        "started_at": "2026-10-01T02:22:35.228379+00:00",
+        "sampling": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 20,
+          "seed_base": 73000,
+          "max_tokens": 16384,
+          "enable_thinking": true,
+          "reasoning_effort": "medium",
+          "preserve_thinking": true,
+          "thinking_token_budget": 4096,
+          "output_budget_policy": "at most 16384; rendered /tokenize history with reasoning alias normalized; input+output fits common 200704-token window or smaller engine limit"
+        },
+        "limits": {
+          "max_requests_per_stage": 32,
+          "max_wall_seconds": 7200,
+          "stages": 6
+        },
+        "measurement": "exclusive C1, native per-request accounting; prefix cache stays enabled; first generated token excluded from decode; 10K=10000 input-token bands",
+        "host": {
+          "kernel": "7.2.3-2-MANJARO",
+          "machine": "x86_64",
+          "power_cap_w": 180,
+          "runtime_source_files": {
+            "request_defaults.py": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2"
+          },
+          "production_policy_sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "source_commit": "f8a1ef2cdb42e312533bc36cca404a3e6d7569d1"
+        },
+        "tool_output_normalization": "Incidental Node test timings and absolute host/project paths normalized in agent history; unmodified raw tool results archived.",
+        "test_isolation": "Node checks/tests: bubblewrap, project-only filesystem, no host home/network/GPU; independent grading project read-only. Browser: SwiftShader software WebGL2, external requests blocked."
+      },
+      "wall_s": 3990.8598633380025,
+      "tool_s": 5.105949933960801,
+      "card_energy_wh": 198.74382626,
+      "requests": 98,
+      "tool_calls": 121,
+      "session_status": "failed",
+      "stop_reason": "RuntimeError: common context window exhausted: 200705",
+      "stages_graded_during_session": 4,
+      "overall": {
+        "requests": 98,
+        "context_min": 964,
+        "context_max": 200509,
+        "native": {
+          "prompt_tokens": 10112081.0,
+          "cached_tokens": 9667840.0,
+          "prefill_tokens": 444241.0,
+          "prefill_seconds": 488.18263339800615,
+          "decode_seconds": 3473.156836938986,
+          "generation_tokens": 169339.0,
+          "draft_tokens": 222852.0,
+          "accepted_tokens": 113718.0,
+          "preemptions": 0.0,
+          "completed": 98.0
+        },
+        "post_first_tokens": 169241,
+        "prefill_tps": 909.9893556389964,
+        "decode_tps": 48.728291852537815,
+        "cached_fraction": 0.9560682909877799,
+        "mtp_acceptance": 0.5102848527273707,
+        "client_request_seconds": 3971.8623443200268,
+        "client_decode_tps": 48.75260031410036
+      },
+      "bands": [
+        {
+          "lower": 0,
+          "upper": 10000,
+          "requests": 5,
+          "context_min": 964,
+          "context_max": 6476,
+          "native": {
+            "prompt_tokens": 13947.0,
+            "cached_tokens": 0.0,
+            "prefill_tokens": 13947.0,
+            "prefill_seconds": 6.591001849003078,
+            "decode_seconds": 113.06911286399554,
+            "generation_tokens": 7788.0,
+            "draft_tokens": 10536.0,
+            "accepted_tokens": 5162.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 7783,
+          "prefill_tps": 2116.066770958281,
+          "decode_tps": 68.83400605930049,
+          "cached_fraction": 0.0,
+          "mtp_acceptance": 0.4899392558845862,
+          "client_request_seconds": 119.70392348799942,
+          "client_decode_tps": 68.83626538346469
+        },
+        {
+          "lower": 10000,
+          "upper": 20000,
+          "requests": 5,
+          "context_min": 11307,
+          "context_max": 19377,
+          "native": {
+            "prompt_tokens": 77819.0,
+            "cached_tokens": 49920.0,
+            "prefill_tokens": 27899.0,
+            "prefill_seconds": 16.10807851899881,
+            "decode_seconds": 125.77947104299528,
+            "generation_tokens": 9431.0,
+            "draft_tokens": 11160.0,
+            "accepted_tokens": 6643.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 9426,
+          "prefill_tps": 1731.9880808312605,
+          "decode_tps": 74.94068723486605,
+          "cached_fraction": 0.6414885824798571,
+          "mtp_acceptance": 0.5952508960573477,
+          "client_request_seconds": 141.98270688000048,
+          "client_decode_tps": 74.94977709540872
+        },
+        {
+          "lower": 20000,
+          "upper": 30000,
+          "requests": 6,
+          "context_min": 22582,
+          "context_max": 28165,
+          "native": {
+            "prompt_tokens": 147881.0,
+            "cached_tokens": 124800.0,
+            "prefill_tokens": 23081.0,
+            "prefill_seconds": 13.599199844997202,
+            "decode_seconds": 110.65563664299407,
+            "generation_tokens": 7786.0,
+            "draft_tokens": 9332.0,
+            "accepted_tokens": 5460.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 7780,
+          "prefill_tps": 1697.2322094737735,
+          "decode_tps": 70.30821236066309,
+          "cached_fraction": 0.8439218019894374,
+          "mtp_acceptance": 0.5850835833690528,
+          "client_request_seconds": 124.4181701760026,
+          "client_decode_tps": 70.32610057449956
+        },
+        {
+          "lower": 30000,
+          "upper": 40000,
+          "requests": 4,
+          "context_min": 32627,
+          "context_max": 39837,
+          "native": {
+            "prompt_tokens": 143052.0,
+            "cached_tokens": 119808.0,
+            "prefill_tokens": 23244.0,
+            "prefill_seconds": 14.821151201002067,
+            "decode_seconds": 173.68814622400532,
+            "generation_tokens": 11935.0,
+            "draft_tokens": 14036.0,
+            "accepted_tokens": 8433.0,
+            "preemptions": 0.0,
+            "completed": 4.0
+          },
+          "post_first_tokens": 11931,
+          "prefill_tps": 1568.2992289039234,
+          "decode_tps": 68.69207979577725,
+          "cached_fraction": 0.8375136314067612,
+          "mtp_acceptance": 0.6008121972071815,
+          "client_request_seconds": 188.65283110100427,
+          "client_decode_tps": 68.70251478360717
+        },
+        {
+          "lower": 40000,
+          "upper": 50000,
+          "requests": 6,
+          "context_min": 44878,
+          "context_max": 48671,
+          "native": {
+            "prompt_tokens": 282128.0,
+            "cached_tokens": 256256.0,
+            "prefill_tokens": 25872.0,
+            "prefill_seconds": 18.541556287993444,
+            "decode_seconds": 121.70425940700079,
+            "generation_tokens": 6600.0,
+            "draft_tokens": 9420.0,
+            "accepted_tokens": 4248.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 6594,
+          "prefill_tps": 1395.35212676583,
+          "decode_tps": 54.1805194997201,
+          "cached_fraction": 0.9082969432314411,
+          "mtp_acceptance": 0.45095541401273886,
+          "client_request_seconds": 140.51817591198778,
+          "client_decode_tps": 54.202514182777385
+        },
+        {
+          "lower": 50000,
+          "upper": 60000,
+          "requests": 2,
+          "context_min": 53404,
+          "context_max": 55252,
+          "native": {
+            "prompt_tokens": 108656.0,
+            "cached_tokens": 98176.0,
+            "prefill_tokens": 10480.0,
+            "prefill_seconds": 8.04481115899398,
+            "decode_seconds": 131.77078899199842,
+            "generation_tokens": 8121.0,
+            "draft_tokens": 9896.0,
+            "accepted_tokens": 5649.0,
+            "preemptions": 0.0,
+            "completed": 2.0
+          },
+          "post_first_tokens": 8119,
+          "prefill_tps": 1302.7030458363854,
+          "decode_tps": 61.61456618805716,
+          "cached_fraction": 0.9035488146075689,
+          "mtp_acceptance": 0.5708367016976557,
+          "client_request_seconds": 139.92093407800712,
+          "client_decode_tps": 61.62344529236641
+        },
+        {
+          "lower": 60000,
+          "upper": 70000,
+          "requests": 4,
+          "context_min": 61727,
+          "context_max": 68796,
+          "native": {
+            "prompt_tokens": 264741.0,
+            "cached_tokens": 241280.0,
+            "prefill_tokens": 23461.0,
+            "prefill_seconds": 19.434960594997392,
+            "decode_seconds": 188.13723828599905,
+            "generation_tokens": 11384.0,
+            "draft_tokens": 13640.0,
+            "accepted_tokens": 7977.0,
+            "preemptions": 0.0,
+            "completed": 4.0
+          },
+          "post_first_tokens": 11380,
+          "prefill_tps": 1207.154492818417,
+          "decode_tps": 60.48775938073758,
+          "cached_fraction": 0.9113813123014569,
+          "mtp_acceptance": 0.5848240469208211,
+          "client_request_seconds": 207.82321860201046,
+          "client_decode_tps": 60.502698510597746
+        },
+        {
+          "lower": 70000,
+          "upper": 80000,
+          "requests": 4,
+          "context_min": 74231,
+          "context_max": 78764,
+          "native": {
+            "prompt_tokens": 306780.0,
+            "cached_tokens": 287872.0,
+            "prefill_tokens": 18908.0,
+            "prefill_seconds": 17.277750744993682,
+            "decode_seconds": 68.40567904400814,
+            "generation_tokens": 3948.0,
+            "draft_tokens": 4800.0,
+            "accepted_tokens": 2753.0,
+            "preemptions": 0.0,
+            "completed": 4.0
+          },
+          "post_first_tokens": 3944,
+          "prefill_tps": 1094.3554099759594,
+          "decode_tps": 57.65603170845896,
+          "cached_fraction": 0.9383662559488885,
+          "mtp_acceptance": 0.5735416666666666,
+          "client_request_seconds": 85.9670375459973,
+          "client_decode_tps": 57.700617449463365
+        },
+        {
+          "lower": 80000,
+          "upper": 90000,
+          "requests": 5,
+          "context_min": 80046,
+          "context_max": 89874,
+          "native": {
+            "prompt_tokens": 419255.0,
+            "cached_tokens": 396032.0,
+            "prefill_tokens": 23223.0,
+            "prefill_seconds": 22.412275481998222,
+            "decode_seconds": 237.57350435800618,
+            "generation_tokens": 12963.0,
+            "draft_tokens": 16100.0,
+            "accepted_tokens": 8940.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 12958,
+          "prefill_tps": 1036.1732354509456,
+          "decode_tps": 54.54311933907085,
+          "cached_fraction": 0.9446088895779419,
+          "mtp_acceptance": 0.55527950310559,
+          "client_request_seconds": 260.39384800500557,
+          "client_decode_tps": 54.55960485429973
+        },
+        {
+          "lower": 90000,
+          "upper": 100000,
+          "requests": 5,
+          "context_min": 94237,
+          "context_max": 97008,
+          "native": {
+            "prompt_tokens": 477428.0,
+            "cached_tokens": 459264.0,
+            "prefill_tokens": 18164.0,
+            "prefill_seconds": 19.10068601900275,
+            "decode_seconds": 131.2506956139987,
+            "generation_tokens": 6796.0,
+            "draft_tokens": 8568.0,
+            "accepted_tokens": 4659.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 6791,
+          "prefill_tps": 950.9606085315015,
+          "decode_tps": 51.740678159695015,
+          "cached_fraction": 0.9619544727163049,
+          "mtp_acceptance": 0.5437675070028011,
+          "client_request_seconds": 150.81123701100296,
+          "client_decode_tps": 51.77245528649536
+        },
+        {
+          "lower": 100000,
+          "upper": 110000,
+          "requests": 5,
+          "context_min": 102752,
+          "context_max": 109042,
+          "native": {
+            "prompt_tokens": 530069.0,
+            "cached_tokens": 505856.0,
+            "prefill_tokens": 24213.0,
+            "prefill_seconds": 26.19027706799534,
+            "decode_seconds": 153.2422439960137,
+            "generation_tokens": 8587.0,
+            "draft_tokens": 9716.0,
+            "accepted_tokens": 6164.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 8582,
+          "prefill_tps": 924.50339250471,
+          "decode_tps": 56.002834311296326,
+          "cached_fraction": 0.9543210412229352,
+          "mtp_acceptance": 0.6344174557431042,
+          "client_request_seconds": 179.95058641299693,
+          "client_decode_tps": 56.035963519391835
+        },
+        {
+          "lower": 110000,
+          "upper": 120000,
+          "requests": 4,
+          "context_min": 112333,
+          "context_max": 117941,
+          "native": {
+            "prompt_tokens": 459187.0,
+            "cached_tokens": 439296.0,
+            "prefill_tokens": 19891.0,
+            "prefill_seconds": 22.448230948000855,
+            "decode_seconds": 127.87028187399847,
+            "generation_tokens": 6321.0,
+            "draft_tokens": 7884.0,
+            "accepted_tokens": 4352.0,
+            "preemptions": 0.0,
+            "completed": 4.0
+          },
+          "post_first_tokens": 6317,
+          "prefill_tps": 886.0831860682282,
+          "decode_tps": 49.40162723833424,
+          "cached_fraction": 0.9566821360360812,
+          "mtp_acceptance": 0.5520040588533739,
+          "client_request_seconds": 150.76098624400038,
+          "client_decode_tps": 49.431832394937146
+        },
+        {
+          "lower": 120000,
+          "upper": 130000,
+          "requests": 8,
+          "context_min": 120538,
+          "context_max": 129643,
+          "native": {
+            "prompt_tokens": 993283.0,
+            "cached_tokens": 960128.0,
+            "prefill_tokens": 33155.0,
+            "prefill_seconds": 39.93737205999787,
+            "decode_seconds": 233.41279786898667,
+            "generation_tokens": 11194.0,
+            "draft_tokens": 13944.0,
+            "accepted_tokens": 7718.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 11186,
+          "prefill_tps": 830.1748034445351,
+          "decode_tps": 47.92367900186279,
+          "cached_fraction": 0.9666207918589164,
+          "mtp_acceptance": 0.5534997131382674,
+          "client_request_seconds": 274.30674200300564,
+          "client_decode_tps": 47.9578048728046
+        },
+        {
+          "lower": 130000,
+          "upper": 140000,
+          "requests": 2,
+          "context_min": 133215,
+          "context_max": 139193,
+          "native": {
+            "prompt_tokens": 272408.0,
+            "cached_tokens": 257920.0,
+            "prefill_tokens": 14488.0,
+            "prefill_seconds": 18.36600330600777,
+            "decode_seconds": 189.21022281399928,
+            "generation_tokens": 7206.0,
+            "draft_tokens": 10992.0,
+            "accepted_tokens": 4459.0,
+            "preemptions": 0.0,
+            "completed": 2.0
+          },
+          "post_first_tokens": 7204,
+          "prefill_tps": 788.8488180365719,
+          "decode_tps": 38.0740527274882,
+          "cached_fraction": 0.9468150715103815,
+          "mtp_acceptance": 0.40565866084425034,
+          "client_request_seconds": 207.8441433379994,
+          "client_decode_tps": 38.08327131861321
+        },
+        {
+          "lower": 140000,
+          "upper": 150000,
+          "requests": 5,
+          "context_min": 140847,
+          "context_max": 146413,
+          "native": {
+            "prompt_tokens": 718326.0,
+            "cached_tokens": 697216.0,
+            "prefill_tokens": 21110.0,
+            "prefill_seconds": 28.321267122009885,
+            "decode_seconds": 244.26195752899366,
+            "generation_tokens": 8886.0,
+            "draft_tokens": 13856.0,
+            "accepted_tokens": 5428.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 8881,
+          "prefill_tps": 745.3762541434579,
+          "decode_tps": 36.35850662068748,
+          "cached_fraction": 0.9706122289879525,
+          "mtp_acceptance": 0.39174364896073904,
+          "client_request_seconds": 273.29418817498663,
+          "client_decode_tps": 36.37745928920765
+        },
+        {
+          "lower": 150000,
+          "upper": 160000,
+          "requests": 3,
+          "context_min": 150504,
+          "context_max": 157814,
+          "native": {
+            "prompt_tokens": 459610.0,
+            "cached_tokens": 439296.0,
+            "prefill_tokens": 20314.0,
+            "prefill_seconds": 27.360791499006154,
+            "decode_seconds": 227.4120909830017,
+            "generation_tokens": 9229.0,
+            "draft_tokens": 12584.0,
+            "accepted_tokens": 6086.0,
+            "preemptions": 0.0,
+            "completed": 3.0
+          },
+          "post_first_tokens": 9226,
+          "prefill_tps": 742.4492818761431,
+          "decode_tps": 40.569522755452844,
+          "cached_fraction": 0.9558016579273733,
+          "mtp_acceptance": 0.4836300063572791,
+          "client_request_seconds": 255.2547330840025,
+          "client_decode_tps": 40.58347259867943
+        },
+        {
+          "lower": 160000,
+          "upper": 170000,
+          "requests": 7,
+          "context_min": 160197,
+          "context_max": 168602,
+          "native": {
+            "prompt_tokens": 1143776.0,
+            "cached_tokens": 1116544.0,
+            "prefill_tokens": 27232.0,
+            "prefill_seconds": 40.07089235501189,
+            "decode_seconds": 281.2327541019913,
+            "generation_tokens": 9070.0,
+            "draft_tokens": 15128.0,
+            "accepted_tokens": 5296.0,
+            "preemptions": 0.0,
+            "completed": 7.0
+          },
+          "post_first_tokens": 9063,
+          "prefill_tps": 679.5955467808278,
+          "decode_tps": 32.22597605652018,
+          "cached_fraction": 0.9761911423215734,
+          "mtp_acceptance": 0.3500793231094659,
+          "client_request_seconds": 322.57684808600607,
+          "client_decode_tps": 32.24809184850395
+        },
+        {
+          "lower": 170000,
+          "upper": 180000,
+          "requests": 8,
+          "context_min": 170229,
+          "context_max": 179794,
+          "native": {
+            "prompt_tokens": 1399935.0,
+            "cached_tokens": 1369472.0,
+            "prefill_tokens": 30463.0,
+            "prefill_seconds": 46.594770873001835,
+            "decode_seconds": 161.49582052299957,
+            "generation_tokens": 5913.0,
+            "draft_tokens": 8440.0,
+            "accepted_tokens": 3806.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 5905,
+          "prefill_tps": 653.7858096357979,
+          "decode_tps": 36.56441374691201,
+          "cached_fraction": 0.9782397039862565,
+          "mtp_acceptance": 0.4509478672985782,
+          "client_request_seconds": 209.70062299400888,
+          "client_decode_tps": 36.618199498826556
+        },
+        {
+          "lower": 180000,
+          "upper": 190000,
+          "requests": 6,
+          "context_min": 182012,
+          "context_max": 187695,
+          "native": {
+            "prompt_tokens": 1110701.0,
+            "cached_tokens": 1088256.0,
+            "prefill_tokens": 22445.0,
+            "prefill_seconds": 36.01127534300031,
+            "decode_seconds": 262.50285891199746,
+            "generation_tokens": 8793.0,
+            "draft_tokens": 13356.0,
+            "accepted_tokens": 5462.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 8787,
+          "prefill_tps": 623.2770093870821,
+          "decode_tps": 33.4739211466866,
+          "cached_fraction": 0.9797920412424226,
+          "mtp_acceptance": 0.4089547768793052,
+          "client_request_seconds": 299.7020015040034,
+          "client_decode_tps": 33.497947395231186
+        },
+        {
+          "lower": 190000,
+          "upper": 200000,
+          "requests": 3,
+          "context_min": 192850,
+          "context_max": 196614,
+          "native": {
+            "prompt_tokens": 582590.0,
+            "cached_tokens": 565760.0,
+            "prefill_tokens": 16830.0,
+            "prefill_seconds": 29.680705833998218,
+            "decode_seconds": 183.92465680500027,
+            "generation_tokens": 7193.0,
+            "draft_tokens": 9144.0,
+            "accepted_tokens": 4910.0,
+            "preemptions": 0.0,
+            "completed": 3.0
+          },
+          "post_first_tokens": 7190,
+          "prefill_tps": 567.0350325941986,
+          "decode_tps": 39.09209414821933,
+          "cached_fraction": 0.9711117595564633,
+          "mtp_acceptance": 0.5369641294838146,
+          "client_request_seconds": 214.22899916299502,
+          "client_decode_tps": 39.11325804148235
+        },
+        {
+          "lower": 200000,
+          "upper": 210000,
+          "requests": 1,
+          "context_min": 200509,
+          "context_max": 200509,
+          "native": {
+            "prompt_tokens": 200509.0,
+            "cached_tokens": 194688.0,
+            "prefill_tokens": 5821.0,
+            "prefill_seconds": 17.269575287995394,
+            "decode_seconds": 6.5566190570025356,
+            "generation_tokens": 195.0,
+            "draft_tokens": 320.0,
+            "accepted_tokens": 113.0,
+            "preemptions": 0.0,
+            "completed": 1.0
+          },
+          "post_first_tokens": 194,
+          "prefill_tps": 337.06677222377056,
+          "decode_tps": 29.588420238141797,
+          "cached_fraction": 0.9709688841897371,
+          "mtp_acceptance": 0.353125,
+          "client_request_seconds": 24.05041051700391,
+          "client_decode_tps": 29.743976268094567
+        }
+      ],
+      "quality": {
+        "passed": 35,
+        "total": 45,
+        "checks": [
+          {
+            "id": "node/rng exact xorshift",
+            "name": "rng exact xorshift",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/rng zero and restore",
+            "name": "rng zero and restore",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/hash FNV-1a",
+            "name": "hash FNV-1a",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/rng invalid seeds",
+            "name": "rng invalid seeds",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/rng invalid restore atomic",
+            "name": "rng invalid restore atomic",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/config defaults and detached",
+            "name": "config defaults and detached",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config JSON roundtrip",
+            "name": "config JSON roundtrip",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config reject invalid",
+            "name": "config reject invalid",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config coupled and prototype edge",
+            "name": "config coupled and prototype edge",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game initial and pure flap",
+            "name": "game initial and pure flap",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game fixed-step flight",
+            "name": "game fixed-step flight",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game paused and restarted",
+            "name": "game paused and restarted",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game seeded pipes",
+            "name": "game seeded pipes",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game lower boundary and no points on crash",
+            "name": "game lower boundary and no points on crash",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game passing one pipe once",
+            "name": "game passing one pipe once",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game snapshot roundtrip",
+            "name": "game snapshot roundtrip",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game pipe and bird collision edges",
+            "name": "game pipe and bird collision edges",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game top boundary inclusive",
+            "name": "game top boundary inclusive",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game strict passing edge",
+            "name": "game strict passing edge",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game removes offscreen pipes",
+            "name": "game removes offscreen pipes",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game restore rejects corrupt snapshots",
+            "name": "game restore rejects corrupt snapshots",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game no-op transitions detached",
+            "name": "game no-op transitions detached",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/input edge queue and release",
+            "name": "input edge queue and release",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/input ignore repeat and disposal",
+            "name": "input ignore repeat and disposal",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/pointer mapping/clamp",
+            "name": "pointer mapping/clamp",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/ticker first frame and backlog cap",
+            "name": "ticker first frame and backlog cap",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/ticker pause fresh base and invalid time",
+            "name": "ticker pause fresh base and invalid time",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/input custom binding validation",
+            "name": "input custom binding validation",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/pointer bad dimensions and values",
+            "name": "pointer bad dimensions and values",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/ticker fractional remainder",
+            "name": "ticker fractional remainder",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/ticker invalid options",
+            "name": "ticker invalid options",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/app import has no DOM side effects",
+            "name": "app import has no DOM side effects",
+            "passed": false,
+            "sealed": false,
+            "error": "SyntaxError: Invalid left-hand side in assignment\n    at compileSourceTextModule (node:internal/modules/esm/utils:319:16)\n    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:89:18)\n    at #translate (node:internal/modules/esm/loader:438:20)\n    at afterLoad (node:internal/modules/esm/loader:506:29)\n    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:511:12)\n    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)\n    at afterResolve (node:internal/modules/esm/loader:611:52)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:617:12)\n    at node:internal/modules/esm/loader:636:32\n    at TracingChannel.tracePromise (node:diagnostics_channel:361:14)"
+          },
+          {
+            "id": "browser/WebGL2 procedural renderer and colors",
+            "name": "WebGL2 procedural renderer and colors",
+            "passed": false,
+            "error": "Error: at least four drawn colors/regions required: {\"info\":{\"backend\":\"webgl2\",\"width\":480,\"height\":720,\"dpr\":1,\"contextLost\":false,\"destroyed\":false},\"colors\":1,\"gl\":true,\"gpu\":\"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\",\"error\":0}"
+          },
+          {
+            "id": "browser/renderer DPR resize and state immutability",
+            "name": "renderer DPR resize and state immutability",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer context loss and restore",
+            "name": "renderer context loss and restore",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer destroy idempotent and commands reject",
+            "name": "renderer destroy idempotent and commands reject",
+            "passed": true
+          },
+          {
+            "id": "browser/app mounts ready with accessible controls",
+            "name": "app mounts ready with accessible controls",
+            "passed": false,
+            "error": "Error: page.evaluate: SyntaxError: Invalid left-hand side in assignment"
+          },
+          {
+            "id": "browser/app buttons start pause restart",
+            "name": "app buttons start pause restart",
+            "passed": false,
+            "error": "TimeoutError: page.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"start\"]')\u001b[22m\n"
+          },
+          {
+            "id": "browser/app keyboard and canvas pointer",
+            "name": "app keyboard and canvas pointer",
+            "passed": false,
+            "error": "Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'getState')\n    at eval (eval at evaluate (:311:30), <anonymous>:1:20)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+          },
+          {
+            "id": "browser/app snapshot detached and invalid count",
+            "name": "app snapshot detached and invalid count",
+            "passed": false,
+            "error": "Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'getState')\n    at eval (eval at evaluate (:311:30), <anonymous>:2:32)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+          },
+          {
+            "id": "browser/app gameover and score/status text",
+            "name": "app gameover and score/status text",
+            "passed": false,
+            "error": "Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'restart')\n    at eval (eval at evaluate (:311:30), <anonymous>:2:22)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+          },
+          {
+            "id": "browser/app responsive mobile canvas",
+            "name": "app responsive mobile canvas",
+            "passed": false,
+            "error": "TimeoutError: locator.boundingBox: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"game-canvas\"]')\u001b[22m\n"
+          },
+          {
+            "id": "browser/app destroy idempotent and removes input",
+            "name": "app destroy idempotent and removes input",
+            "passed": false,
+            "error": "Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'destroy')\n    at eval (eval at evaluate (:311:30), <anonymous>:2:22)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+          },
+          {
+            "id": "browser/real entry point loads without JavaScript errors",
+            "name": "real entry point loads without JavaScript errors",
+            "passed": false,
+            "error": "TimeoutError: page.waitForSelector: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"game-canvas\"]') to be visible\u001b[22m\n"
+          },
+          {
+            "id": "browser/app has no external runtime requests",
+            "name": "app has no external runtime requests",
+            "passed": true
+          }
+        ],
+        "all_stages_declared_complete": false
+      },
+      "stage_completions": {
+        "declared": 3,
+        "total": 6
+      },
+      "project_files": {
+        "README.md": "435bd9f33be4e7344835276d4b6c77bebe54d1c8086974ed8b3c0c32bf34e63d",
+        "index.html": "b75615d4a3a9f1ea836bb0847529ecaf40dc62647a898021380d2a5b4987122f",
+        "main.js": "c58ef221adbe37a9a4ada60895d59b835a071f98aa1a5fbd0818801cf2b3229d",
+        "package.json": "6cab776a7f920178f6f096fb791ac0426dfbd50363325aee992e8530a8e605f7",
+        "specs/app.md": "666daadf3b3b80de813c3c51ffaba3b4f435e9be555780d7e20c83637ca284a0",
+        "specs/config.md": "570ab99926405a336b344f7559a8bfb014b99e018359bf0075fe68c27ae13dc6",
+        "specs/input.md": "9816b4a98e4c13792d4eaa006515d65ada66eba85311d9af735daa7b62868996",
+        "specs/random.md": "0eb208f2b2e5ebf03820edd8725c1e66b13b72c0bb84f99d4c9e101fd3a5158b",
+        "specs/renderer.md": "c2bb5892eb20b9bffa8a6b379f071dcc75f6ae49f6dacfee181b04b96e5a42d9",
+        "specs/simulation.md": "3c366b5d0a7dd69b236def5b921b7850daca74040c52f41b9b21283b3cec109a",
+        "src/app.js": "d64f2060bdfaff81803deb3f42fed8477e4a2bcf627a12d00f86db610ee6f3af",
+        "src/config.js": "96c5d458a3334ec0cd876ad94e09108309dbe7cbcc32568146b000e198ffbf05",
+        "src/dev-smoke.js": "fbddc2617ece4142f2861e4bc8c3517777bd50a4e1ace2085e88282c7179b83e",
+        "src/input.js": "864643ca1aeb8630221b2bfebd129963c0b2ac0534128c4c918228c651b39395",
+        "src/random.js": "1369015feda28912da8a8c15c68df08c4cf76bea86e99342842b66f0b0576457",
+        "src/renderer.js": "f3a6be83f064134a535793f059e5f49e9c9233f4eb63b47c33422d2f11c73565",
+        "src/simulation.js": "3c36cdd89689d5c5dd679f13a9f9853ce75059d91909e48386ca42b867fc0e4f",
+        "style.css": "28e08d310e6f0fbfaebd30ff8585f0b2eef1b4167a12dc176ad3cc2b8bf4e7d7",
+        "tests/config.test.js": "24207b94d629e661340dd85cae5a516ce2b35705881d6660d8fc5c2341b84de2",
+        "tests/input.test.js": "1f049935a0df9bba8baf81d74de34127a27e3f70f87b054ae32b7e2861d4cda1",
+        "tests/random.test.js": "0a22a5afa97862e7de8d18950918bb9a4129e0f09fe12b77af8f40085992ff94",
+        "tests/simulation.test.js": "35a1cc0d482052d5ada06f0598e45969472c4d9d4a8656374c93e29b7b480a63"
+      },
+      "conversation_sha256": "ce4265c777f21cbd3efacea22cbcb16e24d1b07feb63abffebddde16cbdb1c78",
+      "raw_root": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/web-coding-20261001/comparison-v4/gptq"
+    },
+    "exl3": {
+      "fixture_id": "flappybird-webgl2-v4",
+      "fixture_manifest_sha256": "58b09f4db9b6c3c702156294c54aa206a2315a328914add92f297bf2bbb8e331",
+      "runner_sha256": "a520cd59ac86c3e8631883dacb85c824ce467aed21e9964d70c27cc572d98e82",
+      "identity": {
+        "container_id": "bae3303b8178f452b48824dcf93080aa624283fd58365dfaf61c7a5b9f2cc1cb",
+        "image_id": "sha256:cba73584f4ab0a2b37eac1356f34f16655ac5e740d845e110997b03be78279b7",
+        "image_tag": "sha256:cba73584f4ab0a2b37eac1356f34f16655ac5e740d845e110997b03be78279b7",
+        "command": [
+          "models/qwen3.8-27b-exl3-4.00bpw",
+          "--gpu",
+          "0",
+          "--port",
+          "8000",
+          "--model-path",
+          "/models",
+          "--",
+          "--enable-auto-tool-choice",
+          "--tool-call-parser",
+          "qwen3_coder",
+          "--reasoning-parser",
+          "qwen3",
+          "--reasoning-config",
+          "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}"
+        ],
+        "labels": {
+          "image.omix.version": "0.1.0",
+          "org.opencontainers.image.authors": "Intel Corporation",
+          "org.opencontainers.image.created": "2026-06-08T12:53:11+00:00",
+          "org.opencontainers.image.description": "Open Middleware X<sup>e</sup> is a set of highly optimized deep learning frameworks and tools for Intel GPUs to accelerate AI workloads.",
+          "org.opencontainers.image.documentation": "https://github.com/intel/containers",
+          "org.opencontainers.image.licenses": "MIT",
+          "org.opencontainers.image.revision": "ac12083301cbdbe06135882d401f7877b0b512db",
+          "org.opencontainers.image.source": "https://github.com/intel/containers",
+          "org.opencontainers.image.title": "Open Middleware X<sup>e</sup>",
+          "org.opencontainers.image.url": "https://www.intel.com",
+          "org.opencontainers.image.version": "20260608"
+        }
+      },
+      "provenance": {
+        "fixture_id": "flappybird-webgl2-v4",
+        "fixture_manifest_sha256": "58b09f4db9b6c3c702156294c54aa206a2315a328914add92f297bf2bbb8e331",
+        "fixture_files": {
+          "README.md": "e8997faf161ae2823a171ec32424082cf1c6928791edaa8ad104ec845d826117",
+          "project/README.md": "435bd9f33be4e7344835276d4b6c77bebe54d1c8086974ed8b3c0c32bf34e63d",
+          "project/index.html": "ffd1cbfd30492ae40ec2bb1ce4e0bc31aee65dcd9e1065527a8d222aff227d42",
+          "project/main.js": "c58ef221adbe37a9a4ada60895d59b835a071f98aa1a5fbd0818801cf2b3229d",
+          "project/package.json": "6cab776a7f920178f6f096fb791ac0426dfbd50363325aee992e8530a8e605f7",
+          "project/specs/app.md": "666daadf3b3b80de813c3c51ffaba3b4f435e9be555780d7e20c83637ca284a0",
+          "project/specs/config.md": "570ab99926405a336b344f7559a8bfb014b99e018359bf0075fe68c27ae13dc6",
+          "project/specs/input.md": "9816b4a98e4c13792d4eaa006515d65ada66eba85311d9af735daa7b62868996",
+          "project/specs/random.md": "0eb208f2b2e5ebf03820edd8725c1e66b13b72c0bb84f99d4c9e101fd3a5158b",
+          "project/specs/renderer.md": "c2bb5892eb20b9bffa8a6b379f071dcc75f6ae49f6dacfee181b04b96e5a42d9",
+          "project/specs/simulation.md": "3c366b5d0a7dd69b236def5b921b7850daca74040c52f41b9b21283b3cec109a",
+          "project/src/app.js": "b9c3e093e9bc2a956cf934a7037ea001abde5c51214fc48088a988825a38249d",
+          "project/src/config.js": "7b25978fdf17322b1a3d67eeccd275ade7a9d52bfc6ef0a60454ae28b9bc7a7e",
+          "project/src/input.js": "8c1337929e07afb36e6dfac02435d3d0ceef958b691b6dabc46a91f00e7d2814",
+          "project/src/random.js": "8ab78c6d041c206c1155f2f13316c6d30465703db42109480ee9d1087c4e975f",
+          "project/src/renderer.js": "5790649fe8191094abc3e6702cd098aa1fca26ade179f83d73a8346826bb3c04",
+          "project/src/simulation.js": "d2276b36daa14d9214d4185620ede49f348a9eba4f07b679883b31544f08de6a",
+          "project/style.css": "28e08d310e6f0fbfaebd30ff8585f0b2eef1b4167a12dc176ad3cc2b8bf4e7d7",
+          "tasks.json": "66a827d6166f71999047ab5afb245ba57298b5052881646324e87dcda2024503"
+        },
+        "harness_files": {
+          "checks.mjs": "03c0d0aaf2dc8ed096a51968971d98e8f69173a7d00bd2b79174f4c6959af2bc",
+          "browser.mjs": "ad35c54e4c412b0715023b333bfc7b4319698654ed904ad550a46a4fba58d041",
+          "package.json": "89ee7d37083d11091fd6a2cfb0308b9af466f9010c1f91eb9f0140cdf4ebb901",
+          "package-lock.json": "b7bd5012db625f36b65c68f3414deaaa2649baa2beb11cd579a3987b6f0f0f79"
+        },
+        "runner_sha256": "a520cd59ac86c3e8631883dacb85c824ce467aed21e9964d70c27cc572d98e82",
+        "identity": {
+          "container_id": "bae3303b8178f452b48824dcf93080aa624283fd58365dfaf61c7a5b9f2cc1cb",
+          "image_id": "sha256:cba73584f4ab0a2b37eac1356f34f16655ac5e740d845e110997b03be78279b7",
+          "image_tag": "sha256:cba73584f4ab0a2b37eac1356f34f16655ac5e740d845e110997b03be78279b7",
+          "command": [
+            "models/qwen3.8-27b-exl3-4.00bpw",
+            "--gpu",
+            "0",
+            "--port",
+            "8000",
+            "--model-path",
+            "/models",
+            "--",
+            "--enable-auto-tool-choice",
+            "--tool-call-parser",
+            "qwen3_coder",
+            "--reasoning-parser",
+            "qwen3",
+            "--reasoning-config",
+            "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}"
+          ],
+          "labels": {
+            "image.omix.version": "0.1.0",
+            "org.opencontainers.image.authors": "Intel Corporation",
+            "org.opencontainers.image.created": "2026-06-08T12:53:11+00:00",
+            "org.opencontainers.image.description": "Open Middleware X<sup>e</sup> is a set of highly optimized deep learning frameworks and tools for Intel GPUs to accelerate AI workloads.",
+            "org.opencontainers.image.documentation": "https://github.com/intel/containers",
+            "org.opencontainers.image.licenses": "MIT",
+            "org.opencontainers.image.revision": "ac12083301cbdbe06135882d401f7877b0b512db",
+            "org.opencontainers.image.source": "https://github.com/intel/containers",
+            "org.opencontainers.image.title": "Open Middleware X<sup>e</sup>",
+            "org.opencontainers.image.url": "https://www.intel.com",
+            "org.opencontainers.image.version": "20260608"
+          }
+        },
+        "model_info": {
+          "object": "list",
+          "data": [
+            {
+              "id": "qwen3.8-27b-exl3",
+              "object": "model",
+              "created": 1790825486,
+              "owned_by": "vllm",
+              "root": "/models",
+              "parent": null,
+              "max_model_len": 262144,
+              "permission": [
+                {
+                  "id": "modelperm-9375b9ff4beaf671",
+                  "object": "model_permission",
+                  "created": 1790825486,
+                  "allow_create_engine": false,
+                  "allow_sampling": true,
+                  "allow_logprobs": true,
+                  "allow_search_indices": false,
+                  "allow_view": true,
+                  "allow_fine_tuning": false,
+                  "organization": "*",
+                  "group": null,
+                  "is_blocking": false
+                }
+              ]
+            }
+          ]
+        },
+        "node_version": "v24.20.0",
+        "started_at": "2026-10-01T03:31:26.629899+00:00",
+        "sampling": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 20,
+          "seed_base": 73000,
+          "max_tokens": 16384,
+          "enable_thinking": true,
+          "reasoning_effort": "medium",
+          "preserve_thinking": true,
+          "thinking_token_budget": 4096,
+          "output_budget_policy": "at most 16384; rendered /tokenize history with reasoning alias normalized; input+output fits common 200704-token window or smaller engine limit"
+        },
+        "limits": {
+          "max_requests_per_stage": 32,
+          "max_wall_seconds": 7200,
+          "stages": 6
+        },
+        "measurement": "exclusive C1, native per-request accounting; prefix cache stays enabled; first generated token excluded from decode; 10K=10000 input-token bands",
+        "host": {
+          "kernel": "7.2.3-2-MANJARO",
+          "machine": "x86_64",
+          "power_cap_w": 180,
+          "runtime_source_files": {
+            "request_defaults.py": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2"
+          },
+          "production_policy_sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "source_commit": "f8a1ef2cdb42e312533bc36cca404a3e6d7569d1"
+        },
+        "tool_output_normalization": "Incidental Node test timings and absolute host/project paths normalized in agent history; unmodified raw tool results archived.",
+        "test_isolation": "Node checks/tests: bubblewrap, project-only filesystem, no host home/network/GPU; independent grading project read-only. Browser: SwiftShader software WebGL2, external requests blocked."
+      },
+      "wall_s": 2947.542330762997,
+      "tool_s": 10.7342872390509,
+      "card_energy_wh": 146.50211303722222,
+      "requests": 116,
+      "tool_calls": 133,
+      "session_status": "complete",
+      "stop_reason": null,
+      "stages_graded_during_session": 6,
+      "overall": {
+        "requests": 116,
+        "context_min": 964,
+        "context_max": 141551,
+        "native": {
+          "prompt_tokens": 8019898.0,
+          "cached_tokens": 7692800.0,
+          "prefill_tokens": 327098.0,
+          "prefill_seconds": 292.582635054976,
+          "decode_seconds": 2621.3314628020307,
+          "generation_tokens": 111380.0,
+          "draft_tokens": 127005.0,
+          "accepted_tokens": 69090.0,
+          "preemptions": 0.0,
+          "completed": 116.0
+        },
+        "post_first_tokens": 111264,
+        "prefill_tps": 1117.9679202032569,
+        "decode_tps": 42.44560505944796,
+        "cached_fraction": 0.959214194494743,
+        "mtp_acceptance": 0.5439943309318531,
+        "client_request_seconds": 2922.629418027973,
+        "client_decode_tps": 42.46939298378488
+      },
+      "bands": [
+        {
+          "lower": 0,
+          "upper": 10000,
+          "requests": 10,
+          "context_min": 964,
+          "context_max": 9956,
+          "native": {
+            "prompt_tokens": 59898.0,
+            "cached_tokens": 38400.0,
+            "prefill_tokens": 21498.0,
+            "prefill_seconds": 9.760284691998095,
+            "decode_seconds": 104.27498586900765,
+            "generation_tokens": 6530.0,
+            "draft_tokens": 6639.0,
+            "accepted_tokens": 4317.0,
+            "preemptions": 0.0,
+            "completed": 10.0
+          },
+          "post_first_tokens": 6520,
+          "prefill_tps": 2202.599686218681,
+          "decode_tps": 62.526980422615985,
+          "cached_fraction": 0.6410898527496744,
+          "mtp_acceptance": 0.6502485314053321,
+          "client_request_seconds": 114.18022822598869,
+          "client_decode_tps": 62.5353944841781
+        },
+        {
+          "lower": 10000,
+          "upper": 20000,
+          "requests": 14,
+          "context_min": 10228,
+          "context_max": 16334,
+          "native": {
+            "prompt_tokens": 184257.0,
+            "cached_tokens": 147200.0,
+            "prefill_tokens": 37057.0,
+            "prefill_seconds": 18.731092561996775,
+            "decode_seconds": 130.89036189299804,
+            "generation_tokens": 7328.0,
+            "draft_tokens": 7899.0,
+            "accepted_tokens": 4704.0,
+            "preemptions": 0.0,
+            "completed": 14.0
+          },
+          "post_first_tokens": 7314,
+          "prefill_tps": 1978.3683133991008,
+          "decode_tps": 55.87882785425518,
+          "cached_fraction": 0.7988841672229549,
+          "mtp_acceptance": 0.5955184200531712,
+          "client_request_seconds": 149.85259293000126,
+          "client_decode_tps": 55.89562887314686
+        },
+        {
+          "lower": 20000,
+          "upper": 30000,
+          "requests": 8,
+          "context_min": 20721,
+          "context_max": 29835,
+          "native": {
+            "prompt_tokens": 192827.0,
+            "cached_tokens": 169600.0,
+            "prefill_tokens": 23227.0,
+            "prefill_seconds": 13.328961934981635,
+            "decode_seconds": 147.22776274901116,
+            "generation_tokens": 8579.0,
+            "draft_tokens": 8523.0,
+            "accepted_tokens": 5743.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 8571,
+          "prefill_tps": 1742.5963187006432,
+          "decode_tps": 58.21592232309844,
+          "cached_fraction": 0.8795448770141111,
+          "mtp_acceptance": 0.6738237709726622,
+          "client_request_seconds": 160.77542550598446,
+          "client_decode_tps": 58.23150815052008
+        },
+        {
+          "lower": 30000,
+          "upper": 40000,
+          "requests": 7,
+          "context_min": 30749,
+          "context_max": 39865,
+          "native": {
+            "prompt_tokens": 235157.0,
+            "cached_tokens": 212800.0,
+            "prefill_tokens": 22357.0,
+            "prefill_seconds": 14.337116344999231,
+            "decode_seconds": 145.91083550199983,
+            "generation_tokens": 7778.0,
+            "draft_tokens": 8136.0,
+            "accepted_tokens": 5068.0,
+            "preemptions": 0.0,
+            "completed": 7.0
+          },
+          "post_first_tokens": 7771,
+          "prefill_tps": 1559.379129109048,
+          "decode_tps": 53.25855323399537,
+          "cached_fraction": 0.904927346411121,
+          "mtp_acceptance": 0.6229105211406096,
+          "client_request_seconds": 160.50123499798792,
+          "client_decode_tps": 53.274872529457404
+        },
+        {
+          "lower": 40000,
+          "upper": 50000,
+          "requests": 8,
+          "context_min": 40097,
+          "context_max": 49637,
+          "native": {
+            "prompt_tokens": 355260.0,
+            "cached_tokens": 331200.0,
+            "prefill_tokens": 24060.0,
+            "prefill_seconds": 17.429659480003465,
+            "decode_seconds": 233.5199487679929,
+            "generation_tokens": 11808.0,
+            "draft_tokens": 12444.0,
+            "accepted_tokens": 7665.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 11800,
+          "prefill_tps": 1380.4056256866825,
+          "decode_tps": 50.53101485442494,
+          "cached_fraction": 0.9322749535551427,
+          "mtp_acceptance": 0.6159594985535197,
+          "client_request_seconds": 251.33275166699605,
+          "client_decode_tps": 50.54534612379572
+        },
+        {
+          "lower": 50000,
+          "upper": 60000,
+          "requests": 2,
+          "context_min": 54160,
+          "context_max": 58469,
+          "native": {
+            "prompt_tokens": 112629.0,
+            "cached_tokens": 107200.0,
+            "prefill_tokens": 5429.0,
+            "prefill_seconds": 4.151733411003079,
+            "decode_seconds": 203.1779468809982,
+            "generation_tokens": 8343.0,
+            "draft_tokens": 10362.0,
+            "accepted_tokens": 4890.0,
+            "preemptions": 0.0,
+            "completed": 2.0
+          },
+          "post_first_tokens": 8341,
+          "prefill_tps": 1307.6465809707006,
+          "decode_tps": 41.05268375846589,
+          "cached_fraction": 0.9517974944286107,
+          "mtp_acceptance": 0.4719166184134337,
+          "client_request_seconds": 207.44265900299797,
+          "client_decode_tps": 41.05675281456669
+        },
+        {
+          "lower": 60000,
+          "upper": 70000,
+          "requests": 6,
+          "context_min": 63337,
+          "context_max": 69918,
+          "native": {
+            "prompt_tokens": 405103.0,
+            "cached_tokens": 390400.0,
+            "prefill_tokens": 14703.0,
+            "prefill_seconds": 12.559535585001868,
+            "decode_seconds": 112.1305267860007,
+            "generation_tokens": 4805.0,
+            "draft_tokens": 5556.0,
+            "accepted_tokens": 2959.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 4799,
+          "prefill_tps": 1170.664305259645,
+          "decode_tps": 42.79833634563061,
+          "cached_fraction": 0.9637055267425815,
+          "mtp_acceptance": 0.5325773938084953,
+          "client_request_seconds": 125.0928616339952,
+          "client_decode_tps": 42.82787731406835
+        },
+        {
+          "lower": 70000,
+          "upper": 80000,
+          "requests": 7,
+          "context_min": 70031,
+          "context_max": 79777,
+          "native": {
+            "prompt_tokens": 520949.0,
+            "cached_tokens": 499200.0,
+            "prefill_tokens": 21749.0,
+            "prefill_seconds": 19.81219751900062,
+            "decode_seconds": 184.58618533700064,
+            "generation_tokens": 8787.0,
+            "draft_tokens": 8913.0,
+            "accepted_tokens": 5814.0,
+            "preemptions": 0.0,
+            "completed": 7.0
+          },
+          "post_first_tokens": 8780,
+          "prefill_tps": 1097.7580845911675,
+          "decode_tps": 47.56585648037677,
+          "cached_fraction": 0.958251191575375,
+          "mtp_acceptance": 0.6523056210030292,
+          "client_request_seconds": 204.94624497601762,
+          "client_decode_tps": 47.58976354145326
+        },
+        {
+          "lower": 80000,
+          "upper": 90000,
+          "requests": 10,
+          "context_min": 80090,
+          "context_max": 88123,
+          "native": {
+            "prompt_tokens": 847917.0,
+            "cached_tokens": 819200.0,
+            "prefill_tokens": 28717.0,
+            "prefill_seconds": 29.166011529996467,
+            "decode_seconds": 202.73002134499984,
+            "generation_tokens": 8041.0,
+            "draft_tokens": 9438.0,
+            "accepted_tokens": 4892.0,
+            "preemptions": 0.0,
+            "completed": 10.0
+          },
+          "post_first_tokens": 8031,
+          "prefill_tps": 984.6049731710943,
+          "decode_tps": 39.61426110804322,
+          "cached_fraction": 0.9661322983263692,
+          "mtp_acceptance": 0.5183301546937911,
+          "client_request_seconds": 232.78819926900178,
+          "client_decode_tps": 39.644847642555845
+        },
+        {
+          "lower": 90000,
+          "upper": 100000,
+          "requests": 10,
+          "context_min": 91120,
+          "context_max": 99955,
+          "native": {
+            "prompt_tokens": 947862.0,
+            "cached_tokens": 916800.0,
+            "prefill_tokens": 31062.0,
+            "prefill_seconds": 32.467534114002774,
+            "decode_seconds": 226.3242346320112,
+            "generation_tokens": 7856.0,
+            "draft_tokens": 10203.0,
+            "accepted_tokens": 4460.0,
+            "preemptions": 0.0,
+            "completed": 10.0
+          },
+          "post_first_tokens": 7846,
+          "prefill_tps": 956.7095514840289,
+          "decode_tps": 34.66707846270682,
+          "cached_fraction": 0.9672294068123841,
+          "mtp_acceptance": 0.4371263353915515,
+          "client_request_seconds": 259.789216723002,
+          "client_decode_tps": 34.69314321465117
+        },
+        {
+          "lower": 100000,
+          "upper": 110000,
+          "requests": 8,
+          "context_min": 100746,
+          "context_max": 108139,
+          "native": {
+            "prompt_tokens": 829384.0,
+            "cached_tokens": 809600.0,
+            "prefill_tokens": 19784.0,
+            "prefill_seconds": 21.61440059000597,
+            "decode_seconds": 297.4943441770083,
+            "generation_tokens": 10303.0,
+            "draft_tokens": 12945.0,
+            "accepted_tokens": 5989.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 10295,
+          "prefill_tps": 915.3156904636852,
+          "decode_tps": 34.60569991164102,
+          "cached_fraction": 0.9761461518428135,
+          "mtp_acceptance": 0.4626496716879104,
+          "client_request_seconds": 319.99308381000446,
+          "client_decode_tps": 34.62288470420409
+        },
+        {
+          "lower": 110000,
+          "upper": 120000,
+          "requests": 8,
+          "context_min": 113288,
+          "context_max": 119382,
+          "native": {
+            "prompt_tokens": 937763.0,
+            "cached_tokens": 915200.0,
+            "prefill_tokens": 22563.0,
+            "prefill_seconds": 27.63257324600272,
+            "decode_seconds": 112.76822041300329,
+            "generation_tokens": 5295.0,
+            "draft_tokens": 4761.0,
+            "accepted_tokens": 3711.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 5287,
+          "prefill_tps": 816.536331927173,
+          "decode_tps": 46.883776126260095,
+          "cached_fraction": 0.9759395497583078,
+          "mtp_acceptance": 0.7794580970384373,
+          "client_request_seconds": 141.3937596449905,
+          "client_decode_tps": 46.95385066416908
+        },
+        {
+          "lower": 120000,
+          "upper": 130000,
+          "requests": 5,
+          "context_min": 120543,
+          "context_max": 126242,
+          "native": {
+            "prompt_tokens": 618387.0,
+            "cached_tokens": 603200.0,
+            "prefill_tokens": 15187.0,
+            "prefill_seconds": 18.914137968000432,
+            "decode_seconds": 309.5432909069932,
+            "generation_tokens": 9284.0,
+            "draft_tokens": 12741.0,
+            "accepted_tokens": 5039.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 9279,
+          "prefill_tps": 802.9443385521387,
+          "decode_tps": 29.976420980766825,
+          "cached_fraction": 0.9754409455567469,
+          "mtp_acceptance": 0.39549485911623894,
+          "client_request_seconds": 329.1119185449934,
+          "client_decode_tps": 29.987095157143685
+        },
+        {
+          "lower": 130000,
+          "upper": 140000,
+          "requests": 10,
+          "context_min": 130552,
+          "context_max": 139271,
+          "native": {
+            "prompt_tokens": 1349797.0,
+            "cached_tokens": 1320000.0,
+            "prefill_tokens": 29797.0,
+            "prefill_seconds": 39.438414724987524,
+            "decode_seconds": 180.22806557800504,
+            "generation_tokens": 5629.0,
+            "draft_tokens": 7239.0,
+            "accepted_tokens": 3227.0,
+            "preemptions": 0.0,
+            "completed": 10.0
+          },
+          "post_first_tokens": 5619,
+          "prefill_tps": 755.5323967198184,
+          "decode_tps": 31.17716423343635,
+          "cached_fraction": 0.9779248286964632,
+          "mtp_acceptance": 0.4457798038403094,
+          "client_request_seconds": 221.1834570580104,
+          "client_decode_tps": 31.21967578708399
+        },
+        {
+          "lower": 140000,
+          "upper": 150000,
+          "requests": 3,
+          "context_min": 140362,
+          "context_max": 141551,
+          "native": {
+            "prompt_tokens": 422708.0,
+            "cached_tokens": 412800.0,
+            "prefill_tokens": 9908.0,
+            "prefill_seconds": 13.238981352995324,
+            "decode_seconds": 30.524731965000683,
+            "generation_tokens": 1014.0,
+            "draft_tokens": 1206.0,
+            "accepted_tokens": 612.0,
+            "preemptions": 0.0,
+            "completed": 3.0
+          },
+          "post_first_tokens": 1011,
+          "prefill_tps": 748.3959479826831,
+          "decode_tps": 33.120683947665825,
+          "cached_fraction": 0.9765606517974583,
+          "mtp_acceptance": 0.5074626865671642,
+          "client_request_seconds": 44.24578403800115,
+          "client_decode_tps": 33.20375081756207
+        }
+      ],
+      "quality": {
+        "passed": 44,
+        "total": 45,
+        "checks": [
+          {
+            "id": "node/rng exact xorshift",
+            "name": "rng exact xorshift",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/rng zero and restore",
+            "name": "rng zero and restore",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/hash FNV-1a",
+            "name": "hash FNV-1a",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/rng invalid seeds",
+            "name": "rng invalid seeds",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/rng invalid restore atomic",
+            "name": "rng invalid restore atomic",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/config defaults and detached",
+            "name": "config defaults and detached",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config JSON roundtrip",
+            "name": "config JSON roundtrip",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config reject invalid",
+            "name": "config reject invalid",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config coupled and prototype edge",
+            "name": "config coupled and prototype edge",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game initial and pure flap",
+            "name": "game initial and pure flap",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game fixed-step flight",
+            "name": "game fixed-step flight",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game paused and restarted",
+            "name": "game paused and restarted",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game seeded pipes",
+            "name": "game seeded pipes",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game lower boundary and no points on crash",
+            "name": "game lower boundary and no points on crash",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game passing one pipe once",
+            "name": "game passing one pipe once",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game snapshot roundtrip",
+            "name": "game snapshot roundtrip",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game pipe and bird collision edges",
+            "name": "game pipe and bird collision edges",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game top boundary inclusive",
+            "name": "game top boundary inclusive",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game strict passing edge",
+            "name": "game strict passing edge",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game removes offscreen pipes",
+            "name": "game removes offscreen pipes",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game restore rejects corrupt snapshots",
+            "name": "game restore rejects corrupt snapshots",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game no-op transitions detached",
+            "name": "game no-op transitions detached",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/input edge queue and release",
+            "name": "input edge queue and release",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/input ignore repeat and disposal",
+            "name": "input ignore repeat and disposal",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/pointer mapping/clamp",
+            "name": "pointer mapping/clamp",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/ticker first frame and backlog cap",
+            "name": "ticker first frame and backlog cap",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/ticker pause fresh base and invalid time",
+            "name": "ticker pause fresh base and invalid time",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/input custom binding validation",
+            "name": "input custom binding validation",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/pointer bad dimensions and values",
+            "name": "pointer bad dimensions and values",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/ticker fractional remainder",
+            "name": "ticker fractional remainder",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/ticker invalid options",
+            "name": "ticker invalid options",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/app import has no DOM side effects",
+            "name": "app import has no DOM side effects",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "browser/WebGL2 procedural renderer and colors",
+            "name": "WebGL2 procedural renderer and colors",
+            "passed": false,
+            "error": "Error: at least four drawn colors/regions required: {\"info\":{\"backend\":\"webgl2\",\"width\":480,\"height\":720,\"dpr\":1,\"contextLost\":false,\"destroyed\":false},\"colors\":2,\"gl\":true,\"gpu\":\"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\",\"error\":0}"
+          },
+          {
+            "id": "browser/renderer DPR resize and state immutability",
+            "name": "renderer DPR resize and state immutability",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer context loss and restore",
+            "name": "renderer context loss and restore",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer destroy idempotent and commands reject",
+            "name": "renderer destroy idempotent and commands reject",
+            "passed": true
+          },
+          {
+            "id": "browser/app mounts ready with accessible controls",
+            "name": "app mounts ready with accessible controls",
+            "passed": true
+          },
+          {
+            "id": "browser/app buttons start pause restart",
+            "name": "app buttons start pause restart",
+            "passed": true
+          },
+          {
+            "id": "browser/app keyboard and canvas pointer",
+            "name": "app keyboard and canvas pointer",
+            "passed": true
+          },
+          {
+            "id": "browser/app snapshot detached and invalid count",
+            "name": "app snapshot detached and invalid count",
+            "passed": true
+          },
+          {
+            "id": "browser/app gameover and score/status text",
+            "name": "app gameover and score/status text",
+            "passed": true
+          },
+          {
+            "id": "browser/app responsive mobile canvas",
+            "name": "app responsive mobile canvas",
+            "passed": true
+          },
+          {
+            "id": "browser/app destroy idempotent and removes input",
+            "name": "app destroy idempotent and removes input",
+            "passed": true
+          },
+          {
+            "id": "browser/real entry point loads without JavaScript errors",
+            "name": "real entry point loads without JavaScript errors",
+            "passed": true
+          },
+          {
+            "id": "browser/app has no external runtime requests",
+            "name": "app has no external runtime requests",
+            "passed": true
+          }
+        ],
+        "all_stages_declared_complete": false
+      },
+      "stage_completions": {
+        "declared": 5,
+        "total": 6
+      },
+      "project_files": {
+        "README.md": "435bd9f33be4e7344835276d4b6c77bebe54d1c8086974ed8b3c0c32bf34e63d",
+        "USER_GUIDE.md": "d701bbc7916fd2554d8fffa8c6c4edfbf9eaf97a928617aa811cb2780e84779e",
+        "index.html": "ffd1cbfd30492ae40ec2bb1ce4e0bc31aee65dcd9e1065527a8d222aff227d42",
+        "main.js": "c58ef221adbe37a9a4ada60895d59b835a071f98aa1a5fbd0818801cf2b3229d",
+        "package.json": "6cab776a7f920178f6f096fb791ac0426dfbd50363325aee992e8530a8e605f7",
+        "specs/app.md": "666daadf3b3b80de813c3c51ffaba3b4f435e9be555780d7e20c83637ca284a0",
+        "specs/config.md": "570ab99926405a336b344f7559a8bfb014b99e018359bf0075fe68c27ae13dc6",
+        "specs/input.md": "9816b4a98e4c13792d4eaa006515d65ada66eba85311d9af735daa7b62868996",
+        "specs/random.md": "0eb208f2b2e5ebf03820edd8725c1e66b13b72c0bb84f99d4c9e101fd3a5158b",
+        "specs/renderer.md": "c2bb5892eb20b9bffa8a6b379f071dcc75f6ae49f6dacfee181b04b96e5a42d9",
+        "specs/simulation.md": "3c366b5d0a7dd69b236def5b921b7850daca74040c52f41b9b21283b3cec109a",
+        "src/app.js": "813551921a0468abf4e57b0aeb1a0d4c3a9f119c164e80f1f89828dd95cc4146",
+        "src/config.js": "64d9dddc9fb146285e4c52ab666c13d6beb99d0a49bfd10eaf9bd65b5d1be256",
+        "src/input.js": "102df5a8d3dbb5063601af6676238e05e3991b4b5a926bcf98eec3d9ee23e1c6",
+        "src/random.js": "ea66be9ecaf6f01b564d9f089fdde54465cf356d049066350a18bc2c14adbd47",
+        "src/renderer.js": "08accdbf125de97aff96fc278cc5ac9ee27510874591bcd61954bdb17fcb6ad6",
+        "src/simulation.js": "34fb9644c101705047f366a6f5f4807066597eec0940bd35ff07281378f8b655",
+        "style.css": "67c88ae1aa95319f79061a3db824dae756aa49c251d993d55d871e250b10841c",
+        "tests/config.test.js": "89b9d7eddb55b78e15e13ae67e968741fd7c883786dd51672a2238b5e6c0b4e2",
+        "tests/input.test.js": "5905a669e74e05602d3408117ff59977c8daebc4162054c318167e79d89e9207",
+        "tests/random.test.js": "6cd1fe698b687c18da8c58f0c59756f176cce47beeb2a6562ac9860765568fb5",
+        "tests/simulation.test.js": "f6529def3bd9c131a783175a942245c99bdf809cf7e3aa9a2b406b6900558cc6"
+      },
+      "conversation_sha256": "5687bcbb7d00351fcbf07d96e75014b55f7d68ef1f86fc056d7a2f378ff959ff",
+      "raw_root": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/web-coding-20261001/comparison-v4-exl3/exl3"
+    }
+  }
+}

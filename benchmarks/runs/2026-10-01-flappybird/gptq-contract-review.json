@@ -1,0 +1,309 @@
+{
+  "purpose": "Post-run contract review, not feedback to the timed agent. Replaces only the overly strict storage-error case with a construction-or-access check; unchanged browser cases reused by identical harness hash.",
+  "reviewed_at": "2026-10-01T06:12:57.120291+00:00",
+  "project_sha256": "226332c2326c6a435ce8e1ebb2810e2b154b3b06a914883536aa3f9835e07074",
+  "original_score": {
+    "passed": 51,
+    "total": 54
+  },
+  "corrected_checks_sha256": "f3cee5fc149cc9ab5a755da967d8ab95e431b441f92f0b9f6d2c997d9e56845b",
+  "original_browser_sha256": "0690e6033741bd3a6964a279051b99fc1be14db0385cd3c396ffc497b614c13e",
+  "acceptance": {
+    "exit_code": 0,
+    "mode": "acceptance",
+    "checks": [
+      {
+        "name": "rng exact xorshift",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "rng zero and restore",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "hash FNV-1a",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "rng invalid seeds",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "rng invalid restore atomic",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "config defaults and detached",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "config JSON roundtrip",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "config reject invalid",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "config coupled and prototype edge",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "game initial and pure flap",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game fixed-step flight",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game paused and restarted",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game seeded pipes",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game lower boundary and no points on crash",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game passing one pipe once",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game snapshot roundtrip",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "game pipe and bird collision edges",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "game top boundary inclusive",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "game strict passing edge",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "game removes offscreen pipes",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "game restore rejects corrupt snapshots",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "game no-op transitions detached",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "input edge queue and release",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "input ignore repeat and disposal",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "pointer mapping/clamp",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "ticker first frame and backlog cap",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "ticker pause fresh base and invalid time",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "input custom binding validation",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "pointer bad dimensions and values",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "ticker fractional remainder",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "ticker invalid options",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "app import has no DOM side effects",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "scores ordering detached lists and reload",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "scores best ten tie order and clear",
+        "passed": true,
+        "sealed": false
+      },
+      {
+        "name": "scores invalid entry leaves list unchanged",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "scores corrupt persisted data is inert",
+        "passed": true,
+        "sealed": true
+      },
+      {
+        "name": "scores storage failure is reported",
+        "passed": true,
+        "sealed": false
+      }
+    ],
+    "passed": 37,
+    "total": 37
+  },
+  "browser": {
+    "checks": [
+      {
+        "name": "browser renderer identity",
+        "passed": true,
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      {
+        "name": "WebGL2 procedural renderer and colors",
+        "passed": true
+      },
+      {
+        "name": "renderer DPR resize and state immutability",
+        "passed": true
+      },
+      {
+        "name": "renderer context loss and restore",
+        "passed": true
+      },
+      {
+        "name": "renderer destroy idempotent and commands reject",
+        "passed": true
+      },
+      {
+        "name": "app mounts ready with accessible controls",
+        "passed": true
+      },
+      {
+        "name": "app buttons start pause restart",
+        "passed": true
+      },
+      {
+        "name": "app keyboard and canvas pointer",
+        "passed": true
+      },
+      {
+        "name": "app snapshot detached and invalid count",
+        "passed": true
+      },
+      {
+        "name": "app gameover and score/status text",
+        "passed": true
+      },
+      {
+        "name": "app responsive mobile canvas",
+        "passed": true
+      },
+      {
+        "name": "app destroy idempotent and removes input",
+        "passed": true
+      },
+      {
+        "name": "settings labelled inputs and keyboard isolation",
+        "passed": false,
+        "error": "Error: labelled settings and player inputs required"
+      },
+      {
+        "name": "settings valid apply and invalid atomic rejection",
+        "passed": true
+      },
+      {
+        "name": "scores save once display and survive remount",
+        "passed": false,
+        "error": "TimeoutError: page.fill: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"player-name\"]')\u001b[22m\n"
+      },
+      {
+        "name": "scores clear persists through remount",
+        "passed": true
+      },
+      {
+        "name": "real entry point loads without JavaScript errors",
+        "passed": true
+      },
+      {
+        "name": "app has no external runtime requests",
+        "passed": true
+      }
+    ],
+    "passed": 16,
+    "total": 18,
+    "page_errors": [],
+    "browser_version": "153.0.8010.12",
+    "software_rendering": true
+  },
+  "supplemental_storage": {
+    "purpose": "Supplemental contract review: eager and lazy storage adapters are both valid; unchanged timed outputs",
+    "checks": [
+      {
+        "name": "storage read error reported by construction or actual access",
+        "passed": true
+      },
+      {
+        "name": "storage write error reported by construction or actual record",
+        "passed": true
+      },
+      {
+        "name": "public persisted schema loads and stays interoperable",
+        "passed": true
+      }
+    ],
+    "passed": 3,
+    "total": 3
+  },
+  "passed": 52,
+  "total": 54
+}

@@ -114,6 +114,7 @@ def main():
             phase = 'source-review'
             save(root / 'state.json', {'status': 'running', 'phase': phase, 'started_at': started})
             subprocess.run([sys.executable, str(REPO / 'scripts/current-profile-benchmark.py'),
+                '--expected-max-num-seqs', str(json.loads((REPO / 'config/production_policy.json').read_text())['serving']['max_num_seqs']),
                 '--container', CONTAINER, '--fixture-root', str(args.fixture_root.resolve()),
                 '--legacy-prefix-namespace', '--output-root', str(root / 'source-review'), '--execute'],
                 cwd=REPO, check=True)

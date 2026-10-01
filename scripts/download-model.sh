@@ -2,6 +2,13 @@
 set -euo pipefail
 
 repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+if python3 - "$repo_dir/config/production_policy.json" <<'PY'
+import json,sys
+sys.exit(json.load(open(sys.argv[1]))['policy_id']!='b70-qwen38-exl3-production-v1')
+PY
+then
+  exec bash "$repo_dir/scripts/download-exl3-model.sh" "$@"
+fi
 if [[ -f "$repo_dir/.env" ]]; then
   set -a
   # shellcheck disable=SC1091
@@ -19,4 +26,3 @@ docker run --rm \
   -v "$hf_home:/root/.cache/huggingface" \
   --entrypoint hf "$image" \
   download "$model" --revision "$revision"
-

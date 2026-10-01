@@ -46,13 +46,14 @@ def main():
                                  (a.performance_gate,'COMPLETE_REPEATED_LONG_PERFORMANCE')]:
             gate=json.loads((directory/'campaign.json').read_text())
             assert gate['status']==status and gate['image_id']==runtime
-        frozen=json.loads((REPO/'config/frozen_fixture_manifest.json').read_text())
+        frozen_path=REPO/'config/experiments/exl3-migration/full-serving-fixture-manifest.json'
+        frozen=json.loads(frozen_path.read_text())
         for filename,digest in frozen['files'].items():assert sha(a.fixture_root/filename)==digest,filename
         scenarios=json.loads((REPO/'benchmarks/current-profile-scenarios.json').read_text())
         assert len(scenarios)==20 and sum(x['repeats'] for x in scenarios)==70
         assert sum(x['repeats']*x['concurrency'] for x in scenarios)==124
         root.mkdir();state=dict(status='RUNNING',started_unix=time.time(),image_receipt=receipt,
-            quality_review_sha256=sha(a.quality_review),fixture_manifest_sha256=sha(REPO/'config/frozen_fixture_manifest.json'),
+            quality_review_sha256=sha(a.quality_review),fixture_manifest_sha256=sha(frozen_path),
             frozen_fixture_root=str(a.fixture_root.resolve()),sources={f:sha(REPO/'scripts'/f) for f in
               ['run-exl3-final-readme.py','exl3_candidate_worker.py','current-profile-benchmark.py','run-coding-benchmark.py',
                'run-web-coding-benchmark.py','grade-web-coding-output.py','run-server-gptq-rollback.sh']},stages={})
@@ -71,7 +72,11 @@ def main():
                  '--output-root',str(root/'source-review'),'--execute']),
                 ('coding-agent-v2',[sys.executable,str(REPO/'scripts/run-coding-benchmark.py'),
                  '--base',BASE,'--container','b70-exl3-final-benchmark','--policy-sha256-file',
-                 str(policy.with_suffix('.sha256')),'--output-root',str(root/'coding-agent-v2')])]:
+                 str(policy.with_suffix('.sha256')),'--output-root',str(root/'coding-agent-v2')]),
+                ('prefix-64k-isolated',[sys.executable,str(REPO/'scripts/current-profile-benchmark.py'),
+                 '--base',BASE,'--container','b70-exl3-final-benchmark','--expected-max-num-seqs','16',
+                 '--fixture-root',str(a.fixture_root.resolve()),'--legacy-prefix-namespace','--only','prefix-64k-cold-warm',
+                 '--output-root',str(root/'prefix-64k-isolated'),'--execute'])]:
                 w=Worker(image,root/(name+'-worker'),name='b70-exl3-final-benchmark')
                 try:
                     w.start();command(name,argv).check_returncode()
@@ -79,7 +84,7 @@ def main():
                 finally:w.stop()
             flappy=root/'flappy-v7';flappy.mkdir();state['flappy_limits']=dict(stages=6,
                 max_requests_per_stage=32,wall_seconds=2400,thinking_token_budget=4096,seed_base=73000);save()
-            release=json.loads((REPO/'config/production_image.json').read_text())
+            release=json.loads((REPO/'config/releases/gptq-onednn-v2/production_image.json').read_text())
             assert release['image_id']=='sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68'
             for engine in ['gptq','exl3']:
                 w=None;rollback_process=None;rollback_log=None

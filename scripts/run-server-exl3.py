@@ -10,6 +10,8 @@ from exl3_candidate_worker import REPO, MODEL, profile, sha
 
 
 def main():
+    if not __debug__:
+        raise SystemExit('Production integrity checks require ordinary Python execution')
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--check-only',action='store_true')
     p.add_argument('--release-dir',type=Path,default=REPO/'config')

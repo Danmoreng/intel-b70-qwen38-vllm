@@ -608,3 +608,15 @@ Finite/positive FP16-representable inverse scales are checked with integer
 bits under the existing fast-math build. A fresh immutable target image and
 old/new standalone numerical/host-read/thread/stream probes are being built;
 no oneDNN attention path has been enabled for serving yet.
+
+
+`target-sdpa-host-cache-v1` completes old/new XPU validation. EXL3 commit
+`d181d97` builds immutable image`af332911245f…`, native library`48f879c16f36…`.
+Both artifacts pass49 independent dense FP32 cases (max error0.000880957),
+including query padding and65537 exact keys. The new artifact rejects seven
+invalid scales and passes two independent thread/stream sequences. CPU trace
+shows36→0 device scalar reads over36 warmed calls. Four-head256Q/4096K wall
+call envelope is1.44→0.97ms; GPU-event windows include host gaps and must not
+be labeled GPU compute speedup or Decode gains. oneDNN serving stays disabled
+until the unified dispatcher and mixed/prefill tests pass. No new BF16 reference
+has been generated in these M04/SDPA experiments; GPTQ remains offline.

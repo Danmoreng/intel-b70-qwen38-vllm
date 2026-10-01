@@ -521,3 +521,16 @@ replay. No attention-named trace event is not evidence that attention is cheap.
 Its kernel results are diagnostic only; final gains must be tested on the actual
 serving graph path. GPTQ remains offline and all release gates stay open where
 not yet proved.
+
+
+The single eager103K C1 probe completed in~3min. CPU/runtime correlation-ID
+joins attribute128 target attention main+128 reduction kernels and24+24 draft
+attention kernels to8 pure-decode cycles. Target attention contributes21.99ms
+of54.22ms summed target-body GPU kernel time per cycle (~40.56%); draft attention
+2.86ms of6.20ms (~46.12%). This establishes a material optimization candidate,
+not an actual graph-path speedup. See `target-eager-attention-materiality-v1`.
+The eager128-token output hash differs from the graph serving prefix. Exact
+divergence cannot be recovered because that eager probe stored only its hash.
+Generated-path/logprob-margin checks now precede a default-depth selection or
+M04 release. Do not assume numerical rounding is harmless. All raw large trace
+files remain outside tracked fixtures; lean totals and raw SHA proofs are saved.

@@ -1,0 +1,274 @@
+{
+  "status": "COMPLETE_EAGER_ATTENTION_MATERIALITY_NOT_SERVING_SPEEDUP",
+  "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "engine_config": {
+    "kv_cache_dtype": "fp8",
+    "enforce_eager": true,
+    "enable_prefix_caching": true,
+    "max_model_len": 262144,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 4096,
+    "gpu_memory_utilization": 0.965,
+    "limit_mm_per_prompt": {
+      "image": 32,
+      "video": 4
+    },
+    "mm_processor_kwargs": {
+      "max_pixels": 4194304
+    },
+    "mamba_cache_mode": "align",
+    "scheduler_reserve_full_isl": true,
+    "watermark": 0.0,
+    "speculative_config": {
+      "method": "mtp",
+      "num_speculative_tokens": 3
+    },
+    "compilation_config": {
+      "cudagraph_mode": "NONE"
+    },
+    "dtype": "float16",
+    "seed": 20261001
+  },
+  "metadata": {
+    "status": "COMPLETE",
+    "runner_cycles": 8,
+    "pure_decode_cycles": 8,
+    "mixed_or_prefill_cycles": 0,
+    "batches": [
+      {
+        "req_ids": [
+          "1-afa7c509"
+        ],
+        "requests": 1,
+        "actual_rows": 4,
+        "padded_rows": 4,
+        "scheduled_rows_by_request": [
+          4
+        ],
+        "computed_prefill_by_request": [
+          102752
+        ],
+        "prefill_length_by_request": [
+          102752
+        ],
+        "has_prefill": false,
+        "draft_tokens": 3,
+        "target_graph_mode": "NONE",
+        "target_graph_bucket_rows": 4
+      },
+      {
+        "req_ids": [
+          "1-afa7c509"
+        ],
+        "requests": 1,
+        "actual_rows": 4,
+        "padded_rows": 4,
+        "scheduled_rows_by_request": [
+          4
+        ],
+        "computed_prefill_by_request": [
+          102752
+        ],
+        "prefill_length_by_request": [
+          102752
+        ],
+        "has_prefill": false,
+        "draft_tokens": 3,
+        "target_graph_mode": "NONE",
+        "target_graph_bucket_rows": 4
+      },
+      {
+        "req_ids": [
+          "1-afa7c509"
+        ],
+        "requests": 1,
+        "actual_rows": 4,
+        "padded_rows": 4,
+        "scheduled_rows_by_request": [
+          4
+        ],
+        "computed_prefill_by_request": [
+          102752
+        ],
+        "prefill_length_by_request": [
+          102752
+        ],
+        "has_prefill": false,
+        "draft_tokens": 3,
+        "target_graph_mode": "NONE",
+        "target_graph_bucket_rows": 4
+      },
+      {
+        "req_ids": [
+          "1-afa7c509"
+        ],
+        "requests": 1,
+        "actual_rows": 4,
+        "padded_rows": 4,
+        "scheduled_rows_by_request": [
+          4
+        ],
+        "computed_prefill_by_request": [
+          102752
+        ],
+        "prefill_length_by_request": [
+          102752
+        ],
+        "has_prefill": false,
+        "draft_tokens": 3,
+        "target_graph_mode": "NONE",
+        "target_graph_bucket_rows": 4
+      },
+      {
+        "req_ids": [
+          "1-afa7c509"
+        ],
+        "requests": 1,
+        "actual_rows": 4,
+        "padded_rows": 4,
+        "scheduled_rows_by_request": [
+          4
+        ],
+        "computed_prefill_by_request": [
+          102752
+        ],
+        "prefill_length_by_request": [
+          102752
+        ],
+        "has_prefill": false,
+        "draft_tokens": 3,
+        "target_graph_mode": "NONE",
+        "target_graph_bucket_rows": 4
+      },
+      {
+        "req_ids": [
+          "1-afa7c509"
+        ],
+        "requests": 1,
+        "actual_rows": 4,
+        "padded_rows": 4,
+        "scheduled_rows_by_request": [
+          4
+        ],
+        "computed_prefill_by_request": [
+          102752
+        ],
+        "prefill_length_by_request": [
+          102752
+        ],
+        "has_prefill": false,
+        "draft_tokens": 3,
+        "target_graph_mode": "NONE",
+        "target_graph_bucket_rows": 4
+      },
+      {
+        "req_ids": [
+          "1-afa7c509"
+        ],
+        "requests": 1,
+        "actual_rows": 4,
+        "padded_rows": 4,
+        "scheduled_rows_by_request": [
+          4
+        ],
+        "computed_prefill_by_request": [
+          102752
+        ],
+        "prefill_length_by_request": [
+          102752
+        ],
+        "has_prefill": false,
+        "draft_tokens": 3,
+        "target_graph_mode": "NONE",
+        "target_graph_bucket_rows": 4
+      },
+      {
+        "req_ids": [
+          "1-afa7c509"
+        ],
+        "requests": 1,
+        "actual_rows": 4,
+        "padded_rows": 4,
+        "scheduled_rows_by_request": [
+          4
+        ],
+        "computed_prefill_by_request": [
+          102752
+        ],
+        "prefill_length_by_request": [
+          102752
+        ],
+        "has_prefill": false,
+        "draft_tokens": 3,
+        "target_graph_mode": "NONE",
+        "target_graph_bucket_rows": 4
+      }
+    ],
+    "scope": "Bounded runner-cycle kernel trace starting at first pure decode; later mixed cycles are labeled by CPU metadata. Trace startup/stop perturb execution; no throughput claim."
+  },
+  "kernel_events": 16184,
+  "stage_kernel_sums": {
+    "unmapped": {
+      "kernel_events": 292,
+      "kernel_ms": 0.5288469999999991,
+      "attention_main_events": 0,
+      "attention_reduce_events": 0,
+      "attention_ms": 0.0,
+      "kernel_ms_per_cycle": 0.06610587499999988,
+      "attention_ms_per_cycle": 0.0,
+      "attention_share_of_summed_kernel_ms": 0.0
+    },
+    "target_body": {
+      "kernel_events": 14277,
+      "kernel_ms": 433.72818100001956,
+      "attention_main_events": 128,
+      "attention_reduce_events": 128,
+      "attention_ms": 175.90655900000007,
+      "kernel_ms_per_cycle": 54.216022625002445,
+      "attention_ms_per_cycle": 21.98831987500001,
+      "attention_share_of_summed_kernel_ms": 0.40556866421366367
+    },
+    "verification_sampler": {
+      "kernel_events": 30,
+      "kernel_ms": 0.10644699999999999,
+      "attention_main_events": 0,
+      "attention_reduce_events": 0,
+      "attention_ms": 0.0,
+      "kernel_ms_per_cycle": 0.013305874999999998,
+      "attention_ms_per_cycle": 0.0,
+      "attention_share_of_summed_kernel_ms": 0.0
+    },
+    "draft_proposal_including_head_and_sampler": {
+      "kernel_events": 1552,
+      "kernel_ms": 49.59009899999963,
+      "attention_main_events": 24,
+      "attention_reduce_events": 24,
+      "attention_ms": 22.871856,
+      "kernel_ms_per_cycle": 6.198762374999954,
+      "attention_ms_per_cycle": 2.858982,
+      "attention_share_of_summed_kernel_ms": 0.46121819599513547
+    },
+    "target_head": {
+      "kernel_events": 33,
+      "kernel_ms": 14.780402999999994,
+      "attention_main_events": 0,
+      "attention_reduce_events": 0,
+      "attention_ms": 0.0,
+      "kernel_ms_per_cycle": 1.8475503749999993,
+      "attention_ms_per_cycle": 0.0,
+      "attention_share_of_summed_kernel_ms": 0.0
+    }
+  },
+  "streams": {
+    "64": 16184
+  },
+  "graph_first128_output_match": false,
+  "evidence": {
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-eager-kernel-trace-v1/campaign.json": "d508068dd39c10baf4d34fb44eba0c745358d61424995161f7aa6ba349b42e79",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-eager-kernel-trace-v1/capture/summary.json": "81f8092cbe8449c870ae4d1c7e86763d4ba2a60a36f286cb05a8c6195fc8dc13",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-eager-kernel-trace-v1/capture/kernel-trace.json": "24f2f302d8e7503cfb60f92cb361804b09f9c5524afa54cd3d4089cdf4815342",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-eager-kernel-trace-v1/capture/kernel-trace.json.meta.json": "d1370ec1e956d87ed33766bf30d1dafb7c2132e3df18cc90075ca75cea850c0a",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-mtp-serving-v1/arm-0-mtp3/code-102752-c1-cold/result.json": "d5c6bac9dc5dcb2d51864b4b47191e671f4ed67e466db2b5b7c3340b70e92cdf"
+  },
+  "interpretation": "Actual128 target attention main+128 reduction kernels and24+24 draft attention kernels are correlated to8 eager cycles. Summed kernel durations are not wall-clock or serving-graph timings. Attention is material enough for a guarded M04 prototype; any gain requires numerical and actual serving-graph validation. One code128-token match does not close generated quality."
+}

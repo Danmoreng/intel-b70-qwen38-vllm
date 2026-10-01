@@ -65,7 +65,7 @@ C4 moderate-context qualification is clean. C16 permits genuine pool pressure:
 all 16 independent 8K + 256-token requests completed, with four preemptions/two
 affected requests and 16,000 extra submitted prefill tokens. Aligned Mamba and
 speculative states share the block pool; this is not 16 simultaneous 262K contexts.
-The exact 261,120 + 1,024-token boundary passes without preemption.32 different
+The exact 261,120 + 1,024-token boundary passes without preemption. 32 different
 4.2 MP images (131,164 input tokens), video limits, long-image context,
 prefix extension, scheduler-confirmed abort/recovery and independent restart
 pass. See the [release report](docs/EXL3_RELEASE_REPORT.md).
@@ -133,7 +133,7 @@ not repeated. Its corrected v7 coding task above is a new paired measurement.
 Both profiles run at 180 W; MTP depth and quantized checkpoints differ. Remaining
 decode differences are shown explicitly alongside the quality/context gain.
 
-| Frozen input budget | GPTQ prefill | EXL3 prefill | GPTQ decode | EXL3 decode | Decode change |
+| Actual input tokens | GPTQ prefill | EXL3 prefill | GPTQ decode | EXL3 decode | Decode change |
 |---:|---:|---:|---:|---:|---:|
 '''
     for name in ['phase-512-c1','phase-2k-c1','phase-4k-c1','phase-8k-c1','phase-16k-c1','phase-32k-c1','phase-64k-c1','phase-128k-c1','full-context-199680']:
@@ -169,9 +169,19 @@ python3 scripts/run-readme-benchmarks.py \
 ```
 
 The admission check reads the frozen policy (16 for this profile); the measured
-matrix stays 20 scenarios / 70 waves / 124 requests at C1–C4. Use a fresh idle worker
-for isolated 64K cold/warm resends with `current-profile-benchmark.py --container b70-qwen38-vllm
---expected-max-num-seqs 16 --only prefix-64k-cold-warm`. The full paired release
+matrix stays 20 scenarios / 70 waves / 124 requests at C1–C4. For an isolated
+64K cold/warm resend, restart the service first and then run:
+
+```bash
+python3 scripts/current-profile-benchmark.py \
+  --base http://127.0.0.1:8081 --container b70-qwen38-vllm \
+  --expected-max-num-seqs 16 \
+  --fixture-root /path/to/original/run-20260923-201101-w0.00 \
+  --legacy-prefix-namespace --only prefix-64k-cold-warm \
+  --output-root benchmark-results/prefix-64k-new-run --execute
+```
+
+The full paired release
 controller and validated exports are in `scripts/run-exl3-final-readme.py`,
 `summarize-readme-benchmarks.py` and `summarize-web-coding-benchmark.py`.
 The large original fixtures/raw events remain local with 248 frozen file hashes.

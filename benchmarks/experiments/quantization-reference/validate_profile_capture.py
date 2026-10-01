@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 import tempfile
+from contextlib import contextmanager
 from types import SimpleNamespace
 from unittest.mock import patch
 
@@ -26,6 +27,88 @@ class FakeEvent:
 
     def elapsed_time(self, other):
         return other.timestamp - self.timestamp
+
+
+class FakeProfiler:
+    def __init__(self, **kwargs):
+        assert kwargs['record_shapes'] is False and kwargs['with_stack'] is False
+        self.starts = self.stops = self.exports = 0
+
+    def start(self):
+        self.starts += 1
+
+    def stop(self):
+        self.stops += 1
+
+    def export_chrome_trace(self, path):
+        assert self.starts == self.stops == 1
+        self.exports += 1
+        Path(path).write_text('{"traceEvents": []}')
+
+
+def check_trace_lifecycle(batch, descriptor, temp):
+    activities = [P.torch.profiler.ProfilerActivity.CPU, P.torch.profiler.ProfilerActivity.XPU]
+    ranges = []
+
+    @contextmanager
+    def record_range(name):
+        ranges.append(name)
+        yield
+
+    with patch.object(P.torch.profiler, 'supported_activities', return_value=activities), \
+            patch.object(P.torch.profiler, 'profile', side_effect=FakeProfiler), \
+            patch.object(P.torch.profiler, 'record_function', side_effect=record_range):
+        profile = P.EventCapture()
+        fn = lambda value: value + 1
+        assert profile.traced_call('target_body', batch, descriptor, fn, (5,), {}) == 6
+        assert not ranges and profile.trace is None
+        profile.begin_trace(2)
+        fake = profile.trace
+        try:
+            profile.begin_trace(2)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError('Overlapping trace was accepted')
+        batch.has_prefill = True
+        assert profile.traced_call('target_body', batch, descriptor, fn, (5,), {}) == 6
+        profile.trace_step_complete()
+        assert fake.starts == 0 and not ranges and profile.trace_cycles == 0
+        try:
+            profile.finish_trace(Path(temp) / 'unfinished.json')
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError('Unfinished trace was accepted')
+        batch.has_prefill = False
+        assert profile.traced_call('target_body', batch, descriptor, fn, (5,), {}) == 6
+        assert profile.traced_call('target_head', batch, None, fn, (6,), {}) == 7
+        profile.trace_step_complete()
+        assert fake.starts == 1 and fake.stops == 0
+        # A later mixed cycle must be labeled honestly, not called pure decode.
+        batch.has_prefill = True
+        assert profile.traced_call('target_body', batch, descriptor, fn, (5,), {}) == 6
+        profile.trace_step_complete()
+        assert profile.trace_complete and fake.stops == 1
+        before = len(ranges)
+        profile.traced_call('target_body', batch, descriptor, fn, (5,), {})
+        profile.trace_step_complete()
+        assert len(ranges) == before and fake.stops == 1
+        path = Path(temp) / 'bounded-trace.json'
+        profile.finish_trace(path)
+        meta = json.loads(Path(str(path) + '.meta.json').read_text())
+        assert meta['runner_cycles'] == 2 and meta['pure_decode_cycles'] == meta['mixed_or_prefill_cycles'] == 1
+        assert ranges == ['exl3_diagnostic/cycle0/target_body', 'exl3_diagnostic/cycle0/target_head',
+                          'exl3_diagnostic/cycle1/target_body']
+        assert fake.exports == 1 and profile.trace is None
+        with patch.object(P.torch.profiler, 'supported_activities', return_value=[]):
+            try:
+                profile.begin_trace(2)
+            except AssertionError:
+                pass
+            else:
+                raise AssertionError('Missing XPU profiler support was accepted')
+        batch.has_prefill = False
 
 
 class Model:
@@ -112,9 +195,11 @@ def main():
             assert [s["gpu_timeline_ms"] for s in stages] == [head, sampler]
             assert rows[0]["cycle_gpu_timeline_ms"] == head + sampler
             assert not profile.enabled and not profile.cycles
+        check_trace_lifecycle(batch, descriptor, temp)
     print(json.dumps({"status": "PASS", "real_v2_call_sites": identities,
         "changed_call_sites_rejected": True, "timing_passthrough_branches": 4,
         "synchronization_after_generation_only": True,
+        "bounded_trace_wait_start_stop_export_and_mixed_metadata": True,
         "scope": "CPU source/plumbing checks with fake events; no claim of actual XPU timing validation"}))
 
 

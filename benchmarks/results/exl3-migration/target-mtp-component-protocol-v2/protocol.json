@@ -1,0 +1,84 @@
+{
+  "schema": 2,
+  "status": "PREPARED_CPU_GUARDS_PASS_XPU_UNTESTED",
+  "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "depths": [
+    3,
+    4
+  ],
+  "event_cases": [
+    {
+      "window": "code-4096",
+      "concurrency": 1
+    },
+    {
+      "window": "code-49152",
+      "concurrency": 4
+    },
+    {
+      "window": "code-102752",
+      "concurrency": 1
+    }
+  ],
+  "output_tokens": 128,
+  "trace_cases": [
+    "code-49152-c4",
+    "code-102752-c1"
+  ],
+  "trace_cycles": 8,
+  "trace_contract": "Start at first pure decode; retain CPU metadata for each of8 runner cycles and label later mixed/prefill cycles. Separate warm same-prompt/salt128-token trace wave immediately after associated event wave. No trace-wave throughput claim.",
+  "timings": [
+    "target body",
+    "target head",
+    "verification sampler",
+    "sampled-token commit",
+    "complete draft proposal",
+    "whole runner cycle"
+  ],
+  "rows": "Actual/padded/scheduled CPU metadata and graph descriptor",
+  "unmeasured": [
+    "draft body/head/sampler split within fused captured graphs",
+    "other state-commit operations outside postprocess_sampled"
+  ],
+  "prerequisite": "COMPLETE36-case compact serving screen on same image/panel/settings; matched full-candidate long quality and exclusiveGPU lock",
+  "cpu_validation": {
+    "status": "PASS",
+    "real_v2_call_sites": {
+      "execute_model": {
+        "original_source_sha256": "16b8dd942526b81afcd78a76e5c1c7c07a10a2234a7916d550f13c845916a2e7",
+        "call_sites": {
+          "self.cudagraph_manager.run_fullgraph": 1,
+          "self.cudagraph_manager.run_pw_graph": 1,
+          "self.model": 1
+        }
+      },
+      "sample": {
+        "original_source_sha256": "6a152f0c6da19fe51f94ff6bed2f5456263f15d20da5d908966595849a15f997",
+        "call_sites": {
+          "self.model.compute_logits_local": 1,
+          "self.model.compute_logits": 1,
+          "self.sampler": 1,
+          "self.rejection_sampler": 1
+        }
+      },
+      "sample_tokens": {
+        "original_source_sha256": "709bf1f0b05be1734d25649993af1eca09a1e1c8881c3b840752e13b661910a6",
+        "call_sites": {
+          "self.postprocess_sampled": 1,
+          "self.speculator.propose": 1
+        }
+      }
+    },
+    "changed_call_sites_rejected": true,
+    "timing_passthrough_branches": 4,
+    "synchronization_after_generation_only": true,
+    "bounded_trace_wait_start_stop_export_and_mixed_metadata": true,
+    "scope": "CPU source/plumbing checks with fake events; no claim of actual XPU timing validation"
+  },
+  "source_sha256": {
+    "scripts/run-exl3-component-profile.py": "78aae180f8a25f52df8f9c75a90fd972b602217b62868c15ce5a9f27ed00dc13",
+    "benchmarks/experiments/quantization-reference/profile_capture.py": "bc3810925c3e6832b767ab46b9c0d77bd2c402382a11175dfa9c490013b5326d",
+    "benchmarks/experiments/quantization-reference/run_component_profile.py": "c60957d562368400896b34b3f8fdb831eec88d02a71bcba53399f8fbedbf8fcc",
+    "benchmarks/experiments/quantization-reference/validate_profile_capture.py": "1703d2d58cf02ff1af4cd84bfd7dad8c54e7c89d8bbe257cf915e41dd1a2006d"
+  }
+}

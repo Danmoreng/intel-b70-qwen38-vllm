@@ -28,6 +28,7 @@ def main():
     parser.add_argument('--long-campaign', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--contexts', type=int, nargs='+', default=[4096, 49152, 102752])
+    parser.add_argument('--compact', action='store_true', help='Profile three code cases after the compact serving screen')
     args = parser.parse_args()
     root = args.output.resolve()
     assert not root.exists(), 'Fresh diagnostic evidence required'
@@ -43,11 +44,26 @@ def main():
         quality = json.loads((args.long_campaign / 'candidate-campaign.json').read_text())
         assert serving['status'] == quality['status'] == 'COMPLETE'
         assert serving['image_id'] == quality['image_id'] == image
-        assert serving['scope'] == 'SERVING_ABBA' and serving['order'] == [3, 4, 4, 3]
+        if args.compact:
+            assert serving['scope'] == 'SERVING_COMPACT_SCREEN' and serving['order'] == [3, 4]
+            assert serving['planned_waves'] == 36
+            assert [a['depth'] for a in serving['arms']] == [3, 4]
+            assert all(len(a['waves']) == 18 for a in serving['arms'])
+        else:
+            assert serving['scope'] == 'SERVING_ABBA' and serving['order'] == [3, 4, 4, 3]
         assert serving['panel_sha256'] == manifest['panel_raw_sha256']
         config = quality['engine_config']
         settings = json.loads((REPO / 'config/experiments/exl3-migration/target-upstream-expanded.json').read_text())
         assert all(config.get(key) == value for key, value in settings.items())
+        if args.compact:
+            wanted = {(f'{domain}-{ctx}', c, cache) for domain in ['code', 'prose']
+                      for ctx in [4096, 49152] for c in [1, 4] for cache in ['cold', 'warm']}
+            wanted |= {('code-102752', 1, cache) for cache in ['cold', 'warm']}
+            for arm in serving['arms']:
+                assert arm['settings'] == {**settings, 'speculative_config': {'method': 'mtp', 'num_speculative_tokens': arm['depth']}}
+                assert {(w['window'], w['concurrency'], w['cache_mode']) for w in arm['waves']} == wanted
+                assert all(w['native']['completed'] == w['concurrency'] and
+                           w['native']['generation_tokens'] == 512 * w['concurrency'] for w in arm['waves'])
         root.mkdir(); (root / 'panel.json.gz').write_bytes(encoded)
         power = list(Path('/sys/bus/pci/devices/0000:03:00.0/hwmon').glob('hwmon*/power1_cap'))
         assert len(power) == 1 and int(power[0].read_text()) == 180000000, 'B70 power cap must remain180W'
@@ -56,6 +72,8 @@ def main():
                  'serving_campaign_sha256': sha(args.serving_campaign / 'campaign.json'),
                  'long_campaign_sha256': sha(args.long_campaign / 'candidate-campaign.json'),
                  'panel_sha256': manifest['panel_raw_sha256'], 'contexts': args.contexts,
+                 'compact': args.compact, 'output_tokens': 128 if args.compact else 512,
+                 'serving_comparison_design': serving.get('comparison_design'),
                  'arms': [], 'power_w': 180, 'production_restored': False,
                  'source_sha256': {str(p.relative_to(REPO)): sha(p) for p in
                     [Path(__file__), SCRIPTS / 'profile_capture.py', SCRIPTS / 'run_component_profile.py']}}
@@ -91,6 +109,8 @@ def main():
                 command += ['--entrypoint', 'python', image, '-u', '/scripts/run_component_profile.py',
                             '--model', '/exl3', '--panel', '/results/panel.json.gz', '--engine-config', '/results/' + cfg.name,
                             '--out', f'/results/mtp{depth}', '--contexts', *map(str, args.contexts)]
+                if args.compact:
+                    command += ['--compact', '--output-tokens', '128']
                 arm['command'] = command; arm['engine_config'] = applied; persist()
                 with (root / f'mtp{depth}.log').open('w') as log:
                     subprocess.run(command, check=True, stdout=log, stderr=subprocess.STDOUT)

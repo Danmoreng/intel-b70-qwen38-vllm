@@ -85,6 +85,12 @@ class EventCapture:
         self.enabled = False
         self.cycles = []
         self.current = None
+        self.trace = None
+        self.trace_waiting = False
+        self.trace_active = False
+        self.trace_complete = False
+        self.trace_cycles = 0
+        self.trace_batches = []
 
     def begin(self):
         assert self.current is None, "Overlapping runner cycles require a different profiler"
@@ -140,11 +146,61 @@ class EventCapture:
         self.cycles = []
         return {"path": str(path), "cycles": len(rows)}
 
+    def begin_trace(self, cycles):
+        assert not self.enabled and self.current is None and self.trace is None
+        assert 1 <= cycles <= 16
+        assert torch.profiler.ProfilerActivity.XPU in torch.profiler.supported_activities(), \
+            "Actual XPU kernel activity tracing is unavailable"
+        self.trace = torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU,
+            torch.profiler.ProfilerActivity.XPU], record_shapes=False, with_stack=False)
+        self.trace_waiting = True
+        self.trace_complete = False
+        self.trace_cycles = 0
+        self.trace_max_cycles = cycles
+        self.trace_batches = []
+        return {"waiting_for_first_pure_decode": True, "cycles": cycles}
+
+    def traced_call(self, stage, batch, descriptor, function, args, kwargs):
+        if stage == "target_body":
+            if self.trace_waiting and not batch.has_prefill:
+                self.trace.start()
+                self.trace_active = True
+                self.trace_waiting = False
+            if self.trace_active:
+                self.trace_batches.append(batch_metadata(batch, descriptor))
+        if self.trace_active:
+            with torch.profiler.record_function(f"exl3_diagnostic/cycle{self.trace_cycles}/" + stage):
+                return function(*args, **kwargs)
+        return function(*args, **kwargs)
+
+    def trace_step_complete(self):
+        if self.trace_active:
+            self.trace_cycles += 1
+            if self.trace_cycles == self.trace_max_cycles:
+                # Bounded diagnostic only. Stop may synchronize; its wave must
+                # never enter uninstrumented serving/component timing tables.
+                self.trace.stop()
+                self.trace_active = False
+                self.trace_complete = True
+
+    def finish_trace(self, path):
+        assert self.trace_complete and not self.trace_active and not self.trace_waiting
+        assert self.trace_cycles == len(self.trace_batches) == self.trace_max_cycles
+        self.trace.export_chrome_trace(str(path))
+        pure = sum(not batch["has_prefill"] for batch in self.trace_batches)
+        metadata = {"status": "COMPLETE", "runner_cycles": self.trace_cycles,
+                    "pure_decode_cycles": pure, "mixed_or_prefill_cycles": self.trace_cycles - pure,
+                    "batches": self.trace_batches,
+                    "scope": "Bounded runner-cycle kernel trace starting at first pure decode; later mixed cycles are labeled by CPU metadata. Trace startup/stop perturb execution; no throughput claim."}
+        Path(str(path) + ".meta.json").write_text(json.dumps(metadata, indent=2) + "\n")
+        self.trace = None
+        return {"path": str(path), "runner_cycles": self.trace_cycles, "pure_decode_cycles": pure}
+
 
 def event_profile_call(runner, stage, batch, descriptor, function, *args, **kwargs):
     profile = runner._exl3_event_capture
     if not profile.enabled:
-        return function(*args, **kwargs)
+        return profile.traced_call(stage, batch, descriptor, function, args, kwargs)
     return profile.call(stage, batch, descriptor, function, args, kwargs)
 
 
@@ -175,6 +231,7 @@ def install_event_capture(runner):
         value = sample_tokens(*args, **kwargs)
         if profile.enabled:
             profile.end()
+        profile.trace_step_complete()
         return value
 
     runner._exl3_event_capture = profile
@@ -191,9 +248,15 @@ class ProfileWorkerExtension:
 
     def begin_event_profile(self):
         profile = self.model_runner._exl3_event_capture
-        assert not profile.enabled and not profile.cycles and profile.current is None
+        assert not profile.enabled and not profile.cycles and profile.current is None and profile.trace is None
         profile.enabled = True
         return {"enabled": True}
 
     def finish_event_profile(self, path):
         return self.model_runner._exl3_event_capture.finish(path)
+
+    def begin_kernel_trace(self, cycles=8):
+        return self.model_runner._exl3_event_capture.begin_trace(cycles)
+
+    def finish_kernel_trace(self, path):
+        return self.model_runner._exl3_event_capture.finish_trace(path)

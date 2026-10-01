@@ -18,7 +18,9 @@ def main():
     policy=json.loads(policy_file.read_text());digest=sha(policy_file)
     assert digest==(directory/'production_policy.sha256').read_text().split()[0], 'Production policy hash mismatch'
     release=json.loads((directory/'production_image.json').read_text())
-    assert release['policy_sha256']==digest and release['status']=='QUALIFIED_RELEASE', 'Release not approved'
+    assert release['policy_sha256']==digest
+    assert (release['status']=='QUALIFIED_RELEASE' or
+            (a.check_only and release['status']=='CANDIDATE_PREFLIGHT_ONLY')), 'Release not approved'
     assert policy['policy_id']=='b70-qwen38-exl3-production-v1'
     image=release['image_tag']
     inspected=json.loads(subprocess.check_output(['docker','image','inspect',image],text=True))[0]
@@ -51,7 +53,8 @@ assert torch._C._dispatch_has_kernel_for_dispatch_key('b70_exl3_attention::share
     caps=list(Path('/sys/bus/pci/devices/0000:03:00.0/hwmon').glob('*/power1_cap'))
     assert len(caps)==1 and int(caps[0].read_text())==180000000, 'Card power limit must be180W'
     cache=Path(os.environ.get('XDG_CACHE_HOME',str(Path.home()/'.cache')))/'b70-qwen38-vllm-production'/digest/release['image_id'].removeprefix('sha256:')
-    print(json.dumps(dict(status='PRODUCTION_LAUNCH_PREFLIGHT_PASS',image_id=release['image_id'],policy_sha256=digest,cache=str(cache))),flush=True)
+    print(json.dumps(dict(status='LAUNCH_PREFLIGHT_PASS',release_status=release['status'],
+                         image_id=release['image_id'],policy_sha256=digest,cache=str(cache))),flush=True)
     if a.check_only:return
     env={**cfg['env'],'HF_HUB_OFFLINE':'1','PYTHONPATH':'/opt/b70-runtime','ZE_AFFINITY_MASK':'0',
          'EXL3_LOADER_REPORT_DIR':'/results/loader'}

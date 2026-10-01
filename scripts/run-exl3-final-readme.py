@@ -55,7 +55,7 @@ def main():
             quality_review_sha256=sha(a.quality_review),fixture_manifest_sha256=sha(REPO/'config/frozen_fixture_manifest.json'),
             frozen_fixture_root=str(a.fixture_root.resolve()),sources={f:sha(REPO/'scripts'/f) for f in
               ['run-exl3-final-readme.py','exl3_candidate_worker.py','current-profile-benchmark.py','run-coding-benchmark.py',
-               'run-web-coding-benchmark.py','grade-web-coding-output.py']},stages={})
+               'run-web-coding-benchmark.py','grade-web-coding-output.py','run-server-gptq-rollback.sh']},stages={})
         def save():(root/'campaign.json').write_text(json.dumps(state,indent=2)+'\n')
         def command(name,argv,budget=None):
             state['stages'][name]=dict(status='RUNNING',command=argv);save();print('START',name,flush=True)
@@ -82,10 +82,12 @@ def main():
             release=json.loads((REPO/'config/production_image.json').read_text())
             assert release['image_id']=='sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68'
             for engine in ['gptq','exl3']:
-                w=None
+                w=None;rollback_process=None;rollback_log=None
                 try:
                     if engine=='gptq':
-                        subprocess.run(['systemctl','--user','start',c.SERVICE],check=True)
+                        rollback_log=(root/'gptq-rollback-launch.log').open('w')
+                        rollback_process=subprocess.Popen(['bash',str(REPO/'scripts/run-server-gptq-rollback.sh')],
+                            cwd=REPO,stdout=rollback_log,stderr=subprocess.STDOUT)
                         base='http://127.0.0.1:8081';container='b70-qwen38-vllm'
                         identity=c.wait_health(base,container,release['image_id'])
                         item=json.loads(subprocess.check_output(['docker','inspect',container],text=True))[0]
@@ -112,6 +114,11 @@ def main():
                     if engine=='gptq':state['rollback_drill']['status']='PASS_RUNNING_FROZEN_GPTQ_WITH_PAIRED_TASK';save()
                 finally:
                     if w:w.stop()
+                    if rollback_process is not None:
+                        item=json.loads(subprocess.check_output(['docker','inspect','b70-qwen38-vllm'],text=True))[0]
+                        assert item['Image']==release['image_id'], 'Refuse to stop unexpected rollback worker'
+                        subprocess.run(['docker','stop','-t','30','b70-qwen38-vllm'],check=True,timeout=60)
+                        rollback_process.wait(timeout=60);rollback_log.close()
                     subprocess.run(['systemctl','--user','stop',c.SERVICE],check=True)
             state['status']='COMPLETE_FINAL_README_MEASUREMENTS_REQUIRES_RELEASE_REVIEW'
         except BaseException as exc:

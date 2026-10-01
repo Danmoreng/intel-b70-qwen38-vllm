@@ -1,0 +1,93 @@
+{
+  "policy_id": "b70-qwen38-exl3-production-v1",
+  "hardware": {
+    "gpu": "Intel Arc Pro B70",
+    "gpu_count": 1,
+    "power_limit_w": 180
+  },
+  "model": {
+    "id": "turboderp/Qwen3.8-27B-exl3",
+    "revision": "113cf7ab958054860e43fb7f3063b1af19171095",
+    "served_name": "Qwen3.8-27B",
+    "quantization": "exl3_4.00bpw_mixed_4bpw_body_6bpw_head",
+    "activation_dtype": "float16",
+    "target_lm_head": "EXL3 6bpw full248320 rows; shared pruned draft buffers"
+  },
+  "runtime": {
+    "vllm": "0.30.0",
+    "torch": "2.13.0+xpu",
+    "oneapi_compiler": "2026.1.1",
+    "onednn": "3.13.0",
+    "native_library_sha256": "48f879c16f3695dbb0fae7388f1e318591d6408acc7be15b0093a0bbb6d9053b"
+  },
+  "linears": {
+    "small_matrix_kernel": "native EXL3 SmallM opaque row dispatch",
+    "small_matrix_max_rows": 128,
+    "large_matrix_kernel": "native EXL3 INT8 prefill; eager only",
+    "padded_gemm_multiple_rows": 256
+  },
+  "attention": {
+    "long_prefill": "guarded exact-K oneDNN, eager only",
+    "min_query_rows": 64,
+    "min_exact_kv_tokens": 4096,
+    "max_exact_kv_tokens": 262144,
+    "kv_cache_dtype": "fp8",
+    "query_bucket_rows": 256,
+    "key_bucket_tokens": 1,
+    "mixed_metadata": "V2 CPU once-per-step exact prefill and fixed query partition; native GPU decode lengths",
+    "decode_verification": "M04 at uniform q2..5/C1..C4; otherwise unchanged native",
+    "m04_library_sha256": "eaa18427db27d4fceeca8a17c8a3c6b019b7678f39bf98affc1736b9f2c2d631",
+    "unsupported_contract": "native fallback; no duplicate KV updates"
+  },
+  "speculation": {
+    "method": "mtp",
+    "speculative_tokens": 3,
+    "draft_vocabulary_rows": 65536,
+    "target_vocabulary_rows": 248320,
+    "adaptive_verification": false
+  },
+  "serving": {
+    "max_model_len": 262144,
+    "max_num_seqs": 16,
+    "qualified_clean_concurrency": 4,
+    "max_num_batched_tokens": 4096,
+    "gpu_memory_utilization": 0.965,
+    "scheduler_reserve_full_isl": true,
+    "watermark": 0.0,
+    "prefix_caching": true,
+    "mamba_cache_mode": "align",
+    "graph_mode": "FULL_DECODE_ONLY",
+    "graph_capture_sizes": [
+      1,
+      2,
+      4,
+      8,
+      12,
+      16,
+      24,
+      32,
+      40,
+      48,
+      56,
+      64
+    ],
+    "api_image_limit": 32,
+    "api_video_limit": 4,
+    "media_max_pixels": 4194304,
+    "capacity_pressure_preemptions": "permitted at C16 with completion/accounting/recovery; no promise of16 simultaneous262K requests"
+  },
+  "api": {
+    "middleware": "request_defaults.ChatDefaults",
+    "tool_parser": "qwen3_xml",
+    "reasoning_parser": "qwen3",
+    "reasoning_start": "<think>",
+    "reasoning_end": "</think>",
+    "max_new_tokens": 16384
+  },
+  "release": {
+    "missing_required_artifact": "fail_startup",
+    "cache_isolation": "policy_sha256 + image_id",
+    "diagnostic_validation_in_production": false,
+    "gptq_rollback_image": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68"
+  }
+}

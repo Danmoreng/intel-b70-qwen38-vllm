@@ -1,0 +1,67 @@
+{
+  "policy_id": "b70-qwen38-gptq-production-v1",
+  "hardware": {
+    "gpu": "Intel Arc Pro B70",
+    "gpu_count": 1,
+    "power_limit_w": 180
+  },
+  "model": {
+    "id": "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+    "revision": "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+    "served_name": "Qwen3.8-27B",
+    "quantization": "gptq_int4_symmetric_g128",
+    "activation_dtype": "float16",
+    "target_lm_head_dtype": "float16"
+  },
+  "linears": {
+    "large_matrix_kernel": "int4_gemm_w4a8",
+    "min_total_matrix_rows": 512,
+    "small_matrix_kernel": "existing_w4a16",
+    "mixed_matrix_selection": "same_total_matrix_row_threshold"
+  },
+  "attention": {
+    "onednn": {
+      "enabled": true,
+      "mixed_request_routing": true,
+      "min_query_rows": 256,
+      "max_query_rows": 6656,
+      "min_exact_active_kv_tokens": 16384,
+      "max_exact_active_kv_tokens": 196608,
+      "physical_kv_page_tokens": 1664,
+      "capture_eligible": false,
+      "required_native_operator_sha256": "f00c4a6e60bac96f66ac2e1c4c10437d67b1d9b95ee9988f1517e7b6c50af3ea",
+      "required_onednn_library_sha256": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20"
+    },
+    "other_prefill": "existing_q128_or_native_by_fixed_contract",
+    "decode_and_verification": "existing_m04_or_native_by_fixed_contract",
+    "q128_library_sha256": "f38f23c4535407b6c3f083c5e81c89c7f704bae374571cf2e32f9da13abe0873",
+    "m04_library_sha256": "784916abd42b614794becac634a6a154f854c73d6dfcb1a50cd939b563020c6a"
+  },
+  "speculation": {
+    "method": "mtp",
+    "speculative_tokens": 4,
+    "draft_vocabulary_rows": 248320,
+    "draft_vocabulary_pruning": false,
+    "draft_head": "existing_int4",
+    "draft_five_linears": "existing_int4"
+  },
+  "serving": {
+    "max_model_len": 200704,
+    "max_num_seqs": 4,
+    "max_num_batched_tokens": 6656,
+    "gpu_memory_utilization": 0.93,
+    "scheduler_reserve_full_isl": true,
+    "watermark": 0.0,
+    "prefix_caching": true,
+    "mamba_cache_mode": "align",
+    "xpu_graphs_for_existing_supported_paths": true,
+    "api_image_limit": 1,
+    "api_video_limit": 0
+  },
+  "release": {
+    "deployed_profiles": 1,
+    "missing_required_artifact": "fail_startup",
+    "control_server": "offline_only",
+    "diagnostic_validation_in_production": false
+  }
+}

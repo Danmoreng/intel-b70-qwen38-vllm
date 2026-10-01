@@ -163,8 +163,8 @@ does not share EXL3 compiled caches. Stop the service before swapping profiles.
 To repeat the full source matrix and QueueKit on the current permanent service:
 
 ```bash
-python3 scripts/run-readme-benchmarks.py \
-  --fixture-root /path/to/original/run-20260923-201101-w0.00 \
+python3 scripts/run-readme-benchmarks.py \\
+  --fixture-root /path/to/original/run-20260923-201101-w0.00 \\
   --output-root benchmark-results/readme-new-run
 ```
 
@@ -173,11 +173,11 @@ matrix stays 20 scenarios / 70 waves / 124 requests at C1–C4. For an isolated
 64K cold/warm resend, restart the service first and then run:
 
 ```bash
-python3 scripts/current-profile-benchmark.py \
-  --base http://127.0.0.1:8081 --container b70-qwen38-vllm \
-  --expected-max-num-seqs 16 \
-  --fixture-root /path/to/original/run-20260923-201101-w0.00 \
-  --legacy-prefix-namespace --only prefix-64k-cold-warm \
+python3 scripts/current-profile-benchmark.py \\
+  --base http://127.0.0.1:8081 --container b70-qwen38-vllm \\
+  --expected-max-num-seqs 16 \\
+  --fixture-root /path/to/original/run-20260923-201101-w0.00 \\
+  --legacy-prefix-namespace --only prefix-64k-cold-warm \\
   --output-root benchmark-results/prefix-64k-new-run --execute
 ```
 

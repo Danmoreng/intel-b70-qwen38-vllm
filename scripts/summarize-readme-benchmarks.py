@@ -299,7 +299,7 @@ separate serving load points, not paired scaling measurements.
         rates = [rows[f'phase-{short}-c1']['fully_overlapped_decode_tps']] + [rows[f'concurrency-{short}-c{c}']['fully_overlapped_decode_tps'] for c in (2,3,4)]
         text += f"| {label} / 1,024 | " + ' | '.join(f'{rate:.1f} tok/s' for rate in rates) + ' |\n'
     if any(row['max_waiting'] for row in source['scenario_results']):
-        text += '\nThe scheduler queued some work when capacity was tight; no request was preempted.\n'
+        text += '\nSome requests briefly entered the scheduler waiting queue; no request was preempted.\n'
     text += '''
 ### Prefix reuse and maximum context
 

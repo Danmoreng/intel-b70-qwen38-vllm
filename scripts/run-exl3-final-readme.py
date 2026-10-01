@@ -52,7 +52,7 @@ def main():
         scenarios=json.loads((REPO/'benchmarks/current-profile-scenarios.json').read_text())
         assert len(scenarios)==20 and sum(x['repeats'] for x in scenarios)==70
         assert sum(x['repeats']*x['concurrency'] for x in scenarios)==124
-        root.mkdir();state=dict(status='RUNNING',started_unix=time.time(),image_receipt=receipt,
+        root.mkdir(parents=True);state=dict(status='RUNNING',started_unix=time.time(),image_receipt=receipt,
             quality_review_sha256=sha(a.quality_review),fixture_manifest_sha256=sha(frozen_path),
             frozen_fixture_root=str(a.fixture_root.resolve()),sources={f:sha(REPO/'scripts'/f) for f in
               ['run-exl3-final-readme.py','exl3_candidate_worker.py','current-profile-benchmark.py','run-coding-benchmark.py',

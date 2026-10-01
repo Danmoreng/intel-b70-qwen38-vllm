@@ -53,7 +53,8 @@ def summarize(root):
         restored = json.loads((root / 'production-serving.json').read_text())
         fixture_hashes = json.loads((root / 'fixture-sha256.json').read_text())
         provenance=json.loads((root/'provenance.json').read_text())
-    if not same_runtime(live,restored) or live['image_id'] != release['image_id'] or live['policy_sha256'] != release['policy_sha256']:
+    identity_matches=same_runtime(live,restored) if final else live==restored
+    if not identity_matches or live['image_id'] != release['image_id'] or live['policy_sha256'] != release['policy_sha256']:
         raise RuntimeError('benchmark image/policy identity changed')
     if sha(policy_path)!=release['policy_sha256']:
         raise RuntimeError('frozen policy changed')
@@ -68,6 +69,8 @@ def summarize(root):
     if len(cases) != len(expected) or {(row['scenario']['name'], row['repeat']) for row in cases} != set(expected):
         raise RuntimeError('scenario/wave coverage differs from the frozen full plan')
     manifest = data['manifest']
+    if final and manifest['container']['id']!=live['container_id']:
+        raise RuntimeError('source-review worker identity differs from its launch receipt')
     groups = {}
     for case in cases:
         scenario = case['scenario']
@@ -179,7 +182,7 @@ def summarize(root):
             raise RuntimeError('prefix requests were not exact resends')
     coding_path = root / 'coding-agent-v2/summary.json'
     coding = json.loads(coding_path.read_text())
-    if not same_runtime(coding['identity'],live):
+    if not (same_runtime(coding['identity'],live) if final else coding['identity']==live):
         raise RuntimeError('coding and source-review used different images')
     fixture = REPO / 'benchmarks/coding-fixture/v2'
     if coding['fixture_manifest_sha256'] != sha(fixture / 'manifest.json') or coding['tasks_sha256'] != sha(fixture / 'tasks.json'):
@@ -310,7 +313,7 @@ separate serving load points, not paired scaling measurements.
         warm_time = f'{low:.2f}' if round(low, 2) == round(high, 2) else f'{low:.2f}–{high:.2f}'
         text += f"| {label} exact resend | {int(warm[0]['cached_tokens']):,} / {cold['prompt_tokens']:,} prompt tokens cached; TTFT **{cold['ttft_s']:.2f} s cold → {warm_time} s warm** |\n"
     row=rows['full-context-199680']
-    capacity_label='Frozen200K comparison' if isolated else 'Maximum context'
+    capacity_label='Frozen 200K comparison' if isolated else 'Maximum context'
     text += f"| {capacity_label} | **{row['actual_prompt_tokens_min']:,} input + 1,024 output**; {row['prefill_tps_median']:,.1f} prefill tok/s, {row['decode_tps_median']:.1f} decode tok/s, {row['ttft_s_median']:.2f} s TTFT, {row['batch_wall_s_median']:.2f} s end to end |\n"
     text += f'''
 The longest-context row is one capacity and throughput observation. The

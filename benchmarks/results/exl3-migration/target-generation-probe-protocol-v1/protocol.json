@@ -1,0 +1,52 @@
+{
+  "status": "PREPARED_CPU_ENCODING_PASS_XPU_UNTESTED",
+  "image_id": "sha256:046ef4c7937d0e6f8945191671d7147270f7e24f1772159c48b395ad47451088",
+  "variants": [
+    "graph-mtp3",
+    "graph-mtp4",
+    "eager-mtp3",
+    "graph-nospec"
+  ],
+  "contexts": [
+    4096
+  ],
+  "domains": {
+    "code": 192,
+    "prose": 64
+  },
+  "concurrency": [
+    1,
+    4
+  ],
+  "cache_modes": [
+    "cold",
+    "warm"
+  ],
+  "sampling": {
+    "temperature": 0,
+    "top_p": 1,
+    "top_k": -1,
+    "seed": 20261001,
+    "ignore_eos": true,
+    "logprobs": 5
+  },
+  "forced_prefix_positions": {
+    "code": [
+      137
+    ],
+    "prose": [
+      1,
+      3,
+      19
+    ]
+  },
+  "forced_prefix_reference": "First graph-MTP3 C1 cold token history, identical across all variants. New max_tokens1 prefill probe is a control, not proof of multi-row graph verification semantics.",
+  "scope": "Short generated-path diagnostic; no BF16 reference rerun, no serving benchmark. Retain token IDs/top logprobs and metadata-only source-guarded V2 actual/padded/graph rows. No logits/masks/weights modified.",
+  "cpu_checks": "Exact token/prompt/output budget and complete logprob position checks; top1/top2 margin encoding passes; missing logprob positions rejected. Python compilation and diff-check pass.",
+  "remaining": "Actual XPU collection and first-divergence/shared-prefix margin analysis. No claim that differing outputs are harmless.",
+  "source_sha256": {
+    "scripts/run-exl3-generation-probe.py": "553310814471f3ae25102636fdf2f0cf754d0c79ed5384adcf79b3aff3407677",
+    "benchmarks/experiments/quantization-reference/run_generation_probe.py": "cb84eed9e8b6c2df9cdbf1304eb2c4e39d759f2bb2a0bb48b7c33dcdedd98aba",
+    "benchmarks/experiments/quantization-reference/profile_capture.py": "0ee5208b884cbe103b519071a6d405024a49160e061bca8d51f35bfb2830e1dc"
+  }
+}

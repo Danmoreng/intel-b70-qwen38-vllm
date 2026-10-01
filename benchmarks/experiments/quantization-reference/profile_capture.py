@@ -243,6 +243,29 @@ def install_event_capture(runner):
 
 
 class ProfileWorkerExtension:
+    def vocabulary_inventory(self):
+        runner = self.model_runner
+        draft = getattr(getattr(runner, 'speculator', None), 'model', None)
+        assert draft is not None, 'MTP model must be loaded'
+        heads = []
+        for role, model in [('target', runner.model), ('draft', draft)]:
+            for name, module in model.named_modules():
+                report = getattr(module, 'exl3_loader_report', None)
+                if report is None or 'lm_head' not in report['members']:
+                    continue
+                reduced = getattr(module, 'exl3_draft', None)
+                heads.append({'role': role, 'module': name, 'bits': report['bits'],
+                              'full_rows': int(module.svh.numel()),
+                              'pruned_rows': int(reduced['svh'].numel()) if reduced is not None else None,
+                              'pruned_tensor_logical_bytes': sum(v.numel() * v.element_size()
+                                  for v in reduced.values() if isinstance(v, torch.Tensor)) if reduced is not None else 0})
+        assert {h['role'] for h in heads} == {'target', 'draft'}
+        free, total = torch.xpu.mem_get_info()
+        return {'heads': heads, 'device_free_bytes': free, 'device_total_bytes': total,
+                'torch_allocated_bytes': torch.xpu.memory_allocated(),
+                'torch_reserved_bytes': torch.xpu.memory_reserved(),
+                'scope': 'Post-load/capture inventory outside measurement; logical tensor bytes are not unique allocator residency.'}
+
     def install_event_profile(self):
         return install_event_capture(self.model_runner)
 

@@ -43,6 +43,8 @@ def main():
         llm.generate([{"prompt_token_ids": short["ids"], "cache_salt": f"profile-warmup-{concurrency}-{i}"}
                       for i in range(concurrency)],
                      SamplingParams(temperature=0, max_tokens=32, ignore_eos=True), use_tqdm=False)
+    inventory = llm.collective_rpc("vocabulary_inventory")
+    (args.out / 'vocabulary-inventory.json').write_text(json.dumps(inventory, indent=2) + '\n')
     identity = llm.collective_rpc("install_event_profile")
     rows, traces = [], []
     for window, concurrency in cases:
@@ -88,6 +90,7 @@ def main():
                "panel_sha256": hashlib.sha256(raw).hexdigest(), "engine_config": config,
                "capture_identity": identity, "waves": rows, "kernel_traces": traces,
                "compact": args.compact,
+               "vocabulary_inventory": inventory,
                "scope": "Instrumented diagnostic; not unbiased throughput. Fused draft graphs are timed as a complete proposal, not decomposed into body/head/sampler."}
     (args.out / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 

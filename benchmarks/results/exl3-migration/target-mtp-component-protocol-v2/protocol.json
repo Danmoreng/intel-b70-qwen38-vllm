@@ -73,12 +73,14 @@
     "timing_passthrough_branches": 4,
     "synchronization_after_generation_only": true,
     "bounded_trace_wait_start_stop_export_and_mixed_metadata": true,
+    "full_and_pruned_head_inventory_cpu_check": true,
     "scope": "CPU source/plumbing checks with fake events; no claim of actual XPU timing validation"
   },
   "source_sha256": {
     "scripts/run-exl3-component-profile.py": "78aae180f8a25f52df8f9c75a90fd972b602217b62868c15ce5a9f27ed00dc13",
-    "benchmarks/experiments/quantization-reference/profile_capture.py": "bc3810925c3e6832b767ab46b9c0d77bd2c402382a11175dfa9c490013b5326d",
-    "benchmarks/experiments/quantization-reference/run_component_profile.py": "c60957d562368400896b34b3f8fdb831eec88d02a71bcba53399f8fbedbf8fcc",
-    "benchmarks/experiments/quantization-reference/validate_profile_capture.py": "1703d2d58cf02ff1af4cd84bfd7dad8c54e7c89d8bbe257cf915e41dd1a2006d"
-  }
+    "benchmarks/experiments/quantization-reference/profile_capture.py": "0ee5208b884cbe103b519071a6d405024a49160e061bca8d51f35bfb2830e1dc",
+    "benchmarks/experiments/quantization-reference/run_component_profile.py": "ce259da9dfad1e3b04a0f2a631afb14b085812a98b4bbb05f3f1076eed5d2d46",
+    "benchmarks/experiments/quantization-reference/validate_profile_capture.py": "9c573b81da95d5081e635644c40a05aff6c8999d1ef94a1caeaaa46109114f90"
+  },
+  "head_inventory": "Post-load/capture target and MTP full/pruned head row counts, logical pruned tensor bytes and device/allocator memory. Collected outside event and throughput measurements."
 }

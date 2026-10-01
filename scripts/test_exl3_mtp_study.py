@@ -84,4 +84,37 @@ class WaveTests(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError,'did not return the frozen prompt IDs'):self.wave('cold')
 
 
+class CompactReuseTests(unittest.TestCase):
+    def test_compact_selection_keeps_long_c1_and_drops_long_c4(self):
+        windows=[{'name':f'{d}-{n}','context_tokens':n} for n in [4096,32768,49152,102752,131072]
+                 for d in ['code','prose']]
+        self.assertEqual(len(M.selected_cases(windows)),40)
+        cases=M.selected_cases(windows,True)
+        self.assertEqual(len(cases),18)
+        self.assertTrue(all(w['name']=='code-102752' and c==1 for w,c,mode in cases if w['context_tokens']>49152))
+
+    def test_reuse_requires_exact_identity_completed_wave_and_verified_output(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);result_dir=root/'arm-0-mtp3/code-4096-c1-cold';result_dir.mkdir(parents=True)
+            settings={'gpu_memory_utilization':.965}
+            summary={'window':'code-4096','concurrency':1,'cache_mode':'cold','native':{'completed':1,'generation_tokens':512}}
+            raw={**summary,'responses':[{'prompt_ids_verified':True,'token_ids':[10]*512,'usage':{'prompt_tokens':2}}]}
+            campaign={'status':'CURTAILED_BY_USER','image_id':'image','panel_sha256':'panel',
+                      'arms':[{'depth':3,'settings':{**settings,'speculative_config':{'method':'mtp','num_speculative_tokens':3}},'waves':[summary]}]}
+            (root/'campaign.json').write_text(json.dumps(campaign));(result_dir/'result.json').write_text(json.dumps(raw))
+            cases=[({'name':'code-4096','ids':[20,21]},1,'cold')]
+            arm=M.reuse_arm(root,'image','panel',settings,cases)
+            self.assertEqual(arm['status'],'COMPLETE_REUSED_SUBSET')
+            self.assertEqual(len(arm['waves']),1)
+            for image,panel,cfg in [('wrong','panel',settings),('image','wrong',settings),('image','panel',{'gpu_memory_utilization':.93})]:
+                with self.assertRaises(AssertionError):M.reuse_arm(root,image,panel,cfg,cases)
+            with self.assertRaisesRegex(AssertionError,'Missing or duplicated'):
+                M.reuse_arm(root,'image','panel',settings,[({'name':'code-131072','ids':[20,21]},4,'warm')])
+            raw['responses'][0]['token_ids'].pop();(result_dir/'result.json').write_text(json.dumps(raw))
+            with self.assertRaises(AssertionError):M.reuse_arm(root,'image','panel',settings,cases)
+            raw['responses'][0]['token_ids'].append(10);raw['responses'][0]['prompt_ids_verified']=False
+            (result_dir/'result.json').write_text(json.dumps(raw))
+            with self.assertRaises(AssertionError):M.reuse_arm(root,'image','panel',settings,cases)
+
+
 if __name__=='__main__':unittest.main()

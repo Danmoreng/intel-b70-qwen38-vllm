@@ -81,6 +81,7 @@ def check_trace_lifecycle(batch, descriptor, temp):
         else:
             raise AssertionError('Unfinished trace was accepted')
         batch.has_prefill = False
+
         assert profile.traced_call('target_body', batch, descriptor, fn, (5,), {}) == 6
         assert profile.traced_call('target_head', batch, None, fn, (6,), {}) == 7
         profile.trace_step_complete()
@@ -109,6 +110,26 @@ def check_trace_lifecycle(batch, descriptor, temp):
             else:
                 raise AssertionError('Missing XPU profiler support was accepted')
         batch.has_prefill = False
+
+
+def check_vocabulary_inventory():
+    extension = P.ProfileWorkerExtension()
+    heads = [SimpleNamespace(exl3_loader_report={'members': ['lm_head'], 'bits': 6},
+                             svh=P.torch.empty(248320)) for _ in range(2)]
+    models = [SimpleNamespace(named_modules=lambda h=h: [('lm_head', h)]) for h in heads]
+    extension.model_runner = SimpleNamespace(model=models[0], speculator=SimpleNamespace(model=models[1]))
+    with patch.object(P.torch.xpu, 'mem_get_info', return_value=(777, 888)), \
+            patch.object(P.torch.xpu, 'memory_allocated', return_value=123), \
+            patch.object(P.torch.xpu, 'memory_reserved', return_value=456):
+        full = extension.vocabulary_inventory()
+        assert full['torch_allocated_bytes'] == 123 and full['device_free_bytes'] == 777
+        assert all(h['full_rows'] == 248320 and h['pruned_rows'] is None for h in full['heads'])
+        for head in heads:
+            head.exl3_draft = {'svh': P.torch.empty(65536), 'idx': P.torch.empty(65536, dtype=P.torch.int64),
+                               'bounds': [0, 65536]}
+        pruned = extension.vocabulary_inventory()
+        assert all(h['pruned_rows'] == 65536 and h['pruned_tensor_logical_bytes'] == 65536 * 12
+                   for h in pruned['heads'])
 
 
 class Model:
@@ -196,10 +217,12 @@ def main():
             assert rows[0]["cycle_gpu_timeline_ms"] == head + sampler
             assert not profile.enabled and not profile.cycles
         check_trace_lifecycle(batch, descriptor, temp)
+        check_vocabulary_inventory()
     print(json.dumps({"status": "PASS", "real_v2_call_sites": identities,
         "changed_call_sites_rejected": True, "timing_passthrough_branches": 4,
         "synchronization_after_generation_only": True,
         "bounded_trace_wait_start_stop_export_and_mixed_metadata": True,
+        "full_and_pruned_head_inventory_cpu_check": True,
         "scope": "CPU source/plumbing checks with fake events; no claim of actual XPU timing validation"}))
 
 

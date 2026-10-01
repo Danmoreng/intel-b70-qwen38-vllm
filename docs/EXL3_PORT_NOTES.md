@@ -588,3 +588,23 @@ remains, with native compute above4 requests. CPU context scoping, native
 fallback and wrong library/source/duplicate rejection pass. The next candidate
 runs eight code C1/C4 cold/warm waves against the exact completed pruned-MTP3
 baseline, with512 outputs and fixed profile/image. GPTQ remains offline.
+
+
+`target-m04-serving-v1` now completes eight fresh waves/20 requests, zero
+observed preemption, and proves M04 is captured for C1/C4 (also partial C2/C3)
+under the actual FULL graph path. Cold/warm103K C1 Decode is50.14/50.11 tok/s,
+versus44.03/43.92 native (+13.9/+14.1%); both512-token outputs are bit-identical
+to their baselines. Warm49K C4 is91.40 versus86.31 aggregate tok/s (+5.9%) with
+equal94.4% cache reuse, but some outputs/acceptance work differ. Short4K gains
+are small/mixed. This selects M04 as a candidate for final qualification, not
+a production default. The image/weights/profile are fixed and native raw
+baseline waves are reused exactly; no full GPTQ baseline is rerun.
+
+The next isolated EXL3 source change removes `st.item<float>()` from oneDNN
+SDPA. Host scale arguments now select persistent device constants, owned by
+thread-local actual-queue contexts along with their compiled partitions. This
+prevents cross-stream/thread cache reuse and preserves scalar lifetimes.
+Finite/positive FP16-representable inverse scales are checked with integer
+bits under the existing fast-math build. A fresh immutable target image and
+old/new standalone numerical/host-read/thread/stream probes are being built;
+no oneDNN attention path has been enabled for serving yet.

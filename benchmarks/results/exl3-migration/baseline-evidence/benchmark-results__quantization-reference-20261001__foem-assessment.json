@@ -1,0 +1,78 @@
+{
+  "checkpoint": "XReyRobert/Qwen3.8-27B-GPTQ-Pro-FOEM-4bit-g128-ns256",
+  "revision": "af0974575370a06e2feea9926f63f946b6d551a0",
+  "panel_sha256": "cbf1a71bbda470859f2c0786cb7134e260111d2072c4753a6732021dadae6171",
+  "comparison_file": "comparison-foem.json",
+  "paired_nll": [
+    {
+      "comparison": "gptq-foem minus gptq",
+      "domain": "overall",
+      "delta_nll": -0.0004162154195856832,
+      "ppl_ratio": 0.9995838711860361,
+      "paired_window_bootstrap_ci95": [
+        -0.01951866871205766,
+        0.018261364703487454
+      ]
+    },
+    {
+      "comparison": "gptq-foem minus gptq",
+      "domain": "code",
+      "delta_nll": -0.030142789345514176,
+      "ppl_ratio": 0.9703069741585534,
+      "paired_window_bootstrap_ci95": [
+        -0.05039950309820423,
+        -0.010997261276137836
+      ]
+    },
+    {
+      "comparison": "gptq-foem minus gptq",
+      "domain": "prose",
+      "delta_nll": 0.02931035850634281,
+      "ppl_ratio": 1.029744134738119,
+      "paired_window_bootstrap_ci95": [
+        0.015315695270520707,
+        0.04336223023859406
+      ]
+    },
+    {
+      "comparison": "gptq-foem minus exl3",
+      "domain": "overall",
+      "delta_nll": 0.04256415450343702,
+      "ppl_ratio": 1.043482998359945,
+      "paired_window_bootstrap_ci95": [
+        0.034181180898063455,
+        0.050489273095088
+      ]
+    },
+    {
+      "comparison": "gptq-foem minus exl3",
+      "domain": "code",
+      "delta_nll": 0.04252819059469532,
+      "ppl_ratio": 1.0434454713074321,
+      "paired_window_bootstrap_ci95": [
+        0.027935119402069122,
+        0.05689882368191378
+      ]
+    },
+    {
+      "comparison": "gptq-foem minus exl3",
+      "domain": "prose",
+      "delta_nll": 0.04260011841217873,
+      "ppl_ratio": 1.0435205267621015,
+      "paired_window_bootstrap_ci95": [
+        0.03590836773460912,
+        0.04877028226163038
+      ]
+    }
+  ],
+  "bootstrap_method": "10000 paired window draws, Python random seed 20261001, order-statistic percentiles",
+  "indexed_weight_bytes": 19559449368,
+  "current_indexed_weight_bytes": 19559450216,
+  "qualifier": "Short 16x1024 teacher-forced panel; native runtime includes kernel numerical effects; no generated-code or long-context assessment.",
+  "indexed_weight_delta_bytes": -848,
+  "production_restored": {
+    "health": 200,
+    "image_id": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
+    "unix": 1790848394.8446186
+  }
+}

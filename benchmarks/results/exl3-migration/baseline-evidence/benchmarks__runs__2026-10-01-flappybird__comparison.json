@@ -1,0 +1,2478 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-01T06:13:41.150050+00:00",
+  "comparison_scope": "Two complete serving profiles and quantized checkpoints; adaptive coding histories; one fixed seed. Not an isolated quantization or engine-kernel experiment.",
+  "measurement": {
+    "context_bands": "10000 tokens, lower inclusive, upper exclusive, full rendered input including retained reasoning and tool history",
+    "prefill": "sum(native newly computed KV tokens)/sum(native prefill seconds); cached tokens separate",
+    "decode": "sum(max(completion_tokens-1,0))/sum(native decode seconds), includes generated reasoning",
+    "cache": "fresh worker before excluded warmup; prefix caching enabled throughout each session",
+    "quality": "independent final API/physics/input/WebGL/browser checks; renderer identity is metadata, not a quality case"
+  },
+  "engines": {
+    "gptq": {
+      "fixture_id": "flappybird-webgl2-v6",
+      "fixture_manifest_sha256": "a201091d9eb5f81c689c47a6e6293b2d2bf910ce9f68653d35ad217fdc82c695",
+      "runner_sha256": "a520cd59ac86c3e8631883dacb85c824ce467aed21e9964d70c27cc572d98e82",
+      "identity": {
+        "container_id": "cc446fece56aa1cee3f7318e01d6be0d8ad6bcb63f4a31515c23be37a6ed6621",
+        "image_id": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
+        "image_tag": "local/b70-qwen38-vllm:production-onednn-v2",
+        "command": [
+          "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+          "--revision",
+          "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+          "--quantization",
+          "gptq",
+          "--dtype",
+          "float16",
+          "--max-model-len",
+          "200704",
+          "--gpu-memory-utilization",
+          "0.93",
+          "--kv-cache-dtype",
+          "fp8",
+          "--max-num-seqs",
+          "4",
+          "--max-num-batched-tokens",
+          "6656",
+          "--scheduler-reserve-full-isl",
+          "--watermark",
+          "0.0",
+          "--enable-prefix-caching",
+          "--mamba-cache-mode",
+          "align",
+          "--served-model-name",
+          "Qwen3.8-27B",
+          "--speculative-config",
+          "{\"method\":\"mtp\",\"num_speculative_tokens\":4}",
+          "--middleware",
+          "request_defaults.ChatDefaults",
+          "--reasoning-config",
+          "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+          "--override-generation-config",
+          "{\"max_new_tokens\":16384}",
+          "--enable-auto-tool-choice",
+          "--tool-call-parser",
+          "qwen3_xml",
+          "--reasoning-parser",
+          "qwen3",
+          "--limit-mm-per-prompt",
+          "{\"image\":1,\"video\":0}",
+          "--mm-processor-kwargs",
+          "{\"max_pixels\":4194304}"
+        ],
+        "labels": {
+          "org.local.b70.policy.sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "org.opencontainers.image.version": "24.04"
+        }
+      },
+      "provenance": {
+        "fixture_id": "flappybird-webgl2-v6",
+        "fixture_manifest_sha256": "a201091d9eb5f81c689c47a6e6293b2d2bf910ce9f68653d35ad217fdc82c695",
+        "fixture_files": {
+          "README.md": "00f7b15b3ac6b9142d6cd14fdf6082118b814fbe40dfe1645b90c4da125a8c8f",
+          "project/README.md": "9b99eb647e62964c7f8bff7602de4b2b9210512f98a549df3a1262debfe4b38a",
+          "project/index.html": "ffd1cbfd30492ae40ec2bb1ce4e0bc31aee65dcd9e1065527a8d222aff227d42",
+          "project/main.js": "c58ef221adbe37a9a4ada60895d59b835a071f98aa1a5fbd0818801cf2b3229d",
+          "project/package.json": "6cab776a7f920178f6f096fb791ac0426dfbd50363325aee992e8530a8e605f7",
+          "project/specs/app.md": "48f725160db03e2ec58f29f33202f149ecb9e96c4ee517f14cb7ff4a2b442a16",
+          "project/specs/config.md": "570ab99926405a336b344f7559a8bfb014b99e018359bf0075fe68c27ae13dc6",
+          "project/specs/input.md": "9816b4a98e4c13792d4eaa006515d65ada66eba85311d9af735daa7b62868996",
+          "project/specs/random.md": "0eb208f2b2e5ebf03820edd8725c1e66b13b72c0bb84f99d4c9e101fd3a5158b",
+          "project/specs/renderer.md": "c2bb5892eb20b9bffa8a6b379f071dcc75f6ae49f6dacfee181b04b96e5a42d9",
+          "project/specs/scores.md": "a57956f2934ebf0aedd04c35b557d87f1d34109fce217391d7c6a8a9f10181e7",
+          "project/specs/simulation.md": "3c366b5d0a7dd69b236def5b921b7850daca74040c52f41b9b21283b3cec109a",
+          "project/src/app.js": "b9c3e093e9bc2a956cf934a7037ea001abde5c51214fc48088a988825a38249d",
+          "project/src/config.js": "7b25978fdf17322b1a3d67eeccd275ade7a9d52bfc6ef0a60454ae28b9bc7a7e",
+          "project/src/input.js": "8c1337929e07afb36e6dfac02435d3d0ceef958b691b6dabc46a91f00e7d2814",
+          "project/src/random.js": "8ab78c6d041c206c1155f2f13316c6d30465703db42109480ee9d1087c4e975f",
+          "project/src/renderer.js": "5790649fe8191094abc3e6702cd098aa1fca26ade179f83d73a8346826bb3c04",
+          "project/src/scores.js": "c8d7cc42363647c3771a7e42acc0ae14d53f1554b302e37aad0f324527c2a915",
+          "project/src/simulation.js": "d2276b36daa14d9214d4185620ede49f348a9eba4f07b679883b31544f08de6a",
+          "project/style.css": "28e08d310e6f0fbfaebd30ff8585f0b2eef1b4167a12dc176ad3cc2b8bf4e7d7",
+          "tasks.json": "e320699f93c1c70cbb951d5393ff8a81d1cc5441bb0c4654688b426cc500ab85"
+        },
+        "harness_files": {
+          "checks.mjs": "f45fe64d835e0b8b2f5b16ca678148fd7a32a8c0c0806b17d55ecc1d5950940c",
+          "browser.mjs": "0690e6033741bd3a6964a279051b99fc1be14db0385cd3c396ffc497b614c13e",
+          "package.json": "89ee7d37083d11091fd6a2cfb0308b9af466f9010c1f91eb9f0140cdf4ebb901",
+          "package-lock.json": "b7bd5012db625f36b65c68f3414deaaa2649baa2beb11cd579a3987b6f0f0f79"
+        },
+        "runner_sha256": "a520cd59ac86c3e8631883dacb85c824ce467aed21e9964d70c27cc572d98e82",
+        "identity": {
+          "container_id": "cc446fece56aa1cee3f7318e01d6be0d8ad6bcb63f4a31515c23be37a6ed6621",
+          "image_id": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
+          "image_tag": "local/b70-qwen38-vllm:production-onednn-v2",
+          "command": [
+            "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+            "--revision",
+            "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+            "--quantization",
+            "gptq",
+            "--dtype",
+            "float16",
+            "--max-model-len",
+            "200704",
+            "--gpu-memory-utilization",
+            "0.93",
+            "--kv-cache-dtype",
+            "fp8",
+            "--max-num-seqs",
+            "4",
+            "--max-num-batched-tokens",
+            "6656",
+            "--scheduler-reserve-full-isl",
+            "--watermark",
+            "0.0",
+            "--enable-prefix-caching",
+            "--mamba-cache-mode",
+            "align",
+            "--served-model-name",
+            "Qwen3.8-27B",
+            "--speculative-config",
+            "{\"method\":\"mtp\",\"num_speculative_tokens\":4}",
+            "--middleware",
+            "request_defaults.ChatDefaults",
+            "--reasoning-config",
+            "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+            "--override-generation-config",
+            "{\"max_new_tokens\":16384}",
+            "--enable-auto-tool-choice",
+            "--tool-call-parser",
+            "qwen3_xml",
+            "--reasoning-parser",
+            "qwen3",
+            "--limit-mm-per-prompt",
+            "{\"image\":1,\"video\":0}",
+            "--mm-processor-kwargs",
+            "{\"max_pixels\":4194304}"
+          ],
+          "labels": {
+            "org.local.b70.policy.sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+            "org.opencontainers.image.version": "24.04"
+          }
+        },
+        "model_info": {
+          "object": "list",
+          "data": [
+            {
+              "id": "Qwen3.8-27B",
+              "object": "model",
+              "created": 1790830786,
+              "owned_by": "vllm",
+              "root": "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+              "parent": null,
+              "max_model_len": 200704,
+              "permission": [
+                {
+                  "id": "modelperm-8324910c042e5df3",
+                  "object": "model_permission",
+                  "created": 1790830786,
+                  "allow_create_engine": false,
+                  "allow_sampling": true,
+                  "allow_logprobs": true,
+                  "allow_search_indices": false,
+                  "allow_view": true,
+                  "allow_fine_tuning": false,
+                  "organization": "*",
+                  "group": null,
+                  "is_blocking": false
+                }
+              ]
+            }
+          ]
+        },
+        "node_version": "v24.20.0",
+        "started_at": "2026-10-01T04:59:46.278168+00:00",
+        "sampling": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 20,
+          "seed_base": 73000,
+          "max_tokens": 16384,
+          "enable_thinking": true,
+          "reasoning_effort": "medium",
+          "preserve_thinking": true,
+          "thinking_token_budget": 4096,
+          "output_budget_policy": "at most 16384; rendered /tokenize history with reasoning alias normalized; input+output fits common 200704-token window or smaller engine limit"
+        },
+        "limits": {
+          "max_requests_per_stage": 32,
+          "max_wall_seconds": 2400,
+          "stages": 6
+        },
+        "measurement": "exclusive C1, native per-request accounting; prefix cache stays enabled; first generated token excluded from decode; 10K=10000 input-token bands",
+        "host": {
+          "kernel": "7.2.3-2-MANJARO",
+          "machine": "x86_64",
+          "power_cap_w": 180,
+          "runtime_source_files": {
+            "request_defaults.py": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2"
+          },
+          "production_policy_sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "source_commit": "f8a1ef2cdb42e312533bc36cca404a3e6d7569d1"
+        },
+        "tool_output_normalization": "Incidental Node test timings and absolute host/project paths normalized in agent history; unmodified raw tool results archived.",
+        "test_isolation": "Node checks/tests: bubblewrap, project-only filesystem, no host home/network/GPU; independent grading project read-only. Browser: SwiftShader software WebGL2, external requests blocked."
+      },
+      "wall_s": 2419.187879511999,
+      "tool_s": 4.915740568038018,
+      "card_energy_wh": 120.29476760861111,
+      "requests": 107,
+      "tool_calls": 145,
+      "session_status": "failed",
+      "stop_reason": "RuntimeError: run wall-time limit",
+      "stages_graded_during_session": 5,
+      "overall": {
+        "requests": 107,
+        "context_min": 964,
+        "context_max": 152762,
+        "native": {
+          "prompt_tokens": 8381806.0,
+          "cached_tokens": 7960576.0,
+          "prefill_tokens": 421230.0,
+          "prefill_seconds": 393.8390039819715,
+          "decode_seconds": 1998.6071715930157,
+          "generation_tokens": 105148.0,
+          "draft_tokens": 140096.0,
+          "accepted_tokens": 70214.0,
+          "preemptions": 0.0,
+          "completed": 107.0
+        },
+        "post_first_tokens": 105041,
+        "prefill_tps": 1069.5487134110322,
+        "decode_tps": 52.55710151198733,
+        "cached_fraction": 0.9497447208871215,
+        "mtp_acceptance": 0.5011849017816354,
+        "client_request_seconds": 2401.3975309420202,
+        "client_decode_tps": 52.59686705731332
+      },
+      "bands": [
+        {
+          "lower": 0,
+          "upper": 10000,
+          "requests": 7,
+          "context_min": 964,
+          "context_max": 9887,
+          "native": {
+            "prompt_tokens": 33767.0,
+            "cached_tokens": 11648.0,
+            "prefill_tokens": 22119.0,
+            "prefill_seconds": 10.870143093990919,
+            "decode_seconds": 106.86995089099946,
+            "generation_tokens": 7898.0,
+            "draft_tokens": 9988.0,
+            "accepted_tokens": 5402.0,
+            "preemptions": 0.0,
+            "completed": 7.0
+          },
+          "post_first_tokens": 7891,
+          "prefill_tps": 2034.8398184590153,
+          "decode_tps": 73.83740643848819,
+          "cached_fraction": 0.3449521722391684,
+          "mtp_acceptance": 0.5408490188225871,
+          "client_request_seconds": 117.80882144500356,
+          "client_decode_tps": 73.84288997932828
+        },
+        {
+          "lower": 10000,
+          "upper": 20000,
+          "requests": 6,
+          "context_min": 11483,
+          "context_max": 16981,
+          "native": {
+            "prompt_tokens": 85076.0,
+            "cached_tokens": 63232.0,
+            "prefill_tokens": 21844.0,
+            "prefill_seconds": 12.919441067999287,
+            "decode_seconds": 87.86156114299229,
+            "generation_tokens": 6518.0,
+            "draft_tokens": 7784.0,
+            "accepted_tokens": 4573.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 6512,
+          "prefill_tps": 1690.7852193471692,
+          "decode_tps": 74.11659792160873,
+          "cached_fraction": 0.7432413371573652,
+          "mtp_acceptance": 0.5874871531346352,
+          "client_request_seconds": 100.88491447900014,
+          "client_decode_tps": 74.13189183032912
+        },
+        {
+          "lower": 20000,
+          "upper": 30000,
+          "requests": 11,
+          "context_min": 21079,
+          "context_max": 26858,
+          "native": {
+            "prompt_tokens": 263864.0,
+            "cached_tokens": 226304.0,
+            "prefill_tokens": 37560.0,
+            "prefill_seconds": 22.0808165510025,
+            "decode_seconds": 131.9729720720061,
+            "generation_tokens": 8720.0,
+            "draft_tokens": 11128.0,
+            "accepted_tokens": 5944.0,
+            "preemptions": 0.0,
+            "completed": 11.0
+          },
+          "post_first_tokens": 8709,
+          "prefill_tps": 1701.0240501406968,
+          "decode_tps": 65.9907848043936,
+          "cached_fraction": 0.8576539429403026,
+          "mtp_acceptance": 0.5341480948957584,
+          "client_request_seconds": 154.33812469900295,
+          "client_decode_tps": 66.0157687910964
+        },
+        {
+          "lower": 30000,
+          "upper": 40000,
+          "requests": 5,
+          "context_min": 33002,
+          "context_max": 39153,
+          "native": {
+            "prompt_tokens": 182284.0,
+            "cached_tokens": 158080.0,
+            "prefill_tokens": 24204.0,
+            "prefill_seconds": 15.634378295995703,
+            "decode_seconds": 102.96371241599991,
+            "generation_tokens": 6042.0,
+            "draft_tokens": 8356.0,
+            "accepted_tokens": 3960.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 6037,
+          "prefill_tps": 1548.1267973539543,
+          "decode_tps": 58.63230703656999,
+          "cached_fraction": 0.8672181870048935,
+          "mtp_acceptance": 0.4739109621828626,
+          "client_request_seconds": 118.7965437990133,
+          "client_decode_tps": 58.651901362353655
+        },
+        {
+          "lower": 40000,
+          "upper": 50000,
+          "requests": 5,
+          "context_min": 41431,
+          "context_max": 49467,
+          "native": {
+            "prompt_tokens": 227497.0,
+            "cached_tokens": 204672.0,
+            "prefill_tokens": 22825.0,
+            "prefill_seconds": 16.523683675994107,
+            "decode_seconds": 100.85785144299734,
+            "generation_tokens": 5702.0,
+            "draft_tokens": 7892.0,
+            "accepted_tokens": 3737.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 5697,
+          "prefill_tps": 1381.3505782103875,
+          "decode_tps": 56.4854388477611,
+          "cached_fraction": 0.8996690066242632,
+          "mtp_acceptance": 0.47351748606183475,
+          "client_request_seconds": 117.61647801099753,
+          "client_decode_tps": 56.508715190947896
+        },
+        {
+          "lower": 50000,
+          "upper": 60000,
+          "requests": 5,
+          "context_min": 51574,
+          "context_max": 59668,
+          "native": {
+            "prompt_tokens": 285534.0,
+            "cached_tokens": 261248.0,
+            "prefill_tokens": 24286.0,
+            "prefill_seconds": 18.764884890995745,
+            "decode_seconds": 123.61229797299893,
+            "generation_tokens": 7016.0,
+            "draft_tokens": 9364.0,
+            "accepted_tokens": 4679.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 7011,
+          "prefill_tps": 1294.2258980577888,
+          "decode_tps": 56.71765766810223,
+          "cached_fraction": 0.9149453305035478,
+          "mtp_acceptance": 0.49967962409226824,
+          "client_request_seconds": 142.65994898699864,
+          "client_decode_tps": 56.74092224760163
+        },
+        {
+          "lower": 60000,
+          "upper": 70000,
+          "requests": 8,
+          "context_min": 60728,
+          "context_max": 64942,
+          "native": {
+            "prompt_tokens": 503566.0,
+            "cached_tokens": 477568.0,
+            "prefill_tokens": 25998.0,
+            "prefill_seconds": 21.53692215299816,
+            "decode_seconds": 138.24657734201173,
+            "generation_tokens": 7773.0,
+            "draft_tokens": 10064.0,
+            "accepted_tokens": 5261.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 7765,
+          "prefill_tps": 1207.1362758016382,
+          "decode_tps": 56.167755826532826,
+          "cached_fraction": 0.9483722094025411,
+          "mtp_acceptance": 0.5227543720190779,
+          "client_request_seconds": 160.28664214200398,
+          "client_decode_tps": 56.204218370921296
+        },
+        {
+          "lower": 70000,
+          "upper": 80000,
+          "requests": 8,
+          "context_min": 70910,
+          "context_max": 79556,
+          "native": {
+            "prompt_tokens": 610250.0,
+            "cached_tokens": 574080.0,
+            "prefill_tokens": 36170.0,
+            "prefill_seconds": 32.55497654599458,
+            "decode_seconds": 112.85414803199092,
+            "generation_tokens": 6651.0,
+            "draft_tokens": 7964.0,
+            "accepted_tokens": 4671.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 6643,
+          "prefill_tps": 1111.0436510036498,
+          "decode_tps": 58.86358734564989,
+          "cached_fraction": 0.9407292093404342,
+          "mtp_acceptance": 0.5865143144148669,
+          "client_request_seconds": 146.04956370299624,
+          "client_decode_tps": 58.92147895780552
+        },
+        {
+          "lower": 80000,
+          "upper": 90000,
+          "requests": 7,
+          "context_min": 80402,
+          "context_max": 89731,
+          "native": {
+            "prompt_tokens": 603651.0,
+            "cached_tokens": 575744.0,
+            "prefill_tokens": 27907.0,
+            "prefill_seconds": 27.1166856699856,
+            "decode_seconds": 251.72313636801846,
+            "generation_tokens": 11809.0,
+            "draft_tokens": 17040.0,
+            "accepted_tokens": 7554.0,
+            "preemptions": 0.0,
+            "completed": 7.0
+          },
+          "post_first_tokens": 11802,
+          "prefill_tps": 1029.1449456483233,
+          "decode_tps": 46.88484408022595,
+          "cached_fraction": 0.9537696450432452,
+          "mtp_acceptance": 0.4433098591549296,
+          "client_request_seconds": 279.4732126740055,
+          "client_decode_tps": 46.90566532389964
+        },
+        {
+          "lower": 90000,
+          "upper": 100000,
+          "requests": 3,
+          "context_min": 94051,
+          "context_max": 99596,
+          "native": {
+            "prompt_tokens": 292729.0,
+            "cached_tokens": 274560.0,
+            "prefill_tokens": 18169.0,
+            "prefill_seconds": 18.19562858199788,
+            "decode_seconds": 132.31292632900295,
+            "generation_tokens": 7139.0,
+            "draft_tokens": 8672.0,
+            "accepted_tokens": 4973.0,
+            "preemptions": 0.0,
+            "completed": 3.0
+          },
+          "post_first_tokens": 7136,
+          "prefill_tps": 998.5365395936788,
+          "decode_tps": 53.93275017027411,
+          "cached_fraction": 0.9379323538153036,
+          "mtp_acceptance": 0.5734547970479705,
+          "client_request_seconds": 150.81668656099646,
+          "client_decode_tps": 53.954117580633294
+        },
+        {
+          "lower": 100000,
+          "upper": 110000,
+          "requests": 8,
+          "context_min": 101560,
+          "context_max": 109266,
+          "native": {
+            "prompt_tokens": 844198.0,
+            "cached_tokens": 813696.0,
+            "prefill_tokens": 30502.0,
+            "prefill_seconds": 33.737252670005546,
+            "decode_seconds": 73.40032005900866,
+            "generation_tokens": 3206.0,
+            "draft_tokens": 4676.0,
+            "accepted_tokens": 2049.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 3198,
+          "prefill_tps": 904.1044420050871,
+          "decode_tps": 43.569292305933196,
+          "cached_fraction": 0.9638686658817007,
+          "mtp_acceptance": 0.4381950384944397,
+          "client_request_seconds": 108.02197712199268,
+          "client_decode_tps": 43.65873177796633
+        },
+        {
+          "lower": 110000,
+          "upper": 120000,
+          "requests": 8,
+          "context_min": 110253,
+          "context_max": 117729,
+          "native": {
+            "prompt_tokens": 915616.0,
+            "cached_tokens": 885248.0,
+            "prefill_tokens": 30368.0,
+            "prefill_seconds": 35.344681461996515,
+            "decode_seconds": 100.86965776199213,
+            "generation_tokens": 4170.0,
+            "draft_tokens": 6232.0,
+            "accepted_tokens": 2616.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 4162,
+          "prefill_tps": 859.1957472484914,
+          "decode_tps": 41.261169040748435,
+          "cached_fraction": 0.9668332576101772,
+          "mtp_acceptance": 0.4197689345314506,
+          "client_request_seconds": 137.17913238400797,
+          "client_decode_tps": 41.32862567379849
+        },
+        {
+          "lower": 120000,
+          "upper": 130000,
+          "requests": 9,
+          "context_min": 120312,
+          "context_max": 129931,
+          "native": {
+            "prompt_tokens": 1130343.0,
+            "cached_tokens": 1096576.0,
+            "prefill_tokens": 33767.0,
+            "prefill_seconds": 41.51733204200718,
+            "decode_seconds": 128.6952399629954,
+            "generation_tokens": 5179.0,
+            "draft_tokens": 7744.0,
+            "accepted_tokens": 3247.0,
+            "preemptions": 0.0,
+            "completed": 9.0
+          },
+          "post_first_tokens": 5170,
+          "prefill_tps": 813.3229747478617,
+          "decode_tps": 40.17242596918553,
+          "cached_fraction": 0.9701267668309531,
+          "mtp_acceptance": 0.41929235537190085,
+          "client_request_seconds": 171.39563676300168,
+          "client_decode_tps": 40.23493623423741
+        },
+        {
+          "lower": 130000,
+          "upper": 140000,
+          "requests": 8,
+          "context_min": 130310,
+          "context_max": 139563,
+          "native": {
+            "prompt_tokens": 1075497.0,
+            "cached_tokens": 1046656.0,
+            "prefill_tokens": 28841.0,
+            "prefill_seconds": 36.92708758899971,
+            "decode_seconds": 211.4272740660017,
+            "generation_tokens": 8511.0,
+            "draft_tokens": 12264.0,
+            "accepted_tokens": 5458.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 8503,
+          "prefill_tps": 781.0255799482953,
+          "decode_tps": 40.21713867126528,
+          "cached_fraction": 0.9731835607165803,
+          "mtp_acceptance": 0.44504240052185257,
+          "client_request_seconds": 249.5321275309907,
+          "client_decode_tps": 40.25356158881173
+        },
+        {
+          "lower": 140000,
+          "upper": 150000,
+          "requests": 7,
+          "context_min": 143645,
+          "context_max": 149657,
+          "native": {
+            "prompt_tokens": 1024372.0,
+            "cached_tokens": 996736.0,
+            "prefill_tokens": 27636.0,
+            "prefill_seconds": 37.19738456801133,
+            "decode_seconds": 101.86220747499465,
+            "generation_tokens": 5233.0,
+            "draft_tokens": 5748.0,
+            "accepted_tokens": 3803.0,
+            "preemptions": 0.0,
+            "completed": 7.0
+          },
+          "post_first_tokens": 5226,
+          "prefill_tps": 742.9554610074966,
+          "decode_tps": 51.30460186897962,
+          "cached_fraction": 0.9730215195261096,
+          "mtp_acceptance": 0.6616214335421016,
+          "client_request_seconds": 140.20239347600727,
+          "client_decode_tps": 51.39699481779394
+        },
+        {
+          "lower": 150000,
+          "upper": 160000,
+          "requests": 2,
+          "context_min": 150800,
+          "context_max": 152762,
+          "native": {
+            "prompt_tokens": 303562.0,
+            "cached_tokens": 294528.0,
+            "prefill_tokens": 9034.0,
+            "prefill_seconds": 12.917705123996711,
+            "decode_seconds": 93.07733825900505,
+            "generation_tokens": 3581.0,
+            "draft_tokens": 5180.0,
+            "accepted_tokens": 2287.0,
+            "preemptions": 0.0,
+            "completed": 2.0
+          },
+          "post_first_tokens": 3579,
+          "prefill_tps": 699.3502261650093,
+          "decode_tps": 38.451894595876446,
+          "cached_fraction": 0.9702400168664062,
+          "mtp_acceptance": 0.4415057915057915,
+          "client_request_seconds": 106.33532716600166,
+          "client_decode_tps": 38.474349461504765
+        }
+      ],
+      "quality": {
+        "passed": 51,
+        "total": 54,
+        "checks": [
+          {
+            "id": "node/rng exact xorshift",
+            "name": "rng exact xorshift",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/rng zero and restore",
+            "name": "rng zero and restore",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/hash FNV-1a",
+            "name": "hash FNV-1a",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/rng invalid seeds",
+            "name": "rng invalid seeds",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/rng invalid restore atomic",
+            "name": "rng invalid restore atomic",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/config defaults and detached",
+            "name": "config defaults and detached",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config JSON roundtrip",
+            "name": "config JSON roundtrip",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config reject invalid",
+            "name": "config reject invalid",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config coupled and prototype edge",
+            "name": "config coupled and prototype edge",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game initial and pure flap",
+            "name": "game initial and pure flap",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game fixed-step flight",
+            "name": "game fixed-step flight",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game paused and restarted",
+            "name": "game paused and restarted",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game seeded pipes",
+            "name": "game seeded pipes",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game lower boundary and no points on crash",
+            "name": "game lower boundary and no points on crash",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game passing one pipe once",
+            "name": "game passing one pipe once",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game snapshot roundtrip",
+            "name": "game snapshot roundtrip",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game pipe and bird collision edges",
+            "name": "game pipe and bird collision edges",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game top boundary inclusive",
+            "name": "game top boundary inclusive",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game strict passing edge",
+            "name": "game strict passing edge",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game removes offscreen pipes",
+            "name": "game removes offscreen pipes",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game restore rejects corrupt snapshots",
+            "name": "game restore rejects corrupt snapshots",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game no-op transitions detached",
+            "name": "game no-op transitions detached",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/input edge queue and release",
+            "name": "input edge queue and release",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/input ignore repeat and disposal",
+            "name": "input ignore repeat and disposal",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/pointer mapping/clamp",
+            "name": "pointer mapping/clamp",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/ticker first frame and backlog cap",
+            "name": "ticker first frame and backlog cap",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/ticker pause fresh base and invalid time",
+            "name": "ticker pause fresh base and invalid time",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/input custom binding validation",
+            "name": "input custom binding validation",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/pointer bad dimensions and values",
+            "name": "pointer bad dimensions and values",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/ticker fractional remainder",
+            "name": "ticker fractional remainder",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/ticker invalid options",
+            "name": "ticker invalid options",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/app import has no DOM side effects",
+            "name": "app import has no DOM side effects",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/scores ordering detached lists and reload",
+            "name": "scores ordering detached lists and reload",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/scores best ten tie order and clear",
+            "name": "scores best ten tie order and clear",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/scores invalid entry leaves list unchanged",
+            "name": "scores invalid entry leaves list unchanged",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/scores corrupt persisted data is inert",
+            "name": "scores corrupt persisted data is inert",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/scores storage failure is reported",
+            "name": "scores storage failure is reported",
+            "passed": false,
+            "sealed": false,
+            "error": "AssertionError [ERR_ASSERTION]: Missing expected exception.\n    at file:///harness/checks.mjs:526:10\n    at async check (file:///harness/checks.mjs:41:5)\n    at async file:///harness/checks.mjs:524:1"
+          },
+          {
+            "id": "browser/WebGL2 procedural renderer and colors",
+            "name": "WebGL2 procedural renderer and colors",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer DPR resize and state immutability",
+            "name": "renderer DPR resize and state immutability",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer context loss and restore",
+            "name": "renderer context loss and restore",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer destroy idempotent and commands reject",
+            "name": "renderer destroy idempotent and commands reject",
+            "passed": true
+          },
+          {
+            "id": "browser/app mounts ready with accessible controls",
+            "name": "app mounts ready with accessible controls",
+            "passed": true
+          },
+          {
+            "id": "browser/app buttons start pause restart",
+            "name": "app buttons start pause restart",
+            "passed": true
+          },
+          {
+            "id": "browser/app keyboard and canvas pointer",
+            "name": "app keyboard and canvas pointer",
+            "passed": true
+          },
+          {
+            "id": "browser/app snapshot detached and invalid count",
+            "name": "app snapshot detached and invalid count",
+            "passed": true
+          },
+          {
+            "id": "browser/app gameover and score/status text",
+            "name": "app gameover and score/status text",
+            "passed": true
+          },
+          {
+            "id": "browser/app responsive mobile canvas",
+            "name": "app responsive mobile canvas",
+            "passed": true
+          },
+          {
+            "id": "browser/app destroy idempotent and removes input",
+            "name": "app destroy idempotent and removes input",
+            "passed": true
+          },
+          {
+            "id": "browser/settings labelled inputs and keyboard isolation",
+            "name": "settings labelled inputs and keyboard isolation",
+            "passed": false,
+            "error": "Error: labelled settings and player inputs required"
+          },
+          {
+            "id": "browser/settings valid apply and invalid atomic rejection",
+            "name": "settings valid apply and invalid atomic rejection",
+            "passed": true
+          },
+          {
+            "id": "browser/scores save once display and survive remount",
+            "name": "scores save once display and survive remount",
+            "passed": false,
+            "error": "TimeoutError: page.fill: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"player-name\"]')\u001b[22m\n"
+          },
+          {
+            "id": "browser/scores clear persists through remount",
+            "name": "scores clear persists through remount",
+            "passed": true
+          },
+          {
+            "id": "browser/real entry point loads without JavaScript errors",
+            "name": "real entry point loads without JavaScript errors",
+            "passed": true
+          },
+          {
+            "id": "browser/app has no external runtime requests",
+            "name": "app has no external runtime requests",
+            "passed": true
+          }
+        ],
+        "all_stages_declared_complete": false
+      },
+      "stage_completions": {
+        "declared": 4,
+        "total": 6
+      },
+      "project_files": {
+        "README.md": "9b99eb647e62964c7f8bff7602de4b2b9210512f98a549df3a1262debfe4b38a",
+        "USER_GUIDE.md": "42e30783a9b8143c0dbb34cdb2fea0e2b3ad5f0a4c54ce86bea81f55913df230",
+        "index.html": "ffd1cbfd30492ae40ec2bb1ce4e0bc31aee65dcd9e1065527a8d222aff227d42",
+        "main.js": "c58ef221adbe37a9a4ada60895d59b835a071f98aa1a5fbd0818801cf2b3229d",
+        "package.json": "6cab776a7f920178f6f096fb791ac0426dfbd50363325aee992e8530a8e605f7",
+        "specs/app.md": "48f725160db03e2ec58f29f33202f149ecb9e96c4ee517f14cb7ff4a2b442a16",
+        "specs/config.md": "570ab99926405a336b344f7559a8bfb014b99e018359bf0075fe68c27ae13dc6",
+        "specs/input.md": "9816b4a98e4c13792d4eaa006515d65ada66eba85311d9af735daa7b62868996",
+        "specs/random.md": "0eb208f2b2e5ebf03820edd8725c1e66b13b72c0bb84f99d4c9e101fd3a5158b",
+        "specs/renderer.md": "c2bb5892eb20b9bffa8a6b379f071dcc75f6ae49f6dacfee181b04b96e5a42d9",
+        "specs/scores.md": "a57956f2934ebf0aedd04c35b557d87f1d34109fce217391d7c6a8a9f10181e7",
+        "specs/simulation.md": "3c366b5d0a7dd69b236def5b921b7850daca74040c52f41b9b21283b3cec109a",
+        "src/app.js": "c4ac3d8452b0c3b107d00016dcd89c9bf9e0e99603fd7c0320456b2b74125607",
+        "src/config.js": "ec7a3a8c5ce096e60f8f771bc6b5dbc47e7d50393e14b6fbd3f6145564d8f61e",
+        "src/input.js": "1888459fe2d9f9b2d8af02c22f9e8dca3468e1036348c50bed207da1e65f8492",
+        "src/random.js": "e526bea80c3773e8a129061d38570484284c04e5364ac577de9bd0ac198a1c81",
+        "src/renderer.js": "74be090cc8f3d1f677bf8e8a1340234119f1c8b3f8cc1ac86a1f725bc8594ed2",
+        "src/scores.js": "25d2a713e8cc05ee644658ffbcc9cac676cd07105691dcb8081c2bc556bab782",
+        "src/simulation.js": "4353c20680bd8c55d586b7517d4ab3e6a4ea74589a1d0061f0f147edf2ae9e3b",
+        "style.css": "59a58a3422260de25c317f38ce7353ff05177a71454e6526672d3d89a317096b",
+        "tests/app-import.test.js": "2f10c572e3f22af4d6eef47ebc00fd9275c9e0867f85140bd590b64802ea81f0",
+        "tests/config.test.js": "e56a515185e8a988234d14f36b65e050718ab7c177cc25e3f9bf02a1f9589d8b",
+        "tests/input.test.js": "743ed1960f1a31b2d528a63dcd7eb24dfef2bafa7e3fc6dfcff55f03ceeadad2",
+        "tests/random.test.js": "b67e45fc880e5b51b82ec75ad39d0fca5c15c74e516e9dd9709947583b2db2d2",
+        "tests/scores.test.js": "8e9b633f509f4fb85e2179df9d34eab24ecb192a65e4bd39f3b785ea9c36ffe8",
+        "tests/simulation.test.js": "79148bc67c213d05f215b67ec372137c7c8ab3a3f256d0138f0d61c921b8584d"
+      },
+      "conversation_sha256": "29823f262f6d8dbe43ba5625455fb92d5369c9b0f62fa48339b2b02138f3a1b8",
+      "raw_root": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/web-coding-20261001/comparison-v6/gptq",
+      "contract_review": {
+        "purpose": "Post-run contract review, not feedback to the timed agent. Replaces only the overly strict storage-error case with a construction-or-access check; unchanged browser cases reused by identical harness hash.",
+        "reviewed_at": "2026-10-01T06:12:57.120291+00:00",
+        "project_sha256": "226332c2326c6a435ce8e1ebb2810e2b154b3b06a914883536aa3f9835e07074",
+        "original_score": {
+          "passed": 51,
+          "total": 54
+        },
+        "corrected_checks_sha256": "f3cee5fc149cc9ab5a755da967d8ab95e431b441f92f0b9f6d2c997d9e56845b",
+        "original_browser_sha256": "0690e6033741bd3a6964a279051b99fc1be14db0385cd3c396ffc497b614c13e",
+        "acceptance": {
+          "exit_code": 0,
+          "mode": "acceptance",
+          "checks": [
+            {
+              "name": "rng exact xorshift",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "rng zero and restore",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "hash FNV-1a",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "rng invalid seeds",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "rng invalid restore atomic",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "config defaults and detached",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "config JSON roundtrip",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "config reject invalid",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "config coupled and prototype edge",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "game initial and pure flap",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game fixed-step flight",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game paused and restarted",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game seeded pipes",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game lower boundary and no points on crash",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game passing one pipe once",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game snapshot roundtrip",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game pipe and bird collision edges",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "game top boundary inclusive",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "game strict passing edge",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "game removes offscreen pipes",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "game restore rejects corrupt snapshots",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "game no-op transitions detached",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "input edge queue and release",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "input ignore repeat and disposal",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "pointer mapping/clamp",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "ticker first frame and backlog cap",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "ticker pause fresh base and invalid time",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "input custom binding validation",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "pointer bad dimensions and values",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "ticker fractional remainder",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "ticker invalid options",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "app import has no DOM side effects",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "scores ordering detached lists and reload",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "scores best ten tie order and clear",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "scores invalid entry leaves list unchanged",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "scores corrupt persisted data is inert",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "scores storage failure is reported",
+              "passed": true,
+              "sealed": false
+            }
+          ],
+          "passed": 37,
+          "total": 37
+        },
+        "browser": {
+          "checks": [
+            {
+              "name": "browser renderer identity",
+              "passed": true,
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+            },
+            {
+              "name": "WebGL2 procedural renderer and colors",
+              "passed": true
+            },
+            {
+              "name": "renderer DPR resize and state immutability",
+              "passed": true
+            },
+            {
+              "name": "renderer context loss and restore",
+              "passed": true
+            },
+            {
+              "name": "renderer destroy idempotent and commands reject",
+              "passed": true
+            },
+            {
+              "name": "app mounts ready with accessible controls",
+              "passed": true
+            },
+            {
+              "name": "app buttons start pause restart",
+              "passed": true
+            },
+            {
+              "name": "app keyboard and canvas pointer",
+              "passed": true
+            },
+            {
+              "name": "app snapshot detached and invalid count",
+              "passed": true
+            },
+            {
+              "name": "app gameover and score/status text",
+              "passed": true
+            },
+            {
+              "name": "app responsive mobile canvas",
+              "passed": true
+            },
+            {
+              "name": "app destroy idempotent and removes input",
+              "passed": true
+            },
+            {
+              "name": "settings labelled inputs and keyboard isolation",
+              "passed": false,
+              "error": "Error: labelled settings and player inputs required"
+            },
+            {
+              "name": "settings valid apply and invalid atomic rejection",
+              "passed": true
+            },
+            {
+              "name": "scores save once display and survive remount",
+              "passed": false,
+              "error": "TimeoutError: page.fill: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"player-name\"]')\u001b[22m\n"
+            },
+            {
+              "name": "scores clear persists through remount",
+              "passed": true
+            },
+            {
+              "name": "real entry point loads without JavaScript errors",
+              "passed": true
+            },
+            {
+              "name": "app has no external runtime requests",
+              "passed": true
+            }
+          ],
+          "passed": 16,
+          "total": 18,
+          "page_errors": [],
+          "browser_version": "153.0.8010.12",
+          "software_rendering": true
+        },
+        "supplemental_storage": {
+          "purpose": "Supplemental contract review: eager and lazy storage adapters are both valid; unchanged timed outputs",
+          "checks": [
+            {
+              "name": "storage read error reported by construction or actual access",
+              "passed": true
+            },
+            {
+              "name": "storage write error reported by construction or actual record",
+              "passed": true
+            },
+            {
+              "name": "public persisted schema loads and stays interoperable",
+              "passed": true
+            }
+          ],
+          "passed": 3,
+          "total": 3
+        },
+        "passed": 52,
+        "total": 54
+      }
+    },
+    "exl3": {
+      "fixture_id": "flappybird-webgl2-v6",
+      "fixture_manifest_sha256": "a201091d9eb5f81c689c47a6e6293b2d2bf910ce9f68653d35ad217fdc82c695",
+      "runner_sha256": "a520cd59ac86c3e8631883dacb85c824ce467aed21e9964d70c27cc572d98e82",
+      "identity": {
+        "container_id": "896fa041173e68c390a7b3fdc7ff9469449d1dc80eeda2e3eced5b558f5908e8",
+        "image_id": "sha256:cba73584f4ab0a2b37eac1356f34f16655ac5e740d845e110997b03be78279b7",
+        "image_tag": "sha256:cba73584f4ab0a2b37eac1356f34f16655ac5e740d845e110997b03be78279b7",
+        "command": [
+          "models/qwen3.8-27b-exl3-4.00bpw",
+          "--gpu",
+          "0",
+          "--port",
+          "8000",
+          "--model-path",
+          "/models",
+          "--",
+          "--enable-auto-tool-choice",
+          "--tool-call-parser",
+          "qwen3_coder",
+          "--reasoning-parser",
+          "qwen3",
+          "--reasoning-config",
+          "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}"
+        ],
+        "labels": {
+          "image.omix.version": "0.1.0",
+          "org.opencontainers.image.authors": "Intel Corporation",
+          "org.opencontainers.image.created": "2026-06-08T12:53:11+00:00",
+          "org.opencontainers.image.description": "Open Middleware X<sup>e</sup> is a set of highly optimized deep learning frameworks and tools for Intel GPUs to accelerate AI workloads.",
+          "org.opencontainers.image.documentation": "https://github.com/intel/containers",
+          "org.opencontainers.image.licenses": "MIT",
+          "org.opencontainers.image.revision": "ac12083301cbdbe06135882d401f7877b0b512db",
+          "org.opencontainers.image.source": "https://github.com/intel/containers",
+          "org.opencontainers.image.title": "Open Middleware X<sup>e</sup>",
+          "org.opencontainers.image.url": "https://www.intel.com",
+          "org.opencontainers.image.version": "20260608"
+        }
+      },
+      "provenance": {
+        "fixture_id": "flappybird-webgl2-v6",
+        "fixture_manifest_sha256": "a201091d9eb5f81c689c47a6e6293b2d2bf910ce9f68653d35ad217fdc82c695",
+        "fixture_files": {
+          "README.md": "00f7b15b3ac6b9142d6cd14fdf6082118b814fbe40dfe1645b90c4da125a8c8f",
+          "project/README.md": "9b99eb647e62964c7f8bff7602de4b2b9210512f98a549df3a1262debfe4b38a",
+          "project/index.html": "ffd1cbfd30492ae40ec2bb1ce4e0bc31aee65dcd9e1065527a8d222aff227d42",
+          "project/main.js": "c58ef221adbe37a9a4ada60895d59b835a071f98aa1a5fbd0818801cf2b3229d",
+          "project/package.json": "6cab776a7f920178f6f096fb791ac0426dfbd50363325aee992e8530a8e605f7",
+          "project/specs/app.md": "48f725160db03e2ec58f29f33202f149ecb9e96c4ee517f14cb7ff4a2b442a16",
+          "project/specs/config.md": "570ab99926405a336b344f7559a8bfb014b99e018359bf0075fe68c27ae13dc6",
+          "project/specs/input.md": "9816b4a98e4c13792d4eaa006515d65ada66eba85311d9af735daa7b62868996",
+          "project/specs/random.md": "0eb208f2b2e5ebf03820edd8725c1e66b13b72c0bb84f99d4c9e101fd3a5158b",
+          "project/specs/renderer.md": "c2bb5892eb20b9bffa8a6b379f071dcc75f6ae49f6dacfee181b04b96e5a42d9",
+          "project/specs/scores.md": "a57956f2934ebf0aedd04c35b557d87f1d34109fce217391d7c6a8a9f10181e7",
+          "project/specs/simulation.md": "3c366b5d0a7dd69b236def5b921b7850daca74040c52f41b9b21283b3cec109a",
+          "project/src/app.js": "b9c3e093e9bc2a956cf934a7037ea001abde5c51214fc48088a988825a38249d",
+          "project/src/config.js": "7b25978fdf17322b1a3d67eeccd275ade7a9d52bfc6ef0a60454ae28b9bc7a7e",
+          "project/src/input.js": "8c1337929e07afb36e6dfac02435d3d0ceef958b691b6dabc46a91f00e7d2814",
+          "project/src/random.js": "8ab78c6d041c206c1155f2f13316c6d30465703db42109480ee9d1087c4e975f",
+          "project/src/renderer.js": "5790649fe8191094abc3e6702cd098aa1fca26ade179f83d73a8346826bb3c04",
+          "project/src/scores.js": "c8d7cc42363647c3771a7e42acc0ae14d53f1554b302e37aad0f324527c2a915",
+          "project/src/simulation.js": "d2276b36daa14d9214d4185620ede49f348a9eba4f07b679883b31544f08de6a",
+          "project/style.css": "28e08d310e6f0fbfaebd30ff8585f0b2eef1b4167a12dc176ad3cc2b8bf4e7d7",
+          "tasks.json": "e320699f93c1c70cbb951d5393ff8a81d1cc5441bb0c4654688b426cc500ab85"
+        },
+        "harness_files": {
+          "checks.mjs": "f45fe64d835e0b8b2f5b16ca678148fd7a32a8c0c0806b17d55ecc1d5950940c",
+          "browser.mjs": "0690e6033741bd3a6964a279051b99fc1be14db0385cd3c396ffc497b614c13e",
+          "package.json": "89ee7d37083d11091fd6a2cfb0308b9af466f9010c1f91eb9f0140cdf4ebb901",
+          "package-lock.json": "b7bd5012db625f36b65c68f3414deaaa2649baa2beb11cd579a3987b6f0f0f79"
+        },
+        "runner_sha256": "a520cd59ac86c3e8631883dacb85c824ce467aed21e9964d70c27cc572d98e82",
+        "identity": {
+          "container_id": "896fa041173e68c390a7b3fdc7ff9469449d1dc80eeda2e3eced5b558f5908e8",
+          "image_id": "sha256:cba73584f4ab0a2b37eac1356f34f16655ac5e740d845e110997b03be78279b7",
+          "image_tag": "sha256:cba73584f4ab0a2b37eac1356f34f16655ac5e740d845e110997b03be78279b7",
+          "command": [
+            "models/qwen3.8-27b-exl3-4.00bpw",
+            "--gpu",
+            "0",
+            "--port",
+            "8000",
+            "--model-path",
+            "/models",
+            "--",
+            "--enable-auto-tool-choice",
+            "--tool-call-parser",
+            "qwen3_coder",
+            "--reasoning-parser",
+            "qwen3",
+            "--reasoning-config",
+            "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}"
+          ],
+          "labels": {
+            "image.omix.version": "0.1.0",
+            "org.opencontainers.image.authors": "Intel Corporation",
+            "org.opencontainers.image.created": "2026-06-08T12:53:11+00:00",
+            "org.opencontainers.image.description": "Open Middleware X<sup>e</sup> is a set of highly optimized deep learning frameworks and tools for Intel GPUs to accelerate AI workloads.",
+            "org.opencontainers.image.documentation": "https://github.com/intel/containers",
+            "org.opencontainers.image.licenses": "MIT",
+            "org.opencontainers.image.revision": "ac12083301cbdbe06135882d401f7877b0b512db",
+            "org.opencontainers.image.source": "https://github.com/intel/containers",
+            "org.opencontainers.image.title": "Open Middleware X<sup>e</sup>",
+            "org.opencontainers.image.url": "https://www.intel.com",
+            "org.opencontainers.image.version": "20260608"
+          }
+        },
+        "model_info": {
+          "object": "list",
+          "data": [
+            {
+              "id": "qwen3.8-27b-exl3",
+              "object": "model",
+              "created": 1790833276,
+              "owned_by": "vllm",
+              "root": "/models",
+              "parent": null,
+              "max_model_len": 262144,
+              "permission": [
+                {
+                  "id": "modelperm-9f4e83535ae570b3",
+                  "object": "model_permission",
+                  "created": 1790833276,
+                  "allow_create_engine": false,
+                  "allow_sampling": true,
+                  "allow_logprobs": true,
+                  "allow_search_indices": false,
+                  "allow_view": true,
+                  "allow_fine_tuning": false,
+                  "organization": "*",
+                  "group": null,
+                  "is_blocking": false
+                }
+              ]
+            }
+          ]
+        },
+        "node_version": "v24.20.0",
+        "started_at": "2026-10-01T05:41:16.430059+00:00",
+        "sampling": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 20,
+          "seed_base": 73000,
+          "max_tokens": 16384,
+          "enable_thinking": true,
+          "reasoning_effort": "medium",
+          "preserve_thinking": true,
+          "thinking_token_budget": 4096,
+          "output_budget_policy": "at most 16384; rendered /tokenize history with reasoning alias normalized; input+output fits common 200704-token window or smaller engine limit"
+        },
+        "limits": {
+          "max_requests_per_stage": 32,
+          "max_wall_seconds": 2400,
+          "stages": 6
+        },
+        "measurement": "exclusive C1, native per-request accounting; prefix cache stays enabled; first generated token excluded from decode; 10K=10000 input-token bands",
+        "host": {
+          "kernel": "7.2.3-2-MANJARO",
+          "machine": "x86_64",
+          "power_cap_w": 180,
+          "runtime_source_files": {
+            "request_defaults.py": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2"
+          },
+          "production_policy_sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "source_commit": "f8a1ef2cdb42e312533bc36cca404a3e6d7569d1"
+        },
+        "tool_output_normalization": "Incidental Node test timings and absolute host/project paths normalized in agent history; unmodified raw tool results archived.",
+        "test_isolation": "Node checks/tests: bubblewrap, project-only filesystem, no host home/network/GPU; independent grading project read-only. Browser: SwiftShader software WebGL2, external requests blocked."
+      },
+      "wall_s": 1688.103875130997,
+      "tool_s": 4.822593382988998,
+      "card_energy_wh": 83.94196378916666,
+      "requests": 87,
+      "tool_calls": 117,
+      "session_status": "complete",
+      "stop_reason": null,
+      "stages_graded_during_session": 6,
+      "overall": {
+        "requests": 87,
+        "context_min": 964,
+        "context_max": 106434,
+        "native": {
+          "prompt_tokens": 4674992.0,
+          "cached_tokens": 4414400.0,
+          "prefill_tokens": 260592.0,
+          "prefill_seconds": 209.8774699110072,
+          "decode_seconds": 1458.4541511840362,
+          "generation_tokens": 74101.0,
+          "draft_tokens": 76404.0,
+          "accepted_tokens": 48676.0,
+          "preemptions": 0.0,
+          "completed": 87.0
+        },
+        "post_first_tokens": 74014,
+        "prefill_tps": 1241.6387528899452,
+        "decode_tps": 50.74825282639995,
+        "cached_fraction": 0.9442583003350594,
+        "mtp_acceptance": 0.6370870635045286,
+        "client_request_seconds": 1673.4561956240068,
+        "client_decode_tps": 50.77861209204269
+      },
+      "bands": [
+        {
+          "lower": 0,
+          "upper": 10000,
+          "requests": 8,
+          "context_min": 964,
+          "context_max": 8886,
+          "native": {
+            "prompt_tokens": 39779.0,
+            "cached_tokens": 22400.0,
+            "prefill_tokens": 17379.0,
+            "prefill_seconds": 7.934681729981094,
+            "decode_seconds": 115.23530552601733,
+            "generation_tokens": 7258.0,
+            "draft_tokens": 7317.0,
+            "accepted_tokens": 4819.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 7250,
+          "prefill_tps": 2190.257982791379,
+          "decode_tps": 62.914746196105035,
+          "cached_fraction": 0.5631111893209985,
+          "mtp_acceptance": 0.6586032526991936,
+          "client_request_seconds": 123.29292044100293,
+          "client_decode_tps": 62.919164231225956
+        },
+        {
+          "lower": 10000,
+          "upper": 20000,
+          "requests": 11,
+          "context_min": 10260,
+          "context_max": 18620,
+          "native": {
+            "prompt_tokens": 135620.0,
+            "cached_tokens": 104000.0,
+            "prefill_tokens": 31620.0,
+            "prefill_seconds": 15.668062785000075,
+            "decode_seconds": 128.2596735400075,
+            "generation_tokens": 7685.0,
+            "draft_tokens": 7746.0,
+            "accepted_tokens": 5112.0,
+            "preemptions": 0.0,
+            "completed": 11.0
+          },
+          "post_first_tokens": 7674,
+          "prefill_tps": 2018.1180298991155,
+          "decode_tps": 59.831744368242774,
+          "cached_fraction": 0.7668485474118861,
+          "mtp_acceptance": 0.6599535243996901,
+          "client_request_seconds": 144.10195076599484,
+          "client_decode_tps": 59.845626408965586
+        },
+        {
+          "lower": 20000,
+          "upper": 30000,
+          "requests": 6,
+          "context_min": 20539,
+          "context_max": 29609,
+          "native": {
+            "prompt_tokens": 151380.0,
+            "cached_tokens": 131200.0,
+            "prefill_tokens": 20180.0,
+            "prefill_seconds": 11.771302105000359,
+            "decode_seconds": 125.7070919209873,
+            "generation_tokens": 6793.0,
+            "draft_tokens": 7308.0,
+            "accepted_tokens": 4365.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 6787,
+          "prefill_tps": 1714.3388063609116,
+          "decode_tps": 53.99058952271319,
+          "cached_fraction": 0.866693090236491,
+          "mtp_acceptance": 0.5972906403940886,
+          "client_request_seconds": 137.64725726899633,
+          "client_decode_tps": 54.003305428890044
+        },
+        {
+          "lower": 30000,
+          "upper": 40000,
+          "requests": 6,
+          "context_min": 30262,
+          "context_max": 39793,
+          "native": {
+            "prompt_tokens": 208254.0,
+            "cached_tokens": 193600.0,
+            "prefill_tokens": 14654.0,
+            "prefill_seconds": 9.2618699559971,
+            "decode_seconds": 155.53881748900312,
+            "generation_tokens": 8542.0,
+            "draft_tokens": 8700.0,
+            "accepted_tokens": 5643.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 8536,
+          "prefill_tps": 1582.1858943842624,
+          "decode_tps": 54.88019092470927,
+          "cached_fraction": 0.9296340046289627,
+          "mtp_acceptance": 0.6486206896551724,
+          "client_request_seconds": 165.02650605799863,
+          "client_decode_tps": 54.894976556829604
+        },
+        {
+          "lower": 40000,
+          "upper": 50000,
+          "requests": 13,
+          "context_min": 41106,
+          "context_max": 48069,
+          "native": {
+            "prompt_tokens": 580341.0,
+            "cached_tokens": 542400.0,
+            "prefill_tokens": 37941.0,
+            "prefill_seconds": 27.41060921701137,
+            "decode_seconds": 145.70165253299638,
+            "generation_tokens": 6906.0,
+            "draft_tokens": 7740.0,
+            "accepted_tokens": 4331.0,
+            "preemptions": 0.0,
+            "completed": 13.0
+          },
+          "post_first_tokens": 6893,
+          "prefill_tps": 1384.1720809493477,
+          "decode_tps": 47.309003571108946,
+          "cached_fraction": 0.9346229199729125,
+          "mtp_acceptance": 0.5595607235142119,
+          "client_request_seconds": 173.7247039470094,
+          "client_decode_tps": 47.34443990145549
+        },
+        {
+          "lower": 50000,
+          "upper": 60000,
+          "requests": 2,
+          "context_min": 52936,
+          "context_max": 59677,
+          "native": {
+            "prompt_tokens": 112613.0,
+            "cached_tokens": 107200.0,
+            "prefill_tokens": 5413.0,
+            "prefill_seconds": 4.562260256003356,
+            "decode_seconds": 123.40547437200439,
+            "generation_tokens": 6963.0,
+            "draft_tokens": 6348.0,
+            "accepted_tokens": 4848.0,
+            "preemptions": 0.0,
+            "completed": 2.0
+          },
+          "post_first_tokens": 6961,
+          "prefill_tps": 1186.4733040771137,
+          "decode_tps": 56.407546224539,
+          "cached_fraction": 0.9519327253514248,
+          "mtp_acceptance": 0.7637051039697542,
+          "client_request_seconds": 128.08565841399832,
+          "client_decode_tps": 56.41666747014215
+        },
+        {
+          "lower": 60000,
+          "upper": 70000,
+          "requests": 6,
+          "context_min": 60092,
+          "context_max": 69730,
+          "native": {
+            "prompt_tokens": 388932.0,
+            "cached_tokens": 371200.0,
+            "prefill_tokens": 17732.0,
+            "prefill_seconds": 15.09379869800614,
+            "decode_seconds": 177.903041580008,
+            "generation_tokens": 8248.0,
+            "draft_tokens": 8865.0,
+            "accepted_tokens": 5291.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 8242,
+          "prefill_tps": 1174.7870999725444,
+          "decode_tps": 46.328606452146246,
+          "cached_fraction": 0.9544084827167731,
+          "mtp_acceptance": 0.5968415115623238,
+          "client_request_seconds": 193.40990669600433,
+          "client_decode_tps": 46.34697356697805
+        },
+        {
+          "lower": 70000,
+          "upper": 80000,
+          "requests": 13,
+          "context_min": 70417,
+          "context_max": 79450,
+          "native": {
+            "prompt_tokens": 978202.0,
+            "cached_tokens": 936000.0,
+            "prefill_tokens": 42202.0,
+            "prefill_seconds": 39.568667513005494,
+            "decode_seconds": 91.28557179101335,
+            "generation_tokens": 3773.0,
+            "draft_tokens": 4395.0,
+            "accepted_tokens": 2312.0,
+            "preemptions": 0.0,
+            "completed": 13.0
+          },
+          "post_first_tokens": 3760,
+          "prefill_tps": 1066.5509518643503,
+          "decode_tps": 41.18942266810838,
+          "cached_fraction": 0.9568575815629082,
+          "mtp_acceptance": 0.5260523321956769,
+          "client_request_seconds": 131.91693737699825,
+          "client_decode_tps": 41.27241028614404
+        },
+        {
+          "lower": 80000,
+          "upper": 90000,
+          "requests": 8,
+          "context_min": 80843,
+          "context_max": 88188,
+          "native": {
+            "prompt_tokens": 678740.0,
+            "cached_tokens": 649600.0,
+            "prefill_tokens": 29140.0,
+            "prefill_seconds": 29.12490406199504,
+            "decode_seconds": 210.4996204749914,
+            "generation_tokens": 9071.0,
+            "draft_tokens": 9747.0,
+            "accepted_tokens": 5829.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 9063,
+          "prefill_tps": 1000.5183171753227,
+          "decode_tps": 43.05470945529205,
+          "cached_fraction": 0.9570675074402569,
+          "mtp_acceptance": 0.598030163127116,
+          "client_request_seconds": 240.35376145900955,
+          "client_decode_tps": 43.08001249897575
+        },
+        {
+          "lower": 90000,
+          "upper": 100000,
+          "requests": 8,
+          "context_min": 93359,
+          "context_max": 99879,
+          "native": {
+            "prompt_tokens": 777134.0,
+            "cached_tokens": 755200.0,
+            "prefill_tokens": 21934.0,
+            "prefill_seconds": 24.081733687009546,
+            "decode_seconds": 121.09955307700147,
+            "generation_tokens": 5994.0,
+            "draft_tokens": 5433.0,
+            "accepted_tokens": 4189.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 5986,
+          "prefill_tps": 910.8148227646873,
+          "decode_tps": 49.43040538055319,
+          "cached_fraction": 0.9717757812680954,
+          "mtp_acceptance": 0.7710288974783729,
+          "client_request_seconds": 146.01335262000066,
+          "client_decode_tps": 49.48826743616449
+        },
+        {
+          "lower": 100000,
+          "upper": 110000,
+          "requests": 6,
+          "context_min": 101302,
+          "context_max": 106434,
+          "native": {
+            "prompt_tokens": 623997.0,
+            "cached_tokens": 601600.0,
+            "prefill_tokens": 22397.0,
+            "prefill_seconds": 25.39957990199764,
+            "decode_seconds": 63.81834888000594,
+            "generation_tokens": 2868.0,
+            "draft_tokens": 2805.0,
+            "accepted_tokens": 1937.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 2862,
+          "prefill_tps": 881.786237662872,
+          "decode_tps": 44.846036449192034,
+          "cached_fraction": 0.9641071992333297,
+          "mtp_acceptance": 0.6905525846702317,
+          "client_request_seconds": 89.88324057699356,
+          "client_decode_tps": 44.926536312195054
+        }
+      ],
+      "quality": {
+        "passed": 54,
+        "total": 54,
+        "checks": [
+          {
+            "id": "node/rng exact xorshift",
+            "name": "rng exact xorshift",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/rng zero and restore",
+            "name": "rng zero and restore",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/hash FNV-1a",
+            "name": "hash FNV-1a",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/rng invalid seeds",
+            "name": "rng invalid seeds",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/rng invalid restore atomic",
+            "name": "rng invalid restore atomic",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/config defaults and detached",
+            "name": "config defaults and detached",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config JSON roundtrip",
+            "name": "config JSON roundtrip",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config reject invalid",
+            "name": "config reject invalid",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config coupled and prototype edge",
+            "name": "config coupled and prototype edge",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game initial and pure flap",
+            "name": "game initial and pure flap",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game fixed-step flight",
+            "name": "game fixed-step flight",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game paused and restarted",
+            "name": "game paused and restarted",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game seeded pipes",
+            "name": "game seeded pipes",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game lower boundary and no points on crash",
+            "name": "game lower boundary and no points on crash",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game passing one pipe once",
+            "name": "game passing one pipe once",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game snapshot roundtrip",
+            "name": "game snapshot roundtrip",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game pipe and bird collision edges",
+            "name": "game pipe and bird collision edges",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game top boundary inclusive",
+            "name": "game top boundary inclusive",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game strict passing edge",
+            "name": "game strict passing edge",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game removes offscreen pipes",
+            "name": "game removes offscreen pipes",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game restore rejects corrupt snapshots",
+            "name": "game restore rejects corrupt snapshots",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game no-op transitions detached",
+            "name": "game no-op transitions detached",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/input edge queue and release",
+            "name": "input edge queue and release",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/input ignore repeat and disposal",
+            "name": "input ignore repeat and disposal",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/pointer mapping/clamp",
+            "name": "pointer mapping/clamp",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/ticker first frame and backlog cap",
+            "name": "ticker first frame and backlog cap",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/ticker pause fresh base and invalid time",
+            "name": "ticker pause fresh base and invalid time",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/input custom binding validation",
+            "name": "input custom binding validation",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/pointer bad dimensions and values",
+            "name": "pointer bad dimensions and values",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/ticker fractional remainder",
+            "name": "ticker fractional remainder",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/ticker invalid options",
+            "name": "ticker invalid options",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/app import has no DOM side effects",
+            "name": "app import has no DOM side effects",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/scores ordering detached lists and reload",
+            "name": "scores ordering detached lists and reload",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/scores best ten tie order and clear",
+            "name": "scores best ten tie order and clear",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/scores invalid entry leaves list unchanged",
+            "name": "scores invalid entry leaves list unchanged",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/scores corrupt persisted data is inert",
+            "name": "scores corrupt persisted data is inert",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/scores storage failure is reported",
+            "name": "scores storage failure is reported",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "browser/WebGL2 procedural renderer and colors",
+            "name": "WebGL2 procedural renderer and colors",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer DPR resize and state immutability",
+            "name": "renderer DPR resize and state immutability",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer context loss and restore",
+            "name": "renderer context loss and restore",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer destroy idempotent and commands reject",
+            "name": "renderer destroy idempotent and commands reject",
+            "passed": true
+          },
+          {
+            "id": "browser/app mounts ready with accessible controls",
+            "name": "app mounts ready with accessible controls",
+            "passed": true
+          },
+          {
+            "id": "browser/app buttons start pause restart",
+            "name": "app buttons start pause restart",
+            "passed": true
+          },
+          {
+            "id": "browser/app keyboard and canvas pointer",
+            "name": "app keyboard and canvas pointer",
+            "passed": true
+          },
+          {
+            "id": "browser/app snapshot detached and invalid count",
+            "name": "app snapshot detached and invalid count",
+            "passed": true
+          },
+          {
+            "id": "browser/app gameover and score/status text",
+            "name": "app gameover and score/status text",
+            "passed": true
+          },
+          {
+            "id": "browser/app responsive mobile canvas",
+            "name": "app responsive mobile canvas",
+            "passed": true
+          },
+          {
+            "id": "browser/app destroy idempotent and removes input",
+            "name": "app destroy idempotent and removes input",
+            "passed": true
+          },
+          {
+            "id": "browser/settings labelled inputs and keyboard isolation",
+            "name": "settings labelled inputs and keyboard isolation",
+            "passed": true
+          },
+          {
+            "id": "browser/settings valid apply and invalid atomic rejection",
+            "name": "settings valid apply and invalid atomic rejection",
+            "passed": true
+          },
+          {
+            "id": "browser/scores save once display and survive remount",
+            "name": "scores save once display and survive remount",
+            "passed": true
+          },
+          {
+            "id": "browser/scores clear persists through remount",
+            "name": "scores clear persists through remount",
+            "passed": true
+          },
+          {
+            "id": "browser/real entry point loads without JavaScript errors",
+            "name": "real entry point loads without JavaScript errors",
+            "passed": true
+          },
+          {
+            "id": "browser/app has no external runtime requests",
+            "name": "app has no external runtime requests",
+            "passed": true
+          }
+        ],
+        "all_stages_declared_complete": true
+      },
+      "stage_completions": {
+        "declared": 6,
+        "total": 6
+      },
+      "project_files": {
+        "README.md": "9b99eb647e62964c7f8bff7602de4b2b9210512f98a549df3a1262debfe4b38a",
+        "USER_GUIDE.md": "8007f73b52677748aaa392939ee75484fa221a34c64bf80025d2757cc8ef9d36",
+        "index.html": "ffd1cbfd30492ae40ec2bb1ce4e0bc31aee65dcd9e1065527a8d222aff227d42",
+        "main.js": "c58ef221adbe37a9a4ada60895d59b835a071f98aa1a5fbd0818801cf2b3229d",
+        "package.json": "6cab776a7f920178f6f096fb791ac0426dfbd50363325aee992e8530a8e605f7",
+        "specs/app.md": "48f725160db03e2ec58f29f33202f149ecb9e96c4ee517f14cb7ff4a2b442a16",
+        "specs/config.md": "570ab99926405a336b344f7559a8bfb014b99e018359bf0075fe68c27ae13dc6",
+        "specs/input.md": "9816b4a98e4c13792d4eaa006515d65ada66eba85311d9af735daa7b62868996",
+        "specs/random.md": "0eb208f2b2e5ebf03820edd8725c1e66b13b72c0bb84f99d4c9e101fd3a5158b",
+        "specs/renderer.md": "c2bb5892eb20b9bffa8a6b379f071dcc75f6ae49f6dacfee181b04b96e5a42d9",
+        "specs/scores.md": "a57956f2934ebf0aedd04c35b557d87f1d34109fce217391d7c6a8a9f10181e7",
+        "specs/simulation.md": "3c366b5d0a7dd69b236def5b921b7850daca74040c52f41b9b21283b3cec109a",
+        "src/app.js": "e78d57c961a36ccf2f67e0693b7a6aaf3020d2c71b90e72f323dce0d47df4f67",
+        "src/config.js": "f48a1d3908c61774cf8d3e980bdb3b6f1f280c96575b4a6a4fb9aafe2bba24eb",
+        "src/input.js": "242c974e7097b915653d83fe0822e76ddf899a83b3a6a719345df258cbfa598d",
+        "src/random.js": "083392f7b7f629024e6d28904ffa72919b5b0e49847464c78ca6afa74c26aa04",
+        "src/renderer.js": "0eb00ee07f3eea642a86f4a15a805d65e2fb492103a7310646a4889c35ebbfe8",
+        "src/scores.js": "bee60bf5c1fc284f373e1819df43df6120a84150a3dfb6aee201c947e851bd94",
+        "src/simulation.js": "e5ca362e17cce4246fdda91703e3ecea8ed620142ddb0502accf6a4c9b1f22a3",
+        "style.css": "a5c3f1b1d909f5f0673e3ee29cc7eb07adef0b3f47c674bcb01307c354e8d8ce",
+        "tests/app.test.js": "de8c661ced0e7dbaa098cc2a0dd76b968dd236400f203b6889b528975ad621cb",
+        "tests/config.test.js": "cf1e8a0da072f44f5142a2c65c2aacceb64888dcca91fe44351d15eb948793a4",
+        "tests/input.test.js": "bbe190ddedf70c2101ce3ede5048da82738a45de5314e4a521e956bc5cf6b61f",
+        "tests/random.test.js": "a09b4eed0fff476ef467e0862c3ee6bc1d80f8e642dc28fd2e9dff25a569e963",
+        "tests/renderer.test.js": "b897a66260e308450bdf79f030154580eeff9aa12e379e5ea2ae23416ed153c0",
+        "tests/scores.test.js": "ec2d92252e0d2a49bcbff428f3173811777cbc7071a44b8928f7e4dac97ee40e",
+        "tests/simulation.test.js": "e66e9e930878afd42463315027525b988b396db081fd5f3691872fb02abea999"
+      },
+      "conversation_sha256": "e026d256e47a1262d7e7f0fcea8993c5ebfdc48efc314ad5f8968fd2353e23cc",
+      "raw_root": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/web-coding-20261001/comparison-v6/exl3",
+      "contract_review": {
+        "purpose": "Post-run contract review, not feedback to the timed agent. Replaces only the overly strict storage-error case with a construction-or-access check; unchanged browser cases reused by identical harness hash.",
+        "reviewed_at": "2026-10-01T06:13:10.316088+00:00",
+        "project_sha256": "5aacca63d538fb0dd786228d794bb5360cb01806d08891780e14349d3a14286e",
+        "original_score": {
+          "passed": 54,
+          "total": 54
+        },
+        "corrected_checks_sha256": "f3cee5fc149cc9ab5a755da967d8ab95e431b441f92f0b9f6d2c997d9e56845b",
+        "original_browser_sha256": "0690e6033741bd3a6964a279051b99fc1be14db0385cd3c396ffc497b614c13e",
+        "acceptance": {
+          "exit_code": 0,
+          "mode": "acceptance",
+          "checks": [
+            {
+              "name": "rng exact xorshift",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "rng zero and restore",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "hash FNV-1a",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "rng invalid seeds",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "rng invalid restore atomic",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "config defaults and detached",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "config JSON roundtrip",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "config reject invalid",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "config coupled and prototype edge",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "game initial and pure flap",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game fixed-step flight",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game paused and restarted",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game seeded pipes",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game lower boundary and no points on crash",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game passing one pipe once",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game snapshot roundtrip",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "game pipe and bird collision edges",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "game top boundary inclusive",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "game strict passing edge",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "game removes offscreen pipes",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "game restore rejects corrupt snapshots",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "game no-op transitions detached",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "input edge queue and release",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "input ignore repeat and disposal",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "pointer mapping/clamp",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "ticker first frame and backlog cap",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "ticker pause fresh base and invalid time",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "input custom binding validation",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "pointer bad dimensions and values",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "ticker fractional remainder",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "ticker invalid options",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "app import has no DOM side effects",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "scores ordering detached lists and reload",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "scores best ten tie order and clear",
+              "passed": true,
+              "sealed": false
+            },
+            {
+              "name": "scores invalid entry leaves list unchanged",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "scores corrupt persisted data is inert",
+              "passed": true,
+              "sealed": true
+            },
+            {
+              "name": "scores storage failure is reported",
+              "passed": true,
+              "sealed": false
+            }
+          ],
+          "passed": 37,
+          "total": 37
+        },
+        "browser": {
+          "checks": [
+            {
+              "name": "browser renderer identity",
+              "passed": true,
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+            },
+            {
+              "name": "WebGL2 procedural renderer and colors",
+              "passed": true
+            },
+            {
+              "name": "renderer DPR resize and state immutability",
+              "passed": true
+            },
+            {
+              "name": "renderer context loss and restore",
+              "passed": true
+            },
+            {
+              "name": "renderer destroy idempotent and commands reject",
+              "passed": true
+            },
+            {
+              "name": "app mounts ready with accessible controls",
+              "passed": true
+            },
+            {
+              "name": "app buttons start pause restart",
+              "passed": true
+            },
+            {
+              "name": "app keyboard and canvas pointer",
+              "passed": true
+            },
+            {
+              "name": "app snapshot detached and invalid count",
+              "passed": true
+            },
+            {
+              "name": "app gameover and score/status text",
+              "passed": true
+            },
+            {
+              "name": "app responsive mobile canvas",
+              "passed": true
+            },
+            {
+              "name": "app destroy idempotent and removes input",
+              "passed": true
+            },
+            {
+              "name": "settings labelled inputs and keyboard isolation",
+              "passed": true
+            },
+            {
+              "name": "settings valid apply and invalid atomic rejection",
+              "passed": true
+            },
+            {
+              "name": "scores save once display and survive remount",
+              "passed": true
+            },
+            {
+              "name": "scores clear persists through remount",
+              "passed": true
+            },
+            {
+              "name": "real entry point loads without JavaScript errors",
+              "passed": true
+            },
+            {
+              "name": "app has no external runtime requests",
+              "passed": true
+            }
+          ],
+          "passed": 18,
+          "total": 18,
+          "page_errors": [],
+          "browser_version": "153.0.8010.12",
+          "software_rendering": true
+        },
+        "supplemental_storage": {
+          "purpose": "Supplemental contract review: eager and lazy storage adapters are both valid; unchanged timed outputs",
+          "checks": [
+            {
+              "name": "storage read error reported by construction or actual access",
+              "passed": true
+            },
+            {
+              "name": "storage write error reported by construction or actual record",
+              "passed": true
+            },
+            {
+              "name": "public persisted schema loads and stays interoperable",
+              "passed": true
+            }
+          ],
+          "passed": 3,
+          "total": 3
+        },
+        "passed": 54,
+        "total": 54
+      }
+    }
+  }
+}

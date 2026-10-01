@@ -44,6 +44,7 @@ RUN echo "4d7a02c4ea10ca7c00dc89ad927fa3dafa747dbf0553d2adf24e30a3c53e9c14  /opt
 COPY patches/ /opt/b70-local-patches/
 RUN python /opt/b70-local-patches/patch_draft_lmhead_int4.py \
  && python /opt/b70-local-patches/patch_draft_mtp_int4.py \
+ && python /opt/b70-local-patches/patch_mtp_format_guard.py --vllm-root /opt/venv/lib/python3.12/site-packages/vllm \
  && rm -rf /opt/b70-local-patches
 
 # Exact Q128/KV32 prefill extension qualified with this pinned vLLM/XPU ABI.

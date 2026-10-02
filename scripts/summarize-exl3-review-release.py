@@ -30,6 +30,19 @@ def main():
     assert sha(a.release_dir/'production_policy.json')==campaign['policy_sha256']==release['policy_sha256']
     operations=read(q/'operations/operations.json');matched=read(q/'matched/assessment.json')
     quality=read(q/'quality/quality-smoke.json');cache=read(q/'telemetry/assessment.json')
+    references={}
+    for label,base,used_windows in [('short','quantization-reference-20261001',16),('long','exl3-long-quality-v3',1)]:
+        original=REPO/'benchmark-results'/base
+        reference=read(original/'bf16/summary.json')
+        assert reference['panel_sha256']==sha(original/'panel.json')==sha(q/'quality'/label/'panel.json')
+        assert reference['vocab_size']==248320
+        arrays={}
+        for index in range(used_windows):
+            for kind in ('nll','logprobs'):
+                path=original/'bf16'/f'window-{index:03d}-{kind}.npy'
+                arrays[str(path.relative_to(REPO))]=sha(path)
+        references[label]=dict(panel_sha256=reference['panel_sha256'],reference_summary_sha256=sha(original/'bf16/summary.json'),
+            reference_arrays_sha256=arrays,reused_windows=used_windows,regenerated=False)
     assert operations['status']=='PASS_EXACT_IMAGE_OPERATIONAL_GATES'
     assert matched['status']=='PASS_MATCHED_SERVING_SCREEN' and not any(x['trigger'] for x in matched['repeat'])
     assert quality['status']=='PASS_COMPACT_REFERENCE_SMOKE' and all(x['bitidentical'] for x in quality['short_v1_arrays'])
@@ -61,7 +74,7 @@ def main():
         runtime_parent_image_id=release['runtime_image_id'],source_commit=release['source_commit'],
         runtime_artifacts_sha256=release['runtime_artifacts_sha256'],metadata_attestation=release['rootfs_metadata_attestation'],
         serving=dict(scenarios=20,waves=70,requests=124,preemptions=0,summary_sha256=sha(root/'serving-summary.json')),
-        operations=operations,matched_comparison=matched,quality_smoke=quality,candidate_state_replays=replays,
+        operations=operations,matched_comparison=matched,quality_smoke=quality,reference_provenance=references,candidate_state_replays=replays,
         actual_worker_cache=cache,source_guard_coverage=dict(required=13,covered=13,files=len(coverage['files_sha256'])),
         rollback_image_id=campaign['baseline_image_id'],receipts_sha256=sources,
         limitations=['Finite cache workload; application cache cap is per thread/queue and does not bound oneDNN internal caches or every allocator.',

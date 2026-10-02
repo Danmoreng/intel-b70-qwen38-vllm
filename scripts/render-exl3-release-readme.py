@@ -140,6 +140,19 @@ decode differences are shown explicitly alongside the quality/context gain.
         x,y=old[name],new[name]
         text+=f"| {y['actual_prompt_tokens_min']:,}–{y['actual_prompt_tokens_max']:,} | {x['prefill_tps_median']:.1f} | {y['prefill_tps_median']:.1f} | {x['decode_tps_median']:.1f} | {y['decode_tps_median']:.1f} | {100*(y['decode_tps_median']/x['decode_tps_median']-1):+.1f}% |\n"
     text+='''
+The parallel comparison uses aggregate output only while all requests overlap.
+It preserves the original task mix and payloads; generated histories and
+speculative acceptance can differ between checkpoints.
+
+| Input budget / concurrency | GPTQ aggregate decode | EXL3 aggregate decode | Change |
+|---|---:|---:|---:|
+'''
+    for short,budget in [('2k',2048),('4k',4096),('16k',16384)]:
+        for concurrency in (2,3,4):
+            name=f'concurrency-{short}-c{concurrency}'
+            x,y=old[name]['fully_overlapped_decode_tps'],new[name]['fully_overlapped_decode_tps']
+            text+=f'| {budget:,} / C{concurrency} | {x:.1f} | {y:.1f} | {100*(y/x-1):+.1f}% |\n'
+    text+='''
 ## Install, serve and reproduce
 
 Build instructions and immutable upstream/native/header pins are in

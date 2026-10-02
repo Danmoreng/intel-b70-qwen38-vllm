@@ -4,6 +4,7 @@ import argparse
 import datetime
 import hashlib
 import json
+import re
 from pathlib import Path
 import statistics
 from zoneinfo import ZoneInfo
@@ -29,7 +30,7 @@ def same_runtime(left,right):
     return all(left[k]==right[k] for k in ('image_id','image_tag','command','policy_sha256'))
 
 
-def summarize(root):
+def summarize(root, include_failed_coding_task=False):
     final=(root/'campaign.json').exists()
     if final:
         state=json.loads((root/'campaign.json').read_text())
@@ -187,13 +188,32 @@ def summarize(root):
     fixture = REPO / 'benchmarks/coding-fixture/v2'
     if coding['fixture_manifest_sha256'] != sha(fixture / 'manifest.json') or coding['tasks_sha256'] != sha(fixture / 'tasks.json'):
         raise RuntimeError('coding fixture differs')
-    if coding['metrics']['preemptions'] or not all(row['acceptance']['passed'] for row in coding['task_results']):
-        raise RuntimeError('coding acceptance or serving gate failed')
+    if coding['metrics']['preemptions']:
+        raise RuntimeError('coding serving gate failed')
+    tasks=json.loads((fixture/'tasks.json').read_text())['tasks']
+    if [row['task'] for row in coding['task_results']]!=[row['id'] for row in tasks]:
+        raise RuntimeError('coding task coverage differs')
+    acceptance=[]
+    for row in coding['task_results']:
+        check=row['acceptance']
+        states=re.findall(r'^(.+) \.\.\. (ok|FAIL|ERROR)$',check['output'],re.MULTILINE)
+        if len(states)!=check['tests_run'] or check['tests_run']!=4:
+            raise RuntimeError('coding acceptance case accounting differs')
+        passed=sum(state=='ok' for _,state in states)
+        if check['passed']!=(passed==check['tests_run']):
+            raise RuntimeError('coding acceptance status differs from its cases')
+        acceptance.append({'task':row['task'],'passed':check['passed'],'tests_passed':passed,
+            'tests_total':check['tests_run'],'failed_cases':[name for name,state in states if state!='ok'],
+            'output':check['output'],'project_sha256':row['project_sha256']})
+    coding_passed=all(row['passed'] for row in acceptance)
+    if not coding_passed and not include_failed_coding_task:
+        raise RuntimeError('coding task acceptance failed; explicit measured-failure export required, not release approval')
     records = [json.loads(line) for line in (root / 'coding-agent-v2/requests.jsonl').read_text().splitlines()]
     source_finished = datetime.datetime.fromtimestamp(path.stat().st_mtime, ZoneInfo('Europe/Berlin'))
     started = datetime.datetime.fromisoformat(manifest['started_at'])
     return {
         'schema_version': 2, 'date': started.date().isoformat(),
+        'measurement_status': 'COMPLETE' if coding_passed else 'COMPLETE_WITH_CODING_TASK_FAILURE',
         'release_manifest_sha256': sha(release_path),
         'worker_mode': 'fresh isolated same-image workers' if final else 'permanent production service',
         'summary_runner_sha256': sha(Path(__file__)),
@@ -230,7 +250,10 @@ def summarize(root):
             'raw_results_path': str(coding_path.relative_to(REPO)), 'raw_summary_sha256': sha(coding_path),
             'tasks_passed': sum(row['acceptance']['passed'] for row in coding['task_results']),
             'tasks_total': len(coding['task_results']),
-            'acceptance_tests_passed': sum(row['acceptance']['tests_run'] for row in coding['task_results']),
+            'acceptance_status': 'PASS' if coding_passed else 'FAIL_GENERATED_TASK_CASE',
+            'acceptance_tests_passed': sum(row['tests_passed'] for row in acceptance),
+            'acceptance_tests_total': sum(row['tests_total'] for row in acceptance),
+            'task_results': acceptance,
             'weighted_decode_tps_post_first': (coding['metrics']['generation_tokens']-len(records))/coding['metrics']['decode_seconds'],
             'prompt_tokens_min': min(row['usage']['prompt_tokens'] for row in records),
             'prompt_tokens_max': max(row['usage']['prompt_tokens'] for row in records)},
@@ -330,7 +353,7 @@ hashes. This is one adaptive session, not a multi-run distribution.
 
 | Coding workload result | Measured value |
 |---|---:|
-| Tasks / hidden acceptance tests | **{coding['tasks_passed']}/{coding['tasks_total']} tasks, {coding['acceptance_tests_passed']}/{coding['acceptance_tests_passed']} tests passed** |
+| Tasks / hidden acceptance tests | **{coding['tasks_passed']}/{coding['tasks_total']} tasks, {coding['acceptance_tests_passed']}/{coding.get('acceptance_tests_total',coding['acceptance_tests_passed'])} tests passed** |
 | End-to-end time | **{int(coding['wall_s']//60)} min {coding['wall_s']%60:.0f} s** |
 | Model requests / tool calls | **{coding['requests']} / {coding['tool_calls']}** |
 | Actual input context range | **{coding['prompt_tokens_min']:,}–{coding['prompt_tokens_max']:,} tokens** |
@@ -347,6 +370,13 @@ Generated tokens include reasoning. Prefix caching remained enabled between
 agent turns. Raw generated code and conversation records remain local.
 
 '''
+    if coding.get('acceptance_status','PASS')!='PASS':
+        failures=[f"`{row['task']}`: "+', '.join(f'`{name}`' for name in row['failed_cases'])
+                  for row in coding['task_results'] if not row['passed']]
+        text+='**Functional task failure:** '+ '; '.join(failures)+'.\n\n'
+        text+=('The generated output is preserved without repairs or a replacement run. '
+               'The summary records the failed test output; the [release report](docs/EXL3_RELEASE_REPORT.md) '
+               'records the native-attention control and the separate release decision.\n\n')
     return text
 
 
@@ -355,8 +385,10 @@ def main():
     parser.add_argument('root', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--update-readme', action='store_true')
+    parser.add_argument('--include-failed-coding-task', action='store_true',
+                        help='Export an honestly scored failed agent task; does not approve production release')
     args=parser.parse_args()
-    result=summarize(args.root.resolve())
+    result=summarize(args.root.resolve(),args.include_failed_coding_task)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result,indent=2)+'\n')
     if args.update_readme:

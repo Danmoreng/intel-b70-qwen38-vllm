@@ -14,6 +14,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--campaign',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
     p.add_argument('--baseline',type=Path,required=True);p.add_argument('--unit',required=True)
+    p.add_argument('--previous-campaign',type=Path)
     a=p.parse_args()
     while True:
         value=subprocess.check_output(['systemctl','--user','show',a.unit,'--property=ActiveState','--value'],text=True).strip()
@@ -32,14 +33,16 @@ def main():
     assert live['Image']==state['image_id'] and live['State']['Running']
     with urllib.request.urlopen('http://127.0.0.1:8081/v1/models',timeout=10) as response:
         assert any(row['id']=='Qwen3.8-27B' for row in json.load(response)['data'])
-    subprocess.run(['/usr/bin/python3',str(REPO/'scripts/publish-exl3-power-comparison.py'),
-        '--campaign',str(a.campaign),'--baseline',str(a.baseline),'--out',str(a.out)],check=True,cwd=REPO)
+    publication=['/usr/bin/python3',str(REPO/'scripts/publish-exl3-power-comparison.py'),
+        '--campaign',str(a.campaign),'--baseline',str(a.baseline),'--out',str(a.out)]
+    if a.previous_campaign:publication+=['--additional-campaign',str(a.previous_campaign)]
+    subprocess.run(publication,check=True,cwd=REPO)
     subprocess.run(['/usr/bin/python3','-m','unittest','discover','-s','tests/unit','-v'],check=True,cwd=REPO,
         env={**__import__('os').environ,'PYTHONPATH':str(REPO/'scripts')+':'+str(REPO)})
     subprocess.run(['git','diff','--check'],check=True,cwd=REPO)
     subprocess.run(['git','add','README.md','docs/EXL3_POWER_COMPARISON.md',str(a.out.relative_to(REPO))],check=True,cwd=REPO)
     subprocess.run(['git','diff','--cached','--check'],check=True,cwd=REPO)
-    subprocess.run(['git','commit','-m','Document full EXL3 v2 benchmarks at 180 W, 230 W and 275 W'],check=True,cwd=REPO)
+    subprocess.run(['git','commit','-m','Update full EXL3 v2 power and energy benchmark comparison'],check=True,cwd=REPO)
     subprocess.run(['git','fetch','origin','main'],check=True,cwd=REPO)
     subprocess.run(['git','merge-base','--is-ancestor','origin/main','HEAD'],check=True,cwd=REPO)
     subprocess.run(['git','push','origin','HEAD:main'],check=True,cwd=REPO)

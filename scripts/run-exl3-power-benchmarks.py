@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Repeat the frozen v2 serving matrix at 230/275 W, then recover 180 W.
+"""Repeat the frozen v2 serving matrix at selected power caps, then recover 180 W.
 
 Only the hardware power cap changes. Production policy, image, weights,
 serving arguments and benchmark prompts remain frozen.
@@ -34,7 +34,7 @@ def write(path, value):
 
 
 def set_cap(watts):
-    assert watts in (180,230,275)
+    assert watts in (150,180,230,275)
     subprocess.run([sys.executable,str(REPO/'scripts/set-power-limit.py')],check=True,
                    env={**os.environ,'B70_POWER_LIMIT_W':str(watts)})
 
@@ -72,7 +72,9 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--fixture-root',type=Path,required=True)
     parser.add_argument('--out',type=Path,required=True)
+    parser.add_argument('--power-w',type=int,nargs='+',choices=(150,230,275),default=[230,275])
     args=parser.parse_args();root=args.out.resolve();assert not root.exists()
+    assert len(args.power_w)==len(set(args.power_w)), 'Duplicate power caps'
     release=load_release();image=release['image_id']
     assert image=='sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918'
     frozen=REPO/'config/experiments/exl3-migration/full-serving-fixture-manifest.json'
@@ -88,7 +90,7 @@ def main():
         root.mkdir(parents=True)
         frozen_release_sha=sha(REPO/'config/production_image.json')
         state=dict(status='RUNNING',started_unix=time.time(),image_id=image,policy_sha256=release['policy_sha256'],
-            original_power_cap_w=180,requested_power_caps_w=[230,275],variants={},
+            original_power_cap_w=180,requested_power_caps_w=args.power_w,variants={},
             source_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=REPO,text=True).strip(),
             scope='Experimental hardware power override only. Current production policy remains 180 W. No new image or release qualification.')
         save=lambda:write(root/'campaign.json',state)
@@ -97,10 +99,10 @@ def main():
             subprocess.run(['systemctl','--user','stop','b70-qwen38-vllm.service'],check=True,timeout=90)
             running=subprocess.check_output(['docker','ps','--format','{{.Names}}'],text=True).splitlines()
             assert not any(n=='b70-qwen38-vllm' or n.startswith('b70-exl3') for n in running),running
-            # Probe both requested settings while the card is idle, before any long run.
-            for watts in (230,275,180):set_cap(watts)
-            state['power_write_probe']=dict(status='PASS',sudo_required=False,accepted_watts=[230,275,180]);save()
-            for watts in (230,275):
+            # Probe requested settings while the card is idle, before any long run.
+            for watts in [*args.power_w,180]:set_cap(watts)
+            state['power_write_probe']=dict(status='PASS',sudo_required=False,accepted_watts=[*args.power_w,180]);save()
+            for watts in args.power_w:
                 assert sha(REPO/'config/production_image.json')==frozen_release_sha
                 directory=root/f'{watts}w';directory.mkdir();set_cap(watts)
                 campaign=dict(status='RUNNING',started_unix=time.time(),image_receipt=release,

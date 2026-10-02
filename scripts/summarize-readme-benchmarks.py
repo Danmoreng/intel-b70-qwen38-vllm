@@ -31,8 +31,8 @@ def same_runtime(left,right):
 
 
 def summarize(root, include_failed_coding_task=False, serving_only=False, experimental_power_w=None):
-    if experimental_power_w is not None and (not serving_only or experimental_power_w not in (230,275)):
-        raise RuntimeError('Power-variant export requires serving-only and 230 or 275 W')
+    if experimental_power_w is not None and (not serving_only or experimental_power_w not in (150,230,275)):
+        raise RuntimeError('Power-variant export requires serving-only and 150, 230 or 275 W')
     final=(root/'campaign.json').exists()
     if final:
         state=json.loads((root/'campaign.json').read_text())

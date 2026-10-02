@@ -1,0 +1,1604 @@
+{
+  "status": "PASS_EXACT_IMAGE_RELEASE_GATES",
+  "image_id": "sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918",
+  "policy_sha256": "1bf624713cff3583148a71c3b4fb9189268cc5d4a47afca03662ce25be3e7839",
+  "runtime_parent_image_id": "sha256:0e711fea1f9231a25289d812fffbde51ed93cbe7bad16c34f7fde3edf3d91737",
+  "source_commit": "c59d9442aba8610188837e37724600f1517d7335",
+  "runtime_artifacts_sha256": {
+    "/opt/exl3xpu/exl3xpu/_C.so": "e60e499aefa95b290924ed98545eb815aca9d0fb1f3ede39b37d1ad49f3b522d",
+    "/opt/exl3xpu/m04/m04.so": "eaa18427db27d4fceeca8a17c8a3c6b019b7678f39bf98affc1736b9f2c2d631",
+    "/opt/b70/libdnnl.so.3": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20",
+    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "737c6dfbfd86b40dfd8c2786452d147e916a8ae8a1fd67fdb2ad42649dd764d0",
+    "/opt/exl3xpu/exl3xpu/shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2",
+    "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "e3284ba808faeb53670a7546c686c7cf77156d78cdb54884ecd602aecb8beda5",
+    "/opt/exl3xpu/csrc/exl3_ops.sycl": "b70880d1e92032de697c1d432c6899e34e17662e2086a7fbba80fa17b28e41cf",
+    "/opt/exl3xpu/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7"
+  },
+  "metadata_attestation": {
+    "status": "METADATA_FROZEN_NOT_RELEASE_APPROVED",
+    "image_tag": "local/b70-qwen38-vllm:exl3-release-candidate-v2",
+    "image_id": "sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918",
+    "runtime_image_id": "sha256:0e711fea1f9231a25289d812fffbde51ed93cbe7bad16c34f7fde3edf3d91737",
+    "policy_sha256": "1bf624713cff3583148a71c3b4fb9189268cc5d4a47afca03662ce25be3e7839",
+    "rootfs_identical": true,
+    "rootfs": {
+      "Layers": [
+        "sha256:65e5d715ea720349e6475f91651a0956279fc295a45fd73aa04f1cec046281a1",
+        "sha256:a2aab35a5ea1fa52c2d67a5c066e36214de7ecdd86c286d66e66148bd9034270",
+        "sha256:25baf4ec65926e39336a9b863239b5548cb4fffb27b0c36b8b37007fa12c07d4",
+        "sha256:f7e9f195343f9376dda185883619f476b9e90d291730e1e6002a7fab1c5ff15d",
+        "sha256:72993c2d42eea255fcfafcbc1899565aee9fce2ae754ef47f0885984ca44a7bd",
+        "sha256:75c2b420906db31f4d75abed4d73c7dba5003d2baa22a03c5b5a9389e1fdd16b",
+        "sha256:a2a63a39b107293b8f435dcd5004fddcd7fd867296c252406a0a49852852db2a",
+        "sha256:20c45840c292d2931023c97784cf2529d44e6339a369130d89a69ee582ab96d2",
+        "sha256:a90fd457737920a68cfc55dc1f8fdf1e88b45e0b5088771f7d3d9c3c20802c7c",
+        "sha256:c306386f1abd1b373c404ae22633565be10d2ecadaf7a8b072a16a7dcacffd74",
+        "sha256:598995d956023618909c5fc321838eb45f790b3e91612c196015547b31478845",
+        "sha256:b05457b622259a0566066fcfad598f0e93b08b668b3122bfc6d9288bb358aefb",
+        "sha256:50dd499321a2e538dc3dfec16cb1c3f32c70bc3b34c38e2d4e6f631f09ee8b27",
+        "sha256:074d170251addbc56cf6395102853b08cd26f947f2fa4d886326d95eb91c4968",
+        "sha256:a9539c62694214ba5545952bcdecfc5dcbca23d8ae6d5962019a8ea37a102ab3",
+        "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+        "sha256:28691ffedc81fe7eea57dcc0a843be2cac5acb42d10de9d85071f4fc4f33d9fd",
+        "sha256:24bc817b5f77b21ed5901d0c2589aa8ea488e758f6b6770305fb6f96b75e26c3",
+        "sha256:7b0332db157096427b941d4c5189208a4aa69fc4fbb1c9a566e6653cc3c05c71",
+        "sha256:aeda29fbc5074bcd24d3e0ae051b00d9614cf91b4e8917859a0567bd8602fca9",
+        "sha256:880ce1e343469de47a203fbaf2c0c513143ca3d077240df828023969c8449b31",
+        "sha256:10cd2d950eb6f6882072296869f150aed143fe128ce15195d922dcf1e63ab126",
+        "sha256:d3adeefe061139991a9179e88a5533b33a9f1c33f7fe32e2c7de3dfb5a7f1c29",
+        "sha256:e28bb6f0f51fd88c664dfff25c780f03222a7b84053bdfe5fbfe9172b5d31b4f",
+        "sha256:5c709c895f3e10bc57aa4eff7bc970f3099b837b01d3ec8d49bd0943ed21ae22",
+        "sha256:e0281fcb02c62b19d35374a0ca88dd4fbeeaf2ba3de7778adf0fe3888b7b0797",
+        "sha256:a60d19135ae16b19fb6ef817a98e90cd05ab9b5bc3a732e290edfa4f4c36d565",
+        "sha256:d652d4a4f9ec41d68bddb18c408a5c4f1d50316e47d693d905ff6e0e4beaee48",
+        "sha256:a6ff669afb5aacede3e747a6f375c2ea9aca79fe99ff35f29ae54ec94bb89b27",
+        "sha256:6e3775ddb194b0b0afb24a60d6018e4ae30ce9ac5bccfc2d6fe7e4cca4a8f942",
+        "sha256:71bc371d257dc7492bebafab42ba9fa9eea22cbfa148eb5193333ad045574100",
+        "sha256:b8e61556a99b06c3f3c4387f178cf659a5fc1924e1b12c6bae7619550f64085d",
+        "sha256:740a533effa1ead6188b7de23f40ac57f5023b83f375783c9b70fa42b1150318",
+        "sha256:7ae18ec5e69a4b67d074080828d406bacc3a28ab3b8637d54fab857f3002f540",
+        "sha256:5c9438e5071c56cda5062e3c1b876dc3843f877af89dc2160690814414fdafa8",
+        "sha256:3da264270b495faa05d49ba28c1dc57f5da5523bad7ff4b10f2fd6d50f4199e3",
+        "sha256:81b1deca8c2b4baf1ceb9df41c5cda5a562f0c1b14c3cc6ff429d36dafa53b11",
+        "sha256:1ac0af9439e2f689b89904dca0a0505f8b4035022720208f9b1d8e4e4168ba38",
+        "sha256:b7b53c2b5d62b82adb072b3dc2afa06c6f536194864d605007ff1992f60f4989",
+        "sha256:000fe267bbdd8560ba564e71098ced2a2863312bd1866124bcf47ef5524b8fb7",
+        "sha256:5429327c37a4d21be4d884c7c4f26ccc8d5404deafefe0612c8a3ae5d87e11c5",
+        "sha256:a9f29b95808177eb3b9dce5fc0eacd716f8ba61e29eced8fd7c349a6803711a9",
+        "sha256:055c156d60fdb054562be160be5f10ef154e510f929f3088a74805e2801349e0",
+        "sha256:dae5b8ca6a934dedf32ef55f897be35c8d35c619f90f2aa205da67cf4d8c59cc",
+        "sha256:e14c3ee6a82a1cdf00a016ca18b05cef666f9aca48cea898d4902f7bcf1446fa",
+        "sha256:3f518c1031053e70afefed1886b03cc3fa061be583829c8c10a5f77b01723938",
+        "sha256:302cd4f8ea01166c85c26a2e0384940ed0073e1033e85ac4838c82e1e1b0f816",
+        "sha256:0d2c410abee71be39c95ec699ef04956b83144243776c05eeb1b75b5d48524d8",
+        "sha256:5526ddf1b1886ba7d1686ccc88ec485013319767acbeac23969fdbb07e6e8513",
+        "sha256:d1cb47d6bb26a47777b53eccd8b1bd675d90cd7cb356f195cbe169db61051801",
+        "sha256:d797a6719a021a8f3b8ae1bfe752c6320ea759d6a4e5b141a16f4fc73d892cb5",
+        "sha256:146c2f1c564657bd338214534912a975877a26e440110cfd210519172b596af3",
+        "sha256:6c561e9a51c681b771c3aea091f9dbcc5efbad03b16fabd43cf34fb8157ed364",
+        "sha256:a16b6575f513ad942ecbd973e8352153a8f1ceea559d1a58d018c1721e04c3ef",
+        "sha256:d8480ccd9c06747eaa9149aea536fa3c0ef423b86918ef72034e0beff4927a10",
+        "sha256:05ab9e4b4df799b0b1ee37925665eb29817d72c635a267dce9be76f5f4d22dc0",
+        "sha256:8f03afe3e439fb27828af798c4da4fa09d8ea9af843d8fc3b0e7aa5a2c36923e",
+        "sha256:b1724639e1bf460a748842761c1ded64b54a4cfb404343aca36079d56ee5dbbf",
+        "sha256:4a643e168f229a2f908006f84732e6de2f2890dc8670c116b4dd0cf40e2d0319",
+        "sha256:5fdf6ef8bef78ed3e201dd411534fc3cdd5674e02cc8bbce4d85777c5c735e11",
+        "sha256:bd2909f23f1d920a60f218d5308e781236fa89bb207bb560412f486677aec729",
+        "sha256:260c82cb29d7ca5a2849b11eb4ae76f43bcb1734698b0368604675b793e4a853"
+      ],
+      "Type": "layers"
+    },
+    "environment_changes": {
+      "B70_POLICY_SHA256": [
+        "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+        "1bf624713cff3583148a71c3b4fb9189268cc5d4a47afca03662ce25be3e7839"
+      ],
+      "EXL3_SDPA_CACHE_CAPACITY": [
+        null,
+        "64"
+      ]
+    },
+    "effective_partition_cache_capacity": 64,
+    "note": "Only labels, policy identity env, optional explicit reviewed cache capacity and default profile CMD differ. Frozen optimized YAML unchanged; no rebuild or tensor change."
+  },
+  "serving": {
+    "scenarios": 20,
+    "waves": 70,
+    "requests": 124,
+    "preemptions": 0,
+    "summary_sha256": "9dc0db6adfdedc8a955e2843b922d867944b7cb215c71212e79e71570e9b51f3"
+  },
+  "operations": {
+    "loader": {
+      "path": "benchmark-results/exl3-review-release-v2/qualification/operations/serving/loader/loader-67.json",
+      "sha256": "21288008cf4a7d975209860e206d9177f854c17b93c125d57e58550f0f2e3a98",
+      "loaded_modules": 409,
+      "mtp_loaded": 8
+    },
+    "cases": {
+      "api": {
+        "status": "PASS",
+        "checks": [
+          "text",
+          "stream",
+          "tool",
+          "reasoning",
+          "image",
+          "images_at_limit",
+          "over_image_limit",
+          "prefix_first",
+          "prefix_extension",
+          "prefix_native",
+          "after_abort",
+          "c4_usage",
+          "limits"
+        ],
+        "image_limit": 32,
+        "video_limit_configured": 4,
+        "abort_note": "client disconnected after first streamed content; correlate trace with scheduler abort",
+        "c4_note": "four simultaneous small requests; full long-context C4 load remains a separate release gate"
+      },
+      "media": {
+        "status": "PASS",
+        "responses": {
+          "videos_1": {
+            "id": "chatcmpl-b4fce815cbdb3e94",
+            "object": "chat.completion",
+            "created": 1790945031,
+            "model": "Qwen3.8-27B",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "Red",
+                  "refusal": null,
+                  "annotations": null,
+                  "audio": null,
+                  "function_call": null,
+                  "reasoning": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop",
+                "stop_reason": null,
+                "token_ids": null,
+                "routed_experts": null
+              }
+            ],
+            "service_tier": null,
+            "system_fingerprint": "vllm-0.30.0-07c92e33",
+            "usage": {
+              "prompt_tokens": 202,
+              "total_tokens": 204,
+              "completion_tokens": 2,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "prompt_logprobs": null,
+            "prompt_token_ids": null,
+            "prompt_text": null,
+            "kv_transfer_params": null,
+            "ec_transfer_params": null,
+            "metrics": null
+          },
+          "videos_4": {
+            "id": "chatcmpl-887729f5a3afef68",
+            "object": "chat.completion",
+            "created": 1790945031,
+            "model": "Qwen3.8-27B",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "Red",
+                  "refusal": null,
+                  "annotations": null,
+                  "audio": null,
+                  "function_call": null,
+                  "reasoning": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop",
+                "stop_reason": null,
+                "token_ids": null,
+                "routed_experts": null
+              }
+            ],
+            "service_tier": null,
+            "system_fingerprint": "vllm-0.30.0-07c92e33",
+            "usage": {
+              "prompt_tokens": 736,
+              "total_tokens": 738,
+              "completion_tokens": 2,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "prompt_logprobs": null,
+            "prompt_token_ids": null,
+            "prompt_text": null,
+            "kv_transfer_params": null,
+            "ec_transfer_params": null,
+            "metrics": null
+          },
+          "over_video_limit": {
+            "status": 400,
+            "error": "{\"error\":{\"message\":\"At most 4 video(s) may be provided in one prompt. (parameter=video)\",\"type\":\"BadRequestError\",\"param\":\"video\",\"code\":400}}"
+          },
+          "oversized_image": {
+            "id": "chatcmpl-90cfad8bcf370767",
+            "object": "chat.completion",
+            "created": 1790945032,
+            "model": "Qwen3.8-27B",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "Red",
+                  "refusal": null,
+                  "annotations": null,
+                  "audio": null,
+                  "function_call": null,
+                  "reasoning": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop",
+                "stop_reason": null,
+                "token_ids": null,
+                "routed_experts": null
+              }
+            ],
+            "service_tier": null,
+            "system_fingerprint": "vllm-0.30.0-07c92e33",
+            "usage": {
+              "prompt_tokens": 4081,
+              "total_tokens": 4083,
+              "completion_tokens": 2,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "prompt_logprobs": null,
+            "prompt_token_ids": null,
+            "prompt_text": null,
+            "kv_transfer_params": null,
+            "ec_transfer_params": null,
+            "metrics": null
+          }
+        },
+        "video_fixture_sha256": "b860f60fd39a5e806d431e9ffd5e07033191e553fd885d45b2543f1ede28d344",
+        "fixture": "ffmpeg constant-red 320x240,4fps,2s; API decodes real H264 video",
+        "scope": "Small-media count limits and one 6.3MP image; does not promise 32 maximum-area images plus 4 long videos at maximum text context"
+      },
+      "near-limit": {
+        "status": "COMPLETE",
+        "usage": {
+          "prompt_tokens": 261120,
+          "total_tokens": 262144,
+          "completion_tokens": 1024,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "native": {
+          "prompt_tokens": 261120.0,
+          "accepted_tokens": 767.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 307.7244338769815,
+          "completed": 1.0,
+          "decode_seconds": 20.84947963000741,
+          "cached_tokens": 0.0,
+          "prefill_tokens": 261120.0,
+          "draft_tokens": 767.0,
+          "generation_tokens": 1024.0
+        },
+        "native_before": {
+          "draft_tokens": 669.0,
+          "accepted_tokens": 498.0,
+          "preemptions": 0.0,
+          "prompt_tokens": 25393.0,
+          "cached_tokens": 3200.0,
+          "generation_tokens": 706.0,
+          "completed": 16.0,
+          "prefill_seconds": 17.420767397008603,
+          "decode_seconds": 14.868752328882692,
+          "prefill_tokens": 22172.0
+        },
+        "native_after": {
+          "draft_tokens": 1436.0,
+          "accepted_tokens": 1265.0,
+          "preemptions": 0.0,
+          "prompt_tokens": 286513.0,
+          "cached_tokens": 3200.0,
+          "generation_tokens": 1730.0,
+          "completed": 17.0,
+          "prefill_seconds": 325.1452012739901,
+          "decode_seconds": 35.7182319588901,
+          "prefill_tokens": 283292.0
+        },
+        "wall_s": 328.61883266901714,
+        "prompt_ids_sha256": "e8ac906288c498948179c06caab723a3256ece84484faa827f250c35ce8cd17d",
+        "prompt_recipe": "repeat frozen /tokenize code/prose token IDs to exactly 261120; output 1024; total 262144",
+        "qualification": "instrumented capacity diagnostic; preemptions preserved for analysis, not silently accepted"
+      },
+      "c4-long": {
+        "status": "PASS",
+        "usage": [
+          {
+            "prompt_tokens": 32768,
+            "total_tokens": 33024,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 32768,
+            "total_tokens": 33024,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 32768,
+            "total_tokens": 33024,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 32768,
+            "total_tokens": 33024,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          }
+        ],
+        "native": {
+          "prompt_tokens": 131072.0,
+          "accepted_tokens": 768.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 83.09848695201799,
+          "completed": 4.0,
+          "decode_seconds": 110.38994113798253,
+          "cached_tokens": 0.0,
+          "prefill_tokens": 131072.0,
+          "draft_tokens": 768.0,
+          "generation_tokens": 1024.0
+        },
+        "request_sha256": [
+          "61312be016d9f6b43bb6b33bf6b9765fe65522a46c7f345b6239c557d09a00db",
+          "318f985cff39252247feaff983fe5afebcb4b840a9ecf3e0e9fca01af92bbe50",
+          "37d23dec5f89249116998fd64f6f91a3b80ebc5161869a88c48c4e1bb9ffa657",
+          "18a39981aca219b8cfda64eb30c9e3b184a9d2cb2ada3d8955e3c3056366bc41"
+        ],
+        "preemption_policy": "require-zero",
+        "purpose": "4 simultaneous independent 32768-token prompts; fixed output 256 each; not a claim of 4 simultaneous maximum-context sequences"
+      },
+      "c16-long": {
+        "status": "PASS",
+        "usage": [
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          }
+        ],
+        "native": {
+          "prompt_tokens": 131072.0,
+          "accepted_tokens": 2963.0,
+          "preemptions": 4.0,
+          "prefill_seconds": 119.99073403916555,
+          "completed": 16.0,
+          "decode_seconds": 499.74328350200085,
+          "cached_tokens": 0.0,
+          "prefill_tokens": 131072.0,
+          "draft_tokens": 3381.0,
+          "generation_tokens": 4096.0
+        },
+        "request_sha256": [
+          "08ea262450a09f400f15b5465c5bcec359ded5c74d7f0df8ed55a87c54aa7d92",
+          "23ca6548b8439010b8a365d972eed721d7dbd36106f440ef1e8809c7f274042e",
+          "4ea49950f51506dfefd1750c09ebad41bcfa18224edf0fae65fb01d2a8b3911c",
+          "fd63873c8f9ba9a1b53ca7235f9b74a3d435a47c7e54bd3c7b9c7d2515b113e1",
+          "61a5a519c47764747e9595e68d88824bec64d6da9791d153534524cd592f97e2",
+          "cb30aeb880c00d96c0df58a8273b1948b7cae6a7ec34d038847f6e72ab87b183",
+          "5f62aa66e700955de66b83a6b558d5ed088f8780ca3ef6c04c7cf87b91323f77",
+          "bcb2c3687da82b1dc46395c3e1843754894ef3da9d680ef708bf1deb54709cfc",
+          "27063c40a623838b8cf81897f71bee8088f148ea88eebcab65dd13a8a209d0cf",
+          "9a28d1bc05a9c5387a95b35f2c3b9f1e92026c3c0374dfd2b843bbdeb87b0097",
+          "deb31a3e7f8cb143c5b9b8f7697f225c15a45bc4a78efc73721fbcae109e240b",
+          "bb39dd9e294955ee377847986828d7dbcee980d51fa312a6fe84594a41bca22b",
+          "d0f70020edeb3cafaa268799e72b9464cca333e82c6e3a95580e4c7c045284fc",
+          "9ab03a2d4304cbb75f33a0bb4fd49d495836289b6d36c51f505c08b7cc8c535f",
+          "eb22e02e1f43a32d644c2c89175a98139c8862ff97a2afd96d7111bafd994b8b",
+          "4150e7aeb8927063325738fdbb1524af42e6043d5afb5cbb90ff7bcfe1d7cac7"
+        ],
+        "preemption_policy": "record-pressure",
+        "purpose": "16 simultaneous independent 8192-token prompts; fixed output 256 each; not a claim of 16 simultaneous maximum-context sequences"
+      },
+      "image-long": {
+        "status": "PASS",
+        "response": {
+          "id": "chatcmpl-9e2ce06499c3cd34",
+          "object": "chat.completion",
+          "created": 1790945512,
+          "model": "Qwen3.8-27B",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Red",
+                "refusal": null,
+                "annotations": null,
+                "audio": null,
+                "function_call": null,
+                "reasoning": null
+              },
+              "logprobs": null,
+              "finish_reason": "stop",
+              "stop_reason": null,
+              "token_ids": null,
+              "routed_experts": null
+            }
+          ],
+          "service_tier": null,
+          "system_fingerprint": "vllm-0.30.0-07c92e33",
+          "usage": {
+            "prompt_tokens": 119093,
+            "total_tokens": 119095,
+            "completion_tokens": 2,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "prompt_logprobs": null,
+          "prompt_token_ids": null,
+          "prompt_text": null,
+          "kv_transfer_params": null,
+          "ec_transfer_params": null,
+          "metrics": null
+        },
+        "native": {
+          "prompt_tokens": 119093.0,
+          "accepted_tokens": 3.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 90.65998971799854,
+          "completed": 1.0,
+          "decode_seconds": 0.06076389900408685,
+          "cached_tokens": 0.0,
+          "prefill_tokens": 119093.0,
+          "draft_tokens": 3.0,
+          "generation_tokens": 2.0
+        },
+        "purpose": "One allowed image in a long context"
+      },
+      "extension-abort-long": {
+        "status": "PASS",
+        "first_usage": {
+          "prompt_tokens": 50033,
+          "total_tokens": 50061,
+          "completion_tokens": 28,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "extension_usage": {
+          "prompt_tokens": 50038,
+          "total_tokens": 50075,
+          "completion_tokens": 37,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "extension_native": {
+          "prompt_tokens": 50038.0,
+          "accepted_tokens": 28.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 1.4297819409985095,
+          "completed": 1.0,
+          "decode_seconds": 0.5330184869817458,
+          "cached_tokens": 48000.0,
+          "prefill_tokens": 2038.0,
+          "draft_tokens": 30.0,
+          "generation_tokens": 37.0
+        },
+        "restart": {
+          "id": "chatcmpl-a71f3488d6b95ea7",
+          "object": "chat.completion",
+          "created": 1790945637,
+          "model": "Qwen3.8-27B",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "```json\n{\n  \"ALPHA\": 17,\n  \"BETA\": 29,\n  \"sum\": 46\n}\n```",
+                "refusal": null,
+                "annotations": null,
+                "audio": null,
+                "function_call": null,
+                "reasoning": null
+              },
+              "logprobs": null,
+              "finish_reason": "stop",
+              "stop_reason": null,
+              "token_ids": null,
+              "routed_experts": null
+            }
+          ],
+          "service_tier": null,
+          "system_fingerprint": "vllm-0.30.0-07c92e33",
+          "usage": {
+            "prompt_tokens": 50036,
+            "total_tokens": 50073,
+            "completion_tokens": 37,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "prompt_logprobs": null,
+          "prompt_token_ids": null,
+          "prompt_text": null,
+          "kv_transfer_params": null,
+          "ec_transfer_params": null,
+          "metrics": null
+        },
+        "purpose": "Long prefix extension and client abort/restart; trace must confirm FINISHED_ABORTED"
+      },
+      "independent32-max-area-images": {
+        "status": "PASS",
+        "usage": {
+          "prompt_tokens": 131164,
+          "total_tokens": 131166,
+          "completion_tokens": 2,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "native": {
+          "prompt_tokens": 131164.0,
+          "accepted_tokens": 3.0,
+          "preemptions": 0.0,
+          "prefill_seconds": 159.1005283810082,
+          "completed": 1.0,
+          "decode_seconds": 0.0646179509931244,
+          "cached_tokens": 0.0,
+          "prefill_tokens": 131164.0,
+          "draft_tokens": 3.0,
+          "generation_tokens": 2.0
+        },
+        "unique_images": 32,
+        "pixels_each": 4194304,
+        "fixture_sha256": [
+          "19cebdd9ca639a6f0e426d062569b636af951e3a9eaf461ac24154b1ee5ff28d",
+          "e806acc4a43195a9f8408d43e9330d311b04d6ec11501ad950e44a8fd4a67eb2",
+          "96cda4d2b7f824ed6c5231dffe0add4a3f2fdc3cbfe4523b463d98ce8958fd08",
+          "2393c779b376dea20795dae28e40ac41c78f3009ece8dc51dea38340554ca277",
+          "4620ffd781dae975452d60cf2ec5fd23baf3c54df3772597a488815e8fe349c3",
+          "f1cd43ec289b24c46ffa1ae762ab5f06a3cfb70820fa8d4e57b3912814a60e52",
+          "2b02950a80a954fdbd9375ca59d144d5346c0bdce96271aee9bf88fe1a8fe018",
+          "d77052dc702bb05a8d9a3817f8f60a61f58933b910e1f62bddc9309f7686bcc2",
+          "7030ff8a466f66731335ada8efef5a4ab765c22b8842db79d343ab54a28d0def",
+          "178c16a14cce004a6bf62ae59b6a1277d772d1c32de4d272e114ce301a3d87f3",
+          "f9674b525d92a9d6d3bbb3b04f0f40ecdce71e63114aadccd0a0469459cbc01e",
+          "c1e436a2e88ccafe13fb46bb756cb842625276c19e941010295a05a63bda4ef9",
+          "557d2117bc2789e74f0fde42201d30ed693f59f8d702ccb7bc6eae6500509a2f",
+          "c12ebb9e7ee33c215cf4c293ee9bdc4424b0ad1e8f661f6eacde0d988143fe0d",
+          "3d3189f40efeb79a3a1173f824484be81f02a628a29ec44500d93ccbfb8b30d3",
+          "15e1465ab8689cacefe075f7299fa99c6f89d019877be3b16da788c7dc2e9477",
+          "d795d96d34bb7fdff4062b48f63dc9501e802c07abc1505c984d5d18ffa4795a",
+          "3394edb324a4acad80c486509a2664a183859e0a934932930ad2312b0bc20c19",
+          "1152d7e4d3300ba4e028cb14fa7d7054d32f14345d79a86fb0215316382d7f7c",
+          "26a523e20ae7a05bb392bfc9e9dd4adf70b9435611ebe6ad8b836e28f14a5ae0",
+          "5d82116ff166a761b020dae56b2063ee3f383997a0f5da7b30b6f1ec4a67c8c4",
+          "da561aff1a6c60b9b17c44daadd6528032cd6cb0e9011c38d777210317fb2733",
+          "b3d3ccb7cee89fe27336d5c1ed3ed7edf6fe804ff12c2d9b4f5055e42b22f60f",
+          "7f0e8d82689b59b5a2e313a7bb8b37df5305ac2ddc431a4a9f32b6389162194d",
+          "d259f3f13f18cf4e584b52a300c17b32a8cc9283d1768120b620d66d6cba1e02",
+          "7e96173ca345f8565b97921ee414ed462ef3986a19bbcd99a3b15c07fb8e051c",
+          "12356e63363552bd560e6f6407da83eac41054777d1723c709178e4c53911769",
+          "e858021e13c2ac9d941c64c5f7a61d418b68893e65e71af3a171799e7965c0f0",
+          "176fe25f14f90de59f57693153a9a5458fd1a119caeca6fc2ad5aa61f8849f23",
+          "57e5c685f20f84374e87ae76d746c6e374e7f6f64f94062b738ceabf2fb75d33",
+          "498ad648b6e126d08e0dff65fc8251da5a203859bcde595b8a645981931b38b7",
+          "b965479517d27b87f7772d761de61b00d6afef7826555a346f20003efed96617"
+        ]
+      },
+      "worker-restart": {
+        "status": "PASS",
+        "loader": {
+          "path": "benchmark-results/exl3-review-release-v2/qualification/operations/restarted/loader/loader-67.json",
+          "sha256": "21288008cf4a7d975209860e206d9177f854c17b93c125d57e58550f0f2e3a98",
+          "loaded_modules": 409,
+          "mtp_loaded": 8
+        },
+        "reply": "Paris"
+      }
+    },
+    "confirmed_abort_trace_occurrences": 2,
+    "status": "PASS_EXACT_IMAGE_OPERATIONAL_GATES"
+  },
+  "matched_comparison": {
+    "status": "PASS_MATCHED_SERVING_SCREEN",
+    "initial": [
+      {
+        "label": "short-c1",
+        "decode_change_pct": 0.788896854345067,
+        "ttft_change_pct": 0.04947959025609627,
+        "trigger": false
+      },
+      {
+        "label": "long-c1",
+        "decode_change_pct": -0.013438898417794665,
+        "ttft_change_pct": 0.24878647298980372,
+        "trigger": false
+      },
+      {
+        "label": "short-c4",
+        "decode_change_pct": 0.49132102135636124,
+        "ttft_change_pct": 0.055300505372457565,
+        "trigger": false
+      },
+      {
+        "label": "moderate-c4",
+        "decode_change_pct": -0.13520412676567561,
+        "ttft_change_pct": 0.3606107362323474,
+        "trigger": false
+      },
+      {
+        "label": "mixed-c4",
+        "ttft_change_pct": 0.14689996479035905,
+        "p95_stream_gap_change_pct": -0.005110075744518827,
+        "trigger": false
+      }
+    ],
+    "repeat": [],
+    "arms": [
+      {
+        "role": "v1",
+        "image_id": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+        "waves": [
+          {
+            "label": "short-c1",
+            "result": {
+              "window": "code-4096",
+              "domain": "code",
+              "context_tokens": 4096,
+              "concurrency": 1,
+              "cache_mode": "cold",
+              "wall_s": 9.155736930988496,
+              "native": {
+                "prompt_tokens": 4096.0,
+                "accepted_tokens": 348.0,
+                "preemptions": 0.0,
+                "prefill_seconds": 1.7618198420095723,
+                "completed": 1.0,
+                "decode_seconds": 7.369055307994131,
+                "cached_tokens": 0.0,
+                "prefill_tokens": 4096.0,
+                "draft_tokens": 492.0,
+                "generation_tokens": 512.0
+              },
+              "speculative_rounds_sum": 164.0,
+              "accepted_tokens_by_position": {
+                "0": 141.0,
+                "1": 114.0,
+                "2": 93.0
+              },
+              "accepted_per_round_by_position": {
+                "0": 0.8597560975609756,
+                "1": 0.6951219512195121,
+                "2": 0.5670731707317073
+              },
+              "generated_tokens_per_round": 3.1219512195121952,
+              "mean_acceptance_length": 3.1219512195121952,
+              "native_prefill_tps": 2324.868810268369,
+              "native_request_weighted_decode_tps": 69.47973364300441,
+              "wave_aggregate_output_tps": 55.92122227399145,
+              "client_decode_interval_union_s": 7.367648027982796,
+              "client_aggregate_decode_tps": 69.49300483076709,
+              "native_ttft_seconds_sum": 1.7848515510559082,
+              "client_ttft_s": [
+                1.7875350130198058
+              ],
+              "energy_j": 1647.406189,
+              "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+              "joules_per_output_token": 3.217590212890625,
+              "load_classification": "no_observed_preemption",
+              "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+            }
+          },
+          {
+            "label": "long-c1",
+            "result": {
+              "window": "code-102752",
+              "domain": "code",
+              "context_tokens": 102752,
+              "concurrency": 1,
+              "cache_mode": "cold",
+              "wall_s": 82.92567150198738,
+              "native": {
+                "prompt_tokens": 102752.0,
+                "accepted_tokens": 337.0,
+                "preemptions": 0.0,
+                "prefill_seconds": 72.50940736901248,
+                "completed": 1.0,
+                "decode_seconds": 10.391947694006376,
+                "cached_tokens": 0.0,
+                "prefill_tokens": 102752.0,
+                "draft_tokens": 525.0,
+                "generation_tokens": 512.0
+              },
+              "speculative_rounds_sum": 175.0,
+              "accepted_tokens_by_position": {
+                "0": 148.0,
+                "1": 110.0,
+                "2": 79.0
+              },
+              "accepted_per_round_by_position": {
+                "0": 0.8457142857142858,
+                "1": 0.6285714285714286,
+                "2": 0.4514285714285714
+              },
+              "generated_tokens_per_round": 2.9257142857142857,
+              "mean_acceptance_length": 2.9257142857142857,
+              "native_prefill_tps": 1417.085089070966,
+              "native_request_weighted_decode_tps": 49.26891619126407,
+              "wave_aggregate_output_tps": 6.1742038469683,
+              "client_decode_interval_union_s": 10.361435164988507,
+              "client_aggregate_decode_tps": 49.4140041265768,
+              "native_ttft_seconds_sum": 72.52181792259216,
+              "client_ttft_s": [
+                72.56084095800179
+              ],
+              "energy_j": 14926.486633,
+              "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+              "joules_per_output_token": 29.153294205078126,
+              "load_classification": "no_observed_preemption",
+              "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+            }
+          },
+          {
+            "label": "short-c4",
+            "result": {
+              "window": "code-4096",
+              "domain": "code",
+              "context_tokens": 4096,
+              "concurrency": 4,
+              "cache_mode": "cold",
+              "wall_s": 16.307166130980477,
+              "native": {
+                "prompt_tokens": 16384.0,
+                "accepted_tokens": 1425.0,
+                "preemptions": 0.0,
+                "prefill_seconds": 13.543422601942439,
+                "completed": 4.0,
+                "decode_seconds": 44.44119581198902,
+                "cached_tokens": 0.0,
+                "prefill_tokens": 16384.0,
+                "draft_tokens": 1869.0,
+                "generation_tokens": 2048.0
+              },
+              "speculative_rounds_sum": 623.0,
+              "accepted_tokens_by_position": {
+                "0": 553.0,
+                "1": 471.0,
+                "2": 401.0
+              },
+              "accepted_per_round_by_position": {
+                "0": 0.8876404494382022,
+                "1": 0.7560192616372392,
+                "2": 0.6436597110754414
+              },
+              "generated_tokens_per_round": 3.287319422150883,
+              "mean_acceptance_length": 3.287319422150883,
+              "native_prefill_tps": 1209.7385189509007,
+              "native_request_weighted_decode_tps": 46.08336842834246,
+              "wave_aggregate_output_tps": 125.58895785756387,
+              "client_decode_interval_union_s": 13.37912215301185,
+              "client_aggregate_decode_tps": 153.0743180739226,
+              "native_ttft_seconds_sum": 18.943668365478516,
+              "client_ttft_s": [
+                6.925225245999172,
+                2.9267903580039274,
+                5.082926063972991,
+                4.023723045014776
+              ],
+              "energy_j": 2937.526245,
+              "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+              "joules_per_output_token": 1.4343389868164063,
+              "load_classification": "no_observed_preemption",
+              "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+            }
+          },
+          {
+            "label": "moderate-c4",
+            "result": {
+              "window": "code-32768",
+              "domain": "code",
+              "context_tokens": 32768,
+              "concurrency": 4,
+              "cache_mode": "cold",
+              "wall_s": 77.99138217998552,
+              "native": {
+                "prompt_tokens": 131072.0,
+                "accepted_tokens": 1412.0,
+                "preemptions": 0.0,
+                "prefill_seconds": 83.15687850798713,
+                "completed": 4.0,
+                "decode_seconds": 139.08854132000124,
+                "cached_tokens": 0.0,
+                "prefill_tokens": 131072.0,
+                "draft_tokens": 1899.0,
+                "generation_tokens": 2048.0
+              },
+              "speculative_rounds_sum": 633.0,
+              "accepted_tokens_by_position": {
+                "0": 556.0,
+                "1": 471.0,
+                "2": 385.0
+              },
+              "accepted_per_round_by_position": {
+                "0": 0.8783570300157978,
+                "1": 0.7440758293838863,
+                "2": 0.608214849921011
+              },
+              "generated_tokens_per_round": 3.235387045813586,
+              "mean_acceptance_length": 3.230647709320695,
+              "native_prefill_tps": 1576.2015404102822,
+              "native_request_weighted_decode_tps": 14.724433663360973,
+              "wave_aggregate_output_tps": 26.259311513081077,
+              "client_decode_interval_union_s": 60.275478883006144,
+              "client_aggregate_decode_tps": 33.977332705645345,
+              "native_ttft_seconds_sum": 169.32283234596252,
+              "client_ttft_s": [
+                34.25804631502251,
+                50.98215401999187,
+                66.44399883199367,
+                17.711538846982876
+              ],
+              "energy_j": 14037.910766,
+              "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+              "joules_per_output_token": 6.854448616210938,
+              "load_classification": "no_observed_preemption",
+              "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+            }
+          }
+        ],
+        "mixed": {
+          "status": "COMPLETE",
+          "decoders": 3,
+          "total_admitted": 4,
+          "wall_s": 95.65016581700183,
+          "native": {
+            "prompt_tokens": 61440.0,
+            "accepted_tokens": 9106.0,
+            "preemptions": 0.0,
+            "prefill_seconds": 38.08360500598792,
+            "completed": 4.0,
+            "decode_seconds": 276.2931794990145,
+            "cached_tokens": 0.0,
+            "prefill_tokens": 61440.0,
+            "draft_tokens": 10323.0,
+            "generation_tokens": 12544.0
+          },
+          "incoming_prefill_client_s": 27.468990246998146,
+          "during_incoming_prefill_burst_gaps_s": {
+            "count": 57,
+            "p50": 1.6339209639991168,
+            "p95": 2.060106143786106,
+            "maximum": 2.1096819149970543
+          },
+          "note": "SSE burst gaps on existing decode streams during cold49K prefill; not per-token GPU timing. ABBA changes only guarded prefill, M04 remains on."
+        }
+      },
+      {
+        "role": "candidate",
+        "image_id": "sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918",
+        "waves": [
+          {
+            "label": "short-c1",
+            "result": {
+              "window": "code-4096",
+              "domain": "code",
+              "context_tokens": 4096,
+              "concurrency": 1,
+              "cache_mode": "cold",
+              "wall_s": 9.098640931013506,
+              "native": {
+                "prompt_tokens": 4096.0,
+                "accepted_tokens": 352.0,
+                "preemptions": 0.0,
+                "prefill_seconds": 1.7624202340084594,
+                "completed": 1.0,
+                "decode_seconds": 7.311376091995044,
+                "cached_tokens": 0.0,
+                "prefill_tokens": 4096.0,
+                "draft_tokens": 486.0,
+                "generation_tokens": 512.0
+              },
+              "speculative_rounds_sum": 162.0,
+              "accepted_tokens_by_position": {
+                "0": 144.0,
+                "1": 114.0,
+                "2": 94.0
+              },
+              "accepted_per_round_by_position": {
+                "0": 0.8888888888888888,
+                "1": 0.7037037037037037,
+                "2": 0.5802469135802469
+              },
+              "generated_tokens_per_round": 3.1604938271604937,
+              "mean_acceptance_length": 3.1728395061728394,
+              "native_prefill_tps": 2324.07681264759,
+              "native_request_weighted_decode_tps": 70.0278570761214,
+              "wave_aggregate_output_tps": 56.272140408882784,
+              "client_decode_interval_union_s": 7.309722332982346,
+              "client_aggregate_decode_tps": 70.04370024970639,
+              "native_ttft_seconds_sum": 1.7856853008270264,
+              "client_ttft_s": [
+                1.7884194780199323
+              ],
+              "energy_j": 1637.166565,
+              "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+              "joules_per_output_token": 3.197590947265625,
+              "load_classification": "no_observed_preemption",
+              "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+            }
+          },
+          {
+            "label": "long-c1",
+            "result": {
+              "window": "code-102752",
+              "domain": "code",
+              "context_tokens": 102752,
+              "concurrency": 1,
+              "cache_mode": "cold",
+              "wall_s": 83.10878964798758,
+              "native": {
+                "prompt_tokens": 102752.0,
+                "accepted_tokens": 337.0,
+                "preemptions": 0.0,
+                "prefill_seconds": 72.69321173700155,
+                "completed": 1.0,
+                "decode_seconds": 10.393344445008552,
+                "cached_tokens": 0.0,
+                "prefill_tokens": 102752.0,
+                "draft_tokens": 525.0,
+                "generation_tokens": 512.0
+              },
+              "speculative_rounds_sum": 175.0,
+              "accepted_tokens_by_position": {
+                "0": 148.0,
+                "1": 110.0,
+                "2": 79.0
+              },
+              "accepted_per_round_by_position": {
+                "0": 0.8457142857142858,
+                "1": 0.6285714285714286,
+                "2": 0.4514285714285714
+              },
+              "generated_tokens_per_round": 2.9257142857142857,
+              "mean_acceptance_length": 2.9257142857142857,
+              "native_prefill_tps": 1413.5019975695782,
+              "native_request_weighted_decode_tps": 49.26229499166558,
+              "wave_aggregate_output_tps": 6.1605998856271125,
+              "client_decode_interval_union_s": 10.364043723006034,
+              "client_aggregate_decode_tps": 49.40156696400903,
+              "native_ttft_seconds_sum": 72.70370101928711,
+              "client_ttft_s": [
+                72.74136251499294
+              ],
+              "energy_j": 14960.355285,
+              "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+              "joules_per_output_token": 29.219443916015624,
+              "load_classification": "no_observed_preemption",
+              "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+            }
+          },
+          {
+            "label": "short-c4",
+            "result": {
+              "window": "code-4096",
+              "domain": "code",
+              "context_tokens": 4096,
+              "concurrency": 4,
+              "cache_mode": "cold",
+              "wall_s": 16.472056236001663,
+              "native": {
+                "prompt_tokens": 16384.0,
+                "accepted_tokens": 1429.0,
+                "preemptions": 0.0,
+                "prefill_seconds": 13.554161003004992,
+                "completed": 4.0,
+                "decode_seconds": 44.22391442395747,
+                "cached_tokens": 0.0,
+                "prefill_tokens": 16384.0,
+                "draft_tokens": 1857.0,
+                "generation_tokens": 2048.0
+              },
+              "speculative_rounds_sum": 619.0,
+              "accepted_tokens_by_position": {
+                "0": 554.0,
+                "1": 474.0,
+                "2": 401.0
+              },
+              "accepted_per_round_by_position": {
+                "0": 0.8949919224555735,
+                "1": 0.7657512116316639,
+                "2": 0.6478190630048465
+              },
+              "generated_tokens_per_round": 3.308562197092084,
+              "mean_acceptance_length": 3.308562197092084,
+              "native_prefill_tps": 1208.7800931660488,
+              "native_request_weighted_decode_tps": 46.30978570478001,
+              "wave_aggregate_output_tps": 124.33177562397154,
+              "client_decode_interval_union_s": 13.543195182981435,
+              "client_aggregate_decode_tps": 151.21985412818572,
+              "native_ttft_seconds_sum": 18.954522609710693,
+              "client_ttft_s": [
+                4.024977231980301,
+                5.086707899987232,
+                2.92742827400798,
+                6.930892174015753
+              ],
+              "energy_j": 2967.24939,
+              "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+              "joules_per_output_token": 1.4488522412109375,
+              "load_classification": "no_observed_preemption",
+              "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+            }
+          },
+          {
+            "label": "moderate-c4",
+            "result": {
+              "window": "code-32768",
+              "domain": "code",
+              "context_tokens": 32768,
+              "concurrency": 4,
+              "cache_mode": "cold",
+              "wall_s": 78.18363913497888,
+              "native": {
+                "prompt_tokens": 131072.0,
+                "accepted_tokens": 1412.0,
+                "preemptions": 0.0,
+                "prefill_seconds": 83.43661974699353,
+                "completed": 4.0,
+                "decode_seconds": 139.27684936797596,
+                "cached_tokens": 0.0,
+                "prefill_tokens": 131072.0,
+                "draft_tokens": 1899.0,
+                "generation_tokens": 2048.0
+              },
+              "speculative_rounds_sum": 633.0,
+              "accepted_tokens_by_position": {
+                "0": 555.0,
+                "1": 471.0,
+                "2": 386.0
+              },
+              "accepted_per_round_by_position": {
+                "0": 0.8767772511848341,
+                "1": 0.7440758293838863,
+                "2": 0.6097946287519748
+              },
+              "generated_tokens_per_round": 3.235387045813586,
+              "mean_acceptance_length": 3.230647709320695,
+              "native_prefill_tps": 1570.916947468056,
+              "native_request_weighted_decode_tps": 14.704525621405235,
+              "wave_aggregate_output_tps": 26.194738728703374,
+              "client_decode_interval_union_s": 60.38994428201113,
+              "client_aggregate_decode_tps": 33.91293077596124,
+              "native_ttft_seconds_sum": 169.9082989692688,
+              "client_ttft_s": [
+                51.157660851982655,
+                66.6426606499881,
+                34.38992479702574,
+                17.78919746397878
+              ],
+              "energy_j": 14074.546264,
+              "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+              "joules_per_output_token": 6.87233704296875,
+              "load_classification": "no_observed_preemption",
+              "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+            }
+          }
+        ],
+        "mixed": {
+          "status": "COMPLETE",
+          "decoders": 3,
+          "total_admitted": 4,
+          "wall_s": 95.15338164899731,
+          "native": {
+            "prompt_tokens": 61440.0,
+            "accepted_tokens": 9129.0,
+            "preemptions": 0.0,
+            "prefill_seconds": 38.10780824205722,
+            "completed": 4.0,
+            "decode_seconds": 275.3404392899829,
+            "cached_tokens": 0.0,
+            "prefill_tokens": 61440.0,
+            "draft_tokens": 10251.0,
+            "generation_tokens": 12544.0
+          },
+          "incoming_prefill_client_s": 27.50934218399925,
+          "during_incoming_prefill_burst_gaps_s": {
+            "count": 57,
+            "p50": 1.6422031330002937,
+            "p95": 2.060000870801741,
+            "maximum": 2.1098320379969664
+          },
+          "note": "SSE burst gaps on existing decode streams during cold49K prefill; not per-token GPU timing. ABBA changes only guarded prefill, M04 remains on."
+        }
+      }
+    ],
+    "criteria": "Review triggers: decode slower >5%, TTFT slower >5%, mixed p95 SSE gap higher >10%; repeat only affected case once. Finite deterministic workload, not an SLA or general speed guarantee."
+  },
+  "quality_smoke": {
+    "status": "PASS_COMPACT_REFERENCE_SMOKE",
+    "reference_reused": true,
+    "short": {
+      "windows": 16,
+      "ppl_positions": 16368,
+      "kl_positions": 512,
+      "nll_mean": 1.2938287764063696,
+      "perplexity": 3.646722344692463,
+      "delta_nll": 0.011637606090101508,
+      "perplexity_ratio_to_original": 1.0117055864815843,
+      "kl_mean": 0.03248073565485585,
+      "kl_median": 0.0029088048905310257,
+      "kl_p95": 0.16562007193361064,
+      "kl_p99": 0.5312484964940013,
+      "reverse_kl_mean": 0.029587971848413316,
+      "js_mean": 0.006896480839354825,
+      "top1_agreement": 0.9609375,
+      "delta_nll_ci95": [
+        0.004824681284043797,
+        0.019170312138812762
+      ],
+      "kl_mean_ci95": [
+        0.017744477193470984,
+        0.04946443212112294
+      ],
+      "original_probability_outside_tokenizer_mean": 3.2511450249372214e-08,
+      "checkpoint_probability_outside_tokenizer_mean": 3.583581942170435e-08
+    },
+    "long": {
+      "prefix_tokens": 32768,
+      "suffix_positions": 128,
+      "full_vocabulary_positions": 8,
+      "original_perplexity": 1.1846457377824584,
+      "perplexity": 1.1941938503407235,
+      "kl_mean": 0.0009572604937071014,
+      "top1_agreement": 1.0
+    },
+    "scope": "Fresh candidate short panel plus first existing 32K-prefix suffix window. Long numerical attention/graph tolerances are separately checked by matched-state replay; not a new broad quality campaign.",
+    "short_v1_bitidentical_aggregate_arrays": 32
+  },
+  "reference_provenance": {
+    "short": {
+      "panel_sha256": "cbf1a71bbda470859f2c0786cb7134e260111d2072c4753a6732021dadae6171",
+      "reference_summary_sha256": "08ed7c81b41f18fa575bd4085868fe45864b1102bb1bdeea978f3b4166c06337",
+      "reference_arrays_sha256": {
+        "benchmark-results/quantization-reference-20261001/bf16/window-000-nll.npy": "d84aafb20b0cbb4410c33a17e0bb3684fa8eda030b3484c422ff9a7f8250deab",
+        "benchmark-results/quantization-reference-20261001/bf16/window-000-logprobs.npy": "1832900fc8bd4e48d222a1d8fc4ad9309c40061411c16b9f82852c1b836c8b9e",
+        "benchmark-results/quantization-reference-20261001/bf16/window-001-nll.npy": "56303efc85f1ab3855cae28f3f037a7346ae57923cf4f4a5bf18582ed442343c",
+        "benchmark-results/quantization-reference-20261001/bf16/window-001-logprobs.npy": "5347f05ae1aaff241b899ddc89c62cd6b30bde8097678480f14cf3daa44c8234",
+        "benchmark-results/quantization-reference-20261001/bf16/window-002-nll.npy": "e6f589af998ca963a8cb30b89bf2f7d2c0961f50cb66594d7386a678eaba9c09",
+        "benchmark-results/quantization-reference-20261001/bf16/window-002-logprobs.npy": "7d1513987e9b8907aa78f18482fdabbfecbdcd078492a195a7e99aa1f77e25f9",
+        "benchmark-results/quantization-reference-20261001/bf16/window-003-nll.npy": "18c4c7a7a4735e3aae9c87a2da291a8ff7bf0523d849b38e36152bcd320ef409",
+        "benchmark-results/quantization-reference-20261001/bf16/window-003-logprobs.npy": "e895d266f3897d850357cdde8d5295abad65d521b2bd3e678432dedf156a7658",
+        "benchmark-results/quantization-reference-20261001/bf16/window-004-nll.npy": "5f070fef454c6d81bbcbc93e7a4d094b3f800c4157f145db08555f3a01bf4510",
+        "benchmark-results/quantization-reference-20261001/bf16/window-004-logprobs.npy": "d5f50559cda823c4f25ffe768eefa8d4194b63b659382fa455cdd6a7d83f8822",
+        "benchmark-results/quantization-reference-20261001/bf16/window-005-nll.npy": "962520aa00f99d2be50ee7826762e8d183e95138505740154f92abc0e0909259",
+        "benchmark-results/quantization-reference-20261001/bf16/window-005-logprobs.npy": "b030fd9dd21598a4267e6fe3fdf6bdff63c1e41a4377f682d13849fe4bffbed5",
+        "benchmark-results/quantization-reference-20261001/bf16/window-006-nll.npy": "e6f533a9b3c4af1d46e18dd6f43cb65a652f89ad428f188c3d39538a823bce63",
+        "benchmark-results/quantization-reference-20261001/bf16/window-006-logprobs.npy": "c1bb50023886fec969eb53265b583420cb76461a831a065b71ef5d955cc057d5",
+        "benchmark-results/quantization-reference-20261001/bf16/window-007-nll.npy": "4c93f5bbd51019c08b90ff2f05d783712abb88d1c56375b60884d71cb028e624",
+        "benchmark-results/quantization-reference-20261001/bf16/window-007-logprobs.npy": "b5e03a3fc24181ff5327c12a0ca2e038ab2b06abdebcbfae9b99dd8695d150be",
+        "benchmark-results/quantization-reference-20261001/bf16/window-008-nll.npy": "11c1c9094f1f3f218978d2ee4e1639d1224e569a1412293c223e269e89db3d40",
+        "benchmark-results/quantization-reference-20261001/bf16/window-008-logprobs.npy": "453834d2aa705a752fbaecdf1c2a2b9245db91b9ab888da5187edefff1b5fbbb",
+        "benchmark-results/quantization-reference-20261001/bf16/window-009-nll.npy": "b20d0c43a0f53443bb8a233deb439056c80da9137717428f8513988c3c86a134",
+        "benchmark-results/quantization-reference-20261001/bf16/window-009-logprobs.npy": "468dc21295f418fc4ec1d6ba1b05978655ba645ca975340e9c3111283aaa0ff0",
+        "benchmark-results/quantization-reference-20261001/bf16/window-010-nll.npy": "09bbdafe53b18bc50098d5d9252882c3410d94951a08f9037447de555ffec1b2",
+        "benchmark-results/quantization-reference-20261001/bf16/window-010-logprobs.npy": "7aea5ff69fb2a8cf7d563ebfd55ff921222762461b8ccd0c902699bb80b35bc5",
+        "benchmark-results/quantization-reference-20261001/bf16/window-011-nll.npy": "f7df9b82ce4f59175544fc0cf352b4ec53db21af726abc56ce42ced5441f75ec",
+        "benchmark-results/quantization-reference-20261001/bf16/window-011-logprobs.npy": "bd15cb8259ffadc0794f59e7fde49733f3877fab27216087e8d59c3e24acb7c7",
+        "benchmark-results/quantization-reference-20261001/bf16/window-012-nll.npy": "42c03ccd89638d9d92e759e466d5262cfc52d806047d237d2e2b18bcd4384236",
+        "benchmark-results/quantization-reference-20261001/bf16/window-012-logprobs.npy": "2ea3ba0614e915549cd1cb96937ec7ac4a2908abbe814973f02900d40c3be98e",
+        "benchmark-results/quantization-reference-20261001/bf16/window-013-nll.npy": "e2c15cca8540df13206fb1ecd522572f99fc7d00862c815741da2edba67da5c2",
+        "benchmark-results/quantization-reference-20261001/bf16/window-013-logprobs.npy": "fcbc717d0e30e13a7122f8f3320a519f1b43d431511b84d6cfa30f7cf266e185",
+        "benchmark-results/quantization-reference-20261001/bf16/window-014-nll.npy": "c4975fd9f8a996c186e3d04ff312fed9e39873ab98b8d880c70ae12569cb7911",
+        "benchmark-results/quantization-reference-20261001/bf16/window-014-logprobs.npy": "3e38eca7b8915784d53f4c027fa695bee198d4aaaf2272e149dbca443427dfe9",
+        "benchmark-results/quantization-reference-20261001/bf16/window-015-nll.npy": "fd6f86b0a7d7e0526f852ddacb3e6659dc5fe9f73c61ccd18aaa6c994a92886e",
+        "benchmark-results/quantization-reference-20261001/bf16/window-015-logprobs.npy": "adb51c91fa59b01b93f4053496fc3b3034c9184732b51c501b7a1e5a24c03a39"
+      },
+      "reused_windows": 16,
+      "regenerated": false
+    },
+    "long": {
+      "panel_sha256": "fbb3be674583f1704573d19c55fe5a86187efd35bc4438df2ef100132efeba4d",
+      "reference_summary_sha256": "e64626d0aff49a15c8b7580f12b025fab385ee4311b2b09efb6a3e9f46788591",
+      "reference_arrays_sha256": {
+        "benchmark-results/exl3-long-quality-v3/bf16/window-000-nll.npy": "80356ff617c5051f84df3a198af8e465c2b6f5da85b9615ab0a640f6953aae15",
+        "benchmark-results/exl3-long-quality-v3/bf16/window-000-logprobs.npy": "0cd8aa32abb7aa3e58f9ff32f1d6bf94b4dd1c610aa4c619517d6af522e7d342"
+      },
+      "reused_windows": 1,
+      "regenerated": false
+    }
+  },
+  "candidate_state_replays": [
+    {
+      "label": "prefill",
+      "graph_mode": "NONE",
+      "rows_by_request": [
+        1600,
+        2496
+      ],
+      "local_attention_comparisons": 32,
+      "comparisons": {
+        "native-repeat": {
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "kl_native_to_route_mean": 0.0
+        },
+        "m04": {
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "kl_native_to_route_mean": 0.0
+        },
+        "onednn": {
+          "max_abs": 0.4921875,
+          "rms": 0.07071934640407562,
+          "kl_native_to_route_mean": 0.0012916873674839735
+        },
+        "combined": {
+          "max_abs": 0.4921875,
+          "rms": 0.07071934640407562,
+          "kl_native_to_route_mean": 0.0012916873674839735
+        }
+      }
+    },
+    {
+      "label": "early-mixed",
+      "graph_mode": "NONE",
+      "rows_by_request": [
+        4,
+        896,
+        1600
+      ],
+      "local_attention_comparisons": 32,
+      "comparisons": {
+        "native-repeat": {
+          "max_abs": 0.5,
+          "rms": 0.05041908472776413,
+          "kl_native_to_route_mean": 0.0018944382900372148
+        },
+        "m04": {
+          "max_abs": 0.46484375,
+          "rms": 0.048512641340494156,
+          "kl_native_to_route_mean": 0.0005210796953178942
+        },
+        "onednn": {
+          "max_abs": 0.53125,
+          "rms": 0.06029035896062851,
+          "kl_native_to_route_mean": 0.0035492752213031054
+        },
+        "combined": {
+          "max_abs": 0.5078125,
+          "rms": 0.06412458419799805,
+          "kl_native_to_route_mean": 0.0015594762517139316
+        }
+      }
+    },
+    {
+      "label": "c4-verification",
+      "graph_mode": "FULL",
+      "rows_by_request": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "local_attention_comparisons": 32,
+      "comparisons": {
+        "native-repeat": {
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "kl_native_to_route_mean": 0.0
+        },
+        "m04": {
+          "max_abs": 0.0361328125,
+          "rms": 0.004717235919088125,
+          "kl_native_to_route_mean": 6.62340562485042e-06
+        },
+        "onednn": {
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "kl_native_to_route_mean": 0.0
+        },
+        "combined": {
+          "max_abs": 0.0361328125,
+          "rms": 0.004717235919088125,
+          "kl_native_to_route_mean": 6.62340562485042e-06
+        }
+      }
+    },
+    {
+      "label": "long-prefill",
+      "graph_mode": "NONE",
+      "rows_by_request": [
+        1792
+      ],
+      "local_attention_comparisons": 32,
+      "comparisons": {
+        "native-repeat": {
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "kl_native_to_route_mean": 0.0
+        },
+        "m04": {
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "kl_native_to_route_mean": 0.0
+        },
+        "onednn": {
+          "max_abs": 0.7958984375,
+          "rms": 0.11994068324565887,
+          "kl_native_to_route_mean": 0.006581999361515045
+        },
+        "combined": {
+          "max_abs": 0.7958984375,
+          "rms": 0.11994068324565887,
+          "kl_native_to_route_mean": 0.006581999361515045
+        }
+      }
+    }
+  ],
+  "actual_worker_cache": {
+    "status": "PASS_ACTUAL_WORKER_CACHE_DIAGNOSTIC",
+    "mixed": {
+      "status": "COMPLETE",
+      "decoders": 3,
+      "total_admitted": 4,
+      "wall_s": 103.7179146319977,
+      "native": {
+        "accepted_tokens": 8884.0,
+        "generation_tokens": 12544.0,
+        "decode_seconds": 286.22844640599214,
+        "prompt_tokens": 61440.0,
+        "preemptions": 0.0,
+        "cached_tokens": 0.0,
+        "completed": 4.0,
+        "prefill_tokens": 61440.0,
+        "draft_tokens": 10992.0,
+        "prefill_seconds": 35.35390666004969
+      },
+      "incoming_prefill_client_s": 27.038106709020212,
+      "during_incoming_prefill_burst_gaps_s": {
+        "count": 57,
+        "p50": 1.6062251840194222,
+        "p95": 2.0273509462131183,
+        "maximum": 2.0795388109982014
+      },
+      "note": "SSE burst gaps on existing decode streams during cold49K prefill; not per-token GPU timing. ABBA changes only guarded prefill, M04 remains on."
+    },
+    "requests": 78,
+    "varied_exact_lengths": 70,
+    "observations": 147,
+    "owners": [
+      {
+        "pid": 67,
+        "thread_id": 140552239502080,
+        "stream": "torch.xpu.Stream(device=xpu:0 sycl_queue=0x31c0ee90)",
+        "first": {
+          "pid": 67,
+          "thread_id": 140552239502080,
+          "stream": "torch.xpu.Stream(device=xpu:0 sycl_queue=0x31c0ee90)",
+          "monotonic": 167945.165448616,
+          "exact_kv_tokens": 4096,
+          "query_rows": 2496,
+          "cache": {
+            "capacity": 64,
+            "entries": 1,
+            "hits": 3,
+            "misses": 1,
+            "evictions": 0,
+            "pressure_waits": 0,
+            "compile_microseconds": 7312,
+            "peak_entries": 1,
+            "scale_constants": 1
+          },
+          "rss_bytes": 4628393984,
+          "xpu_allocated_bytes": 29136360960,
+          "xpu_reserved_bytes": 30490492928,
+          "scope": "Actual serving prefill thread/queue; instrumented diagnostic, not throughput"
+        },
+        "last": {
+          "pid": 67,
+          "thread_id": 140552239502080,
+          "stream": "torch.xpu.Stream(device=xpu:0 sycl_queue=0x31c0ee90)",
+          "monotonic": 168250.028423771,
+          "exact_kv_tokens": 6905,
+          "query_rows": 2105,
+          "cache": {
+            "capacity": 64,
+            "entries": 64,
+            "hits": 7937,
+            "misses": 87,
+            "evictions": 23,
+            "pressure_waits": 0,
+            "compile_microseconds": 56288,
+            "peak_entries": 64,
+            "scale_constants": 1
+          },
+          "rss_bytes": 4645228544,
+          "xpu_allocated_bytes": 29004599296,
+          "xpu_reserved_bytes": 30490492928,
+          "scope": "Actual serving prefill thread/queue; instrumented diagnostic, not throughput"
+        },
+        "rss_min_bytes": 4628393984,
+        "rss_max_bytes": 4645265408
+      }
+    ],
+    "scope": "Same inference worker/thread/queue host cache counters; instrumented TTFT/gaps and memory, excluded from serving throughput. Per-context cap, not a global allocator or oneDNN internal-cache limit."
+  },
+  "source_guard_coverage": {
+    "required": 13,
+    "covered": 13,
+    "files": 118
+  },
+  "rollback_image_id": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+  "qualification_retry_provenance": {
+    "campaign_path": "benchmark-results/exl3-review-release-v2/qualification/campaign.json",
+    "campaign_sha256": "3f61a1944240464edf7bcc070c7985060bdb5e56fc0b1f7ff0e259b923a1a0cd",
+    "phases": [
+      "operations",
+      "matched",
+      "quality"
+    ],
+    "prior_status": "FAILED",
+    "prior_error": "CalledProcessError(125, ['docker', 'run', '-d', '--name', 'b70-exl3-review-qualification', '--device', '/dev/dri', '--shm-size', '8g', '-p', '127.0.0.1:8082:8000', '-v', '/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro', '-v', '/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/runtime:/opt/b70-runtime:ro', '-v', '/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-review-release-v2/qualification/telemetry/serving:/results', '-e', 'VLLM_XPU_ENABLE_XPU_GRAPH=1', '-e', 'VLLM_WORKER_MULTIPROC_METHOD=spawn', '-e', 'EXL3_DRAFT_VOCAB=/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json', '-e', 'EXL3_KV_BLOCK_EXACT=0', '-e', 'EXL3_ONEDNN_ATTN=0', '-e', 'EXL3_INT8_PREFILL=1', '-e', 'EXL3_TARGET_RUNTIME=vllm030', '-e', 'EXL3_FIX_SPARSE_GDN_RETIREMENT=0', '-e', 'B70_ONEDNN_PREFILL=0', '-e', 'B70_ONEDNN_MIXED_ROUTE=0', '-e', 'B70_GPTQ_W4A8_PREFILL=0', '-e', 'EXL3_GUARDED_ATTN=1', '-e', 'EXL3_GUARDED_PREFILL=1', '-e', 'EXL3_M04_LIBRARY=/opt/exl3xpu/m04/m04.so', '-e', 'EXL3_M04_LIBRARY_SHA256=eaa18427db27d4fceeca8a17c8a3c6b019b7678f39bf98affc1736b9f2c2d631', '-e', 'EXL3_SDPA_CACHE_CAPACITY=64', '-e', 'B70_REVIEW_CACHE_DIAGNOSTIC=1', '-e', 'HF_HUB_OFFLINE=1', '-e', 'PYTHONPATH=/opt/b70-runtime', '-e', 'ZE_AFFINITY_MASK=0', '-e', 'EXL3_LOADER_REPORT_DIR=/results/loader', '-v', '/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/experiments/exl3-review-release-v2/sitecustomize.py:/opt/b70-runtime/sitecustomize.py:ro', '-v', '/home/sebastian/.cache/exl3xpu/optimized-qualification/8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918/vllm:/root/.cache/vllm', '-v', '/home/sebastian/.cache/exl3xpu/optimized-qualification/8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918/triton:/root/.triton/cache', '-v', '/home/sebastian/.cache/exl3xpu/optimized-qualification/8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918/neo_compiler_cache:/root/.cache/neo_compiler_cache', '--entrypoint', '/opt/venv/bin/vllm', 'sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918', 'serve', '/models/checkpoint', '--served-model-name', 'Qwen3.8-27B', '--host', '0.0.0.0', '--port', '8000', '--revision', '113cf7ab958054860e43fb7f3063b1af19171095', '--dtype', 'float16', '--max-model-len', '262144', '--kv-cache-dtype', 'fp8', '--gpu-memory-utilization', '0.965', '--max-num-seqs', '16', '--max-num-batched-tokens', '4096', '--scheduler-reserve-full-isl', '--watermark', '0.0', '--enable-prefix-caching', '--mamba-cache-mode', 'align', '--speculative-config', '{\"method\":\"mtp\",\"num_speculative_tokens\":3}', '--limit-mm-per-prompt', '{\"image\":32,\"video\":4}', '--mm-processor-kwargs', '{\"max_pixels\":4194304}', '--enable-auto-tool-choice', '--tool-call-parser', 'qwen3_xml', '--reasoning-parser', 'qwen3', '--reasoning-config', '{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}', '--override-generation-config', '{\"max_new_tokens\":16384}', '--middleware', 'request_defaults.ChatDefaults', '--compilation-config', '{\"cudagraph_mode\":\"FULL_DECODE_ONLY\",\"cudagraph_capture_sizes\":[1,2,4,8,12,16,24,32,40,48,56,64]}'])",
+    "scope": "Only completed same-image operating, matched and quality phases retained. Failed diagnostic setup is not a passed check."
+  },
+  "receipts_sha256": {
+    "benchmark-results/exl3-review-release-v2/qualification-retry/campaign.json": "9ec19fd5682c4a1515ef804d0d3bddb997a050cf3170c9af381042436fcaacdb",
+    "benchmark-results/exl3-review-release-v2/serving/campaign.json": "af7f7a01a8ed0239c39ed1a7746a042cca3ed2ea55026200e402591294ee6457",
+    "benchmark-results/exl3-review-release-v2/qualification/campaign.json": "3f61a1944240464edf7bcc070c7985060bdb5e56fc0b1f7ff0e259b923a1a0cd",
+    "config/experiments/exl3-review-release-v2/production_image.json": "9f88964c14ffaceb32ae59a8d45a584655eb19d679de8b0b52427a8f7271f6c3",
+    "benchmark-results/exl3-review-release-v2/qualification-retry/operations/operations.json": "78c5ad1750a40e2e61c69b86843e47e8046687e601623e956dccc875d52b42cc",
+    "benchmark-results/exl3-review-release-v2/qualification-retry/matched/assessment.json": "7706bb043c5dbdd296b6bd79b4634828e1dfded533d57929f0f189fd9641820f",
+    "benchmark-results/exl3-review-release-v2/qualification-retry/quality/quality-smoke.json": "065e1c927cc67a337a10d8d2695343146d0eb89e3c4e5122f137db69703c2caf",
+    "benchmark-results/exl3-review-release-v2/qualification-retry/telemetry/assessment.json": "79fe908a1deb9d406d724338f74a6ec9f75cec917b5e6a5649b95dccecf627bd",
+    "benchmark-results/quantization-reference-20261001/bf16/summary.json": "08ed7c81b41f18fa575bd4085868fe45864b1102bb1bdeea978f3b4166c06337",
+    "benchmark-results/exl3-long-quality-v3/bf16/summary.json": "e64626d0aff49a15c8b7580f12b025fab385ee4311b2b09efb6a3e9f46788591",
+    "benchmark-results/exl3-review-release-v2/qualification-retry/operations/runtime-sources/SOURCE_GUARD_COVERAGE.json": "5331944ebe3b3fae496c02249cc81a8cea88f2959e9e0a14f5357cc20ec027a9",
+    "benchmark-results/exl3-review-release-v2/qualification-retry/operations/runtime-sources/CAPTURE_IDENTITY.json": "37cd0c3228421e9c12a800a41b0bf86f1fe5c18666f644694bbe36accacecc88",
+    "benchmark-results/exl3-review-release-v2/qualification-retry/quality/replay/observations/steps/00-prose-4096-prefill-result.json": "85158e9cdd793b0d36c38f2bf090d91b4472d24c7dae193cc39aa1f8ee730848",
+    "benchmark-results/exl3-review-release-v2/qualification-retry/quality/replay/observations/steps/01-prose-4096-early-mixed-result.json": "923f6fcecefaf35787fe3a31110ee48eb408e1e8c84e87ca24b9e058fe16a598",
+    "benchmark-results/exl3-review-release-v2/qualification-retry/quality/replay/observations/steps/02-prose-4096-c4-verification-result.json": "a4a529ff2b4615b1695232d2b4f999201e10aa030a0968dd9b2f88b387685445",
+    "benchmark-results/exl3-review-release-v2/qualification-retry/quality/replay/observations/steps/03-prose-8192-long-prefill-result.json": "1abb35b5caba903cacc9ff1c510b2fcda08ae5e1e087560f26e7675914231139"
+  },
+  "limitations": [
+    "Finite cache workload; application cache cap is per thread/queue and does not bound oneDNN internal caches or every allocator.",
+    "Client p95 SSE burst gaps are not GPU token-step latency.",
+    "Historical Flappy and QueueKit were not rerun or relabeled as candidate results; no general coding-quality ranking.",
+    "C16 is pressure with permitted preemptions; clean C4 and one maximum context are separate operating claims.",
+    "Quality smoke reuses existing BF16 references; short arrays alone do not prove long attention/verification correctness. Fresh graph/long-prefill numerical replay is separate."
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "policy_id": "b70-qwen38-exl3-production-v1",
+  "policy_id": "b70-qwen38-exl3-production-v2",
   "hardware": {
     "gpu": "Intel Arc Pro B70",
     "gpu_count": 1,
@@ -18,7 +18,8 @@
     "torch": "2.13.0+xpu",
     "oneapi_compiler": "2026.1.1",
     "onednn": "3.13.0",
-    "native_library_sha256": "48f879c16f3695dbb0fae7388f1e318591d6408acc7be15b0093a0bbb6d9053b"
+    "native_library_sha256": "e60e499aefa95b290924ed98545eb815aca9d0fb1f3ede39b37d1ad49f3b522d",
+    "exl3_source_commit": "c59d9442aba8610188837e37724600f1517d7335"
   },
   "linears": {
     "small_matrix_kernel": "native EXL3 SmallM opaque row dispatch",
@@ -37,7 +38,14 @@
     "mixed_metadata": "V2 CPU once-per-step exact prefill and fixed query partition; native GPU decode lengths",
     "decode_verification": "M04 at uniform q2..5/C1..C4; otherwise unchanged native",
     "m04_library_sha256": "eaa18427db27d4fceeca8a17c8a3c6b019b7678f39bf98affc1736b9f2c2d631",
-    "unsupported_contract": "native fallback; no duplicate KV updates"
+    "unsupported_contract": "native fallback; no duplicate KV updates",
+    "partition_cache": {
+      "capacity": 64,
+      "scope": "per thread/queue context; exact lengths",
+      "eviction": "completed LRU, oldest event wait only if all entries busy",
+      "onednn_internal_cache": "separate scope"
+    },
+    "m04_output_copy": "direct permuted-view copy at C4 only; original copy C1-C3 and no-output fallback"
   },
   "speculation": {
     "method": "mtp",
@@ -88,6 +96,7 @@
     "missing_required_artifact": "fail_startup",
     "cache_isolation": "policy_sha256 + image_id",
     "diagnostic_validation_in_production": false,
-    "gptq_rollback_image": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68"
+    "gptq_rollback_image": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
+    "immediate_exl3_rollback_image": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f"
   }
 }

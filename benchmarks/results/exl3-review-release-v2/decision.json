@@ -1,0 +1,18 @@
+{
+  "status": "QUALIFIED_FOR_PRODUCTION_PROMOTION",
+  "image_id": "sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918",
+  "policy_sha256": "1bf624713cff3583148a71c3b4fb9189268cc5d4a47afca03662ce25be3e7839",
+  "source_commit": "c59d9442aba8610188837e37724600f1517d7335",
+  "native_library_sha256": "e60e499aefa95b290924ed98545eb815aca9d0fb1f3ede39b37d1ad49f3b522d",
+  "gate_assessment": {
+    "path": "benchmarks/results/exl3-review-release-v2/assessment.json",
+    "sha256": "a14d1bab654825fa4569b062c7292c5039aed692b44922ed4ad0f10b545872e8"
+  },
+  "benchmark_summary": {
+    "path": "benchmarks/results/exl3-review-release-v2/serving-summary.json",
+    "sha256": "9dc0db6adfdedc8a955e2843b922d867944b7cb215c71212e79e71570e9b51f3"
+  },
+  "immediate_rollback_image_id": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+  "rationale": "Exact-image serving, original-tolerance numerical, API/media, capacity, abort/restart and bounded actual-worker cache gates passed; matched serving screen has no unresolved repeated review-trigger regression. Safety/resource bound justifies equivalent performance without claiming a universal speedup.",
+  "deployment": "Pending strict-launcher switch and post-deployment API/image checks; this decision does not itself start a service."
+}

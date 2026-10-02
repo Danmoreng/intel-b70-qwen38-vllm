@@ -1,6 +1,7 @@
 # EXL3 v1 coding benchmark evidence
 
-Measured on the qualified immutable v1 image on 2026-10-02. Adaptive agent
+Historical measurements on the qualified immutable v1 image on 2026-10-02.
+The current v2 release did not rerun these coding tasks. Adaptive agent
 histories differ; rates are not an isolated quantization or engine comparison.
 
 
@@ -44,7 +45,7 @@ replay system. Both engines use the same task/harness, seeds, sampling,
 retained reasoning, 4,096-token thinking budget and 40-minute task budget.
 Unmodified final outputs are independently graded against the same 54 cases.
 
-| Result | GPTQ production v2 | Current EXL3 v1 |
+| Result | GPTQ production v2 | Historical EXL3 v1 |
 |---|---:|---:|
 | Wall time / task outcome | 32min 6s; complete | 24min 12s; complete |
 | Requests / maximum input context | 77 / 122,078 | 66 / 90,444 |
@@ -57,7 +58,7 @@ post-first generated tokens including reasoning. Agent histories differ, so
 overall rates and task duration do not isolate engine or quantization effects.
 One seed/pair does not establish a general model-quality ranking. The older
 [v6 result](../benchmarks/runs/2026-10-01-flappybird/README.md) remains historical;
-it is not substituted for the corrected current run.
+it is not substituted for the corrected v1 run.
 
 ![Rates over the growing coding context](../benchmarks/runs/2026-10-02-flappybird-v7/context-rates.png)
 

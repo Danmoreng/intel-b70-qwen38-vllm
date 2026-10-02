@@ -85,7 +85,7 @@ def main():
                 raise RuntimeError('production tag differs from frozen image')
             policy_data=json.loads((REPO/'config/production_policy.json').read_text())
             fixture_manifest=(REPO/'config/experiments/exl3-migration/full-serving-fixture-manifest.json'
-                              if policy_data['policy_id']=='b70-qwen38-exl3-production-v1'
+                              if policy_data['policy_id'] in ('b70-qwen38-exl3-production-v1','b70-qwen38-exl3-production-v2')
                               else REPO/'config/frozen_fixture_manifest.json')
             manifest = json.loads(fixture_manifest.read_text())
             for file, expected in manifest['files'].items():

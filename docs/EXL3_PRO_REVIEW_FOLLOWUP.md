@@ -1,5 +1,9 @@
 # EXL3 production review follow-up — 2026-10-02
 
+This document preserves the pre-release review experiment and its identities.
+The subsequent final-image qualification and deployment are in the
+[v2 release report](EXL3_RELEASE_V2_REPORT.md).
+
 The supplied Pro review identifies bounded follow-up work. Its patch is a
 candidate, not an instruction to overwrite the qualified image. Work takes
 place in `work/exl3-review-20261002` in separate owned and EXL3 worktrees.
@@ -7,7 +11,7 @@ No root installation or driver change has been needed.
 
 ## Release identities and scope
 
-- Current qualified production: `sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f`.
+- Qualified production at the time of this experiment: `sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f`.
 - Final review candidate: `sha256:0e711fea1f9231a25289d812fffbde51ed93cbe7bad16c34f7fde3edf3d91737`.
 - Candidate tag: `local/b70-qwen38-vllm:exl3-review-cache-c4copy-v2`.
 - First unrestricted-copy experiment: `sha256:ed4a6deeee37c2da69829824b29fbc942d258325b03a6c87be4121cdcb923a18`.
@@ -17,7 +21,7 @@ No root installation or driver change has been needed.
 - Native attention formulas, exact K lengths, quantization, MTP3, draft
   vocabulary and existing numerical thresholds remain unchanged.
 
-The candidate is not a promoted production release. Its native library is a
+At the time of this experiment, the candidate was not a promoted release. Its native library is a
 fresh build with a different manifest, and needs its own release attestation.
 The v1 image, source snapshot and qualification receipts retain their identity.
 

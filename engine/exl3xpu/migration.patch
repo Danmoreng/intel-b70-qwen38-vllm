@@ -24,27 +24,102 @@ index e07c67a..a9de049 100644
 +.native-target/
 +.target-integration/
 +.m04-target/
+diff --git a/csrc/bounded_partition_cache.h b/csrc/bounded_partition_cache.h
+new file mode 100644
+index 0000000..a91d99c
+--- /dev/null
++++ b/csrc/bounded_partition_cache.h
+@@ -0,0 +1,55 @@
++#pragma once
++#include <chrono>
++#include <cstdint>
++#include <map>
++#include <stdexcept>
++#include <utility>
++
++// Thread/queue-owned cache. Completion and wait are supplied by the native
++// executor so the eviction policy can be tested without a GPU or oneDNN.
++template <class Key, class Value> class BoundedPartitionCache {
++    struct Node { Value value; uint64_t used; };
++    std::map<Key, Node> entries_;
++    size_t capacity_;
++    uint64_t tick_ = 0;
++public:
++    struct Stats {
++        uint64_t hits=0, misses=0, evictions=0, pressure_waits=0;
++        uint64_t compile_microseconds=0, peak_entries=0;
++    } stats;
++    explicit BoundedPartitionCache(size_t capacity): capacity_(capacity) {
++        if (!capacity) throw std::invalid_argument("Partition cache capacity must be positive");
++    }
++    size_t size() const { return entries_.size(); }
++    size_t capacity() const { return capacity_; }
++    template <class Factory, class Ready, class Wait>
++    Value& get(const Key& key, Factory factory, Ready ready, Wait wait) {
++        auto found=entries_.find(key);
++        if (found!=entries_.end()) {
++            ++stats.hits; found->second.used=++tick_; return found->second.value;
++        }
++        ++stats.misses;
++        if (entries_.size()==capacity_) {
++            auto victim=entries_.end();
++            auto oldest=entries_.end();
++            for (auto it=entries_.begin();it!=entries_.end();++it) {
++                if (oldest==entries_.end() || it->second.used<oldest->second.used) oldest=it;
++                if (ready(it->second.value) && (victim==entries_.end() || it->second.used<victim->second.used)) victim=it;
++            }
++            if (victim==entries_.end()) {
++                victim=oldest; ++stats.pressure_waits;
++                // Only a full-cache MISS waits, and only for this victim's
++                // completion chain. No hit/normal call synchronizes the queue.
++                wait(victim->second.value);
++            }
++            entries_.erase(victim); ++stats.evictions;
++        }
++        auto start=std::chrono::steady_clock::now();
++        Value value=factory();
++        stats.compile_microseconds+=std::chrono::duration_cast<std::chrono::microseconds>(
++            std::chrono::steady_clock::now()-start).count();
++        auto inserted=entries_.emplace(key,Node{std::move(value),++tick_}).first;
++        if (entries_.size()>stats.peak_entries) stats.peak_entries=entries_.size();
++        return inserted->second.value;
++    }
++};
 diff --git a/csrc/exl3_ops.sycl b/csrc/exl3_ops.sycl
-index a4299ec..2792d31 100644
+index a4299ec..e99f277 100644
 --- a/csrc/exl3_ops.sycl
 +++ b/csrc/exl3_ops.sycl
-@@ -1,4 +1,5 @@
+@@ -1,4 +1,8 @@
  #include <map>
 +#include <cstring>
++#include <optional>
++#include <cstdlib>
++#include "bounded_partition_cache.h"
  // Host launchers + torch bindings for EXL3 ESIMD kernels.
  #include <torch/all.h>
  #include <torch/library.h>
-@@ -396,9 +397,19 @@ using namespace dnnl::graph;
+@@ -396,9 +400,30 @@ using namespace dnnl::graph;
  using lt = logical_tensor;
  static void* alloc_fn(size_t n, size_t, const void*, const void*) { return c10::xpu::XPUCachingAllocator::raw_alloc(n); }
  static void free_fn(void* p, const void*, const void*, void*) { c10::xpu::XPUCachingAllocator::raw_delete(p); }
 -struct Ctx { dnnl::engine eng; dnnl::stream strm; };
-+struct Entry { compiled_partition cp; std::vector<lt> ins, outs; };
++struct Entry {
++    compiled_partition cp; std::vector<lt> ins, outs;
++    std::optional<sycl::event> last_use;
++};
 +using PartitionKey = std::tuple<int64_t, int64_t, int64_t, int64_t, int64_t, bool, bool>;
++static size_t partition_capacity() {
++    const char* setting=std::getenv("EXL3_SDPA_CACHE_CAPACITY");
++    if (!setting) return 64;
++    char* end=nullptr; long value=std::strtol(setting,&end,10);
++    TORCH_CHECK(end!=setting && *end=='\0' && value>=1 && value<=256,
++                "EXL3_SDPA_CACHE_CAPACITY must be an integer from 1 to 256");
++    return static_cast<size_t>(value);
++}
 +struct Ctx {
 +    dnnl::engine eng;
 +    dnnl::stream strm;
-+    std::map<PartitionKey, Entry> partitions;
++    BoundedPartitionCache<PartitionKey, Entry> partitions{partition_capacity()};
 +    std::map<float, at::Tensor> inverse_scales;
 +    at::Tensor minus_inf;
 +};
@@ -56,18 +131,48 @@ index a4299ec..2792d31 100644
      auto it = m.find((void*)&q);
      if (it == m.end()) {
          auto alloc = sycl_interop::make_allocator(alloc_fn, free_fn);
-@@ -407,9 +418,8 @@ static Ctx& ctx(sycl::queue& q) {
+@@ -407,12 +432,9 @@ static Ctx& ctx(sycl::queue& q) {
      }
      return it->second;
  }
 -struct Entry { compiled_partition cp; std::vector<lt> ins, outs; };
  static Entry& build(Ctx& c, int64_t Q, int64_t L, int64_t Hq, int64_t Hk, int64_t D, bool causal, bool with_lse) {
 -    static std::map<std::tuple<int64_t, int64_t, int64_t, int64_t, int64_t, bool, bool>, Entry> cache;
-+    auto& cache = c.partitions;
      auto key = std::make_tuple(Q, L, Hq, Hk, D, causal, with_lse);
-     auto it = cache.find(key);
-     if (it != cache.end()) return it->second;
-@@ -486,6 +496,17 @@ void exl3_sdpa_len(at::Tensor q, at::Tensor k, at::Tensor v, at::Tensor out, at:
+-    auto it = cache.find(key);
+-    if (it != cache.end()) return it->second;
++    return c.partitions.get(key, [&]() {
+     const int64_t G = Hq / Hk;
+     using dt = lt::data_type;
+     size_t id = 0;
+@@ -469,10 +491,25 @@ static Entry& build(Ctx& c, int64_t Q, int64_t L, int64_t Hq, int64_t Hk, int64_
+     std::vector<lt> outs{output};
+     if (with_lse) outs.push_back(stats);
+     auto cp = parts[0].compile(ins, outs, c.eng);
+-    return cache.emplace(key, Entry{cp, ins, outs}).first->second;
++    return Entry{cp, ins, outs, std::nullopt};
++    }, [](const Entry& e) {
++        return !e.last_use || e.last_use->get_info<sycl::info::event::command_execution_status>()==sycl::info::event_command_status::complete;
++    }, [](Entry& e) { if (e.last_use) e.last_use->wait_and_throw(); });
+ }
+ }  // namespace sdpadnnl
+ 
++c10::Dict<std::string,int64_t> exl3_sdpa_cache_stats(at::Tensor like) {
++    auto& c=sdpadnnl::ctx(queue_of(like));
++    const auto& s=c.partitions.stats;
++    c10::Dict<std::string,int64_t> result;
++    result.insert("capacity",c.partitions.capacity()); result.insert("entries",c.partitions.size());
++    result.insert("hits",s.hits); result.insert("misses",s.misses);
++    result.insert("evictions",s.evictions); result.insert("pressure_waits",s.pressure_waits);
++    result.insert("compile_microseconds",s.compile_microseconds); result.insert("peak_entries",s.peak_entries);
++    result.insert("scale_constants",c.inverse_scales.size());
++    return result;
++}
++
+ static void sdpa_impl(at::Tensor q, at::Tensor k, at::Tensor v, at::Tensor out, at::Tensor lse, bool causal, double scale,
+                       int64_t len_k, int64_t len_q);
+ void exl3_sdpa(at::Tensor q, at::Tensor k, at::Tensor v, at::Tensor out, at::Tensor lse, bool causal, double scale) {
+@@ -486,6 +523,17 @@ void exl3_sdpa_len(at::Tensor q, at::Tensor k, at::Tensor v, at::Tensor out, at:
  }
  static void sdpa_impl(at::Tensor q, at::Tensor k, at::Tensor v, at::Tensor out, at::Tensor lse, bool causal, double scale,
                        int64_t len_k, int64_t len_q) {
@@ -85,7 +190,7 @@ index a4299ec..2792d31 100644
      TORCH_CHECK(q.scalar_type() == at::kHalf && k.scalar_type() == at::kHalf && v.scalar_type() == at::kHalf);
      TORCH_CHECK(q.is_contiguous() && k.is_contiguous() && v.is_contiguous() && out.is_contiguous());
      int64_t Hq = q.size(0), Q = q.size(1), D = q.size(2), Hk = k.size(0), L = k.size(1);
-@@ -494,10 +515,15 @@ static void sdpa_impl(at::Tensor q, at::Tensor k, at::Tensor v, at::Tensor out,
+@@ -494,10 +542,15 @@ static void sdpa_impl(at::Tensor q, at::Tensor k, at::Tensor v, at::Tensor out,
      bool with_lse = lse.defined() && lse.numel() > 0;
      auto& e = sdpadnnl::build(c, Q, L, Hq, Hk, D, causal, with_lse);
      using dnnl::graph::tensor;
@@ -105,6 +210,28 @@ index a4299ec..2792d31 100644
      if (!nt.defined()) nt = at::full({1}, -std::numeric_limits<float>::infinity(), q.options().dtype(at::kFloat));
      int32_t lk = (int32_t)len_k, lq = (int32_t)len_q;
      std::vector<tensor> ins{tensor(e.ins[0], c.eng, q.data_ptr()), tensor(e.ins[1], c.eng, k.data_ptr()),
+@@ -512,7 +565,11 @@ static void sdpa_impl(at::Tensor q, at::Tensor k, at::Tensor v, at::Tensor out,
+     ins.push_back(tensor(e.ins[vi], c.eng, v.data_ptr()));
+     std::vector<tensor> outs{tensor(e.outs[0], c.eng, out.data_ptr())};
+     if (with_lse) outs.push_back(tensor(e.outs[1], c.eng, lse.data_ptr()));
+-    dnnl::graph::sycl_interop::execute(e.cp, c.strm, ins, outs);
++    // Chain uses of a partition even on an out-of-order queue: completion of
++    // last_use then covers every prior use, making eviction lifetime-safe.
++    std::vector<sycl::event> deps;
++    if (e.last_use) deps.push_back(*e.last_use);
++    e.last_use=dnnl::graph::sycl_interop::execute(e.cp, c.strm, ins, outs, deps);
+ }
+ #endif
+ 
+@@ -774,6 +831,8 @@ void exl3_set_vec_max_m(int64_t n) { g_vec_max_m = (int)n; }
+ TORCH_LIBRARY(exl3xpu_C, m) {
+     m.def("exl3_set_int8(int on) -> ()", &exl3_set_int8);
+ #ifdef EXL3_DNNL
++    m.def("exl3_sdpa_cache_stats(Tensor like) -> Dict(str, int)");
++    m.impl("exl3_sdpa_cache_stats", torch::kXPU, &exl3_sdpa_cache_stats);
+     m.def("exl3_sdpa(Tensor q, Tensor k, Tensor v, Tensor(a!) out, Tensor(b!) lse, bool causal, float scale) -> ()");
+     m.impl("exl3_sdpa", torch::kXPU, &exl3_sdpa);
+     m.def("exl3_sdpa_len(Tensor q, Tensor k, Tensor v, Tensor(a!) out, Tensor(b!) lse, bool causal, float scale, int len_k, int len_q) -> ()");
 diff --git a/docker/Dockerfile.migration-old b/docker/Dockerfile.migration-old
 new file mode 100644
 index 0000000..365fd94
@@ -156,10 +283,10 @@ index 0000000..927fd25
 +CMD ["models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml", "--gpu", "0"]
 diff --git a/exl3xpu/attention_dispatch.py b/exl3xpu/attention_dispatch.py
 new file mode 100644
-index 0000000..7a2cf6b
+index 0000000..393c246
 --- /dev/null
 +++ b/exl3xpu/attention_dispatch.py
-@@ -0,0 +1,208 @@
+@@ -0,0 +1,221 @@
 +"""Opt-in, source-guarded attention compute; native V2 owns every KV write."""
 +from contextvars import ContextVar
 +from dataclasses import dataclass
@@ -251,10 +378,19 @@ index 0000000..7a2cf6b
 +    return all(t.device == q.device for t in (k, v, out, cq, used, bt, ks, vs))
 +
 +
-+def dispatch(original, d, context, *, capturing, native_op, m04, onednn):
++def select_route(d, context, *, capturing, native_op, m04, onednn):
 +    if not context.allowed:
-+        return original(**d)
++        return 'native'
 +    if onednn and native_op is not None and prefill_eligible(d, context, capturing):
++        return 'mixed/oneDNN'
++    if m04 and verify.eligible(d) and d['cu_seqlens_q'].numel()-1 <= 4:
++        return 'M04'
++    return 'native'
++
++
++def _dispatch_selected(route, original, d, context, *, capturing, native_op, m04):
++    """Consume one checked route; subgroup calls each select their own route."""
++    if route == 'mixed/oneDNN':
 +        from .fp8kv_prefill import prefill_attention_onednn
 +        for segment in context.plan.segments:
 +            if segment.prefill:
@@ -274,9 +410,14 @@ index 0000000..7a2cf6b
 +                dispatch(original, group, Context(True), capturing=capturing,
 +                         native_op=native_op, m04=m04, onednn=False)
 +        return d['out']
-+    if m04 and verify.eligible(d) and d['cu_seqlens_q'].numel()-1 <= 4:
++    if route == 'M04':
 +        return verify.run(d)
 +    return original(**d)
++
++
++def dispatch(original, d, context, *, capturing, native_op, m04, onednn):
++    route = select_route(d, context, capturing=capturing, native_op=native_op, m04=m04, onednn=onednn)
++    return _dispatch_selected(route, original, d, context, capturing=capturing, native_op=native_op, m04=m04)
 +
 +
 +def install():
@@ -355,14 +496,13 @@ index 0000000..7a2cf6b
 +            return original(*args, **d)
 +        capturing = torch.xpu.is_current_stream_capturing()
 +        # Log bounded structural evidence once, never per layer/step.
-+        route = ('mixed/oneDNN' if onednn and native_op is not None and prefill_eligible(d, context, capturing)
-+                 else 'M04' if library and verify.eligible(d) and d['cu_seqlens_q'].numel()-1 <= 4 else 'native')
++        route = select_route(d, context, capturing=capturing, native_op=native_op, m04=bool(library), onednn=onednn)
 +        signature = (route, d['cu_seqlens_q'].numel()-1, d['max_seqlen_q'], capturing)
 +        if signature not in seen and len(seen) < 64:
 +            seen.add(signature)
 +            print('EXL3_GUARDED_ATTN_ROUTE', signature, flush=True)
-+        return dispatch(original, d, context, capturing=capturing,
-+                        native_op=native_op, m04=bool(library), onednn=onednn)
++        return _dispatch_selected(route, original, d, context, capturing=capturing,
++                                  native_op=native_op, m04=bool(library))
 +    fa.FlashAttentionMetadataBuilder.build = build
 +    fa.FlashAttentionImpl.forward = layer_forward
 +    fa.flash_attn_varlen_func = forward
@@ -1066,10 +1206,10 @@ index 0000000..59a3a77
 +    KVCacheManager._exl3_migration_traced=True
 diff --git a/exl3xpu/shared_kv_verify.py b/exl3xpu/shared_kv_verify.py
 new file mode 100644
-index 0000000..c2635f6
+index 0000000..efac016
 --- /dev/null
 +++ b/exl3xpu/shared_kv_verify.py
-@@ -0,0 +1,121 @@
+@@ -0,0 +1,126 @@
 +"""Experimental shared-KV verification, with native fallback and no KV writes.
 +
 +Input metadata is the native FA2 contract: max_seqlen_q is the true per-sequence
@@ -1179,12 +1319,17 @@ index 0000000..c2635f6
 +    torch.ops.b70_exl3_attention.shared_kv_verify_out(
 +        q, d['k'], d['v'], d['block_table'], cu, d['seqused_k'], ks, vs,
 +        y, temp, sums, maxima, d['max_seqlen_k'], splits, tile)
-+    result = unpacked_output(y, batch, rows)
 +    out = d.get('out')
 +    if out is not None:
-+        out.copy_(result)
++        # Matched q4 repeats support this copy at C4; C1 was slightly
++        # slower with the direct strided copy. Keep its qualified layout path.
++        if batch == 4:
++            out.view(batch, rows, 4, 6, 256).copy_(
++                y.view(batch, 4, rows, 6, 256).permute(0, 2, 1, 3, 4))
++        else:
++            out.copy_(unpacked_output(y, batch, rows))
 +        return out
-+    return result
++    return unpacked_output(y, batch, rows)
 +
 +
 +def dispatch(original, **d):
@@ -1966,7 +2111,7 @@ index 0000000..9b434b0
 +if __name__=='__main__': main()
 diff --git a/scripts/native_build_manifest.py b/scripts/native_build_manifest.py
 new file mode 100644
-index 0000000..e1bde77
+index 0000000..a6f15f3
 --- /dev/null
 +++ b/scripts/native_build_manifest.py
 @@ -0,0 +1,60 @@
@@ -1998,7 +2143,7 @@ index 0000000..e1bde77
 +    p.add_argument('flags',nargs=argparse.REMAINDER)
 +    a=p.parse_args()
 +    torch.ops.load_library(a.library)
-+    xpu=XPU_OPS+(('exl3_sdpa','exl3_sdpa_len') if a.dnnl else ())
++    xpu=XPU_OPS+(('exl3_sdpa','exl3_sdpa_len','exl3_sdpa_cache_stats') if a.dnnl else ())
 +    for op in HOST_OPS+xpu:
 +        if not hasattr(torch.ops.exl3xpu_C,op): raise RuntimeError('Missing registered operator: '+op)
 +    for op in xpu:
@@ -2218,6 +2363,54 @@ index de50fe7..fbfb268 100644
 +        'failures':fails,'elapsed_seconds':time.time()-t0,'weights_checked':n_elems}
 +Path(os.environ.get('EXL3_TEST_REPORT','bitexact-xpu-report.json')).write_text(json.dumps(report,indent=2)+'\n')
 +raise SystemExit(1 if fails else 0)
+diff --git a/tests/test_bounded_partition_cache.cpp b/tests/test_bounded_partition_cache.cpp
+new file mode 100644
+index 0000000..415ece1
+--- /dev/null
++++ b/tests/test_bounded_partition_cache.cpp
+@@ -0,0 +1,42 @@
++#include "bounded_partition_cache.h"
++#include <cassert>
++#include <memory>
++#include <iostream>
++
++struct State { bool busy; bool unsafe_destroy=false; unsigned waits=0; };
++struct Value {
++    std::shared_ptr<State> state;
++    explicit Value(std::shared_ptr<State> s):state(std::move(s)) {}
++    Value(Value&&)=default;
++    ~Value() { if (state && state->busy) state->unsafe_destroy=true; }
++};
++int main() {
++    auto ready=[](const Value& v){return !v.state->busy;};
++    auto wait=[](const Value& v){v.state->busy=false;++v.state->waits;};
++    {
++        auto a=std::make_shared<State>(State{true}),b=std::make_shared<State>(State{true}),c=std::make_shared<State>(State{false});
++        BoundedPartitionCache<int,Value> cache(2);
++        cache.get(1,[&]{return Value(a);},ready,wait);
++        cache.get(2,[&]{return Value(b);},ready,wait);
++        cache.get(1,[]{throw std::runtime_error("hot hit compiled");return Value(nullptr);},ready,wait);
++        cache.get(3,[&]{return Value(c);},ready,wait);
++        assert(cache.size()==2 && cache.stats.peak_entries==2);
++        assert(cache.stats.hits==1 && cache.stats.misses==3 && cache.stats.evictions==1);
++        assert(cache.stats.pressure_waits==1 && b->waits==1 && !b->unsafe_destroy);
++        a->busy=false;
++    }
++    {
++        auto a=std::make_shared<State>(State{true}),b=std::make_shared<State>(State{false}),c=std::make_shared<State>(State{false});
++        BoundedPartitionCache<int,Value> cache(2);
++        cache.get(1,[&]{return Value(a);},ready,wait);
++        cache.get(2,[&]{return Value(b);},ready,wait);
++        cache.get(3,[&]{return Value(c);},ready,wait);
++        assert(cache.stats.pressure_waits==0 && !b->unsafe_destroy && a->waits==0);
++        bool failed=false;
++        try {cache.get(4,[]{throw std::runtime_error("compile fails");return Value(nullptr);},ready,wait);}
++        catch (const std::runtime_error&) {failed=true;}
++        assert(failed && cache.size()<2 && !a->unsafe_destroy);
++        a->busy=false;
++    }
++    std::cout<<"PASS bounded LRU, hot hits, async retirement, pressure-only wait, compile failure\n";
++}
 diff --git a/tests/test_cache_retirement.py b/tests/test_cache_retirement.py
 new file mode 100644
 index 0000000..bea01c8
@@ -2811,6 +3004,47 @@ index 0000000..e076c55
 +            callbacks[0](param,torch.zeros_like(param))
 +
 +if __name__=='__main__': unittest.main()
+diff --git a/tests/test_m04_output_copy.py b/tests/test_m04_output_copy.py
+new file mode 100644
+index 0000000..98857ec
+--- /dev/null
++++ b/tests/test_m04_output_copy.py
+@@ -0,0 +1,35 @@
++"""Exercise the actual run() output path with a deterministic stand-in kernel."""
++import unittest
++from unittest.mock import patch
++import torch
++from exl3xpu import shared_kv_verify as m04
++
++
++class CopyContract(unittest.TestCase):
++    def test_native_output_and_no_output_preserve_all_half_bitpatterns(self):
++        for batch in (1, 2, 4):
++            for rows in (2, 3, 4, 5):
++                with self.subTest(batch=batch, rows=rows):
++                    count=batch*rows*24*256
++                    bits=((torch.arange(count,dtype=torch.int64)%65536)-32768).to(torch.int16)
++                    y=bits.view(torch.float16).reshape(batch,rows*24,256)
++                    expected=m04.unpacked_output(y,batch,rows)
++                    def kernel(*args):
++                        args[8].copy_(y)
++                    for has_out in (True, False):
++                        q=torch.zeros((batch*rows,24,256),dtype=torch.float16)
++                        out=torch.empty_like(q) if has_out else None
++                        d=dict(q=q,k=q,v=q,block_table=torch.zeros((batch,1),dtype=torch.int32),
++                               cu_seqlens_q=torch.arange(batch+1,dtype=torch.int32),
++                               seqused_k=torch.ones(batch,dtype=torch.int32),
++                               k_descale=torch.ones(1),v_descale=torch.ones(1),
++                               max_seqlen_q=rows,max_seqlen_k=4096,out=out)
++                        with patch.object(torch.ops.b70_exl3_attention,'shared_kv_verify_out',kernel,create=True):
++                            actual=m04.run(d)
++                        self.assertTrue(torch.equal(actual.view(torch.int16),expected.view(torch.int16)))
++                        if has_out:
++                            self.assertIs(actual,out)
++                            self.assertEqual(actual.data_ptr(),out.data_ptr())
++
++
++if __name__=='__main__':unittest.main()
 diff --git a/tests/test_sdpa_host_cache.py b/tests/test_sdpa_host_cache.py
 new file mode 100644
 index 0000000..b262c1d

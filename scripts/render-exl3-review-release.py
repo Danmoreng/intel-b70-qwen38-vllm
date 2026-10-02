@@ -42,6 +42,10 @@ def main():
         'The [saved EXL3 v1 rollback](config/releases/exl3-v1/README.md) has its own\nstrict launcher, policy, source snapshot and compiler namespace. Its immutable\ntag is retained alongside the current image.\n\nThe [EXL3 source snapshot/build instructions](engine/exl3xpu/README.md) contain')
     (REPO/'README.md').write_text(text)
     relative=str(root.relative_to(REPO));quality=assessment['quality_smoke'];long=quality['long'];matched=assessment['matched_comparison']
+    cache_table='| Worker context | Peak entries | Hits | Misses | Evictions | Pressure waits | Cumulative compile | RSS range |\n|---|---:|---:|---:|---:|---:|---:|---:|\n'
+    for index,owner in enumerate(assessment['actual_worker_cache']['owners'],1):
+        counters=owner['last']['cache']
+        cache_table+=f"| {index} | {counters['peak_entries']} | {counters['hits']} | {counters['misses']} | {counters['evictions']} | {counters['pressure_waits']} | {counters['compile_microseconds']/1000:.3f} ms | {owner['rss_min_bytes']/2**30:.3f}–{owner['rss_max_bytes']/2**30:.3f} GiB |\n"
     body=f'''# EXL3 v2 release qualification — 2026-10-02
 
 The bounded Pro-review changes are qualified and deployed. This release adds
@@ -140,6 +144,12 @@ not a separate-process cache query. Each observed cache stays at/below 64,
 with hits, misses and eviction; pressure waits, compilation microseconds,
 RSS and XPU allocated/reserved memory are preserved in the assessment.
 These instrumented times are excluded from the throughput comparison.
+
+{cache_table}
+Zero recorded pressure waits does not exercise the GPU all-entries-busy branch;
+the separate host policy test covers that branch. The
+[147 raw worker observations](../{relative}/cache-observations.jsonl) preserve
+allocated/reserved XPU memory and the individual cache samples.
 
 The cap applies to each application thread/queue context. It does not globally
 bound arbitrary thread/queue counts, oneDNN internal caches or every allocator,

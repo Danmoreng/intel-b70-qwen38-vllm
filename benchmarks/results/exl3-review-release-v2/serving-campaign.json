@@ -1,86 +1,7 @@
 {
-  "schema_version": 1,
-  "status": "QUALIFIED_RELEASE",
-  "image_tag": "local/b70-qwen38-vllm:production-exl3-v2",
-  "image_id": "sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918",
-  "runtime_image_id": "sha256:0e711fea1f9231a25289d812fffbde51ed93cbe7bad16c34f7fde3edf3d91737",
-  "policy_sha256": "1bf624713cff3583148a71c3b4fb9189268cc5d4a47afca03662ce25be3e7839",
-  "vllm_config": {
-    "dtype": "float16",
-    "max_model_len": 262144,
-    "kv_cache_dtype": "fp8",
-    "gpu_memory_utilization": 0.965,
-    "max_num_seqs": 16,
-    "max_num_batched_tokens": 4096,
-    "scheduler_reserve_full_isl": true,
-    "watermark": 0.0,
-    "enable_prefix_caching": true,
-    "mamba_cache_mode": "align",
-    "speculative_config": {
-      "method": "mtp",
-      "num_speculative_tokens": 3
-    },
-    "limit_mm_per_prompt": {
-      "image": 32,
-      "video": 4
-    },
-    "mm_processor_kwargs": {
-      "max_pixels": 4194304
-    },
-    "enable_auto_tool_choice": true,
-    "tool_call_parser": "qwen3_xml",
-    "reasoning_parser": "qwen3",
-    "reasoning_config": {
-      "reasoning_start_str": "<think>",
-      "reasoning_end_str": "</think>"
-    },
-    "override_generation_config": {
-      "max_new_tokens": 16384
-    },
-    "middleware": "request_defaults.ChatDefaults",
-    "compilation_config": {
-      "cudagraph_mode": "FULL_DECODE_ONLY",
-      "cudagraph_capture_sizes": [
-        1,
-        2,
-        4,
-        8,
-        12,
-        16,
-        24,
-        32,
-        40,
-        48,
-        56,
-        64
-      ]
-    }
-  },
-  "request_defaults_sha256": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2",
-  "checkpoint_files_sha256": {
-    "config.json": "dab9abc478e1b1b928ef354f27a26fc90e8191a4a3ce5f3d19aa21558216b267",
-    "generation_config.json": "e70c136c1b78ddc1fb0905bac8e733a4dc448d4f852a5dd75143fffc70be550e",
-    "model-00001-of-00002.safetensors": "b1e7fcc53a2bb211460ebb65e329cdb7a5af8bd819dcbcd89e06f0ccc041e590",
-    "model-00002-of-00002.safetensors": "c6d72f51b0cd99510239b264fef37bc26c950e6843f35421ce4830d4f87f8c05",
-    "model.safetensors.index.json": "c3111b8308db5396b1eed054967cf7dfbfc2508764f8813aebbaaf4a05860bc2",
-    "preprocessor_config.json": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
-    "quantization_config.json": "c85767fc0bd991d1b7ddebe52feeb9a556216883de2cdb3f679ce85f989e29e0",
-    "tokenizer.json": "0997f410c57a1f4e53b09e4be8f4a172d90edd9564368fb0847030937229b9f3",
-    "tokenizer_config.json": "b11349aafa7cdc6a320767cf7ceb29ed82f7eda5d65e8e0819e76f0ce947bf27",
-    "video_preprocessor_config.json": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
-    "vocab.json": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003"
-  },
-  "runtime_artifacts_sha256": {
-    "/opt/exl3xpu/exl3xpu/_C.so": "e60e499aefa95b290924ed98545eb815aca9d0fb1f3ede39b37d1ad49f3b522d",
-    "/opt/exl3xpu/m04/m04.so": "eaa18427db27d4fceeca8a17c8a3c6b019b7678f39bf98affc1736b9f2c2d631",
-    "/opt/b70/libdnnl.so.3": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20",
-    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "737c6dfbfd86b40dfd8c2786452d147e916a8ae8a1fd67fdb2ad42649dd764d0",
-    "/opt/exl3xpu/exl3xpu/shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2",
-    "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "e3284ba808faeb53670a7546c686c7cf77156d78cdb54884ecd602aecb8beda5",
-    "/opt/exl3xpu/csrc/exl3_ops.sycl": "b70880d1e92032de697c1d432c6899e34e17662e2086a7fbba80fa17b28e41cf",
-    "/opt/exl3xpu/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7"
-  },
-  "rootfs_metadata_attestation": {
+  "status": "COMPLETE_REVIEW_SERVING_MATRIX",
+  "started_unix": 1790941461.2006369,
+  "image_receipt": {
     "status": "METADATA_FROZEN_NOT_RELEASE_APPROVED",
     "image_tag": "local/b70-qwen38-vllm:exl3-release-candidate-v2",
     "image_id": "sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918",
@@ -167,17 +88,70 @@
     "effective_partition_cache_capacity": 64,
     "note": "Only labels, policy identity env, optional explicit reviewed cache capacity and default profile CMD differ. Frozen optimized YAML unchanged; no rebuild or tensor change."
   },
-  "environment_overrides": {
-    "EXL3_SDPA_CACHE_CAPACITY": "64"
+  "policy_path": "config/experiments/exl3-review-release-v2/production_policy.json",
+  "fixture_manifest_sha256": "a200c7b7ac7017421f1445029cbe1511095df51a7e13088309f6857ecfa21485",
+  "frozen_fixture_root": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+  "effective_partition_cache_capacity": 64,
+  "power_cap_w": 180,
+  "sources": {
+    "run-exl3-review-serving.py": "6891a44156e1880572c9054e8d2142289fc5063d585cc4c07442a82096a4dc32",
+    "exl3_candidate_worker.py": "19ba0fbb844a6bfcaf6d558ba2f42b99e84cbe2ad8570833847c1361b72ee203",
+    "current-profile-benchmark.py": "01105118930b595aaf31b2bf58f3427b76a3b94721ceeabd947b432105ad3345"
   },
-  "source_commit": "c59d9442aba8610188837e37724600f1517d7335",
-  "qualification_review": {
-    "path": "benchmarks/results/exl3-review-release-v2/decision.json",
-    "sha256": "d9bf9f127a764eefcb0aa3fca19f2d979a80bc7e293a916570e2930c254165cb"
+  "stages": {
+    "source-review": {
+      "status": "COMPLETE",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/scripts/current-profile-benchmark.py",
+        "--base",
+        "http://127.0.0.1:8082",
+        "--container",
+        "b70-exl3-review-benchmark",
+        "--expected-max-num-seqs",
+        "16",
+        "--fixture-root",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+        "--legacy-prefix-namespace",
+        "--output-root",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-review-release-v2/serving/source-review",
+        "--execute"
+      ],
+      "loader": {
+        "path": "benchmark-results/exl3-review-release-v2/serving/source-review-worker/loader/loader-168.json",
+        "sha256": "6e5ebfe7cc5b5144fa702e09b54ebed55647f4e2aaf40fd0042db6599a6a7700",
+        "loaded_modules": 409,
+        "mtp_loaded": 8
+      }
+    },
+    "prefix-64k-isolated": {
+      "status": "COMPLETE",
+      "command": [
+        "/usr/bin/python3",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/scripts/current-profile-benchmark.py",
+        "--base",
+        "http://127.0.0.1:8082",
+        "--container",
+        "b70-exl3-review-benchmark",
+        "--expected-max-num-seqs",
+        "16",
+        "--fixture-root",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+        "--legacy-prefix-namespace",
+        "--output-root",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-review-release-v2/serving/prefix-64k-isolated",
+        "--execute",
+        "--only",
+        "prefix-64k-cold-warm"
+      ],
+      "loader": {
+        "path": "benchmark-results/exl3-review-release-v2/serving/prefix-64k-isolated-worker/loader/loader-67.json",
+        "sha256": "21288008cf4a7d975209860e206d9177f854c17b93c125d57e58550f0f2e3a98",
+        "loaded_modules": 409,
+        "mtp_loaded": 8
+      }
+    }
   },
-  "qualification_note": "Bounded review, exact-image full serving matrix, matched comparison, API/media, capacity, abort/restart, current-reference and original-tolerance candidate replay pass. Historical coding results retained explicitly.",
-  "production_start_receipt": {
-    "path": "benchmarks/results/exl3-review-release-v2/promotion.json",
-    "sha256": "d75620c6d7866e79f8683e9ca39dac9a7eb137dcec8be810735353c3da37beea"
-  }
+  "production_left_offline": true,
+  "finished_unix": 1790944967.5205345
 }

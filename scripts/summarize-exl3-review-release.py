@@ -19,7 +19,7 @@ def main():
     a=p.parse_args();q=a.qualification.resolve();root=a.out.resolve();assert not root.exists()
     sources={}
     def read(path):
-        path=Path(path);sources[str(path.relative_to(REPO))]=sha(path);return json.loads(path.read_text())
+        path=Path(path).absolute();sources[str(path.relative_to(REPO))]=sha(path);return json.loads(path.read_text())
     campaign=read(q/'campaign.json');serving=read(a.serving/'campaign.json')
     assert campaign['status']=='PASS_BOUNDED_REVIEW_RELEASE_QUALIFICATION'
     assert set(campaign['phases'])=={'operations','matched','quality','telemetry'}

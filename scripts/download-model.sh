@@ -4,7 +4,7 @@ set -euo pipefail
 repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 if python3 - "$repo_dir/config/production_policy.json" <<'PY'
 import json,sys
-sys.exit(json.load(open(sys.argv[1]))['policy_id']!='b70-qwen38-exl3-production-v1')
+sys.exit(json.load(open(sys.argv[1]))['policy_id'] not in ('b70-qwen38-exl3-production-v1','b70-qwen38-exl3-production-v2'))
 PY
 then
   exec bash "$repo_dir/scripts/download-exl3-model.sh" "$@"

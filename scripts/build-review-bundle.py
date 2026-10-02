@@ -53,7 +53,7 @@ def main():
         for name in sorted(set(filter(None,names))):
             path=root/name
             allowed=(path.suffix in TEXT or path.name.startswith('Dockerfile.') or path.name in {'LICENSE','NOTICE','Dockerfile','CMakeLists.txt','.gitignore','.dockerignore'})
-            historical=(role=='engine-code' and ((name.startswith('benchmarks/results/') and not name.startswith(('benchmarks/results/exl3-migration/','benchmarks/results/exl3-review-20261002/')))
+            historical=(role=='engine-code' and ((name.startswith('benchmarks/results/') and not name.startswith(('benchmarks/results/exl3-migration/','benchmarks/results/exl3-review-20261002/','benchmarks/results/exl3-review-release-v2/')))
                 or (name.startswith('benchmarks/runs/') and not name.startswith(('benchmarks/runs/2026-10-02-exl3-production/','benchmarks/runs/2026-10-02-flappybird-v7/')) and path.name!='summary.json')
                 or (name.startswith('benchmarks/web-coding-fixture/v') and not name.startswith('benchmarks/web-coding-fixture/v7/'))))
             redundant=(path.name in {'runtime-environment.json','trace-summary.json','baseline_environment.json'} or path.name.startswith('loader-') or name in {
@@ -73,7 +73,7 @@ def main():
             path=Path(item.name)
             if (path.suffix in TEXT or path.name.startswith('Dockerfile.') or path.name in {'LICENSE','NOTICE','Dockerfile','CMakeLists.txt','.gitignore','.dockerignore'}) and item.size<=1024*1024:
                 add('exl3-qualified-source/'+item.name,archive.extractfile(item).read(),'Qualified EXL3 git commit '+qualified)
-    repos['exl3-qualified-source']=dict(commit=qualified,scope='Unchanged qualified v1 source, separate from candidate working tree')
+    repos['exl3-qualified-source']=dict(commit=qualified,scope='Current qualified source from the published manifest; archived experiments retain their original identities')
     for path in sorted(capture.rglob('*')):
         if path.is_file():add('qualified-runtime/'+str(path.relative_to(capture)),path.read_bytes(),'Read-only active runtime capture')
     for path in sorted(a.evidence.rglob('*')):

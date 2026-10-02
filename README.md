@@ -8,8 +8,8 @@ OpenAI-compatible API at `http://127.0.0.1:8081/v1`, model `Qwen3.8-27B`.
 
 The local release uses the immutable image recorded in
 [config/production_image.json](config/production_image.json):
-`sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f`,
-alias `local/b70-qwen38-vllm:production-exl3-v1`.
+`sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918`,
+alias `local/b70-qwen38-vllm:production-exl3-v2`.
 The strict launcher checks image/policy identity, native libraries, serving
 arguments, checkpoint files, middleware and the 180 W cap before loading.
 Compiler caches are isolated by policy and image ID.
@@ -39,6 +39,10 @@ and launcher preflight before starting the service. The service uses Type=exec;
 its process being active does not mean model loading has finished. Check the
 API readiness endpoint. The host defaults are loopback and port 8081; the
 recovery helper targets that endpoint and the standard container name.
+
+The [saved EXL3 v1 rollback](config/releases/exl3-v1/README.md) has its own
+strict launcher, policy, source snapshot and compiler namespace. Its immutable
+tag is retained alongside the current image.
 
 The [EXL3 source snapshot/build instructions](engine/exl3xpu/README.md) contain
 immutable upstream and native/header pins. A rebuilt image needs its own
@@ -77,7 +81,8 @@ curl -fsS http://127.0.0.1:8081/v1/chat/completions \
 | Weights / activations / target head | EXL3 4.00-bpw checkpoint / FP16 / 6-bpw full 248,320-row head |
 | Linear dispatch | Native EXL3 SmallM through 128 rows; INT8 large-matrix prefill; unchanged row policy |
 | Prefill attention | Guarded oneDNN: query rows ≥64, exact active KV 4,096–262,144, query bucket 256, exact-K bucket 1; eager only |
-| Verification | Rebuilt M04 for supported uniform q2–5 / C1–C4; native fallback elsewhere; no duplicate KV updates |
+| Verification | M04 for supported uniform q2–5 / C1–C4; direct output copy at C4; native fallback elsewhere; no duplicate KV updates |
+| oneDNN partition cache | 64 exact-shape entries per inference thread/queue; completion-aware LRU eviction; oneDNN internal caches are a separate scope |
 | MTP | 3 draft tokens; 65,536-row draft vocabulary; full 248,320-row target vocabulary |
 | Context | 262,144 total input+output tokens |
 | Admission / batch | 16 sequences; 4,096 max batched tokens; full-ISL, watermark 0.0 |
@@ -92,34 +97,35 @@ curl -fsS http://127.0.0.1:8081/v1/chat/completions \
   media tokens and generated output. The exact **261,120 input + 1,024 output**
   boundary is qualified.
 - **C4 at moderate context** is qualified without preemptions. Sixteen admitted
-  requests share the same cache pool. C16 pressure tests completed with four
-  preemptions affecting two requests; this allows waiting/recomputation and
+  requests share the same cache pool. All 16 pressure-test requests completed,
+  with 4 preemptions; this allows waiting/recomputation and
   does not promise sixteen simultaneous maximum contexts.
 - Up to **32 images or 4 videos** per prompt, within the same context and
   memory budget. The image cap is 4,194,304 pixels. Qualification includes
   32 distinct images, long image context, video limits and recovery.
 - Generated text can vary with attention route, batching and floating-point
-  rounding. The short quality panel does not exercise the ≥4096-token oneDNN
-  prefill route or prove identical graph-based MTP verification.
-- QueueKit passes **7/8 checks and 1/2 tasks**. The same failed case occurs in
-  the native-attention control; the actual task failure remains documented.
+  rounding. Fresh candidate reference checks and separate long-prefill/C4
+  graph numerical probes pass; finite probes do not guarantee identical text.
+- Historical EXL3 v1 QueueKit passed **7/8 checks and 1/2 tasks**, with the
+  same failure in its native-attention control. Coding tasks were not rerun
+  for this release; the failed task remains documented.
 
-See the [qualification and limitations](docs/EXL3_RELEASE_REPORT.md) and the
-[bounded Pro-review follow-up](docs/EXL3_PRO_REVIEW_FOLLOWUP.md). Review candidate
-measurements are kept separate from the immutable v1 production measurements
-below.
+See the [current v2 qualification and limitations](docs/EXL3_RELEASE_V2_REPORT.md).
+The [v1 report](docs/EXL3_RELEASE_REPORT.md), coding measurements and
+[bounded review experiments](docs/EXL3_PRO_REVIEW_FOLLOWUP.md) remain historical.
+The serving measurements below are fresh measurements of the deployed v2 image.
 
 <!-- BEGIN CURRENT SERVING MEASUREMENTS -->
 ## Source-review serving benchmark
 
 Measured **2026-10-02** on a fresh isolated worker with the
 [frozen public corpus](benchmarks/meaningful-corpus.json). The
-[current summary](benchmarks/runs/2026-10-02-exl3-production/summary.json) records scenario results, fixture hashes,
+[current summary](benchmarks/results/exl3-review-release-v2/serving-summary.json) records scenario results, fixture hashes,
 fixed prompt namespace `20260923-201101` and image identity. Raw prompts,
 responses and stream events remain local under `benchmark-results/`.
 
 The complete run covered **20 scenarios, 70 measured waves and 124 successful
-requests** in **53.7 minutes**. Each request sampled at temperature 1.0,
+requests** in **53.5 minutes**. Each request sampled at temperature 1.0,
 top-p 0.95 and top-k 20 with thinking disabled. `ignore_eos=true` required
 exactly 1,024 output tokens. These are throughput measurements rather than
 semantic answer scores. All prompt/output counts matched, all requests
@@ -140,14 +146,14 @@ across drafted tokens.
 
 | Input / output budget | Waves | Actual input | Prefill tok/s | Decode tok/s | MTP accepted | TTFT | End to end |
 |---:|---:|---:|---:|---:|---:|---:|---:|
-| 512 / 1,024 | 5 | 479–507 | 1,700.9 | 58.2 | 55.1% | 0.31 s | 17.88 s |
-| 2,048 / 1,024 | 5 | 1,992–2,047 | 2,422.1 | 59.7 | 59.5% | 0.84 s | 17.97 s |
-| 4,096 / 1,024 | 5 | 4,052–4,094 | 2,235.7 | 55.2 | 51.6% | 1.83 s | 20.38 s |
-| 8,192 / 1,024 | 5 | 8,167–8,186 | 2,300.1 | 54.8 | 52.2% | 3.57 s | 22.26 s |
-| 16,384 / 1,024 | 5 | 16,335–16,379 | 2,166.2 | 56.1 | 56.3% | 7.58 s | 25.81 s |
-| 32,768 / 1,024 | 5 | 32,704–32,762 | 1,974.8 | 56.5 | 60.7% | 16.61 s | 34.70 s |
-| 65,536 / 1,024 | 3 | 65,491–65,532 | 1,668.2 | 52.7 | 60.7% | 39.36 s | 58.76 s |
-| 131,072 / 1,024 | 3 | 131,034–131,070 | 1,261.8 | 39.9 | 54.5% | 104.05 s | 129.71 s |
+| 512 / 1,024 | 5 | 479–507 | 1,718.8 | 58.4 | 55.1% | 0.30 s | 17.84 s |
+| 2,048 / 1,024 | 5 | 1,992–2,047 | 2,431.6 | 59.9 | 59.5% | 0.84 s | 17.92 s |
+| 4,096 / 1,024 | 5 | 4,052–4,094 | 2,241.4 | 57.1 | 55.0% | 1.83 s | 19.74 s |
+| 8,192 / 1,024 | 5 | 8,167–8,186 | 2,305.6 | 54.9 | 52.2% | 3.57 s | 22.20 s |
+| 16,384 / 1,024 | 5 | 16,335–16,379 | 2,168.2 | 56.2 | 56.3% | 7.58 s | 25.75 s |
+| 32,768 / 1,024 | 5 | 32,704–32,762 | 1,977.7 | 54.5 | 56.6% | 16.60 s | 35.39 s |
+| 65,536 / 1,024 | 3 | 65,491–65,532 | 1,670.0 | 52.7 | 60.7% | 39.32 s | 58.73 s |
+| 131,072 / 1,024 | 3 | 131,034–131,070 | 1,262.5 | 39.9 | 54.5% | 103.98 s | 129.68 s |
 
 ### One to four simultaneous requests
 
@@ -158,9 +164,9 @@ separate serving load points, not paired scaling measurements.
 
 | Input / output per request | C1 | C2 | C3 | C4 |
 |---|---:|---:|---:|---:|
-| 2,048 / 1,024 | 60.7 tok/s | 108.5 tok/s | 152.2 tok/s | 185.6 tok/s |
-| 4,096 / 1,024 | 55.4 tok/s | 110.9 tok/s | 141.4 tok/s | 181.6 tok/s |
-| 16,384 / 1,024 | 56.5 tok/s | 101.5 tok/s | 137.1 tok/s | 168.2 tok/s |
+| 2,048 / 1,024 | 61.2 tok/s | 108.1 tok/s | 154.2 tok/s | 190.5 tok/s |
+| 4,096 / 1,024 | 57.6 tok/s | 107.3 tok/s | 140.4 tok/s | 180.1 tok/s |
+| 16,384 / 1,024 | 56.6 tok/s | 103.1 tok/s | 134.7 tok/s | 165.0 tok/s |
 
 Some requests briefly entered the scheduler waiting queue; no request was preempted.
 
@@ -168,9 +174,9 @@ Some requests briefly entered the scheduler waiting queue; no request was preemp
 
 | Scenario | Measured result |
 |---|---|
-| 16K exact resend | 14,400 / 16,382 prompt tokens cached; TTFT **7.57 s cold → 1.03–1.04 s warm** |
-| 64K exact resend | 62,400 / 65,469 prompt tokens cached; TTFT **39.09 s cold → 2.48–2.49 s warm** |
-| Frozen 200K comparison | **199,673 input + 1,024 output**; 999.0 prefill tok/s, 38.5 decode tok/s, 200.14 s TTFT, 226.68 s end to end |
+| 16K exact resend | 14,400 / 16,382 prompt tokens cached; TTFT **7.56 s cold → 1.00–1.02 s warm** |
+| 64K exact resend | 62,400 / 65,469 prompt tokens cached; TTFT **39.03 s cold → 2.49–2.53 s warm** |
+| Frozen 200K comparison | **199,673 input + 1,024 output**; 999.3 prefill tok/s, 38.5 decode tok/s, 200.07 s TTFT, 226.60 s end to end |
 
 The longest-context row is one capacity and throughput observation. The
 16K/64K resends reused the same prompt on the same worker.
@@ -179,19 +185,23 @@ The longest-context row is one capacity and throughput observation. The
 
 ## Coding and quality results
 
-The qualified v1 release completes Flappy Bird v7 in **24 min 12 s**, passes
+The historical qualified v1 release completed Flappy Bird v7 in **24 min 12 s**, passed
 **54/54 checks**, and reaches **90,444 input tokens**. Native weighted prefill /
-decode are **1,388.7 / 53.9 tok/s**. Adaptive histories and tool work contribute
-to task duration. QueueKit takes **7 min 36 s**, with the failure noted above.
+decode were **1,388.7 / 53.9 tok/s**. Adaptive histories and tool work contribute
+to task duration. QueueKit took **7 min 36 s**, with the failure noted above.
 [Full coding results and 10K context bands](docs/EXL3_CODING_BENCHMARKS.md).
 
-On the frozen short panel, EXL3 PPL is **3.64672**, with mean KL **0.032481**
+The fresh v2 run of the frozen short panel gives PPL **3.64672**, with mean KL **0.032481**
 against BF16. These finite checkpoint/path measurements do not establish a
-general coding ranking. [Quality scope and metric receipts](benchmarks/results/exl3-migration/optimized-quality-v1/README.md).
+general coding ranking. [Current quality scope and metric receipts](docs/EXL3_RELEASE_V2_REPORT.md).
 
 ## Rollback and benchmark reproduction
 
-Stop `b70-qwen38-vllm.service` before switching to
+The immediate rollback is the [saved EXL3 v1 release](config/releases/exl3-v1/README.md).
+It retains its own strict launcher, image, policy and compiler namespace.
+Stop the current service before using that launcher; verify the API and a real reply.
+
+For the additional GPTQ rollback, stop `b70-qwen38-vllm.service` before switching to
 `scripts/run-server-gptq-rollback.sh`; both profiles use the same API endpoint
 and container name. The [independently pinned GPTQ rollback](config/releases/gptq-onednn-v2/README.md)
 uses its own image, policy and compiled caches. For a persistent rollback,

@@ -1,0 +1,42 @@
+{
+  "status": "COMPLETE_POWER_COMPARISON_MEASUREMENTS",
+  "started_unix": 1790951045.3974123,
+  "image_id": "sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918",
+  "policy_sha256": "1bf624713cff3583148a71c3b4fb9189268cc5d4a47afca03662ce25be3e7839",
+  "original_power_cap_w": 180,
+  "requested_power_caps_w": [
+    230,
+    275
+  ],
+  "variants": {
+    "230": {
+      "status": "COMPLETE",
+      "path": "benchmark-results/exl3-power-20261002/230w"
+    },
+    "275": {
+      "status": "COMPLETE",
+      "path": "benchmark-results/exl3-power-20261002/275w"
+    }
+  },
+  "source_commit": "37ef4df45eb34e7fbeb4f0bf824610635fc29245",
+  "scope": "Experimental hardware power override only. Current production policy remains 180 W. No new image or release qualification.",
+  "power_write_probe": {
+    "status": "PASS",
+    "sudo_required": false,
+    "accepted_watts": [
+      230,
+      275,
+      180
+    ]
+  },
+  "cleanup_errors": [],
+  "restoration": {
+    "image_id": "sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918",
+    "policy_sha256": "1bf624713cff3583148a71c3b4fb9189268cc5d4a47afca03662ce25be3e7839",
+    "models_endpoint_healthy": true,
+    "verified_unix": 1790956866.9633207
+  },
+  "restored_power_cap_w": 180,
+  "finished_unix": 1790956866.9633324,
+  "success": true
+}

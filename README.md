@@ -184,11 +184,11 @@ The longest-context row is one capacity and throughput observation. The
 <!-- END CURRENT SERVING MEASUREMENTS -->
 
 <!-- BEGIN POWER COMPARISON -->
-## Power-limit comparison: 180 / 230 / 275 W
+## Power-limit comparison: 150 / 180 / 230 / 275 W
 
 Same immutable EXL3 v2 image, serving arguments, environment values, frozen
-prompts and sampling. The existing fresh 180 W matrix is the baseline; 230 W
-and 275 W each repeat **20 scenarios / 70 measured waves / 124 requests** plus
+prompts and sampling. The existing fresh 180 W matrix is the baseline; the
+other measured variants each repeat **20 scenarios / 70 measured waves / 124 requests** plus
 an isolated 64K cold/warm resend. All ordinary requests completed without
 preemptions. The production service is restored to **180 W**.
 
@@ -199,6 +199,7 @@ energy includes each measured wave's prefill, decode and request overhead.
 
 | Power limit | Measured mean card power | Wave time | Output tok/s | Output tok/s per W | Output tok/Wh | Card energy |
 |---:|---:|---:|---:|---:|---:|---:|
+| 150 W | 150.1 W | 50.05 min | 42.3 | 0.282 | 1,014.5 | 125.16 Wh |
 | 180 W | 180.1 W | 41.68 min | 50.8 | 0.282 | 1,015.0 | 125.10 Wh |
 | 230 W | 230.1 W | 35.77 min | 59.2 | 0.257 | 925.7 | 137.16 Wh |
 | 275 W | 275.0 W | 33.89 min | 62.4 | 0.227 | 817.4 | 155.34 Wh |
@@ -213,26 +214,31 @@ For this fixed mixed workload, **180 W produced the most tokens per Wh**;
 **275 W finished the measured waves fastest**. The rate tables below show
 which context and concurrency points benefit from the additional power.
 
+The observed efficiency lead over the next-best setting (150 W) is
+**0.1%**. Each limit has one full campaign with the fixed
+repeats, without randomized order. Small differences do not establish a
+general optimum; generated trajectories and MTP acceptance can also differ.
+
 C1 rates below are median native prefill / request-weighted decode in tok/s.
 
-| C1 input budget | 180 W prefill / decode | 230 W prefill / decode | 275 W prefill / decode |
-|---:|---:|---:|---:|
-| 4K | 2,241.4 / 57.1 | 2,615.2 / 66.8 | 2,791.5 / 69.5 |
-| 16K | 2,168.2 / 56.2 | 2,540.1 / 65.5 | 2,721.1 / 68.4 |
-| 64K | 1,670.0 / 52.7 | 1,947.6 / 60.6 | 2,086.1 / 63.9 |
-| 128K | 1,262.5 / 39.9 | 1,466.3 / 45.9 | 1,562.6 / 48.0 |
-| 200K | 999.3 / 38.5 | 1,154.4 / 44.0 | 1,228.2 / 46.2 |
+| C1 input budget | 150 W prefill / decode | 180 W prefill / decode | 230 W prefill / decode | 275 W prefill / decode |
+|---:|---:|---:|---:|---:|
+| 4K | 1,858.0 / 45.8 | 2,241.4 / 57.1 | 2,615.2 / 66.8 | 2,791.5 / 69.5 |
+| 16K | 1,785.8 / 46.5 | 2,168.2 / 56.2 | 2,540.1 / 65.5 | 2,721.1 / 68.4 |
+| 64K | 1,396.6 / 43.6 | 1,670.0 / 52.7 | 1,947.6 / 60.6 | 2,086.1 / 63.9 |
+| 128K | 1,069.5 / 33.3 | 1,262.5 / 39.9 | 1,466.3 / 45.9 | 1,562.6 / 48.0 |
+| 200K | 852.5 / 32.6 | 999.3 / 38.5 | 1,154.4 / 44.0 | 1,228.2 / 46.2 |
 
 C4 rates are fully overlapped aggregate decode in tok/s, using the same
 sampled-interval definition as the main serving table.
 
-| Input per request, C4 | 180 W aggregate decode | 230 W aggregate decode | 275 W aggregate decode |
-|---|---:|---:|---:|
-| 2K | 190.5 | 223.5 | 231.1 |
-| 4K | 180.1 | 204.7 | 219.0 |
-| 16K | 165.0 | 191.5 | 202.2 |
+| Input per request, C4 | 150 W aggregate decode | 180 W aggregate decode | 230 W aggregate decode | 275 W aggregate decode |
+|---|---:|---:|---:|---:|
+| 2K | 156.1 | 190.5 | 223.5 | 231.1 |
+| 4K | 146.9 | 180.1 | 204.7 | 219.0 |
+| 16K | 138.2 | 165.0 | 191.5 | 202.2 |
 
-[All 20 load points, acceptance, energy scope and temperatures](docs/EXL3_POWER_COMPARISON.md); [measurement receipts](benchmarks/results/exl3-power-20261002/comparison.json).
+[All 20 load points, acceptance, energy scope and temperatures](docs/EXL3_POWER_COMPARISON.md); [measurement receipts](benchmarks/results/exl3-power-20261002-with-150w/comparison.json).
 <!-- END POWER COMPARISON -->
 
 ## Coding and quality results

@@ -26,9 +26,10 @@ c=serve.load(sys.argv[1]); print(json.dumps({'config':c,'argv':serve.vllm_argv(c
 
 
 class Worker:
-    def __init__(self,image,root,name='b70-exl3-qualification',env=None):
+    def __init__(self,image,root,name='b70-exl3-qualification',env=None,binds=None):
         self.image=subprocess.check_output(['docker','image','inspect',image,'--format','{{.Id}}'],text=True).strip()
         self.root=Path(root).resolve(); self.name=name; self.profile=profile(self.image,env)
+        self.binds=binds or []
 
     def start(self):
         if subprocess.run(['docker','inspect',self.name],capture_output=True).returncode==0:
@@ -40,6 +41,8 @@ class Worker:
                  '-p','127.0.0.1:8082:8000','-v',str(MODEL)+':/models/checkpoint:ro',
                  '-v',str(REPO/'runtime')+':/opt/b70-runtime:ro','-v',str(self.root)+':/results']
         for k,v in env.items(): command += ['-e',k+'='+v]
+        for source,target in self.binds:
+            command += ['-v',str(Path(source).resolve())+':'+target+':ro']
         cache=Path.home()/'.cache/exl3xpu/optimized-qualification'/self.image.removeprefix('sha256:')
         for k,target in [('vllm','/root/.cache/vllm'),('triton','/root/.triton/cache'),('neo_compiler_cache','/root/.cache/neo_compiler_cache')]:
             (cache/k).mkdir(parents=True,exist_ok=True);command+=['-v',str(cache/k)+':'+target]

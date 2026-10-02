@@ -23,12 +23,18 @@ def main():
     assert release['policy_sha256']==digest
     assert (release['status']=='QUALIFIED_RELEASE' or
             (a.check_only and release['status']=='CANDIDATE_PREFLIGHT_ONLY')), 'Release not approved'
-    assert policy['policy_id']=='b70-qwen38-exl3-production-v1'
+    assert policy['policy_id'] in ('b70-qwen38-exl3-production-v1','b70-qwen38-exl3-production-v2')
     image=release['image_tag']
     inspected=json.loads(subprocess.check_output(['docker','image','inspect',image],text=True))[0]
     assert inspected['Id']==release['image_id'], 'Production image tag moved'
     assert inspected['Config']['Labels']['org.local.b70.policy.sha256']==digest
     cfg=profile(release['image_id'])
+    if policy['policy_id']=='b70-qwen38-exl3-production-v2':
+        assert policy['attention']['partition_cache']['capacity']==64
+        image_env=dict(x.split('=',1) for x in inspected['Config']['Env'])
+        assert image_env.get('EXL3_SDPA_CACHE_CAPACITY')=='64'
+        assert release['environment_overrides']=={'EXL3_SDPA_CACHE_CAPACITY':'64'}
+        cfg['env'].update(release['environment_overrides'])
     assert sha(REPO/'runtime/request_defaults.py')==release['request_defaults_sha256'], 'Serving middleware changed'
     required={'VLLM_IMAGE':image,'MODEL_ID':policy['model']['id'],'MODEL_REVISION':policy['model']['revision'],
         'SERVED_MODEL_NAME':policy['model']['served_name'],'CONTEXT_SIZE':'262144','GPU_MEMORY_UTILIZATION':'0.965',

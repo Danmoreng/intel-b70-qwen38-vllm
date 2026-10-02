@@ -1,0 +1,3057 @@
+diff --git a/.dockerignore b/.dockerignore
+index 0d60390..f6f8450 100644
+--- a/.dockerignore
++++ b/.dockerignore
+@@ -2,3 +2,5 @@
+ logs
+ **/__pycache__
+ **/*.so
++!.native-target/_C.so
++!.m04-target/m04.so
+diff --git a/.gitignore b/.gitignore
+index e07c67a..a9de049 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -2,6 +2,11 @@ __pycache__/
+ *.so
+ build/
+ logs/
++*.build-*.log
++*.so.manifest.json
+ *.egg-info/
+ .claude/
+ bench/corpus/
++.native-target/
++.target-integration/
++.m04-target/
+diff --git a/csrc/exl3_ops.sycl b/csrc/exl3_ops.sycl
+index a4299ec..2792d31 100644
+--- a/csrc/exl3_ops.sycl
++++ b/csrc/exl3_ops.sycl
+@@ -1,4 +1,5 @@
+ #include <map>
++#include <cstring>
+ // Host launchers + torch bindings for EXL3 ESIMD kernels.
+ #include <torch/all.h>
+ #include <torch/library.h>
+@@ -396,9 +397,19 @@ using namespace dnnl::graph;
+ using lt = logical_tensor;
+ static void* alloc_fn(size_t n, size_t, const void*, const void*) { return c10::xpu::XPUCachingAllocator::raw_alloc(n); }
+ static void free_fn(void* p, const void*, const void*, void*) { c10::xpu::XPUCachingAllocator::raw_delete(p); }
+-struct Ctx { dnnl::engine eng; dnnl::stream strm; };
++struct Entry { compiled_partition cp; std::vector<lt> ins, outs; };
++using PartitionKey = std::tuple<int64_t, int64_t, int64_t, int64_t, int64_t, bool, bool>;
++struct Ctx {
++    dnnl::engine eng;
++    dnnl::stream strm;
++    std::map<PartitionKey, Entry> partitions;
++    std::map<float, at::Tensor> inverse_scales;
++    at::Tensor minus_inf;
++};
+ static Ctx& ctx(sycl::queue& q) {
+-    static std::map<void*, Ctx> m;
++    // Isolate each worker/thread and actual device queue. Partitions and
++    // constants remain owned by the engine/stream that creates them.
++    static thread_local std::map<void*, Ctx> m;
+     auto it = m.find((void*)&q);
+     if (it == m.end()) {
+         auto alloc = sycl_interop::make_allocator(alloc_fn, free_fn);
+@@ -407,9 +418,8 @@ static Ctx& ctx(sycl::queue& q) {
+     }
+     return it->second;
+ }
+-struct Entry { compiled_partition cp; std::vector<lt> ins, outs; };
+ static Entry& build(Ctx& c, int64_t Q, int64_t L, int64_t Hq, int64_t Hk, int64_t D, bool causal, bool with_lse) {
+-    static std::map<std::tuple<int64_t, int64_t, int64_t, int64_t, int64_t, bool, bool>, Entry> cache;
++    auto& cache = c.partitions;
+     auto key = std::make_tuple(Q, L, Hq, Hk, D, causal, with_lse);
+     auto it = cache.find(key);
+     if (it != cache.end()) return it->second;
+@@ -486,6 +496,17 @@ void exl3_sdpa_len(at::Tensor q, at::Tensor k, at::Tensor v, at::Tensor out, at:
+ }
+ static void sdpa_impl(at::Tensor q, at::Tensor k, at::Tensor v, at::Tensor out, at::Tensor lse, bool causal, double scale,
+                       int64_t len_k, int64_t len_q) {
++    // Integer finite checks remain valid under the existing -ffast-math build.
++    uint64_t scale_bits;
++    std::memcpy(&scale_bits, &scale, sizeof(scale_bits));
++    TORCH_CHECK((scale_bits >> 63) == 0 && (scale_bits & 0x7fffffffffffffffULL) != 0 &&
++                ((scale_bits >> 52) & 0x7ffULL) != 0x7ffULL,
++                "oneDNN SDPA: scale must be finite and positive");
++    const float inverse_scale = static_cast<float>(1.0 / scale);
++    uint32_t inverse_bits;
++    std::memcpy(&inverse_bits, &inverse_scale, sizeof(inverse_bits));
++    TORCH_CHECK(inverse_bits > 0 && inverse_bits <= 0x477fe000U,
++                "oneDNN SDPA: inverse scale must be positive and finite in FP16");
+     TORCH_CHECK(q.scalar_type() == at::kHalf && k.scalar_type() == at::kHalf && v.scalar_type() == at::kHalf);
+     TORCH_CHECK(q.is_contiguous() && k.is_contiguous() && v.is_contiguous() && out.is_contiguous());
+     int64_t Hq = q.size(0), Q = q.size(1), D = q.size(2), Hk = k.size(0), L = k.size(1);
+@@ -494,10 +515,15 @@ static void sdpa_impl(at::Tensor q, at::Tensor k, at::Tensor v, at::Tensor out,
+     bool with_lse = lse.defined() && lse.numel() > 0;
+     auto& e = sdpadnnl::build(c, Q, L, Hq, Hk, D, causal, with_lse);
+     using dnnl::graph::tensor;
+-    static std::vector<at::Tensor> sc(16), ni(16);
+-    auto& st = sc.at(q.device().index());
+-    if (!st.defined() || std::abs(st.item<float>() - (float)(1.0 / scale)) > 1e-3f) st = at::full({1}, (float)(1.0 / scale), q.options().dtype(at::kHalf));
+-    auto& nt = ni.at(q.device().index());
++    // The host argument is authoritative. Never reread the device scalar to
++    // select a stable model constant, and retain each value for queued work.
++    auto it_scale = c.inverse_scales.find(inverse_scale);
++    if (it_scale == c.inverse_scales.end()) {
++        it_scale = c.inverse_scales.emplace(inverse_scale,
++            at::full({1}, inverse_scale, q.options().dtype(at::kHalf))).first;
++    }
++    auto& st = it_scale->second;
++    auto& nt = c.minus_inf;
+     if (!nt.defined()) nt = at::full({1}, -std::numeric_limits<float>::infinity(), q.options().dtype(at::kFloat));
+     int32_t lk = (int32_t)len_k, lq = (int32_t)len_q;
+     std::vector<tensor> ins{tensor(e.ins[0], c.eng, q.data_ptr()), tensor(e.ins[1], c.eng, k.data_ptr()),
+diff --git a/docker/Dockerfile.migration-old b/docker/Dockerfile.migration-old
+new file mode 100644
+index 0000000..365fd94
+--- /dev/null
++++ b/docker/Dockerfile.migration-old
+@@ -0,0 +1,13 @@
++# Diagnostic candidate on the original ABI. Keep the production GPTQ image intact.
++ARG BASE_IMAGE=local/exl3xpu:15ded2f
++FROM ${BASE_IMAGE}
++WORKDIR /opt/exl3xpu
++COPY exl3xpu ./exl3xpu
++COPY csrc ./csrc
++COPY scripts ./scripts
++COPY models ./models
++COPY tests ./tests
++RUN bash scripts/build_ext.sh
++ARG ENABLE_SPARSE_GDN_RETIREMENT_FIX=0
++ENV EXL3_FIX_SPARSE_GDN_RETIREMENT=${ENABLE_SPARSE_GDN_RETIREMENT_FIX}
++CMD ["models/qwen3.8-27b-exl3-4.00bpw/migration-200704-c4.yaml", "--gpu", "0"]
+diff --git a/docker/Dockerfile.migration-target b/docker/Dockerfile.migration-target
+new file mode 100644
+index 0000000..927fd25
+--- /dev/null
++++ b/docker/Dockerfile.migration-target
+@@ -0,0 +1,24 @@
++# Initial functional port. Native attention; no inherited GPTQ performance routes.
++ARG BASE_IMAGE=sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68
++FROM ${BASE_IMAGE}
++USER root
++WORKDIR /opt/exl3xpu
++COPY pyproject.toml ./
++COPY exl3xpu ./exl3xpu
++COPY csrc ./csrc
++COPY scripts ./scripts
++COPY models ./models
++COPY tests ./tests
++COPY .native-target/_C.so .native-target/_C.so.manifest.json ./exl3xpu/
++COPY .m04-target/ ./m04/
++COPY .target-integration/ /tmp/exl3-integration/
++RUN python scripts/verify_native_artifact.py \
++ && python /tmp/exl3-integration/patch_mtp_format_guard.py --vllm-root /opt/venv/lib/python3.12/site-packages/vllm \
++ && python scripts/prepare_target_runtime.py \
++ && pip install --no-deps --no-build-isolation -e . \
++ && python -c "from importlib.metadata import entry_points; assert any(e.name=='exl3xpu' for e in entry_points(group='vllm.general_plugins'))" \
++ && rm -rf /tmp/exl3-integration
++ENV MODELS_DIR=/models EXL3_TARGET_RUNTIME=vllm030 EXL3_FIX_SPARSE_GDN_RETIREMENT=0 \
++    B70_GPTQ_W4A8_PREFILL=0 B70_ONEDNN_PREFILL=0 B70_ONEDNN_MIXED_ROUTE=0
++ENTRYPOINT ["python", "scripts/serve.py"]
++CMD ["models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml", "--gpu", "0"]
+diff --git a/exl3xpu/attention_dispatch.py b/exl3xpu/attention_dispatch.py
+new file mode 100644
+index 0000000..7a2cf6b
+--- /dev/null
++++ b/exl3xpu/attention_dispatch.py
+@@ -0,0 +1,208 @@
++"""Opt-in, source-guarded attention compute; native V2 owns every KV write."""
++from contextvars import ContextVar
++from dataclasses import dataclass
++import functools
++import hashlib
++import math
++import os
++from pathlib import Path
++
++import torch
++
++from . import attention_metadata as metadata
++from . import shared_kv_verify as verify
++
++SOURCE_HASHES = {
++    'v1/attention/backends/flash_attn.py': 'b170a4789e18104c1bee35bea70df51abe6766693d8f4726a59f2e6f5c4282aa',
++    'v1/attention/backends/fa_utils.py': '08fa6e231d3af3a71a6e59162dd12328aa8beb28548165ae58f130a92adb5a83',
++    'v1/attention/backend.py': '01ac364372afa75fdb22486aa3a9c7cf9aebb742e3471dfb9e0f9d9d36b734bc',
++    'v1/worker/gpu/model_runner.py': '174c93db921c23cf0396eee4764be25b2bd2d4b6a06e9fa41ce3598b884ce8ce',
++    'v1/worker/gpu/attn_utils.py': 'b9b81e59dda2720b1f9c434471381f879228832443e52756e469b4ad4905888f',
++    'v1/worker/gpu/model_states/mamba_hybrid.py': '573e130ac5587d4822fabf97adad1ad0fda02ff83c5e70df879a5bb175ae845c',
++    'model_executor/layers/attention/attention.py': 'bc897e452f3aea603e353ca42a365d3be8836e9485d78cbf8cc4677baca2fb42',
++    'model_executor/layers/quantization/kv_cache.py': '343665e0742ef111da53a3fc1fb4c4fd07b006895642e0ddbaaa57da68323a74',
++}
++
++
++@dataclass(frozen=True)
++class Context:
++    allowed: bool
++    plan: object = None
++    scales: object = None
++
++
++def supported_features(d):
++    """Unknown or unsupported semantics always go to native unchanged."""
++    if set(d) - verify.KNOWN or d.get('causal') is not True:
++        return False
++    if type(d.get('softmax_scale')) not in (int, float) or d['softmax_scale'] != .0625:
++        return False
++    window = d.get('window_size')
++    if window is not None and (type(window) not in (tuple, list) or
++                              len(window) != 2 or any(type(x) is not int for x in window)):
++        return False
++    if tuple(window or (-1, -1)) != (-1, -1) or d.get('fa_version', 2) != 2:
++        return False
++    for name in ('return_softmax_lse', 'return_attn_probs', 'dropout_p', 'softcap', 'deterministic'):
++        x = d.get(name)
++        if type(x) not in (type(None), bool, int, float) or x not in (None, False, 0, 0.):
++            return False
++    for name in ('num_splits', 'num_splits_kv'):
++        x = d.get(name)
++        if type(x) not in (type(None), int) or x not in (None, 0, 1):
++            return False
++    return all(d.get(name) is None for name in
++               ('s_aux', 'alibi_slopes', 'q_descale', 'cu_seqlens_k', 'q_v',
++                'scheduler_metadata', 'host_kv_lens', 'dynamic_causal', 'mask_mod', 'aux_tensors'))
++
++
++def prefill_eligible(d, context, capturing):
++    plan = context.plan
++    if capturing or plan is None or context.scales is None or not supported_features(d):
++        return False
++    names = ('q', 'k', 'v', 'out', 'cu_seqlens_q', 'seqused_k', 'block_table', 'k_descale', 'v_descale')
++    if any(not isinstance(d.get(name), torch.Tensor) for name in names):
++        return False
++    q, k, v, out, cq, used, bt, ks, vs = (d[name] for name in names)
++    if (q.device.type != 'xpu' or q.dtype != torch.float16 or
++            q.shape != (plan.tokens, 24, 256) or not q.is_contiguous() or
++            out.shape != q.shape or out.dtype != q.dtype or not out.is_contiguous() or
++            k.dtype != torch.float8_e4m3fn or v.dtype != k.dtype or k.ndim != 4 or
++            k.shape[1] <= 0 or k.shape[1] % 64 or tuple(k.shape[2:]) != (4, 256) or
++            v.shape != k.shape or v.stride() != k.stride()):
++        return False
++    strides = k.stride()
++    if (strides[3] != 1 or strides[2] < 256 or strides[1] < 4*strides[2] or
++            strides[0] < k.shape[1]*strides[1]):
++        return False
++    if (cq.dtype != torch.int32 or cq.shape != (plan.requests+1,) or not cq.is_contiguous() or
++            used.dtype != torch.int32 or used.shape != (plan.requests,) or not used.is_contiguous() or
++            bt.dtype != torch.int32 or bt.ndim != 2 or bt.shape[0] != plan.requests or not bt.is_contiguous()):
++        return False
++    if any(s.maximum_kv > bt.shape[1]*k.shape[1] for s in plan.segments):
++        return False
++    for scale in (ks, vs):
++        if (scale.dtype != torch.float32 or scale.numel() < 1 or
++                scale.untyped_storage().nbytes() != scale.element_size() or
++                (scale.numel() != 1 and any(stride != 0 for stride in scale.stride()))):
++            return False
++    return all(t.device == q.device for t in (k, v, out, cq, used, bt, ks, vs))
++
++
++def dispatch(original, d, context, *, capturing, native_op, m04, onednn):
++    if not context.allowed:
++        return original(**d)
++    if onednn and native_op is not None and prefill_eligible(d, context, capturing):
++        from .fp8kv_prefill import prefill_attention_onednn
++        for segment in context.plan.segments:
++            if segment.prefill:
++                prefill_attention_onednn(native_op, d['q'][segment.start:segment.stop],
++                    d['k'], d['v'], d['block_table'][segment.first], segment.maximum_kv,
++                    *context.scales, d['softmax_scale'], d['out'][segment.start:segment.stop])
++            else:
++                group = dict(d, q=d['q'][segment.start:segment.stop], out=d['out'][segment.start:segment.stop],
++                    cu_seqlens_q=segment.cu_query, max_seqlen_q=segment.maximum_query,
++                    max_seqlen_k=segment.maximum_kv,
++                    # Exact decode lengths stay on the GPU; CPU upper bounds
++                    # determine capacity only, never the actual attention mask.
++                    seqused_k=d['seqused_k'][segment.first:segment.last],
++                    block_table=d['block_table'][segment.first:segment.last],
++                    k_descale=d['k_descale'][segment.first:segment.last],
++                    v_descale=d['v_descale'][segment.first:segment.last])
++                dispatch(original, group, Context(True), capturing=capturing,
++                         native_op=native_op, m04=m04, onednn=False)
++        return d['out']
++    if m04 and verify.eligible(d) and d['cu_seqlens_q'].numel()-1 <= 4:
++        return verify.run(d)
++    return original(**d)
++
++
++def install():
++    if os.environ.get('EXL3_GUARDED_ATTN') != '1':
++        return
++    import vllm
++    from vllm.v1.attention.backends import flash_attn as fa
++    from vllm.v1.attention.backend import AttentionType
++    if getattr(fa, '_exl3_guarded_attention', False):
++        return
++    if vllm.__version__ != '0.30.0' or torch.__version__ != '2.13.0+xpu':
++        raise RuntimeError('Unsupported guarded attention ABI')
++    root = Path(vllm.__file__).parent
++    actual = {name: hashlib.sha256((root/name).read_bytes()).hexdigest() for name in SOURCE_HASHES}
++    if actual != SOURCE_HASHES:
++        raise RuntimeError(f'Unknown guarded attention metadata source: {actual}')
++    assert fa.FlashAttentionBackend.forward_includes_kv_cache_update is False
++    assert not getattr(fa, '_b70_exl3_m04_installed', False), 'Do not stack attention overlays'
++    from .fp8kv_prefill import _onednn_op, L_BUCKET, Q_BUCKET
++    onednn = os.environ.get('EXL3_GUARDED_PREFILL') == '1'
++    if onednn and (L_BUCKET != 1 or Q_BUCKET != 256):
++        raise RuntimeError('Guarded oneDNN requires exact K length and validated query padding')
++    native_op = _onednn_op() if onednn else None
++    if onednn and native_op is None:
++        raise RuntimeError('Requested oneDNN operation unavailable')
++    library = os.environ.get('EXL3_M04_LIBRARY')
++    if library:
++        expected = os.environ['EXL3_M04_LIBRARY_SHA256']
++        if hashlib.sha256(Path(library).read_bytes()).hexdigest() != expected:
++            raise RuntimeError('Unverified M04 library')
++        torch.ops.load_library(library)
++        assert torch._C._dispatch_has_kernel_for_dispatch_key('b70_exl3_attention::shared_kv_verify_out', 'XPU')
++    original_build = fa.FlashAttentionMetadataBuilder.build
++    @functools.wraps(original_build)
++    def build(self, common_prefix_len, common_attn_metadata, fast_build=False):
++        result = original_build(self, common_prefix_len, common_attn_metadata, fast_build)
++        config = self.vllm_config
++        spec = config.speculative_config
++        fixed = (not (spec and spec.enable_adaptive_verification) and
++                 config.parallel_config.decode_context_parallel_size == 1 and
++                 config.parallel_config.prefill_context_parallel_size == 1)
++        result._exl3_fixed_query_partition = fixed
++        # In this reviewed 0.30 source, ordinary fp8 uses load-time scalar
++        # scales; dynamic per-token/head formats have different dtype names.
++        # The old calculate_kv_scales CacheConfig field no longer exists.
++        result._exl3_static_kv_scales = config.cache_config.cache_dtype in ('fp8', 'fp8_e4m3')
++        result._exl3_host_plan = metadata.prepare(common_attn_metadata, fixed_partition=fixed) if onednn else None
++        return result
++    context_var = ContextVar('exl3_guarded_attention', default=Context(False))
++    original_forward = fa.FlashAttentionImpl.forward
++    @functools.wraps(original_forward)
++    def layer_forward(self, layer, query, key, value, kv_cache, attn_metadata, output,
++                      output_scale=None, output_block_scale=None):
++        md = attn_metadata
++        allowed = (md is not None and getattr(md, '_exl3_fixed_query_partition', False) and
++                   self.attn_type == AttentionType.DECODER and self.dcp_world_size == 1 and
++                   self.head_size == 256 and self.num_heads == 24 and self.num_kv_heads == 4 and
++                   self.kv_cache_dtype in ('fp8', 'fp8_e4m3') and not md.use_cascade and
++                   output_scale is None and output_block_scale is None)
++        scales = (getattr(layer, '_k_scale_float', None), getattr(layer, '_v_scale_float', None))
++        if (not getattr(md, '_exl3_static_kv_scales', False) or
++                any(type(s) not in (int, float) or not math.isfinite(s) or s <= 0 for s in scales)):
++            scales = None
++        context = Context(allowed, getattr(md, '_exl3_host_plan', None), scales)
++        token = context_var.set(context)
++        try:
++            return original_forward(self, layer, query, key, value, kv_cache, md,
++                                    output, output_scale, output_block_scale)
++        finally:
++            context_var.reset(token)
++    original = fa.flash_attn_varlen_func
++    seen = set()
++    def forward(*args, **d):
++        context = context_var.get()
++        if args or not context.allowed:
++            return original(*args, **d)
++        capturing = torch.xpu.is_current_stream_capturing()
++        # Log bounded structural evidence once, never per layer/step.
++        route = ('mixed/oneDNN' if onednn and native_op is not None and prefill_eligible(d, context, capturing)
++                 else 'M04' if library and verify.eligible(d) and d['cu_seqlens_q'].numel()-1 <= 4 else 'native')
++        signature = (route, d['cu_seqlens_q'].numel()-1, d['max_seqlen_q'], capturing)
++        if signature not in seen and len(seen) < 64:
++            seen.add(signature)
++            print('EXL3_GUARDED_ATTN_ROUTE', signature, flush=True)
++        return dispatch(original, d, context, capturing=capturing,
++                        native_op=native_op, m04=bool(library), onednn=onednn)
++    fa.FlashAttentionMetadataBuilder.build = build
++    fa.FlashAttentionImpl.forward = layer_forward
++    fa.flash_attn_varlen_func = forward
++    fa._exl3_guarded_attention = True
++    print('EXL3_GUARDED_ATTN_INSTALL_PASS', actual, 'prefill', onednn, 'M04', bool(library), flush=True)
+diff --git a/exl3xpu/attention_metadata.py b/exl3xpu/attention_metadata.py
+new file mode 100644
+index 0000000..161a29c
+--- /dev/null
++++ b/exl3xpu/attention_metadata.py
+@@ -0,0 +1,99 @@
++"""Exact prefill / bounded decode metadata, prepared once by the V2 builder.
++
++The CPU sequence length is exact ONLY on genuine prefill rows. Decode rows
++retain their native GPU lengths. CPU query boundaries are trusted only with
++adaptive verification disabled on the source-guarded single-rank V2 runner.
++"""
++from dataclasses import dataclass
++
++import torch
++
++
++@dataclass(frozen=True)
++class Segment:
++    first: int
++    last: int
++    start: int
++    stop: int
++    maximum_query: int
++    maximum_kv: int
++    prefill: bool
++    cu_query: object = None
++
++
++@dataclass(frozen=True)
++class HostPlan:
++    requests: int
++    tokens: int
++    segments: tuple
++
++
++def host_segments(bounds, lengths, prefilling, tokens, *, fixed_partition):
++    """Pure host contract; None means use the unmodified native whole batch."""
++    if not fixed_partition or type(tokens) is not int or tokens <= 0:
++        return None
++    n = len(lengths)
++    if (n <= 0 or len(bounds) != n + 1 or len(prefilling) != n or
++            any(type(x) is not int for x in bounds + lengths) or
++            any(type(x) is not bool for x in prefilling) or
++            bounds[0] != 0 or bounds[-1] != tokens):
++        return None
++    queries = [bounds[i+1] - bounds[i] for i in range(n)]
++    if any(q <= 0 or length < q for q, length in zip(queries, lengths)):
++        return None
++    long = [flag and q >= 64 and length >= 4096
++            for flag, q, length in zip(prefilling, queries, lengths)]
++    if not any(long):
++        return None
++    segments = []
++    i = 0
++    while i < n:
++        j = i + 1
++        # Long prefills have individual exact KV lengths; native work can be
++        # batched in contiguous runs, independent of request ordering.
++        if not long[i]:
++            while j < n and not long[j]:
++                j += 1
++        segments.append(Segment(i, j, bounds[i], bounds[j],
++                                max(queries[i:j]), max(lengths[i:j]), long[i]))
++        i = j
++    return HostPlan(n, tokens, tuple(segments))
++
++
++def prepare(common, *, fixed_partition):
++    if not fixed_partition or common.max_query_len < 64:
++        return None
++    tensors = [getattr(common, name, None) for name in
++               ('query_start_loc_cpu', 'seq_lens_cpu_upper_bound', 'is_prefilling')]
++    if any(not isinstance(t, torch.Tensor) or t.device.type != 'cpu' or t.ndim != 1
++           for t in tensors):
++        return None
++    bounds, lengths, flags = tensors
++    n = common.num_reqs
++    if (type(n) is not int or n <= 0 or bounds.numel() < n+1 or
++            lengths.numel() < n or flags.numel() < n or flags.dtype != torch.bool or
++            bounds.dtype not in (torch.int32, torch.int64) or
++            lengths.dtype not in (torch.int32, torch.int64)):
++        return None
++    bounds = bounds[:n+1].tolist()
++    plan = host_segments(bounds, lengths[:n].tolist(), flags[:n].tolist(),
++                         common.num_actual_tokens, fixed_partition=True)
++    if plan is None:
++        return None
++    result = []
++    for s in plan.segments:
++        cu = None
++        if not s.prefill:
++            if s.start == 0:
++                cu = common.query_start_loc[s.first:s.last+1]
++            else:
++                # One asynchronous metadata copy per native run per step,
++                # retained by the metadata object, never per attention layer.
++                host = torch.tensor([x-s.start for x in bounds[s.first:s.last+1]],
++                                    dtype=torch.int32)
++                if common.query_start_loc.device.type != 'cpu':
++                    host = host.pin_memory()
++                cu = host.to(common.query_start_loc.device, non_blocking=True)
++        result.append(Segment(s.first, s.last, s.start, s.stop,
++                              s.maximum_query, s.maximum_kv, s.prefill, cu))
++    return HostPlan(plan.requests, plan.tokens, tuple(result))
+diff --git a/exl3xpu/cache_retirement.py b/exl3xpu/cache_retirement.py
+new file mode 100644
+index 0000000..e800fcb
+--- /dev/null
++++ b/exl3xpu/cache_retirement.py
+@@ -0,0 +1,35 @@
++"""Retire processed GDN states across null holes; preserve in-flight boundaries.
++
++The pinned old allocator stopped at the first null entry. GDN tables are sparse
++and can contain older live states to the left of that hole, accumulating one
++orphan per prefill chunk. Only the Mamba manager receives this override.
++"""
++import hashlib
++import inspect
++import os
++from pathlib import Path
++from vllm.logger import init_logger
++logger=init_logger('vllm.exl3xpu.cache')
++OLD_SOURCE_SHA256='bcb27e38895332bf6a4c55608f2917eb9fd941ec5a629c14b88358f00aadeba8'
++
++def retire_sparse_states(self,request_id,first_block,last_block):
++    if request_id not in self.req_to_blocks or first_block>=last_block: return
++    blocks=self.req_to_blocks[request_id]
++    last_block=min(last_block,len(blocks))
++    freed=[]
++    for i in range(last_block-1,first_block-1,-1):
++        if blocks[i]==self._null_block: continue
++        freed.append(blocks[i]);blocks[i]=self._null_block
++    if freed: self.block_pool.free_blocks(freed)
++
++def install():
++    if os.environ.get('EXL3_FIX_SPARSE_GDN_RETIREMENT','0')!='1': return False
++    from vllm.v1.core import single_type_kv_cache_manager as module
++    cls=module.MambaManager
++    if getattr(cls,'_exl3_sparse_retirement_fixed',False): return True
++    sha=hashlib.sha256(Path(module.__file__).read_bytes()).hexdigest()
++    if sha!=OLD_SOURCE_SHA256: raise RuntimeError(f'Unknown GDN allocator for retirement fix: {module.__file__}/{sha}')
++    cls._remove_blocks_in_range=retire_sparse_states
++    cls._exl3_sparse_retirement_fixed=True
++    logger.info('EXL3 GDN retirement fix: scan past null holes within the existing processed-token boundary; source=%s',sha)
++    return True
+diff --git a/exl3xpu/checkpoint.py b/exl3xpu/checkpoint.py
+new file mode 100644
+index 0000000..9d2a4e9
+--- /dev/null
++++ b/exl3xpu/checkpoint.py
+@@ -0,0 +1,55 @@
++"""Authoritative, dependency-free EXL3 inventory shared by loader and gates."""
++from __future__ import annotations
++import json
++from pathlib import Path
++import re
++
++GPTQ_DRAFT_FLAGS=('B70_MTP_BF16_DRAFT','B70_DRAFT_LMHEAD_INT4','B70_DRAFT_MTP_INT4')
++
++def validate_exl3_environment(environment):
++    for name in GPTQ_DRAFT_FLAGS:
++        value=environment.get(name,'0')
++        if value not in ('0','1'): raise ValueError(f'{name} must be 0 or 1')
++        if value=='1': raise ValueError(f'{name} is a GPTQ representation override and cannot be used with EXL3')
++
++def normalize_key(key: str) -> str:
++    parts=key.split('.')
++    if 'mtp' in parts: return 'mtp.'+'.'.join(parts[parts.index('mtp')+1:])
++    match=re.search(r'(layers\.\d+\..*)$',key)
++    return match.group(1) if match else parts[-1]
++
++def inventory(weight_map: dict, quantization: dict, *, bits=4, head_bits=6,
++              mtp_bits=4, codebook='mul1') -> list[dict]:
++    stored=quantization.get('tensor_storage',{})
++    modules=[]; seen=set()
++    for name in sorted(weight_map):
++        if not name.endswith('.trellis'): continue
++        key=name[:-len('.trellis')]; canonical=normalize_key(key)
++        if canonical in seen: raise ValueError(f'Duplicate canonical EXL3 module: {canonical}')
++        seen.add(canonical)
++        meta=stored.get(key,{})
++        if meta and meta.get('quant_format')!='exl3':
++            raise ValueError(f'Index/quantization format conflict: {key}')
++        default=head_bits if canonical=='lm_head' else mtp_bits if canonical.startswith('mtp.') else bits
++        width=int(meta.get('bits_per_weight',default))
++        cb='mcg' if key+'.mcg' in weight_map else 'mul1' if key+'.mul1' in weight_map else '3inst'
++        if cb!=codebook: raise ValueError(f'Codebook mismatch for {key}: {cb} != {codebook}')
++        required=[key+s for s in ('.trellis','.suh','.svh')]
++        if cb!='3inst': required.append(key+'.'+cb)
++        missing=[n for n in required if n not in weight_map]
++        if missing: raise ValueError(f'Incomplete EXL3 module {key}: {missing}')
++        if width<=0: raise ValueError(f'Invalid bit width for {key}: {width}')
++        modules.append({'key':key,'canonical':canonical,'bits':width,'codebook':cb,
++                        'mtp':canonical.startswith('mtp.'),'tensors':required,
++                        'bit_width_source':'tensor_storage' if meta else 'checkpoint defaults'})
++    omitted=[k for k,v in stored.items() if v.get('quant_format')=='exl3' and k+'.trellis' not in weight_map]
++    if omitted: raise ValueError(f'Quantized modules missing from weight index: {omitted}')
++    if not modules: raise ValueError('No EXL3 trellis tensors in authoritative weight index')
++    return modules
++
++def load_inventory(model) -> tuple[dict,list[dict]]:
++    root=Path(model)
++    wmap=json.loads((root/'model.safetensors.index.json').read_text())['weight_map']
++    qc=json.loads((root/'quantization_config.json').read_text())
++    return wmap,inventory(wmap,qc,bits=int(qc.get('bits',4)),head_bits=qc.get('head_bits',6),
++                          mtp_bits=qc.get('mtp_bits',int(qc.get('bits',4))),codebook=qc.get('codebook','mul1'))
+diff --git a/exl3xpu/gdn_rows.py b/exl3xpu/gdn_rows.py
+new file mode 100644
+index 0000000..fe92774
+--- /dev/null
++++ b/exl3xpu/gdn_rows.py
+@@ -0,0 +1,34 @@
++"""Reuse host-computed row indices without indexing device tensors by CPU masks."""
++import torch
++
++
++class HostRows:
++    def __init__(self, mask):
++        if mask.device.type != 'cpu' or mask.dtype != torch.bool or mask.ndim != 1:
++            raise ValueError('GDN row selector requires a one-dimensional CPU bool mask')
++        self.mask = mask
++        self.indices = None
++        self.device_indices = {}
++        self.prefix_length = None
++
++    def _prepare(self):
++        if self.indices is not None:
++            return
++        self.indices = self.mask.nonzero(as_tuple=True)[0]
++        n = self.indices.numel()
++        if torch.equal(self.indices, torch.arange(n, dtype=torch.long)):
++            self.prefix_length = n
++
++    def select(self, tensor):
++        if tensor.shape[0] != self.mask.numel():
++            raise ValueError('GDN mask and tensor row counts differ')
++        self._prepare()
++        if self.prefix_length is not None:
++            return tensor[:self.prefix_length]
++        if tensor.device.type == 'cpu':
++            return tensor.index_select(0, self.indices)
++        key = str(tensor.device)
++        if key not in self.device_indices:
++            pinned = self.indices.pin_memory()
++            self.device_indices[key] = pinned.to(tensor.device, non_blocking=True)
++        return tensor.index_select(0, self.device_indices[key])
+diff --git a/exl3xpu/gdn_target_patch.py b/exl3xpu/gdn_target_patch.py
+new file mode 100644
+index 0000000..d196281
+--- /dev/null
++++ b/exl3xpu/gdn_target_patch.py
+@@ -0,0 +1,70 @@
++"""Semantic transformation of the reviewed 0.30 metadata builder, not a regex."""
++import ast
++from collections import Counter
++
++EXPECTED_SITES = {'block_table_tensor': 3, 'query_lens': 2,
++                  'num_accepted_tokens': 1, 'has_initial_state': 1}
++
++
++def selector_name(mask):
++    if isinstance(mask, ast.Name):
++        return {'spec_sequence_masks_cpu': '_exl3_spec_rows',
++                'non_spec_sequence_masks_cpu': '_exl3_non_spec_rows'}.get(mask.id)
++    if (isinstance(mask, ast.UnaryOp) and isinstance(mask.op, ast.Invert)
++            and isinstance(mask.operand, ast.Name)
++            and mask.operand.id == 'spec_sequence_masks_cpu'):
++        return '_exl3_non_spec_rows'
++    return None
++
++
++class DeviceMaskSites(ast.NodeTransformer):
++    def __init__(self):
++        self.sites = Counter()
++
++    def visit_Subscript(self, node):
++        node = self.generic_visit(node)
++        if not isinstance(node.value, ast.Name) or node.value.id not in EXPECTED_SITES:
++            return node
++        selectors = node.slice.elts if isinstance(node.slice, ast.Tuple) else [node.slice]
++        name = selector_name(selectors[0])
++        if name is None:
++            return node
++        self.sites[node.value.id] += 1
++        selected = ast.Call(func=ast.Attribute(value=ast.Name(id=name, ctx=ast.Load()),
++                                              attr='select', ctx=ast.Load()),
++                            args=[node.value], keywords=[])
++        if len(selectors) > 1:
++            selected = ast.Subscript(value=selected,
++                                     slice=ast.Tuple(elts=[ast.Slice(), *selectors[1:]], ctx=ast.Load()),
++                                     ctx=node.ctx)
++        return ast.copy_location(selected, node)
++
++
++def transformed_build(source):
++    tree = ast.parse(source)
++    patch = DeviceMaskSites()
++    tree = patch.visit(tree)
++    if dict(patch.sites) != EXPECTED_SITES:
++        raise ValueError(f'Unknown GDN device mask sites: {dict(patch.sites)}')
++    assignments = [n for n in ast.walk(tree) if isinstance(n, ast.Assign)
++                   and len(n.targets) == 1 and isinstance(n.targets[0], ast.Name)
++                   and n.targets[0].id == 'spec_sequence_masks_cpu'
++                   and isinstance(n.value, ast.Compare)]
++    if len(assignments) != 1:
++        raise ValueError('Unknown GDN speculative CPU mask construction')
++    anchor = assignments[0]
++    injected = ast.parse('_exl3_spec_rows = _Exl3HostRows(spec_sequence_masks_cpu)\n'
++                         '_exl3_non_spec_rows = _Exl3HostRows(~spec_sequence_masks_cpu)').body
++    for parent in ast.walk(tree):
++        for _, field in ast.iter_fields(parent):
++            if isinstance(field, list) and anchor in field:
++                pos = field.index(anchor) + 1
++                field[pos:pos] = injected
++    ast.fix_missing_locations(tree)
++    # Reject any remaining mask access on the explicitly identified device tensors.
++    for node in ast.walk(tree):
++        if isinstance(node, ast.Subscript) and isinstance(node.value, ast.Name) and node.value.id in EXPECTED_SITES:
++            selectors = node.slice.elts if isinstance(node.slice, ast.Tuple) else [node.slice]
++            if selector_name(selectors[0]):
++                raise ValueError('Unaccounted GDN device/CPU mask access')
++    return ast.unparse(tree), dict(patch.sites)
+diff --git a/exl3xpu/loader_audit.py b/exl3xpu/loader_audit.py
+new file mode 100644
+index 0000000..562d5ae
+--- /dev/null
++++ b/exl3xpu/loader_audit.py
+@@ -0,0 +1,60 @@
++"""Fail-closed whole-model inventory check after target and MTP weight loading."""
++import functools
++import json
++import os
++from pathlib import Path
++from collections import Counter
++from vllm.logger import init_logger
++logger=init_logger('vllm.exl3xpu.loader')
++
++def audit_runner(runner):
++    config=getattr(runner.vllm_config,'quant_config',None)
++    if config is None or config.get_name()!='exl3': return None
++    expected={v['canonical']:v for v in config.expected_inventory}
++    proposer=getattr(runner,'speculator',None) or getattr(runner,'drafter',None)
++    draft=getattr(proposer,'model',None)
++    models=[('target',runner.model)]+([('draft',draft)] if draft is not None else [])
++    reports=[];counts=Counter()
++    for role,model in models:
++        seen=set()
++        for name,layer in model.named_modules():
++            if id(layer) in seen: continue
++            seen.add(id(layer))
++            record=getattr(layer,'exl3_loader_report',None)
++            if record is None: continue
++            reports.append(dict(record,role=role,module=name))
++            for member in record['members']:
++                if member not in expected or record['bits']!=expected[member]['bits']:
++                    raise ValueError(f'EXL3 unexpected loaded tensor/bit width: {member}')
++                counts[member]+=1
++    required={k for k in expected if not k.startswith('mtp.') or draft is not None}
++    missing=required-set(counts)
++    duplicates={k:v for k,v in counts.items() if v>1 and k!='lm_head'}
++    result={'schema':1,'pid':os.getpid(),'status':'FAIL' if missing or duplicates else 'PASS',
++            'expected_modules':len(required),'loaded_modules':len(counts),'missing':sorted(missing),
++            'unexpected_duplicates':duplicates,'shared_head_load_count':counts.get('lm_head',0),
++            'mtp_expected':sum(k.startswith('mtp.') for k in required),
++            'mtp_loaded':sum(k.startswith('mtp.') for k in counts),'layers':reports,
++            'mtp_skipped_reason':None if draft is not None else 'speculation disabled; no draft model instantiated'}
++    path=os.environ.get('EXL3_LOADER_REPORT_DIR')
++    if path:
++        Path(path).mkdir(parents=True,exist_ok=True)
++        (Path(path)/f'loader-{os.getpid()}.json').write_text(json.dumps(result,indent=2)+'\n')
++    if missing or duplicates: raise ValueError(f'EXL3 loader mismatch: missing={sorted(missing)}, duplicates={duplicates}')
++    logger.info('EXL3 loader audit PASS: %d/%d modules; %d MTP; exact shapes/groups verified',
++                len(counts),len(required),result['mtp_loaded'])
++    return result
++
++def install():
++    # XPUWorker inherits this method for both V1 and V2 runners. Auditing only
++    # GPUModelRunner(V1) would silently miss the active V2 serving path.
++    from vllm.v1.worker.gpu_worker import Worker
++    if getattr(Worker,'_exl3_loader_audited',False): return
++    original=Worker.load_model
++    @functools.wraps(original)
++    def load_model(self,*args,**kwargs):
++        result=original(self,*args,**kwargs)
++        audit_runner(self.model_runner)
++        return result
++    Worker.load_model=load_model
++    Worker._exl3_loader_audited=True
+diff --git a/exl3xpu/memory_audit.py b/exl3xpu/memory_audit.py
+new file mode 100644
+index 0000000..a7759a7
+--- /dev/null
++++ b/exl3xpu/memory_audit.py
+@@ -0,0 +1,45 @@
++"""Startup-only host inspection of live XPU tensors outside the loaded models."""
++import gc
++import torch
++
++
++def unowned_tensor_audit(models):
++    known=set();modules=set()
++    for model in models:
++        for layer in model.modules():
++            modules.add(id(layer))
++            for t in list(layer.parameters(recurse=False))+list(layer.buffers(recurse=False)):
++                if t.device.type=='xpu': known.add(t.untyped_storage().data_ptr())
++            for value in vars(layer).values():
++                tensors=[value] if isinstance(value,torch.Tensor) else value.values() if isinstance(value,dict) else []
++                for t in tensors:
++                    if isinstance(t,torch.Tensor) and t.device.type=='xpu': known.add(t.untyped_storage().data_ptr())
++    objects=gc.get_objects();seen=set();rows=[];unowned_heads=[]
++    for obj in objects:
++        if isinstance(obj,torch.Tensor) and obj.device.type=='xpu':
++            storage=obj.untyped_storage();ptr=storage.data_ptr()
++            if ptr in known or ptr in seen or storage.nbytes()<1024*1024: continue
++            seen.add(ptr)
++            refs=[]
++            for ref in gc.get_referrers(obj):
++                if ref is objects: continue
++                summary={'type':type(ref).__name__}
++                if isinstance(ref,dict):
++                    summary['tensor_keys']=[str(k) for k,v in list(ref.items()) if v is obj][:12]
++                refs.append(summary)
++            rows.append({'shape':list(obj.shape),'dtype':str(obj.dtype),'bytes':storage.nbytes(),
++                         'tensor_type':type(obj).__name__,'referrers':refs[:10]})
++        elif isinstance(obj,torch.nn.Module) and id(obj) not in modules:
++            report=getattr(obj,'exl3_loader_report',None)
++            if report and 'lm_head' in report['members']:
++                refs=[]
++                for ref in gc.get_referrers(obj):
++                    if ref is objects: continue
++                    summary={'type':type(ref).__name__}
++                    if isinstance(ref,dict): summary['module_keys']=[str(k) for k,v in list(ref.items()) if v is obj][:12]
++                    if type(ref).__name__=='method': summary['method']=getattr(ref,'__name__',None)
++                    refs.append(summary)
++                unowned_heads.append({'class':type(obj).__name__,'prefix':report['prefix'],'referrers':refs[:12]})
++    rows.sort(key=lambda r:r['bytes'],reverse=True)
++    return {'unowned_storage_bytes_over_1MiB':sum(r['bytes'] for r in rows),'largest_tensors':rows[:24],
++            'unowned_exl3_heads':unowned_heads,'scope':'Python-GC-visible XPU storage not referenced by model parameters/buffers/direct attributes/dictionaries; host metadata only'}
+diff --git a/exl3xpu/migration_trace.py b/exl3xpu/migration_trace.py
+new file mode 100644
+index 0000000..59a3a77
+--- /dev/null
++++ b/exl3xpu/migration_trace.py
+@@ -0,0 +1,250 @@
++"""Opt-in diagnostic trace for the pinned old EXL3 runtime. No production dispatch changes.
++
++These runs are for memory/accounting diagnosis, not unbiased throughput timing.
++Unknown scheduler/cache source fails closed; target-runtime port needs new guards.
++"""
++import functools
++import hashlib
++import inspect
++import json
++import os
++from pathlib import Path
++import time
++import torch
++import vllm
++
++OLD_SOURCE_HASHES={
++ 'v1/core/sched/scheduler.py':'2ed2a550b6558b2495eda845a97ae38bcf0225027b9e25fbf00fc3880c1d3941',
++ 'v1/core/kv_cache_manager.py':'3f4af8d247f3fe9570b0132818b832b66ae6a2ac12942588828f899f6ff77ccf',
++ 'v1/core/single_type_kv_cache_manager.py':'bcb27e38895332bf6a4c55608f2917eb9fd941ec5a629c14b88358f00aadeba8',
++ 'v1/worker/gpu_worker.py':'28ac3f85aca3f68f18ac51cb5915e4d7ebe316c4ff3c021f1c2c5d3b90daca56',
++}
++TARGET_SOURCE_HASHES={
++ 'v1/core/sched/scheduler.py':'c1db45f3bbad3a875dd8638331b8870c4380ac1ab4734265ba5c863833a82884',
++ 'v1/core/kv_cache_manager.py':'58800535eda854580d84e1025bf32fe01b2a43ce0bba501b4f3d125e4f2c8afa',
++ 'v1/core/single_type_kv_cache_manager.py':'0233531d85aeced9e57a38c76d83db970519c92902b7e55484390cb2b64985bf',
++ 'v1/worker/gpu_worker.py':'6994436e4547c0996ab555b3e814e8ccea26b650dfc1b378b97d640745309347',
++}
++
++def digest(path):
++    with Path(path).open('rb') as f: return hashlib.file_digest(f,'sha256').hexdigest()
++
++def memory():
++    if not torch.xpu.is_initialized(): return {'available':False,'reason':'no XPU context in this process'}
++    result={'allocated':torch.xpu.memory_allocated(),'reserved':torch.xpu.memory_reserved(),
++            'max_allocated':torch.xpu.max_memory_allocated(),'max_reserved':torch.xpu.max_memory_reserved(),
++            'oneDNN_workspace_bytes':None,'graph_pool_bytes':None}
++    if hasattr(torch.xpu,'mem_get_info'):
++        try: result['free'],result['total']=torch.xpu.mem_get_info()
++        except RuntimeError as e: result['free_query_error']=str(e)
++    return result
++
++def tensor_storage(model):
++    """Host metadata only. Count shared parameter/buffer/draft-head storage once."""
++    if model is None: return None
++    models=model if isinstance(model,list) else [model]
++    seen=set();by_dtype={};named_bytes=0;extra_bytes=0
++    def record(tensor,extra=False):
++        nonlocal named_bytes,extra_bytes
++        if not isinstance(tensor,torch.Tensor) or tensor.device.type!='xpu': return
++        storage=tensor.untyped_storage();key=(str(tensor.device),storage.data_ptr())
++        if key in seen: return
++        seen.add(key);n=storage.nbytes();by_dtype[str(tensor.dtype)]=by_dtype.get(str(tensor.dtype),0)+n
++        if extra: extra_bytes+=n
++        else: named_bytes+=n
++    for model in models:
++        for tensor in list(model.parameters())+list(model.buffers()): record(tensor)
++        for layer in model.modules():
++            for tensor in getattr(layer,'exl3_draft',{}).values(): record(tensor,True)
++    return {'unique_storage_bytes':named_bytes+extra_bytes,'named_parameter_buffer_bytes':named_bytes,
++            'extra_pruned_draft_head_bytes':extra_bytes,'storage_count':len(seen),'bytes_by_dtype':by_dtype,
++            'scope':'named XPU parameters/buffers and explicit exl3_draft tensor dictionaries; workspaces are excluded'}
++
++def emit(event,**fields):
++    root=Path(os.environ['EXL3_MIGRATION_TRACE']);root.mkdir(parents=True,exist_ok=True)
++    record={'event':event,'pid':os.getpid(),'unix':time.time(),'monotonic':time.monotonic(),**fields}
++    with (root/f'trace-{os.getpid()}.jsonl').open('a') as f:
++        f.write(json.dumps(record,default=str,separators=(',',':'))+'\n')
++
++def request_summary(request):
++    result={n:getattr(request,n,None) for n in ('request_id','num_prompt_tokens','num_tokens',
++             'num_computed_tokens','num_cached_tokens','num_preemptions','num_in_flight_tokens','status')}
++    result['status_name']=getattr(getattr(request,'status',None),'name',None)
++    return result
++
++def cache_snapshot(manager,request_id=None):
++    groups=[]
++    for i,m in enumerate(manager.coordinator.single_type_managers):
++        blocks=m.req_to_blocks.get(request_id,[]) if request_id is not None else []
++        groups.append({'group':i,'type':type(m).__name__,'spec':repr(m.kv_cache_spec),
++                       'block_size':m.block_size,'num_speculative_blocks':getattr(m,'num_speculative_blocks',None),
++                       'held_blocks':len(blocks),'non_null_blocks':sum(b.block_id!=0 for b in blocks),
++                       'block_ids':[b.block_id for b in blocks],
++                       'ref_counts':[b.ref_cnt for b in blocks]})
++    return {'total_blocks':manager.block_pool.num_gpu_blocks,
++            'free_blocks':manager.block_pool.get_num_free_blocks(),
++            'watermark_blocks':manager.watermark_blocks,'groups':groups}
++
++def native_map():
++    paths=set()
++    for row in Path('/proc/self/maps').read_text().splitlines():
++        parts=row.split()
++        if len(parts)>=6 and parts[-1].startswith('/') and '.so' in parts[-1] and Path(parts[-1]).is_file(): paths.add(parts[-1])
++    return {p:{'bytes':Path(p).stat().st_size,'sha256':digest(p)} for p in sorted(paths)}
++
++def wrap(cls,name,callback):
++    original=getattr(cls,name)
++    @functools.wraps(original)
++    def wrapped(self,*args,**kw): return callback(original,self,args,kw)
++    setattr(cls,name,wrapped)
++
++def install():
++    if not os.environ.get('EXL3_MIGRATION_TRACE'): return
++    from vllm.v1.core.kv_cache_manager import KVCacheManager
++    from vllm.v1.core.sched.scheduler import Scheduler
++    from vllm.v1.worker.gpu_worker import Worker
++    from vllm.v1.core.single_type_kv_cache_manager import MambaManager
++    if getattr(KVCacheManager,'_exl3_migration_traced',False): return
++    root=Path(vllm.__file__).parent
++    expected=TARGET_SOURCE_HASHES if os.environ.get('EXL3_TARGET_RUNTIME')=='vllm030' else OLD_SOURCE_HASHES
++    actual={n:digest(root/n) for n in expected}
++    if actual!=expected: raise RuntimeError(f'Unknown runtime for EXL3 diagnostic trace: {actual}')
++    emit('trace_install',vllm_version=vllm.__version__,torch_version=torch.__version__,
++         source_hashes=actual,sparse_gdn_retirement_fix=bool(getattr(MambaManager,'_exl3_sparse_retirement_fixed',False)),
++         gdn_retirement_method_source=inspect.getsourcefile(MambaManager._remove_blocks_in_range),
++         gdn_retirement_method_sha256=hashlib.sha256(inspect.getsource(MambaManager._remove_blocks_in_range).encode()).hexdigest(),
++         note='instrumented diagnostics; throughput is not a release benchmark')
++
++    def init_cache(original,self,args,kw):
++        result=original(self,*args,**kw)
++        emit('cache_initialized',cache=cache_snapshot(self))
++        for i,m in enumerate(self.coordinator.single_type_managers):
++            bound=m.get_num_blocks_to_allocate
++            signature=inspect.signature(bound)
++            def traced_query(*args,_bound=bound,_signature=signature,_manager=m,_group=i,**kw):
++                inputs=_signature.bind(*args,**kw);inputs.apply_defaults()
++                data=inputs.arguments
++                requested=_bound(*args,**kw)
++                emit('group_allocation_query',group=_group,type=type(_manager).__name__,
++                     request_id=data.get('request_id'),num_tokens=data.get('num_tokens'),
++                     num_tokens_main_model=data.get('num_tokens_main_model'),
++                     total_computed_tokens=data.get('total_computed_tokens'),
++                     admission_cap=data.get('apply_admission_cap'),requested_blocks=requested,
++                     free_pool_blocks=self.block_pool.get_num_free_blocks(),
++                     prefix_computed_blocks=len(data.get('new_computed_blocks',[])))
++                return requested
++            m.get_num_blocks_to_allocate=traced_query
++        return result
++    wrap(KVCacheManager,'__init__',init_cache)
++    allocate_signature=inspect.signature(KVCacheManager.allocate_slots)
++    def allocate(original,self,args,kw):
++        bound=allocate_signature.bind(self,*args,**kw);bound.apply_defaults();data=bound.arguments
++        request=data['request'];rid=request.request_id
++        emit('before_allocation',request=request_summary(request),cache=cache_snapshot(self,rid),
++             arguments={k:v for k,v in data.items() if k not in ('self','request','new_computed_blocks')})
++        result=original(self,*args,**kw)
++        emit('allocation_rejected' if result is None else 'allocation_completed',
++             request=request_summary(request),cache=cache_snapshot(self,rid),
++             memory=memory() if result is None else None)
++        return result
++    wrap(KVCacheManager,'allocate_slots',allocate)
++
++    def admit(original,self,args,kw):
++        request=args[0] if args else kw['request']
++        emit('request_admission',request=request_summary(request),memory=memory(),
++             cache=cache_snapshot(self.kv_cache_manager),lookahead_tokens=self.num_lookahead_tokens)
++        return original(self,*args,**kw)
++    wrap(Scheduler,'add_request',admit)
++    def preempt(original,self,args,kw):
++        request=args[0] if args else kw['request']
++        emit('before_preemption',request=request_summary(request),cache=cache_snapshot(self.kv_cache_manager,request.request_id),
++             memory=memory(),reason='Scheduler._preempt_request; correlate immediately preceding allocation_rejected (or explicit preempt API)')
++        result=original(self,*args,**kw)
++        emit('after_preemption_requeue',request=request_summary(request),cache=cache_snapshot(self.kv_cache_manager,request.request_id),memory=memory())
++        return result
++    wrap(Scheduler,'_preempt_request',preempt)
++    def free_request(original,self,args,kw):
++        request=args[0] if args else kw['request']
++        emit('request_finish_or_abort',request=request_summary(request),cache=cache_snapshot(self.kv_cache_manager,request.request_id),memory=memory())
++        return original(self,*args,**kw)
++    wrap(Scheduler,'_free_request',free_request)
++    def schedule(original,self,args,kw):
++        before={rid:request_summary(r) for rid,r in self.requests.items()}
++        result=original(self,*args,**kw)
++        if result.num_scheduled_tokens:
++            emit('scheduled_work',tokens=result.num_scheduled_tokens,request_state_before=before,
++                 note='scheduled work including speculation, not logical prompt metric or proof of completed GPU compute')
++        return result
++    wrap(Scheduler,'schedule',schedule)
++
++    def worker_load(original,self,args,kw):
++        emit('before_weights',memory=memory())
++        runner=self.model_runner
++        proposer=getattr(runner,'speculator',None) or getattr(runner,'drafter',None)
++        if proposer is not None and hasattr(proposer,'load_model') and not getattr(type(proposer),'_exl3_draft_load_traced',False):
++            def draft_load(original,self,args,kw):
++                target=args[0] if args else kw.get('target_model')
++                emit('before_draft_weights',memory=memory(),target_tensor_storage=tensor_storage(target))
++                result=original(self,*args,**kw)
++                draft=getattr(self,'model',None)
++                language=target.get_language_model() if hasattr(target,'get_language_model') else target
++                head=getattr(language,'lm_head',None)
++                emit('after_draft_weights',memory=memory(),draft_tensor_storage=tensor_storage(draft),
++                     proposer_class=type(self).__name__,
++                     shared_lm_head=None if head is None else head is getattr(draft,'lm_head',None))
++                return result
++            wrap(type(proposer),'load_model',draft_load)
++            type(proposer)._exl3_draft_load_traced=True
++        result=original(self,*args,**kw)
++        runner=self.model_runner
++        proposer=getattr(runner,'speculator',None) or getattr(runner,'drafter',None)
++        models=[runner.model]+([proposer.model] if proposer is not None and hasattr(proposer,'model') else [])
++        from .memory_audit import unowned_tensor_audit
++        emit('after_weights_and_draft',memory=memory(),runner_class=type(runner).__name__,
++             runner_source=inspect.getfile(type(runner)),
++             runner_mro=[str(c) for c in type(runner).__mro__],model_tensor_storage=tensor_storage(models),
++             unowned_tensor_audit=unowned_tensor_audit(models),
++             draft_present=(getattr(runner,'speculator',None) or getattr(runner,'drafter',None)) is not None)
++        runner_class=type(runner)
++        if not getattr(runner_class,'_exl3_capture_traced',False):
++            def capture(original,self,args,kw):
++                emit('before_graph_capture',memory=memory())
++                result=original(self,*args,**kw)
++                emit('after_graph_capture',memory=memory(),reported_capture_bytes=result)
++                return result
++            wrap(runner_class,'capture_model',capture)
++            runner_class._exl3_capture_traced=True
++        return result
++    wrap(Worker,'load_model',worker_load)
++    def profile_memory(original,self,args,kw):
++        emit('before_memory_profile',memory=memory(),requested_memory=getattr(self,'requested_memory',None))
++        result=original(self,*args,**kw)
++        emit('after_memory_profile',memory=memory(),available_kv_cache_memory_bytes=result,
++             requested_memory=getattr(self,'requested_memory',None),
++             total_consumed=getattr(self,'total_consumed',None),
++             peak_activation_memory=getattr(self,'peak_activation_memory',None),
++             cudagraph_memory_estimate=getattr(self,'cudagraph_memory_estimate',None),
++             model_memory_usage=getattr(self.model_runner,'model_memory_usage',None))
++        return result
++    wrap(Worker,'determine_available_memory',profile_memory)
++    def warm(original,self,args,kw):
++        result=original(self,*args,**kw)
++        emit('after_warmup',memory=memory(),native_libraries=native_map())
++        return result
++    wrap(Worker,'compile_or_warm_up_model',warm)
++    def execute(original,self,args,kw):
++        output=args[0] if args else kw.get('scheduler_output')
++        if output is None: return original(self,*args,**kw)
++        new_requests=getattr(output,'scheduled_new_reqs',[])
++        cached=getattr(output,'scheduled_cached_reqs',None)
++        offsets={getattr(r,'req_id',None):getattr(r,'num_computed_tokens',None) for r in new_requests}
++        if cached is not None:
++            offsets.update(zip(getattr(cached,'req_ids',[]),getattr(cached,'num_computed_tokens',[])))
++        emit('target_forward_submission',tokens=output.num_scheduled_tokens,computed_offsets=offsets,
++             runner_class=type(self.model_runner).__name__)
++        result=original(self,*args,**kw)
++        emit('target_forward_return',tokens=output.num_scheduled_tokens,
++             note='worker returned after submitting forward work; GPU completion is asynchronous')
++        return result
++    wrap(Worker,'execute_model',execute)
++    KVCacheManager._exl3_migration_traced=True
+diff --git a/exl3xpu/shared_kv_verify.py b/exl3xpu/shared_kv_verify.py
+new file mode 100644
+index 0000000..c2635f6
+--- /dev/null
++++ b/exl3xpu/shared_kv_verify.py
+@@ -0,0 +1,121 @@
++"""Experimental shared-KV verification, with native fallback and no KV writes.
++
++Input metadata is the native FA2 contract: max_seqlen_q is the true per-sequence
++maximum, cu_seqlens_q describes all actual query rows, and seqused_k includes
++the newly written queries. Shape equality then proves uniform query lengths.
++This module does not infer lengths by reading device tensors on the host.
++"""
++import torch
++
++KNOWN = {
++    'q', 'k', 'v', 'out', 'cu_seqlens_q', 'max_seqlen_q', 'max_seqlen_k',
++    'seqused_k', 'block_table', 'softmax_scale', 'causal', 'window_size',
++    'k_descale', 'v_descale', 'fa_version', 'num_splits', 'num_splits_kv',
++    'dropout_p', 'softcap', 'return_softmax_lse', 'return_attn_probs',
++    'deterministic', 's_aux', 'alibi_slopes', 'q_descale', 'cu_seqlens_k',
++    'q_v', 'scheduler_metadata', 'host_kv_lens', 'is_mix_batch',
++    'dynamic_causal', 'mask_mod', 'aux_tensors',
++}
++
++
++def eligible(d):
++    if set(d) - KNOWN or any(d.get(n) is None for n in
++                            ('q', 'k', 'v', 'cu_seqlens_q', 'seqused_k',
++                             'block_table', 'k_descale', 'v_descale')):
++        return False
++    q, k, v = d['q'], d['k'], d['v']
++    cq, used, bt = d['cu_seqlens_q'], d['seqused_k'], d['block_table']
++    batch, rows = cq.numel() - 1, d.get('max_seqlen_q')
++    if not isinstance(rows, int) or not 2 <= rows <= 5 or not 1 <= batch <= 16:
++        return False
++    if (q.device.type != 'xpu' or q.dtype != torch.float16 or
++            tuple(q.shape) != (batch * rows, 24, 256) or not q.is_contiguous()):
++        return False
++    if (k.dtype != torch.float8_e4m3fn or v.dtype != k.dtype or k.ndim != 4 or
++            k.shape[1] <= 0 or k.shape[1] % 64 or tuple(k.shape[2:]) != (4, 256) or
++            v.shape != k.shape or v.stride() != k.stride()):
++        return False
++    strides = k.stride()
++    if (strides[3] != 1 or strides[2] < 256 or strides[1] < 4 * strides[2] or
++            strides[0] < k.shape[1] * strides[1]):
++        return False
++    if (cq.ndim != 1 or cq.dtype != torch.int32 or not cq.is_contiguous() or
++            used.ndim != 1 or used.numel() != batch or used.dtype != torch.int32 or
++            not used.is_contiguous() or bt.ndim != 2 or bt.shape[0] != batch or
++            bt.dtype != torch.int32 or not bt.is_contiguous()):
++        return False
++    maximum = d.get('max_seqlen_k')
++    if not isinstance(maximum, int) or not rows <= maximum <= bt.shape[1] * k.shape[1]:
++        return False
++    if (d.get('causal') is not True or type(d.get('softmax_scale')) not in (int, float) or
++            d.get('softmax_scale') != 0.0625):
++        return False
++    window = d.get('window_size')
++    if window is not None and (type(window) not in (tuple, list) or
++                              len(window) != 2 or any(type(v) is not int for v in window)):
++        return False
++    if tuple(window or (-1, -1)) != (-1, -1) or type(d.get('fa_version', 2)) is not int or d.get('fa_version', 2) != 2:
++        return False
++    for name in ('num_splits', 'num_splits_kv'):
++        value = d.get(name)
++        if type(value) not in (type(None), int) or value not in (None, 0, 1):
++            return False
++    for name in ('return_softmax_lse', 'return_attn_probs', 'dropout_p', 'softcap', 'deterministic'):
++        flag = d.get(name)
++        if type(flag) not in (type(None), bool, int, float) or flag not in (None, False, 0, 0.0):
++            return False
++    if any(d.get(n) is not None for n in
++           ('s_aux', 'alibi_slopes', 'q_descale', 'cu_seqlens_k', 'q_v',
++            'scheduler_metadata', 'host_kv_lens', 'dynamic_causal', 'mask_mod', 'aux_tensors')):
++        return False
++    tensors = [q, k, v, cq, used, bt]
++    for key in ('k_descale', 'v_descale'):
++        scale = d[key]
++        if (scale.dtype != torch.float32 or scale.numel() < 1 or
++                scale.untyped_storage().nbytes() != scale.element_size() or
++                (scale.numel() != 1 and any(stride != 0 for stride in scale.stride()))):
++            return False
++        tensors.append(scale)
++    out = d.get('out')
++    if out is not None:
++        if out.shape != q.shape or out.dtype != q.dtype or not out.is_contiguous():
++            return False
++        tensors.append(out)
++    return all(t.device == q.device for t in tensors)
++
++
++def packed_queries(q, batch, rows):
++    return q.view(batch, rows, 4, 6, 256).permute(0, 2, 1, 3, 4).reshape(batch, rows * 24, 256).contiguous()
++
++
++def unpacked_output(y, batch, rows):
++    return y.view(batch, 4, rows, 6, 256).permute(0, 2, 1, 3, 4).reshape(batch * rows, 24, 256).contiguous()
++
++
++def run(d, splits=None, tile=8):
++    batch, rows = d['cu_seqlens_q'].numel() - 1, d['max_seqlen_q']
++    q = packed_queries(d['q'], batch, rows)
++    y = torch.empty_like(q)
++    # Initial historical policy, to be measured independently for C1/C4.
++    splits = splits if splits is not None else {2: 32, 3: 8, 4: 16, 5: 16}[rows]
++    temp = torch.empty((batch, rows * 24 * splits, 256), dtype=q.dtype, device=q.device)
++    sums = torch.empty((batch, rows * 24, splits), dtype=torch.float32, device=q.device)
++    maxima = torch.empty_like(sums)
++    cu = torch.arange(batch + 1, dtype=torch.int32, device=q.device)
++    ks = d['k_descale'].as_strided((1,), (1,))
++    vs = d['v_descale'].as_strided((1,), (1,))
++    torch.ops.b70_exl3_attention.shared_kv_verify_out(
++        q, d['k'], d['v'], d['block_table'], cu, d['seqused_k'], ks, vs,
++        y, temp, sums, maxima, d['max_seqlen_k'], splits, tile)
++    result = unpacked_output(y, batch, rows)
++    out = d.get('out')
++    if out is not None:
++        out.copy_(result)
++        return out
++    return result
++
++
++def dispatch(original, **d):
++    if not eligible(d):
++        return original(**d)
++    return run(d)
+diff --git a/exl3xpu/target_runtime.py b/exl3xpu/target_runtime.py
+new file mode 100644
+index 0000000..3167c10
+--- /dev/null
++++ b/exl3xpu/target_runtime.py
+@@ -0,0 +1,39 @@
++"""Reviewed vLLM 0.30 port. Deliberately do not apply legacy runner/cache patches."""
++import hashlib
++import inspect
++import textwrap
++from pathlib import Path
++import vllm
++from vllm.logger import init_logger
++from .gdn_rows import HostRows
++from .gdn_target_patch import transformed_build
++
++logger = init_logger('vllm.exl3xpu.port')
++SOURCE_HASHES = {
++    'v1/attention/backends/gdn_attn.py': 'd30bfce0df438e0d29d8a8744aeb9fb8e4bdcbca2410fde7afdb2a6cdb627f1b',
++    'v1/worker/gpu/model_states/mamba_hybrid.py': '573e130ac5587d4822fabf97adad1ad0fda02ff83c5e70df879a5bb175ae845c',
++    'platforms/xpu.py': '3736e6cba2a0d78b9bd93f6069f610e2b2725be00f398a6ad5672a9862d66285',
++    'v1/core/single_type_kv_cache_manager.py': '0233531d85aeced9e57a38c76d83db970519c92902b7e55484390cb2b64985bf',
++    'v1/worker/xpu_model_runner.py': '07fa0390d28f2b8c3c3c0019eb9c3b126e2397aea268ba47c889f06b423deb23',
++    'v1/worker/xpu_worker.py': '711b56432506b58041cd86e71320c3960413f7bd61061990b66488421d81cfc3',
++}
++
++
++def install():
++    from vllm.v1.attention.backends import gdn_attn
++    cls = gdn_attn.GDNAttentionMetadataBuilder
++    if getattr(cls, '_exl3_target_patched', False):
++        return
++    root = Path(vllm.__file__).parent
++    actual = {f: hashlib.sha256((root/f).read_bytes()).hexdigest() for f in SOURCE_HASHES}
++    if actual != SOURCE_HASHES:
++        raise RuntimeError(f'Unknown target runtime for EXL3 port: {actual}')
++    source, sites = transformed_build(textwrap.dedent(inspect.getsource(cls.build)))
++    ns = dict(vars(gdn_attn), _Exl3HostRows=HostRows)
++    exec(compile(source, f'<EXL3 target GDN {gdn_attn.__file__}>', 'exec'), ns)
++    cls.build = ns['build']
++    cls._exl3_target_patched = True
++    logger.info('EXL3 target GDN semantic row selection: %s; V2 Mamba metadata uses this builder; '
++                'native block64/sparse retirement retained; no V1 align or old attention override', sites)
++    from . import attention_dispatch
++    attention_dispatch.install()
+diff --git a/exl3xpu/validation.py b/exl3xpu/validation.py
+new file mode 100644
+index 0000000..05e2b6f
+--- /dev/null
++++ b/exl3xpu/validation.py
+@@ -0,0 +1,7 @@
++"""Numerical gates must reject NaN as well as finite out-of-tolerance values."""
++import math
++
++INT8_REFERENCE_TOLERANCE = 2e-3
++
++def int8_reference_pass(errors):
++    return bool(errors) and all(math.isfinite(v) and v < INT8_REFERENCE_TOLERANCE for v in errors)
+diff --git a/exl3xpu/vllm_plugin.py b/exl3xpu/vllm_plugin.py
+index 353f1d9..58b8228 100644
+--- a/exl3xpu/vllm_plugin.py
++++ b/exl3xpu/vllm_plugin.py
+@@ -6,12 +6,15 @@ engine core, workers) imports it before model construction.
+ """
+ from __future__ import annotations
+ import json
++import hashlib
+ import os
+ import re
++import weakref
+ from typing import Any
+ 
+ import torch
+ from torch.nn import Parameter
++from vllm.distributed import get_tensor_model_parallel_world_size
+ 
+ from vllm.logger import init_logger
+ from vllm.model_executor.layers.linear import LinearBase, LinearMethodBase, UnquantizedLinearMethod
+@@ -20,6 +23,7 @@ from vllm.model_executor.layers.quantization.base_config import QuantizationConf
+ from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
+ 
+ logger = init_logger("vllm.exl3xpu")
++from .checkpoint import normalize_key as _norm_key, inventory, validate_exl3_environment
+ 
+ # vLLM fused module -> checkpoint constituents
+ FUSED = {
+@@ -32,27 +36,14 @@ QKV_IDS = {"q": 0, "k": 1, "v": 2}
+ CB_IDS = {"3inst": 0, "mcg": 1, "mul1": 2}
+ 
+ 
+-def _norm_key(k: str) -> str:
+-    """Canonical module name shared by checkpoint keys and vLLM prefixes:
+-       'model.language_model.layers.3.mlp.gate_proj' / 'language_model.model.layers.3.mlp.gate_proj'
+-           -> 'layers.3.mlp.gate_proj'
+-       'mtp.layers.0.mlp.gate_proj' / 'model.mtp.layers.0...' -> 'mtp.layers.0.mlp.gate_proj'
+-       '...lm_head' -> 'lm_head'"""
+-    parts = k.split(".")
+-    if "mtp" in parts:
+-        return "mtp." + ".".join(parts[parts.index("mtp") + 1:])
+-    m = re.search(r"(layers\.\d+\..*)$", k)
+-    if m:
+-        return m.group(1)
+-    return parts[-1]
+-
+-
+ @register_quantization_config("exl3")
+ class Exl3Config(QuantizationConfig):
+ 
+     def __init__(self, bits: float, head_bits: int, codebook: str, storage: dict | None = None,
+                  mtp_bits: int | None = None):
+         super().__init__()
++        validate_exl3_environment(os.environ)
++        logger.info("EXL3 MTP quantization path: checkpoint-native EXL3; GPTQ draft overrides disabled")
+         self.bits = bits
+         self.mtp_bits = int(mtp_bits or bits)
+         self.head_bits = head_bits
+@@ -96,22 +87,17 @@ class Exl3Config(QuantizationConfig):
+         # index has '<module>.trellis'. (quantization_config.json's tensor_storage omits the MTP head.)
+         idx_path = self._model_file(model_name, "model.safetensors.index.json", revision)
+         qc_path = self._model_file(model_name, "quantization_config.json", revision)
+-        stored = {}
++        qc = {}
+         if qc_path:
+             with open(qc_path) as f:
+-                for key, v in json.load(f).get("tensor_storage", {}).items():
+-                    if v.get("quant_format") == "exl3":
+-                        stored[_norm_key(key)] = int(v.get("bits_per_weight", self.bits))
+-        if idx_path:
+-            with open(idx_path) as f:
+-                wmap = json.load(f)["weight_map"]
+-            for name in wmap:
+-                if name.endswith(".trellis"):
+-                    key = _norm_key(name[: -len(".trellis")])
+-                    default = self.mtp_bits if key.startswith("mtp.") else int(self.bits)
+-                    self.storage[key] = stored.get(key, default)
+-        else:
+-            self.storage.update(stored)
++                qc = json.load(f)
++        if not idx_path:
++            raise RuntimeError("exl3: authoritative model.safetensors.index.json is required")
++        with open(idx_path) as f:
++            wmap = json.load(f)["weight_map"]
++        self.expected_inventory = inventory(wmap, qc, bits=int(self.bits), head_bits=self.head_bits,
++                                            mtp_bits=self.mtp_bits, codebook=self.codebook)
++        self.storage = {v['canonical']:v['bits'] for v in self.expected_inventory}
+         logger.info("exl3: %d EXL3 modules (%d in MTP head)", len(self.storage),
+                     sum(1 for k in self.storage if k.startswith("mtp.")))
+ 
+@@ -138,36 +124,42 @@ class Exl3Config(QuantizationConfig):
+             bits = self._bits_for(prefix)
+             if bits is None:
+                 return UnquantizedLinearMethod()
+-            return Exl3LinearMethod(self, bits)
++            return Exl3LinearMethod(self, bits, prefix)
+         if isinstance(layer, ParallelLMHead):
+             bits = self._bits_for(prefix)
+             if bits is None:
+                 return None
+-            return Exl3LinearMethod(self, bits)
++            return Exl3LinearMethod(self, bits, prefix)
+         return None
+ 
+ 
+ class Exl3LinearMethod(LinearMethodBase):
+ 
+-    def __init__(self, config: Exl3Config, bits: int):
++    def __init__(self, config: Exl3Config, bits: int, prefix: str = ""):
+         self.config = config
+         self.K = int(bits)
+         self.cb = CB_IDS[config.codebook]
++        self.prefix = prefix
+ 
+     def create_weights(self, layer, input_size_per_partition, output_partition_sizes, input_size,
+                        output_size, params_dtype, **extra_weight_attrs):
+         k = input_size_per_partition
+         n = sum(output_partition_sizes)
++        if get_tensor_model_parallel_world_size() != 1:
++            raise NotImplementedError("exl3: tensor parallel sharding is not qualified (TP must be 1)")
+         if k != input_size or n != (output_size if not isinstance(layer, ParallelLMHead) else n):
+             raise NotImplementedError("exl3: tensor parallel sharding not supported yet (use DP)")
+-        assert k % 128 == 0 and all(s % 128 == 0 for s in output_partition_sizes), \
+-            f"exl3: dims must be multiples of 128 (k={k}, n={output_partition_sizes})"
++        if k % 128 != 0 or not output_partition_sizes or any(s<=0 or s%128 for s in output_partition_sizes):
++            raise ValueError(f"exl3: dims must be positive multiples of 128 (k={k}, n={output_partition_sizes})")
+         K = self.K
+         layer.exl3_sizes = list(output_partition_sizes)
+         layer.exl3_offsets = [sum(output_partition_sizes[:i]) for i in range(len(output_partition_sizes) + 1)]
+         layer.exl3_groups = set()
++        layer.exl3_loaded_shards = {name:set() for name in ('trellis','suh','svh')}
++        layer.exl3_codebook_loaded = False
+         layer.exl3_K = K
+         layer.exl3_cb = self.cb
++        layer_ref = weakref.ref(layer)
+ 
+         def reg(name, tensor, loader):
+             p = Parameter(tensor, requires_grad=False)
+@@ -178,7 +170,15 @@ class Exl3LinearMethod(LinearMethodBase):
+         reg("suh", torch.empty((len(output_partition_sizes), k), dtype=torch.float16), self._load_suh(layer))
+         reg("svh", torch.empty((n,), dtype=torch.float16), self._load_svh(layer))
+         if self.config.codebook != "3inst":
+-            reg(self.config.codebook, torch.empty((), dtype=torch.int32), lambda p, w, *a, **kw: p.data.copy_(w))
++            def load_codebook(p,w,*a,**kw):
++                layer = layer_ref()
++                if layer is None:
++                    raise RuntimeError(f'exl3: codebook loader owner was released: {self.prefix}')
++                if w.shape != torch.Size([]) or w.dtype != torch.int32:
++                    raise ValueError(f"exl3: invalid codebook marker {self.prefix}: {w.shape}/{w.dtype}")
++                p.data.copy_(w)
++                layer.exl3_codebook_loaded = True
++            reg(self.config.codebook, torch.empty((), dtype=torch.int32), load_codebook)
+ 
+     @staticmethod
+     def _shards(layer, loaded, sid=None) -> list[int]:
+@@ -194,34 +194,67 @@ class Exl3LinearMethod(LinearMethodBase):
+ 
+     def _range(self, layer, loaded, sid=None):
+         s = self._shards(layer, loaded, sid)
+-        assert s == list(range(s[0], s[-1] + 1)), s
++        if not s or any(not isinstance(i,int) or i<0 or i>=len(layer.exl3_sizes) for i in s):
++            raise ValueError(f"exl3: invalid shard IDs {s} for {self.prefix}")
++        if s != list(range(s[0], s[-1]+1)):
++            raise ValueError(f"exl3: shards must be ordered and contiguous: {s}")
+         return s, layer.exl3_offsets[s[0]], layer.exl3_offsets[s[-1] + 1]
+ 
+     def _load_trellis(self, layer):
++        layer_ref = weakref.ref(layer)
+         def f(param, w, sid=None):
++            layer = layer_ref()
++            if layer is None:
++                raise RuntimeError(f'exl3: trellis loader owner was released: {self.prefix}')
+             s, a, b = self._range(layer, w, sid)
+-            assert w.dtype == torch.int16 and w.shape[-1] == param.shape[-1], \
+-                f"exl3: trellis bits mismatch {tuple(w.shape)} vs {tuple(param.shape)}"
+-            assert w.shape[1] * 16 == b - a and w.shape[0] == param.shape[0], (w.shape, a, b)
++            if w.dtype!=torch.int16 or tuple(w.shape)!=(param.shape[0],(b-a)//16,param.shape[-1]):
++                raise ValueError(f"exl3: trellis shape/bits mismatch {self.prefix}: {tuple(w.shape)}/{w.dtype} vs {tuple(param.shape)}")
++            if set(s) & layer.exl3_loaded_shards['trellis']:
++                raise ValueError(f"exl3: duplicate trellis shards {s}: {self.prefix}")
+             param.data[:, a // 16: b // 16].copy_(w)
++            layer.exl3_loaded_shards['trellis'].update(s)
+             layer.exl3_groups.add(tuple(s))
+         return f
+ 
+     def _load_suh(self, layer):
++        layer_ref = weakref.ref(layer)
+         def f(param, w, sid=None):
++            layer = layer_ref()
++            if layer is None:
++                raise RuntimeError(f'exl3: suh loader owner was released: {self.prefix}')
+             s, _, _ = self._range(layer, w, sid)
++            if tuple(w.shape) != (param.shape[1],):
++                raise ValueError(f"exl3: suh shape mismatch for {self.prefix}: {w.shape}")
++            if set(s) & layer.exl3_loaded_shards['suh']:
++                raise ValueError(f"exl3: duplicate suh shards {s}: {self.prefix}")
+             for i in s:
+                 param.data[i].copy_(w)
++            layer.exl3_loaded_shards['suh'].update(s)
+         return f
+ 
+     def _load_svh(self, layer):
++        layer_ref = weakref.ref(layer)
+         def f(param, w, sid=None):
+-            _, a, b = self._range(layer, w, sid)
++            layer = layer_ref()
++            if layer is None:
++                raise RuntimeError(f'exl3: svh loader owner was released: {self.prefix}')
++            s, a, b = self._range(layer, w, sid)
++            if tuple(w.shape) != (b-a,):
++                raise ValueError(f"exl3: svh shape mismatch for {self.prefix}: {w.shape}")
++            if set(s) & layer.exl3_loaded_shards['svh']:
++                raise ValueError(f"exl3: duplicate svh shards {s}: {self.prefix}")
+             param.data[a:b].copy_(w)
++            layer.exl3_loaded_shards['svh'].update(s)
+         return f
+ 
+     def process_weights_after_loading(self, layer):
+-        groups = sorted(layer.exl3_groups) or [tuple(range(len(layer.exl3_sizes)))]
++        expected_shards=set(range(len(layer.exl3_sizes)))
++        for name,loaded in layer.exl3_loaded_shards.items():
++            if loaded != expected_shards:
++                raise ValueError(f"exl3: incomplete {name} shards for {self.prefix}: {sorted(loaded)} != {sorted(expected_shards)}")
++        if self.config.codebook!='3inst' and not layer.exl3_codebook_loaded:
++            raise ValueError(f"exl3: missing codebook marker for {self.prefix}")
++        groups = sorted(layer.exl3_groups)
+         covered = [i for g in groups for i in g]
+         assert covered == list(range(len(layer.exl3_sizes))), f"exl3: incomplete shards {groups}"
+         dev = layer.trellis.device
+@@ -234,6 +267,22 @@ class Exl3LinearMethod(LinearMethodBase):
+         layer.suh = Parameter(suh, requires_grad=False)
+         layer.exl3_shard_of_nb = shard_of_nb.to(dev)
+         layer.exl3_bounds = bounds
++        key=_norm_key(self.prefix)
++        base,_,leaf=key.rpartition('.')
++        members=[f'{base}.{p}' if base else p for p in FUSED.get(leaf,[leaf])]
++        # GDN's combined q/k/v source shares one Hadamard transform; z has its own.
++        expected_groups=[(0,1,2),(3,)] if leaf=='in_proj_qkvz' else [(i,) for i in range(len(members))]
++        if self.prefix and groups!=expected_groups:
++            raise ValueError(f"exl3: unexpected fused source groups for {self.prefix}: {groups} != {expected_groups}")
++        for member in members:
++            if self.config.storage and self.config.storage.get(member)!=self.K:
++                raise ValueError(f"exl3: loaded unexpected module/bit width {member}/{self.K}")
++        layer.exl3_loader_report={'prefix':self.prefix,'members':members,'bits':self.K,
++                                  'shapes':{name:list(getattr(layer,name).shape) for name in ('trellis','suh','svh')},
++                                  'groups':[list(g) for g in groups],'bounds':bounds,
++                                  'shard_of_nb_counts':[(bounds[i+1]-bounds[i])//128 for i in range(len(groups))],
++                                  'loaded_shards':{name:sorted(v) for name,v in layer.exl3_loaded_shards.items()},
++                                  'codebook':self.config.codebook,'status':'PASS'}
+         if isinstance(layer, ParallelLMHead) and os.environ.get("EXL3_DRAFT_VOCAB") and _spec_is_mtp():
+             _build_draft_head(layer, os.environ["EXL3_DRAFT_VOCAB"])
+         cb = self.cb
+@@ -285,9 +334,11 @@ def _spec_is_mtp():
+ def _build_draft_head(layer, path):
+     with open(path) as f:
+         spec = json.load(f)
+-    blocks = torch.tensor(spec["blocks"], dtype=torch.long)
+     n_total_blocks = layer.svh.shape[0] // 128
+-    blocks = blocks[blocks < n_total_blocks]
++    ids=spec['blocks']
++    if not ids or any(type(i) is not int or i<0 or i>=n_total_blocks for i in ids) or len(set(ids))!=len(ids):
++        raise ValueError(f'exl3: draft vocabulary contains empty/invalid/duplicate blocks: {path}')
++    blocks = torch.tensor(ids, dtype=torch.long)
+     dev = layer.trellis.device
+     tiles = (blocks[:, None] * 8 + torch.arange(8)[None, :]).flatten().to(dev)
+     trellis = layer.trellis.data.index_select(1, tiles).contiguous()
+@@ -328,9 +379,21 @@ def _patch_mtp_draft_logits():
+ 
+ def register():
+     """vllm.general_plugins entry point (runs in every vLLM process)."""
++    with open(__file__,'rb') as source:
++        digest=hashlib.file_digest(source,'sha256').hexdigest()
++    logger.info('EXL3 plugin registered pid=%d source=%s sha256=%s',os.getpid(),__file__,digest)
+     if os.environ.get("EXL3_DRAFT_VOCAB"):
+         _patch_mtp_draft_logits()
+-    if os.environ.get("EXL3_VLLM_PATCHES", "1") != "0":
++    if os.environ.get('EXL3_TARGET_RUNTIME') == 'vllm030':
++        from . import target_runtime
++        target_runtime.install()
++    elif os.environ.get("EXL3_VLLM_PATCHES", "1") != "0":
+         from . import vllm_patches
+         vllm_patches.apply_all()
++    from . import loader_audit
++    loader_audit.install()
++    from . import cache_retirement
++    cache_retirement.install()
++    from . import migration_trace
++    migration_trace.install()
+     return None
+diff --git a/models/qwen3.8-27b-exl3-4.00bpw/migration-200704-c4.yaml b/models/qwen3.8-27b-exl3-4.00bpw/migration-200704-c4.yaml
+new file mode 100644
+index 0000000..5d8baca
+--- /dev/null
++++ b/models/qwen3.8-27b-exl3-4.00bpw/migration-200704-c4.yaml
+@@ -0,0 +1,40 @@
++# Initial old-runtime diagnostic candidate: same serving limits as GPTQ.
++# MTP remains the old EXL3 depth (3); no decode optimization is introduced here.
++id: qwen3.8-27b-exl3-4.00bpw
++served_model_name: Qwen3.8-27B
++source:
++  repo: turboderp/Qwen3.8-27B-exl3
++  revision: 113cf7ab958054860e43fb7f3063b1af19171095
++vllm:
++  dtype: float16
++  max_model_len: 200704
++  kv_cache_dtype: fp8
++  gpu_memory_utilization: 0.93
++  max_num_seqs: 4
++  max_num_batched_tokens: 6656
++  scheduler_reserve_full_isl: true
++  watermark: 0.0
++  enable_prefix_caching: true
++  mamba_cache_mode: align
++  speculative_config: {method: qwen3_5_mtp, num_speculative_tokens: 3}
++  limit_mm_per_prompt: {image: 1, video: 0}
++  mm_processor_kwargs: {size: {longest_edge: 4194304, shortest_edge: 65536}}
++  enable_auto_tool_choice: true
++  tool_call_parser: qwen3_xml
++  reasoning_parser: qwen3
++  reasoning_config: {reasoning_start_str: '<think>', reasoning_end_str: '</think>'}
++  override_generation_config: {max_new_tokens: 16384}
++  middleware: request_defaults.ChatDefaults
++  compilation_config:
++    cudagraph_mode: FULL_DECODE_ONLY
++    cudagraph_capture_sizes: [1, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64]
++env:
++  VLLM_XPU_ENABLE_XPU_GRAPH: '1'
++  VLLM_WORKER_MULTIPROC_METHOD: spawn
++  EXL3_DRAFT_VOCAB: '{model_dir}/draft_vocab.json'
++  EXL3_KV_BLOCK_EXACT: '1'
++  EXL3_ONEDNN_ATTN: '1'
++  EXL3_INT8_PREFILL: '1'
++  B70_MTP_BF16_DRAFT: null
++  B70_DRAFT_LMHEAD_INT4: null
++  B70_DRAFT_MTP_INT4: null
+diff --git a/models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml b/models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml
+new file mode 100644
+index 0000000..a6f7e2f
+--- /dev/null
++++ b/models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml
+@@ -0,0 +1,64 @@
++# Initial functional port: FP8 KV and INT8 prefill retained; native attention.
++id: qwen3.8-27b-exl3-4.00bpw
++served_model_name: Qwen3.8-27B
++source:
++  repo: turboderp/Qwen3.8-27B-exl3
++  revision: 113cf7ab958054860e43fb7f3063b1af19171095
++vllm:
++  dtype: float16
++  max_model_len: 200704
++  kv_cache_dtype: fp8
++  gpu_memory_utilization: 0.93
++  max_num_seqs: 4
++  max_num_batched_tokens: 6656
++  scheduler_reserve_full_isl: true
++  watermark: 0.0
++  enable_prefix_caching: true
++  mamba_cache_mode: align
++  speculative_config:
++    method: mtp
++    num_speculative_tokens: 3
++  limit_mm_per_prompt:
++    image: 1
++    video: 0
++  mm_processor_kwargs:
++    max_pixels: 4194304
++  enable_auto_tool_choice: true
++  tool_call_parser: qwen3_xml
++  reasoning_parser: qwen3
++  reasoning_config:
++    reasoning_start_str: <think>
++    reasoning_end_str: </think>
++  override_generation_config:
++    max_new_tokens: 16384
++  middleware: request_defaults.ChatDefaults
++  compilation_config:
++    cudagraph_mode: FULL_DECODE_ONLY
++    cudagraph_capture_sizes:
++    - 1
++    - 2
++    - 4
++    - 8
++    - 12
++    - 16
++    - 24
++    - 32
++    - 40
++    - 48
++    - 56
++    - 64
++env:
++  VLLM_XPU_ENABLE_XPU_GRAPH: '1'
++  VLLM_WORKER_MULTIPROC_METHOD: spawn
++  EXL3_DRAFT_VOCAB: '{model_dir}/draft_vocab.json'
++  EXL3_KV_BLOCK_EXACT: '0'
++  EXL3_ONEDNN_ATTN: '0'
++  EXL3_INT8_PREFILL: '1'
++  B70_MTP_BF16_DRAFT: null
++  B70_DRAFT_LMHEAD_INT4: null
++  B70_DRAFT_MTP_INT4: null
++  EXL3_TARGET_RUNTIME: vllm030
++  EXL3_FIX_SPARSE_GDN_RETIREMENT: '0'
++  B70_ONEDNN_PREFILL: '0'
++  B70_ONEDNN_MIXED_ROUTE: '0'
++  B70_GPTQ_W4A8_PREFILL: '0'
+diff --git a/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml b/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml
+new file mode 100644
+index 0000000..e175c86
+--- /dev/null
++++ b/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml
+@@ -0,0 +1,69 @@
++# Frozen optimized EXL3 candidate; release requires numerical, quality,
++# operational and complete README benchmark qualification of this exact image.
++id: qwen3.8-27b-exl3-4.00bpw
++served_model_name: Qwen3.8-27B
++source:
++  repo: turboderp/Qwen3.8-27B-exl3
++  revision: 113cf7ab958054860e43fb7f3063b1af19171095
++vllm:
++  dtype: float16
++  max_model_len: 262144
++  kv_cache_dtype: fp8
++  gpu_memory_utilization: 0.965
++  max_num_seqs: 16
++  max_num_batched_tokens: 4096
++  scheduler_reserve_full_isl: true
++  watermark: 0.0
++  enable_prefix_caching: true
++  mamba_cache_mode: align
++  speculative_config:
++    method: mtp
++    num_speculative_tokens: 3
++  limit_mm_per_prompt:
++    image: 32
++    video: 4
++  mm_processor_kwargs:
++    max_pixels: 4194304
++  enable_auto_tool_choice: true
++  tool_call_parser: qwen3_xml
++  reasoning_parser: qwen3
++  reasoning_config:
++    reasoning_start_str: <think>
++    reasoning_end_str: </think>
++  override_generation_config:
++    max_new_tokens: 16384
++  middleware: request_defaults.ChatDefaults
++  compilation_config:
++    cudagraph_mode: FULL_DECODE_ONLY
++    cudagraph_capture_sizes:
++    - 1
++    - 2
++    - 4
++    - 8
++    - 12
++    - 16
++    - 24
++    - 32
++    - 40
++    - 48
++    - 56
++    - 64
++env:
++  VLLM_XPU_ENABLE_XPU_GRAPH: '1'
++  VLLM_WORKER_MULTIPROC_METHOD: spawn
++  EXL3_DRAFT_VOCAB: '{model_dir}/draft_vocab.json'
++  EXL3_KV_BLOCK_EXACT: '0'
++  EXL3_ONEDNN_ATTN: '0'
++  EXL3_INT8_PREFILL: '1'
++  B70_MTP_BF16_DRAFT: null
++  B70_DRAFT_LMHEAD_INT4: null
++  B70_DRAFT_MTP_INT4: null
++  EXL3_TARGET_RUNTIME: vllm030
++  EXL3_FIX_SPARSE_GDN_RETIREMENT: '0'
++  B70_ONEDNN_PREFILL: '0'
++  B70_ONEDNN_MIXED_ROUTE: '0'
++  B70_GPTQ_W4A8_PREFILL: '0'
++  EXL3_GUARDED_ATTN: '1'
++  EXL3_GUARDED_PREFILL: '1'
++  EXL3_M04_LIBRARY: /opt/exl3xpu/m04/m04.so
++  EXL3_M04_LIBRARY_SHA256: eaa18427db27d4fceeca8a17c8a3c6b019b7678f39bf98affc1736b9f2c2d631
+diff --git a/models/qwen3.8-27b-exl3-4.00bpw/migration-target-upstream-expanded.yaml b/models/qwen3.8-27b-exl3-4.00bpw/migration-target-upstream-expanded.yaml
+new file mode 100644
+index 0000000..4c1a5cc
+--- /dev/null
++++ b/models/qwen3.8-27b-exl3-4.00bpw/migration-target-upstream-expanded.yaml
+@@ -0,0 +1,66 @@
++# User-preferred upstream EXL3 capacity/media settings on the new runtime.
++# UNQUALIFIED candidate: finish equal-contract port and qualify expanded limits before release.
++# Native attention remains the functional-port baseline; optimized attention is a later gate.
++id: qwen3.8-27b-exl3-4.00bpw
++served_model_name: Qwen3.8-27B
++source:
++  repo: turboderp/Qwen3.8-27B-exl3
++  revision: 113cf7ab958054860e43fb7f3063b1af19171095
++vllm:
++  dtype: float16
++  max_model_len: 262144
++  kv_cache_dtype: fp8
++  gpu_memory_utilization: 0.965
++  max_num_seqs: 16
++  max_num_batched_tokens: 4096
++  scheduler_reserve_full_isl: true
++  watermark: 0.0
++  enable_prefix_caching: true
++  mamba_cache_mode: align
++  speculative_config:
++    method: mtp
++    num_speculative_tokens: 3
++  limit_mm_per_prompt:
++    image: 32
++    video: 4
++  mm_processor_kwargs:
++    max_pixels: 4194304
++  enable_auto_tool_choice: true
++  tool_call_parser: qwen3_xml
++  reasoning_parser: qwen3
++  reasoning_config:
++    reasoning_start_str: <think>
++    reasoning_end_str: </think>
++  override_generation_config:
++    max_new_tokens: 16384
++  middleware: request_defaults.ChatDefaults
++  compilation_config:
++    cudagraph_mode: FULL_DECODE_ONLY
++    cudagraph_capture_sizes:
++    - 1
++    - 2
++    - 4
++    - 8
++    - 12
++    - 16
++    - 24
++    - 32
++    - 40
++    - 48
++    - 56
++    - 64
++env:
++  VLLM_XPU_ENABLE_XPU_GRAPH: '1'
++  VLLM_WORKER_MULTIPROC_METHOD: spawn
++  EXL3_DRAFT_VOCAB: '{model_dir}/draft_vocab.json'
++  EXL3_KV_BLOCK_EXACT: '0'
++  EXL3_ONEDNN_ATTN: '0'
++  EXL3_INT8_PREFILL: '1'
++  B70_MTP_BF16_DRAFT: null
++  B70_DRAFT_LMHEAD_INT4: null
++  B70_DRAFT_MTP_INT4: null
++  EXL3_TARGET_RUNTIME: vllm030
++  EXL3_FIX_SPARSE_GDN_RETIREMENT: '0'
++  B70_ONEDNN_PREFILL: '0'
++  B70_ONEDNN_MIXED_ROUTE: '0'
++  B70_GPTQ_W4A8_PREFILL: '0'
+diff --git a/scripts/build_ext.sh b/scripts/build_ext.sh
+index f170d61..0a4eda4 100755
+--- a/scripts/build_ext.sh
++++ b/scripts/build_ext.sh
+@@ -1,19 +1,42 @@
+ #!/usr/bin/env bash
+-# Build exl3xpu/_C.so (SYCL/ESIMD torch op library). JIT (spir64) device code: the kernels are
+-# finalised by the Level Zero driver's IGC on first launch and cached.
++# A stale installed library can never turn a failed compile/import into success.
++set -eo pipefail
+ source /opt/intel/oneapi/setvars.sh --force >/dev/null 2>&1
+-set -euo pipefail
++set -u
+ cd "$(dirname "$0")/.."
+-T=$(python3 -c "import torch,os;print(os.path.dirname(torch.__file__))")
+-# oneDNN (oneAPI) for the fused-scale int8 prefill GEMM, when present
+-D=/opt/intel/oneapi/dnnl/latest
+-DNNL_FLAGS=""; DNNL_LIBS=""
+-if [ -f $D/include/oneapi/dnnl/dnnl_sycl.hpp ] && [ -z "${EXL3_NO_DNNL:-}" ]; then
+-  DNNL_FLAGS="-DEXL3_DNNL -I$D/include"; DNNL_LIBS="-L$D/lib -Wl,-rpath,$D/lib -ldnnl"
++out=${EXL3_OUT:-exl3xpu/_C.so}
++mkdir -p "$(dirname "$out")"
++out=$(realpath -m "$out")
++tmp=$(mktemp "${out}.pending.XXXXXX.so")
++manifest_tmp=$(mktemp "${out}.manifest.pending.XXXXXX")
++flags_tmp=$(mktemp "${out}.flags.pending.XXXXXX")
++trap 'rm -f "$tmp" "$manifest_tmp" "$flags_tmp"' EXIT
++log=${EXL3_BUILD_LOG:-${out}.build-$(date -u +%Y%m%dT%H%M%S)-$$.log}
++T=$(python3 -c 'import torch,os; print(os.path.dirname(torch.__file__))')
++abi=$(python3 -c 'import torch; print(int(torch._C._GLIBCXX_USE_CXX11_ABI))')
++D=${EXL3_DNNL_ROOT:-/opt/intel/oneapi/dnnl/latest}
++dnnl=0
++dnnl_flags=(); dnnl_libs=()
++if [[ -f "$D/include/oneapi/dnnl/dnnl_sycl.hpp" && -z "${EXL3_NO_DNNL:-}" ]]; then
++  dnnl=1
++  dnnl_flags=(-DEXL3_DNNL "-I$D/include")
++  dnnl_libs=("-L$D/lib" "-Wl,-rpath,$D/lib" -ldnnl)
+ fi
+-icpx -fsycl -fsycl-targets=spir64 -O3 -ffast-math -fPIC -std=c++17 -shared \
+-  -fsycl-device-code-split=per_kernel -D_GLIBCXX_USE_CXX11_ABI=1 ${EXL3_FLAGS:-} $DNNL_FLAGS \
+-  -I csrc -I$T/include -I$T/include/torch/csrc/api/include \
+-  -x c++ csrc/exl3_ops.sycl -x none -o ${EXL3_OUT:-exl3xpu/_C.so} \
+-  -L$T/lib -Wl,-rpath,$T/lib -lc10 -ltorch -ltorch_cpu -lc10_xpu -ltorch_xpu $DNNL_LIBS 2>&1 | grep -E "error" || true
+-ls -la ${EXL3_OUT:-exl3xpu/_C.so}
++# Parse optional flags as words; do not execute shell expansions in them.
++python3 -c 'import os,shlex,sys; sys.stdout.write("\0".join(shlex.split(os.environ.get("EXL3_FLAGS","")))+"\0")' > "$flags_tmp"
++mapfile -d '' -t extra_flags < "$flags_tmp"
++if [[ ${#extra_flags[@]} == 1 && -z ${extra_flags[0]} ]]; then extra_flags=(); fi
++compiler=${EXL3_CXX:-icpx}
++command=("$compiler" -fsycl -fsycl-targets=spir64 -O3 -ffast-math -fPIC -std=c++17 -shared
++ -fsycl-device-code-split=per_kernel "-D_GLIBCXX_USE_CXX11_ABI=$abi" "${extra_flags[@]}" "${dnnl_flags[@]}"
++ -I csrc "-I$T/include" "-I$T/include/torch/csrc/api/include"
++ -x c++ csrc/exl3_ops.sycl -x none -o "$tmp"
++ "-L$T/lib" "-Wl,-rpath,$T/lib" -lc10 -ltorch -ltorch_cpu -lc10_xpu -ltorch_xpu "${dnnl_libs[@]}")
++# pipefail preserves the compiler status even when tee succeeds.
++"${command[@]}" 2>&1 | tee "$log"
++EXL3_DNNL_ROOT="$D" python3 scripts/native_build_manifest.py --library "$tmp" --output "$manifest_tmp" \
++  --installed-output "$out" --log "$log" --dnnl "$dnnl" --compiler "$compiler" -- "${command[@]:1}"
++chmod 644 "$tmp" "$manifest_tmp"
++mv -f "$tmp" "$out"
++mv -f "$manifest_tmp" "${out}.manifest.json"
++printf 'Installed verified library: %s\nManifest: %s\nBuild log: %s\n' "$out" "${out}.manifest.json" "$log"
+diff --git a/scripts/build_target_image.py b/scripts/build_target_image.py
+new file mode 100644
+index 0000000..9b434b0
+--- /dev/null
++++ b/scripts/build_target_image.py
+@@ -0,0 +1,95 @@
++#!/usr/bin/env python3
++"""Build and attest an isolated target candidate; never overwrite a candidate tag."""
++import argparse
++import hashlib
++import json
++from pathlib import Path
++import shutil
++import subprocess
++import time
++
++ROOT=Path(__file__).resolve().parents[1]
++BUILDER='sha256:ae6950731b3c031f812a95c0eb615a572239426440bf67fd1b3c9c9cbfce9eca'
++BASE='sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68'
++def sha(path):
++    with Path(path).open('rb') as stream: return hashlib.file_digest(stream,'sha256').hexdigest()
++
++def main():
++    p=argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--tag',required=True);p.add_argument('--output',type=Path,required=True)
++    p.add_argument('--native-artifacts',type=Path,help='Reuse only an ABI/source/hash-verified native build')
++    p.add_argument('--m04-artifacts',type=Path,help='Package the separately rebuilt, hash/ABI/source-verified M04 library')
++    p.add_argument('--onednn',type=Path,default=ROOT.parent/'b70-onednn-3.13-install')
++    p.add_argument('--gptq-repo',type=Path,default=ROOT.parent/'intel-b70-qwen38-vllm-onednn')
++    a=p.parse_args();out=a.output.resolve()
++    if out.exists(): raise SystemExit('Fresh build evidence directory required')
++    if subprocess.run(['docker','image','inspect',a.tag],capture_output=True).returncode==0:
++        raise SystemExit('Candidate tag already exists; choose a new immutable candidate name')
++    for image in (BUILDER,BASE): subprocess.run(['docker','image','inspect',image],check=True,stdout=subprocess.DEVNULL)
++    out.mkdir(parents=True)
++    state={'schema':1,'started_unix':time.time(),'builder_image':BUILDER,'base_image':BASE,'tag':a.tag,'commands':[],
++           'source_sha256':{str(f.relative_to(ROOT)):sha(f) for d in ('exl3xpu','csrc','scripts','models','docker','tests')
++                            for f in (ROOT/d).rglob('*') if f.is_file() and '__pycache__' not in f.parts and f.suffix not in ('.so','.log')}}
++    def save(): (out/'build.json').write_text(json.dumps(state,indent=2)+'\n')
++    def run(command,log):
++        state['commands'].append(command);save()
++        with (out/log).open('w') as stream: subprocess.run(command,check=True,stdout=stream,stderr=subprocess.STDOUT)
++    try:
++        if a.native_artifacts:
++            native=a.native_artifacts.resolve();state['native_reused']=str(native)
++        else:
++            native=out/'native';native.mkdir()
++            assert (a.onednn/'include/oneapi/dnnl/dnnl_sycl.hpp').is_file()
++            run(['docker','run','--rm','--network','none','--memory','12g','--entrypoint','/bin/bash',
++                 '-v',str(ROOT)+':/work:ro','-v',str(a.onednn.resolve())+':/opt/intel/oneapi/dnnl/latest:ro',
++                 '-v',str(native)+':/results','-w','/work','-e','EXL3_OUT=/results/_C.so',
++                 '-e','EXL3_BUILD_LOG=/results/compiler.log',BUILDER,'scripts/build_ext.sh'],'native-build.log')
++        manifest=json.loads((native/'_C.so.manifest.json').read_text())
++        assert manifest['torch_version']=='2.13.0+xpu' and manifest['torch_cxx11_abi'] is True
++        assert sha(native/'_C.so')==manifest['library_sha256']
++        for path,h in manifest['source_sha256'].items(): assert sha(ROOT/path)==h,path
++        state['native_manifest']=manifest
++        stage=ROOT/'.native-target';stage.mkdir(exist_ok=True)
++        for file in ('_C.so','_C.so.manifest.json'): shutil.copyfile(native/file,stage/file)
++        stage=ROOT/'.m04-target'
++        if stage.exists(): shutil.rmtree(stage)
++        stage.mkdir()
++        if a.m04_artifacts:
++            m04=a.m04_artifacts.resolve()
++            receipt=json.loads((m04/'manifest.json').read_text())
++            assert receipt['torch']=='2.13.0+xpu' and receipt['cxx11_abi'] is True
++            assert sha(m04/'m04.so')==receipt['library_sha256']
++            source=a.gptq_repo/'benchmarks/experiments/exl3-shared-kv-verify'
++            for file in ('csrc/shared_kv_verification.cpp','patches/shared-kv-verification.patch'):
++                assert sha(source/file)==receipt['source_sha256'][file],file
++            state['m04_manifest']=receipt
++            for file in ('m04.so','manifest.json'): shutil.copyfile(m04/file,stage/file)
++            # Keep the independently reviewed sources with the immutable image.
++            for file in ('csrc/shared_kv_verification.cpp','patches/shared-kv-verification.patch'):
++                target=stage/file;target.parent.mkdir(parents=True,exist_ok=True)
++                shutil.copyfile(source/file,target)
++        stage=ROOT/'.target-integration';stage.mkdir(exist_ok=True)
++        state['integration_sha256']={}
++        for file in ('patch_mtp_format_guard.py','b70_mtp_policy.py'):
++            source=a.gptq_repo/'docker/patches'/file;state['integration_sha256'][file]=sha(source)
++            shutil.copyfile(source,stage/file)
++        run(['docker','build','--build-arg','BASE_IMAGE='+BASE,'-f',str(ROOT/'docker/Dockerfile.migration-target'),
++             '-t',a.tag,str(ROOT)],'image-build.log')
++        state['image_id']=subprocess.check_output(['docker','image','inspect',a.tag,'--format','{{.Id}}'],text=True).strip()
++        if a.m04_artifacts:
++            probe="""import hashlib,pathlib,torch
++p=pathlib.Path('/opt/exl3xpu/m04/m04.so')
++assert hashlib.sha256(p.read_bytes()).hexdigest()==%r
++torch.ops.load_library(str(p))
++assert torch._C._dispatch_has_kernel_for_dispatch_key('b70_exl3_attention::shared_kv_verify_out','XPU')
++print('PACKAGED_M04_CPU_IMPORT_PASS')""" % receipt['library_sha256']
++            run(['docker','run','--rm','--network','none','--entrypoint','python',state['image_id'],
++                 '-c',probe],'m04-image-import.log')
++        state['status']='PASS'
++    except BaseException as e:
++        state['status']='FAIL';state['error']=repr(e);raise
++    finally:
++        state['finished_unix']=time.time();save()
++    print(json.dumps({'status':state['status'],'image_id':state['image_id']}))
++
++if __name__=='__main__': main()
+diff --git a/scripts/native_build_manifest.py b/scripts/native_build_manifest.py
+new file mode 100644
+index 0000000..e1bde77
+--- /dev/null
++++ b/scripts/native_build_manifest.py
+@@ -0,0 +1,60 @@
++#!/usr/bin/env python3
++"""Load a candidate native library in this Torch ABI, validate registrations, attest it."""
++import argparse
++import hashlib
++import json
++import os
++from pathlib import Path
++import platform
++import subprocess
++import time
++import torch
++
++XPU_OPS = ('linear','exl3_gemm_small','exl3_had_in_rm','exl3_had_out_h',
++           'exl3_reconstruct','exl3_gemm_raw','exl3_fa_fwd')
++HOST_OPS = ('exl3_supported','exl3_set_int8','exl3_set_target_threads',
++            'exl3_set_target_threads_mb64','exl3_set_target_threads_mb16',
++            'exl3_set_vec_max_m','exl3_set_fused','exl3_set_local','exl3_set_max_mb')
++
++def sha(path):
++    with Path(path).open('rb') as f: return hashlib.file_digest(f,'sha256').hexdigest()
++
++def main():
++    p=argparse.ArgumentParser(description=__doc__)
++    for key in ('library','output','installed-output','log','compiler'): p.add_argument('--'+key,required=True)
++    p.add_argument('--dnnl',type=int,choices=(0,1),required=True)
++    p.add_argument('flags',nargs=argparse.REMAINDER)
++    a=p.parse_args()
++    torch.ops.load_library(a.library)
++    xpu=XPU_OPS+(('exl3_sdpa','exl3_sdpa_len') if a.dnnl else ())
++    for op in HOST_OPS+xpu:
++        if not hasattr(torch.ops.exl3xpu_C,op): raise RuntimeError('Missing registered operator: '+op)
++    for op in xpu:
++        if not torch._C._dispatch_has_kernel_for_dispatch_key('exl3xpu_C::'+op,'XPU'):
++            raise RuntimeError('Missing XPU implementation: '+op)
++    for bits in (4,6):
++        if not torch.ops.exl3xpu_C.exl3_supported(bits,2): raise RuntimeError(f'Missing mul1/{bits} bpw support')
++    root=Path(__file__).resolve().parents[1]
++    source=list((root/'csrc').rglob('*'))+[Path(__file__),root/'scripts/build_ext.sh']
++    versions={}
++    for name in ('intel-igc-core-2','intel-igc-opencl-2','libze-intel-gpu1','intel-opencl-icd'):
++        r=subprocess.run(['dpkg-query','-W','-f=${Version}',name],capture_output=True,text=True)
++        versions[name]=r.stdout if r.returncode==0 else None
++    dnnl_root=Path(os.environ.get('EXL3_DNNL_ROOT','/opt/intel/oneapi/dnnl/latest'))
++    headers={str(h):h.read_text() for h in (dnnl_root/'include').rglob('dnnl_version.h')}
++    d={'schema':1,'build_unix':time.time(),'source_sha256':{
++          str(f.relative_to(root)):sha(f) for f in sorted(source) if f.is_file()},
++       'compiler':a.compiler,'compiler_version':subprocess.check_output([a.compiler,'--version'],text=True),
++       'flags':a.flags[1:] if a.flags[:1]==['--'] else a.flags,
++       'torch_version':torch.__version__,'torch_cxx11_abi':bool(torch._C._GLIBCXX_USE_CXX11_ABI),
++       'python_version':platform.python_version(),'oneDNN_enabled':bool(a.dnnl),
++       'oneDNN_version_headers':headers,'driver_packages':versions,
++       'oneDNN_library_sha256':{str(f):sha(f) for f in (dnnl_root/'lib').glob('libdnnl.so.*') if f.is_file()},
++       'registered_ops':list(HOST_OPS+xpu),'xpu_kernel_ops':list(xpu),
++       'operator_smoke':'PASS (registration and host capability queries; GPU numerical tests separate)',
++       'library':a.installed_output,'library_bytes':Path(a.library).stat().st_size,'library_sha256':sha(a.library),
++       'compiler_log':a.log,'compiler_log_sha256':sha(a.log)}
++    Path(a.output).write_text(json.dumps(d,indent=2)+'\n')
++    print(json.dumps({'native_smoke':'PASS','ops':len(d['registered_ops']),'sha256':d['library_sha256']}))
++
++if __name__=='__main__': main()
+diff --git a/scripts/prepare_target_runtime.py b/scripts/prepare_target_runtime.py
+new file mode 100644
+index 0000000..5898fb2
+--- /dev/null
++++ b/scripts/prepare_target_runtime.py
+@@ -0,0 +1,12 @@
++"""Remove the GPTQ-specific attention adapter at its reviewed import boundary."""
++from pathlib import Path
++path = Path('/opt/venv/lib/python3.12/site-packages/vllm/_xpu_ops.py')
++source = path.read_text()
++old = 'from b70_attention import flash_attn_varlen_func'
++new = 'from vllm_xpu_kernels.flash_attn_interface import flash_attn_varlen_func'
++if source.count(old) != 1:
++    raise RuntimeError('Unknown target XPU attention import; do not inherit GPTQ routing')
++source = source.replace(old, new, 1)
++compile(source, str(path), 'exec')
++path.write_text(source)
++print('EXL3 initial port: native XPU attention restored; GPTQ adapter not imported')
+diff --git a/scripts/verify_native_artifact.py b/scripts/verify_native_artifact.py
+new file mode 100644
+index 0000000..4b68452
+--- /dev/null
++++ b/scripts/verify_native_artifact.py
+@@ -0,0 +1,24 @@
++"""Reject stale sources, wrong Torch ABI or wrong libraries in a candidate image."""
++import hashlib
++import json
++from pathlib import Path
++import torch
++
++root = Path(__file__).resolve().parents[1]
++library = root/'exl3xpu/_C.so'
++manifest = json.loads(library.with_suffix('.so.manifest.json').read_text())
++def sha(path):
++    with Path(path).open('rb') as stream: return hashlib.file_digest(stream, 'sha256').hexdigest()
++assert sha(library) == manifest['library_sha256'], 'Native library differs from manifest'
++assert torch.__version__ == manifest['torch_version'], 'Wrong Torch version for EXL3 native library'
++assert bool(torch._C._GLIBCXX_USE_CXX11_ABI) == manifest['torch_cxx11_abi'], 'Wrong C++ ABI'
++for path, expected in manifest['source_sha256'].items():
++    assert sha(root/path) == expected, f'Stale native source: {path}'
++expected_dnnl = set(manifest['oneDNN_library_sha256'].values())
++assert expected_dnnl == {sha('/opt/b70/libdnnl.so.3')}, 'Different oneDNN runtime from native build'
++torch.ops.load_library(str(library))
++for name in manifest['registered_ops']:
++    assert hasattr(torch.ops.exl3xpu_C, name), name
++for name in manifest['xpu_kernel_ops']:
++    assert torch._C._dispatch_has_kernel_for_dispatch_key('exl3xpu_C::'+name, 'XPU'), name
++print(json.dumps({'native_artifact':'PASS', 'torch':torch.__version__, 'sha256':sha(library), 'ops':len(manifest['registered_ops'])}))
+diff --git a/tests/test_attention_metadata.py b/tests/test_attention_metadata.py
+new file mode 100644
+index 0000000..beac1e9
+--- /dev/null
++++ b/tests/test_attention_metadata.py
+@@ -0,0 +1,68 @@
++"""CPU proof of mixed metadata and fail-closed semantic guards."""
++import unittest
++from types import SimpleNamespace
++
++import torch
++
++from exl3xpu.attention_metadata import host_segments, prepare
++from exl3xpu.attention_dispatch import supported_features
++
++
++class Contract(unittest.TestCase):
++    def test_interleaved_and_true_per_sequence_maximum(self):
++        p = host_segments([0, 4, 8, 264, 266, 269, 333],
++                          [10000, 20000, 103001, 30000, 40000, 4097],
++                          [False, False, True, False, False, True], 333,
++                          fixed_partition=True)
++        self.assertEqual([(s.first, s.last, s.maximum_query, s.maximum_kv, s.prefill)
++                          for s in p.segments],
++                         [(0, 2, 4, 20000, False), (2, 3, 256, 103001, True),
++                          (3, 5, 3, 40000, False), (5, 6, 64, 4097, True)])
++        # Legacy total-query maximum would incorrectly be 8 and 5.
++        self.assertEqual(sum(s.stop-s.start for s in p.segments), 333)
++
++    def test_thresholds_and_prefill_only_exact_lengths(self):
++        for q in [1, 2, 3, 4, 5, 63, 64, 255, 256]:
++            for length in [4095, 4096, 4097]:
++                for flag in [False, True]:
++                    plan = host_segments([0, q], [length], [flag], q, fixed_partition=True)
++                    self.assertEqual(plan is not None, flag and q >= 64 and length >= 4096)
++
++    def test_inexact_and_malformed_fallback(self):
++        for bounds, lengths, flags, tokens, fixed in [
++            ([0, 256], [4096], [True], 256, False),
++            ([1, 257], [4096], [True], 256, True),
++            ([0, 256, 256], [4096, 100], [True, False], 256, True),
++            ([0, 256], [100], [True], 256, True),
++            ([0, 256], [4096], [True], 260, True),
++            ([0, 256], [4096], [1], 256, True),
++        ]:
++            self.assertIsNone(host_segments(bounds, lengths, flags, tokens, fixed_partition=fixed))
++
++    def test_cpu_prepare_native_offsets(self):
++        c = SimpleNamespace(max_query_len=256, num_reqs=4, num_actual_tokens=266,
++            query_start_loc_cpu=torch.tensor([0, 4, 260, 263, 266], dtype=torch.int32),
++            seq_lens_cpu_upper_bound=torch.tensor([10000, 4097, 10000, 15000], dtype=torch.int32),
++            is_prefilling=torch.tensor([False, True, False, False]),
++            query_start_loc=torch.tensor([0, 4, 260, 263, 266], dtype=torch.int32))
++        p = prepare(c, fixed_partition=True)
++        self.assertEqual(p.segments[-1].cu_query.tolist(), [0, 3, 6])
++        self.assertEqual(p.segments[-1].maximum_query, 3)
++        self.assertIsNone(prepare(c, fixed_partition=False))
++        c.is_prefilling = None
++        self.assertIsNone(prepare(c, fixed_partition=True))
++
++    def test_semantic_native_fallbacks(self):
++        d = dict(causal=True, softmax_scale=.0625, fa_version=2, window_size=None)
++        self.assertTrue(supported_features(d))
++        for k, value in [('causal', False), ('window_size', [128, -1]),
++                         ('s_aux', object()), ('alibi_slopes', object()),
++                         ('softcap', 1.), ('q_descale', object()),
++                         ('return_softmax_lse', True), ('dynamic_causal', object()),
++                         ('scheduler_metadata', object()), ('mask_mod', object()),
++                         ('unknown_flag', False), ('fa_version', 4)]:
++            self.assertFalse(supported_features(dict(d, **{k:value})), k)
++
++
++if __name__ == '__main__':
++    unittest.main()
+diff --git a/tests/test_bitexact_xpu.py b/tests/test_bitexact_xpu.py
+index de50fe7..fbfb268 100644
+--- a/tests/test_bitexact_xpu.py
++++ b/tests/test_bitexact_xpu.py
+@@ -15,17 +15,24 @@ from safetensors import safe_open
+ 
+ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ from exl3xpu import ref, ops
++from exl3xpu.checkpoint import load_inventory
++from pathlib import Path
+ 
+ MODEL = os.environ.get("MODEL", "/models/turboderp-Qwen3.8-27B-exl3-4.00bpw")
+ dev = torch.device("xpu:0")
+ E = ops._get_esimd()
+ assert E, "ESIMD ops not built"
+ quick = "--quick" in sys.argv
+-qc = json.load(open(f"{MODEL}/quantization_config.json"))["tensor_storage"]
+-idx = json.load(open(f"{MODEL}/model.safetensors.index.json"))["weight_map"]
+-keys = [k for k, v in qc.items() if v.get("quant_format") == "exl3"]
++idx, expected = load_inventory(MODEL)
++metadata = {v['key']:v for v in expected}
++keys = list(metadata)
++skipped = []
+ if quick:
+-    keys = [k for k in keys if ".layers.0." in k or ".layers.3." in k or k == "lm_head"]
++    selected = [k for k in keys if ".layers.0." in k or ".layers.3." in k or k == "lm_head" or metadata[k]['mtp']]
++    skipped = [{'key':k,'reason':'explicit --quick smoke subset; not a full coverage gate'} for k in keys if k not in selected]
++    keys = selected
++if os.environ.get('EXL3_FOLD_TEST') == '1':
++    raise SystemExit('EXL3_FOLD_TEST relaxes bit-exactness and is not allowed in this release gate')
+ 
+ handles = {}
+ 
+@@ -42,9 +49,12 @@ fails = []
+ t0 = time.time()
+ n_elems = 0
+ full_cover = {}
++tested = []
+ for i, key in enumerate(keys):
+     tr = get(f"{key}.trellis").to(dev)
+     K = tr.shape[-1] // 16
++    if K != metadata[key]['bits']:
++        fails.append(f"bit width {key}: tensor={K}, inventory={metadata[key]['bits']}")
+     cb = ref.codebook_of(f"{key}.mcg" in idx, f"{key}.mul1" in idx)
+     k, n = tr.shape[0] * 16, tr.shape[1] * 16
+     for n0 in range(0, n, SLICE):
+@@ -94,8 +104,19 @@ for i, key in enumerate(keys):
+                         break
+     if i % 25 == 0 or i == len(keys) - 1:
+         print(f"[{i + 1}/{len(keys)}] {key} K={K} {k}x{n}  elapsed {time.time() - t0:.0f}s  fails={len(fails)}", flush=True)
++    tested.append(key)
+ 
+ print(f"checked {len(keys)} tensors, {n_elems / 1e9:.2f}G weights, shape classes with full k coverage: {sorted(full_cover)}")
+ for f in fails[:20]:
+     print("FAIL", f)
+ print("GATE_A1_PASS" if not fails else f"GATE_A1_FAIL ({len(fails)})")
++uncovered=set(metadata)-set(tested)-{v['key'] for v in skipped}
++if uncovered: fails.append(f'Unexpected untested tensors: {sorted(uncovered)}')
++report={'schema':1,'status':'FAIL' if fails else 'SMOKE_PASS' if quick else 'PASS',
++        'expected_tensors':len(expected),'tested_tensors':len(tested),'skipped_tensors':len(skipped),
++        'skipped':skipped,'tested':tested,'mtp_expected':sum(v['mtp'] for v in expected),
++        'mtp_tested':sum(metadata[k]['mtp'] for k in tested),
++        'bits_expected':{str(b):sum(v['bits']==b for v in expected) for b in sorted({v['bits'] for v in expected})},
++        'failures':fails,'elapsed_seconds':time.time()-t0,'weights_checked':n_elems}
++Path(os.environ.get('EXL3_TEST_REPORT','bitexact-xpu-report.json')).write_text(json.dumps(report,indent=2)+'\n')
++raise SystemExit(1 if fails else 0)
+diff --git a/tests/test_cache_retirement.py b/tests/test_cache_retirement.py
+new file mode 100644
+index 0000000..bea01c8
+--- /dev/null
++++ b/tests/test_cache_retirement.py
+@@ -0,0 +1,53 @@
++"""Sparse GDN retirement: no orphan states, no premature reuse, no double free."""
++import os
++from pathlib import Path
++import sys
++from types import SimpleNamespace
++import unittest
++from unittest.mock import patch
++sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
++from exl3xpu.cache_retirement import retire_sparse_states,install
++from vllm.v1.core.single_type_kv_cache_manager import MambaManager,FullAttentionManager
++ORIGINAL_RETIRE=MambaManager._remove_blocks_in_range
++
++class Block:
++    def __init__(self,n,refs=1): self.block_id=n;self.ref_cnt=refs
++
++class Pool:
++    def __init__(self): self.freed=[]
++    def free_blocks(self,blocks):
++        for b in blocks:
++            if b.ref_cnt<=0: raise AssertionError('double free')
++            b.ref_cnt-=1;self.freed.append(b.block_id)
++
++class RetirementTests(unittest.TestCase):
++    def manager(self,blocks):
++        null=Block(0,0);values=[null if b is None else Block(b) for b in blocks]
++        return SimpleNamespace(req_to_blocks={'request':values},_null_block=null,block_pool=Pool())
++    def test_old_sparse_hole_regression(self):
++        m=self.manager([1,None,2,None,3])
++        ORIGINAL_RETIRE(m,'request',0,4)
++        self.assertEqual(m.block_pool.freed,[]) # demonstrate the pinned original bug
++        retire_sparse_states(m,'request',0,4)
++        self.assertEqual(m.block_pool.freed,[2,1]);self.assertEqual(m.req_to_blocks['request'][4].block_id,3)
++    def test_processed_boundary_preserves_current_and_speculative_states(self):
++        m=self.manager([1,None,None,2,None,None,None,3,4,5,6])
++        retire_sparse_states(m,'request',0,7)
++        self.assertEqual(m.block_pool.freed,[2,1])
++        self.assertEqual([b.block_id for b in m.req_to_blocks['request'][7:]],[3,4,5,6])
++    def test_shared_state_keeps_other_reference(self):
++        m=self.manager([1,None,2]);m.req_to_blocks['request'][0].ref_cnt=2
++        state=m.req_to_blocks['request'][0]
++        retire_sparse_states(m,'request',0,2);self.assertEqual(state.ref_cnt,1)
++    def test_repeated_retirement_and_bounds(self):
++        m=self.manager([1,None,2]);retire_sparse_states(m,'request',0,99);retire_sparse_states(m,'request',0,99)
++        self.assertEqual(m.block_pool.freed,[2,1])
++        retire_sparse_states(m,'unknown',0,99);retire_sparse_states(m,'request',3,2)
++    def test_install_only_changes_mamba(self):
++        original=FullAttentionManager._remove_blocks_in_range
++        with patch.dict(os.environ,{'EXL3_FIX_SPARSE_GDN_RETIREMENT':'1'}):
++            self.assertTrue(install());self.assertTrue(install())
++        self.assertIs(FullAttentionManager._remove_blocks_in_range,original)
++        self.assertIs(MambaManager._remove_blocks_in_range,retire_sparse_states)
++
++if __name__=='__main__': unittest.main()
+diff --git a/tests/test_checkpoint_inventory.py b/tests/test_checkpoint_inventory.py
+new file mode 100644
+index 0000000..c2cbb98
+--- /dev/null
++++ b/tests/test_checkpoint_inventory.py
+@@ -0,0 +1,55 @@
++"""CPU coverage gate: loader and GPU oracle see exactly the same modules."""
++import copy
++import sys
++from pathlib import Path
++import unittest
++sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
++from exl3xpu.checkpoint import inventory,normalize_key,validate_exl3_environment,GPTQ_DRAFT_FLAGS
++from exl3xpu.validation import int8_reference_pass,INT8_REFERENCE_TOLERANCE
++
++def fixture():
++    names=('model.language_model.layers.0.mlp.gate_proj','lm_head','mtp.fc')
++    index={k+s:'weights.safetensors' for k in names for s in ('.trellis','.suh','.svh','.mul1')}
++    qc={'tensor_storage':{names[0]:{'quant_format':'exl3','bits_per_weight':4},
++                          'lm_head':{'quant_format':'exl3','bits_per_weight':6}}}
++    return index,qc
++
++class InventoryTests(unittest.TestCase):
++    def test_missing_qc_mtp_is_discovered(self):
++        idx,qc=fixture();inv=inventory(idx,qc)
++        self.assertEqual(len(inv),3)
++        self.assertEqual({v['canonical']:v['bits'] for v in inv},
++                         {'layers.0.mlp.gate_proj':4,'lm_head':6,'mtp.fc':4})
++        self.assertEqual(sum(v['mtp'] for v in inv),1)
++    def test_missing_component_rejected(self):
++        idx,qc=fixture();del idx['mtp.fc.suh']
++        with self.assertRaisesRegex(ValueError,'Incomplete'): inventory(idx,qc)
++    def test_missing_trellis_rejected(self):
++        idx,qc=fixture();del idx['lm_head.trellis']
++        with self.assertRaisesRegex(ValueError,'missing from weight index'): inventory(idx,qc)
++    def test_duplicate_canonical_rejected(self):
++        idx,qc=fixture();idx['model.mtp.fc.trellis']='weights.safetensors'
++        with self.assertRaises(ValueError): inventory(idx,qc)
++    def test_conflicting_codebook_rejected(self):
++        idx,qc=fixture();idx['mtp.fc.mcg']='weights.safetensors'
++        with self.assertRaisesRegex(ValueError,'Codebook mismatch'): inventory(idx,qc)
++    def test_other_quant_format_rejected(self):
++        idx,qc=fixture();qc['tensor_storage']['lm_head']['quant_format']='gptq'
++        with self.assertRaisesRegex(ValueError,'format conflict'): inventory(idx,qc)
++    def test_empty_inventory_rejected(self):
++        with self.assertRaisesRegex(ValueError,'No EXL3'): inventory({}, {})
++    def test_normalization(self):
++        self.assertEqual(normalize_key('language_model.model.layers.3.self_attn.q_proj'),'layers.3.self_attn.q_proj')
++        self.assertEqual(normalize_key('model.mtp.layers.0.self_attn.q_proj'),'mtp.layers.0.self_attn.q_proj')
++    def test_exl3_rejects_gptq_environment(self):
++        validate_exl3_environment({})
++        for flag in GPTQ_DRAFT_FLAGS:
++            with self.assertRaises(ValueError): validate_exl3_environment({flag:'1'})
++    def test_int8_gate_preserves_threshold_and_rejects_nonfinite(self):
++        self.assertEqual(INT8_REFERENCE_TOLERANCE,2e-3)
++        self.assertTrue(int8_reference_pass([0.0,1.999e-3]))
++        for value in (2e-3,3e-3,float('nan'),float('inf')):
++            self.assertFalse(int8_reference_pass([value]))
++        self.assertFalse(int8_reference_pass([]))
++
++if __name__=='__main__': unittest.main()
+diff --git a/tests/test_guarded_attention_xpu.py b/tests/test_guarded_attention_xpu.py
+new file mode 100644
+index 0000000..d2fe640
+--- /dev/null
++++ b/tests/test_guarded_attention_xpu.py
+@@ -0,0 +1,141 @@
++"""Exact-K mixed dispatch numerical/causal/graph gates on the actual XPU ABI."""
++import argparse
++import json
++from pathlib import Path
++from types import SimpleNamespace
++
++import torch
++from vllm_xpu_kernels.flash_attn_interface import flash_attn_varlen_func as native
++
++from exl3xpu.attention_metadata import prepare
++from exl3xpu.attention_dispatch import Context, dispatch
++from exl3xpu.fp8kv_prefill import _onednn_op
++
++RTOL, ATOL = .01, .003
++
++
++def make(queries, lengths, prefilling, page=1600):
++    n = len(queries)
++    pages = (max(lengths)+page-1)//page
++    storage = torch.randn((n*pages, page, 4, 2, 256), device='xpu', dtype=torch.float16).to(torch.float8_e4m3fn)
++    table = torch.randperm(n*pages, device='xpu').view(n, pages).int()
++    bounds = [0]
++    for q in queries: bounds.append(bounds[-1]+q)
++    upper = [length if flag else length+7 for length, flag in zip(lengths, prefilling)]
++    common = SimpleNamespace(max_query_len=max(queries), num_reqs=n, num_actual_tokens=sum(queries),
++        query_start_loc_cpu=torch.tensor(bounds, dtype=torch.int32),
++        seq_lens_cpu_upper_bound=torch.tensor(upper, dtype=torch.int32),
++        is_prefilling=torch.tensor(prefilling, dtype=torch.bool),
++        query_start_loc=torch.tensor(bounds, device='xpu', dtype=torch.int32))
++    d = dict(q=torch.randn((sum(queries), 24, 256), device='xpu', dtype=torch.float16),
++        k=storage[:, :, :, 0], v=storage[:, :, :, 1],
++        out=torch.empty((sum(queries), 24, 256), device='xpu', dtype=torch.float16),
++        cu_seqlens_q=common.query_start_loc, seqused_k=torch.tensor(lengths, device='xpu', dtype=torch.int32),
++        block_table=table, max_seqlen_q=max(queries), max_seqlen_k=max(upper),
++        softmax_scale=.0625, causal=True,
++        k_descale=torch.tensor(.75, device='xpu').expand(n, 4),
++        v_descale=torch.tensor(1.25, device='xpu').expand(n, 4))
++    return d, Context(True, prepare(common, fixed_partition=True), (.75, 1.25))
++
++
++def dense(d):
++    boundaries = d['cu_seqlens_q'].cpu().tolist()
++    result = torch.empty_like(d['q'], dtype=torch.float32)
++    for b, length in enumerate(d['seqused_k'].cpu().tolist()):
++        start, stop = boundaries[b:b+2]
++        q = d['q'][start:stop].float()
++        k = d['k'][d['block_table'][b].long()].reshape(-1, 4, 256)[:length].float()*.75
++        v = d['v'][d['block_table'][b].long()].reshape(-1, 4, 256)[:length].float()*1.25
++        positions = torch.arange(length, device='xpu')
++        visible = length-(stop-start)+torch.arange(stop-start, device='xpu')[:, None]
++        for h in range(24):
++            scores = q[:, h]@k[:, h//6].T*.0625
++            scores.masked_fill_(positions[None] > visible, -float('inf'))
++            result[start:stop, h] = scores.softmax(-1)@v[:, h//6]
++    return result
++
++
++def check(a, b):
++    a, b = a.float(), b.float()
++    error = (a-b).abs()
++    row = dict(allclose=bool(torch.allclose(a,b,rtol=RTOL,atol=ATOL)),
++               finite=bool(a.isfinite().all()), maximum_absolute=float(error.max()),
++               rms=float(error.square().mean().sqrt()))
++    assert row['allclose'] and row['finite'], row
++    return row
++
++
++def reference(d):
++    # Native must not overwrite the captured/candidate output under test.
++    return native(**dict(d, out=torch.empty_like(d['q'])))
++
++
++def main():
++    p = argparse.ArgumentParser()
++    p.add_argument('--library', required=True); p.add_argument('--out', type=Path, required=True)
++    args = p.parse_args(); assert not args.out.exists(); args.out.mkdir(parents=True)
++    torch.manual_seed(20261001); torch.ops.load_library(args.library)
++    op = _onednn_op(); assert op is not None
++    calls = []
++    class CountedOp:
++        def exl3_sdpa_len(self, *args):
++            calls.append((args[-2], args[-1]))
++            return op.exl3_sdpa_len(*args)
++    counted = CountedOp()
++    result = dict(status='RUNNING', tolerance=dict(rtol=RTOL,atol=ATOL), cases=[], graphs=[], causal=[])
++    def save(): (args.out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
++    def run(d, context, capture=False):
++        return dispatch(native, d, context, capturing=capture, native_op=counted, m04=True, onednn=True)
++    save()
++    try:
++        cases = [([q], [length], [True], 1600)
++                 for q in (63,64,255,256) for length in (4095,4096,4097)]
++        cases += [([4,4,64,3], [1601,1701,4097,3201], [False,False,True,False], page)
++                  for page in (64,1600,1664)]
++        cases += [([256,4,4,64], [8193,8191,9000,4097], [True,False,False,True], 1600),
++                  ([64]*4, [4096,4097,8191,8193], [True]*4, 1600)]
++        cases += [([q], [length], [False], 1600) for q in (1,2,3,4,5) for length in (1600,1601)]
++        cases += [([64],[length],[True],page) for page in (1600,1664) for length in (32769,102753)]
++        for queries,lengths,flags,page in cases:
++            d, context = make(queries,lengths,flags,page)
++            before = d['k'].view(torch.uint8).clone(), d['v'].view(torch.uint8).clone()
++            expected = reference(d).clone(); before_calls = len(calls)
++            actual = run(d,context).clone()
++            expected_calls = 4*sum(s.prefill for s in context.plan.segments) if context.plan else 0
++            assert len(calls)-before_calls == expected_calls
++            row = dict(queries=queries,lengths=lengths,prefilling=flags,page=page,
++                       planned=context.plan is not None, native=check(actual,expected),
++                       onednn_calls=len(calls)-before_calls)
++            if max(lengths) <= 8193: row['fp32'] = check(actual,dense(d))
++            row['kv_unchanged'] = bool(torch.equal(before[0],d['k'].view(torch.uint8)) and
++                                       torch.equal(before[1],d['v'].view(torch.uint8)))
++            assert row['kv_unchanged']; result['cases'].append(row); save()
++            print('PASS',queries,lengths,page,'plan',context.plan is not None,flush=True)
++        for q in (64,255,256):
++            d, context = make([q],[4097],[True])
++            original = run(d,context).clone()
++            for position in range(4097-q+1,4097):
++                physical = d['block_table'][0,position//1600].long()
++                d['v'][physical,position%1600].fill_(224)
++            actual = run(d,context)
++            assert torch.equal(original[0],actual[0]), 'future KV leaked'
++            assert not torch.equal(original[-1],actual[-1]), 'poison control ineffective'
++            result['causal'].append(dict(q=q,first_row_bitexact=True,last_row_changes=True)); save()
++        for queries,lengths,flags in [([4]*4,[4096]*4,[False]*4),([64],[4097],[True])]:
++            d, context = make(queries,lengths,flags)
++            before_calls = len(calls)
++            for _ in range(3): run(d,context,True)
++            torch.xpu.synchronize(); graph = torch.xpu.XPUGraph()
++            with torch.xpu.graph(graph): actual = run(d,context,True)
++            graph.replay(); row = dict(queries=queries,initial=check(actual,reference(d).clone()))
++            d['q'].mul_(.5); d['block_table'].copy_(d['block_table'].flip(1)); d['seqused_k'].sub_(1)
++            graph.replay(); row['mutated'] = check(actual,reference(d).clone())
++            assert len(calls) == before_calls, 'oneDNN entered graph path'
++            result['graphs'].append(row); save()
++        result['status'] = 'PASS_ATTENTION_MICRO_GATES_SERVING_UNQUALIFIED'
++    except BaseException as exc:
++        result['status']='FAILED'; result['error']=repr(exc); raise
++    finally: save()
++
++
++if __name__ == '__main__': main()
+diff --git a/tests/test_int8_prefill.py b/tests/test_int8_prefill.py
+index db8f078..dcbd516 100644
+--- a/tests/test_int8_prefill.py
++++ b/tests/test_int8_prefill.py
+@@ -4,17 +4,26 @@ error vs fp16, and agreement with a torch reference of the same quantization (ke
+   EXL3_LIB=exl3xpu/_C_i8.so python3 tests/test_int8_prefill.py [M]
+ """
+ import sys, os, json, time, collections
++import argparse
++from pathlib import Path
+ import torch
+ from safetensors import safe_open
+ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ from exl3xpu import ops, triton_kernels as tk
++from exl3xpu.checkpoint import load_inventory
++from exl3xpu.validation import int8_reference_pass, INT8_REFERENCE_TOLERANCE
+ 
+ MODEL = os.environ.get("MODEL", "/models/turboderp-Qwen3.8-27B-exl3-4.00bpw")
+-M = int(sys.argv[1]) if len(sys.argv) > 1 else 8192
++parser=argparse.ArgumentParser(description=__doc__)
++parser.add_argument('M',nargs='?',type=int,default=8192)
++parser.add_argument('--inject-error',action='store_true',help='Fault injection: perturb the independent reference; must exit nonzero')
++parser.add_argument('--report',default=os.environ.get('EXL3_TEST_REPORT','int8-prefill-report.json'))
++args=parser.parse_args()
++M = args.M
++torch.manual_seed(20261001)
+ dev = torch.device("xpu:0")
+ E = ops._get_esimd()
+-qc = json.load(open(f"{MODEL}/quantization_config.json"))["tensor_storage"]
+-idx = json.load(open(f"{MODEL}/model.safetensors.index.json"))["weight_map"]
++idx, expected = load_inventory(MODEL)
+ H = {}
+ 
+ 
+@@ -28,8 +37,9 @@ def get(n):
+ FUSE = {"in_proj_qkv": "in_proj_qkvz", "in_proj_z": "in_proj_qkvz", "gate_proj": "gate_up", "up_proj": "gate_up",
+         "q_proj": "qkv", "k_proj": "qkv", "v_proj": "qkv"}
+ groups = collections.OrderedDict()
+-for k, v in qc.items():
+-    if v.get("quant_format") != "exl3" or k == "lm_head":
++for v in expected:
++    k = v['key']
++    if v['bits'] != 4 or k == "lm_head":
+         continue
+     base, leaf = k.rsplit(".", 1)
+     groups.setdefault((base, FUSE.get(leaf, leaf)), []).append(k)
+@@ -47,6 +57,7 @@ def timeit(fn, it=5):
+     for _ in range(it): fn()
+     torch.xpu.synchronize(); return (time.perf_counter() - t0) / it
+ worst = 0.0
++diagnostics=[]
+ for name, (keys, count) in kinds.items():
+     trs = [get(f"{k}.trellis") for k in keys]
+     tr = torch.cat(trs, 1).to(dev)
+@@ -72,12 +83,24 @@ for name, (keys, count) in kinds.items():
+         xq = torch.round(xh[g].float() / sx).to(torch.int8)
+         yr[:, g0:g1] = (torch._int_mm(xq, Wq).float() * sx * Q8).half()
+     ref = torch.empty_like(y16); E.exl3_had_out_h(yr, svh, ref)
++    if args.inject_error: ref.mul_(1.1)
+     e16 = ((y8.float() - y16.float()).norm() / y16.float().norm()).item()
+     eref = ((y8.float() - ref.float()).norm() / ref.float().norm()).item()
+     worst = max(worst, eref)
++    diagnostics.append({'kind':name,'keys':keys,'count':count,'M':M,'k':kdim,'n':n,
++                        'relative_error_vs_fp16':e16,'relative_error_vs_reference':eref,
++                        'max_absolute_error_vs_reference':(y8.float()-ref.float()).abs().max().item(),
++                        'fp16_seconds':t16,'int8_seconds':t8})
++    Path(args.report).write_text(json.dumps({'status':'RUNNING','tolerance':INT8_REFERENCE_TOLERANCE,
++                                          'fault_injected':args.inject_error,'diagnostics':diagnostics},indent=2)+'\n')
+     tot["fp16"] += t16 * count; tot["int8"] += t8 * count
+     print(f"{name:14s} x{count:2d}: fp16 {t16*1e3:6.2f} ms  int8 {t8*1e3:6.2f} ms ({t16/t8:.2f}x)  rel vs fp16 {e16:.2e}  "
+           f"vs torch-ref {eref:.2e}", flush=True)
+     del tr, x, y16, y8, xh, yr, ref; torch.xpu.empty_cache()
+ print(f"M={M}: all linears fp16 {tot['fp16']*1e3:.0f} ms -> int8 {tot['int8']*1e3:.0f} ms "
+       f"({tot['fp16']/tot['int8']:.2f}x); kernel vs torch-ref worst {worst:.1e} {'PASS' if worst < 2e-3 else 'FAIL'}")
++passed=int8_reference_pass([d['relative_error_vs_reference'] for d in diagnostics])
++Path(args.report).write_text(json.dumps({'schema':1,'status':'PASS' if passed else 'FAIL',
++                                      'tolerance':INT8_REFERENCE_TOLERANCE,'seed':20261001,
++                                      'fault_injected':args.inject_error,'diagnostics':diagnostics},indent=2)+'\n')
++raise SystemExit(0 if passed else 1)
+diff --git a/tests/test_linear_rows_xpu.py b/tests/test_linear_rows_xpu.py
+new file mode 100644
+index 0000000..0de9726
+--- /dev/null
++++ b/tests/test_linear_rows_xpu.py
+@@ -0,0 +1,143 @@
++"""Real checkpoint fused/head row, padding, large-first and graph regression gate.
++
++Small-M compares with independent FP32 Hadamard/matmul. Large INT8 compares
++with independently quantized torch._int_mm and the already gated transforms.
++The existing 2e-3 relative-norm tolerance is fixed before this matrix.
++"""
++import argparse
++import gc
++import hashlib
++import json
++import os
++from pathlib import Path
++
++import torch
++from safetensors import safe_open
++from exl3xpu import ops, ref
++
++ROWS = [1,2,3,4,5,8,12,16,20,24,32,40,48,64,128,129,256,512]
++TOLERANCE = 2e-3
++
++
++def check(actual,expected):
++    a,b=actual.float(),expected.float()
++    relative=float((a-b).norm()/b.norm().clamp_min(1e-20))
++    finite=bool(a.isfinite().all())
++    assert finite and relative<TOLERANCE,(relative,finite)
++    return dict(relative_norm=relative,maximum_absolute=float((a-b).abs().max()),finite=finite)
++
++
++def main():
++    p=argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--model',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
++    p.add_argument('--groups',nargs='+',help='Only newly required shape classes; prior terminal evidence stays separate')
++    args=p.parse_args();assert not args.out.exists();args.out.mkdir(parents=True)
++    torch.manual_seed(20261001);E=ops._get_esimd();E.exl3_set_int8(1)
++    idx=json.loads((args.model/'model.safetensors.index.json').read_text())['weight_map']
++    handles={}
++    def get(key):
++        file=idx[key]
++        if file not in handles:handles[file]=safe_open(str(args.model/file),'pt',device='cpu')
++        return handles[file].get_tensor(key)
++    prefix='model.language_model.layers.'
++    groups=[('gdn-qkvz',[prefix+'0.linear_attn.in_proj_qkv',prefix+'0.linear_attn.in_proj_z'],None),
++            ('attention-qkv',[prefix+'3.self_attn.'+x+'_proj' for x in ('q','k','v')],None),
++            ('gate-up',[prefix+'0.mlp.gate_proj',prefix+'0.mlp.up_proj'],None),
++            ('down',[prefix+'0.mlp.down_proj'],None),
++            ('head-first',['lm_head'],0),('head-last',['lm_head'],-512),('head-full',['lm_head'],None)]
++    if args.groups:
++        assert set(args.groups)<=set(v[0] for v in groups)
++        groups=[g for g in groups if g[0] in args.groups]
++    result=dict(status='RUNNING',torch=torch.__version__,seed=20261001,rows=ROWS,
++                tolerance=TOLERANCE,groups=[],source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
++                native_library_sha256=hashlib.sha256(Path(os.environ['EXL3_LIB']).read_bytes()).hexdigest(),
++                checkpoint_index_sha256=hashlib.sha256((args.model/'model.safetensors.index.json').read_bytes()).hexdigest())
++    def save():(args.out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
++    save()
++    try:
++        for name,keys,offset in groups:
++            trs=[get(k+'.trellis') for k in keys]
++            suhs=[get(k+'.suh') for k in keys];svhs=[get(k+'.svh') for k in keys]
++            bits=trs[0].shape[-1]//16
++            if offset is not None:
++                n=svhs[0].numel();start=offset if offset>=0 else n+offset
++                trs=[trs[0][:,start//16:(start+512)//16].contiguous()]
++                svhs=[svhs[0][start:start+512]]
++            widths=[t.shape[1]*16 for t in trs];bounds=[0]
++            for n in widths:bounds.append(bounds[-1]+n)
++            tr=torch.cat(trs,1).to('xpu');suh=torch.stack(suhs).to('xpu');svh=torch.cat(svhs).to('xpu')
++            shard=torch.cat([torch.full((n//128,),i,dtype=torch.int32) for i,n in enumerate(widths)]).to('xpu')
++            kdim=suh.shape[1];n=svh.numel();x=torch.randn((512,kdim),dtype=torch.float16,device='xpu')
++            def linear(z):return E.linear(z,tr,suh,svh,shard,bounds,bits,2,128,16384)
++            # Prime large INT8/oneDNN before every small/native shape.
++            large=linear(x);torch.xpu.synchronize()
++            fp32_gold=torch.empty((512,n),dtype=torch.float32,device='xpu')
++            int8_pre=torch.empty((512,n),dtype=torch.float16,device='xpu')
++            xh=torch.empty((len(keys),512,kdim),dtype=torch.float16,device='xpu')
++            E.exl3_had_in_rm(x,suh,xh)
++            for i,(left,right) in enumerate(zip(bounds,bounds[1:])):
++                inner=ref.had_rows(x.float()*suh[i].float())
++                q8=3.453125/127
++                sx=xh[i].float().abs().amax(1,keepdim=True)/127
++                xq=torch.round(xh[i].float()/sx).to(torch.int8)
++                # Bound reference storage even for the full248320-row head.
++                # Slice boundaries are128-aligned; output Hadamard blocks do
++                # not cross them. This preserves every real head column.
++                for start in range(left,right,16384):
++                    stop=min(start+16384,right)
++                    w=torch.empty((kdim,stop-start),dtype=torch.float16,device='xpu')
++                    E.exl3_reconstruct(tr,w,start,bits,2)
++                    fp32_gold[:,start:stop]=ref.had_rows(inner@w.float())*svh[start:stop].float()
++                    wq=torch.round(w.float()/q8).to(torch.int8)
++                    int8_pre[:,start:stop]=(torch._int_mm(xq,wq).float()*sx*q8).half()
++                    del w,wq
++                del inner,xq,sx
++            int8_gold=torch.empty_like(int8_pre);E.exl3_had_out_h(int8_pre,svh,int8_gold)
++            row=dict(name=name,keys=keys,bits=bits,k=kdim,n=n,head_slice_start=offset,cases=[],padding=[],compiled=[])
++            result['groups'].append(row);save()
++            for count in ROWS:
++                eager=linear(x[:count]);gold=fp32_gold[:count] if count<=128 else int8_gold[:count]
++                case=dict(rows=count,expected_family='SmallM' if count<=128 else 'INT8-prefill',reference=check(eager,gold))
++                if count<=128:
++                    # The frozen FULL_DECODE_ONLY profile captures at most64
++                    # target rows. Cover128 additionally; INT8-prefill is eager.
++                    for _ in range(2):linear(x[:count])
++                    torch.xpu.synchronize();graph=torch.xpu.XPUGraph()
++                    gx=x[:count].clone()
++                    with torch.xpu.graph(graph):gy=linear(gx)
++                    graph.replay();case['graph']=check(gy,gold)
++                    gx.mul_(.75);graph.replay();case['mutated_graph']=check(gy,linear(gx))
++                    del graph,gy,gx
++                else:
++                    case['graph_applicability']='Unsupported oneDNN INT8-prefill capture; frozen profile is FULL_DECODE_ONLY with maximum64 target rows. Eager numerical/compiled/padding gates remain required.'
++                row['cases'].append(case);save()
++            for count in ROWS:
++                padded=128 if count<=128 else 512
++                z=x[:padded].clone();base=linear(z)[:count].clone()
++                z[count:]=torch.randn_like(z[count:])*64
++                row['padding'].append(dict(actual=count,padded=padded,tail_poison=check(linear(z)[:count],base),
++                                           same_family_active=check(base,linear(x[:count]))))
++            # Isolate shape-class experiments: the same helper code object
++            # otherwise accumulates closure specializations across all groups
++            # and exhausts Dynamo's8-frame limit, unrelated to native dispatch.
++            torch._dynamo.reset()
++            compiled=torch.compile(linear,dynamic=True,fullgraph=True)
++            compiled(x);torch.xpu.synchronize()
++            for count in [1,4,20,64,128,129,512]:
++                row['compiled'].append(dict(rows=count,after_large_first=check(compiled(x[:count]),linear(x[:count]))))
++            if name=='attention-qkv':
++                with torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU,torch.profiler.ProfilerActivity.XPU]) as trace:
++                    for count in [512,1,20,128,129]:compiled(x[:count])
++                    torch.xpu.synchronize()
++                trace.export_chrome_trace(str(args.out/'large-first-dispatch.trace.json'))
++                row['trace_sha256']=hashlib.sha256((args.out/'large-first-dispatch.trace.json').read_bytes()).hexdigest()
++                row['events']=[dict(name=v.key,count=v.count,device_time_total=v.device_time_total) for v in trace.key_averages()]
++            print('PASS',name,'bits',bits,'shape',kdim,n,'eager/graph/padding/compiled',flush=True);save()
++            del tr,suh,svh,shard,x,xh,large,fp32_gold,int8_pre,int8_gold,compiled
++            gc.collect();torch.xpu.empty_cache()
++        result['status']='PASS_EXPANDED_ROW_PADDING_GRAPH_GATE'
++    except BaseException as exc:result['status']='FAILED';result['error']=repr(exc);raise
++    finally:save()
++
++
++if __name__=='__main__':main()
+diff --git a/tests/test_loader_validation.py b/tests/test_loader_validation.py
+new file mode 100644
+index 0000000..e076c55
+--- /dev/null
++++ b/tests/test_loader_validation.py
+@@ -0,0 +1,92 @@
++"""CPU integration with real Torch/vLLM: fused transforms, completeness, head width and TP guards."""
++import sys
++from pathlib import Path
++from types import SimpleNamespace
++from unittest.mock import patch
++import unittest
++import tempfile
++import json
++import gc
++import weakref
++import torch
++sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
++from exl3xpu.vllm_plugin import Exl3Config,Exl3LinearMethod,_build_draft_head
++from exl3xpu.loader_audit import audit_runner
++
++class LoaderTests(unittest.TestCase):
++    def layer(self,prefix='layers.0.self_attn.qkv_proj',bits=4,sizes=(128,128,128)):
++        config=Exl3Config(4,6,'mul1')
++        method=Exl3LinearMethod(config,bits,prefix)
++        layer=torch.nn.Module()
++        with patch('exl3xpu.vllm_plugin.get_tensor_model_parallel_world_size',return_value=1):
++            method.create_weights(layer,128,list(sizes),128,sum(sizes),torch.float16)
++        return method,layer
++    def fill(self,method,layer,groups=None):
++        groups=groups or [(i,) for i in range(len(layer.exl3_sizes))]
++        for ordinal,g in enumerate(groups):
++            sid=g if len(g)>1 else g[0];width=sum(layer.exl3_sizes[i] for i in g)
++            layer.trellis.weight_loader(layer.trellis,torch.zeros(8,width//16,16*method.K,dtype=torch.int16),sid)
++            layer.suh.weight_loader(layer.suh,torch.full((128,),ordinal+1,dtype=torch.float16),sid)
++            layer.svh.weight_loader(layer.svh,torch.ones(width,dtype=torch.float16),sid)
++            layer.mul1.weight_loader(layer.mul1,torch.tensor(1,dtype=torch.int32),sid)
++    def test_qkv_keeps_independent_hadamard_shards(self):
++        m,l=self.layer();self.fill(m,l);m.process_weights_after_loading(l)
++        self.assertEqual(l.exl3_bounds,[0,128,256,384])
++        self.assertTrue(torch.equal(l.suh[:,0],torch.tensor([1,2,3],dtype=torch.float16)))
++        self.assertEqual(l.exl3_shard_of_nb.tolist(),[0,1,2])
++    def test_gdn_combined_qkv_and_separate_z(self):
++        m,l=self.layer(prefix='layers.0.linear_attn.in_proj_qkvz',sizes=(128,128,256,256))
++        self.fill(m,l,[(0,1,2),(3,)]);m.process_weights_after_loading(l)
++        self.assertEqual(l.exl3_bounds,[0,512,768]);self.assertEqual(l.exl3_shard_of_nb.tolist(),[0,0,0,0,1,1])
++        self.assertTrue(torch.equal(l.suh[:,0],torch.tensor([1,2],dtype=torch.float16)))
++    def test_head_stays_six_bits(self):
++        m,l=self.layer(prefix='lm_head',bits=6,sizes=(128,));self.fill(m,l);m.process_weights_after_loading(l)
++        self.assertEqual(l.exl3_K,6);self.assertEqual(l.trellis.shape[-1],96)
++    def test_mtp_fc_is_four_bits(self):
++        m,l=self.layer(prefix='mtp.fc',sizes=(128,));self.fill(m,l);m.process_weights_after_loading(l)
++        self.assertEqual(l.exl3_loader_report['members'],['mtp.fc'])
++    def test_draft_head_preserves_target_six_bit_trellis(self):
++        m,l=self.layer(prefix='lm_head',bits=6,sizes=(256,));self.fill(m,l);m.process_weights_after_loading(l)
++        with tempfile.TemporaryDirectory() as d:
++            p=Path(d)/'draft.json';p.write_text(json.dumps({'blocks':[1]}));_build_draft_head(l,p)
++            self.assertEqual(l.exl3_K,6)
++            self.assertEqual(l.exl3_draft['trellis'].shape[-1],96)
++            self.assertTrue(torch.equal(l.exl3_draft['trellis'],l.trellis[:,8:16]))
++            self.assertEqual(l.exl3_draft['idx'].tolist(),list(range(128,256)))
++            for blocks in ([],[-1],[2],[1,1]):
++                p.write_text(json.dumps({'blocks':blocks}))
++                with self.assertRaises(ValueError): _build_draft_head(l,p)
++    def test_missing_trellis_or_transform_rejected(self):
++        for component in ('trellis','suh','svh'):
++            m,l=self.layer();self.fill(m,l);l.exl3_loaded_shards[component].remove(1)
++            with self.assertRaisesRegex(ValueError,'incomplete'): m.process_weights_after_loading(l)
++    def test_invalid_shape_and_duplicate_rejected(self):
++        m,l=self.layer()
++        with self.assertRaisesRegex(ValueError,'shape/bits'): l.trellis.weight_loader(l.trellis,torch.zeros(8,8,96,dtype=torch.int16),0)
++        self.fill(m,l)
++        with self.assertRaisesRegex(ValueError,'duplicate'): l.suh.weight_loader(l.suh,torch.ones(128),0)
++    def test_invalid_fused_group_and_tp_rejected(self):
++        m,l=self.layer()
++        with self.assertRaises(ValueError): l.suh.weight_loader(l.suh,torch.ones(128),[0,2])
++        with patch('exl3xpu.vllm_plugin.get_tensor_model_parallel_world_size',return_value=2):
++            with self.assertRaises(NotImplementedError): m.create_weights(torch.nn.Module(),128,[128],128,128,torch.float16)
++    def test_whole_model_missing_mtp_rejected(self):
++        cfg=Exl3Config(4,6,'mul1');cfg.expected_inventory=[{'canonical':'lm_head','bits':6},{'canonical':'mtp.fc','bits':4}]
++        m,l=self.layer(prefix='lm_head',bits=6,sizes=(128,));self.fill(m,l);m.process_weights_after_loading(l)
++        target=torch.nn.Module();target.add_module('lm_head',l)
++        runner=SimpleNamespace(vllm_config=SimpleNamespace(quant_config=cfg),model=target,drafter=SimpleNamespace(model=torch.nn.Module()))
++        with self.assertRaisesRegex(ValueError,'mtp.fc'): audit_runner(runner)
++    def test_discarded_head_not_retained_by_loader_callbacks(self):
++        m,l=self.layer(prefix='lm_head',bits=6,sizes=(256,));self.fill(m,l);m.process_weights_after_loading(l)
++        # Parameter/callback handles can outlive an MTP head replaced by the shared
++        # target head. They must not retain its entire quantized/pruned storage.
++        param=l.trellis
++        callbacks=[getattr(l,name).weight_loader for name in ('trellis','svh','mul1')]
++        reference=weakref.ref(l)
++        del l
++        gc.collect()
++        self.assertIsNone(reference())
++        with self.assertRaisesRegex(RuntimeError,'owner was released'):
++            callbacks[0](param,torch.zeros_like(param))
++
++if __name__=='__main__': unittest.main()
+diff --git a/tests/test_sdpa_host_cache.py b/tests/test_sdpa_host_cache.py
+new file mode 100644
+index 0000000..b262c1d
+--- /dev/null
++++ b/tests/test_sdpa_host_cache.py
+@@ -0,0 +1,113 @@
++"""oneDNN SDPA host-read removal: numerical, scale, stream and thread gates."""
++import argparse
++import concurrent.futures
++import hashlib
++import json
++import os
++from pathlib import Path
++import statistics
++import time
++
++import torch
++from exl3xpu import ops
++
++
++def compare(actual, gold):
++    error=(actual.float()-gold.float()).abs()
++    result={'finite':bool(actual.isfinite().all().cpu()),
++            'allclose':bool(torch.allclose(actual.float(),gold.float(),rtol=0.01,atol=0.003)),
++            'max_abs':float(error.max().cpu())}
++    assert result['finite'] and result['allclose'],result
++    return result
++
++
++def inputs(rows,length,pad=256):
++    q=torch.randn((6,pad,256),dtype=torch.float16,device='xpu')
++    k=torch.randn((1,length,256),dtype=torch.float16,device='xpu')
++    v=torch.randn_like(k);out=torch.empty_like(q);none=torch.empty(0,device='xpu')
++    return q,k,v,out,none
++
++
++def gold(q,k,v,rows,scale):
++    reciprocal=torch.tensor(1.0/scale,dtype=torch.float16).float()
++    scores=q[:,-rows:].float() @ k[0].float().T / float(reciprocal)
++    visible=k.shape[1]-rows+torch.arange(rows,device='xpu')[:,None]
++    keys=torch.arange(k.shape[1],device='xpu')
++    scores.masked_fill_(keys[None]>visible,-float('inf'))
++    return scores.softmax(-1) @ v[0].float()
++
++
++def main():
++    p=argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--report',type=Path,required=True)
++    p.add_argument('--baseline',action='store_true',help='Measure old scalar reads; skip new invalid-scale/thread guarantees')
++    args=p.parse_args();assert not args.report.exists()
++    torch.manual_seed(20261001);E=ops._get_esimd()
++    result={'status':'RUNNING','baseline':args.baseline,'torch':torch.__version__,'checks':[],
++            'library_sha256':hashlib.sha256(Path(os.environ.get('EXL3_LIB',Path(ops.__file__).parent/'_C.so')).read_bytes()).hexdigest()}
++    def save():args.report.write_text(json.dumps(result,indent=2)+'\n')
++    save()
++    try:
++        for rows in (63,64,255,256):
++            for length in (1600,1601,4096):
++                q,k,v,out,none=inputs(rows,length)
++                for scale in (0.0625,0.125,0.09375,0.0625):
++                    E.exl3_sdpa_len(q,k,v,out,none,True,scale,length,256)
++                    result['checks'].append({'rows':rows,'length':length,'scale':scale,
++                                             'fp32':compare(out[:,-rows:],gold(q,k,v,rows,scale))})
++                before=out[:,-rows:].clone();q[:,:256-rows].fill_(32)
++                E.exl3_sdpa_len(q,k,v,out,none,True,0.0625,length,256)
++                assert torch.equal(before,out[:,-rows:]),'padded queries changed valid output'
++                save()
++        q,k,v,out,none=inputs(256,65537)
++        E.exl3_sdpa(q,k,v,out,none,True,0.0625)
++        result['checks'].append({'rows':256,'length':65537,'scale':0.0625,
++                                 'fp32':compare(out,gold(q,k,v,256,0.0625))});save()
++        q,k,v,out,none=inputs(256,4096)
++        fn=lambda:E.exl3_sdpa(q,k,v,out,none,True,0.0625)
++        for _ in range(3):fn()
++        torch.xpu.synchronize()
++        with torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU]) as profiler:
++            for _ in range(9):
++                for _ in range(4):fn()  # Same four-head loop as prefill caller.
++        torch.xpu.synchronize()
++        counts={event.key:event.count for event in profiler.key_averages()}
++        reads=counts.get('aten::_local_scalar_dense',0)
++        result['profile_cpu_op_counts']=counts;result['device_scalar_reads_in36_calls']=reads
++        assert reads==(36 if args.baseline else 0),counts
++        samples=[]
++        for _ in range(9):
++            start,end=torch.xpu.Event(enable_timing=True),torch.xpu.Event(enable_timing=True)
++            torch.xpu.synchronize();host=time.perf_counter();start.record()
++            for _ in range(4):fn()
++            end.record();end.synchronize()
++            samples.append({'event_ms':start.elapsed_time(end),'wall_ms':(time.perf_counter()-host)*1000})
++        result['four_head_samples']=samples
++        result['median_four_head_ms']={k:statistics.median(v[k] for v in samples) for k in ['event_ms','wall_ms']}
++        if not args.baseline:
++            result['invalid_scales']=[]
++            for scale in (0.0,-0.0625,float('nan'),float('inf'),-float('inf'),1e-30,1e300):
++                try:E.exl3_sdpa(q,k,v,out,none,True,scale)
++                except RuntimeError as exc:
++                    assert 'scale' in str(exc);result['invalid_scales'].append(repr(scale))
++                else:raise AssertionError(f'Invalid scale accepted: {scale}')
++            # Independent streams/threads create separate engines, partitions
++            # and constants. Source input tensors are synchronized before use.
++            cases=[inputs(64,1601),inputs(64,4096)];torch.xpu.synchronize()
++            def worker(index):
++                torch.xpu.set_device(0);stream=torch.xpu.Stream()
++                with torch.xpu.stream(stream):
++                    q,k,v,out,none=cases[index];checks=[]
++                    for scale in (0.0625,0.125,0.0625):
++                        E.exl3_sdpa_len(q,k,v,out,none,True,scale,k.shape[1],256)
++                        checks.append(compare(out[:,-64:],gold(q,k,v,64,scale)))
++                    stream.synchronize();return checks
++            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
++                result['thread_stream_checks']=list(pool.map(worker,[0,1]))
++        result['status']='PASS_NUMERICAL_AND_HOST_READ_GATES_SERVING_UNQUALIFIED'
++    except BaseException as exc:result['status']='FAILED';result['error']=repr(exc);raise
++    finally:save()
++    print(json.dumps({'status':result['status'],'device_scalar_reads':reads,'median_four_head_ms':result['median_four_head_ms']}))
++
++
++if __name__=='__main__':main()
+diff --git a/tests/test_target_gdn.py b/tests/test_target_gdn.py
+new file mode 100644
+index 0000000..efcf76e
+--- /dev/null
++++ b/tests/test_target_gdn.py
+@@ -0,0 +1,119 @@
++"""Compare actual 0.30 build semantics and device row selection against native."""
++import dataclasses
++import inspect
++from pathlib import Path
++import sys
++import textwrap
++from types import SimpleNamespace
++import unittest
++from unittest.mock import patch
++import torch
++sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
++from exl3xpu.gdn_rows import HostRows
++from exl3xpu.gdn_target_patch import transformed_build, EXPECTED_SITES
++from vllm.v1.attention.backends import gdn_attn
++
++ORIGINAL = gdn_attn.GDNAttentionMetadataBuilder.build
++SOURCE, SITES = transformed_build(textwrap.dedent(inspect.getsource(ORIGINAL)))
++NS = dict(vars(gdn_attn), _Exl3HostRows=HostRows)
++exec(compile(SOURCE, '<test GDN semantic port>', 'exec'), NS)
++PORTED = NS['build']
++
++
++class TargetGDNTests(unittest.TestCase):
++    def test_accounted_device_sites_and_unknown_source(self):
++        self.assertEqual(SITES, EXPECTED_SITES)
++        source = textwrap.dedent(inspect.getsource(ORIGINAL))
++        with self.assertRaises(ValueError):
++            transformed_build(source.replace('query_lens[non_spec_sequence_masks_cpu]', 'query_lens[:1]'))
++
++    def test_row_selection_c1_c4_and_reused_indices(self):
++        for device in ['cpu'] + (['xpu'] if torch.xpu.is_available() else []):
++            for mask in ([True], [False], [True]*4, [False]*4,
++                         [True, True, False, False], [False, True, False, True]):
++                m = torch.tensor(mask, dtype=torch.bool)
++                t = torch.arange(len(mask)*5, device=device).reshape(len(mask), 5)
++                rows = HostRows(m)
++                expected = t[m.to(device)]
++                self.assertTrue(torch.equal(rows.select(t), expected))
++                prepared = rows.indices
++                self.assertTrue(torch.equal(rows.select(t+10), expected+10))
++                self.assertIs(rows.indices, prepared)
++                if device == 'xpu' and rows.prefix_length is None:
++                    pointer = rows.device_indices[str(t.device)].data_ptr()
++                    rows.select(t)
++                    self.assertEqual(pointer, rows.device_indices[str(t.device)].data_ptr())
++        with self.assertRaises(ValueError): HostRows(torch.ones(3)).select(torch.ones(3))
++        with self.assertRaises(ValueError): HostRows(torch.ones(3, dtype=torch.bool)).select(torch.ones(4))
++
++    @unittest.skipUnless(torch.xpu.is_available(), 'XPU graph replay requires the device')
++    def test_row_selection_graph_replay(self):
++        for mask in ([True], [True]*4, [True, True, False, False], [False, True, False, True]):
++            m = torch.tensor(mask, dtype=torch.bool)
++            t = torch.arange(len(mask)*5, device='xpu').reshape(len(mask), 5)
++            rows = HostRows(m)
++            rows.select(t)  # prepare CPU indices and the one pinned transfer outside capture
++            torch.xpu.synchronize()
++            graph = torch.xpu.XPUGraph()
++            with torch.xpu.graph(graph): out = rows.select(t).clone()
++            t.add_(7)
++            graph.replay()
++            self.assertTrue(torch.equal(out, t[m.to('xpu')]))
++
++    def builder(self, device, graphs):
++        b = gdn_attn.GDNAttentionMetadataBuilder.__new__(gdn_attn.GDNAttentionMetadataBuilder)
++        b.use_spec_decode = True; b.num_spec = 3
++        b.use_full_cuda_graph = graphs; b.decode_cudagraph_max_bs = 16
++        b.kv_cache_spec = None
++        b.vllm_config = SimpleNamespace(cache_config=SimpleNamespace(mamba_cache_mode='align'))
++        b._build_chunk_metadata = lambda *args: (None, None)
++        for name, shape, dtype in (
++            ('spec_state_indices_tensor', (16, 4), torch.int32),
++            ('non_spec_state_indices_tensor', (16,), torch.int32),
++            ('spec_sequence_masks', (16,), torch.bool),
++            ('spec_token_indx', (64,), torch.int32), ('non_spec_token_indx', (64,), torch.int32),
++            ('spec_query_start_loc', (17,), torch.int32), ('non_spec_query_start_loc', (17,), torch.int32),
++            ('num_accepted_tokens', (16,), torch.int32)):
++            setattr(b, name, torch.empty(shape, device=device, dtype=dtype))
++        return b
++
++    def test_actual_builder_fields_all_spec_non_spec_mixed_partial_c1_c4(self):
++        # Only block selection / chunk-convolution helper primitives are stubbed.
++        # Execute the real reviewed build body, including mixed classification,
++        # seven row sites, cumulative query lengths, and graph metadata padding.
++        for device in ['cpu'] + (['xpu'] if torch.xpu.is_available() else []):
++            for graphs in (False, True):
++                for lens, drafts in (([4], [3]), ([1], [-1]), ([4]*4, [3]*4),
++                                     ([1, 1, 8, 4], [-1]*4),
++                                     ([4, 17, 4, 11], [3, -1, 3, -1]),
++                                     ([4, 4, 0, 0], [3, 3, -1, -1]), ([4, 2], [3, 1])):
++                    n = len(lens)
++                    cpu = torch.tensor([0, *torch.tensor(lens).cumsum(0).tolist()], dtype=torch.int32)
++                    m = SimpleNamespace(query_start_loc=cpu.to(device), query_start_loc_cpu=cpu,
++                                        block_table_tensor=torch.arange(n*4, dtype=torch.int32, device=device).reshape(n,4),
++                                        seq_lens=torch.tensor(lens, dtype=torch.int32, device=device)+100,
++                                        num_reqs=n, num_actual_tokens=sum(lens),
++                                        compute_num_computed_tokens=lambda: torch.full((n,),100,device=device))
++                    accepted = torch.arange(1, n+1, dtype=torch.int32, device=device)
++                    def split(*args, **kwargs):
++                        nd = sum(x == 1 for x in lens)
++                        return nd, sum(x > 1 for x in lens), nd, sum(x for x in lens if x > 1)
++                    with patch.object(gdn_attn, 'mamba_get_block_table_tensor', side_effect=lambda t,*args:t), \
++                         patch.object(gdn_attn, 'split_decodes_and_prefills', side_effect=split), \
++                         patch.object(gdn_attn, 'compute_causal_conv1d_metadata', return_value=(None,None,None)):
++                        # The exec namespace contains direct references; install equivalent helpers there.
++                        old = {k:NS[k] for k in ('mamba_get_block_table_tensor','split_decodes_and_prefills','compute_causal_conv1d_metadata')}
++                        NS.update(mamba_get_block_table_tensor=gdn_attn.mamba_get_block_table_tensor,
++                                  split_decodes_and_prefills=gdn_attn.split_decodes_and_prefills,
++                                  compute_causal_conv1d_metadata=gdn_attn.compute_causal_conv1d_metadata)
++                        try:
++                            ref = ORIGINAL(self.builder(device,graphs),0,m,accepted,torch.tensor(drafts))
++                            got = PORTED(self.builder(device,graphs),0,m,accepted,torch.tensor(drafts))
++                        finally: NS.update(old)
++                    for field in dataclasses.fields(ref):
++                        a, b = getattr(ref,field.name), getattr(got,field.name)
++                        if isinstance(a,torch.Tensor): self.assertTrue(torch.equal(a,b), (device,graphs,lens,field.name,a,b))
++                        else: self.assertEqual(a,b,(device,graphs,lens,field.name))
++
++
++if __name__ == '__main__': unittest.main()

@@ -52,7 +52,7 @@ def main():
         names=subprocess.check_output(['git','ls-files','-co','--exclude-standard','-z'],cwd=root).decode().split('\0')
         for name in sorted(set(filter(None,names))):
             path=root/name
-            allowed=(path.suffix in TEXT or path.name in {'LICENSE','NOTICE','Dockerfile','CMakeLists.txt','.gitignore','.dockerignore'})
+            allowed=(path.suffix in TEXT or path.name.startswith('Dockerfile.') or path.name in {'LICENSE','NOTICE','Dockerfile','CMakeLists.txt','.gitignore','.dockerignore'})
             historical=(role=='engine-code' and ((name.startswith('benchmarks/results/') and not name.startswith(('benchmarks/results/exl3-migration/','benchmarks/results/exl3-review-20261002/')))
                 or (name.startswith('benchmarks/runs/') and not name.startswith(('benchmarks/runs/2026-10-02-exl3-production/','benchmarks/runs/2026-10-02-flappybird-v7/')) and path.name!='summary.json')
                 or (name.startswith('benchmarks/web-coding-fixture/v') and not name.startswith('benchmarks/web-coding-fixture/v7/'))))
@@ -71,7 +71,7 @@ def main():
         for item in archive:
             if not item.isfile():continue
             path=Path(item.name)
-            if (path.suffix in TEXT or path.name in {'LICENSE','NOTICE','Dockerfile','CMakeLists.txt','.gitignore','.dockerignore'}) and item.size<=1024*1024:
+            if (path.suffix in TEXT or path.name.startswith('Dockerfile.') or path.name in {'LICENSE','NOTICE','Dockerfile','CMakeLists.txt','.gitignore','.dockerignore'}) and item.size<=1024*1024:
                 add('exl3-qualified-source/'+item.name,archive.extractfile(item).read(),'Qualified EXL3 git commit '+qualified)
     repos['exl3-qualified-source']=dict(commit=qualified,scope='Unchanged qualified v1 source, separate from candidate working tree')
     for path in sorted(capture.rglob('*')):
@@ -80,7 +80,8 @@ def main():
         if not path.is_file():continue
         redundant=(path.name.endswith('-before.json') or path.name=='progress.json')
         failed_partial=(any(part in {'matched-state-v1','matched-state-v2','matched-state-v3','matched-state-v4'} for part in path.parts) and path.name!='campaign.json')
-        unsupported=((path.suffix not in {'.json','.md'} and not ('diagnostic-sources' in path.parts and path.suffix=='.py')) or path.stat().st_size>1024*1024 or 'runtime-sources' in path.parts or '/loader/' in str(path))
+        historical_coverage=(path.relative_to(a.evidence)==Path('runtime-sources/SOURCE_GUARD_COVERAGE.json'))
+        unsupported=((path.suffix not in {'.json','.md'} and not ('diagnostic-sources' in path.parts and path.suffix=='.py')) or path.stat().st_size>1024*1024 or ('runtime-sources' in path.parts and not historical_coverage) or '/loader/' in str(path))
         if redundant or failed_partial or unsupported:
             reason=('Superseded progress snapshot' if redundant else
                     'Failed setup partial; campaign outcome retained' if failed_partial else
@@ -96,6 +97,12 @@ def main():
     for item in coverage['guards'].values():
         name='qualified-runtime/'+item['installed_path']
         assert hashlib.sha256(data[name]).hexdigest()==item['expected_sha256']
+    build=json.loads((REPO/'engine/exl3xpu/review-candidate/build-receipt.json').read_text())
+    for name,digest in build['source_sha256'].items():
+        assert hashlib.sha256(data['exl3-candidate/'+name]).hexdigest()==digest, 'Candidate build input missing or changed: '+name
+    old_coverage=data.get('review-evidence/runtime-sources/SOURCE_GUARD_COVERAGE.json')
+    if old_coverage is not None:
+        assert hashlib.sha256(old_coverage).hexdigest()=='51ad7a2b21a6d6c87fc08361ce83d26d5b5937018c3fa07eaa028aafd489b944'
     meta('SOURCE_PROVENANCE.json',dict(repositories=repos,source_guard_count=coverage['required_count'],
         qualified_runtime=json.loads(data['qualified-runtime/CAPTURE_IDENTITY.json']),
         scope='Current owned code and EXL3 candidate code, complete active source-guard closure, compact diagnostic receipts. No weights, binaries, raw logits or new production claim.'))

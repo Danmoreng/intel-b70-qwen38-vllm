@@ -37,7 +37,7 @@ def main():
             requests=[dict(req_id=r.request_id,prompt_ids=r.prompt_token_ids,output_ids=list(r.outputs[0].token_ids)) for r in results],captures=captures))
         (a.out/'progress.json').write_text(json.dumps(waves,indent=2)+'\n')
     summary = dict(status='COMPLETE_MATCHED_STATE_DIAGNOSTIC',identity=identity,
-        image_scope='Existing qualified EXL3 release; no new reference model or quantization panel',
+        image_scope=os.environ.get('B70_REPLAY_IMAGE_SCOPE','Existing qualified EXL3 release; no new reference model or quantization panel'),
         panel_raw_sha256=hashlib.sha256(raw).hexdigest(),config=config,waves=waves,
         limits='Finite recreated batches; not a proof for every possible batch, history or quantization. Shadow graphs include extra native attention and are not throughput measurements.')
     (a.out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')

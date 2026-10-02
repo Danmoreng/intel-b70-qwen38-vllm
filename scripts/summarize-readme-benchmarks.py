@@ -30,17 +30,17 @@ def same_runtime(left,right):
     return all(left[k]==right[k] for k in ('image_id','image_tag','command','policy_sha256'))
 
 
-def summarize(root, include_failed_coding_task=False):
+def summarize(root, include_failed_coding_task=False, serving_only=False):
     final=(root/'campaign.json').exists()
     if final:
         state=json.loads((root/'campaign.json').read_text())
-        if state['status']!='COMPLETE_FINAL_README_MEASUREMENTS_REQUIRES_RELEASE_REVIEW':
+        if state['status']!=('COMPLETE_REVIEW_SERVING_MATRIX' if serving_only else 'COMPLETE_FINAL_README_MEASUREMENTS_REQUIRES_RELEASE_REVIEW'):
             raise RuntimeError('final measurement campaign has not completed')
         release=state['image_receipt']
         live=worker_identity(root/'source-review-worker/identity.json')
-        restored=worker_identity(root/'coding-agent-v2-worker/identity.json')
+        restored=worker_identity(root/('prefix-64k-isolated-worker/identity.json' if serving_only else 'coding-agent-v2-worker/identity.json'))
         fixture_hashes=json.loads((REPO/'config/experiments/exl3-migration/full-serving-fixture-manifest.json').read_text())['files']
-        policy_path=REPO/'config/experiments/exl3-migration/final-candidate-policy.json'
+        policy_path=REPO/state['policy_path'] if serving_only else REPO/'config/experiments/exl3-migration/final-candidate-policy.json'
         release_path=root/'campaign.json'
         provenance={'source_sha256':{'scripts/'+k:v for k,v in state['sources'].items()}}
     else:
@@ -181,34 +181,36 @@ def summarize(root, include_failed_coding_task=False):
         prompts = [sha(path.parent / f"{name}-r{repeat}/prompt-1.txt") for repeat in (1, 2, 3)]
         if len(set(prompts)) != 1:
             raise RuntimeError('prefix requests were not exact resends')
-    coding_path = root / 'coding-agent-v2/summary.json'
-    coding = json.loads(coding_path.read_text())
-    if not (same_runtime(coding['identity'],live) if final else coding['identity']==live):
-        raise RuntimeError('coding and source-review used different images')
-    fixture = REPO / 'benchmarks/coding-fixture/v2'
-    if coding['fixture_manifest_sha256'] != sha(fixture / 'manifest.json') or coding['tasks_sha256'] != sha(fixture / 'tasks.json'):
-        raise RuntimeError('coding fixture differs')
-    if coding['metrics']['preemptions']:
-        raise RuntimeError('coding serving gate failed')
-    tasks=json.loads((fixture/'tasks.json').read_text())['tasks']
-    if [row['task'] for row in coding['task_results']]!=[row['id'] for row in tasks]:
-        raise RuntimeError('coding task coverage differs')
-    acceptance=[]
-    for row in coding['task_results']:
-        check=row['acceptance']
-        states=re.findall(r'^(.+) \.\.\. (ok|FAIL|ERROR)$',check['output'],re.MULTILINE)
-        if len(states)!=check['tests_run'] or check['tests_run']!=4:
-            raise RuntimeError('coding acceptance case accounting differs')
-        passed=sum(state=='ok' for _,state in states)
-        if check['passed']!=(passed==check['tests_run']):
-            raise RuntimeError('coding acceptance status differs from its cases')
-        acceptance.append({'task':row['task'],'passed':check['passed'],'tests_passed':passed,
-            'tests_total':check['tests_run'],'failed_cases':[name for name,state in states if state!='ok'],
-            'output':check['output'],'project_sha256':row['project_sha256']})
-    coding_passed=all(row['passed'] for row in acceptance)
-    if not coding_passed and not include_failed_coding_task:
-        raise RuntimeError('coding task acceptance failed; explicit measured-failure export required, not release approval')
-    records = [json.loads(line) for line in (root / 'coding-agent-v2/requests.jsonl').read_text().splitlines()]
+    coding_passed=True
+    if not serving_only:
+        coding_path = root / 'coding-agent-v2/summary.json'
+        coding = json.loads(coding_path.read_text())
+        if not (same_runtime(coding['identity'],live) if final else coding['identity']==live):
+            raise RuntimeError('coding and source-review used different images')
+        fixture = REPO / 'benchmarks/coding-fixture/v2'
+        if coding['fixture_manifest_sha256'] != sha(fixture / 'manifest.json') or coding['tasks_sha256'] != sha(fixture / 'tasks.json'):
+            raise RuntimeError('coding fixture differs')
+        if coding['metrics']['preemptions']:
+            raise RuntimeError('coding serving gate failed')
+        tasks=json.loads((fixture/'tasks.json').read_text())['tasks']
+        if [row['task'] for row in coding['task_results']]!=[row['id'] for row in tasks]:
+            raise RuntimeError('coding task coverage differs')
+        acceptance=[]
+        for row in coding['task_results']:
+            check=row['acceptance']
+            states=re.findall(r'^(.+) \.\.\. (ok|FAIL|ERROR)$',check['output'],re.MULTILINE)
+            if len(states)!=check['tests_run'] or check['tests_run']!=4:
+                raise RuntimeError('coding acceptance case accounting differs')
+            passed=sum(state=='ok' for _,state in states)
+            if check['passed']!=(passed==check['tests_run']):
+                raise RuntimeError('coding acceptance status differs from its cases')
+            acceptance.append({'task':row['task'],'passed':check['passed'],'tests_passed':passed,
+                'tests_total':check['tests_run'],'failed_cases':[name for name,state in states if state!='ok'],
+                'output':check['output'],'project_sha256':row['project_sha256']})
+        coding_passed=all(row['passed'] for row in acceptance)
+        if not coding_passed and not include_failed_coding_task:
+            raise RuntimeError('coding task acceptance failed; explicit measured-failure export required, not release approval')
+        records = [json.loads(line) for line in (root / 'coding-agent-v2/requests.jsonl').read_text().splitlines()]
     source_finished = datetime.datetime.fromtimestamp(path.stat().st_mtime, ZoneInfo('Europe/Berlin'))
     started = datetime.datetime.fromisoformat(manifest['started_at'])
     return {
@@ -246,7 +248,7 @@ def summarize(root, include_failed_coding_task=False):
                 'fixture_manifest_sha256': state['fixture_manifest_sha256'] if final else sha(root / 'fixture-sha256.json'),
                 'reference_main_results_path': str(Path(manifest['fixture_root']) / 'results.json')},
         },
-        'coding': {**{key: coding[key] for key in ('fixture_id', 'fixture_manifest_sha256', 'fixture_project_sha256', 'tasks_sha256', 'runner_sha256', 'wall_s', 'requests', 'tool_calls', 'metrics')},
+        'coding': None if serving_only else {**{key: coding[key] for key in ('fixture_id', 'fixture_manifest_sha256', 'fixture_project_sha256', 'tasks_sha256', 'runner_sha256', 'wall_s', 'requests', 'tool_calls', 'metrics')},
             'raw_results_path': str(coding_path.relative_to(REPO)), 'raw_summary_sha256': sha(coding_path),
             'tasks_passed': sum(row['acceptance']['passed'] for row in coding['task_results']),
             'tasks_total': len(coding['task_results']),
@@ -261,7 +263,7 @@ def summarize(root, include_failed_coding_task=False):
 
 
 def readme_measurements(result, public_path):
-    source = result['source_review']; coding = result['coding']; metrics = coding['metrics']
+    source = result['source_review']; coding = result.get('coding'); metrics = coding['metrics'] if coding else None
     reference = str(public_path.relative_to(REPO))
     rows = {row['name']: row for row in source['scenario_results']}
     isolated=result.get('worker_mode')=='fresh isolated same-image workers'
@@ -338,11 +340,10 @@ separate serving load points, not paired scaling measurements.
     row=rows['full-context-199680']
     capacity_label='Frozen 200K comparison' if isolated else 'Maximum context'
     text += f"| {capacity_label} | **{row['actual_prompt_tokens_min']:,} input + 1,024 output**; {row['prefill_tps_median']:,.1f} prefill tok/s, {row['decode_tps_median']:.1f} decode tok/s, {row['ttft_s_median']:.2f} s TTFT, {row['batch_wall_s_median']:.2f} s end to end |\n"
-    text += f'''
-The longest-context row is one capacity and throughput observation. The
-16K/64K resends reused the same prompt on the same worker.
-
-## Repeatable coding-agent benchmark
+    text += '\nThe longest-context row is one capacity and throughput observation. The\n16K/64K resends reused the same prompt on the same worker.\n\n'
+    if coding is None:
+        return text
+    text += f'''## Repeatable coding-agent benchmark
 
 The [QueueKit fixture v2](benchmarks/coding-fixture/v2/README.md) copies a frozen
 Python repository and gives the model two linked editing tasks in one
@@ -387,8 +388,9 @@ def main():
     parser.add_argument('--update-readme', action='store_true')
     parser.add_argument('--include-failed-coding-task', action='store_true',
                         help='Export an honestly scored failed agent task; does not approve production release')
+    parser.add_argument('--serving-only',action='store_true',help='Validate the new exact-image serving-only campaign; no inherited coding measurement')
     args=parser.parse_args()
-    result=summarize(args.root.resolve(),args.include_failed_coding_task)
+    result=summarize(args.root.resolve(),args.include_failed_coding_task,args.serving_only)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result,indent=2)+'\n')
     if args.update_readme:
@@ -405,7 +407,7 @@ def main():
         path.write_text(text)
     print(json.dumps({'image':result['image_id'],'scenarios':result['source_review']['scenarios'],
                       'waves':result['source_review']['waves'],'requests':result['source_review']['requests'],
-                      'coding_tasks_passed':result['coding']['tasks_passed']},indent=2))
+                      'coding_tasks_passed':result['coding']['tasks_passed'] if result.get('coding') else None},indent=2))
 
 
 if __name__=='__main__':

@@ -112,6 +112,9 @@ def main():
         overview+=f"| {watts} W | {e['mean_card_power_w']:.1f} W | {e['measured_wave_wall_s']/60:.2f} min | {e['output_tokens_per_s_including_prefill']:.1f} | {e['output_tokens_per_s_per_measured_watt_including_prefill']:.3f} | {e['output_tokens_per_wh_including_prefill']:,.1f} | {e['card_energy_wh']:.2f} Wh |\n"
     efficient=max(profiles,key=lambda w:profiles[w]['energy']['output_tokens_per_wh_including_prefill'])
     fastest=min(profiles,key=lambda w:profiles[w]['energy']['measured_wave_wall_s'])
+    ranked=sorted(profiles,key=lambda w:profiles[w]['energy']['output_tokens_per_wh_including_prefill'],reverse=True)
+    runner_up=ranked[1]
+    efficiency_lead_percent=(profiles[efficient]['energy']['output_tokens_per_wh_including_prefill']/profiles[runner_up]['energy']['output_tokens_per_wh_including_prefill']-1)*100
     efficiency_note=f'''All efficiency columns cover the same **126,976 output tokens**, including
 their prefill and request overhead. `Output tok/s per W` divides whole-wave
 throughput by measured mean card power: it equals output tokens/J. `Output
@@ -121,6 +124,11 @@ better**. These are not decode-only rates, and do not include whole-PC power.
 For this fixed mixed workload, **{efficient} W produced the most tokens per Wh**;
 **{fastest} W finished the measured waves fastest**. The rate tables below show
 which context and concurrency points benefit from the additional power.
+
+The observed efficiency lead over the next-best setting ({runner_up} W) is
+**{efficiency_lead_percent:.1f}%**. Each limit has one full campaign with the fixed
+repeats, without randomized order. Small differences do not establish a
+general optimum; generated trajectories and MTP acceptance can also differ.
 
 '''
     c1='| C1 input budget | '+' | '.join(f'{w} W prefill / decode' for w in levels)+' |\n|---:|'+('---:|'*len(levels))+'\n'

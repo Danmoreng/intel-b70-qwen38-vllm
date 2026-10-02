@@ -30,12 +30,25 @@ def same_runtime(left,right):
     return all(left[k]==right[k] for k in ('image_id','image_tag','command','policy_sha256'))
 
 
-def summarize(root, include_failed_coding_task=False, serving_only=False):
+def summarize(root, include_failed_coding_task=False, serving_only=False, experimental_power_w=None):
+    if experimental_power_w is not None and (not serving_only or experimental_power_w not in (230,275)):
+        raise RuntimeError('Power-variant export requires serving-only and 230 or 275 W')
     final=(root/'campaign.json').exists()
     if final:
         state=json.loads((root/'campaign.json').read_text())
-        if state['status']!=('COMPLETE_REVIEW_SERVING_MATRIX' if serving_only else 'COMPLETE_FINAL_README_MEASUREMENTS_REQUIRES_RELEASE_REVIEW'):
+        expected_status=('COMPLETE_POWER_SERVING_MATRIX' if experimental_power_w is not None else
+                         'COMPLETE_REVIEW_SERVING_MATRIX' if serving_only else 'COMPLETE_FINAL_README_MEASUREMENTS_REQUIRES_RELEASE_REVIEW')
+        if state['status']!=expected_status:
             raise RuntimeError('final measurement campaign has not completed')
+        if experimental_power_w is not None:
+            if state['power_cap_w']!=experimental_power_w:
+                raise RuntimeError('Experimental power cap differs')
+            observations=root/'hardware-observations.jsonl'
+            if sha(observations)!=state['hardware_observations_sha256']:
+                raise RuntimeError('Hardware observation receipt changed')
+            samples=[json.loads(line) for line in observations.read_text().splitlines()]
+            if len(samples)<2 or any(row['power_cap_uw']!=experimental_power_w*1_000_000 for row in samples):
+                raise RuntimeError('Experimental power cap was not held throughout the run')
         release=state['image_receipt']
         live=worker_identity(root/'source-review-worker/identity.json')
         restored=worker_identity(root/('prefix-64k-isolated-worker/identity.json' if serving_only else 'coding-agent-v2-worker/identity.json'))
@@ -44,6 +57,8 @@ def summarize(root, include_failed_coding_task=False, serving_only=False):
         release_path=root/'campaign.json'
         provenance={'source_sha256':{'scripts/'+k:v for k,v in state['sources'].items()}}
     else:
+        if experimental_power_w is not None:
+            raise RuntimeError('Power export requires an explicit experimental campaign receipt')
         state = json.loads((root / 'state.json').read_text())
         if state['status'] != 'complete':
             raise RuntimeError('benchmark has not completed')

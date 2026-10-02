@@ -24,6 +24,12 @@ def main():
     assert campaign['status']=='PASS_BOUNDED_REVIEW_RELEASE_QUALIFICATION'
     assert set(campaign['phases'])=={'operations','matched','quality','telemetry'}
     assert all(x['status']=='PASS' for x in campaign['phases'].values())
+    retry=campaign.get('reused_passed_phases')
+    if retry:
+        previous=read(REPO/retry['campaign_path'])
+        assert sources[retry['campaign_path']]==retry['campaign_sha256']
+        assert previous['image_id']==campaign['image_id'] and previous['policy_sha256']==campaign['policy_sha256']
+        assert all(previous['phases'][name]['status']=='PASS' for name in retry['phases'])
     assert serving['status']=='COMPLETE_REVIEW_SERVING_MATRIX'
     image=campaign['image_id'];release=read(a.release_dir/'production_image.json')
     assert release['image_id']==image==serving['image_receipt']['image_id']
@@ -76,7 +82,7 @@ def main():
         serving=dict(scenarios=20,waves=70,requests=124,preemptions=0,summary_sha256=sha(root/'serving-summary.json')),
         operations=operations,matched_comparison=matched,quality_smoke=quality,reference_provenance=references,candidate_state_replays=replays,
         actual_worker_cache=cache,source_guard_coverage=dict(required=13,covered=13,files=len(coverage['files_sha256'])),
-        rollback_image_id=campaign['baseline_image_id'],receipts_sha256=sources,
+        rollback_image_id=campaign['baseline_image_id'],qualification_retry_provenance=retry,receipts_sha256=sources,
         limitations=['Finite cache workload; application cache cap is per thread/queue and does not bound oneDNN internal caches or every allocator.',
             'Client p95 SSE burst gaps are not GPU token-step latency.',
             'Historical Flappy and QueueKit were not rerun or relabeled as candidate results; no general coding-quality ranking.',

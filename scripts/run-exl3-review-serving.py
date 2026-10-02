@@ -32,6 +32,11 @@ def restore(image):
     return m.wait_for_qualified_service(image)
 
 
+def current_qualified_image():
+    from release_integrity import load_release
+    return load_release()['image_id']
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--release-dir',type=Path,required=True)
@@ -59,11 +64,12 @@ def main():
     subprocess.run([sys.executable,str(REPO/'scripts/run-server-exl3.py'),'--check-only','--release-dir',str(directory)],check=True)
     with (REPO.parent/'Local-AI-B70/qwen38/context-benchmark/run.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
+        restore_image=current_qualified_image()
         root.mkdir(parents=True)
         state=dict(status='RUNNING',started_unix=time.time(),image_receipt=receipt,
             policy_path=str((directory/'production_policy.json').relative_to(REPO)),
             fixture_manifest_sha256=sha(frozen),frozen_fixture_root=str(a.fixture_root.resolve()),
-            effective_partition_cache_capacity=64,power_cap_w=180,
+            effective_partition_cache_capacity=64,power_cap_w=180,restore_image_id=restore_image,
             sources={f:sha(REPO/'scripts'/f) for f in ['run-exl3-review-serving.py','exl3_candidate_worker.py','current-profile-benchmark.py']},stages={})
         def save():(root/'campaign.json').write_text(json.dumps(state,indent=2)+'\n')
         save(); success=False
@@ -90,7 +96,7 @@ def main():
         except BaseException as exc:
             state['status']='FAILED';state['error']=repr(exc);raise
         finally:
-            if not success or not a.leave_offline:state['restoration']=restore(saved['image_id'])
+            if not success or not a.leave_offline:state['restoration']=restore(restore_image)
             state['production_left_offline']=success and a.leave_offline
             state['finished_unix']=time.time();save()
 

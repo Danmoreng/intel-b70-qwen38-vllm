@@ -35,7 +35,7 @@ class Worker:
         if subprocess.run(['docker','inspect',self.name],capture_output=True).returncode==0:
             raise RuntimeError('Refuse to replace existing worker '+self.name)
         self.root.mkdir(parents=True,exist_ok=True)
-        env={**self.profile['env'],'HF_HUB_OFFLINE':'1','PYTHONPATH':'/opt/b70-runtime',
+        env={**self.profile['env'],'HF_HUB_OFFLINE':'1','PYTHONPATH':self.profile['env'].get('PYTHONPATH','/opt/b70-runtime'),
              'ZE_AFFINITY_MASK':'0','EXL3_LOADER_REPORT_DIR':'/results/loader'}
         command=['docker','run','-d','--name',self.name,'--device','/dev/dri','--shm-size','8g',
                  '-p','127.0.0.1:8082:8000','-v',str(MODEL)+':/models/checkpoint:ro',

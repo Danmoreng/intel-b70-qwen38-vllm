@@ -44,6 +44,7 @@ def main():
     p.add_argument('--out',type=Path,required=True)
     p.add_argument('--leave-offline',action='store_true')
     p.add_argument('--phases',default='operations,matched,quality,telemetry')
+    p.add_argument('--reuse-passed-from',type=Path,help='Retain completed same-image phases from a previous campaign; never reuse a failed phase')
     a=p.parse_args();root=a.out.resolve();assert not root.exists();root.mkdir(parents=True)
     phases=a.phases.split(',');assert len(set(phases))==len(phases) and set(phases)<=set(['operations','matched','quality','telemetry'])
     directory=a.release_dir.resolve();release=read(directory/'production_image.json');image=release['image_id']
@@ -58,6 +59,20 @@ def main():
         baseline_image_id=baseline,policy_sha256=release['policy_sha256'],
         environment_overrides=release['environment_overrides'],performance_panel_sha256=sha(panel_path),
         sources_sha256={str(f.relative_to(REPO)):sha(f) for f in [Path(__file__),REPO/'scripts/exl3_candidate_worker.py',*fixture.glob('*.py')]},phases={})
+    if a.reuse_passed_from:
+        previous=a.reuse_passed_from.resolve();prior=read(previous/'campaign.json')
+        assert prior['status'] in ('FAILED','PASS_BOUNDED_REVIEW_RELEASE_QUALIFICATION')
+        for key in ['image_id','baseline_image_id','policy_sha256','environment_overrides','performance_panel_sha256']:
+            assert prior[key]==state[key], 'Reuse identity mismatch: '+key
+        assert prior['serving_campaign_sha256']==sha(a.serving/'campaign.json')
+        reused=[]
+        for phase,value in prior['phases'].items():
+            if phase in phases:continue
+            assert value['status']=='PASS', 'Cannot reuse a failed phase: '+phase
+            (root/phase).symlink_to(previous/phase,target_is_directory=True)
+            state['phases'][phase]=dict(value,reused=True);reused.append(phase)
+        state['reused_passed_phases']=dict(campaign_path=str((previous/'campaign.json').relative_to(REPO)),campaign_sha256=sha(previous/'campaign.json'),phases=reused,
+            prior_status=prior['status'],prior_error=prior.get('error'),scope='Only completed same-image operating, matched and quality phases retained. Failed diagnostic setup is not a passed check.')
     def save():(root/'campaign.json').write_text(json.dumps(state,indent=2)+'\n')
     save()
     def worker(path,role='candidate',**kwargs):
@@ -82,6 +97,7 @@ def main():
         return common+['--entrypoint','python',image,'-u',script,*args]
     with (REPO.parent/'Local-AI-B70/qwen38/context-benchmark/run.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
+        restore_image=S.current_qualified_image();state['restore_image_id']=restore_image
         assert read(a.serving/'campaign.json')['status']=='COMPLETE_REVIEW_SERVING_MATRIX'
         assert read(a.serving/'campaign.json')['image_receipt']['image_id']==image
         state['serving_campaign_sha256']=sha(a.serving/'campaign.json');state['status']='RUNNING';save()
@@ -183,7 +199,7 @@ def main():
                     assert len(results)==4 and all(d['status']=='PASS_LOCAL_ATTENTION_ORIGINAL_TOLERANCE' for d in results)
                     assert any(d['graph_mode']=='FULL' for d in results) and any(d['label']=='long-prefill' for d in results)
                 elif phase=='telemetry':
-                    w=worker(path/'serving',env={'B70_REVIEW_CACHE_DIAGNOSTIC':'1'},binds=[(fixture/'sitecustomize.py','/opt/b70-runtime/sitecustomize.py')])
+                    w=worker(path/'serving',env={'B70_REVIEW_CACHE_DIAGNOSTIC':'1','PYTHONPATH':'/opt/b70-review:/opt/b70-runtime'},binds=[(fixture,'/opt/b70-review')])
                     try:
                         w.start();mixed=X.mixed(panel,3,path/'mixed-c4',0)
                         ids=next(x for x in panel['windows'] if x['name']=='code-4096')['ids']
@@ -212,7 +228,7 @@ def main():
             state['status']='FAILED';state['error']=repr(exc);raise
         finally:
             subprocess.run(['docker','rm','-f','b70-exl3-review-quality'],capture_output=True,timeout=60)
-            if not success or not a.leave_offline:state['restoration']=S.restore(baseline)
+            if not success or not a.leave_offline:state['restoration']=S.restore(restore_image)
             state['production_left_offline']=success and a.leave_offline;state['finished_unix']=time.time();save()
 
 

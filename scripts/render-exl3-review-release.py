@@ -67,6 +67,12 @@ The [release assessment](../{relative}/assessment.json),
 [actual service startup/restart receipt](../{relative}/promotion.json)
 preserve identities, configuration, source hashes, tests and limitations.
 
+The first cache-diagnostic worker failed before model startup because a file
+mount targeted a read-only parent directory. Its failed campaign receipt is
+retained. Only that diagnostic phase was rerun with a separate read-only
+diagnostic directory; already passed serving, operating and quality gates
+were preserved under their original identities. No image bytes changed.
+
 ## Fresh serving measurements
 
 The existing 20-scenario / 70-wave / 124-request matrix ran once on the final
@@ -148,8 +154,8 @@ remain visible. No coding task was rerun or relabeled for v2.
 
 The immediately usable [EXL3 v1 rollback](../config/releases/exl3-v1/README.md)
 retains image `{old['image_id']}`, its immutable tag, policy, original release
-receipts, source and runtime snapshots and compiler namespace. Both matched
-v1 workers load and serve real requests during this release qualification.
+receipts, source and runtime snapshots and compiler namespace. The matched
+v1 worker loads and serves real requests during this release qualification.
 The strict rollback preflight is separately checked. A failed deployment
 automatically restores v1 configuration and the local environment.
 No sudo, driver or system-service installation was needed.

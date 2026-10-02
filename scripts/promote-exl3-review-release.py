@@ -62,7 +62,8 @@ def verify(image,policy):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--release-dir',type=Path,required=True);p.add_argument('--decision',type=Path,required=True)
-    p.add_argument('--out',type=Path,required=True);a=p.parse_args();out=a.out.resolve();assert not out.exists()
+    p.add_argument('--out',type=Path,required=True);a=p.parse_args();out=a.out.resolve()
+    assert not (out/'promotion.json').exists(), 'Refuse to replace an existing deployment receipt'
     decision=json.loads(a.decision.read_text());assert decision['status']=='QUALIFIED_FOR_PRODUCTION_PROMOTION'
     for key in ('gate_assessment','benchmark_summary'):
         assert sha(REPO/decision[key]['path'])==decision[key]['sha256']
@@ -83,7 +84,7 @@ def main():
     found=subprocess.run(['docker','image','inspect',tag,'--format','{{.Id}}'],capture_output=True,text=True)
     assert found.returncode!=0 or found.stdout.strip()==image, 'Refuse to overwrite a different release alias'
     current=json.loads((REPO/'config/production_image.json').read_text());assert current['image_id']==old['image_id']
-    out.mkdir(parents=True);state=dict(status='PROMOTION_IN_PROGRESS',started_unix=time.time(),image_id=image,
+    out.mkdir(parents=True,exist_ok=True);state=dict(status='PROMOTION_IN_PROGRESS',started_unix=time.time(),image_id=image,
         policy_sha256=policy,rollback_image_id=old['image_id'],decision_sha256=sha(a.decision),stages={})
     private=Path.home()/'.cache/b70-qwen38-vllm-promotion-backups'/image.removeprefix('sha256:');private.mkdir(parents=True,exist_ok=True);private.chmod(0o700)
     env_path=REPO/'.env';original_env=env_path.read_bytes() if env_path.exists() else None
@@ -116,6 +117,7 @@ def main():
         subprocess.run(['systemctl','--user','restart',SERVICE],check=True,timeout=90)
         state['stages']['restart_readiness']=helper.wait_for_qualified_service(image)
         state['stages']['restart_api']=verify(image,policy)
+        assert state['stages']['restart_api']['container_id']!=state['stages']['first_start_api']['container_id'], 'Permanent service restart must create a new container'
         state['status']='PASS_STRICT_PRODUCTION_DEPLOYMENT_AND_RESTART';state['finished_unix']=time.time();save()
         candidate['production_start_receipt']=dict(path=str((out/'promotion.json').relative_to(REPO)),sha256=sha(out/'promotion.json'))
         write(REPO/'config/production_image.json',candidate);success=True

@@ -24,6 +24,9 @@ def energy(cases):
     assert tokens==124*1024
     return dict(measured_wave_wall_s=seconds,card_energy_j=joules,card_energy_wh=joules/3600,
         mean_card_power_w=joules/seconds,card_j_per_output_token_including_prefill=joules/tokens,
+        output_tokens_per_s_including_prefill=tokens/seconds,
+        output_tokens_per_s_per_measured_watt_including_prefill=tokens/joules,
+        output_tokens_per_wh_including_prefill=tokens*3600/joules,
         completion_tokens=tokens,scope='70 measured waves only, including their prefill+decode and request overhead. Warmup, worker startup and supplementary prefix requests excluded. Card energy, not whole-system electricity.')
 
 
@@ -84,10 +87,23 @@ def main():
         shutil.copyfile(path/'campaign.json',root/f'{watts}w-campaign.json')
         shutil.copyfile(path/'hardware-observations.jsonl',root/f'{watts}w-hardware-observations.jsonl')
     def scenario(watts,name):return next(x for x in profiles[str(watts)]['serving']['scenario_results'] if x['name']==name)
-    overview='| Power limit | Measured mean card power | Measured waves | Card energy | J/output token incl. prefill |\n|---:|---:|---:|---:|---:|\n'
+    overview='| Power limit | Measured mean card power | Wave time | Output tok/s | Output tok/s per W | Output tok/Wh | Card energy |\n|---:|---:|---:|---:|---:|---:|---:|\n'
     for watts in (180,230,275):
         e=profiles[str(watts)]['energy']
-        overview+=f"| {watts} W | {e['mean_card_power_w']:.1f} W | {e['measured_wave_wall_s']/60:.2f} min | {e['card_energy_wh']:.2f} Wh | {e['card_j_per_output_token_including_prefill']:.3f} |\n"
+        overview+=f"| {watts} W | {e['mean_card_power_w']:.1f} W | {e['measured_wave_wall_s']/60:.2f} min | {e['output_tokens_per_s_including_prefill']:.1f} | {e['output_tokens_per_s_per_measured_watt_including_prefill']:.3f} | {e['output_tokens_per_wh_including_prefill']:,.1f} | {e['card_energy_wh']:.2f} Wh |\n"
+    efficient=max(profiles,key=lambda w:profiles[w]['energy']['output_tokens_per_wh_including_prefill'])
+    fastest=min(profiles,key=lambda w:profiles[w]['energy']['measured_wave_wall_s'])
+    efficiency_note=f'''All efficiency columns cover the same **126,976 output tokens**, including
+their prefill and request overhead. `Output tok/s per W` divides whole-wave
+throughput by measured mean card power: it equals output tokens/J. `Output
+tok/Wh` is output tokens divided by integrated card energy; **higher is
+better**. These are not decode-only rates, and do not include whole-PC power.
+
+For this fixed mixed workload, **{efficient} W produced the most tokens per Wh**;
+**{fastest} W finished the measured waves fastest**. The rate tables below show
+which context and concurrency points benefit from the additional power.
+
+'''
     c1='| C1 input budget | 180 W prefill / decode | 230 W prefill / decode | 275 W prefill / decode |\n|---:|---:|---:|---:|\n'
     names=[('4K','phase-4k-c1'),('16K','phase-16k-c1'),('64K','phase-64k-c1'),('128K','phase-128k-c1'),('200K','full-context-199680')]
     for label,name in names:
@@ -111,7 +127,7 @@ uses the card energy counter. Measured wave times exclude warmup/startup;
 energy includes each measured wave's prefill, decode and request overhead.
 
 '''
-    block=introduction+overview+'\nC1 rates below are median native prefill / request-weighted decode in tok/s.\n\n'+c1+'\nC4 rates are fully overlapped aggregate decode in tok/s, using the same\nsampled-interval definition as the main serving table.\n\n'+c4+f'\n[All 20 load points, acceptance, energy scope and temperatures](docs/EXL3_POWER_COMPARISON.md); [measurement receipts]({relative}/comparison.json).\n'
+    block=introduction+overview+'\n'+efficiency_note+'C1 rates below are median native prefill / request-weighted decode in tok/s.\n\n'+c1+'\nC4 rates are fully overlapped aggregate decode in tok/s, using the same\nsampled-interval definition as the main serving table.\n\n'+c4+f'\n[All 20 load points, acceptance, energy scope and temperatures](docs/EXL3_POWER_COMPARISON.md); [measurement receipts]({relative}/comparison.json).\n'
     readme=REPO/'README.md';text=readme.read_text();start='<!-- BEGIN POWER COMPARISON -->';end='<!-- END POWER COMPARISON -->'
     if start in text:
         assert text.count(start)==text.count(end)==1
@@ -120,7 +136,7 @@ energy includes each measured wave's prefill, decode and request overhead.
         anchor='## Coding and quality results';assert text.count(anchor)==1
         text=text.replace(anchor,start+'\n'+block+end+'\n\n'+anchor)
     readme.write_text(text)
-    report='# EXL3 v2 power-limit comparison — 2026-10-02\n\n'+introduction.replace('## Power-limit comparison: 180 / 230 / 275 W\n\n','')+overview+'\n'+c1+'\n'+c4
+    report='# EXL3 v2 power-limit comparison — 2026-10-02\n\n'+introduction.replace('## Power-limit comparison: 180 / 230 / 275 W\n\n','')+overview+'\n'+efficiency_note+c1+'\n'+c4
     report+='\n## Complete matrix\n\nEach cell is median native prefill / request-weighted decode / weighted MTP\nacceptance. Rates are tok/s; C4 request-weighted decode is not aggregate decode.\n\n| Scenario | 180 W | 230 W | 275 W |\n|---|---:|---:|---:|\n'
     for old in profiles['180']['serving']['scenario_results']:
         row=[]

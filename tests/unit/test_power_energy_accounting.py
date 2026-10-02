@@ -20,6 +20,12 @@ class PowerEnergyAccounting(unittest.TestCase):
         self.assertAlmostEqual(result['mean_card_power_w'],7700/73)
         self.assertAlmostEqual(result['card_energy_wh'],7700/3600)
         self.assertAlmostEqual(result['card_j_per_output_token_including_prefill'],7700/(124*1024))
+        self.assertAlmostEqual(result['output_tokens_per_s_including_prefill'],(124*1024)/73)
+        self.assertAlmostEqual(result['output_tokens_per_wh_including_prefill'],(124*1024)*3600/7700)
+        self.assertAlmostEqual(result['output_tokens_per_s_per_measured_watt_including_prefill'],
+            result['output_tokens_per_s_including_prefill']/result['mean_card_power_w'])
+        self.assertAlmostEqual(result['output_tokens_per_s_per_measured_watt_including_prefill'],
+            1/result['card_j_per_output_token_including_prefill'])
 
     def test_incomplete_or_invalid_measurements_rejected(self):
         for invalid in ('partial','negative','nonfinite','missing_output'):

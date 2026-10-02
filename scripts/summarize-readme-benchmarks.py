@@ -393,8 +393,15 @@ def main():
     args.output.write_text(json.dumps(result,indent=2)+'\n')
     if args.update_readme:
         path=REPO/'README.md';text=path.read_text()
-        start=text.index('## Source-review serving benchmark\n');end=text.index('## Install and serve\n')
-        text=text[:start]+readme_measurements(result,args.output.resolve())+text[end:]
+        beginning='<!-- BEGIN CURRENT SERVING MEASUREMENTS -->'
+        ending='<!-- END CURRENT SERVING MEASUREMENTS -->'
+        if text.count(beginning)!=1 or text.count(ending)!=1:
+            raise RuntimeError('README requires unique current-serving measurement markers')
+        start=text.index(beginning)+len(beginning);end=text.index(ending)
+        # Preserve the operations guide and separately maintained coding/history
+        # documents. Never restore a historical migration diary into README.
+        measured=readme_measurements(result,args.output.resolve()).split('## Repeatable coding-agent benchmark\n',1)[0]
+        text=text[:start]+'\n'+measured+text[end:]
         path.write_text(text)
     print(json.dumps({'image':result['image_id'],'scenarios':result['source_review']['scenarios'],
                       'waves':result['source_review']['waves'],'requests':result['source_review']['requests'],

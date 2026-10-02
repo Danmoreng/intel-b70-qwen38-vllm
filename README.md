@@ -1,9 +1,72 @@
 # Intel Arc Pro B70: Qwen3.8-27B with vLLM
 
-The current production profile serves **EXL3 4.00 bpw on one 32 GB Intel Arc Pro B70 at 180 W**.
-It preserves the OpenAI-compatible API and uses the pinned vLLM 0.30/Torch 2.13
-port, native EXL3 row dispatch, guarded exact-K oneDNN prefill and rebuilt M04
-shared-KV verification. The previous GPTQ image remains an independently pinned rollback.
+The qualified production profile serves **EXL3 4.00 bpw on one 32 GB Intel Arc
+Pro B70 at 180 W**, using vLLM 0.30.0 and Torch 2.13.0+xpu. It exposes an
+OpenAI-compatible API at `http://127.0.0.1:8081/v1`, model `Qwen3.8-27B`.
+
+## Start and recover the qualified service
+
+The local release uses the immutable image recorded in
+[config/production_image.json](config/production_image.json):
+`sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f`,
+alias `local/b70-qwen38-vllm:production-exl3-v1`.
+The strict launcher checks image/policy identity, native libraries, serving
+arguments, checkpoint files, middleware and the 180 W cap before loading.
+Compiler caches are isolated by policy and image ID.
+
+On an installation with the qualified image and local checkpoint already
+available, run from the checkout used by the user service:
+
+```bash
+cp .env.example .env                 # initial setup only; retain an existing .env
+./scripts/download-model.sh
+./scripts/set-power-limit.py
+./scripts/install-user-service.sh
+curl -fsS http://127.0.0.1:8081/v1/models
+```
+
+Check or recover an existing installation:
+
+```bash
+python3 scripts/run-server-exl3.py --check-only
+python3 scripts/restore-production.py
+systemctl --user status --no-pager b70-qwen38-vllm.service
+journalctl --user -u b70-qwen38-vllm.service -n 60 --no-pager
+```
+
+The restore helper validates current release receipts, the service checkout
+and launcher preflight before starting the service. The service uses Type=exec;
+its process being active does not mean model loading has finished. Check the
+API readiness endpoint. The host defaults are loopback and port 8081; the
+recovery helper targets that endpoint and the standard container name.
+
+The [EXL3 source snapshot/build instructions](engine/exl3xpu/README.md) contain
+immutable upstream and native/header pins. A rebuilt image needs its own
+qualification and release manifest. For a **base development build**, use a
+separate tag:
+
+```bash
+B70_BASE_BUILD_IMAGE=local/b70-qwen38-vllm:base-development ./scripts/build-image.sh
+```
+
+This helper does not load the serving `.env` and rejects production/rollback
+aliases before any build or download. It builds the base image; use the EXL3
+build workflow to produce an EXL3 candidate.
+
+## API defaults and example
+
+Chat requests default to 16,384 maximum completion tokens and an 8,192-token
+thinking budget. Larger thinking budgets are capped at 8,192. Reasoning effort
+is `medium`; thinking and retention of thinking history are enabled by default.
+`reasoning_effort: "none"` disables thinking unless explicitly overridden with
+`chat_template_kwargs.enable_thinking`. Requests can set a smaller output cap.
+Tools use the `qwen3_xml` parser and automatic tool choice.
+
+```bash
+curl -fsS http://127.0.0.1:8081/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"Write a small JavaScript debounce function."}],"max_tokens":512,"reasoning_effort":"none"}'
+```
 
 ## Current production configuration
 
@@ -23,48 +86,30 @@ shared-KV verification. The previous GPTQ image remains an independently pinned 
 | Runtime | vLLM 0.30.0, Torch 2.13.0+xpu, oneAPI 2026.1.1 / SYCL 9, oneDNN 3.13.0; Intel Runtime 26.35.39758.10, IGC 2.41.5 |
 | Tools / reasoning / media | qwen3_xml / qwen3; 32 images or 4 videos within the total context limit; image cap 4,194,304 pixels |
 
-The [policy](config/production_policy.json) is `cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542`.
-The [release image](config/production_image.json) is `sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f`
-(`local/b70-qwen38-vllm:production-exl3-v1`). The final benchmark used this immutable image with
-its candidate alias; promotion adds an alias and does not rebuild the payload.
-The launcher verifies image/policy labels, native/M04/oneDNN/profile artifacts,
-checkpoint file hashes and middleware before loading the model. Compiled caches
-are isolated by policy and image. The complete EXL3 source snapshot, upstream
-patch and build pins are published in [engine/exl3xpu](engine/exl3xpu/README.md).
+## Capacity and operating limits
 
-C4 moderate-context qualification is clean. C16 permits genuine pool pressure:
-all 16 independent 8K + 256-token requests completed, with four preemptions/two
-affected requests and 16,000 extra submitted prefill tokens. Aligned Mamba and
-speculative states share the block pool; this is not 16 simultaneous 262K contexts.
-The exact 261,120 + 1,024-token boundary passes without preemption. 32 different
-4.2 MP images (131,164 input tokens), video limits, long-image context,
-prefix extension, scheduler-confirmed abort/recovery and independent restart
-pass. See the [release report](docs/EXL3_RELEASE_REPORT.md).
+- **262,144 total tokens** includes input, retained conversation/reasoning,
+  media tokens and generated output. The exact **261,120 input + 1,024 output**
+  boundary is qualified.
+- **C4 at moderate context** is qualified without preemptions. Sixteen admitted
+  requests share the same cache pool. C16 pressure tests completed with four
+  preemptions affecting two requests; this allows waiting/recomputation and
+  does not promise sixteen simultaneous maximum contexts.
+- Up to **32 images or 4 videos** per prompt, within the same context and
+  memory budget. The image cap is 4,194,304 pixels. Qualification includes
+  32 distinct images, long image context, video limits and recovery.
+- Generated text can vary with attention route, batching and floating-point
+  rounding. The short quality panel does not exercise the ≥4096-token oneDNN
+  prefill route or prove identical graph-based MTP verification.
+- QueueKit passes **7/8 checks and 1/2 tasks**. The same failed case occurs in
+  the native-attention control; the actual task failure remains documented.
 
-## Quality and optimization evidence
+See the [qualification and limitations](docs/EXL3_RELEASE_REPORT.md) and the
+[bounded Pro-review follow-up](docs/EXL3_PRO_REVIEW_FOLLOWUP.md). Review candidate
+measurements are kept separate from the immutable v1 production measurements
+below.
 
-The same frozen short panel retains the observed EXL3 quality advantage:
-original BF16 PPL 3.60453, historical supplied GPTQ PPL 3.80193/KL 0.086369,
-current EXL3 precision path PPL 3.64672/KL 0.032481. These are finite-panel
-checkpoint/path measurements, not a general coding ranking or an isolated
-quantization-only comparison. Matched native/optimized EXL3 has 272 bit-identical
-short-panel arrays. Four engineered 32K/100K/180K/262K prefixes yield suffix
-PPL 1.20858 versus BF16 1.21075, KL 0.001178 and 32/32 sampled top1 agreement.
-Generated histories can differ; no bit-exact-text guarantee is claimed.
-[Quality scope and raw metric receipts](benchmarks/results/exl3-migration/optimized-quality-v1/README.md).
-
-All 409 weight tensors including 8 MTP tensors reconstruct bit-exactly. Seven
-linear classes, the full target head, 18 row counts, tail poisoning, large-first
-compilation and supported graphs pass unchanged numerical tolerances. Large
-INT8-prefill capture is unsupported and outside the frozen decode-only profile.
-The brief final kernel profile did not justify a speculative rewrite.
-
-Mixed ABBA improves incoming 49K TTFT ~36→27 s and overlapping SSE gap p95 ~3.0→2.05 s.
-Repeated 103K C1 whole-attention ABBA improves decode 43.98→49.24 tok/s cold
-and 43.91→49.24 warm (~12%), with matched cache residency. Histories differ,
-so this is not an isolated kernel gain. The separate M04-only proof has its own
-~14% / identical 512-token scope. [Measured optimization evidence](benchmarks/results/exl3-migration/optimized-performance-v1/README.md).
-
+<!-- BEGIN CURRENT SERVING MEASUREMENTS -->
 ## Source-review serving benchmark
 
 Measured **2026-10-02** on a fresh isolated worker with the
@@ -130,169 +175,34 @@ Some requests briefly entered the scheduler waiting queue; no request was preemp
 The longest-context row is one capacity and throughput observation. The
 16K/64K resends reused the same prompt on the same worker.
 
-## Coding-agent benchmarks
+<!-- END CURRENT SERVING MEASUREMENTS -->
 
-### Short Python fixture
+## Coding and quality results
 
-The [QueueKit fixture v2](benchmarks/coding-fixture/v2/README.md) copies a frozen
-Python repository and gives the model two linked editing tasks in one
-conversation, with file/test tools and hidden acceptance tests after each
-task. This fresh run used fresh workers with the same immutable image/profile as
-the source-review run. The [summary](benchmarks/runs/2026-10-02-exl3-production/summary.json) records fixture and runner
-hashes. This is one adaptive session, not a multi-run distribution.
+The qualified v1 release completes Flappy Bird v7 in **24 min 12 s**, passes
+**54/54 checks**, and reaches **90,444 input tokens**. Native weighted prefill /
+decode are **1,388.7 / 53.9 tok/s**. Adaptive histories and tool work contribute
+to task duration. QueueKit takes **7 min 36 s**, with the failure noted above.
+[Full coding results and 10K context bands](docs/EXL3_CODING_BENCHMARKS.md).
 
-| Coding workload result | Measured value |
-|---|---:|
-| Tasks / hidden acceptance tests | **1/2 tasks, 7/8 tests passed** |
-| End-to-end time | **7 min 36 s** |
-| Model requests / tool calls | **29 / 33** |
-| Actual input context range | **716–33,967 tokens** |
-| Logical prompt / generated tokens | 461,149 / 27,328 |
-| Newly computed / prefix-cached prompt tokens | 97,949 / 363,200 |
-| Prefix-cache hit rate | **78.8%** |
-| Weighted native prefill compute | **1,883.6 tok/s** |
-| Weighted native decode after first token | **67.9 tok/s** |
-| MTP accepted / drafted tokens | **75.7%** |
-| Preemptions | **0** |
+On the frozen short panel, EXL3 PPL is **3.64672**, with mean KL **0.032481**
+against BF16. These finite checkpoint/path measurements do not establish a
+general coding ranking. [Quality scope and metric receipts](benchmarks/results/exl3-migration/optimized-quality-v1/README.md).
 
-The coding rates exclude tool execution; end-to-end time includes it.
-Generated tokens include reasoning. Prefix caching remained enabled between
-agent turns. Raw generated code and conversation records remain local.
+## Rollback and benchmark reproduction
 
-**Functional task failure:** `snapshot-restore-metrics`: `test_roundtrip_and_detachment (test_task2.SnapshotRestoreMetrics.test_roundtrip_and_detachment)`.
+Stop `b70-qwen38-vllm.service` before switching to
+`scripts/run-server-gptq-rollback.sh`; both profiles use the same API endpoint
+and container name. The [independently pinned GPTQ rollback](config/releases/gptq-onednn-v2/README.md)
+uses its own image, policy and compiled caches. For a persistent rollback,
+follow that document's user-service instructions and verify a real request.
 
-The generated output is preserved without repairs or a replacement run. The summary records the failed test output; the [release report](docs/EXL3_RELEASE_REPORT.md) records the native-attention control and the separate release decision.
-
-### Long WebGL2 coding task
-
-The corrected [Flappy Bird v7 assignment](benchmarks/web-coding-fixture/v7/README.md)
-uses six fixed stages, deterministic physics, procedural WebGL2 graphics,
-controls, responsive UI, settings and highscores, without a level editor or
-replay system. Both engines use the same task/harness, seeds, sampling,
-retained reasoning, 4,096-token thinking budget and 40-minute task budget.
-Unmodified final outputs are independently graded against the same 54 cases.
-
-| Result | GPTQ production v2 | Current EXL3 v1 |
-|---|---:|---:|
-| Wall time / task outcome | 32min 6s; complete | 24min 12s; complete |
-| Requests / maximum input context | 77 / 122,078 | 66 / 90,444 |
-| Frozen functional checks | 54/54 | 54/54 |
-| Native prefill / decode tok/s | 1207.9 / 58.1 | 1388.7 / 53.9 |
-
-[All measured 10K context bands and request accounting](benchmarks/runs/2026-10-02-flappybird-v7/README.md)
-preserve empty bands as unmeasured. Prefill counts new KV tokens; decode counts
-post-first generated tokens including reasoning. Agent histories differ, so
-overall rates and task duration do not isolate engine or quantization effects.
-One seed/pair does not establish a general model-quality ranking. The older
-[v6 result](benchmarks/runs/2026-10-01-flappybird/README.md) remains historical;
-it is not substituted for the corrected current run.
-
-![Rates over the growing coding context](benchmarks/runs/2026-10-02-flappybird-v7/context-rates.png)
-
-## Comparison with the previous GPTQ profile
-
-GPTQ numbers are the published 2026-09-30 full run; EXL3 numbers are the new
-complete run using identical frozen request payloads. The GPTQ full matrix was
-not repeated. Its corrected v7 coding task above is a new paired measurement.
-Both profiles run at 180 W; MTP depth and quantized checkpoints differ. Remaining
-decode differences are shown explicitly alongside the quality/context gain.
-
-| Actual input tokens | GPTQ prefill | EXL3 prefill | GPTQ decode | EXL3 decode | Decode change |
-|---:|---:|---:|---:|---:|---:|
-| 479–507 | 1694.3 | 1700.9 | 68.1 | 58.2 | -14.6% |
-| 1,992–2,047 | 2271.4 | 2422.1 | 73.1 | 59.7 | -18.3% |
-| 4,052–4,094 | 2118.4 | 2235.7 | 67.4 | 55.2 | -18.2% |
-| 8,167–8,186 | 2004.6 | 2300.1 | 63.0 | 54.8 | -13.1% |
-| 16,335–16,379 | 1816.3 | 2166.2 | 68.5 | 56.1 | -18.0% |
-| 32,704–32,762 | 1783.6 | 1974.8 | 62.2 | 56.5 | -9.2% |
-| 65,491–65,532 | 1560.9 | 1668.2 | 52.5 | 52.7 | +0.3% |
-| 131,034–131,070 | 1224.0 | 1261.8 | 44.8 | 39.9 | -10.9% |
-| 199,673–199,673 | 976.4 | 999.0 | 37.2 | 38.5 | +3.5% |
-
-The parallel comparison uses aggregate output only while all requests overlap.
-It preserves the original task mix and payloads; generated histories and
-speculative acceptance can differ between checkpoints.
-
-| Input budget / concurrency | GPTQ aggregate decode | EXL3 aggregate decode | Change |
-|---|---:|---:|---:|
-| 2,048 / C2 | 117.3 | 108.5 | -7.5% |
-| 2,048 / C3 | 165.5 | 152.2 | -8.1% |
-| 2,048 / C4 | 203.7 | 185.6 | -8.9% |
-| 4,096 / C2 | 117.4 | 110.9 | -5.6% |
-| 4,096 / C3 | 149.5 | 141.4 | -5.4% |
-| 4,096 / C4 | 196.6 | 181.6 | -7.7% |
-| 16,384 / C2 | 101.7 | 101.5 | -0.2% |
-| 16,384 / C3 | 130.6 | 137.1 | +5.0% |
-| 16,384 / C4 | 162.8 | 168.2 | +3.3% |
-
-## Install, serve and reproduce
-
-Build instructions and immutable upstream/native/header pins are in
-[engine/exl3xpu](engine/exl3xpu/README.md). This local release pins an already
-qualified image; a different rebuilt image needs its own qualification and
-manifest update. Model weights and large local fixtures are not redistributed.
-
-```bash
-cp .env.example .env
-./scripts/download-model.sh
-./scripts/set-power-limit.py
-./scripts/install-user-service.sh
-curl -fsS http://127.0.0.1:8081/v1/models
-```
-
-The API is `http://127.0.0.1:8081/v1`, model `Qwen3.8-27B`.
-`scripts/run-server.sh` selects the frozen production profile. The independent
-[GPTQ rollback launcher/config](config/releases/gptq-onednn-v2/README.md)
-does not share EXL3 compiled caches. Stop the service before swapping profiles.
-
-To repeat the full source matrix and QueueKit on the current permanent service:
-
-```bash
-python3 scripts/run-readme-benchmarks.py \
-  --fixture-root /path/to/original/run-20260923-201101-w0.00 \
-  --output-root benchmark-results/readme-new-run
-```
-
-The admission check reads the frozen policy (16 for this profile); the measured
-matrix stays 20 scenarios / 70 waves / 124 requests at C1–C4. For an isolated
-64K cold/warm resend, restart the service first and then run:
-
-```bash
-python3 scripts/current-profile-benchmark.py \
-  --base http://127.0.0.1:8081 --container b70-qwen38-vllm \
-  --expected-max-num-seqs 16 \
-  --fixture-root /path/to/original/run-20260923-201101-w0.00 \
-  --legacy-prefix-namespace --only prefix-64k-cold-warm \
-  --output-root benchmark-results/prefix-64k-new-run --execute
-```
-
-The full paired release
-controller and validated exports are in `scripts/run-exl3-final-readme.py`,
-`summarize-readme-benchmarks.py` and `summarize-web-coding-benchmark.py`.
-The large original fixtures/raw events remain local with 248 frozen file hashes.
-The frozen v7 fixture README preserves its historical calibration instructions.
-Its old `run-web-coding-campaign.py` entry point refuses an EXL3 production
-service to prevent mislabeling it as GPTQ. Use the final release controller for
-the corrected pair, or the standalone runner with the current service for a
-single-engine repeat. Keep the six stages, 40-minute budget, 4K thinking budget
-and fresh-worker warmup unchanged when comparing results.
-
-On this installation, repeat the complete measured release campaign using the
-retained qualification receipts and a fresh output directory:
-
-```bash
-python3 scripts/run-exl3-final-readme.py \
-  --image-receipt benchmark-results/exl3-release-image-v1/image.json \
-  --quality-review benchmark-results/exl3-optimized-quality-v2/quality-review.json \
-  --operations-gate benchmark-results/exl3-optimized-operations-v2 \
-  --performance-gate benchmark-results/exl3-optimized-performance-v1 \
-  --fixture-root /path/to/original/run-20260923-201101-w0.00 \
-  --out benchmark-results/exl3-repeat-new-run
-systemctl --user start b70-qwen38-vllm.service
-```
-
-Run exclusively while the service is idle. The controller leaves workers off
-after measuring; the last command restores the qualified current service.
+The [benchmark reproduction guide](docs/EXL3_BENCHMARK_REPRODUCTION.md) preserves
+the frozen 20-scenario / 70-wave source matrix, QueueKit and six-stage Flappy
+fixture. Run with exclusive GPU access and fresh output directories.
+[Historical GPTQ comparisons](docs/EXL3_GPTQ_COMPARISON.md), the
+[release report](docs/EXL3_RELEASE_REPORT.md) and
+[port history](docs/EXL3_PORT_NOTES.md) retain the migration evidence.
 
 ## Sources and acknowledgements
 

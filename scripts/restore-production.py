@@ -1,42 +1,43 @@
 #!/usr/bin/env python3
-"""Idempotently stop diagnostic engines and restore the frozen production service."""
-from __future__ import annotations
+"""Start the declared EXL3 service only after current-release preflight."""
 
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import time
 import urllib.request
 
 
-EXPECTED_IMAGE_ID = "sha256:b675d81d4e7cc63fbcd6df395965ea16ec5c4704428c81118a1618185245dd5a"
-DIAGNOSTIC_CONTAINERS = (
-    "b70-m06-target-head-arm",
-    "b70-m01-long-context",
-    "b70-m01-decode-trace",
-    "b70-m06-screen",
-    "b70-m06-confirm",
-    "b70-m06-prefix-state",
-    "b70-direct-output-probe",
-    "b70-direct-serving-arm",
-    "b70-direct-serving-196k",
-    "b70-gptq-small-m-probe",
-    "b70-m04-serving-arm",
-    "b70-m04-control-196k",
-    "b70-m04-serving-196k",
-)
+from release_integrity import CONTAINER, REPO, SERVICE, load_release
+
+
+def preflight(repo=REPO):
+    release = load_release(repo)
+    working = subprocess.check_output(
+        ['systemctl', '--user', 'show', SERVICE, '--property=WorkingDirectory', '--value'],
+        text=True).strip()
+    if Path(working).resolve() != Path(repo).resolve():
+        raise RuntimeError('Service WorkingDirectory differs from the reviewed release checkout: ' + working)
+    start = subprocess.check_output(
+        ['systemctl', '--user', 'show', SERVICE, '--property=ExecStart', '--value'], text=True).strip()
+    command = re.search(r'path=(.*?) ; argv\[\]=(.*?) ; ignore_errors=', start)
+    launcher = str(Path(repo).resolve() / 'scripts/run-server.sh')
+    if command is None or command.group(1) != launcher or command.group(2) != launcher:
+        raise RuntimeError('Service ExecStart differs from the qualified EXL3 launcher: ' + start)
+    # Positional shell arguments keep paths literal. Validate the same .env
+    # and strict launcher used by the service before starting anything.
+    subprocess.run(['bash', '-c',
+        'if [[ -f "$1" ]]; then set -a; source "$1"; set +a; fi; exec python3 "$2" --check-only',
+        'exl3-release-preflight', str(Path(repo) / '.env'),
+        str(Path(repo) / 'scripts/run-server-exl3.py')], check=True, timeout=720)
+    return release
 
 
 def main() -> int:
-    for name in DIAGNOSTIC_CONTAINERS:
-        subprocess.run(
-            ["docker", "stop", "-t", "30", name],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            timeout=45,
-        )
-    subprocess.run(["systemctl", "--user", "start", "qwen38.service"], check=True, timeout=720)
+    release = preflight()
+    subprocess.run(["systemctl", "--user", "start", SERVICE], check=True, timeout=720)
     deadline = time.monotonic() + 720
     while time.monotonic() < deadline:
         try:
@@ -49,18 +50,16 @@ def main() -> int:
         raise TimeoutError("production health endpoint did not recover")
 
     inspect = json.loads(
-        subprocess.check_output(["docker", "inspect", "qwen38-vllm-production"], text=True)
+        subprocess.check_output(["docker", "inspect", CONTAINER], text=True)
     )[0]
-    if inspect["Image"] != EXPECTED_IMAGE_ID:
-        raise RuntimeError(f"restored unexpected image {inspect['Image']}")
-    caps = list(Path("/sys/bus/pci/devices/0000:03:00.0/hwmon").glob("*/power1_cap"))
-    cap = int(caps[0].read_text()) if len(caps) == 1 else None
-    if cap != 180_000_000:
-        raise RuntimeError(f"restored with unexpected power cap {cap}")
+    if (inspect['Image'] != release['image_id'] or
+            inspect['Config']['Labels']['org.local.b70.policy.sha256'] != release['policy_sha256']):
+        raise RuntimeError('Started container differs from the current qualified release')
     result = {
         "health": 200,
         "image_id": inspect["Image"],
-        "power_cap_uw": cap,
+        "policy_sha256": release['policy_sha256'],
+        "service": SERVICE,
         "restored_at_unix": time.time(),
     }
     run_dir = os.getenv("B70_RUN_DIR")

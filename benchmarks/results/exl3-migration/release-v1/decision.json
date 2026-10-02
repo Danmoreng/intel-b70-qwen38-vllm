@@ -1,0 +1,38 @@
+{
+  "status": "QUALIFIED_ENGINE_RELEASE_AND_PRODUCTION_START",
+  "image_id": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+  "policy_sha256": "cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542",
+  "gates": {
+    "A": "PASS",
+    "B": "PASS",
+    "C": "PASS",
+    "D": "PASS",
+    "E": "PASS",
+    "F": "PASS",
+    "G": "PASS",
+    "H": "PASS"
+  },
+  "quality_gate_scope": "Finite-panel precision fidelity and unchanged serving/tool/parser/media contracts. Generated coding-task outcomes are separately scored utility evidence; QueueKit remains a failed task case, not a passed test.",
+  "task_limitations": {
+    "queuekit_optimized": "1/2 tasks, 7/8 cases; valid running-job snapshot rejected",
+    "queuekit_native_control": "Same failing case, 1/2 tasks, 7/8 cases",
+    "flappy_v7": "Both 54/54; GPTQ 122078 maximum context, EXL3 90444; one adaptive session per arm"
+  },
+  "residual_performance_tradeoff": "User-directed EXL3 quality/context priority with bounded kernel tuning. Short C1 decode remains 9\u201318% lower than published GPTQ; C4 2K/4K is 8\u20139% lower, C4 16K and the frozen 200K point are slightly higher. No parity or universal speed claim.",
+  "capacity_scope": "Clean moderate C4, exact 262144 total boundary and 32 unique max-area images pass. C16 pressure accepted by user: all complete, four preemptions/two requests, 16000 extra submitted prefill rows.",
+  "receipts_sha256": {
+    "benchmark-results/exl3-production-v1/readme-20261002/campaign.json": "ab2cab107615e071f728d131f32f1dad2f5d64406e412a5db8b4fd3ac3b49c8e",
+    "benchmarks/runs/2026-10-02-exl3-production/summary.json": "5cee1e8fe696fc4ed7a8e341fad5b777f1c07dfa5d0ee1781517871063758f8d",
+    "benchmarks/runs/2026-10-02-flappybird-v7/comparison.json": "5764e0b07c21854fe3a6eca1d6bba3a9594578f7eb7861c344fdcf731773d260",
+    "benchmarks/results/exl3-migration/optimized-quality-v1/review.json": "c3e856dd753fcde205cfa6543e3adec3550cd395cffe0660a44980a4db7898bf",
+    "benchmarks/results/exl3-migration/optimized-operations-v1/assessment.json": "4fc45ea87f689bddc48b26fc8467999529a82aa3378b9cb358339db8d3bd922d",
+    "benchmarks/results/exl3-migration/optimized-performance-v1/assessment.json": "3407f31eaa77f1e79cd29dd857def2dd9b17a8f0c89f02cdeb8b46b32e853ec7",
+    "benchmarks/results/exl3-migration/release-v1/queuekit-control.json": "df57b48c7891daf42996fa912798924f1a3a8118f57c283ec6d4428a17020592"
+  },
+  "rollback_image_id": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
+  "rollback_policy_sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+  "production_start_receipt": {
+    "path": "benchmarks/results/exl3-migration/release-v1/promotion.json",
+    "sha256": "429cb4595ce5737dcb6c288bcd5e89e7fdb76f5a01381e180f155f4ea10efa5b"
+  }
+}

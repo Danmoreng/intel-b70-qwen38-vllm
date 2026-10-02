@@ -1,67 +1,93 @@
 {
-  "policy_id": "b70-qwen38-gptq-production-v1",
+  "policy_id": "b70-qwen38-exl3-production-v1",
   "hardware": {
     "gpu": "Intel Arc Pro B70",
     "gpu_count": 1,
     "power_limit_w": 180
   },
   "model": {
-    "id": "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
-    "revision": "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+    "id": "turboderp/Qwen3.8-27B-exl3",
+    "revision": "113cf7ab958054860e43fb7f3063b1af19171095",
     "served_name": "Qwen3.8-27B",
-    "quantization": "gptq_int4_symmetric_g128",
+    "quantization": "exl3_4.00bpw_mixed_4bpw_body_6bpw_head",
     "activation_dtype": "float16",
-    "target_lm_head_dtype": "float16"
+    "target_lm_head": "EXL3 6bpw full248320 rows; shared pruned draft buffers"
+  },
+  "runtime": {
+    "vllm": "0.30.0",
+    "torch": "2.13.0+xpu",
+    "oneapi_compiler": "2026.1.1",
+    "onednn": "3.13.0",
+    "native_library_sha256": "48f879c16f3695dbb0fae7388f1e318591d6408acc7be15b0093a0bbb6d9053b"
   },
   "linears": {
-    "large_matrix_kernel": "int4_gemm_w4a8",
-    "min_total_matrix_rows": 512,
-    "small_matrix_kernel": "existing_w4a16",
-    "mixed_matrix_selection": "same_total_matrix_row_threshold"
+    "small_matrix_kernel": "native EXL3 SmallM opaque row dispatch",
+    "small_matrix_max_rows": 128,
+    "large_matrix_kernel": "native EXL3 INT8 prefill; eager only",
+    "padded_gemm_multiple_rows": 256
   },
   "attention": {
-    "onednn": {
-      "enabled": true,
-      "mixed_request_routing": true,
-      "min_query_rows": 256,
-      "max_query_rows": 6656,
-      "min_exact_active_kv_tokens": 16384,
-      "max_exact_active_kv_tokens": 196608,
-      "physical_kv_page_tokens": 1664,
-      "capture_eligible": false,
-      "required_native_operator_sha256": "f00c4a6e60bac96f66ac2e1c4c10437d67b1d9b95ee9988f1517e7b6c50af3ea",
-      "required_onednn_library_sha256": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20"
-    },
-    "other_prefill": "existing_q128_or_native_by_fixed_contract",
-    "decode_and_verification": "existing_m04_or_native_by_fixed_contract",
-    "q128_library_sha256": "f38f23c4535407b6c3f083c5e81c89c7f704bae374571cf2e32f9da13abe0873",
-    "m04_library_sha256": "784916abd42b614794becac634a6a154f854c73d6dfcb1a50cd939b563020c6a"
+    "long_prefill": "guarded exact-K oneDNN, eager only",
+    "min_query_rows": 64,
+    "min_exact_kv_tokens": 4096,
+    "max_exact_kv_tokens": 262144,
+    "kv_cache_dtype": "fp8",
+    "query_bucket_rows": 256,
+    "key_bucket_tokens": 1,
+    "mixed_metadata": "V2 CPU once-per-step exact prefill and fixed query partition; native GPU decode lengths",
+    "decode_verification": "M04 at uniform q2..5/C1..C4; otherwise unchanged native",
+    "m04_library_sha256": "eaa18427db27d4fceeca8a17c8a3c6b019b7678f39bf98affc1736b9f2c2d631",
+    "unsupported_contract": "native fallback; no duplicate KV updates"
   },
   "speculation": {
     "method": "mtp",
-    "speculative_tokens": 4,
-    "draft_vocabulary_rows": 248320,
-    "draft_vocabulary_pruning": false,
-    "draft_head": "existing_int4",
-    "draft_five_linears": "existing_int4"
+    "speculative_tokens": 3,
+    "draft_vocabulary_rows": 65536,
+    "target_vocabulary_rows": 248320,
+    "adaptive_verification": false
   },
   "serving": {
-    "max_model_len": 200704,
-    "max_num_seqs": 4,
-    "max_num_batched_tokens": 6656,
-    "gpu_memory_utilization": 0.93,
+    "max_model_len": 262144,
+    "max_num_seqs": 16,
+    "qualified_clean_concurrency": 4,
+    "max_num_batched_tokens": 4096,
+    "gpu_memory_utilization": 0.965,
     "scheduler_reserve_full_isl": true,
     "watermark": 0.0,
     "prefix_caching": true,
     "mamba_cache_mode": "align",
-    "xpu_graphs_for_existing_supported_paths": true,
-    "api_image_limit": 1,
-    "api_video_limit": 0
+    "graph_mode": "FULL_DECODE_ONLY",
+    "graph_capture_sizes": [
+      1,
+      2,
+      4,
+      8,
+      12,
+      16,
+      24,
+      32,
+      40,
+      48,
+      56,
+      64
+    ],
+    "api_image_limit": 32,
+    "api_video_limit": 4,
+    "media_max_pixels": 4194304,
+    "capacity_pressure_preemptions": "permitted at C16 with completion/accounting/recovery; no promise of16 simultaneous262K requests"
+  },
+  "api": {
+    "middleware": "request_defaults.ChatDefaults",
+    "tool_parser": "qwen3_xml",
+    "reasoning_parser": "qwen3",
+    "reasoning_start": "<think>",
+    "reasoning_end": "</think>",
+    "max_new_tokens": 16384
   },
   "release": {
-    "deployed_profiles": 1,
     "missing_required_artifact": "fail_startup",
-    "control_server": "offline_only",
-    "diagnostic_validation_in_production": false
+    "cache_isolation": "policy_sha256 + image_id",
+    "diagnostic_validation_in_production": false,
+    "gptq_rollback_image": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68"
   }
 }

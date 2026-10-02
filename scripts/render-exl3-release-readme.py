@@ -198,6 +198,29 @@ The full paired release
 controller and validated exports are in `scripts/run-exl3-final-readme.py`,
 `summarize-readme-benchmarks.py` and `summarize-web-coding-benchmark.py`.
 The large original fixtures/raw events remain local with 248 frozen file hashes.
+The frozen v7 fixture README preserves its historical calibration instructions.
+Its old `run-web-coding-campaign.py` entry point refuses an EXL3 production
+service to prevent mislabeling it as GPTQ. Use the final release controller for
+the corrected pair, or the standalone runner with the current service for a
+single-engine repeat. Keep the six stages, 40-minute budget, 4K thinking budget
+and fresh-worker warmup unchanged when comparing results.
+
+On this installation, repeat the complete measured release campaign using the
+retained qualification receipts and a fresh output directory:
+
+```bash
+python3 scripts/run-exl3-final-readme.py \\
+  --image-receipt benchmark-results/exl3-release-image-v1/image.json \\
+  --quality-review benchmark-results/exl3-optimized-quality-v2/quality-review.json \\
+  --operations-gate benchmark-results/exl3-optimized-operations-v2 \\
+  --performance-gate benchmark-results/exl3-optimized-performance-v1 \\
+  --fixture-root /path/to/original/run-20260923-201101-w0.00 \\
+  --out benchmark-results/exl3-repeat-new-run
+systemctl --user start b70-qwen38-vllm.service
+```
+
+Run exclusively while the service is idle. The controller leaves workers off
+after measuring; the last command restores the qualified current service.
 
 ## Sources and acknowledgements
 

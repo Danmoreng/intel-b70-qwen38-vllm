@@ -1,0 +1,153 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #20303a;
+  color: #f4f8fb;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.flappy-app {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.flappy-app canvas[data-testid="game-canvas"] {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  touch-action: none;
+  background: #87cfeb;
+}
+
+.flappy-score {
+  font-size: 1.6rem;
+  font-weight: 700;
+  min-height: 1.8rem;
+}
+
+.flappy-status {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.flappy-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.flappy-controls button {
+  font: inherit;
+  padding: 0.5rem 1rem;
+  border: 1px solid #3c5563;
+  border-radius: 8px;
+  background: #2f4858;
+  color: inherit;
+  cursor: pointer;
+}
+
+.flappy-controls button:hover {
+  background: #3a586c;
+}
+
+.flappy-controls button:focus-visible,
+canvas:focus-visible {
+  outline: 3px solid #ffd54a;
+  outline-offset: 2px;
+}
+
+.flappy-live {
+  min-height: 1.4rem;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.flappy-settings,
+.flappy-player,
+.flappy-scores {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+}
+
+.flappy-settings h2,
+.flappy-scores h2 {
+  margin: 0.25rem 0 0;
+  font-size: 1rem;
+}
+
+.flappy-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.flappy-field input {
+  font: inherit;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #3c5563;
+  border-radius: 6px;
+  background: #1a2831;
+  color: inherit;
+  min-width: 6rem;
+}
+
+.flappy-field input:focus-visible {
+  outline: 3px solid #ffd54a;
+  outline-offset: 1px;
+}
+
+.flappy-settings button,
+.flappy-scores button {
+  align-self: flex-start;
+  font: inherit;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid #3c5563;
+  border-radius: 8px;
+  background: #2f4858;
+  color: inherit;
+  cursor: pointer;
+}
+
+.flappy-settings button:focus-visible,
+.flappy-scores button:focus-visible {
+  outline: 3px solid #ffd54a;
+  outline-offset: 2px;
+}
+
+.flappy-error {
+  min-height: 1.2rem;
+  color: #ffb4a8;
+  font-size: 0.9rem;
+}
+
+.flappy-score-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.15rem 0.4rem;
+  background: #26394a;
+  border-radius: 6px;
+}
+
+.flappy-score-row-score {
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flappy-controls button {
+    transition: none;
+  }
+}

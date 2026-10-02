@@ -1,0 +1,128 @@
+body { margin: 0; font-family: system-ui, sans-serif; background: #10151c; color: #f2f5f8; }
+#app, .game { width: 100%; }
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.game canvas {
+  display: block;
+  touch-action: manipulation;
+  border-radius: 8px;
+  background: #73c1fa;
+}
+.game p { margin: 0; }
+[data-testid="score"] { font-size: 1.4rem; font-weight: 700; }
+[data-testid="status"] { font-size: 1rem; }
+[data-testid="live"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.row { display: flex; gap: 10px; width: 100%; max-width: 320px; }
+.row button {
+  flex: 1;
+  padding: 12px 0;
+  font-size: 1rem;
+  border: 0;
+  border-radius: 8px;
+  background: #2a3b4c;
+  color: #f2f5f8;
+  cursor: pointer;
+}
+.row button:hover { background: #35516c; }
+.row button:focus-visible {
+  outline: 3px solid #73c1fa;
+  outline-offset: 2px;
+}
+.settings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 420px;
+}
+label.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 90px;
+}
+input[type="number"], input[type="text"] {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #46586b;
+  background: #1b2530;
+  color: #f2f5f8;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+input:focus-visible {
+  outline: 3px solid #73c1fa;
+  outline-offset: 2px;
+}
+#settings-apply, [data-testid="settings-apply"] {
+  flex: 0 0 auto;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #2a3b4c;
+  color: #f2f5f8;
+  cursor: pointer;
+}
+[data-testid="settings-apply"]:focus-visible,
+[data-testid="scores-clear"]:focus-visible {
+  outline: 3px solid #73c1fa;
+  outline-offset: 2px;
+}
+[data-testid="settings-error"] {
+  flex-basis: 100%;
+  margin: 0;
+  min-height: 1.2em;
+  color: #ff9d9d;
+  font-size: 0.9rem;
+}
+[data-testid="scoreboard"] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+[data-testid="scoreboard"] li {
+  background: #1b2530;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+[data-testid="scores-clear"] {
+  align-self: center;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #2a3b4c;
+  color: #f2f5f8;
+  cursor: pointer;
+}
+@media (max-width: 600px) {
+  .row { flex-wrap: wrap; }
+  .row button { min-width: 40%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -104,7 +104,7 @@ def main():
             source_files = ['scripts/current-profile-benchmark.py', 'scripts/decode_overlap.py',
                             'scripts/run-coding-benchmark.py', 'scripts/run-readme-benchmarks.py',
                             'scripts/run-server.sh', 'config/production_image.json',
-                            'benchmarks/current-profile-scenarios.json', 'config/frozen_fixture_manifest.json']
+                            'benchmarks/current-profile-scenarios.json', str(fixture_manifest.relative_to(REPO))]
             save(root / 'provenance.json', {'started_at': started, 'release': release,
                  'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=REPO, text=True).strip(),
                  'source_sha256': {file: digest(REPO / file) for file in source_files},

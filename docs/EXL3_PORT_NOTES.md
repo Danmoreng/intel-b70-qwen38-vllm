@@ -659,3 +659,27 @@ Final short quality uses identical128-row capture batches in both arms: all272 a
 Kernel profiling is limited, per user steering, to three128-token event waves and two eight-cycle pure-decode traces. Captured body graphs are not decomposed by the trace. No speculative linear rewrite is justified by this limited diagnostic. Final clean decode is checked by a small ABBA then the existing70-wave README matrix.
 
 Final README matrix replays the original frozen2026-09-23 fixture bytes that also drove2026-09-30 GPTQ. The later run saves normalized request metadata, so its request JSON is not substituted for the original manifest. The corrected Flappyv7 assignment is six stages with identical40-minute budgets/seed/sampling/tool limits, plus independent QueueKitv2. No production image/profile is changed before the measurements and release review finish.
+
+
+## Qualified production release — 2026-10-02
+
+Final image c09015ce / policy cbe1755c is promoted without rebuilding the
+immutable payload. All engine gates A–H pass in the release report. The full
+frozen matrix completes 70 waves/124 requests in 53.69 minutes, zero
+preemptions/recompute, with all 248 original fixture-file hashes validated.
+Corrected Flappy v7 completes 54/54 on both recipes: GPTQ 32m06s/122K maximum
+context, EXL3 24m12s/90K. EXL3's lower context is the actual trajectory; no
+agent band above 100K is invented. Kernel work ends at the bounded profile.
+
+QueueKit remains a real 7/8 score, 1/2 tasks: restoring a valid running job
+fails. A single native-attention control repeats the same failed case (7/8);
+neither output is repaired or replaced. Task scores are utility observations,
+separate from numerical/API release gates, and do not establish a general
+model ranking. The explicit measured-failure export preserves this limitation.
+
+The strict production startup checks pinned image/policy, all checkpoint and
+library/profile/middleware artifacts, 180 W and exact environment. Actual
+service arguments/environment match the measured worker. Loader 409/409 incl
+8 MTP and real text/tool/image checks pass; the service is active and enabled.
+The independent original GPTQ rollback actually served the paired task.
+See EXL3_RELEASE_REPORT.md and the compact release-v1 receipts.

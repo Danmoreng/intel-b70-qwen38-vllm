@@ -1,0 +1,345 @@
+{
+  "status": "PASS_PRODUCTION_START_AND_REAL_API_SMOKE",
+  "image_id": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+  "policy_sha256": "cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542",
+  "checked_unix": 1790904490.935372,
+  "service": "active",
+  "models": {
+    "object": "list",
+    "data": [
+      {
+        "id": "Qwen3.8-27B",
+        "object": "model",
+        "created": 1790904488,
+        "owned_by": "vllm",
+        "root": "/models/checkpoint",
+        "parent": null,
+        "max_model_len": 262144,
+        "permission": [
+          {
+            "id": "modelperm-b5cfc846633d844e",
+            "object": "model_permission",
+            "created": 1790904488,
+            "allow_create_engine": false,
+            "allow_sampling": true,
+            "allow_logprobs": true,
+            "allow_search_indices": false,
+            "allow_view": true,
+            "allow_fine_tuning": false,
+            "organization": "*",
+            "group": null,
+            "is_blocking": false
+          }
+        ]
+      }
+    ]
+  },
+  "same_measured_arguments_and_environment": true,
+  "preflight": {
+    "status": "LAUNCH_PREFLIGHT_PASS",
+    "release_status": "QUALIFIED_RELEASE",
+    "image_id": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+    "policy_sha256": "cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542",
+    "cache": "/home/sebastian/.cache/b70-qwen38-vllm-production/cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542/c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f"
+  },
+  "loader": {
+    "schema": 1,
+    "pid": 168,
+    "status": "PASS",
+    "expected_modules": 409,
+    "loaded_modules": 409,
+    "missing": [],
+    "unexpected_duplicates": {},
+    "shared_head_load_count": 2,
+    "mtp_expected": 8,
+    "mtp_loaded": 8,
+    "mtp_skipped_reason": null
+  },
+  "loader_report_sha256": "6e5ebfe7cc5b5144fa702e09b54ebed55647f4e2aaf40fd0042db6599a6a7700",
+  "target_head": {
+    "prefix": "language_model.lm_head",
+    "members": [
+      "lm_head"
+    ],
+    "bits": 6,
+    "shapes": {
+      "trellis": [
+        320,
+        15520,
+        96
+      ],
+      "suh": [
+        1,
+        5120
+      ],
+      "svh": [
+        248320
+      ]
+    },
+    "groups": [
+      [
+        0
+      ]
+    ],
+    "bounds": [
+      0,
+      248320
+    ],
+    "shard_of_nb_counts": [
+      1940
+    ],
+    "loaded_shards": {
+      "trellis": [
+        0
+      ],
+      "suh": [
+        0
+      ],
+      "svh": [
+        0
+      ]
+    },
+    "codebook": "mul1",
+    "status": "PASS",
+    "role": "target",
+    "module": "language_model.lm_head"
+  },
+  "mounts": [
+    {
+      "Type": "bind",
+      "Source": "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw",
+      "Destination": "/models/checkpoint",
+      "Mode": "ro",
+      "RW": false,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/runtime",
+      "Destination": "/opt/b70-runtime",
+      "Mode": "ro",
+      "RW": false,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542/c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f/reports",
+      "Destination": "/results",
+      "Mode": "",
+      "RW": true,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542/c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f/vllm",
+      "Destination": "/root/.cache/vllm",
+      "Mode": "",
+      "RW": true,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542/c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f/triton",
+      "Destination": "/root/.triton/cache",
+      "Mode": "",
+      "RW": true,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542/c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f/neo_compiler_cache",
+      "Destination": "/root/.cache/neo_compiler_cache",
+      "Mode": "",
+      "RW": true,
+      "Propagation": "rprivate"
+    }
+  ],
+  "command": [
+    "serve",
+    "/models/checkpoint",
+    "--served-model-name",
+    "Qwen3.8-27B",
+    "--host",
+    "0.0.0.0",
+    "--port",
+    "8000",
+    "--revision",
+    "113cf7ab958054860e43fb7f3063b1af19171095",
+    "--dtype",
+    "float16",
+    "--max-model-len",
+    "262144",
+    "--kv-cache-dtype",
+    "fp8",
+    "--gpu-memory-utilization",
+    "0.965",
+    "--max-num-seqs",
+    "16",
+    "--max-num-batched-tokens",
+    "4096",
+    "--scheduler-reserve-full-isl",
+    "--watermark",
+    "0.0",
+    "--enable-prefix-caching",
+    "--mamba-cache-mode",
+    "align",
+    "--speculative-config",
+    "{\"method\":\"mtp\",\"num_speculative_tokens\":3}",
+    "--limit-mm-per-prompt",
+    "{\"image\":32,\"video\":4}",
+    "--mm-processor-kwargs",
+    "{\"max_pixels\":4194304}",
+    "--enable-auto-tool-choice",
+    "--tool-call-parser",
+    "qwen3_xml",
+    "--reasoning-parser",
+    "qwen3",
+    "--reasoning-config",
+    "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+    "--override-generation-config",
+    "{\"max_new_tokens\":16384}",
+    "--middleware",
+    "request_defaults.ChatDefaults",
+    "--compilation-config",
+    "{\"cudagraph_mode\":\"FULL_DECODE_ONLY\",\"cudagraph_capture_sizes\":[1,2,4,8,12,16,24,32,40,48,56,64]}"
+  ],
+  "responses": {
+    "text": {
+      "id": "chatcmpl-88a36c08ac556d36",
+      "object": "chat.completion",
+      "created": 1790904488,
+      "model": "Qwen3.8-27B",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "Paris",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": null
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.30.0-07c92e33",
+      "usage": {
+        "prompt_tokens": 26,
+        "total_tokens": 28,
+        "completion_tokens": 2,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "tool": {
+      "id": "chatcmpl-b77ec0c4a286cefd",
+      "object": "chat.completion",
+      "created": 1790904489,
+      "model": "Qwen3.8-27B",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "tool_calls": [
+              {
+                "id": "chatcmpl-tool-b748afb5f210e2c8",
+                "type": "function",
+                "function": {
+                  "name": "add",
+                  "arguments": "{\"a\": 13, \"b\": 29}"
+                }
+              }
+            ],
+            "reasoning": null
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.30.0-07c92e33",
+      "usage": {
+        "prompt_tokens": 291,
+        "total_tokens": 328,
+        "completion_tokens": 37,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "image": {
+      "id": "chatcmpl-929761fd5143b96f",
+      "object": "chat.completion",
+      "created": 1790904490,
+      "model": "Qwen3.8-27B",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "Red",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": null
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.30.0-07c92e33",
+      "usage": {
+        "prompt_tokens": 91,
+        "total_tokens": 93,
+        "completion_tokens": 2,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    }
+  },
+  "release_manifest_sha256_at_start": "9e729f119890a32fb9b1343a5fc2fd0e2c6f76361fbc59b5896be811615350c3"
+}

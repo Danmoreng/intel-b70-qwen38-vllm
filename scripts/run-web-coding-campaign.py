@@ -163,6 +163,13 @@ def main():
         return
     if not a.fixture or not a.output:
         p.error("fixture and output required")
+    release = json.loads((REPO / "config/production_image.json").read_text())
+    if release['image_id'] != 'sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68':
+        raise RuntimeError(
+            'This historical campaign labels the permanent service GPTQ. '
+            'Use run-exl3-final-readme.py or the standalone coding runner for the current EXL3 release; '
+            'refusing to mislabel the current service or start the old EXL3 image.'
+        )
     if a.output.exists():
         raise RuntimeError("fresh output required")
     engines = a.engines.split(",")

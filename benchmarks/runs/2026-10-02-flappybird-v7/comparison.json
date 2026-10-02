@@ -1,0 +1,1803 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-02T01:12:14.765402+00:00",
+  "comparison_scope": "Two complete serving profiles and quantized checkpoints; adaptive coding histories; one fixed seed. Not an isolated quantization or engine-kernel experiment.",
+  "measurement": {
+    "context_bands": "10000 tokens, lower inclusive, upper exclusive, full rendered input including retained reasoning and tool history",
+    "prefill": "sum(native newly computed KV tokens)/sum(native prefill seconds); cached tokens separate",
+    "decode": "sum(max(completion_tokens-1,0))/sum(native decode seconds), includes generated reasoning",
+    "cache": "fresh worker before excluded warmup; prefix caching enabled throughout each session",
+    "quality": "independent final API/physics/input/WebGL/browser checks; renderer identity is metadata, not a quality case"
+  },
+  "engines": {
+    "gptq": {
+      "fixture_id": "flappybird-webgl2-v7",
+      "fixture_manifest_sha256": "309b5af48e5db6c7109236fd315d92b70e432a799adca96376098ab7ca56f736",
+      "runner_sha256": "a520cd59ac86c3e8631883dacb85c824ce467aed21e9964d70c27cc572d98e82",
+      "identity": {
+        "container_id": "7a13ba4aa5455f52fbee9745278c44c2fa950fb0a76abf082e0a832a3586b3a1",
+        "image_id": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
+        "image_tag": "local/b70-qwen38-vllm:production-onednn-v2",
+        "command": [
+          "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+          "--revision",
+          "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+          "--quantization",
+          "gptq",
+          "--dtype",
+          "float16",
+          "--max-model-len",
+          "200704",
+          "--gpu-memory-utilization",
+          "0.93",
+          "--kv-cache-dtype",
+          "fp8",
+          "--max-num-seqs",
+          "4",
+          "--max-num-batched-tokens",
+          "6656",
+          "--scheduler-reserve-full-isl",
+          "--watermark",
+          "0.0",
+          "--enable-prefix-caching",
+          "--mamba-cache-mode",
+          "align",
+          "--served-model-name",
+          "Qwen3.8-27B",
+          "--speculative-config",
+          "{\"method\":\"mtp\",\"num_speculative_tokens\":4}",
+          "--middleware",
+          "request_defaults.ChatDefaults",
+          "--reasoning-config",
+          "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+          "--override-generation-config",
+          "{\"max_new_tokens\":16384}",
+          "--enable-auto-tool-choice",
+          "--tool-call-parser",
+          "qwen3_xml",
+          "--reasoning-parser",
+          "qwen3",
+          "--limit-mm-per-prompt",
+          "{\"image\":1,\"video\":0}",
+          "--mm-processor-kwargs",
+          "{\"max_pixels\":4194304}"
+        ],
+        "labels": {
+          "org.local.b70.policy.sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "org.opencontainers.image.version": "24.04"
+        }
+      },
+      "provenance": {
+        "fixture_id": "flappybird-webgl2-v7",
+        "fixture_manifest_sha256": "309b5af48e5db6c7109236fd315d92b70e432a799adca96376098ab7ca56f736",
+        "fixture_files": {
+          "README.md": "008bfe49e0d9af0fc16a75489f5ab87d3e8bdbeef1b7f03442e5c578e7f6d62f",
+          "project/README.md": "9b99eb647e62964c7f8bff7602de4b2b9210512f98a549df3a1262debfe4b38a",
+          "project/index.html": "ffd1cbfd30492ae40ec2bb1ce4e0bc31aee65dcd9e1065527a8d222aff227d42",
+          "project/main.js": "c58ef221adbe37a9a4ada60895d59b835a071f98aa1a5fbd0818801cf2b3229d",
+          "project/package.json": "6cab776a7f920178f6f096fb791ac0426dfbd50363325aee992e8530a8e605f7",
+          "project/specs/app.md": "48f725160db03e2ec58f29f33202f149ecb9e96c4ee517f14cb7ff4a2b442a16",
+          "project/specs/config.md": "570ab99926405a336b344f7559a8bfb014b99e018359bf0075fe68c27ae13dc6",
+          "project/specs/input.md": "9816b4a98e4c13792d4eaa006515d65ada66eba85311d9af735daa7b62868996",
+          "project/specs/random.md": "0eb208f2b2e5ebf03820edd8725c1e66b13b72c0bb84f99d4c9e101fd3a5158b",
+          "project/specs/renderer.md": "c2bb5892eb20b9bffa8a6b379f071dcc75f6ae49f6dacfee181b04b96e5a42d9",
+          "project/specs/scores.md": "a57956f2934ebf0aedd04c35b557d87f1d34109fce217391d7c6a8a9f10181e7",
+          "project/specs/simulation.md": "3c366b5d0a7dd69b236def5b921b7850daca74040c52f41b9b21283b3cec109a",
+          "project/src/app.js": "b9c3e093e9bc2a956cf934a7037ea001abde5c51214fc48088a988825a38249d",
+          "project/src/config.js": "7b25978fdf17322b1a3d67eeccd275ade7a9d52bfc6ef0a60454ae28b9bc7a7e",
+          "project/src/input.js": "8c1337929e07afb36e6dfac02435d3d0ceef958b691b6dabc46a91f00e7d2814",
+          "project/src/random.js": "8ab78c6d041c206c1155f2f13316c6d30465703db42109480ee9d1087c4e975f",
+          "project/src/renderer.js": "5790649fe8191094abc3e6702cd098aa1fca26ade179f83d73a8346826bb3c04",
+          "project/src/scores.js": "c8d7cc42363647c3771a7e42acc0ae14d53f1554b302e37aad0f324527c2a915",
+          "project/src/simulation.js": "d2276b36daa14d9214d4185620ede49f348a9eba4f07b679883b31544f08de6a",
+          "project/style.css": "28e08d310e6f0fbfaebd30ff8585f0b2eef1b4167a12dc176ad3cc2b8bf4e7d7",
+          "tasks.json": "b0162f4aa5b682af0d021671f9fb60e40feb9010594769b202a15f62a6de0a67"
+        },
+        "harness_files": {
+          "checks.mjs": "f3cee5fc149cc9ab5a755da967d8ab95e431b441f92f0b9f6d2c997d9e56845b",
+          "browser.mjs": "0690e6033741bd3a6964a279051b99fc1be14db0385cd3c396ffc497b614c13e",
+          "package.json": "89ee7d37083d11091fd6a2cfb0308b9af466f9010c1f91eb9f0140cdf4ebb901",
+          "package-lock.json": "b7bd5012db625f36b65c68f3414deaaa2649baa2beb11cd579a3987b6f0f0f79"
+        },
+        "runner_sha256": "a520cd59ac86c3e8631883dacb85c824ce467aed21e9964d70c27cc572d98e82",
+        "identity": {
+          "container_id": "7a13ba4aa5455f52fbee9745278c44c2fa950fb0a76abf082e0a832a3586b3a1",
+          "image_id": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
+          "image_tag": "local/b70-qwen38-vllm:production-onednn-v2",
+          "command": [
+            "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+            "--revision",
+            "a47b0c6f0d756bc394c4cc629d5b0ded1acc7001",
+            "--quantization",
+            "gptq",
+            "--dtype",
+            "float16",
+            "--max-model-len",
+            "200704",
+            "--gpu-memory-utilization",
+            "0.93",
+            "--kv-cache-dtype",
+            "fp8",
+            "--max-num-seqs",
+            "4",
+            "--max-num-batched-tokens",
+            "6656",
+            "--scheduler-reserve-full-isl",
+            "--watermark",
+            "0.0",
+            "--enable-prefix-caching",
+            "--mamba-cache-mode",
+            "align",
+            "--served-model-name",
+            "Qwen3.8-27B",
+            "--speculative-config",
+            "{\"method\":\"mtp\",\"num_speculative_tokens\":4}",
+            "--middleware",
+            "request_defaults.ChatDefaults",
+            "--reasoning-config",
+            "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+            "--override-generation-config",
+            "{\"max_new_tokens\":16384}",
+            "--enable-auto-tool-choice",
+            "--tool-call-parser",
+            "qwen3_xml",
+            "--reasoning-parser",
+            "qwen3",
+            "--limit-mm-per-prompt",
+            "{\"image\":1,\"video\":0}",
+            "--mm-processor-kwargs",
+            "{\"max_pixels\":4194304}"
+          ],
+          "labels": {
+            "org.local.b70.policy.sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+            "org.opencontainers.image.version": "24.04"
+          }
+        },
+        "model_info": {
+          "object": "list",
+          "data": [
+            {
+              "id": "Qwen3.8-27B",
+              "object": "model",
+              "created": 1790899987,
+              "owned_by": "vllm",
+              "root": "mikeinnyc/Qwen3.8-27B-GPTQ-Int4-sym-G128-MTP-BF16",
+              "parent": null,
+              "max_model_len": 200704,
+              "permission": [
+                {
+                  "id": "modelperm-9365f0ff5a8449c6",
+                  "object": "model_permission",
+                  "created": 1790899987,
+                  "allow_create_engine": false,
+                  "allow_sampling": true,
+                  "allow_logprobs": true,
+                  "allow_search_indices": false,
+                  "allow_view": true,
+                  "allow_fine_tuning": false,
+                  "organization": "*",
+                  "group": null,
+                  "is_blocking": false
+                }
+              ]
+            }
+          ]
+        },
+        "node_version": "v24.20.0",
+        "started_at": "2026-10-02T00:13:07.622931+00:00",
+        "sampling": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 20,
+          "seed_base": 73000,
+          "max_tokens": 16384,
+          "enable_thinking": true,
+          "reasoning_effort": "medium",
+          "preserve_thinking": true,
+          "thinking_token_budget": 4096,
+          "output_budget_policy": "at most 16384; rendered /tokenize history with reasoning alias normalized; input+output fits common 200704-token window or smaller engine limit"
+        },
+        "limits": {
+          "max_requests_per_stage": 32,
+          "max_wall_seconds": 2400,
+          "stages": 6
+        },
+        "measurement": "exclusive C1, native per-request accounting; prefix cache stays enabled; first generated token excluded from decode; 10K=10000 input-token bands",
+        "host": {
+          "kernel": "7.2.3-2-MANJARO",
+          "machine": "x86_64",
+          "power_cap_w": 180,
+          "runtime_source_files": {
+            "request_defaults.py": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2"
+          },
+          "production_policy_sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "source_commit": "d8494239a5e34e2bbe926b90aaa8685004d01a1f"
+        },
+        "tool_output_normalization": "Incidental Node test timings and absolute host/project paths normalized in agent history; unmodified raw tool results archived.",
+        "test_isolation": "Node checks/tests: bubblewrap, project-only filesystem, no host home/network/GPU; independent grading project read-only. Browser: SwiftShader software WebGL2, external requests blocked."
+      },
+      "wall_s": 1926.3889696639962,
+      "tool_s": 10.986149994059815,
+      "card_energy_wh": 95.48771877722223,
+      "requests": 77,
+      "tool_calls": 98,
+      "session_status": "complete",
+      "stop_reason": null,
+      "stages_graded_during_session": 6,
+      "overall": {
+        "requests": 77,
+        "context_min": 964,
+        "context_max": 122078,
+        "native": {
+          "prompt_tokens": 4692906.0,
+          "cached_tokens": 4382976.0,
+          "prefill_tokens": 309930.0,
+          "prefill_seconds": 256.5927355129679,
+          "decode_seconds": 1641.6014459120488,
+          "generation_tokens": 95473.0,
+          "draft_tokens": 122092.0,
+          "accepted_tokens": 65000.0,
+          "preemptions": 0.0,
+          "completed": 77.0
+        },
+        "post_first_tokens": 95396,
+        "prefill_tps": 1207.8673988193889,
+        "decode_tps": 58.11154725622176,
+        "cached_fraction": 0.9339577651885633,
+        "mtp_acceptance": 0.5323854142777578,
+        "client_request_seconds": 1903.0541485009744,
+        "client_decode_tps": 58.14081938757439
+      },
+      "bands": [
+        {
+          "lower": 0,
+          "upper": 10000,
+          "requests": 8,
+          "context_min": 964,
+          "context_max": 9788,
+          "native": {
+            "prompt_tokens": 37998.0,
+            "cached_tokens": 11648.0,
+            "prefill_tokens": 26350.0,
+            "prefill_seconds": 13.01026265200926,
+            "decode_seconds": 141.78445384501538,
+            "generation_tokens": 10177.0,
+            "draft_tokens": 13124.0,
+            "accepted_tokens": 6899.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 10169,
+          "prefill_tps": 2025.3242155669006,
+          "decode_tps": 71.72154438818615,
+          "cached_fraction": 0.3065424496026107,
+          "mtp_acceptance": 0.525678146906431,
+          "client_request_seconds": 154.871421096017,
+          "client_decode_tps": 71.7259979137042
+        },
+        {
+          "lower": 10000,
+          "upper": 20000,
+          "requests": 7,
+          "context_min": 13148,
+          "context_max": 18753,
+          "native": {
+            "prompt_tokens": 109399.0,
+            "cached_tokens": 83200.0,
+            "prefill_tokens": 26199.0,
+            "prefill_seconds": 15.719041856966214,
+            "decode_seconds": 78.09059477900155,
+            "generation_tokens": 5906.0,
+            "draft_tokens": 6920.0,
+            "accepted_tokens": 4182.0,
+            "preemptions": 0.0,
+            "completed": 7.0
+          },
+          "post_first_tokens": 5899,
+          "prefill_tps": 1666.7046400407273,
+          "decode_tps": 75.54046702671847,
+          "cached_fraction": 0.7605188347242662,
+          "mtp_acceptance": 0.6043352601156069,
+          "client_request_seconds": 93.93792670698895,
+          "client_decode_tps": 75.56132034087734
+        },
+        {
+          "lower": 20000,
+          "upper": 30000,
+          "requests": 7,
+          "context_min": 20647,
+          "context_max": 29799,
+          "native": {
+            "prompt_tokens": 168834.0,
+            "cached_tokens": 141440.0,
+            "prefill_tokens": 27394.0,
+            "prefill_seconds": 16.07970932700846,
+            "decode_seconds": 190.67194815003313,
+            "generation_tokens": 12142.0,
+            "draft_tokens": 16056.0,
+            "accepted_tokens": 8131.0,
+            "preemptions": 0.0,
+            "completed": 7.0
+          },
+          "post_first_tokens": 12135,
+          "prefill_tps": 1703.6377612863541,
+          "decode_tps": 63.64334196895807,
+          "cached_fraction": 0.8377459516448109,
+          "mtp_acceptance": 0.5064150473343298,
+          "client_request_seconds": 206.93995498600998,
+          "client_decode_tps": 63.65370663581295
+        },
+        {
+          "lower": 30000,
+          "upper": 40000,
+          "requests": 3,
+          "context_min": 35037,
+          "context_max": 39224,
+          "native": {
+            "prompt_tokens": 111800.0,
+            "cached_tokens": 94848.0,
+            "prefill_tokens": 16952.0,
+            "prefill_seconds": 11.105083749993355,
+            "decode_seconds": 62.428574141988065,
+            "generation_tokens": 3746.0,
+            "draft_tokens": 5064.0,
+            "accepted_tokens": 2483.0,
+            "preemptions": 0.0,
+            "completed": 3.0
+          },
+          "post_first_tokens": 3743,
+          "prefill_tps": 1526.5080733866725,
+          "decode_tps": 59.95651913315992,
+          "cached_fraction": 0.8483720930232558,
+          "mtp_acceptance": 0.49032385466034756,
+          "client_request_seconds": 73.65202951201354,
+          "client_decode_tps": 59.97646191208935
+        },
+        {
+          "lower": 40000,
+          "upper": 50000,
+          "requests": 6,
+          "context_min": 40622,
+          "context_max": 44225,
+          "native": {
+            "prompt_tokens": 254796.0,
+            "cached_tokens": 234624.0,
+            "prefill_tokens": 20172.0,
+            "prefill_seconds": 14.155104563003988,
+            "decode_seconds": 116.91863706499862,
+            "generation_tokens": 7142.0,
+            "draft_tokens": 9172.0,
+            "accepted_tokens": 4851.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 7136,
+          "prefill_tps": 1425.0689502302844,
+          "decode_tps": 61.033896555199156,
+          "cached_fraction": 0.9208307822728772,
+          "mtp_acceptance": 0.5288922808547754,
+          "client_request_seconds": 131.33756136697775,
+          "client_decode_tps": 61.05741965779715
+        },
+        {
+          "lower": 50000,
+          "upper": 60000,
+          "requests": 6,
+          "context_min": 50036,
+          "context_max": 55933,
+          "native": {
+            "prompt_tokens": 322357.0,
+            "cached_tokens": 296192.0,
+            "prefill_tokens": 26165.0,
+            "prefill_seconds": 20.035979676016723,
+            "decode_seconds": 159.32256378598686,
+            "generation_tokens": 9121.0,
+            "draft_tokens": 12040.0,
+            "accepted_tokens": 6113.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 9115,
+          "prefill_tps": 1305.9007057847928,
+          "decode_tps": 57.21097993529593,
+          "cached_fraction": 0.918832226382551,
+          "mtp_acceptance": 0.5077242524916944,
+          "client_request_seconds": 179.68311550098588,
+          "client_decode_tps": 57.231836198425945
+        },
+        {
+          "lower": 60000,
+          "upper": 70000,
+          "requests": 6,
+          "context_min": 60706,
+          "context_max": 69358,
+          "native": {
+            "prompt_tokens": 389184.0,
+            "cached_tokens": 361088.0,
+            "prefill_tokens": 28096.0,
+            "prefill_seconds": 23.449104709987296,
+            "decode_seconds": 128.45427524502156,
+            "generation_tokens": 6608.0,
+            "draft_tokens": 9404.0,
+            "accepted_tokens": 4263.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 6602,
+          "prefill_tps": 1198.1694119022602,
+          "decode_tps": 51.39572028573545,
+          "cached_fraction": 0.9278079263279065,
+          "mtp_acceptance": 0.45331773713313483,
+          "client_request_seconds": 152.2865310329944,
+          "client_decode_tps": 51.423004999343206
+        },
+        {
+          "lower": 70000,
+          "upper": 80000,
+          "requests": 5,
+          "context_min": 70116,
+          "context_max": 79742,
+          "native": {
+            "prompt_tokens": 371073.0,
+            "cached_tokens": 347776.0,
+            "prefill_tokens": 23297.0,
+            "prefill_seconds": 20.65224122100335,
+            "decode_seconds": 143.7637446969893,
+            "generation_tokens": 8378.0,
+            "draft_tokens": 10172.0,
+            "accepted_tokens": 5837.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 8373,
+          "prefill_tps": 1128.0615866672586,
+          "decode_tps": 58.241387754943105,
+          "cached_fraction": 0.9372172052399393,
+          "mtp_acceptance": 0.5738301219032639,
+          "client_request_seconds": 164.80067285799305,
+          "client_decode_tps": 58.26780691041961
+        },
+        {
+          "lower": 80000,
+          "upper": 90000,
+          "requests": 7,
+          "context_min": 80470,
+          "context_max": 88160,
+          "native": {
+            "prompt_tokens": 591031.0,
+            "cached_tokens": 564096.0,
+            "prefill_tokens": 26935.0,
+            "prefill_seconds": 25.94369764799194,
+            "decode_seconds": 208.93073160598578,
+            "generation_tokens": 11681.0,
+            "draft_tokens": 14152.0,
+            "accepted_tokens": 8150.0,
+            "preemptions": 0.0,
+            "completed": 7.0
+          },
+          "post_first_tokens": 11674,
+          "prefill_tps": 1038.2097558126911,
+          "decode_tps": 55.874977846799176,
+          "cached_fraction": 0.954427094348689,
+          "mtp_acceptance": 0.5758903335217637,
+          "client_request_seconds": 235.47990568600653,
+          "client_decode_tps": 55.90243202045783
+        },
+        {
+          "lower": 90000,
+          "upper": 100000,
+          "requests": 8,
+          "context_min": 93544,
+          "context_max": 99176,
+          "native": {
+            "prompt_tokens": 771866.0,
+            "cached_tokens": 740480.0,
+            "prefill_tokens": 31386.0,
+            "prefill_seconds": 31.780423476011492,
+            "decode_seconds": 93.67549108499952,
+            "generation_tokens": 4591.0,
+            "draft_tokens": 6136.0,
+            "accepted_tokens": 3061.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 4583,
+          "prefill_tps": 987.5891057175745,
+          "decode_tps": 48.924216429689864,
+          "cached_fraction": 0.959337501587063,
+          "mtp_acceptance": 0.49885919165580184,
+          "client_request_seconds": 126.24756011398858,
+          "client_decode_tps": 48.99464341654681
+        },
+        {
+          "lower": 100000,
+          "upper": 110000,
+          "requests": 6,
+          "context_min": 100252,
+          "context_max": 109953,
+          "native": {
+            "prompt_tokens": 619672.0,
+            "cached_tokens": 594048.0,
+            "prefill_tokens": 25624.0,
+            "prefill_seconds": 27.44026956395828,
+            "decode_seconds": 179.90648531002807,
+            "generation_tokens": 8285.0,
+            "draft_tokens": 11392.0,
+            "accepted_tokens": 5441.0,
+            "preemptions": 0.0,
+            "completed": 6.0
+          },
+          "post_first_tokens": 8279,
+          "prefill_tps": 933.8100684570577,
+          "decode_tps": 46.018352177427175,
+          "cached_fraction": 0.9586490917775856,
+          "mtp_acceptance": 0.47761587078651685,
+          "client_request_seconds": 207.9776062279998,
+          "client_decode_tps": 46.04609950912454
+        },
+        {
+          "lower": 110000,
+          "upper": 120000,
+          "requests": 5,
+          "context_min": 112740,
+          "context_max": 119916,
+          "native": {
+            "prompt_tokens": 580526.0,
+            "cached_tokens": 557440.0,
+            "prefill_tokens": 23086.0,
+            "prefill_seconds": 27.246151358020143,
+            "decode_seconds": 117.31446961901383,
+            "generation_tokens": 6828.0,
+            "draft_tokens": 7228.0,
+            "accepted_tokens": 5024.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 6823,
+          "prefill_tps": 847.3123303414533,
+          "decode_tps": 58.15991856893804,
+          "cached_fraction": 0.96023261662699,
+          "mtp_acceptance": 0.6950747094631987,
+          "client_request_seconds": 145.15343512801337,
+          "client_decode_tps": 58.209196222311284
+        },
+        {
+          "lower": 120000,
+          "upper": 130000,
+          "requests": 3,
+          "context_min": 120664,
+          "context_max": 122078,
+          "native": {
+            "prompt_tokens": 364370.0,
+            "cached_tokens": 356096.0,
+            "prefill_tokens": 8274.0,
+            "prefill_seconds": 9.975665710997419,
+            "decode_seconds": 20.339476582987118,
+            "generation_tokens": 868.0,
+            "draft_tokens": 1232.0,
+            "accepted_tokens": 565.0,
+            "preemptions": 0.0,
+            "completed": 3.0
+          },
+          "post_first_tokens": 865,
+          "prefill_tps": 829.41833053593,
+          "decode_tps": 42.5281347074352,
+          "cached_fraction": 0.9772923127590087,
+          "mtp_acceptance": 0.4586038961038961,
+          "client_request_seconds": 30.686428284985595,
+          "client_decode_tps": 42.660072312617054
+        }
+      ],
+      "quality": {
+        "passed": 54,
+        "total": 54,
+        "checks": [
+          {
+            "id": "node/rng exact xorshift",
+            "name": "rng exact xorshift",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/rng zero and restore",
+            "name": "rng zero and restore",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/hash FNV-1a",
+            "name": "hash FNV-1a",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/rng invalid seeds",
+            "name": "rng invalid seeds",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/rng invalid restore atomic",
+            "name": "rng invalid restore atomic",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/config defaults and detached",
+            "name": "config defaults and detached",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config JSON roundtrip",
+            "name": "config JSON roundtrip",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config reject invalid",
+            "name": "config reject invalid",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config coupled and prototype edge",
+            "name": "config coupled and prototype edge",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game initial and pure flap",
+            "name": "game initial and pure flap",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game fixed-step flight",
+            "name": "game fixed-step flight",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game paused and restarted",
+            "name": "game paused and restarted",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game seeded pipes",
+            "name": "game seeded pipes",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game lower boundary and no points on crash",
+            "name": "game lower boundary and no points on crash",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game passing one pipe once",
+            "name": "game passing one pipe once",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game snapshot roundtrip",
+            "name": "game snapshot roundtrip",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game pipe and bird collision edges",
+            "name": "game pipe and bird collision edges",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game top boundary inclusive",
+            "name": "game top boundary inclusive",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game strict passing edge",
+            "name": "game strict passing edge",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game removes offscreen pipes",
+            "name": "game removes offscreen pipes",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game restore rejects corrupt snapshots",
+            "name": "game restore rejects corrupt snapshots",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game no-op transitions detached",
+            "name": "game no-op transitions detached",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/input edge queue and release",
+            "name": "input edge queue and release",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/input ignore repeat and disposal",
+            "name": "input ignore repeat and disposal",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/pointer mapping/clamp",
+            "name": "pointer mapping/clamp",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/ticker first frame and backlog cap",
+            "name": "ticker first frame and backlog cap",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/ticker pause fresh base and invalid time",
+            "name": "ticker pause fresh base and invalid time",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/input custom binding validation",
+            "name": "input custom binding validation",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/pointer bad dimensions and values",
+            "name": "pointer bad dimensions and values",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/ticker fractional remainder",
+            "name": "ticker fractional remainder",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/ticker invalid options",
+            "name": "ticker invalid options",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/app import has no DOM side effects",
+            "name": "app import has no DOM side effects",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/scores ordering detached lists and reload",
+            "name": "scores ordering detached lists and reload",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/scores best ten tie order and clear",
+            "name": "scores best ten tie order and clear",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/scores invalid entry leaves list unchanged",
+            "name": "scores invalid entry leaves list unchanged",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/scores corrupt persisted data is inert",
+            "name": "scores corrupt persisted data is inert",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/scores storage failure is reported",
+            "name": "scores storage failure is reported",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "browser/WebGL2 procedural renderer and colors",
+            "name": "WebGL2 procedural renderer and colors",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer DPR resize and state immutability",
+            "name": "renderer DPR resize and state immutability",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer context loss and restore",
+            "name": "renderer context loss and restore",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer destroy idempotent and commands reject",
+            "name": "renderer destroy idempotent and commands reject",
+            "passed": true
+          },
+          {
+            "id": "browser/app mounts ready with accessible controls",
+            "name": "app mounts ready with accessible controls",
+            "passed": true
+          },
+          {
+            "id": "browser/app buttons start pause restart",
+            "name": "app buttons start pause restart",
+            "passed": true
+          },
+          {
+            "id": "browser/app keyboard and canvas pointer",
+            "name": "app keyboard and canvas pointer",
+            "passed": true
+          },
+          {
+            "id": "browser/app snapshot detached and invalid count",
+            "name": "app snapshot detached and invalid count",
+            "passed": true
+          },
+          {
+            "id": "browser/app gameover and score/status text",
+            "name": "app gameover and score/status text",
+            "passed": true
+          },
+          {
+            "id": "browser/app responsive mobile canvas",
+            "name": "app responsive mobile canvas",
+            "passed": true
+          },
+          {
+            "id": "browser/app destroy idempotent and removes input",
+            "name": "app destroy idempotent and removes input",
+            "passed": true
+          },
+          {
+            "id": "browser/settings labelled inputs and keyboard isolation",
+            "name": "settings labelled inputs and keyboard isolation",
+            "passed": true
+          },
+          {
+            "id": "browser/settings valid apply and invalid atomic rejection",
+            "name": "settings valid apply and invalid atomic rejection",
+            "passed": true
+          },
+          {
+            "id": "browser/scores save once display and survive remount",
+            "name": "scores save once display and survive remount",
+            "passed": true
+          },
+          {
+            "id": "browser/scores clear persists through remount",
+            "name": "scores clear persists through remount",
+            "passed": true
+          },
+          {
+            "id": "browser/real entry point loads without JavaScript errors",
+            "name": "real entry point loads without JavaScript errors",
+            "passed": true
+          },
+          {
+            "id": "browser/app has no external runtime requests",
+            "name": "app has no external runtime requests",
+            "passed": true
+          }
+        ],
+        "all_stages_declared_complete": true
+      },
+      "stage_completions": {
+        "declared": 6,
+        "total": 6
+      },
+      "project_files": {
+        "README.md": "9b99eb647e62964c7f8bff7602de4b2b9210512f98a549df3a1262debfe4b38a",
+        "USER_GUIDE.md": "271df460c8ad2a83d1b2ddd3abeed86b6fec4694f233526bf089f1493e5e9189",
+        "index.html": "ffd1cbfd30492ae40ec2bb1ce4e0bc31aee65dcd9e1065527a8d222aff227d42",
+        "main.js": "c58ef221adbe37a9a4ada60895d59b835a071f98aa1a5fbd0818801cf2b3229d",
+        "package.json": "6cab776a7f920178f6f096fb791ac0426dfbd50363325aee992e8530a8e605f7",
+        "specs/app.md": "48f725160db03e2ec58f29f33202f149ecb9e96c4ee517f14cb7ff4a2b442a16",
+        "specs/config.md": "570ab99926405a336b344f7559a8bfb014b99e018359bf0075fe68c27ae13dc6",
+        "specs/input.md": "9816b4a98e4c13792d4eaa006515d65ada66eba85311d9af735daa7b62868996",
+        "specs/random.md": "0eb208f2b2e5ebf03820edd8725c1e66b13b72c0bb84f99d4c9e101fd3a5158b",
+        "specs/renderer.md": "c2bb5892eb20b9bffa8a6b379f071dcc75f6ae49f6dacfee181b04b96e5a42d9",
+        "specs/scores.md": "a57956f2934ebf0aedd04c35b557d87f1d34109fce217391d7c6a8a9f10181e7",
+        "specs/simulation.md": "3c366b5d0a7dd69b236def5b921b7850daca74040c52f41b9b21283b3cec109a",
+        "src/app.js": "08c86a4ebb825df493b122b01762aed6a123b992b71f6e1c5754a89982b68d38",
+        "src/config.js": "334886bb94061427864a27ce58b40aae03379cf1709c521fb5385c29ae7ab903",
+        "src/input.js": "ea804854309f508245ccaf73bc4047dc641c81d456a8864ed60ac5d2e4a57ff3",
+        "src/random.js": "85f17ee96aa65d7ee34a803e47831e13d77954cebc96c6e2ea9cbf83e84106ec",
+        "src/renderer.js": "08a6fe118622757cdebbc63c6c922c6dd95d069827f08e3f945e69e50651a2f4",
+        "src/scores.js": "cac0f60e7d2b595aa5e65250348d95a7229b0b19b113e7451041038319d960ad",
+        "src/simulation.js": "0b8d39c4758b478f926e292b2ea80fd02549101f7d4ff1915ea2d502785cc882",
+        "style.css": "c8ace692343a1a32f0c06b58dff6573da246bd9ed98a1eea42e9d75806afc75c",
+        "tests/app.test.js": "3db48e93e0931026df7e89e85d5606c27a61b6c4f4723e6a90e439ae25b8fd94",
+        "tests/config.test.js": "7499091e89e93c61c977e4f30f485bfd61a84f8695d331ace31f435ec94d3e09",
+        "tests/input.test.js": "f1289b7a6234de03802dd96b46e24cd86db1d7bb878f3e1e58da2f19e85679dc",
+        "tests/random.test.js": "1eb98b1a8cc337230693c21e00d6df6ca9ca7077ce9cce18308a49d5c816d3f0",
+        "tests/scores.test.js": "d93e518c398e542b0eaf16c1b932d799b88caa79e00ac08cb9f5f87f26ff805f",
+        "tests/simulation.test.js": "dea330f14d677e41e618647d3051eca1f3de7d83550b1d2b7004a146c09b0d01"
+      },
+      "conversation_sha256": "88d95bc37d2eb1a63ce532c3ca5ec9305a2b2e24c70fb82f64c4c63a1392c006",
+      "raw_root": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-production-v1/readme-20261002/flappy-v7/gptq"
+    },
+    "exl3": {
+      "fixture_id": "flappybird-webgl2-v7",
+      "fixture_manifest_sha256": "309b5af48e5db6c7109236fd315d92b70e432a799adca96376098ab7ca56f736",
+      "runner_sha256": "a520cd59ac86c3e8631883dacb85c824ce467aed21e9964d70c27cc572d98e82",
+      "identity": {
+        "container_id": "805abb064fb500ba0d85fbdad2ed600e50432696c161a425e79b465cfe10e901",
+        "image_id": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+        "image_tag": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+        "command": [
+          "serve",
+          "/models/checkpoint",
+          "--served-model-name",
+          "Qwen3.8-27B",
+          "--host",
+          "0.0.0.0",
+          "--port",
+          "8000",
+          "--revision",
+          "113cf7ab958054860e43fb7f3063b1af19171095",
+          "--dtype",
+          "float16",
+          "--max-model-len",
+          "262144",
+          "--kv-cache-dtype",
+          "fp8",
+          "--gpu-memory-utilization",
+          "0.965",
+          "--max-num-seqs",
+          "16",
+          "--max-num-batched-tokens",
+          "4096",
+          "--scheduler-reserve-full-isl",
+          "--watermark",
+          "0.0",
+          "--enable-prefix-caching",
+          "--mamba-cache-mode",
+          "align",
+          "--speculative-config",
+          "{\"method\":\"mtp\",\"num_speculative_tokens\":3}",
+          "--limit-mm-per-prompt",
+          "{\"image\":32,\"video\":4}",
+          "--mm-processor-kwargs",
+          "{\"max_pixels\":4194304}",
+          "--enable-auto-tool-choice",
+          "--tool-call-parser",
+          "qwen3_xml",
+          "--reasoning-parser",
+          "qwen3",
+          "--reasoning-config",
+          "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+          "--override-generation-config",
+          "{\"max_new_tokens\":16384}",
+          "--middleware",
+          "request_defaults.ChatDefaults",
+          "--compilation-config",
+          "{\"cudagraph_mode\":\"FULL_DECODE_ONLY\",\"cudagraph_capture_sizes\":[1,2,4,8,12,16,24,32,40,48,56,64]}"
+        ],
+        "labels": {
+          "org.local.b70.exl3.runtime-image": "sha256:6cf4899923749b221a008834f7fd42e0aa7e3f58546f408faf77cbf4da86554b",
+          "org.local.b70.policy.sha256": "cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542",
+          "org.opencontainers.image.source": "https://github.com/Danmoreng/intel-b70-qwen38-vllm",
+          "org.opencontainers.image.version": "24.04"
+        }
+      },
+      "provenance": {
+        "fixture_id": "flappybird-webgl2-v7",
+        "fixture_manifest_sha256": "309b5af48e5db6c7109236fd315d92b70e432a799adca96376098ab7ca56f736",
+        "fixture_files": {
+          "README.md": "008bfe49e0d9af0fc16a75489f5ab87d3e8bdbeef1b7f03442e5c578e7f6d62f",
+          "project/README.md": "9b99eb647e62964c7f8bff7602de4b2b9210512f98a549df3a1262debfe4b38a",
+          "project/index.html": "ffd1cbfd30492ae40ec2bb1ce4e0bc31aee65dcd9e1065527a8d222aff227d42",
+          "project/main.js": "c58ef221adbe37a9a4ada60895d59b835a071f98aa1a5fbd0818801cf2b3229d",
+          "project/package.json": "6cab776a7f920178f6f096fb791ac0426dfbd50363325aee992e8530a8e605f7",
+          "project/specs/app.md": "48f725160db03e2ec58f29f33202f149ecb9e96c4ee517f14cb7ff4a2b442a16",
+          "project/specs/config.md": "570ab99926405a336b344f7559a8bfb014b99e018359bf0075fe68c27ae13dc6",
+          "project/specs/input.md": "9816b4a98e4c13792d4eaa006515d65ada66eba85311d9af735daa7b62868996",
+          "project/specs/random.md": "0eb208f2b2e5ebf03820edd8725c1e66b13b72c0bb84f99d4c9e101fd3a5158b",
+          "project/specs/renderer.md": "c2bb5892eb20b9bffa8a6b379f071dcc75f6ae49f6dacfee181b04b96e5a42d9",
+          "project/specs/scores.md": "a57956f2934ebf0aedd04c35b557d87f1d34109fce217391d7c6a8a9f10181e7",
+          "project/specs/simulation.md": "3c366b5d0a7dd69b236def5b921b7850daca74040c52f41b9b21283b3cec109a",
+          "project/src/app.js": "b9c3e093e9bc2a956cf934a7037ea001abde5c51214fc48088a988825a38249d",
+          "project/src/config.js": "7b25978fdf17322b1a3d67eeccd275ade7a9d52bfc6ef0a60454ae28b9bc7a7e",
+          "project/src/input.js": "8c1337929e07afb36e6dfac02435d3d0ceef958b691b6dabc46a91f00e7d2814",
+          "project/src/random.js": "8ab78c6d041c206c1155f2f13316c6d30465703db42109480ee9d1087c4e975f",
+          "project/src/renderer.js": "5790649fe8191094abc3e6702cd098aa1fca26ade179f83d73a8346826bb3c04",
+          "project/src/scores.js": "c8d7cc42363647c3771a7e42acc0ae14d53f1554b302e37aad0f324527c2a915",
+          "project/src/simulation.js": "d2276b36daa14d9214d4185620ede49f348a9eba4f07b679883b31544f08de6a",
+          "project/style.css": "28e08d310e6f0fbfaebd30ff8585f0b2eef1b4167a12dc176ad3cc2b8bf4e7d7",
+          "tasks.json": "b0162f4aa5b682af0d021671f9fb60e40feb9010594769b202a15f62a6de0a67"
+        },
+        "harness_files": {
+          "checks.mjs": "f3cee5fc149cc9ab5a755da967d8ab95e431b441f92f0b9f6d2c997d9e56845b",
+          "browser.mjs": "0690e6033741bd3a6964a279051b99fc1be14db0385cd3c396ffc497b614c13e",
+          "package.json": "89ee7d37083d11091fd6a2cfb0308b9af466f9010c1f91eb9f0140cdf4ebb901",
+          "package-lock.json": "b7bd5012db625f36b65c68f3414deaaa2649baa2beb11cd579a3987b6f0f0f79"
+        },
+        "runner_sha256": "a520cd59ac86c3e8631883dacb85c824ce467aed21e9964d70c27cc572d98e82",
+        "identity": {
+          "container_id": "805abb064fb500ba0d85fbdad2ed600e50432696c161a425e79b465cfe10e901",
+          "image_id": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+          "image_tag": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+          "command": [
+            "serve",
+            "/models/checkpoint",
+            "--served-model-name",
+            "Qwen3.8-27B",
+            "--host",
+            "0.0.0.0",
+            "--port",
+            "8000",
+            "--revision",
+            "113cf7ab958054860e43fb7f3063b1af19171095",
+            "--dtype",
+            "float16",
+            "--max-model-len",
+            "262144",
+            "--kv-cache-dtype",
+            "fp8",
+            "--gpu-memory-utilization",
+            "0.965",
+            "--max-num-seqs",
+            "16",
+            "--max-num-batched-tokens",
+            "4096",
+            "--scheduler-reserve-full-isl",
+            "--watermark",
+            "0.0",
+            "--enable-prefix-caching",
+            "--mamba-cache-mode",
+            "align",
+            "--speculative-config",
+            "{\"method\":\"mtp\",\"num_speculative_tokens\":3}",
+            "--limit-mm-per-prompt",
+            "{\"image\":32,\"video\":4}",
+            "--mm-processor-kwargs",
+            "{\"max_pixels\":4194304}",
+            "--enable-auto-tool-choice",
+            "--tool-call-parser",
+            "qwen3_xml",
+            "--reasoning-parser",
+            "qwen3",
+            "--reasoning-config",
+            "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+            "--override-generation-config",
+            "{\"max_new_tokens\":16384}",
+            "--middleware",
+            "request_defaults.ChatDefaults",
+            "--compilation-config",
+            "{\"cudagraph_mode\":\"FULL_DECODE_ONLY\",\"cudagraph_capture_sizes\":[1,2,4,8,12,16,24,32,40,48,56,64]}"
+          ],
+          "labels": {
+            "org.local.b70.exl3.runtime-image": "sha256:6cf4899923749b221a008834f7fd42e0aa7e3f58546f408faf77cbf4da86554b",
+            "org.local.b70.policy.sha256": "cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542",
+            "org.opencontainers.image.source": "https://github.com/Danmoreng/intel-b70-qwen38-vllm",
+            "org.opencontainers.image.version": "24.04"
+          }
+        },
+        "model_info": {
+          "object": "list",
+          "data": [
+            {
+              "id": "Qwen3.8-27B",
+              "object": "model",
+              "created": 1790901984,
+              "owned_by": "vllm",
+              "root": "/models/checkpoint",
+              "parent": null,
+              "max_model_len": 262144,
+              "permission": [
+                {
+                  "id": "modelperm-8c84a5273c0891de",
+                  "object": "model_permission",
+                  "created": 1790901984,
+                  "allow_create_engine": false,
+                  "allow_sampling": true,
+                  "allow_logprobs": true,
+                  "allow_search_indices": false,
+                  "allow_view": true,
+                  "allow_fine_tuning": false,
+                  "organization": "*",
+                  "group": null,
+                  "is_blocking": false
+                }
+              ]
+            }
+          ]
+        },
+        "node_version": "v24.20.0",
+        "started_at": "2026-10-02T00:46:24.052375+00:00",
+        "sampling": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 20,
+          "seed_base": 73000,
+          "max_tokens": 16384,
+          "enable_thinking": true,
+          "reasoning_effort": "medium",
+          "preserve_thinking": true,
+          "thinking_token_budget": 4096,
+          "output_budget_policy": "at most 16384; rendered /tokenize history with reasoning alias normalized; input+output fits common 200704-token window or smaller engine limit"
+        },
+        "limits": {
+          "max_requests_per_stage": 32,
+          "max_wall_seconds": 2400,
+          "stages": 6
+        },
+        "measurement": "exclusive C1, native per-request accounting; prefix cache stays enabled; first generated token excluded from decode; 10K=10000 input-token bands",
+        "host": {
+          "kernel": "7.2.3-2-MANJARO",
+          "machine": "x86_64",
+          "power_cap_w": 180,
+          "runtime_source_files": {
+            "request_defaults.py": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2"
+          },
+          "production_policy_sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+          "source_commit": "df4e1e46d29b133640d99c213a1a141bf1631445"
+        },
+        "tool_output_normalization": "Incidental Node test timings and absolute host/project paths normalized in agent history; unmodified raw tool results archived.",
+        "test_isolation": "Node checks/tests: bubblewrap, project-only filesystem, no host home/network/GPU; independent grading project read-only. Browser: SwiftShader software WebGL2, external requests blocked."
+      },
+      "wall_s": 1452.1284209200094,
+      "tool_s": 13.947621911080205,
+      "card_energy_wh": 71.86011801805556,
+      "requests": 66,
+      "tool_calls": 95,
+      "session_status": "complete",
+      "stop_reason": null,
+      "stages_graded_during_session": 6,
+      "overall": {
+        "requests": 66,
+        "context_min": 964,
+        "context_max": 90444,
+        "native": {
+          "prompt_tokens": 3026802.0,
+          "cached_tokens": 2784000.0,
+          "prefill_tokens": 242802.0,
+          "prefill_seconds": 174.83659956097836,
+          "decode_seconds": 1251.4240726420394,
+          "generation_tokens": 67555.0,
+          "draft_tokens": 72495.0,
+          "accepted_tokens": 43421.0,
+          "preemptions": 0.0,
+          "completed": 66.0
+        },
+        "post_first_tokens": 67489,
+        "prefill_tps": 1388.7366867674473,
+        "decode_tps": 53.92976008325895,
+        "cached_fraction": 0.9197826617003689,
+        "mtp_acceptance": 0.5989516518380578,
+        "client_request_seconds": 1430.0034023040644,
+        "client_decode_tps": 53.95816683275499
+      },
+      "bands": [
+        {
+          "lower": 0,
+          "upper": 10000,
+          "requests": 8,
+          "context_min": 964,
+          "context_max": 9143,
+          "native": {
+            "prompt_tokens": 38441.0,
+            "cached_tokens": 14400.0,
+            "prefill_tokens": 24041.0,
+            "prefill_seconds": 10.61040421098005,
+            "decode_seconds": 171.09217581900884,
+            "generation_tokens": 9825.0,
+            "draft_tokens": 10989.0,
+            "accepted_tokens": 6165.0,
+            "preemptions": 0.0,
+            "completed": 8.0
+          },
+          "post_first_tokens": 9817,
+          "prefill_tps": 2265.79492373358,
+          "decode_tps": 57.378427464649164,
+          "cached_fraction": 0.374600036419448,
+          "mtp_acceptance": 0.561015561015561,
+          "client_request_seconds": 181.8066608680092,
+          "client_decode_tps": 57.38177389804307
+        },
+        {
+          "lower": 10000,
+          "upper": 20000,
+          "requests": 9,
+          "context_min": 13778,
+          "context_max": 18815,
+          "native": {
+            "prompt_tokens": 147870.0,
+            "cached_tokens": 116800.0,
+            "prefill_tokens": 31070.0,
+            "prefill_seconds": 16.061647691007238,
+            "decode_seconds": 135.1897960399947,
+            "generation_tokens": 8004.0,
+            "draft_tokens": 8409.0,
+            "accepted_tokens": 5209.0,
+            "preemptions": 0.0,
+            "completed": 9.0
+          },
+          "post_first_tokens": 7995,
+          "prefill_tps": 1934.4217105070604,
+          "decode_tps": 59.1390787928606,
+          "cached_fraction": 0.7898830053425306,
+          "mtp_acceptance": 0.6194553454631943,
+          "client_request_seconds": 151.45268936296634,
+          "client_decode_tps": 59.15403228970601
+        },
+        {
+          "lower": 20000,
+          "upper": 30000,
+          "requests": 7,
+          "context_min": 24110,
+          "context_max": 29613,
+          "native": {
+            "prompt_tokens": 191592.0,
+            "cached_tokens": 164800.0,
+            "prefill_tokens": 26792.0,
+            "prefill_seconds": 15.773039916006383,
+            "decode_seconds": 161.5384035770112,
+            "generation_tokens": 9078.0,
+            "draft_tokens": 9726.0,
+            "accepted_tokens": 5838.0,
+            "preemptions": 0.0,
+            "completed": 7.0
+          },
+          "post_first_tokens": 9071,
+          "prefill_tps": 1698.5945729340128,
+          "decode_tps": 56.15382967230778,
+          "cached_fraction": 0.8601611758319763,
+          "mtp_acceptance": 0.6002467612584824,
+          "client_request_seconds": 177.54542528300954,
+          "client_decode_tps": 56.16864648250298
+        },
+        {
+          "lower": 30000,
+          "upper": 40000,
+          "requests": 5,
+          "context_min": 35509,
+          "context_max": 39341,
+          "native": {
+            "prompt_tokens": 188874.0,
+            "cached_tokens": 168000.0,
+            "prefill_tokens": 20874.0,
+            "prefill_seconds": 13.620948020005017,
+            "decode_seconds": 46.39211722298933,
+            "generation_tokens": 2865.0,
+            "draft_tokens": 2733.0,
+            "accepted_tokens": 1956.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 2860,
+          "prefill_tps": 1532.4924498164492,
+          "decode_tps": 61.64840432380061,
+          "cached_fraction": 0.88948187680676,
+          "mtp_acceptance": 0.7156970362239298,
+          "client_request_seconds": 60.251518729986856,
+          "client_decode_tps": 61.70306994281666
+        },
+        {
+          "lower": 40000,
+          "upper": 50000,
+          "requests": 5,
+          "context_min": 40249,
+          "context_max": 49661,
+          "native": {
+            "prompt_tokens": 221729.0,
+            "cached_tokens": 198400.0,
+            "prefill_tokens": 23329.0,
+            "prefill_seconds": 16.299284879962215,
+            "decode_seconds": 170.14241180202225,
+            "generation_tokens": 8866.0,
+            "draft_tokens": 9801.0,
+            "accepted_tokens": 5600.0,
+            "preemptions": 0.0,
+            "completed": 5.0
+          },
+          "post_first_tokens": 8861,
+          "prefill_tps": 1431.2897879759055,
+          "decode_tps": 52.07990122010649,
+          "cached_fraction": 0.8947859774770103,
+          "mtp_acceptance": 0.5713702683399653,
+          "client_request_seconds": 186.70177763700485,
+          "client_decode_tps": 52.09436152624624
+        },
+        {
+          "lower": 50000,
+          "upper": 60000,
+          "requests": 11,
+          "context_min": 50078,
+          "context_max": 59437,
+          "native": {
+            "prompt_tokens": 586224.0,
+            "cached_tokens": 552000.0,
+            "prefill_tokens": 34224.0,
+            "prefill_seconds": 26.44197036701371,
+            "decode_seconds": 273.8049346659973,
+            "generation_tokens": 13543.0,
+            "draft_tokens": 15237.0,
+            "accepted_tokens": 8467.0,
+            "preemptions": 0.0,
+            "completed": 11.0
+          },
+          "post_first_tokens": 13532,
+          "prefill_tps": 1294.305966044586,
+          "decode_tps": 49.42204572210175,
+          "cached_fraction": 0.9416195856873822,
+          "mtp_acceptance": 0.5556868149898274,
+          "client_request_seconds": 300.9354398880241,
+          "client_decode_tps": 49.44476664129342
+        },
+        {
+          "lower": 60000,
+          "upper": 70000,
+          "requests": 4,
+          "context_min": 65537,
+          "context_max": 69466,
+          "native": {
+            "prompt_tokens": 270067.0,
+            "cached_tokens": 249600.0,
+            "prefill_tokens": 20467.0,
+            "prefill_seconds": 17.327117132008425,
+            "decode_seconds": 40.079160019013216,
+            "generation_tokens": 2084.0,
+            "draft_tokens": 2181.0,
+            "accepted_tokens": 1359.0,
+            "preemptions": 0.0,
+            "completed": 4.0
+          },
+          "post_first_tokens": 2080,
+          "prefill_tps": 1181.212076081096,
+          "decode_tps": 51.89729522807528,
+          "cached_fraction": 0.9242151021783483,
+          "mtp_acceptance": 0.6231086657496562,
+          "client_request_seconds": 57.73739132702758,
+          "client_decode_tps": 51.974272816778225
+        },
+        {
+          "lower": 70000,
+          "upper": 80000,
+          "requests": 7,
+          "context_min": 70489,
+          "context_max": 79350,
+          "native": {
+            "prompt_tokens": 517274.0,
+            "cached_tokens": 491200.0,
+            "prefill_tokens": 26074.0,
+            "prefill_seconds": 22.801967805004097,
+            "decode_seconds": 152.1722696839861,
+            "generation_tokens": 8043.0,
+            "draft_tokens": 8136.0,
+            "accepted_tokens": 5334.0,
+            "preemptions": 0.0,
+            "completed": 7.0
+          },
+          "post_first_tokens": 8036,
+          "prefill_tps": 1143.49779909249,
+          "decode_tps": 52.808570291343116,
+          "cached_fraction": 0.9495934456400283,
+          "mtp_acceptance": 0.6556047197640118,
+          "client_request_seconds": 175.60228672804078,
+          "client_decode_tps": 52.84771970275594
+        },
+        {
+          "lower": 80000,
+          "upper": 90000,
+          "requests": 9,
+          "context_min": 81003,
+          "context_max": 89100,
+          "native": {
+            "prompt_tokens": 774287.0,
+            "cached_tokens": 742400.0,
+            "prefill_tokens": 31887.0,
+            "prefill_seconds": 31.80581017100485,
+            "decode_seconds": 87.91989870401449,
+            "generation_tokens": 4596.0,
+            "draft_tokens": 4608.0,
+            "accepted_tokens": 3066.0,
+            "preemptions": 0.0,
+            "completed": 9.0
+          },
+          "post_first_tokens": 4587,
+          "prefill_tps": 1002.552672878277,
+          "decode_tps": 52.17248959126194,
+          "cached_fraction": 0.9588175960593424,
+          "mtp_acceptance": 0.6653645833333334,
+          "client_request_seconds": 120.68352299899561,
+          "client_decode_tps": 52.27144182825041
+        },
+        {
+          "lower": 90000,
+          "upper": 100000,
+          "requests": 1,
+          "context_min": 90444,
+          "context_max": 90444,
+          "native": {
+            "prompt_tokens": 90444.0,
+            "cached_tokens": 86400.0,
+            "prefill_tokens": 4044.0,
+            "prefill_seconds": 4.094409367986373,
+            "decode_seconds": 13.092905108002014,
+            "generation_tokens": 651.0,
+            "draft_tokens": 675.0,
+            "accepted_tokens": 427.0,
+            "preemptions": 0.0,
+            "completed": 1.0
+          },
+          "post_first_tokens": 650,
+          "prefill_tps": 987.688244272662,
+          "decode_tps": 49.64520819773897,
+          "cached_fraction": 0.955287249568794,
+          "mtp_acceptance": 0.6325925925925926,
+          "client_request_seconds": 17.286689480999485,
+          "client_decode_tps": 49.7188206977588
+        }
+      ],
+      "quality": {
+        "passed": 54,
+        "total": 54,
+        "checks": [
+          {
+            "id": "node/rng exact xorshift",
+            "name": "rng exact xorshift",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/rng zero and restore",
+            "name": "rng zero and restore",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/hash FNV-1a",
+            "name": "hash FNV-1a",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/rng invalid seeds",
+            "name": "rng invalid seeds",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/rng invalid restore atomic",
+            "name": "rng invalid restore atomic",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/config defaults and detached",
+            "name": "config defaults and detached",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config JSON roundtrip",
+            "name": "config JSON roundtrip",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config reject invalid",
+            "name": "config reject invalid",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/config coupled and prototype edge",
+            "name": "config coupled and prototype edge",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game initial and pure flap",
+            "name": "game initial and pure flap",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game fixed-step flight",
+            "name": "game fixed-step flight",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game paused and restarted",
+            "name": "game paused and restarted",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game seeded pipes",
+            "name": "game seeded pipes",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game lower boundary and no points on crash",
+            "name": "game lower boundary and no points on crash",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game passing one pipe once",
+            "name": "game passing one pipe once",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game snapshot roundtrip",
+            "name": "game snapshot roundtrip",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/game pipe and bird collision edges",
+            "name": "game pipe and bird collision edges",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game top boundary inclusive",
+            "name": "game top boundary inclusive",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game strict passing edge",
+            "name": "game strict passing edge",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game removes offscreen pipes",
+            "name": "game removes offscreen pipes",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game restore rejects corrupt snapshots",
+            "name": "game restore rejects corrupt snapshots",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/game no-op transitions detached",
+            "name": "game no-op transitions detached",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/input edge queue and release",
+            "name": "input edge queue and release",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/input ignore repeat and disposal",
+            "name": "input ignore repeat and disposal",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/pointer mapping/clamp",
+            "name": "pointer mapping/clamp",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/ticker first frame and backlog cap",
+            "name": "ticker first frame and backlog cap",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/ticker pause fresh base and invalid time",
+            "name": "ticker pause fresh base and invalid time",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/input custom binding validation",
+            "name": "input custom binding validation",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/pointer bad dimensions and values",
+            "name": "pointer bad dimensions and values",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/ticker fractional remainder",
+            "name": "ticker fractional remainder",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/ticker invalid options",
+            "name": "ticker invalid options",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/app import has no DOM side effects",
+            "name": "app import has no DOM side effects",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/scores ordering detached lists and reload",
+            "name": "scores ordering detached lists and reload",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/scores best ten tie order and clear",
+            "name": "scores best ten tie order and clear",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "node/scores invalid entry leaves list unchanged",
+            "name": "scores invalid entry leaves list unchanged",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/scores corrupt persisted data is inert",
+            "name": "scores corrupt persisted data is inert",
+            "passed": true,
+            "sealed": true
+          },
+          {
+            "id": "node/scores storage failure is reported",
+            "name": "scores storage failure is reported",
+            "passed": true,
+            "sealed": false
+          },
+          {
+            "id": "browser/WebGL2 procedural renderer and colors",
+            "name": "WebGL2 procedural renderer and colors",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer DPR resize and state immutability",
+            "name": "renderer DPR resize and state immutability",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer context loss and restore",
+            "name": "renderer context loss and restore",
+            "passed": true
+          },
+          {
+            "id": "browser/renderer destroy idempotent and commands reject",
+            "name": "renderer destroy idempotent and commands reject",
+            "passed": true
+          },
+          {
+            "id": "browser/app mounts ready with accessible controls",
+            "name": "app mounts ready with accessible controls",
+            "passed": true
+          },
+          {
+            "id": "browser/app buttons start pause restart",
+            "name": "app buttons start pause restart",
+            "passed": true
+          },
+          {
+            "id": "browser/app keyboard and canvas pointer",
+            "name": "app keyboard and canvas pointer",
+            "passed": true
+          },
+          {
+            "id": "browser/app snapshot detached and invalid count",
+            "name": "app snapshot detached and invalid count",
+            "passed": true
+          },
+          {
+            "id": "browser/app gameover and score/status text",
+            "name": "app gameover and score/status text",
+            "passed": true
+          },
+          {
+            "id": "browser/app responsive mobile canvas",
+            "name": "app responsive mobile canvas",
+            "passed": true
+          },
+          {
+            "id": "browser/app destroy idempotent and removes input",
+            "name": "app destroy idempotent and removes input",
+            "passed": true
+          },
+          {
+            "id": "browser/settings labelled inputs and keyboard isolation",
+            "name": "settings labelled inputs and keyboard isolation",
+            "passed": true
+          },
+          {
+            "id": "browser/settings valid apply and invalid atomic rejection",
+            "name": "settings valid apply and invalid atomic rejection",
+            "passed": true
+          },
+          {
+            "id": "browser/scores save once display and survive remount",
+            "name": "scores save once display and survive remount",
+            "passed": true
+          },
+          {
+            "id": "browser/scores clear persists through remount",
+            "name": "scores clear persists through remount",
+            "passed": true
+          },
+          {
+            "id": "browser/real entry point loads without JavaScript errors",
+            "name": "real entry point loads without JavaScript errors",
+            "passed": true
+          },
+          {
+            "id": "browser/app has no external runtime requests",
+            "name": "app has no external runtime requests",
+            "passed": true
+          }
+        ],
+        "all_stages_declared_complete": true
+      },
+      "stage_completions": {
+        "declared": 6,
+        "total": 6
+      },
+      "project_files": {
+        "README.md": "9b99eb647e62964c7f8bff7602de4b2b9210512f98a549df3a1262debfe4b38a",
+        "USER_GUIDE.md": "4a2043931c778b5f2c18100022fb2a07a15e5d708c23e95b8836a0702f91e93a",
+        "index.html": "ffd1cbfd30492ae40ec2bb1ce4e0bc31aee65dcd9e1065527a8d222aff227d42",
+        "main.js": "c58ef221adbe37a9a4ada60895d59b835a071f98aa1a5fbd0818801cf2b3229d",
+        "package.json": "6cab776a7f920178f6f096fb791ac0426dfbd50363325aee992e8530a8e605f7",
+        "specs/app.md": "48f725160db03e2ec58f29f33202f149ecb9e96c4ee517f14cb7ff4a2b442a16",
+        "specs/config.md": "570ab99926405a336b344f7559a8bfb014b99e018359bf0075fe68c27ae13dc6",
+        "specs/input.md": "9816b4a98e4c13792d4eaa006515d65ada66eba85311d9af735daa7b62868996",
+        "specs/random.md": "0eb208f2b2e5ebf03820edd8725c1e66b13b72c0bb84f99d4c9e101fd3a5158b",
+        "specs/renderer.md": "c2bb5892eb20b9bffa8a6b379f071dcc75f6ae49f6dacfee181b04b96e5a42d9",
+        "specs/scores.md": "a57956f2934ebf0aedd04c35b557d87f1d34109fce217391d7c6a8a9f10181e7",
+        "specs/simulation.md": "3c366b5d0a7dd69b236def5b921b7850daca74040c52f41b9b21283b3cec109a",
+        "src/app.js": "9d4f08108ec82e21b99f91f684aef939e7289897f449c7f7ba47d0599bd1882e",
+        "src/config.js": "837edca731e3812d56da794fafc8b60d861a0ca334ab7d8db5f5d6ef15d90db7",
+        "src/input.js": "3db01736373ac4927f50aa7aa09a1772d5566336936ba088b98c4f01632ac214",
+        "src/random.js": "fce4d2869e7876ff176b747776f98a3fdba1e00890c5a4621457d36c7a9f90b5",
+        "src/renderer.js": "6fe8599b69d5f9d7c6a9ea271e5cc6cf5f362d9e933bfdee2fe22efe8e500edb",
+        "src/scores.js": "29a400278ea644c22dbce7380c5417cddcf8d7c341e4039be9cb3bd02b55afc8",
+        "src/simulation.js": "a807f816c59a949419322c61d153d2afcc98be3909c7f34d07a6338dc637e865",
+        "style.css": "2228160e2d464e284e866102053fc2a5cc35b6598105190febcb935bbe1af460",
+        "tests/config.test.js": "8e681e98ed154a223af16586308a7032791a9964fd68127a778d8dbbff16b8a7",
+        "tests/input.test.js": "04edccb97f9a6e77920cf937f7c3c4e3d8f491f7b93fc6fc066bbc2bcd3bf1ab",
+        "tests/random.test.js": "d00c65431069c99292b55f62ef519d7ebc9f1926f81ae816c37436cc5ed54ccd",
+        "tests/scores.test.js": "55896aedebf31dd30ce195e5109b907fd0effd90577ca26505d5dca2ea28f877",
+        "tests/simulation.test.js": "9c247a55fe107311104393b458a835f373e7cd310ebcd206eddc9adcf6e7cc0f"
+      },
+      "conversation_sha256": "18ec79017554afcfc19e43aa7ebd1c0482504301893318584e380e600f0d7de8",
+      "raw_root": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-production-v1/readme-20261002/flappy-v7/exl3"
+    }
+  }
+}

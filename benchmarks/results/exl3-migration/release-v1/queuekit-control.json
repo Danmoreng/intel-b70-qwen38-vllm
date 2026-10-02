@@ -1,0 +1,165 @@
+{
+  "status": "MEASURED_NATIVE_CONTROL_WITH_SAME_TASK_FAILURE",
+  "image_id": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+  "override": {
+    "EXL3_GUARDED_ATTN": "0"
+  },
+  "native_summary_sha256": "a951a03d2ddbf1bfa923c628d86d25c6b7eb699fa1c4675ede44fa17d4648738",
+  "controller_sha256": "891f097834d98f7cd08742066477e1faddd57865884d471ac21acb02e08b674a",
+  "optimized": {
+    "fixture_id": "queuekit-agent-v2",
+    "fixture_manifest_sha256": "8e4bc9486c5a7aa02304d410969a7eae3247137d9ac17a6195447dc913c59732",
+    "fixture_project_sha256": "d5329abc789d8d4cd4ef19455389e5da2a47dedb5761695c2d7c506f34102ad4",
+    "tasks_sha256": "66967e28948e856d20a903a2ef79c8872a59f481e56dcda65b68c8285bf3bdf8",
+    "runner_sha256": "bccfeabdbebebae827ffa81ed1dedb0649de5319f4e07984c1c80580963d4fd0",
+    "wall_s": 455.78689546498936,
+    "requests": 29,
+    "tool_calls": 33,
+    "metrics": {
+      "prompt_tokens": 461149.0,
+      "cached_tokens": 363200.0,
+      "prefill_tokens": 97949.0,
+      "prefill_seconds": 52.00187351902423,
+      "decode_seconds": 402.111727282987,
+      "generation_tokens": 27328.0,
+      "draft_tokens": 25092.0,
+      "accepted_tokens": 18985.0,
+      "preemptions": 0.0,
+      "completed": 29.0
+    },
+    "raw_results_path": "benchmark-results/exl3-production-v1/readme-20261002/coding-agent-v2/summary.json",
+    "raw_summary_sha256": "8f161ba44308e6998f0ef933c9e62a1e8f610838630c8c8a169f03a5f9f2bbe6",
+    "tasks_passed": 1,
+    "tasks_total": 2,
+    "acceptance_status": "FAIL_GENERATED_TASK_CASE",
+    "acceptance_tests_passed": 7,
+    "acceptance_tests_total": 8,
+    "task_results": [
+      {
+        "task": "priority-retry-cancel",
+        "passed": true,
+        "tests_passed": 4,
+        "tests_total": 4,
+        "failed_cases": [],
+        "output": "test_cancel_never_reappears (test_task1.PriorityRetryCancel.test_cancel_never_reappears) ... ok\ntest_input_errors_and_api (test_task1.PriorityRetryCancel.test_input_errors_and_api) ... ok\ntest_priority_and_stable_ties (test_task1.PriorityRetryCancel.test_priority_and_stable_ties) ... ok\ntest_retry_moves_to_end_of_priority (test_task1.PriorityRetryCancel.test_retry_moves_to_end_of_priority) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+        "project_sha256": "ec9ec1db2944fdcf6184b67962030afe675c09f54b17c02cebf29eeff77954ec"
+      },
+      {
+        "task": "snapshot-restore-metrics",
+        "passed": false,
+        "tests_passed": 3,
+        "tests_total": 4,
+        "failed_cases": [
+          "test_roundtrip_and_detachment (test_task2.SnapshotRestoreMetrics.test_roundtrip_and_detachment)"
+        ],
+        "output": "test_invalid_restore_atomic (test_task2.SnapshotRestoreMetrics.test_invalid_restore_atomic) ... ok\ntest_metrics_and_duplicate_rejection (test_task2.SnapshotRestoreMetrics.test_metrics_and_duplicate_rejection) ... ok\ntest_pending_order_and_retry_state (test_task2.SnapshotRestoreMetrics.test_pending_order_and_retry_state) ... ok\ntest_roundtrip_and_detachment (test_task2.SnapshotRestoreMetrics.test_roundtrip_and_detachment) ... ERROR\n\n======================================================================\nERROR: test_roundtrip_and_detachment (test_task2.SnapshotRestoreMetrics.test_roundtrip_and_detachment)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/coding-fixture/v2/acceptance/test_task2.py\", line 18, in test_roundtrip_and_detachment\n    restored = JobQueue.from_snapshot(snap)\n  File \"/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-production-v1/readme-20261002/coding-agent-v2/project/queuekit/queue.py\", line 163, in from_snapshot\n    raise ValueError(f\"job {job_id!r} is not referenced in pending list\")\nValueError: job 'a' is not referenced in pending list\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (errors=1)\n",
+        "project_sha256": "0038d5fa98dfcf1d88368ca58768bea936cd01cef939cb3704ee0b08512cb94c"
+      }
+    ],
+    "weighted_decode_tps_post_first": 67.88909188114344,
+    "prompt_tokens_min": 716,
+    "prompt_tokens_max": 33967
+  },
+  "native": {
+    "fixture_id": "queuekit-agent-v2",
+    "fixture_manifest_sha256": "8e4bc9486c5a7aa02304d410969a7eae3247137d9ac17a6195447dc913c59732",
+    "fixture_project_sha256": "d5329abc789d8d4cd4ef19455389e5da2a47dedb5761695c2d7c506f34102ad4",
+    "tasks_sha256": "66967e28948e856d20a903a2ef79c8872a59f481e56dcda65b68c8285bf3bdf8",
+    "runner_sha256": "bccfeabdbebebae827ffa81ed1dedb0649de5319f4e07984c1c80580963d4fd0",
+    "identity": {
+      "container_id": "4bd0a22038269ec685c6c779e3b8d82b6edd2bdeeacfb98edd0d3db993e191c3",
+      "image_id": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+      "image_tag": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+      "command": [
+        "serve",
+        "/models/checkpoint",
+        "--served-model-name",
+        "Qwen3.8-27B",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--revision",
+        "113cf7ab958054860e43fb7f3063b1af19171095",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "262144",
+        "--kv-cache-dtype",
+        "fp8",
+        "--gpu-memory-utilization",
+        "0.965",
+        "--max-num-seqs",
+        "16",
+        "--max-num-batched-tokens",
+        "4096",
+        "--scheduler-reserve-full-isl",
+        "--watermark",
+        "0.0",
+        "--enable-prefix-caching",
+        "--mamba-cache-mode",
+        "align",
+        "--speculative-config",
+        "{\"method\":\"mtp\",\"num_speculative_tokens\":3}",
+        "--limit-mm-per-prompt",
+        "{\"image\":32,\"video\":4}",
+        "--mm-processor-kwargs",
+        "{\"max_pixels\":4194304}",
+        "--enable-auto-tool-choice",
+        "--tool-call-parser",
+        "qwen3_xml",
+        "--reasoning-parser",
+        "qwen3",
+        "--reasoning-config",
+        "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+        "--override-generation-config",
+        "{\"max_new_tokens\":16384}",
+        "--middleware",
+        "request_defaults.ChatDefaults",
+        "--compilation-config",
+        "{\"cudagraph_mode\":\"FULL_DECODE_ONLY\",\"cudagraph_capture_sizes\":[1,2,4,8,12,16,24,32,40,48,56,64]}"
+      ],
+      "policy_sha256": "cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542"
+    },
+    "wall_s": 145.3903306150023,
+    "requests": 11,
+    "tool_calls": 15,
+    "task_results": [
+      {
+        "task": "priority-retry-cancel",
+        "acceptance": {
+          "passed": true,
+          "exit_code": 0,
+          "tests_run": 4,
+          "output": "test_cancel_never_reappears (test_task1.PriorityRetryCancel.test_cancel_never_reappears) ... ok\ntest_input_errors_and_api (test_task1.PriorityRetryCancel.test_input_errors_and_api) ... ok\ntest_priority_and_stable_ties (test_task1.PriorityRetryCancel.test_priority_and_stable_ties) ... ok\ntest_retry_moves_to_end_of_priority (test_task1.PriorityRetryCancel.test_retry_moves_to_end_of_priority) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n"
+        },
+        "project_sha256": "07f3f6f2b5da471847b475433fc3181e0da4f246f21312264cb46d610e95110b"
+      },
+      {
+        "task": "snapshot-restore-metrics",
+        "acceptance": {
+          "passed": false,
+          "exit_code": 1,
+          "tests_run": 4,
+          "output": "test_invalid_restore_atomic (test_task2.SnapshotRestoreMetrics.test_invalid_restore_atomic) ... ok\ntest_metrics_and_duplicate_rejection (test_task2.SnapshotRestoreMetrics.test_metrics_and_duplicate_rejection) ... ok\ntest_pending_order_and_retry_state (test_task2.SnapshotRestoreMetrics.test_pending_order_and_retry_state) ... ok\ntest_roundtrip_and_detachment (test_task2.SnapshotRestoreMetrics.test_roundtrip_and_detachment) ... ERROR\n\n======================================================================\nERROR: test_roundtrip_and_detachment (test_task2.SnapshotRestoreMetrics.test_roundtrip_and_detachment)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/coding-fixture/v2/acceptance/test_task2.py\", line 18, in test_roundtrip_and_detachment\n    restored = JobQueue.from_snapshot(snap)\n  File \"/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-production-v1/queuekit-native-control-20261002/coding/project/queuekit/queue.py\", line 157, in from_snapshot\n    raise ValueError(\"pending list does not match job states\")\nValueError: pending list does not match job states\n\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nFAILED (errors=1)\n"
+        },
+        "project_sha256": "9602656352e3635d285dfd6c522257d7330c2673667d20555b55b71df0968aad"
+      }
+    ],
+    "metrics": {
+      "prompt_tokens": 61612.0,
+      "cached_tokens": 30400.0,
+      "prefill_tokens": 31212.0,
+      "prefill_seconds": 15.757999427994946,
+      "decode_seconds": 129.0661425270082,
+      "generation_tokens": 8360.0,
+      "draft_tokens": 8208.0,
+      "accepted_tokens": 5634.0,
+      "preemptions": 0.0,
+      "completed": 11.0
+    },
+    "prompt_tokens_by_usage": 61612,
+    "generated_tokens_by_usage": 8360
+  },
+  "interpretation": "Both native and optimized arms reject a valid saved running job during snapshot restoration. This one-pair utility result does not identify an attention regression or establish a model ranking. The optimized output and failed score are not repaired or replaced."
+}

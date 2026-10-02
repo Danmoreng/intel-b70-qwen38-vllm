@@ -1,8 +1,170 @@
 {
   "schema_version": 1,
-  "image_tag": "local/b70-qwen38-vllm:production-onednn-v2",
-  "image_id": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
-  "base_image_id": "sha256:a42cda993bf6492acc39d23e9382e27a17efca4657bea07d80d0c28228a1623a",
-  "policy_sha256": "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
-  "row_dispatch_sha256": "238f1735c8307712e07f9fb7f0ca94e90adfe100573e8d911a7127268a91c9b2"
+  "status": "QUALIFIED_RELEASE",
+  "image_tag": "local/b70-qwen38-vllm:production-exl3-v1",
+  "image_id": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+  "runtime_image_id": "sha256:6cf4899923749b221a008834f7fd42e0aa7e3f58546f408faf77cbf4da86554b",
+  "policy_sha256": "cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542",
+  "vllm_config": {
+    "dtype": "float16",
+    "max_model_len": 262144,
+    "kv_cache_dtype": "fp8",
+    "gpu_memory_utilization": 0.965,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 4096,
+    "scheduler_reserve_full_isl": true,
+    "watermark": 0.0,
+    "enable_prefix_caching": true,
+    "mamba_cache_mode": "align",
+    "speculative_config": {
+      "method": "mtp",
+      "num_speculative_tokens": 3
+    },
+    "limit_mm_per_prompt": {
+      "image": 32,
+      "video": 4
+    },
+    "mm_processor_kwargs": {
+      "max_pixels": 4194304
+    },
+    "enable_auto_tool_choice": true,
+    "tool_call_parser": "qwen3_xml",
+    "reasoning_parser": "qwen3",
+    "reasoning_config": {
+      "reasoning_start_str": "<think>",
+      "reasoning_end_str": "</think>"
+    },
+    "override_generation_config": {
+      "max_new_tokens": 16384
+    },
+    "middleware": "request_defaults.ChatDefaults",
+    "compilation_config": {
+      "cudagraph_mode": "FULL_DECODE_ONLY",
+      "cudagraph_capture_sizes": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        48,
+        56,
+        64
+      ]
+    }
+  },
+  "request_defaults_sha256": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2",
+  "checkpoint_files_sha256": {
+    "config.json": "dab9abc478e1b1b928ef354f27a26fc90e8191a4a3ce5f3d19aa21558216b267",
+    "generation_config.json": "e70c136c1b78ddc1fb0905bac8e733a4dc448d4f852a5dd75143fffc70be550e",
+    "model-00001-of-00002.safetensors": "b1e7fcc53a2bb211460ebb65e329cdb7a5af8bd819dcbcd89e06f0ccc041e590",
+    "model-00002-of-00002.safetensors": "c6d72f51b0cd99510239b264fef37bc26c950e6843f35421ce4830d4f87f8c05",
+    "model.safetensors.index.json": "c3111b8308db5396b1eed054967cf7dfbfc2508764f8813aebbaaf4a05860bc2",
+    "preprocessor_config.json": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+    "quantization_config.json": "c85767fc0bd991d1b7ddebe52feeb9a556216883de2cdb3f679ce85f989e29e0",
+    "tokenizer.json": "0997f410c57a1f4e53b09e4be8f4a172d90edd9564368fb0847030937229b9f3",
+    "tokenizer_config.json": "b11349aafa7cdc6a320767cf7ceb29ed82f7eda5d65e8e0819e76f0ce947bf27",
+    "video_preprocessor_config.json": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+    "vocab.json": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003"
+  },
+  "runtime_artifacts_sha256": {
+    "/opt/exl3xpu/exl3xpu/_C.so": "48f879c16f3695dbb0fae7388f1e318591d6408acc7be15b0093a0bbb6d9053b",
+    "/opt/exl3xpu/m04/m04.so": "eaa18427db27d4fceeca8a17c8a3c6b019b7678f39bf98affc1736b9f2c2d631",
+    "/opt/b70/libdnnl.so.3": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20",
+    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "737c6dfbfd86b40dfd8c2786452d147e916a8ae8a1fd67fdb2ad42649dd764d0"
+  },
+  "rootfs_metadata_attestation": {
+    "status": "METADATA_FROZEN_NOT_RELEASE_APPROVED",
+    "image_tag": "local/b70-qwen38-vllm:exl3-candidate-v1",
+    "image_id": "sha256:c09015ce22180fbc90ef0f5070f4a7116c8d11be785067499477accf0216f21f",
+    "runtime_image_id": "sha256:6cf4899923749b221a008834f7fd42e0aa7e3f58546f408faf77cbf4da86554b",
+    "policy_sha256": "cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542",
+    "rootfs_identical": true,
+    "rootfs": {
+      "Layers": [
+        "sha256:65e5d715ea720349e6475f91651a0956279fc295a45fd73aa04f1cec046281a1",
+        "sha256:a2aab35a5ea1fa52c2d67a5c066e36214de7ecdd86c286d66e66148bd9034270",
+        "sha256:25baf4ec65926e39336a9b863239b5548cb4fffb27b0c36b8b37007fa12c07d4",
+        "sha256:f7e9f195343f9376dda185883619f476b9e90d291730e1e6002a7fab1c5ff15d",
+        "sha256:72993c2d42eea255fcfafcbc1899565aee9fce2ae754ef47f0885984ca44a7bd",
+        "sha256:75c2b420906db31f4d75abed4d73c7dba5003d2baa22a03c5b5a9389e1fdd16b",
+        "sha256:a2a63a39b107293b8f435dcd5004fddcd7fd867296c252406a0a49852852db2a",
+        "sha256:20c45840c292d2931023c97784cf2529d44e6339a369130d89a69ee582ab96d2",
+        "sha256:a90fd457737920a68cfc55dc1f8fdf1e88b45e0b5088771f7d3d9c3c20802c7c",
+        "sha256:c306386f1abd1b373c404ae22633565be10d2ecadaf7a8b072a16a7dcacffd74",
+        "sha256:598995d956023618909c5fc321838eb45f790b3e91612c196015547b31478845",
+        "sha256:b05457b622259a0566066fcfad598f0e93b08b668b3122bfc6d9288bb358aefb",
+        "sha256:50dd499321a2e538dc3dfec16cb1c3f32c70bc3b34c38e2d4e6f631f09ee8b27",
+        "sha256:074d170251addbc56cf6395102853b08cd26f947f2fa4d886326d95eb91c4968",
+        "sha256:a9539c62694214ba5545952bcdecfc5dcbca23d8ae6d5962019a8ea37a102ab3",
+        "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+        "sha256:28691ffedc81fe7eea57dcc0a843be2cac5acb42d10de9d85071f4fc4f33d9fd",
+        "sha256:24bc817b5f77b21ed5901d0c2589aa8ea488e758f6b6770305fb6f96b75e26c3",
+        "sha256:7b0332db157096427b941d4c5189208a4aa69fc4fbb1c9a566e6653cc3c05c71",
+        "sha256:aeda29fbc5074bcd24d3e0ae051b00d9614cf91b4e8917859a0567bd8602fca9",
+        "sha256:880ce1e343469de47a203fbaf2c0c513143ca3d077240df828023969c8449b31",
+        "sha256:10cd2d950eb6f6882072296869f150aed143fe128ce15195d922dcf1e63ab126",
+        "sha256:d3adeefe061139991a9179e88a5533b33a9f1c33f7fe32e2c7de3dfb5a7f1c29",
+        "sha256:e28bb6f0f51fd88c664dfff25c780f03222a7b84053bdfe5fbfe9172b5d31b4f",
+        "sha256:5c709c895f3e10bc57aa4eff7bc970f3099b837b01d3ec8d49bd0943ed21ae22",
+        "sha256:e0281fcb02c62b19d35374a0ca88dd4fbeeaf2ba3de7778adf0fe3888b7b0797",
+        "sha256:a60d19135ae16b19fb6ef817a98e90cd05ab9b5bc3a732e290edfa4f4c36d565",
+        "sha256:d652d4a4f9ec41d68bddb18c408a5c4f1d50316e47d693d905ff6e0e4beaee48",
+        "sha256:a6ff669afb5aacede3e747a6f375c2ea9aca79fe99ff35f29ae54ec94bb89b27",
+        "sha256:6e3775ddb194b0b0afb24a60d6018e4ae30ce9ac5bccfc2d6fe7e4cca4a8f942",
+        "sha256:71bc371d257dc7492bebafab42ba9fa9eea22cbfa148eb5193333ad045574100",
+        "sha256:b8e61556a99b06c3f3c4387f178cf659a5fc1924e1b12c6bae7619550f64085d",
+        "sha256:740a533effa1ead6188b7de23f40ac57f5023b83f375783c9b70fa42b1150318",
+        "sha256:7ae18ec5e69a4b67d074080828d406bacc3a28ab3b8637d54fab857f3002f540",
+        "sha256:5c9438e5071c56cda5062e3c1b876dc3843f877af89dc2160690814414fdafa8",
+        "sha256:3da264270b495faa05d49ba28c1dc57f5da5523bad7ff4b10f2fd6d50f4199e3",
+        "sha256:81b1deca8c2b4baf1ceb9df41c5cda5a562f0c1b14c3cc6ff429d36dafa53b11",
+        "sha256:1ac0af9439e2f689b89904dca0a0505f8b4035022720208f9b1d8e4e4168ba38",
+        "sha256:b7b53c2b5d62b82adb072b3dc2afa06c6f536194864d605007ff1992f60f4989",
+        "sha256:000fe267bbdd8560ba564e71098ced2a2863312bd1866124bcf47ef5524b8fb7",
+        "sha256:5429327c37a4d21be4d884c7c4f26ccc8d5404deafefe0612c8a3ae5d87e11c5",
+        "sha256:a9f29b95808177eb3b9dce5fc0eacd716f8ba61e29eced8fd7c349a6803711a9",
+        "sha256:055c156d60fdb054562be160be5f10ef154e510f929f3088a74805e2801349e0",
+        "sha256:dae5b8ca6a934dedf32ef55f897be35c8d35c619f90f2aa205da67cf4d8c59cc",
+        "sha256:e14c3ee6a82a1cdf00a016ca18b05cef666f9aca48cea898d4902f7bcf1446fa",
+        "sha256:3f518c1031053e70afefed1886b03cc3fa061be583829c8c10a5f77b01723938",
+        "sha256:302cd4f8ea01166c85c26a2e0384940ed0073e1033e85ac4838c82e1e1b0f816",
+        "sha256:0d2c410abee71be39c95ec699ef04956b83144243776c05eeb1b75b5d48524d8",
+        "sha256:5526ddf1b1886ba7d1686ccc88ec485013319767acbeac23969fdbb07e6e8513",
+        "sha256:d1cb47d6bb26a47777b53eccd8b1bd675d90cd7cb356f195cbe169db61051801",
+        "sha256:d797a6719a021a8f3b8ae1bfe752c6320ea759d6a4e5b141a16f4fc73d892cb5",
+        "sha256:146c2f1c564657bd338214534912a975877a26e440110cfd210519172b596af3",
+        "sha256:6c561e9a51c681b771c3aea091f9dbcc5efbad03b16fabd43cf34fb8157ed364",
+        "sha256:a6988d8240f448c5af661f6288a9d6c5531ebea656aab7d1d6a912608dbe52f4",
+        "sha256:b8c26306fc7eac6b6b0261878e1a1d1602be392e3bd68d06fa1ca18d0d3e6b34",
+        "sha256:81e49e78671fd7da440759a77ec417a5f7a3ee0431642c57ee123ca368104aff",
+        "sha256:a58707696ae84783862002f382a8344608ef501b026b620dd96ccea7f967f117",
+        "sha256:85c2c5c318320f9581ea0fba4d110607bfe4c0a1cc4cb6742edc9da71ad7268f",
+        "sha256:e781fc499d1114bfcd23e1e6bddf3b062d18ac7e1679441bd932646b522d0381",
+        "sha256:62f8d25fd21064712fe5f48c7632f0995834826a2046df8cc9873b35003bd5a3",
+        "sha256:97dd27cf1b00b56aeeb8245a1f733b4931b633dd98ab8f4aed057d50ac0c8b91",
+        "sha256:0b148923f662ec31291549a7705df82995ab590fa6cd3be7df13cc7f24f92fce"
+      ],
+      "Type": "layers"
+    },
+    "environment_changes": {
+      "B70_POLICY_SHA256": [
+        "4ce5f3bd77710fe08ac4b96ee761c50eb13c2d3b48ac74f20ab7fced82b4b368",
+        "cbe1755c37b888528797ca5c0f51cf9562aa4bd8cb8ee149d0cd7bb15eb78542"
+      ]
+    },
+    "note": "Only labels, unused EXL3 legacy policy identity env and default profile CMD differ. Serving argv and optimized env are taken from the same frozen optimized YAML. No rebuild or tensor change."
+  },
+  "qualification_review": {
+    "path": "benchmarks/results/exl3-migration/release-v1/decision.json",
+    "sha256": "a01cf8feee31f1de8fa970a849d619684875f9ea64818a3d1d299f08db466507"
+  },
+  "qualification_note": "Engine gates pass; production service enabled/active, same measured arguments/environment, 409/409 loader including 8 MTP, text/tool/image smoke passes. QueueKit generated-task failure remains 7/8 in both optimized and native control; Flappy v7 both 54/54.",
+  "production_start_receipt": {
+    "path": "benchmarks/results/exl3-migration/release-v1/promotion.json",
+    "sha256": "429cb4595ce5737dcb6c288bcd5e89e7fdb76f5a01381e180f155f4ea10efa5b"
+  }
 }

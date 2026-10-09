@@ -1,0 +1,11 @@
+{
+  "status": "REPRODUCED_DRAFT_LENGTH_AOT_CACHE_COLLISION_BEFORE_PATCH",
+  "affected_installed_version": "vLLM 0.31.0",
+  "original_log_sha256": "bdcd1c45a320828b57fe6f5d8899d78d77b76a9551126f20aed21bdc0928538d",
+  "evidence": [
+    "(EngineCore pid=67) ERROR 10-09 18:57:58 [core.py:1433] AssertionError: expected size 16==16, stride 40960==35840 at dim=0; expected size 8==7, stride 5120==5120 at dim=1",
+    "AssertionError: expected size 16==16, stride 40960==35840 at dim=0; expected size 8==7, stride 5120==5120 at dim=1"
+  ],
+  "patch": "SpeculativeConfig.compute_hash includes num_speculative_tokens",
+  "numeric_kernel_failure": false
+}

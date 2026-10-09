@@ -1,0 +1,5 @@
+FROM sha256:9d276b4595a7ddbd7293be19ee277f91210d8d3c9af537f69d988c708838417b
+COPY patch_cache.py /opt/m04-wide/patch_cache.py
+ARG SPECULATIVE_SOURCE_SHA
+RUN python /opt/m04-wide/patch_cache.py /opt/venv/lib/python3.12/site-packages/vllm/config/speculative.py "$SPECULATIVE_SOURCE_SHA"
+LABEL org.local.b70.experiment="M04 q2..9; draft-length AOT isolation; unqualified serving"

@@ -1,0 +1,13 @@
+{
+  "status": "PINNED_MODEL_CACHE_STRUCTURE_NOT_ALLOCATED_MEMORY_MEASUREMENT",
+  "target_config_sha256": "dab9abc478e1b1b928ef354f27a26fc90e8191a4a3ce5f3d19aa21558216b267",
+  "draft_config_sha256": "45b073285ccec54c62ffafdb726d2676d4965dc4fe9ef2256cc3a6933e61b8f3",
+  "mtp_source_sha256": "d206addc79b7d01aabe54be57a6610b897a88d1130df51d39b3975b53599110b",
+  "mtp_own_full_attention_layers": 1,
+  "dflash_own_sliding_attention_layers": 5,
+  "dflash_window_tokens": 2048,
+  "dflash_kv_heads": 8,
+  "dflash_head_dim": 128,
+  "target_kv_replaced_or_duplicated": false,
+  "note": "Verification uses the ordinary target cache in both methods. Draft layers hold their own projected K/V; shared allocation is not shared layer contents. Grouping, prefix caching and speculative reservations can exceed the active window footprint."
+}

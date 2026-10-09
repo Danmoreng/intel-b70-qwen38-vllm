@@ -1,0 +1,239 @@
+{
+  "status": "EXPERIMENT_ONLY_NOT_PRODUCTION_QUALIFICATION",
+  "baseline": "stored qualified vLLM 0.31 MTP3, identical frozen first three repeats; no baseline rerun",
+  "baseline_sha256": "249eb2872f76e735d25ea17e964e691c54cae1348bd696dd1601e109a6dba655",
+  "arms": [
+    {
+      "method": "mtp",
+      "name": "mtp-high-scout-k5",
+      "depth": 5,
+      "context_limit": 262144,
+      "image": "sha256:b0b9244420a2586f8328b14aeff21d94673632ad7342032a285f3b877f2de49b",
+      "benchmark_sha256": "035d6c64da558756c69dfb77b96003623db17b0109e8ed40cda274fcee661f47",
+      "measurements": [
+        {
+          "scenario": "phase-32k-c1",
+          "mtp3": {
+            "prefill_tps": 1990.4062565470413,
+            "decode_tps": 55.192979743268985,
+            "ttft_s": 16.495080180000514,
+            "acceptance": 0.5522904062229905,
+            "cases": 3,
+            "sampled_window_issues": [],
+            "round_equivalent_metric_used": false
+          },
+          "candidate": {
+            "prefill_tps": 2067.859632549122,
+            "decode_tps": 55.95356932298679,
+            "ttft_s": 15.890223804992274,
+            "acceptance": 0.4459601259181532,
+            "cases": 3,
+            "sampled_window_issues": [],
+            "round_equivalent_metric_used": false
+          },
+          "decode_change_pct": 1.378054932449202
+        }
+      ],
+      "matching_frozen_request_sha256": [
+        {
+          "path": "phase-32k-c1-r1/prompt-1.txt",
+          "sha256": "12e77a588e47c5aa865da72dbfc12830741604d06d1595777a5968f8c6c49d7d"
+        },
+        {
+          "path": "phase-32k-c1-r1/request-1.json",
+          "sha256": "6bdff660156bb60aeb361ca33ad1260f9cba2fc772f535d88183d25cf2f1ddba"
+        },
+        {
+          "path": "phase-32k-c1-r2/prompt-1.txt",
+          "sha256": "cd0f4910df1b4f2a0b94b358e602f9e1722ec1fb0169338455ee403c43cae34b"
+        },
+        {
+          "path": "phase-32k-c1-r2/request-1.json",
+          "sha256": "3b851c467da478530a0e8156872a4e26e171659f420736c96f8349246ecfd959"
+        },
+        {
+          "path": "phase-32k-c1-r3/prompt-1.txt",
+          "sha256": "8edd2b4209144e503784f023e633ea11611f668c5c3d47ea598d8b367d36de07"
+        },
+        {
+          "path": "phase-32k-c1-r3/request-1.json",
+          "sha256": "32b5bdafcc5de79dfc9aca53812fe70968f2bcf73333954edccf0702a49b544a"
+        }
+      ]
+    },
+    {
+      "method": "mtp",
+      "name": "mtp-high-scout-k6",
+      "depth": 6,
+      "context_limit": 262144,
+      "image": "sha256:b0b9244420a2586f8328b14aeff21d94673632ad7342032a285f3b877f2de49b",
+      "benchmark_sha256": "a69756867dcc3c4eba8c544eafaeb782c0d03bd26c46b4640130ed1e69ecd8ad",
+      "measurements": [
+        {
+          "scenario": "phase-32k-c1",
+          "mtp3": {
+            "prefill_tps": 1990.4062565470413,
+            "decode_tps": 55.192979743268985,
+            "ttft_s": 16.495080180000514,
+            "acceptance": 0.5522904062229905,
+            "cases": 3,
+            "sampled_window_issues": [],
+            "round_equivalent_metric_used": false
+          },
+          "candidate": {
+            "prefill_tps": 2061.949909407108,
+            "decode_tps": 59.56065058499362,
+            "ttft_s": 15.913585194997722,
+            "acceptance": 0.4145880574452003,
+            "cases": 3,
+            "sampled_window_issues": [],
+            "round_equivalent_metric_used": false
+          },
+          "decode_change_pct": 7.91345359870208
+        }
+      ],
+      "matching_frozen_request_sha256": [
+        {
+          "path": "phase-32k-c1-r1/prompt-1.txt",
+          "sha256": "12e77a588e47c5aa865da72dbfc12830741604d06d1595777a5968f8c6c49d7d"
+        },
+        {
+          "path": "phase-32k-c1-r1/request-1.json",
+          "sha256": "6bdff660156bb60aeb361ca33ad1260f9cba2fc772f535d88183d25cf2f1ddba"
+        },
+        {
+          "path": "phase-32k-c1-r2/prompt-1.txt",
+          "sha256": "cd0f4910df1b4f2a0b94b358e602f9e1722ec1fb0169338455ee403c43cae34b"
+        },
+        {
+          "path": "phase-32k-c1-r2/request-1.json",
+          "sha256": "3b851c467da478530a0e8156872a4e26e171659f420736c96f8349246ecfd959"
+        },
+        {
+          "path": "phase-32k-c1-r3/prompt-1.txt",
+          "sha256": "8edd2b4209144e503784f023e633ea11611f668c5c3d47ea598d8b367d36de07"
+        },
+        {
+          "path": "phase-32k-c1-r3/request-1.json",
+          "sha256": "32b5bdafcc5de79dfc9aca53812fe70968f2bcf73333954edccf0702a49b544a"
+        }
+      ]
+    },
+    {
+      "method": "mtp",
+      "name": "mtp-high-scout-k7",
+      "depth": 7,
+      "context_limit": 262144,
+      "image": "sha256:b0b9244420a2586f8328b14aeff21d94673632ad7342032a285f3b877f2de49b",
+      "benchmark_sha256": "36760e19bd22151c930c14feaecd783d786eecfac8bbeac0c02493df69501ac1",
+      "measurements": [
+        {
+          "scenario": "phase-32k-c1",
+          "mtp3": {
+            "prefill_tps": 1990.4062565470413,
+            "decode_tps": 55.192979743268985,
+            "ttft_s": 16.495080180000514,
+            "acceptance": 0.5522904062229905,
+            "cases": 3,
+            "sampled_window_issues": [],
+            "round_equivalent_metric_used": false
+          },
+          "candidate": {
+            "prefill_tps": 2060.5789945417187,
+            "decode_tps": 59.53993237242615,
+            "ttft_s": 15.929048306003097,
+            "acceptance": 0.3631570275168891,
+            "cases": 3,
+            "sampled_window_issues": [],
+            "round_equivalent_metric_used": false
+          },
+          "decode_change_pct": 7.875915830921043
+        }
+      ],
+      "matching_frozen_request_sha256": [
+        {
+          "path": "phase-32k-c1-r1/prompt-1.txt",
+          "sha256": "12e77a588e47c5aa865da72dbfc12830741604d06d1595777a5968f8c6c49d7d"
+        },
+        {
+          "path": "phase-32k-c1-r1/request-1.json",
+          "sha256": "6bdff660156bb60aeb361ca33ad1260f9cba2fc772f535d88183d25cf2f1ddba"
+        },
+        {
+          "path": "phase-32k-c1-r2/prompt-1.txt",
+          "sha256": "cd0f4910df1b4f2a0b94b358e602f9e1722ec1fb0169338455ee403c43cae34b"
+        },
+        {
+          "path": "phase-32k-c1-r2/request-1.json",
+          "sha256": "3b851c467da478530a0e8156872a4e26e171659f420736c96f8349246ecfd959"
+        },
+        {
+          "path": "phase-32k-c1-r3/prompt-1.txt",
+          "sha256": "8edd2b4209144e503784f023e633ea11611f668c5c3d47ea598d8b367d36de07"
+        },
+        {
+          "path": "phase-32k-c1-r3/request-1.json",
+          "sha256": "32b5bdafcc5de79dfc9aca53812fe70968f2bcf73333954edccf0702a49b544a"
+        }
+      ]
+    },
+    {
+      "method": "mtp",
+      "name": "mtp-high-scout-k8",
+      "depth": 8,
+      "context_limit": 262144,
+      "image": "sha256:b0b9244420a2586f8328b14aeff21d94673632ad7342032a285f3b877f2de49b",
+      "benchmark_sha256": "79c750edf1538346d963aa0582a3e84c454043e5619a49287112522a49d3b06a",
+      "measurements": [
+        {
+          "scenario": "phase-32k-c1",
+          "mtp3": {
+            "prefill_tps": 1990.4062565470413,
+            "decode_tps": 55.192979743268985,
+            "ttft_s": 16.495080180000514,
+            "acceptance": 0.5522904062229905,
+            "cases": 3,
+            "sampled_window_issues": [],
+            "round_equivalent_metric_used": false
+          },
+          "candidate": {
+            "prefill_tps": 2061.5530976661476,
+            "decode_tps": 54.4565645043483,
+            "ttft_s": 15.938731979986187,
+            "acceptance": 0.34793972939729395,
+            "cases": 3,
+            "sampled_window_issues": [],
+            "round_equivalent_metric_used": false
+          },
+          "decode_change_pct": -1.3342552664236118
+        }
+      ],
+      "matching_frozen_request_sha256": [
+        {
+          "path": "phase-32k-c1-r1/prompt-1.txt",
+          "sha256": "12e77a588e47c5aa865da72dbfc12830741604d06d1595777a5968f8c6c49d7d"
+        },
+        {
+          "path": "phase-32k-c1-r1/request-1.json",
+          "sha256": "6bdff660156bb60aeb361ca33ad1260f9cba2fc772f535d88183d25cf2f1ddba"
+        },
+        {
+          "path": "phase-32k-c1-r2/prompt-1.txt",
+          "sha256": "cd0f4910df1b4f2a0b94b358e602f9e1722ec1fb0169338455ee403c43cae34b"
+        },
+        {
+          "path": "phase-32k-c1-r2/request-1.json",
+          "sha256": "3b851c467da478530a0e8156872a4e26e171659f420736c96f8349246ecfd959"
+        },
+        {
+          "path": "phase-32k-c1-r3/prompt-1.txt",
+          "sha256": "8edd2b4209144e503784f023e633ea11611f668c5c3d47ea598d8b367d36de07"
+        },
+        {
+          "path": "phase-32k-c1-r3/request-1.json",
+          "sha256": "32b5bdafcc5de79dfc9aca53812fe70968f2bcf73333954edccf0702a49b544a"
+        }
+      ]
+    }
+  ]
+}

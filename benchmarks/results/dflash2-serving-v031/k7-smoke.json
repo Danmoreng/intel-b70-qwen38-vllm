@@ -1,0 +1,88 @@
+{
+  "cold": {
+    "id": "chatcmpl-998ba2e40c2a1f7a",
+    "object": "chat.completion",
+    "created": 1791569747,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef add(a: int, b: int) -> int:\n    \"\"\"Add two integers and return the result.\"\"\"\n    return a + b\n\n# Example\nprint(add(3, 5))  # Output: 8\n```",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.31.0-4b6257bb",
+    "usage": {
+      "prompt_tokens": 25,
+      "total_tokens": 79,
+      "completion_tokens": 54,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "warm": {
+    "id": "chatcmpl-ace690d567264863",
+    "object": "chat.completion",
+    "created": 1791569748,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef add(a: int, b: int) -> int:\n    \"\"\"Add two integers and return the result.\"\"\"\n    return a + b\n\n# Example\nprint(add(3, 5))  # Output: 8\n```",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.31.0-4b6257bb",
+    "usage": {
+      "prompt_tokens": 25,
+      "total_tokens": 79,
+      "completion_tokens": 54,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "accepted": 88.0,
+  "drafted": 140.0
+}

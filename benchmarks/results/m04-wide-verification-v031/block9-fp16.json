@@ -1,0 +1,32 @@
+{
+  "status": "PASS_NEW_BLOCK9_FP16_PRIMITIVES",
+  "checks": [
+    {
+      "rows": 0,
+      "finite": true,
+      "fp32_reference_pass": true
+    },
+    {
+      "rows": 1,
+      "finite": true,
+      "fp32_reference_pass": true
+    },
+    {
+      "rows": 9,
+      "finite": true,
+      "fp32_reference_pass": true
+    },
+    {
+      "rows": 36,
+      "finite": true,
+      "fp32_reference_pass": true
+    },
+    {
+      "compile_and_graph_replay": "PASS",
+      "dtype": "torch.float16"
+    }
+  ],
+  "device": "xpu",
+  "block_size": 9,
+  "dflash_source_sha256": "34da1d98d4f89c0b32ee26be95555c5098440d7d2d38931f6f913483dcac3e3e"
+}

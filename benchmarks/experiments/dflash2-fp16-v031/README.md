@@ -78,9 +78,12 @@ approximately 1.92 billion parameters, including the two candidate codebooks.
 ## Next integration gates
 
 Measure actual added model/activation/graph/KV-group memory at the existing context
-limit before throughput tests. Do not silently lower the context limit to make an
-unquantized draft fit. Quantized FP16-output draft linear layers are a separate
-candidate if necessary, with retained residual scaling and new numerical gates.
+limit before throughput tests. The subsequent
+[serving screen](../dflash2-serving-v031/README.md) records the user's explicit
+authorization to lower context temporarily for unquantized speed experiments;
+the eventual serving minimum remains 192000 tokens. Quantized FP16-output draft
+linear layers are a separate candidate if necessary, with retained residual
+scaling and new numerical gates.
 Then verify draft noncausal attention, candidate selection, nonzero acceptance,
 prefix reuse, outputs/abort/restart and long-context capacity before benchmarking.
 

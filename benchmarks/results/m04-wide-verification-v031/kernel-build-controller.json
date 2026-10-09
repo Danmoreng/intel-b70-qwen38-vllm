@@ -1,0 +1,42 @@
+{
+  "status": "COMPILE_AND_CPU_IMPORT_PASS_XPU_UNTESTED",
+  "builder_image": "sha256:a78ff8ea07752bb3bc156cd47043386777031f54531075060889f5b2b55b0505",
+  "kernel_source_commit": "6d92b1bfbf32767ecda8e819613eb151e70030ad",
+  "sycl_tla_commit": "87f6850680a580654b9ea2c80dbc01aeb36ad231",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--cpus",
+    "4",
+    "--memory",
+    "12g",
+    "-v",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/m04-wide-verification-v031-20261009/build-adaptive/kernels:/kernels:ro",
+    "-v",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/m04-wide-verification-v031-20261009/build-adaptive/sycl-tla:/sycl-tla:ro",
+    "-v",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/experiments/m04-wide-verification-v031:/src:ro",
+    "-v",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/m04-wide-verification-v031-20261009/build-adaptive/output:/output",
+    "--entrypoint",
+    "bash",
+    "sha256:a78ff8ea07752bb3bc156cd47043386777031f54531075060889f5b2b55b0505",
+    "/src/build-container.sh"
+  ],
+  "source_sha256": {
+    ".gitignore": "181314065df2f2fdaf920b1a8b5311daa216a2d6489a06ada5b49cc514d89417",
+    "patch_wrapper.py": "5a0e5bacaf22f2dd637112063ff0dbeddcf9c84996dc47d9bcc646ed6149d362",
+    "build.py": "466713bbf2c8903d18e75862206b0d46a918ec0f74c63d5af00571db74d54b21",
+    "probe_xpu.py": "168528cf41cfaf47fa18bd324227f327dfdc8d84e69049133f3d519f78e05df2",
+    "run_gpu.py": "feea706c0bd3660e0b8d40ebb4ec3772892a2f59d6e945e4aa4245c05ca08bcc",
+    "Dockerfile": "1e43594be7fc483c62eb7d2102dd34def2d523936a8dfe5d498cd474b6db9660",
+    ".dockerignore": "5161d563988838bd1be9e86c90af9c7fac8adfc7c3eed52e1b8bb07d3176a27c",
+    "build-container.sh": "f0d995909f3a0d21709a8503263670701856e3ea78f16596d51ca682d052f586",
+    "csrc/shared_kv_verification.cpp": "cecfb841b45fc2bc03e1f4d05108fafeb361fa53b6c6c9c967c08361e6822b62",
+    "patches/shared-kv-verification.patch": "3b1d3c3108ba55bad7cd2b780623fd9d1e7de438726dfc4aaf0828c6a9e4d45e"
+  },
+  "library_sha256": "56cd3cf8d79e7fe0b5fc7043fad8f50b8084a62c62c8dd321be902b8dea73a4b"
+}

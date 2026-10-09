@@ -1,0 +1,102 @@
+{
+  "status": "PASS_MTP5_TO_8_32K_SCOUT_ONLY",
+  "image": "local/b70-m04-wide:v031-cache-fixed",
+  "started_unix": 1791574874.456676,
+  "arms": [
+    {
+      "depth": 5,
+      "command": [
+        "/usr/bin/python3",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/experiments/dflash2-serving-v031/run_serving.py",
+        "--name",
+        "mtp-high-scout-k5",
+        "--method",
+        "mtp",
+        "--depth",
+        "5",
+        "--contexts",
+        "262144,192000",
+        "--benchmark",
+        "--scenario-names",
+        "phase-32k-c1",
+        "--image",
+        "local/b70-m04-wide:v031-cache-fixed"
+      ],
+      "status": "PASS_CHECKPOINT_NATIVE_MTP_STARTUP_ACCEPTANCE_AND_SPEED",
+      "campaign_path": "benchmark-results/dflash2-serving-v031-20261009/mtp-high-scout-k5/campaign.json",
+      "campaign_sha256": "0068c581ab431a34456211a03dee6c95ea6a5fac6e5a76b84193becd154bf861"
+    },
+    {
+      "depth": 6,
+      "command": [
+        "/usr/bin/python3",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/experiments/dflash2-serving-v031/run_serving.py",
+        "--name",
+        "mtp-high-scout-k6",
+        "--method",
+        "mtp",
+        "--depth",
+        "6",
+        "--contexts",
+        "262144,192000",
+        "--benchmark",
+        "--scenario-names",
+        "phase-32k-c1",
+        "--image",
+        "local/b70-m04-wide:v031-cache-fixed"
+      ],
+      "status": "PASS_CHECKPOINT_NATIVE_MTP_STARTUP_ACCEPTANCE_AND_SPEED",
+      "campaign_path": "benchmark-results/dflash2-serving-v031-20261009/mtp-high-scout-k6/campaign.json",
+      "campaign_sha256": "22167711c2e5926d9d740f0a83efa709797d645464faff913117bad5706871a1"
+    },
+    {
+      "depth": 7,
+      "command": [
+        "/usr/bin/python3",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/experiments/dflash2-serving-v031/run_serving.py",
+        "--name",
+        "mtp-high-scout-k7",
+        "--method",
+        "mtp",
+        "--depth",
+        "7",
+        "--contexts",
+        "262144,192000",
+        "--benchmark",
+        "--scenario-names",
+        "phase-32k-c1",
+        "--image",
+        "local/b70-m04-wide:v031-cache-fixed"
+      ],
+      "status": "PASS_CHECKPOINT_NATIVE_MTP_STARTUP_ACCEPTANCE_AND_SPEED",
+      "campaign_path": "benchmark-results/dflash2-serving-v031-20261009/mtp-high-scout-k7/campaign.json",
+      "campaign_sha256": "8c2d82091f7c8ccb27e9ccffb81c5a5bedd0dc87ab30db907dc1dee9374a5ad2"
+    },
+    {
+      "depth": 8,
+      "command": [
+        "/usr/bin/python3",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/experiments/dflash2-serving-v031/run_serving.py",
+        "--name",
+        "mtp-high-scout-k8",
+        "--method",
+        "mtp",
+        "--depth",
+        "8",
+        "--contexts",
+        "262144,192000",
+        "--benchmark",
+        "--scenario-names",
+        "phase-32k-c1",
+        "--image",
+        "local/b70-m04-wide:v031-cache-fixed"
+      ],
+      "status": "PASS_CHECKPOINT_NATIVE_MTP_STARTUP_ACCEPTANCE_AND_SPEED",
+      "campaign_path": "benchmark-results/dflash2-serving-v031-20261009/mtp-high-scout-k8/campaign.json",
+      "campaign_sha256": "5ccb97e3370c76c3046469983442e17420c6a860c308a3836a3f42c7e4a0b88d"
+    }
+  ],
+  "baseline_regenerated": false,
+  "child_controller_sha256": "218efec90acbf4cabc48d180ba08afe52ecf15fcb5a1f5b31e1387a6287edd6d",
+  "finished_unix": 1791576032.8857703
+}

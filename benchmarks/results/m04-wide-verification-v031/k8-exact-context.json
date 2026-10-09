@@ -1,0 +1,46 @@
+{
+  "status": "PASS_EXACT_CONTEXT_CAPACITY_NOT_SEMANTIC_QUALITY",
+  "usage": {
+    "prompt_tokens": 94976,
+    "total_tokens": 96000,
+    "completion_tokens": 1024,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": null
+  },
+  "wall_s": 77.11020813600044,
+  "accepted": 836.0,
+  "drafted": 1478.0,
+  "prompt_token_ids_sha256": "7e42cbb99eaa6af9110ba2c0516dbdf8171a1b8d5d2351dc77bff158c45d650c",
+  "source": "cycled frozen source-review token IDs; capacity-only fixture",
+  "response": {
+    "id": "cmpl-8b1a3ec88e1ee24a",
+    "object": "text_completion",
+    "created": 1791573372,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "text": "if (cwd !== workspace && !cwd.startsWith(`${workspace}/`))\n    fail('Invalid release work directory.');\nconst head = run(['/usr/bin/git', 'rev-parse', 'HEAD'], workspace, 10_000);\nif (!head.ok || head.log.trim() !== config.revision)\n    fail('Release checkout does not match commit.');\nlet buildLog = '';\nfor (const command of config.commands) {\n    const result = run(command.argv, cwd, 20 * 60_000);\n    buildLog += `\\n## ${command.label}\\n${result.log}`;\n    if (!result.ok)\n        fail(`${command.label} failed; the active version was not changed.`, buildLog);\n}\nconst artifact = join(workspace, '.b70-release');\nrmSync(artifact, { recursive: true, force: true });\nmkdirSync(join(artifact, 'web'), { recursive: true, mode: 0o755 });\nmkdirSync(join(artifact, 'runtime'), { recursive: true, mode: 0o755 });\nconst esbuild = join(cwd, 'node_modules', '.bin', 'esbuild');\nfor (const [entry, output, format] of [\n    ['packages/server/dist/index.js', 'server.cjs', 'cjs'],\n    ['packages/server/dist/runner/main.js', 'runner.mjs', 'esm'],\n]) {\n    const bundled = run([\n        esbuild,\n        join(cwd, entry),\n        '--bundle',\n        '--platform=node',\n        `--format=${format}`,\n        '--target=node24',\n        '--packages=bundle',\n        `--outfile=${join(artifact, output)}`,\n    ], cwd, 5 * 60_000);\n    buildLog += `\\n## Bundle ${output}\\n${bundled.log}`;\n    if (!bundled.ok)\n        fail(`Bundling ${output} failed; the active version was not changed.`, buildLog);\n    const syntax = run(['/usr/bin/node', '--check', join(artifact, output)], cwd, 60_000);\n    buildLog += syntax.log;\n    if (!syntax.ok)\n        fail(`Syntax check for ${output} failed.`, buildLog);\n}\ncpSync(join(cwd, 'packages', 'web', 'dist'), join(artifact, 'web'), { recursive: true });\ncpSync(join(cwd, 'packages', 'runner', 'dist'), join(artifact, 'runtime'), { recursive: true });\nconst fileDigests = filesBelow(artifact).map((path) => {\n    const file = relative(artifact, path);\n    return { file, sha256: createHash('sha256').update(readFileSync(path)).digest('hex') };\n});\nconst artifactDigest = createHash('sha256').update(JSON.stringify(fileDigests)).digest('hex');\nwriteFileSync(join(artifact, 'manifest.json'), `${JSON.stringify({\n    version: 1,\n    target: 'observatory',\n    revision: config.revision,\n    compatibility: 1,\n    artifactDigest,\n    files: fileDigests,\n}, null, 2)}\\n`, { encoding: 'utf8', mode: 0o644 });\nfinish({\n    ok: true,\n    artifactRelativePath: '.b70-release',\n    artifactDigest,\n    log: buildLog.slice(0, MAX_LOG),\n});\n\n### FILE benchmarks/experiments/m06-target-head-int4/coding/runtime/sandbox-entry.js\nprocess.env.B70_READONLY_DEPS = '1';\nimport { spawn } from 'node:child_process';\nimport { createConnection, createServer } from 'node:net';\nconst RELAY_SOCKET = '/inference/relay.sock';\nconst LISTEN_HOST = '127.0.0.1';\nconst LISTEN_PORT = 8081;\nconst SAFE_AGENT_PATH = /^\\/agent-runtime\\/[A-Za-z0-9@._+/-]+$/;\nfunction fail(message) {\n    process.stderr.write(`[b70-sandbox] ${message}\\n`);\n    process.exit(70);\n}\nconst executable = process.env.B70_AGENT_EXECUTABLE;\nconst token = process.env.B70_INFERENCE_TOKEN;\nif (executable === undefined || !SAFE_AGENT_PATH.test(executable) || executable.includes('..')) {\n    fail('invalid agent executable');\n}\nif (token === undefined || !/^[a-f0-9]{64}$/.test(token)) {\n    fail('missing inference capability');",
+        "logprobs": null,
+        "finish_reason": "length",
+        "stop_reason": null,
+        "token_ids": null,
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.31.0-166d3944",
+    "usage": {
+      "prompt_tokens": 94976,
+      "total_tokens": 96000,
+      "completion_tokens": 1024,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    },
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  }
+}

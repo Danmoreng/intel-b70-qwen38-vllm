@@ -8,6 +8,12 @@ import subprocess
 
 from exl3_candidate_worker import REPO, MODEL, profile, sha
 
+RUNTIME_VERSIONS = {
+    'b70-qwen38-exl3-production-v1': ('0.30.0', '2.13.0+xpu'),
+    'b70-qwen38-exl3-production-v2': ('0.30.0', '2.13.0+xpu'),
+    'b70-qwen38-exl3-production-v3': ('0.31.0', '2.14.0+xpu'),
+}
+
 
 def main():
     if not __debug__:
@@ -23,13 +29,15 @@ def main():
     assert release['policy_sha256']==digest
     assert (release['status']=='QUALIFIED_RELEASE' or
             (a.check_only and release['status']=='CANDIDATE_PREFLIGHT_ONLY')), 'Release not approved'
-    assert policy['policy_id'] in ('b70-qwen38-exl3-production-v1','b70-qwen38-exl3-production-v2')
+    assert policy['policy_id'] in RUNTIME_VERSIONS, 'Unsupported production policy'
+    expected_vllm, expected_torch = RUNTIME_VERSIONS[policy['policy_id']]
+    assert (policy['runtime']['vllm'], policy['runtime']['torch']) == (expected_vllm, expected_torch), 'Policy runtime version mismatch'
     image=release['image_tag']
     inspected=json.loads(subprocess.check_output(['docker','image','inspect',image],text=True))[0]
     assert inspected['Id']==release['image_id'], 'Production image tag moved'
     assert inspected['Config']['Labels']['org.local.b70.policy.sha256']==digest
     cfg=profile(release['image_id'])
-    if policy['policy_id']=='b70-qwen38-exl3-production-v2':
+    if policy['policy_id'] in ('b70-qwen38-exl3-production-v2','b70-qwen38-exl3-production-v3'):
         assert policy['attention']['partition_cache']['capacity']==64
         image_env=dict(x.split('=',1) for x in inspected['Config']['Env'])
         assert image_env.get('EXL3_SDPA_CACHE_CAPACITY')=='64'
@@ -50,13 +58,14 @@ def main():
     verify="""import hashlib,json,pathlib,runpy,torch,vllm
 runpy.run_path('/opt/exl3xpu/scripts/verify_native_artifact.py')
 r=json.loads(__import__('sys').argv[1])
-assert torch.__version__=='2.13.0+xpu' and vllm.__version__=='0.30.0'
+versions=json.loads(__import__('sys').argv[2])
+assert (vllm.__version__,torch.__version__)==tuple(versions), 'Runtime ABI/version mismatch'
 for p,h in r.items():assert hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()==h,p
 torch.ops.load_library('/opt/exl3xpu/m04/m04.so')
 assert torch._C._dispatch_has_kernel_for_dispatch_key('b70_exl3_attention::shared_kv_verify_out','XPU')
 """
     subprocess.run(['docker','run','--rm','--network','none','--entrypoint','python',release['image_id'],
-        '-c',verify,json.dumps(release['runtime_artifacts_sha256'])],check=True)
+        '-c',verify,json.dumps(release['runtime_artifacts_sha256']),json.dumps([expected_vllm,expected_torch])],check=True)
     node=Path(os.environ.get('RENDER_NODE','/dev/dri/renderD128'));assert node.exists()
     caps=list(Path('/sys/bus/pci/devices/0000:03:00.0/hwmon').glob('*/power1_cap'))
     assert len(caps)==1 and int(caps[0].read_text())==180000000, 'Card power limit must be180W'

@@ -1,0 +1,1615 @@
+{
+  "status": "PASS_EXACT_IMAGE_RELEASE_GATES",
+  "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+  "source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
+  "runtime_artifacts_sha256": {
+    "/opt/exl3xpu/exl3xpu/_C.so": "37c30b86542d96fcfb12464f88febe1b193479c12e08b57ac8cd789f89bb07d3",
+    "/opt/exl3xpu/m04/m04.so": "03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+    "/opt/b70/libdnnl.so.3": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20",
+    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "c7bd0941664d02fa4ec4bb118efdecbf9c63801cb9e4cdfaeb366efbe8c8800d",
+    "/opt/exl3xpu/exl3xpu/shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2",
+    "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "7d6c3dea198388ab7d8be7dc73f5d135026125f5988653de0fb45d385fca0a41",
+    "/opt/exl3xpu/csrc/exl3_ops.sycl": "b70880d1e92032de697c1d432c6899e34e17662e2086a7fbba80fa17b28e41cf",
+    "/opt/exl3xpu/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7"
+  },
+  "kernel_gates": {
+    "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+    "status": "PASS_NEW_ABI_KERNEL_GATES",
+    "started_unix": 1791556862.040621,
+    "source_sha256": "7e4266caf700e0be04623d3b408bd5d2558082a74bba5089e54ee9fa9d42a4de",
+    "checks": {
+      "metadata-gdn-copy": {
+        "status": "PASS",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--name",
+          "b70-v031-kernel-gates",
+          "--network",
+          "none",
+          "--device",
+          "/dev/dri",
+          "--shm-size",
+          "4g",
+          "-v",
+          "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro",
+          "-v",
+          "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/kernels-final:/results",
+          "-e",
+          "VLLM_WORKER_MULTIPROC_METHOD=spawn",
+          "-e",
+          "EXL3_DRAFT_VOCAB=/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json",
+          "-e",
+          "EXL3_KV_BLOCK_EXACT=0",
+          "-e",
+          "EXL3_ONEDNN_ATTN=0",
+          "-e",
+          "EXL3_INT8_PREFILL=1",
+          "-e",
+          "EXL3_TARGET_RUNTIME=vllm031",
+          "-e",
+          "EXL3_FIX_SPARSE_GDN_RETIREMENT=0",
+          "-e",
+          "B70_ONEDNN_PREFILL=0",
+          "-e",
+          "B70_ONEDNN_MIXED_ROUTE=0",
+          "-e",
+          "B70_GPTQ_W4A8_PREFILL=0",
+          "-e",
+          "EXL3_GUARDED_ATTN=1",
+          "-e",
+          "EXL3_GUARDED_PREFILL=1",
+          "-e",
+          "EXL3_M04_LIBRARY=/opt/exl3xpu/m04/m04.so",
+          "-e",
+          "EXL3_M04_LIBRARY_SHA256=03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+          "-e",
+          "EXL3_LIB=/opt/exl3xpu/exl3xpu/_C.so",
+          "-e",
+          "EXL3_SDPA_CACHE_CAPACITY=64",
+          "-e",
+          "HF_HUB_OFFLINE=1",
+          "-e",
+          "ZE_AFFINITY_MASK=0",
+          "-e",
+          "OMP_NUM_THREADS=4",
+          "--entrypoint",
+          "python",
+          "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+          "-u",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_target_gdn.py",
+          "-v"
+        ],
+        "started_unix": 1791556862.3023162,
+        "finished_unix": 1791556873.639749
+      },
+      "attention-metadata": {
+        "status": "PASS",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--name",
+          "b70-v031-kernel-gates",
+          "--network",
+          "none",
+          "--device",
+          "/dev/dri",
+          "--shm-size",
+          "4g",
+          "-v",
+          "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro",
+          "-v",
+          "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/kernels-final:/results",
+          "-e",
+          "VLLM_WORKER_MULTIPROC_METHOD=spawn",
+          "-e",
+          "EXL3_DRAFT_VOCAB=/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json",
+          "-e",
+          "EXL3_KV_BLOCK_EXACT=0",
+          "-e",
+          "EXL3_ONEDNN_ATTN=0",
+          "-e",
+          "EXL3_INT8_PREFILL=1",
+          "-e",
+          "EXL3_TARGET_RUNTIME=vllm031",
+          "-e",
+          "EXL3_FIX_SPARSE_GDN_RETIREMENT=0",
+          "-e",
+          "B70_ONEDNN_PREFILL=0",
+          "-e",
+          "B70_ONEDNN_MIXED_ROUTE=0",
+          "-e",
+          "B70_GPTQ_W4A8_PREFILL=0",
+          "-e",
+          "EXL3_GUARDED_ATTN=1",
+          "-e",
+          "EXL3_GUARDED_PREFILL=1",
+          "-e",
+          "EXL3_M04_LIBRARY=/opt/exl3xpu/m04/m04.so",
+          "-e",
+          "EXL3_M04_LIBRARY_SHA256=03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+          "-e",
+          "EXL3_LIB=/opt/exl3xpu/exl3xpu/_C.so",
+          "-e",
+          "EXL3_SDPA_CACHE_CAPACITY=64",
+          "-e",
+          "HF_HUB_OFFLINE=1",
+          "-e",
+          "ZE_AFFINITY_MASK=0",
+          "-e",
+          "OMP_NUM_THREADS=4",
+          "--entrypoint",
+          "python",
+          "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+          "-u",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_attention_metadata.py",
+          "-v"
+        ],
+        "started_unix": 1791556873.6399088,
+        "finished_unix": 1791556874.6791384
+      },
+      "m04-copy": {
+        "status": "PASS",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--name",
+          "b70-v031-kernel-gates",
+          "--network",
+          "none",
+          "--device",
+          "/dev/dri",
+          "--shm-size",
+          "4g",
+          "-v",
+          "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro",
+          "-v",
+          "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/kernels-final:/results",
+          "-e",
+          "VLLM_WORKER_MULTIPROC_METHOD=spawn",
+          "-e",
+          "EXL3_DRAFT_VOCAB=/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json",
+          "-e",
+          "EXL3_KV_BLOCK_EXACT=0",
+          "-e",
+          "EXL3_ONEDNN_ATTN=0",
+          "-e",
+          "EXL3_INT8_PREFILL=1",
+          "-e",
+          "EXL3_TARGET_RUNTIME=vllm031",
+          "-e",
+          "EXL3_FIX_SPARSE_GDN_RETIREMENT=0",
+          "-e",
+          "B70_ONEDNN_PREFILL=0",
+          "-e",
+          "B70_ONEDNN_MIXED_ROUTE=0",
+          "-e",
+          "B70_GPTQ_W4A8_PREFILL=0",
+          "-e",
+          "EXL3_GUARDED_ATTN=1",
+          "-e",
+          "EXL3_GUARDED_PREFILL=1",
+          "-e",
+          "EXL3_M04_LIBRARY=/opt/exl3xpu/m04/m04.so",
+          "-e",
+          "EXL3_M04_LIBRARY_SHA256=03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+          "-e",
+          "EXL3_LIB=/opt/exl3xpu/exl3xpu/_C.so",
+          "-e",
+          "EXL3_SDPA_CACHE_CAPACITY=64",
+          "-e",
+          "HF_HUB_OFFLINE=1",
+          "-e",
+          "ZE_AFFINITY_MASK=0",
+          "-e",
+          "OMP_NUM_THREADS=4",
+          "--entrypoint",
+          "python",
+          "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+          "-u",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_m04_output_copy.py",
+          "-v"
+        ],
+        "started_unix": 1791556874.679317,
+        "finished_unix": 1791556875.7151904
+      },
+      "inventory": {
+        "status": "PASS",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--name",
+          "b70-v031-kernel-gates",
+          "--network",
+          "none",
+          "--device",
+          "/dev/dri",
+          "--shm-size",
+          "4g",
+          "-v",
+          "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro",
+          "-v",
+          "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/kernels-final:/results",
+          "-e",
+          "VLLM_WORKER_MULTIPROC_METHOD=spawn",
+          "-e",
+          "EXL3_DRAFT_VOCAB=/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json",
+          "-e",
+          "EXL3_KV_BLOCK_EXACT=0",
+          "-e",
+          "EXL3_ONEDNN_ATTN=0",
+          "-e",
+          "EXL3_INT8_PREFILL=1",
+          "-e",
+          "EXL3_TARGET_RUNTIME=vllm031",
+          "-e",
+          "EXL3_FIX_SPARSE_GDN_RETIREMENT=0",
+          "-e",
+          "B70_ONEDNN_PREFILL=0",
+          "-e",
+          "B70_ONEDNN_MIXED_ROUTE=0",
+          "-e",
+          "B70_GPTQ_W4A8_PREFILL=0",
+          "-e",
+          "EXL3_GUARDED_ATTN=1",
+          "-e",
+          "EXL3_GUARDED_PREFILL=1",
+          "-e",
+          "EXL3_M04_LIBRARY=/opt/exl3xpu/m04/m04.so",
+          "-e",
+          "EXL3_M04_LIBRARY_SHA256=03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+          "-e",
+          "EXL3_LIB=/opt/exl3xpu/exl3xpu/_C.so",
+          "-e",
+          "EXL3_SDPA_CACHE_CAPACITY=64",
+          "-e",
+          "HF_HUB_OFFLINE=1",
+          "-e",
+          "ZE_AFFINITY_MASK=0",
+          "-e",
+          "OMP_NUM_THREADS=4",
+          "--entrypoint",
+          "python",
+          "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+          "-u",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_checkpoint_inventory.py",
+          "-v"
+        ],
+        "started_unix": 1791556875.715352,
+        "finished_unix": 1791556875.8537602
+      },
+      "attention": {
+        "status": "PASS",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--name",
+          "b70-v031-kernel-gates",
+          "--network",
+          "none",
+          "--device",
+          "/dev/dri",
+          "--shm-size",
+          "4g",
+          "-v",
+          "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro",
+          "-v",
+          "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/kernels-final:/results",
+          "-e",
+          "VLLM_WORKER_MULTIPROC_METHOD=spawn",
+          "-e",
+          "EXL3_DRAFT_VOCAB=/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json",
+          "-e",
+          "EXL3_KV_BLOCK_EXACT=0",
+          "-e",
+          "EXL3_ONEDNN_ATTN=0",
+          "-e",
+          "EXL3_INT8_PREFILL=1",
+          "-e",
+          "EXL3_TARGET_RUNTIME=vllm031",
+          "-e",
+          "EXL3_FIX_SPARSE_GDN_RETIREMENT=0",
+          "-e",
+          "B70_ONEDNN_PREFILL=0",
+          "-e",
+          "B70_ONEDNN_MIXED_ROUTE=0",
+          "-e",
+          "B70_GPTQ_W4A8_PREFILL=0",
+          "-e",
+          "EXL3_GUARDED_ATTN=1",
+          "-e",
+          "EXL3_GUARDED_PREFILL=1",
+          "-e",
+          "EXL3_M04_LIBRARY=/opt/exl3xpu/m04/m04.so",
+          "-e",
+          "EXL3_M04_LIBRARY_SHA256=03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+          "-e",
+          "EXL3_LIB=/opt/exl3xpu/exl3xpu/_C.so",
+          "-e",
+          "EXL3_SDPA_CACHE_CAPACITY=64",
+          "-e",
+          "HF_HUB_OFFLINE=1",
+          "-e",
+          "ZE_AFFINITY_MASK=0",
+          "-e",
+          "OMP_NUM_THREADS=4",
+          "--entrypoint",
+          "python",
+          "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+          "-u",
+          "tests/test_guarded_attention_xpu.py",
+          "--library",
+          "/opt/exl3xpu/m04/m04.so",
+          "--out",
+          "/results/attention"
+        ],
+        "started_unix": 1791556875.8539364,
+        "finished_unix": 1791556880.2183304
+      },
+      "linear": {
+        "status": "PASS",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--name",
+          "b70-v031-kernel-gates",
+          "--network",
+          "none",
+          "--device",
+          "/dev/dri",
+          "--shm-size",
+          "4g",
+          "-v",
+          "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro",
+          "-v",
+          "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/kernels-final:/results",
+          "-e",
+          "VLLM_WORKER_MULTIPROC_METHOD=spawn",
+          "-e",
+          "EXL3_DRAFT_VOCAB=/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json",
+          "-e",
+          "EXL3_KV_BLOCK_EXACT=0",
+          "-e",
+          "EXL3_ONEDNN_ATTN=0",
+          "-e",
+          "EXL3_INT8_PREFILL=1",
+          "-e",
+          "EXL3_TARGET_RUNTIME=vllm031",
+          "-e",
+          "EXL3_FIX_SPARSE_GDN_RETIREMENT=0",
+          "-e",
+          "B70_ONEDNN_PREFILL=0",
+          "-e",
+          "B70_ONEDNN_MIXED_ROUTE=0",
+          "-e",
+          "B70_GPTQ_W4A8_PREFILL=0",
+          "-e",
+          "EXL3_GUARDED_ATTN=1",
+          "-e",
+          "EXL3_GUARDED_PREFILL=1",
+          "-e",
+          "EXL3_M04_LIBRARY=/opt/exl3xpu/m04/m04.so",
+          "-e",
+          "EXL3_M04_LIBRARY_SHA256=03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+          "-e",
+          "EXL3_LIB=/opt/exl3xpu/exl3xpu/_C.so",
+          "-e",
+          "EXL3_SDPA_CACHE_CAPACITY=64",
+          "-e",
+          "HF_HUB_OFFLINE=1",
+          "-e",
+          "ZE_AFFINITY_MASK=0",
+          "-e",
+          "OMP_NUM_THREADS=4",
+          "--entrypoint",
+          "python",
+          "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+          "-u",
+          "tests/test_linear_rows_xpu.py",
+          "--model",
+          "/models/checkpoint",
+          "--out",
+          "/results/linear"
+        ],
+        "started_unix": 1791556880.2185073,
+        "finished_unix": 1791556896.5346386
+      }
+    },
+    "finished_unix": 1791556896.5348117
+  },
+  "numerical_review": {
+    "status": "PASS_REVIEWED_CROSS_VERSION_NUMERICS",
+    "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+    "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+    "source_measurement_sha256": "95f879e1024200cbf89b37c6b17f308caf19f142accae433e5b47d30f3f61c59",
+    "matched_state_sha256": "da5d380690a5c802c2755e72f1cb529dd7cca1e80f9ce852ff3fef367b0b5cde",
+    "kernel_gates_sha256": "f163e7f8cb27f756da43f50f491b9c206c7e4e38d680b1debce1de597bef223c",
+    "review": {
+      "short_bitidentity": false,
+      "old_bitidentity_check_status": "FAILED_RETAINED_NOT_RELABELLED",
+      "short_ppl": 3.642174755384621,
+      "stored_short_ppl": 3.646722344692463,
+      "short_top1_agreement": 0.95703125,
+      "stored_short_top1_agreement": 0.9609375,
+      "numerical_changes": {
+        "short_ppl_pct": -0.12470347007528249,
+        "short_kl_delta": 0.000871888920551657,
+        "short_js_delta": -0.00016417082943340038,
+        "long_ppl_pct": -0.3213190912313757,
+        "long_kl_delta": 0.00012904393894831636
+      },
+      "rationale": "Engineering review of this explicitly hashed measurement: the same-runtime v2 bitidentity test is not satisfied across the upstream Torch/vLLM upgrade and remains a failed recorded check. On unchanged stored BF16 references, short PPL improves 0.125% and 32K-suffix PPL 0.321%; short JS, reverse KL and KL tails improve. Mean short KL increases 0.000872 and long KL 0.000129. BF16-relative top1 agreement changes from 492/512 to 490/512 short probes and stays 8/8 long probes. These are mixed distribution changes, not a claim of identical output or a general quality improvement. Independently referenced kernel math and all four actual-state replay cases pass the unchanged tolerances, including full-graph C4 and long prefill. Accept the bounded upgrade numerics with these explicit limitations; no attention tolerance was relaxed.",
+      "limits": "Finite engineered panels; stored references reused without executing old runtime or original BF16 model. Old and new isolated JIT caches can produce different floating-point execution choices; cause of every cross-version token difference is not proven. API, resource and performance gates are still required."
+    }
+  },
+  "quality_measurements": {
+    "status": "MEASURED_CROSS_VERSION_CHANGE_REQUIRES_NUMERICAL_REVIEW",
+    "reference_reused": true,
+    "short": {
+      "windows": 16,
+      "ppl_positions": 16368,
+      "kl_positions": 512,
+      "nll_mean": 1.2925809635108199,
+      "perplexity": 3.642174755384621,
+      "delta_nll": 0.010389793194551807,
+      "perplexity_ratio_to_original": 1.0104439545082964,
+      "kl_mean": 0.033352624575407504,
+      "kl_median": 0.0032604016689968297,
+      "kl_p95": 0.15187805544907804,
+      "kl_p99": 0.49346192966403124,
+      "reverse_kl_mean": 0.028408188808935666,
+      "js_mean": 0.006732310009921425,
+      "top1_agreement": 0.95703125,
+      "delta_nll_ci95": [
+        0.003670198639628119,
+        0.017829746455351236
+      ],
+      "kl_mean_ci95": [
+        0.01822610461815005,
+        0.05114101704043539
+      ],
+      "original_probability_outside_tokenizer_mean": 3.2511450249372214e-08,
+      "checkpoint_probability_outside_tokenizer_mean": 3.5696407023055825e-08
+    },
+    "long": {
+      "prefix_tokens": 32768,
+      "suffix_positions": 128,
+      "full_vocabulary_positions": 8,
+      "original_perplexity": 1.1846457377824584,
+      "perplexity": 1.1903566775132677,
+      "kl_mean": 0.0010863044326554177,
+      "top1_agreement": 1.0
+    },
+    "stored_v2": {
+      "status": "PASS_COMPACT_REFERENCE_SMOKE",
+      "reference_reused": true,
+      "short": {
+        "windows": 16,
+        "ppl_positions": 16368,
+        "kl_positions": 512,
+        "nll_mean": 1.2938287764063696,
+        "perplexity": 3.646722344692463,
+        "delta_nll": 0.011637606090101508,
+        "perplexity_ratio_to_original": 1.0117055864815843,
+        "kl_mean": 0.03248073565485585,
+        "kl_median": 0.0029088048905310257,
+        "kl_p95": 0.16562007193361064,
+        "kl_p99": 0.5312484964940013,
+        "reverse_kl_mean": 0.029587971848413316,
+        "js_mean": 0.006896480839354825,
+        "top1_agreement": 0.9609375,
+        "delta_nll_ci95": [
+          0.004824681284043797,
+          0.019170312138812762
+        ],
+        "kl_mean_ci95": [
+          0.017744477193470984,
+          0.04946443212112294
+        ],
+        "original_probability_outside_tokenizer_mean": 3.2511450249372214e-08,
+        "checkpoint_probability_outside_tokenizer_mean": 3.583581942170435e-08
+      },
+      "long": {
+        "prefix_tokens": 32768,
+        "suffix_positions": 128,
+        "full_vocabulary_positions": 8,
+        "original_perplexity": 1.1846457377824584,
+        "perplexity": 1.1941938503407235,
+        "kl_mean": 0.0009572604937071014,
+        "top1_agreement": 1.0
+      },
+      "scope": "Fresh candidate short panel plus first existing 32K-prefix suffix window. Long numerical attention/graph tolerances are separately checked by matched-state replay; not a new broad quality campaign.",
+      "short_v1_bitidentical_aggregate_arrays": 32
+    },
+    "short_arrays": [
+      {
+        "name": "window-000-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "141df16b1f21908e2e2ec04b0cb6bee35629bb1d838584afbe9e9062b87e390a",
+        "new_sha256": "ae9327e2d0bc6f91daee6ac5176c03118559bdb0b892fabd0b8a0c91935e75a1",
+        "max_absolute": 9.595629692077637
+      },
+      {
+        "name": "window-000-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "57de3fe717a550068199933326f09aac10004562ee9632546a75a6e147ecc11e",
+        "new_sha256": "9b3cd4c51b8d96a05dfcdb92e842f68391d816d1ebbec0372577a902a8014158",
+        "max_absolute": 0.43384790420532227
+      },
+      {
+        "name": "window-001-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "f0110be0e8dc1096867a396b0a114a47d7a53d16d095e02ec6195d32b6a8f916",
+        "new_sha256": "e920748046b4f32234ef17f59edba64caf05c191464a5e55d390b4d670e16d5e",
+        "max_absolute": 2.0790672302246094
+      },
+      {
+        "name": "window-001-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "a13e140b2b46b4668562c14efa5b7257c8509412ec65197ddf438b309a3dfc69",
+        "new_sha256": "5ce15912032de62e39e2f01d76850dac3c4ed47e5e111e49227ab5b45ff83c90",
+        "max_absolute": 0.34247827529907227
+      },
+      {
+        "name": "window-002-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "1648a66473bf6aa21a9d5d35f129cd489d19fb155e975a1c6057ec211291e816",
+        "new_sha256": "1a0f4cb5493c50e7974661cda1b13964dadf1a0cf5973b8bc3cb02214940fe4e",
+        "max_absolute": 4.699934005737305
+      },
+      {
+        "name": "window-002-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "297b49a4c640565fa91c0ee6c52f05ba76056d2ded35710ae06558324a3fef1f",
+        "new_sha256": "77832c58a428680bbbf0c8e9e87e789e691a095e9cf3e0a473f708d53e527ede",
+        "max_absolute": 0.5831632614135742
+      },
+      {
+        "name": "window-003-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "64b5e1dffcfc9329db24e036804e2edd0871d7763c0ac1cb9da4ef8ebc89885b",
+        "new_sha256": "95a4615597cab51032332df4f3677f4e474b6e5f59a7f64177bcfcbbc4c3b43f",
+        "max_absolute": 1.312063217163086
+      },
+      {
+        "name": "window-003-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "e0dc3b4fa5eff58bbedc2cc91ac3913cc3700962973f9acbd4c7e879a3eb9729",
+        "new_sha256": "399178564d0e5edcc672c8099b839af80f4fb14c07241397ed3325afe96bf607",
+        "max_absolute": 1.0644779205322266
+      },
+      {
+        "name": "window-004-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "d1562e9f33506b353a2bad6fc581e2e7a01da0cb309d2894fb9a19b952631aa2",
+        "new_sha256": "2ecef7b9ab7c5199f4777334746edd57a448fa6cb5794bc8fce1afdf45723b60",
+        "max_absolute": 9.138422012329102
+      },
+      {
+        "name": "window-004-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "da5363940448cd8759204de122da08ac819845257045762620d57a4e904ae0a6",
+        "new_sha256": "964e327c6c8e31a7b972548c83549048dabe94313f121f416148c073439d6c26",
+        "max_absolute": 1.5895938873291016
+      },
+      {
+        "name": "window-005-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "01c9db1bd6a575f946b609a1d9328e7ed5a3d19c78757aa365ab4c73a3024dc4",
+        "new_sha256": "66deac18e6c73b0cf476f0305b3e685e435c587195bb61f3325bee5ba3aa9e2a",
+        "max_absolute": 1.0356817245483398
+      },
+      {
+        "name": "window-005-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "02a08e482c57d7e3d6638d4c74ed8efabbce5f16f4e880dda4f3ac47cceffc55",
+        "new_sha256": "148f6d34304aedc2a3d0a8046fc4af5f9996eb4c99b8b63adbd549e0724efaea",
+        "max_absolute": 0.4931631088256836
+      },
+      {
+        "name": "window-006-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "798cd2a0318633bee564aaed6f6e7b874b0260b107f058941c28d1b9b59869ff",
+        "new_sha256": "bff3c1372326e692157637a3c1f1b828ac4f08fb48de262d97a86a4029702388",
+        "max_absolute": 1.5053462982177734
+      },
+      {
+        "name": "window-006-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "a96494a03f78cc182112111e467e5f9d66ebe6069d545dddfb7fa3602ef868c1",
+        "new_sha256": "817998f3e5c93343cadf76d24181e9c2b606f33ccb0e7f97a5a7c92a0c56c24e",
+        "max_absolute": 0.541318416595459
+      },
+      {
+        "name": "window-007-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "aab24c073ff748cd5ab4e901c75cd6f4eb5deea86e7dad5dfc8e96ccf2f5a4e3",
+        "new_sha256": "54e0ff58d02dfef0c02616f56246ecd2ecf94e27f707eef49e47ea34d092fc3d",
+        "max_absolute": 1.706634521484375
+      },
+      {
+        "name": "window-007-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "747abc33ae3766251b8a65bb6257b7034ab7653a45698b4c9cd7b493894c73e0",
+        "new_sha256": "00942b9d01445dd2a078ffa8970c7b91ff483fa3f4de8de39deef75b7d4c0d97",
+        "max_absolute": 1.1355829238891602
+      },
+      {
+        "name": "window-008-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "144481ec4c5a6d0d1c859efd3e90dae41e68ec6b6841e55f231941749083e1b9",
+        "new_sha256": "546a48103944720567c635fee3e5c1b54e66f59230988885b3ea9f788bc62601",
+        "max_absolute": 1.2265586853027344
+      },
+      {
+        "name": "window-008-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "fcfd0f3d9391fae1d83380a742a4a21595770294a3e6bc7f67acb542d5ad9935",
+        "new_sha256": "ecab78c0fe8b9370b01828dffbc1fb46f8ec98fb77683693ea9494b0994d48a3",
+        "max_absolute": 0.8692965507507324
+      },
+      {
+        "name": "window-009-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "fe70a25246098778e1421c5bbab6fc28cf6e7cead4da2a421d2deb2815430375",
+        "new_sha256": "82faa453449c21595e150e2304ebbc74612b53f112eb3c64f76264bd2c173cb3",
+        "max_absolute": 1.523606300354004
+      },
+      {
+        "name": "window-009-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "4f1e45b8737a4f4fd413a5e1e1247ec119bee99d064e6193002d9046cd3059f3",
+        "new_sha256": "4140be323acb19e2dd87ec43adbba37d44d1692129dd5acb0d025c81f3cfdc41",
+        "max_absolute": 1.5070323944091797
+      },
+      {
+        "name": "window-010-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "af3ec5615f96472d382fc67b92ac802ab7b6769bb7f88b59b656aa16208851d1",
+        "new_sha256": "12a8edb92a966e90568f66a6f55282c6a084f7f5353fa5e4218c783b3cb4e2a0",
+        "max_absolute": 2.0068359375
+      },
+      {
+        "name": "window-010-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "19c3ff24bddae2c244c224d0ecae50d967c429d0134443d0c43d402ed8627b7f",
+        "new_sha256": "add88160b4f2a8e5ae8261eef214d0a3a784d57a46951c40ca627db432b4e76a",
+        "max_absolute": 1.2941534519195557
+      },
+      {
+        "name": "window-011-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "240bb7995305e9cb1785932ff2dd604c61e1c2a8fa38369461571e3653b2ee5f",
+        "new_sha256": "c3a7671725f30dbe770fbbf6031015fea38546e866b1aff6b9e1ed33c4bfd57b",
+        "max_absolute": 1.9228038787841797
+      },
+      {
+        "name": "window-011-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "a8cf0613b13afd69d7435658c70f1601d35647e8b2a024607075bdfeaf107d08",
+        "new_sha256": "67cf2f3eaf484240bf77c9c2b7cad4986d65101819c43e9fb6969282f1625ee7",
+        "max_absolute": 1.285989761352539
+      },
+      {
+        "name": "window-012-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "94933f11325783a5706dbcbd9ad19bac9cf4b47d537ca497c58c3fd0805c4a4c",
+        "new_sha256": "aaf1c4a7c686ded8d08aa5deeefe754d5e8dc527aeb97dd2c9779aebaea775e3",
+        "max_absolute": 2.0409793853759766
+      },
+      {
+        "name": "window-012-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "a47fa8bae90a6712d1f91555f32e5c0c68bc941171c1143f41c9552c6756a7e7",
+        "new_sha256": "3cc1124c389b6bcefdafa14dfb4af9f703e78fb0a69b1d57a2f9eaf5de983f2b",
+        "max_absolute": 2.0790648460388184
+      },
+      {
+        "name": "window-013-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "eb986d6513f078a2c1ab803bbf6fb9bede27abdca4915073bb3008bf81c8ed75",
+        "new_sha256": "28c92e5e5a607505cb0b88eb8fa3ae1262d259c60ef7825a7b62e6854730d028",
+        "max_absolute": 4.707026481628418
+      },
+      {
+        "name": "window-013-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "27edd49a431b24b9eafdd7c710b1bc2f683e224c0330002c3f9a6abd46d19faf",
+        "new_sha256": "2335bc719eb75be5db373cd7126d1e276cff16a6851602fca64f94cd3435092e",
+        "max_absolute": 1.7226142883300781
+      },
+      {
+        "name": "window-014-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "b41ac7a01cd79e34f53f9fcd757c80eef91057dbf2fea2d2cce75e6506b022de",
+        "new_sha256": "f1669954c4ab0fd9ddb8c536e61d2f96d6fade27454d753ae533c85e5cfb7b64",
+        "max_absolute": 1.4134082794189453
+      },
+      {
+        "name": "window-014-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "5ef84e335bdf8e7e6827abbae5b125cd0c57321e7d66f85bba9400442ee2c681",
+        "new_sha256": "00235e524f9f56603278c3e55e07fc9f69c9f126bcd289d45f760373fd9a2527",
+        "max_absolute": 1.3465373516082764
+      },
+      {
+        "name": "window-015-logprobs.npy",
+        "bitidentical": false,
+        "old_sha256": "8d3596790625a22cb64a5fd154ca737af6feaa07ba45d83a35771ddb3e4e11dc",
+        "new_sha256": "9c19b6517f3e02d7bd1a391d35a7bec26d3d3868561ebf9f0a4e35d91f38c2c5",
+        "max_absolute": 4.187526702880859
+      },
+      {
+        "name": "window-015-nll.npy",
+        "bitidentical": false,
+        "old_sha256": "38f49f9f34bffe57d16daff4c2e0418310db9e8caf098596526c00a1dd56e63a",
+        "new_sha256": "4f47bf9d51f39019623ab4363bdb6376eba3be9624c1021eb9eeb65a4c164268",
+        "max_absolute": 0.7773656845092773
+      }
+    ],
+    "cross_version_windows": [
+      {
+        "window": 0,
+        "old_to_new_kl_mean": 0.0005452424861814038,
+        "js_mean": 0.00014526465237486098,
+        "top1_agreement": 0.96875,
+        "nll_delta": -0.000712663182670159
+      },
+      {
+        "window": 1,
+        "old_to_new_kl_mean": 0.0009575908477015379,
+        "js_mean": 0.00023809081853406864,
+        "top1_agreement": 0.9375,
+        "nll_delta": -0.00018464050742217353
+      },
+      {
+        "window": 2,
+        "old_to_new_kl_mean": 0.0007217935924432342,
+        "js_mean": 0.00018007625845314445,
+        "top1_agreement": 0.96875,
+        "nll_delta": -0.0020930345539817985
+      },
+      {
+        "window": 3,
+        "old_to_new_kl_mean": 0.001924477396634308,
+        "js_mean": 0.0004830716625870752,
+        "top1_agreement": 0.96875,
+        "nll_delta": -0.003215562179290643
+      },
+      {
+        "window": 4,
+        "old_to_new_kl_mean": 0.002897994956838133,
+        "js_mean": 0.0008286770247021148,
+        "top1_agreement": 1.0,
+        "nll_delta": 0.0008212765972823721
+      },
+      {
+        "window": 5,
+        "old_to_new_kl_mean": 0.0027993926754570917,
+        "js_mean": 0.0006541285216466185,
+        "top1_agreement": 1.0,
+        "nll_delta": -0.0021478678185635758
+      },
+      {
+        "window": 6,
+        "old_to_new_kl_mean": 0.001361621785547885,
+        "js_mean": 0.00033834089359855416,
+        "top1_agreement": 1.0,
+        "nll_delta": 0.0018335480020514883
+      },
+      {
+        "window": 7,
+        "old_to_new_kl_mean": 0.0021842995045296687,
+        "js_mean": 0.0005343702240958566,
+        "top1_agreement": 1.0,
+        "nll_delta": 0.0014515193154924777
+      },
+      {
+        "window": 8,
+        "old_to_new_kl_mean": 0.0024461166038208743,
+        "js_mean": 0.0006188922830648634,
+        "top1_agreement": 1.0,
+        "nll_delta": -0.0024158465437118526
+      },
+      {
+        "window": 9,
+        "old_to_new_kl_mean": 0.002850881814114409,
+        "js_mean": 0.0007266916308910013,
+        "top1_agreement": 0.96875,
+        "nll_delta": 0.00022245979113999503
+      },
+      {
+        "window": 10,
+        "old_to_new_kl_mean": 0.0035235155196648117,
+        "js_mean": 0.0008814985473599296,
+        "top1_agreement": 1.0,
+        "nll_delta": -0.0017673581767830848
+      },
+      {
+        "window": 11,
+        "old_to_new_kl_mean": 0.0019817462448770726,
+        "js_mean": 0.0004731985352487007,
+        "top1_agreement": 0.96875,
+        "nll_delta": -0.0029707453410156015
+      },
+      {
+        "window": 12,
+        "old_to_new_kl_mean": 0.005007349648726473,
+        "js_mean": 0.0012425803318831515,
+        "top1_agreement": 0.9375,
+        "nll_delta": 0.0016049514108119056
+      },
+      {
+        "window": 13,
+        "old_to_new_kl_mean": 0.0019379381304929276,
+        "js_mean": 0.0004618735775745141,
+        "top1_agreement": 1.0,
+        "nll_delta": -0.0012269852093598765
+      },
+      {
+        "window": 14,
+        "old_to_new_kl_mean": 0.002167069127323289,
+        "js_mean": 0.0005132937644967995,
+        "top1_agreement": 1.0,
+        "nll_delta": -0.003830429781209954
+      },
+      {
+        "window": 15,
+        "old_to_new_kl_mean": 0.0007280372856575654,
+        "js_mean": 0.00018066186220300144,
+        "top1_agreement": 1.0,
+        "nll_delta": -0.005333628151564684
+      }
+    ],
+    "paired_short_nll_delta_ci95": [
+      -0.002259589898590244,
+      -0.0002739944025067363
+    ],
+    "changes": {
+      "short_ppl_pct": -0.12470347007528249,
+      "short_kl_delta": 0.000871888920551657,
+      "short_js_delta": -0.00016417082943340038,
+      "long_ppl_pct": -0.3213190912313757,
+      "long_kl_delta": 0.00012904393894831636
+    },
+    "scope": "New Torch/vLLM changes cannot be approved by the old same-runtime bitidentity check. The failed old check remains evidence; review these differences together with unchanged FP32/native kernel and actual-state numerical gates. No old runtime was executed."
+  },
+  "state_replays": [
+    {
+      "label": "prefill",
+      "graph_mode": "NONE",
+      "rows_by_request": [
+        1600,
+        2496
+      ],
+      "local_attention_comparisons": 32
+    },
+    {
+      "label": "early-mixed",
+      "graph_mode": "NONE",
+      "rows_by_request": [
+        4,
+        896,
+        1600
+      ],
+      "local_attention_comparisons": 32
+    },
+    {
+      "label": "c4-verification",
+      "graph_mode": "FULL",
+      "rows_by_request": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "local_attention_comparisons": 32
+    },
+    {
+      "label": "long-prefill",
+      "graph_mode": "NONE",
+      "rows_by_request": [
+        1792
+      ],
+      "local_attention_comparisons": 32
+    }
+  ],
+  "operations": {
+    "status": "PASS_NEW_IMAGE_OPERATIONAL_GATES",
+    "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+    "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+    "cases": {
+      "api": {
+        "status": "PASS",
+        "checks": [
+          "text",
+          "stream",
+          "tool",
+          "reasoning",
+          "image",
+          "images_at_limit",
+          "over_image_limit",
+          "prefix_first",
+          "prefix_extension",
+          "prefix_native",
+          "after_abort",
+          "c4_usage",
+          "limits"
+        ],
+        "image_limit": 32,
+        "video_limit_configured": 4,
+        "abort_note": "client disconnected after first streamed content; correlate trace with scheduler abort",
+        "c4_note": "four simultaneous small requests; full long-context C4 load remains a separate release gate"
+      },
+      "media": {
+        "status": "PASS",
+        "responses": {
+          "videos_1": {
+            "id": "chatcmpl-af75b4ade9362285",
+            "object": "chat.completion",
+            "created": 1791557424,
+            "model": "Qwen3.8-27B",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "Red",
+                  "refusal": null,
+                  "annotations": null,
+                  "audio": null,
+                  "function_call": null,
+                  "reasoning": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop",
+                "stop_reason": null,
+                "token_ids": null,
+                "routed_experts": null
+              }
+            ],
+            "service_tier": null,
+            "system_fingerprint": "vllm-0.31.0-cf4b6f14",
+            "usage": {
+              "prompt_tokens": 202,
+              "total_tokens": 204,
+              "completion_tokens": 2,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "prompt_logprobs": null,
+            "prompt_token_ids": null,
+            "prompt_text": null,
+            "kv_transfer_params": null,
+            "ec_transfer_params": null,
+            "metrics": null
+          },
+          "videos_4": {
+            "id": "chatcmpl-a1a23a014f88e991",
+            "object": "chat.completion",
+            "created": 1791557425,
+            "model": "Qwen3.8-27B",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "Red",
+                  "refusal": null,
+                  "annotations": null,
+                  "audio": null,
+                  "function_call": null,
+                  "reasoning": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop",
+                "stop_reason": null,
+                "token_ids": null,
+                "routed_experts": null
+              }
+            ],
+            "service_tier": null,
+            "system_fingerprint": "vllm-0.31.0-cf4b6f14",
+            "usage": {
+              "prompt_tokens": 736,
+              "total_tokens": 738,
+              "completion_tokens": 2,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "prompt_logprobs": null,
+            "prompt_token_ids": null,
+            "prompt_text": null,
+            "kv_transfer_params": null,
+            "ec_transfer_params": null,
+            "metrics": null
+          },
+          "over_video_limit": {
+            "status": 400,
+            "error": "{\"error\":{\"message\":\"At most 4 video(s) may be provided in one prompt. (parameter=video)\",\"type\":\"BadRequestError\",\"param\":\"video\",\"code\":400}}"
+          },
+          "oversized_image": {
+            "id": "chatcmpl-bdeae9111c95b811",
+            "object": "chat.completion",
+            "created": 1791557425,
+            "model": "Qwen3.8-27B",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "Red",
+                  "refusal": null,
+                  "annotations": null,
+                  "audio": null,
+                  "function_call": null,
+                  "reasoning": null
+                },
+                "logprobs": null,
+                "finish_reason": "stop",
+                "stop_reason": null,
+                "token_ids": null,
+                "routed_experts": null
+              }
+            ],
+            "service_tier": null,
+            "system_fingerprint": "vllm-0.31.0-cf4b6f14",
+            "usage": {
+              "prompt_tokens": 4081,
+              "total_tokens": 4083,
+              "completion_tokens": 2,
+              "prompt_tokens_details": null,
+              "completion_tokens_details": {
+                "reasoning_tokens": 0
+              }
+            },
+            "prompt_logprobs": null,
+            "prompt_token_ids": null,
+            "prompt_text": null,
+            "kv_transfer_params": null,
+            "ec_transfer_params": null,
+            "metrics": null
+          }
+        },
+        "video_fixture_sha256": "b860f60fd39a5e806d431e9ffd5e07033191e553fd885d45b2543f1ede28d344",
+        "fixture": "ffmpeg constant-red 320x240,4fps,2s; API decodes real H264 video",
+        "scope": "Small-media count limits and one 6.3MP image; does not promise 32 maximum-area images plus 4 long videos at maximum text context"
+      },
+      "near-limit": {
+        "status": "COMPLETE",
+        "usage": {
+          "prompt_tokens": 261120,
+          "total_tokens": 262144,
+          "completion_tokens": 1024,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "native": {
+          "prefill_seconds": 306.2818977480056,
+          "draft_tokens": 767.0,
+          "prompt_tokens": 261120.0,
+          "prefill_tokens": 261120.0,
+          "preemptions": 0.0,
+          "generation_tokens": 1024.0,
+          "completed": 1.0,
+          "cached_tokens": 0.0,
+          "accepted_tokens": 767.0,
+          "decode_seconds": 20.957454485993367
+        },
+        "native_before": {
+          "draft_tokens": 672.0,
+          "accepted_tokens": 497.0,
+          "preemptions": 0.0,
+          "prompt_tokens": 25393.0,
+          "cached_tokens": 3200.0,
+          "generation_tokens": 706.0,
+          "completed": 16.0,
+          "prefill_seconds": 17.374208645982435,
+          "decode_seconds": 14.830006288044387,
+          "prefill_tokens": 22172.0
+        },
+        "native_after": {
+          "draft_tokens": 1439.0,
+          "accepted_tokens": 1264.0,
+          "preemptions": 0.0,
+          "prompt_tokens": 286513.0,
+          "cached_tokens": 3200.0,
+          "generation_tokens": 1730.0,
+          "completed": 17.0,
+          "prefill_seconds": 323.656106393988,
+          "decode_seconds": 35.787460774037754,
+          "prefill_tokens": 283292.0
+        },
+        "wall_s": 327.28466396199656,
+        "prompt_ids_sha256": "e8ac906288c498948179c06caab723a3256ece84484faa827f250c35ce8cd17d",
+        "prompt_recipe": "repeat frozen /tokenize code/prose token IDs to exactly 261120; output 1024; total 262144",
+        "qualification": "instrumented capacity diagnostic; preemptions preserved for analysis, not silently accepted"
+      },
+      "c4-long": {
+        "status": "PASS",
+        "usage": [
+          {
+            "prompt_tokens": 32768,
+            "total_tokens": 33024,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 32768,
+            "total_tokens": 33024,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 32768,
+            "total_tokens": 33024,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 32768,
+            "total_tokens": 33024,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          }
+        ],
+        "native": {
+          "prefill_seconds": 82.78702302298916,
+          "draft_tokens": 768.0,
+          "prompt_tokens": 131072.0,
+          "prefill_tokens": 131072.0,
+          "preemptions": 0.0,
+          "generation_tokens": 1024.0,
+          "completed": 4.0,
+          "cached_tokens": 0.0,
+          "accepted_tokens": 767.0,
+          "decode_seconds": 110.15988007001579
+        },
+        "request_sha256": [
+          "61312be016d9f6b43bb6b33bf6b9765fe65522a46c7f345b6239c557d09a00db",
+          "318f985cff39252247feaff983fe5afebcb4b840a9ecf3e0e9fca01af92bbe50",
+          "37d23dec5f89249116998fd64f6f91a3b80ebc5161869a88c48c4e1bb9ffa657",
+          "18a39981aca219b8cfda64eb30c9e3b184a9d2cb2ada3d8955e3c3056366bc41"
+        ],
+        "preemption_policy": "require-zero",
+        "purpose": "4 simultaneous independent 32768-token prompts; fixed output 256 each; not a claim of 4 simultaneous maximum-context sequences"
+      },
+      "c16-long": {
+        "status": "PASS",
+        "usage": [
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 8192,
+            "total_tokens": 8448,
+            "completion_tokens": 256,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": null
+          }
+        ],
+        "native": {
+          "prefill_seconds": 114.6695435619913,
+          "draft_tokens": 3366.0,
+          "prompt_tokens": 131072.0,
+          "prefill_tokens": 131072.0,
+          "preemptions": 2.0,
+          "generation_tokens": 4096.0,
+          "completed": 16.0,
+          "cached_tokens": 0.0,
+          "accepted_tokens": 2970.0,
+          "decode_seconds": 434.53338686602365
+        },
+        "request_sha256": [
+          "08ea262450a09f400f15b5465c5bcec359ded5c74d7f0df8ed55a87c54aa7d92",
+          "23ca6548b8439010b8a365d972eed721d7dbd36106f440ef1e8809c7f274042e",
+          "4ea49950f51506dfefd1750c09ebad41bcfa18224edf0fae65fb01d2a8b3911c",
+          "fd63873c8f9ba9a1b53ca7235f9b74a3d435a47c7e54bd3c7b9c7d2515b113e1",
+          "61a5a519c47764747e9595e68d88824bec64d6da9791d153534524cd592f97e2",
+          "cb30aeb880c00d96c0df58a8273b1948b7cae6a7ec34d038847f6e72ab87b183",
+          "5f62aa66e700955de66b83a6b558d5ed088f8780ca3ef6c04c7cf87b91323f77",
+          "bcb2c3687da82b1dc46395c3e1843754894ef3da9d680ef708bf1deb54709cfc",
+          "27063c40a623838b8cf81897f71bee8088f148ea88eebcab65dd13a8a209d0cf",
+          "9a28d1bc05a9c5387a95b35f2c3b9f1e92026c3c0374dfd2b843bbdeb87b0097",
+          "deb31a3e7f8cb143c5b9b8f7697f225c15a45bc4a78efc73721fbcae109e240b",
+          "bb39dd9e294955ee377847986828d7dbcee980d51fa312a6fe84594a41bca22b",
+          "d0f70020edeb3cafaa268799e72b9464cca333e82c6e3a95580e4c7c045284fc",
+          "9ab03a2d4304cbb75f33a0bb4fd49d495836289b6d36c51f505c08b7cc8c535f",
+          "eb22e02e1f43a32d644c2c89175a98139c8862ff97a2afd96d7111bafd994b8b",
+          "4150e7aeb8927063325738fdbb1524af42e6043d5afb5cbb90ff7bcfe1d7cac7"
+        ],
+        "preemption_policy": "record-pressure",
+        "purpose": "16 simultaneous independent 8192-token prompts; fixed output 256 each; not a claim of 16 simultaneous maximum-context sequences"
+      },
+      "image-long": {
+        "status": "PASS",
+        "response": {
+          "id": "chatcmpl-91a365e3dee2f6d6",
+          "object": "chat.completion",
+          "created": 1791557898,
+          "model": "Qwen3.8-27B",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Red",
+                "refusal": null,
+                "annotations": null,
+                "audio": null,
+                "function_call": null,
+                "reasoning": null
+              },
+              "logprobs": null,
+              "finish_reason": "stop",
+              "stop_reason": null,
+              "token_ids": null,
+              "routed_experts": null
+            }
+          ],
+          "service_tier": null,
+          "system_fingerprint": "vllm-0.31.0-cf4b6f14",
+          "usage": {
+            "prompt_tokens": 119093,
+            "total_tokens": 119095,
+            "completion_tokens": 2,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "prompt_logprobs": null,
+          "prompt_token_ids": null,
+          "prompt_text": null,
+          "kv_transfer_params": null,
+          "ec_transfer_params": null,
+          "metrics": null
+        },
+        "native": {
+          "prefill_seconds": 89.96202753100079,
+          "draft_tokens": 3.0,
+          "prompt_tokens": 119093.0,
+          "prefill_tokens": 119093.0,
+          "preemptions": 0.0,
+          "generation_tokens": 2.0,
+          "completed": 1.0,
+          "cached_tokens": 0.0,
+          "accepted_tokens": 3.0,
+          "decode_seconds": 0.1812652989901835
+        },
+        "purpose": "One allowed image in a long context"
+      },
+      "extension-abort-long": {
+        "status": "PASS",
+        "first_usage": {
+          "prompt_tokens": 50033,
+          "total_tokens": 50061,
+          "completion_tokens": 28,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "extension_usage": {
+          "prompt_tokens": 50038,
+          "total_tokens": 50075,
+          "completion_tokens": 37,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "extension_native": {
+          "prefill_seconds": 1.3608759379858384,
+          "draft_tokens": 30.0,
+          "prompt_tokens": 50038.0,
+          "prefill_tokens": 2038.0,
+          "preemptions": 0.0,
+          "generation_tokens": 37.0,
+          "completed": 1.0,
+          "cached_tokens": 48000.0,
+          "accepted_tokens": 28.0,
+          "decode_seconds": 0.5739714590017684
+        },
+        "restart": {
+          "id": "chatcmpl-8712990cd10184c4",
+          "object": "chat.completion",
+          "created": 1791558021,
+          "model": "Qwen3.8-27B",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "```json\n{\n  \"ALPHA\": 17,\n  \"BETA\": 29,\n  \"sum\": 46\n}\n```",
+                "refusal": null,
+                "annotations": null,
+                "audio": null,
+                "function_call": null,
+                "reasoning": null
+              },
+              "logprobs": null,
+              "finish_reason": "stop",
+              "stop_reason": null,
+              "token_ids": null,
+              "routed_experts": null
+            }
+          ],
+          "service_tier": null,
+          "system_fingerprint": "vllm-0.31.0-cf4b6f14",
+          "usage": {
+            "prompt_tokens": 50036,
+            "total_tokens": 50073,
+            "completion_tokens": 37,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "prompt_logprobs": null,
+          "prompt_token_ids": null,
+          "prompt_text": null,
+          "kv_transfer_params": null,
+          "ec_transfer_params": null,
+          "metrics": null
+        },
+        "purpose": "Long prefix extension and client abort/restart; trace must confirm FINISHED_ABORTED"
+      },
+      "independent32-max-area-images": {
+        "status": "PASS",
+        "usage": {
+          "prompt_tokens": 131164,
+          "total_tokens": 131166,
+          "completion_tokens": 2,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "native": {
+          "prefill_seconds": 157.02771441799996,
+          "draft_tokens": 3.0,
+          "prompt_tokens": 131164.0,
+          "prefill_tokens": 131164.0,
+          "preemptions": 0.0,
+          "generation_tokens": 2.0,
+          "completed": 1.0,
+          "cached_tokens": 0.0,
+          "accepted_tokens": 3.0,
+          "decode_seconds": 0.22833285899832845
+        },
+        "unique_images": 32,
+        "pixels_each": 4194304,
+        "fixture_sha256": [
+          "19cebdd9ca639a6f0e426d062569b636af951e3a9eaf461ac24154b1ee5ff28d",
+          "e806acc4a43195a9f8408d43e9330d311b04d6ec11501ad950e44a8fd4a67eb2",
+          "96cda4d2b7f824ed6c5231dffe0add4a3f2fdc3cbfe4523b463d98ce8958fd08",
+          "2393c779b376dea20795dae28e40ac41c78f3009ece8dc51dea38340554ca277",
+          "4620ffd781dae975452d60cf2ec5fd23baf3c54df3772597a488815e8fe349c3",
+          "f1cd43ec289b24c46ffa1ae762ab5f06a3cfb70820fa8d4e57b3912814a60e52",
+          "2b02950a80a954fdbd9375ca59d144d5346c0bdce96271aee9bf88fe1a8fe018",
+          "d77052dc702bb05a8d9a3817f8f60a61f58933b910e1f62bddc9309f7686bcc2",
+          "7030ff8a466f66731335ada8efef5a4ab765c22b8842db79d343ab54a28d0def",
+          "178c16a14cce004a6bf62ae59b6a1277d772d1c32de4d272e114ce301a3d87f3",
+          "f9674b525d92a9d6d3bbb3b04f0f40ecdce71e63114aadccd0a0469459cbc01e",
+          "c1e436a2e88ccafe13fb46bb756cb842625276c19e941010295a05a63bda4ef9",
+          "557d2117bc2789e74f0fde42201d30ed693f59f8d702ccb7bc6eae6500509a2f",
+          "c12ebb9e7ee33c215cf4c293ee9bdc4424b0ad1e8f661f6eacde0d988143fe0d",
+          "3d3189f40efeb79a3a1173f824484be81f02a628a29ec44500d93ccbfb8b30d3",
+          "15e1465ab8689cacefe075f7299fa99c6f89d019877be3b16da788c7dc2e9477",
+          "d795d96d34bb7fdff4062b48f63dc9501e802c07abc1505c984d5d18ffa4795a",
+          "3394edb324a4acad80c486509a2664a183859e0a934932930ad2312b0bc20c19",
+          "1152d7e4d3300ba4e028cb14fa7d7054d32f14345d79a86fb0215316382d7f7c",
+          "26a523e20ae7a05bb392bfc9e9dd4adf70b9435611ebe6ad8b836e28f14a5ae0",
+          "5d82116ff166a761b020dae56b2063ee3f383997a0f5da7b30b6f1ec4a67c8c4",
+          "da561aff1a6c60b9b17c44daadd6528032cd6cb0e9011c38d777210317fb2733",
+          "b3d3ccb7cee89fe27336d5c1ed3ed7edf6fe804ff12c2d9b4f5055e42b22f60f",
+          "7f0e8d82689b59b5a2e313a7bb8b37df5305ac2ddc431a4a9f32b6389162194d",
+          "d259f3f13f18cf4e584b52a300c17b32a8cc9283d1768120b620d66d6cba1e02",
+          "7e96173ca345f8565b97921ee414ed462ef3986a19bbcd99a3b15c07fb8e051c",
+          "12356e63363552bd560e6f6407da83eac41054777d1723c709178e4c53911769",
+          "e858021e13c2ac9d941c64c5f7a61d418b68893e65e71af3a171799e7965c0f0",
+          "176fe25f14f90de59f57693153a9a5458fd1a119caeca6fc2ad5aa61f8849f23",
+          "57e5c685f20f84374e87ae76d746c6e374e7f6f64f94062b738ceabf2fb75d33",
+          "498ad648b6e126d08e0dff65fc8251da5a203859bcde595b8a645981931b38b7",
+          "b965479517d27b87f7772d761de61b00d6afef7826555a346f20003efed96617"
+        ]
+      },
+      "worker-restart": {
+        "status": "PASS",
+        "loader": {
+          "path": "benchmark-results/vllm-031-upgrade-20261009/operations-final/restarted/loader/loader-67.json",
+          "sha256": "21288008cf4a7d975209860e206d9177f854c17b93c125d57e58550f0f2e3a98",
+          "loaded_modules": 409,
+          "mtp_loaded": 8
+        },
+        "reply": "Paris"
+      }
+    },
+    "started_unix": 1791557322.357151,
+    "loader": {
+      "path": "benchmark-results/vllm-031-upgrade-20261009/operations-final/serving/loader/loader-67.json",
+      "sha256": "21288008cf4a7d975209860e206d9177f854c17b93c125d57e58550f0f2e3a98",
+      "loaded_modules": 409,
+      "mtp_loaded": 8
+    },
+    "confirmed_abort_trace_occurrences": 2,
+    "finished_unix": 1791558244.4623933
+  },
+  "source_guard_coverage": {
+    "required": 16,
+    "covered": 16
+  },
+  "serving": {
+    "scenarios": 20,
+    "waves": 70,
+    "requests": 124,
+    "preemptions": 0
+  },
+  "receipts_sha256": {
+    "config/experiments/vllm-031-upgrade/production_image.json": "f217374e963741c44fe0ee8e4155811638458d21ad3c605f2baabece9300657a",
+    "benchmark-results/vllm-031-upgrade-20261009/kernels-final/campaign.json": "f163e7f8cb27f756da43f50f491b9c206c7e4e38d680b1debce1de597bef223c",
+    "benchmark-results/vllm-031-upgrade-20261009/quality-final/numerical-review.json": "9f3bdb7695ed0876cd7475f338f21b308bb4c61f5f8e0f28606c431dc0728773",
+    "benchmark-results/vllm-031-upgrade-20261009/quality-final/replay-campaign.json": "da5d380690a5c802c2755e72f1cb529dd7cca1e80f9ce852ff3fef367b0b5cde",
+    "benchmark-results/vllm-031-upgrade-20261009/operations-final/operations.json": "2adf4213a0764533ad08636df51fa1604f8c3694df5700419d087a74ae3fdf80",
+    "benchmark-results/vllm-031-upgrade-20261009/serving-final/campaign.json": "bb50a24f85221d69cb13a3f58a2620420205b2f072c1d929d6b6db4d4e705f71",
+    "benchmark-results/vllm-031-upgrade-20261009/operations-final/runtime-sources/SOURCE_GUARD_COVERAGE.json": "4574e62f9f26e13225699f7b98157b13d09ea7cff54a62250a5e7ad7297ec5e0",
+    "benchmark-results/vllm-031-upgrade-20261009/operations-final/runtime-sources/CAPTURE_IDENTITY.json": "13278bf461fe945c52ef8fc841d0c5a4ffb0fc3942cba59a64acfd52844ca30f",
+    "benchmark-results/vllm-031-upgrade-20261009/quality-final/replay/observations/steps/00-prose-4096-prefill-result.json": "ab4a9e221318a713129442f61fe56a55911d67760fbaa3ed0c87431b0f805986",
+    "benchmark-results/vllm-031-upgrade-20261009/quality-final/replay/observations/steps/01-prose-4096-early-mixed-result.json": "5e7c58d9c083f37be570a374b529c9fda1e0a1edc32f9c6499d698422ba0af07",
+    "benchmark-results/vllm-031-upgrade-20261009/quality-final/replay/observations/steps/02-prose-4096-c4-verification-result.json": "7455e2775f37510e11867cde10ea89fb3e04ead6b1264cfad449bf6972713ac0",
+    "benchmark-results/vllm-031-upgrade-20261009/quality-final/replay/observations/steps/03-prose-8192-long-prefill-result.json": "d82ccff1d05ac8a7be03cdad6584e369fa9b6962b92cad9be46c4ad26b73a5d7",
+    "benchmarks/results/exl3-review-release-v2/serving-summary.json": "9dc0db6adfdedc8a955e2843b922d867944b7cb215c71212e79e71570e9b51f3",
+    "config/releases/exl3-v2/production_image.json": "40c9f84aba50dacaf18509376254c0a2e899fde84eaf6630ab1085eaff04a09b",
+    "benchmark-results/exl3-review-release-v2/serving/source-review/run-20261002-134647-w0.00/results.json": "55e4e99c24d4352434f934f436083e77058c955c3fe2396334b3d31b167d1138",
+    "benchmark-results/vllm-031-upgrade-20261009/serving-final/source-review/run-20261009-170506-w0.00/results.json": "249eb2872f76e735d25ea17e964e691c54cae1348bd696dd1601e109a6dba655",
+    "benchmark-results/vllm-031-upgrade-20261009/quality-final/cross-version-quality.json": "95f879e1024200cbf89b37c6b17f308caf19f142accae433e5b47d30f3f61c59"
+  },
+  "benchmark_comparison_sha256": "dc6ea09b76457fef3e6cb5cab0aa48a72f81841ba3546fc266cd361062d06dbf",
+  "limitations": [
+    "Full-reference output distributions change across Torch/vLLM versions; old bitidentity gate failed and is retained, not relabeled. New-image numerical gates retain original tolerances.",
+    "Frozen finite quality panels and state probes cannot guarantee identical generated text or all-task accuracy.",
+    "Official upstream dependency metadata conflicts are inherited unchanged; actual GPU ABI and serving tests qualify this exact stack.",
+    "Clean C4 and maximum single context are separate from C16 pressure, which permits recorded preemptions.",
+    "DFlash, old-runtime inference and old-baseline benchmark reruns were excluded."
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "status": "CANDIDATE_PREFLIGHT_ONLY",
+  "image_tag": "local/b70-qwen38-vllm:exl3-release-candidate-v3",
+  "image_id": "sha256:d0e1933cd4d5583a508e0799d1ffe308cf7d4f803ee4377471dc589b2da6b766",
+  "runtime_image_id": "sha256:f6bcf8c6fc7a797032b85a7c939e5502f36581443d5c0b2563f698c254ef734e",
+  "policy_sha256": "139d22d7f67890eb9d5db52618ada97b7ab6af27a7209b302c976730b9f7607c",
+  "vllm_config": {
+    "dtype": "float16",
+    "max_model_len": 262144,
+    "kv_cache_dtype": "fp8",
+    "gpu_memory_utilization": 0.965,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 4096,
+    "scheduler_reserve_full_isl": true,
+    "watermark": 0.0,
+    "enable_prefix_caching": true,
+    "mamba_cache_mode": "align",
+    "speculative_config": {
+      "method": "mtp",
+      "num_speculative_tokens": 3
+    },
+    "limit_mm_per_prompt": {
+      "image": 32,
+      "video": 4
+    },
+    "mm_processor_kwargs": {
+      "max_pixels": 4194304
+    },
+    "enable_auto_tool_choice": true,
+    "tool_call_parser": "qwen3_xml",
+    "reasoning_parser": "qwen3",
+    "reasoning_config": {
+      "reasoning_start_str": "<think>",
+      "reasoning_end_str": "</think>"
+    },
+    "override_generation_config": {
+      "max_new_tokens": 16384
+    },
+    "middleware": "request_defaults.ChatDefaults",
+    "compilation_config": {
+      "cudagraph_mode": "FULL_DECODE_ONLY",
+      "cudagraph_capture_sizes": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        48,
+        56,
+        64
+      ]
+    }
+  },
+  "request_defaults_sha256": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2",
+  "checkpoint_files_sha256": {
+    "config.json": "dab9abc478e1b1b928ef354f27a26fc90e8191a4a3ce5f3d19aa21558216b267",
+    "generation_config.json": "e70c136c1b78ddc1fb0905bac8e733a4dc448d4f852a5dd75143fffc70be550e",
+    "model-00001-of-00002.safetensors": "b1e7fcc53a2bb211460ebb65e329cdb7a5af8bd819dcbcd89e06f0ccc041e590",
+    "model-00002-of-00002.safetensors": "c6d72f51b0cd99510239b264fef37bc26c950e6843f35421ce4830d4f87f8c05",
+    "model.safetensors.index.json": "c3111b8308db5396b1eed054967cf7dfbfc2508764f8813aebbaaf4a05860bc2",
+    "preprocessor_config.json": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+    "quantization_config.json": "c85767fc0bd991d1b7ddebe52feeb9a556216883de2cdb3f679ce85f989e29e0",
+    "tokenizer.json": "0997f410c57a1f4e53b09e4be8f4a172d90edd9564368fb0847030937229b9f3",
+    "tokenizer_config.json": "b11349aafa7cdc6a320767cf7ceb29ed82f7eda5d65e8e0819e76f0ce947bf27",
+    "video_preprocessor_config.json": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+    "vocab.json": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003"
+  },
+  "runtime_artifacts_sha256": {
+    "/opt/exl3xpu/exl3xpu/_C.so": "37c30b86542d96fcfb12464f88febe1b193479c12e08b57ac8cd789f89bb07d3",
+    "/opt/exl3xpu/m04/m04.so": "03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+    "/opt/b70/libdnnl.so.3": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20",
+    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "c7bd0941664d02fa4ec4bb118efdecbf9c63801cb9e4cdfaeb366efbe8c8800d",
+    "/opt/exl3xpu/exl3xpu/shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2",
+    "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "7d6c3dea198388ab7d8be7dc73f5d135026125f5988653de0fb45d385fca0a41",
+    "/opt/exl3xpu/csrc/exl3_ops.sycl": "b70880d1e92032de697c1d432c6899e34e17662e2086a7fbba80fa17b28e41cf",
+    "/opt/exl3xpu/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7"
+  },
+  "rootfs_metadata_attestation": {
+    "status": "METADATA_FROZEN_NOT_RELEASE_APPROVED",
+    "image_tag": "local/b70-qwen38-vllm:exl3-release-candidate-v3",
+    "image_id": "sha256:d0e1933cd4d5583a508e0799d1ffe308cf7d4f803ee4377471dc589b2da6b766",
+    "runtime_image_id": "sha256:f6bcf8c6fc7a797032b85a7c939e5502f36581443d5c0b2563f698c254ef734e",
+    "policy_sha256": "139d22d7f67890eb9d5db52618ada97b7ab6af27a7209b302c976730b9f7607c",
+    "rootfs_identical": true,
+    "rootfs": {
+      "Layers": [
+        "sha256:d81fb2a7c6ee3be05fdefaa7fd223be219c1ab172083ec1b994c3ecda33ac0a8",
+        "sha256:25c78002791717848c38a7895e3ead1daa9bb3c7a83f89f471f6fc23fe80052d",
+        "sha256:3d744a2d55ae618757ef863d1a37ab3b6166b9fd99ab361c5c8caa30e1e6bc6e",
+        "sha256:fa643a7e666b09f6c370268a3c103697877108d4c5eca81df1078a93b345dd79",
+        "sha256:94ec9e46834e7e7e53ce624281d605d1f3a779fb4da39fa838f62af55d8b6864",
+        "sha256:fc7e39ae63e0b038bf6ab830a816102b4984a7eb091bc3291e6bc9783baa2ee1",
+        "sha256:598a0fa94ceb234784d517b5e7869b531577bb94a16e0ec8e18c475a911aefaf",
+        "sha256:be0165c806debed38ee79c341b9c9332efc6f5d82322651db6af7efdb2c52119",
+        "sha256:e4c57eca079c4f399dc4738ca9fd651f0bcd7db0ea986f232502ec88a136a37b",
+        "sha256:902e0b50076f4b0a57988879c2af0349be3c8ec256b931ac3789d40e478b93b5",
+        "sha256:2fa19a7fc5480b95e2109c9452e20b0d0f391b22db03734cccdd61a2adcffb1e",
+        "sha256:b73c10130ddfd172fd2d4f5ad58b7989d00d67d372750895e4cf3e686d8e1114",
+        "sha256:291ad2943af71ea97ae36b69b910b5f0b376a352c14e590b5571545ce0e475cb",
+        "sha256:9ebc69e63c9a502fdb4357cfd22afe52046e9c7e2d1b45473baeb932eb4b4d65",
+        "sha256:6a19ffa98f67fb2b35fc1c0e48db540bea506edf1df78bf703b30207b5367f54",
+        "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+        "sha256:e4d683045f5b373a1a5bd6b818f9135181cbdca743e89006afb58d5321e1da14",
+        "sha256:7fce6f9c7218d45d8730848ac90e0c8c082014934760fc67342b9c1e4e4eed5b",
+        "sha256:797eda2626c4aa1c1593fd5a524560cf3e176e3a5f4307cc8ddf16e437d6c72d",
+        "sha256:9369f26f86668efde03cb52c0cbc2582cfb40e4df97cfa20c5da46fefe7ae8a7",
+        "sha256:fa6163e27799cd27115303b6c1a9b35b3dba17bb10f4d32e5d930046dd01f582",
+        "sha256:5625340cc613400ff661e85b7a00e8d77c387f94b16992771d2a5171a083ca16",
+        "sha256:c2dd6bf869369b2ea74eb614ce6b217d0edced0a1417e04bcd5e5975825969dd",
+        "sha256:cffecb0ebbfc0e18d41ceeb1cc765829d5b31258ac3b5bd0919e4899733b815a",
+        "sha256:70d11e4a830cc6dee1d0b95756bc1eec81f1c81b0446863117f6f35f36f68b6f",
+        "sha256:94349695e9b905862529bfe55650348c0f8fe17efb20b3915ca2b075d3d9f2e7",
+        "sha256:f2ebffedd0c06ef7e7da12d91ac77b4ff0396b9ee63e9ce3e54177783c6da301",
+        "sha256:cb06111c8b4fdd08c9136c53f8b166e2b0f48082474ab3268330d1b8c458eee0",
+        "sha256:5613764bb96ff3807f47a37ff0da36bf4a0ab642f50a6e4ed1830f428daf8f9b",
+        "sha256:051a18c7b8d1e722d9c6c9193cbdc36bfebdbeb231c475104f1f5e575bc34867",
+        "sha256:72e44c6a2820068e65f9c8eee33c505cbc80c80188d09532f48f6041e00ab217",
+        "sha256:20e3a76af793aaf8c6ad261553261fc25e04f226f18f2e50952f356316ee2e1d",
+        "sha256:d000d83615a44b774be2a0ae36c3b04ee3516bde000b8cb25cd66e42fef5dfc0",
+        "sha256:3aa013e2fc53d6a7309ad5c31b0e223ed7f28409fa07ba19367f4bdba88f82c2",
+        "sha256:00e4776787d2671123ea47035010a17344144b38bb2ff5b3936bcf5c6a4079b3",
+        "sha256:f1848a7d772473e9474f9132547f257e9d94dbb8b317eff800ae334f3e2a0ff9",
+        "sha256:ee0ef7d00308a8d3c4fb8f2a7c898c6e95110a116213395a81840a0bcddff55b",
+        "sha256:07a49eabe663501ff13931dcfa131d4060c26b616a2493d9b90134612bf16fdd",
+        "sha256:864d5153a70971031b04c96f3e2fa4ac234475d681fef1a25ba8834139e0416e",
+        "sha256:72e6e3f82e7c937235714ede975286b08e9d758eabd5751ea47dd8daca27d798"
+      ],
+      "Type": "layers"
+    },
+    "environment_changes": {
+      "B70_POLICY_SHA256": [
+        null,
+        "139d22d7f67890eb9d5db52618ada97b7ab6af27a7209b302c976730b9f7607c"
+      ]
+    },
+    "effective_partition_cache_capacity": 64,
+    "note": "Only labels, policy identity env, optional explicit reviewed cache capacity and default profile CMD differ. Frozen optimized YAML unchanged; no rebuild or tensor change."
+  },
+  "environment_overrides": {
+    "EXL3_SDPA_CACHE_CAPACITY": "64"
+  },
+  "source_commit": "9ddc9e88fd7616b3923e8b85c0e733471d89742a"
+}

@@ -1,0 +1,409 @@
+{
+  "status": "PASS_STRICT_PRODUCTION_DEPLOYMENT_AND_RESTART",
+  "started_unix": 1791562089.3204932,
+  "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+  "rollback_image_id": "sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918",
+  "decision_sha256": "de5416d31553453e2894171718bd7c5a956e8dbedd1320cffe72f77e46996345",
+  "stages": {
+    "first_start_readiness": {
+      "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+      "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+      "models_endpoint_healthy": true,
+      "verified_unix": 1791562213.766749
+    },
+    "first_start_api": {
+      "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+      "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+      "container_id": "a38a668096873d4d42fdb3dc6084a1ca6033a054ff8f074c0abd031aa2fc765e",
+      "models_endpoint": true,
+      "real_generated_reply": "Paris",
+      "streaming_done": true,
+      "streaming_usage": {
+        "prompt_tokens": 23,
+        "total_tokens": 25,
+        "completion_tokens": 2,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "defaults_response": {
+        "id": "chatcmpl-8d7d244586d5e8f9",
+        "object": "chat.completion",
+        "created": 1791562214,
+        "model": "Qwen3.8-27B",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "\n\n13 \u00d7 29 = **377**",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": "The user wants me to calculate 13 \u00d7 29.\n\n13 \u00d7 29 = 13 \u00d7 30 - 13 = 390 - 13 = 377.\n"
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.31.0-cf4b6f14",
+        "usage": {
+          "prompt_tokens": 24,
+          "total_tokens": 88,
+          "completion_tokens": 64,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 49
+          }
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      },
+      "default_contract": "16384 completion,8192 thinking budget,medium reasoning; unchanged hashed middleware plus live request with no overrides",
+      "command": [
+        "serve",
+        "/models/checkpoint",
+        "--served-model-name",
+        "Qwen3.8-27B",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--revision",
+        "113cf7ab958054860e43fb7f3063b1af19171095",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "262144",
+        "--kv-cache-dtype",
+        "fp8",
+        "--gpu-memory-utilization",
+        "0.965",
+        "--max-num-seqs",
+        "16",
+        "--max-num-batched-tokens",
+        "4096",
+        "--scheduler-reserve-full-isl",
+        "--watermark",
+        "0.0",
+        "--enable-prefix-caching",
+        "--mamba-cache-mode",
+        "align",
+        "--speculative-config",
+        "{\"method\":\"mtp\",\"num_speculative_tokens\":3}",
+        "--limit-mm-per-prompt",
+        "{\"image\":32,\"video\":4}",
+        "--mm-processor-kwargs",
+        "{\"max_pixels\":4194304}",
+        "--enable-auto-tool-choice",
+        "--tool-call-parser",
+        "qwen3_xml",
+        "--reasoning-parser",
+        "qwen3",
+        "--reasoning-config",
+        "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+        "--override-generation-config",
+        "{\"max_new_tokens\":16384}",
+        "--middleware",
+        "request_defaults.ChatDefaults",
+        "--compilation-config",
+        "{\"cudagraph_mode\":\"FULL_DECODE_ONLY\",\"cudagraph_capture_sizes\":[1,2,4,8,12,16,24,32,40,48,56,64]}"
+      ],
+      "environment": {
+        "B70_ONEDNN_MIXED_ROUTE": "0",
+        "B70_GPTQ_W4A8_PREFILL": "0",
+        "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+        "EXL3_TARGET_RUNTIME": "vllm031",
+        "B70_ONEDNN_PREFILL": "0",
+        "PYTHONPATH": "/opt/b70-runtime",
+        "ZE_AFFINITY_MASK": "0",
+        "EXL3_LOADER_REPORT_DIR": "/results/loader",
+        "EXL3_DRAFT_VOCAB": "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json",
+        "EXL3_ONEDNN_ATTN": "0",
+        "EXL3_FIX_SPARSE_GDN_RETIREMENT": "0",
+        "EXL3_GUARDED_PREFILL": "1",
+        "EXL3_M04_LIBRARY_SHA256": "03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+        "EXL3_SDPA_CACHE_CAPACITY": "64",
+        "HF_HUB_OFFLINE": "1",
+        "EXL3_KV_BLOCK_EXACT": "0",
+        "EXL3_INT8_PREFILL": "1",
+        "EXL3_GUARDED_ATTN": "1",
+        "EXL3_M04_LIBRARY": "/opt/exl3xpu/m04/m04.so",
+        "PATH": "/opt/venv/bin:/root/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "DEBIAN_FRONTEND": "noninteractive",
+        "VIRTUAL_ENV": "/opt/venv",
+        "UV_PYTHON_INSTALL_DIR": "/opt/uv/python",
+        "UV_HTTP_TIMEOUT": "500",
+        "PIP_EXTRA_INDEX_URL": "https://download.pytorch.org/whl/xpu",
+        "UV_EXTRA_INDEX_URL": "https://download.pytorch.org/whl/xpu",
+        "UV_INDEX_STRATEGY": "unsafe-best-match",
+        "UV_LINK_MODE": "copy",
+        "LD_LIBRARY_PATH": "/opt/b70:/opt/intel/oneapi/compiler/2026.1/lib:/opt/ucx/lib:/opt/venv/lib:/usr/local/lib",
+        "VLLM_TARGET_DEVICE": "xpu",
+        "MODELS_DIR": "/models",
+        "B70_POLICY_SHA256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424"
+      },
+      "mounts": [
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/runtime",
+          "Destination": "/opt/b70-runtime",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424/194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec/reports",
+          "Destination": "/results",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424/194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec/vllm",
+          "Destination": "/root/.cache/vllm",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424/194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec/triton",
+          "Destination": "/root/.triton/cache",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424/194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec/neo_compiler_cache",
+          "Destination": "/root/.cache/neo_compiler_cache",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw",
+          "Destination": "/models/checkpoint",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ],
+      "verified_unix": 1791562215.132163
+    },
+    "restart_readiness": {
+      "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+      "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+      "models_endpoint_healthy": true,
+      "verified_unix": 1791562273.062889
+    },
+    "restart_api": {
+      "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+      "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+      "container_id": "b4608a5796de67058cb318941b34932cd3191ff9d155e61ac727aef2178a1893",
+      "models_endpoint": true,
+      "real_generated_reply": "Paris",
+      "streaming_done": true,
+      "streaming_usage": {
+        "prompt_tokens": 23,
+        "total_tokens": 25,
+        "completion_tokens": 2,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "defaults_response": {
+        "id": "chatcmpl-802b3280c4ce6124",
+        "object": "chat.completion",
+        "created": 1791562273,
+        "model": "Qwen3.8-27B",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "\n\n13 \u00d7 29 = **377**",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": "The user wants me to calculate 13 \u00d7 29.\n\n13 \u00d7 29 = 13 \u00d7 30 - 13 = 390 - 13 = 377.\n"
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.31.0-cf4b6f14",
+        "usage": {
+          "prompt_tokens": 24,
+          "total_tokens": 88,
+          "completion_tokens": 64,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 49
+          }
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      },
+      "default_contract": "16384 completion,8192 thinking budget,medium reasoning; unchanged hashed middleware plus live request with no overrides",
+      "command": [
+        "serve",
+        "/models/checkpoint",
+        "--served-model-name",
+        "Qwen3.8-27B",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--revision",
+        "113cf7ab958054860e43fb7f3063b1af19171095",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "262144",
+        "--kv-cache-dtype",
+        "fp8",
+        "--gpu-memory-utilization",
+        "0.965",
+        "--max-num-seqs",
+        "16",
+        "--max-num-batched-tokens",
+        "4096",
+        "--scheduler-reserve-full-isl",
+        "--watermark",
+        "0.0",
+        "--enable-prefix-caching",
+        "--mamba-cache-mode",
+        "align",
+        "--speculative-config",
+        "{\"method\":\"mtp\",\"num_speculative_tokens\":3}",
+        "--limit-mm-per-prompt",
+        "{\"image\":32,\"video\":4}",
+        "--mm-processor-kwargs",
+        "{\"max_pixels\":4194304}",
+        "--enable-auto-tool-choice",
+        "--tool-call-parser",
+        "qwen3_xml",
+        "--reasoning-parser",
+        "qwen3",
+        "--reasoning-config",
+        "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+        "--override-generation-config",
+        "{\"max_new_tokens\":16384}",
+        "--middleware",
+        "request_defaults.ChatDefaults",
+        "--compilation-config",
+        "{\"cudagraph_mode\":\"FULL_DECODE_ONLY\",\"cudagraph_capture_sizes\":[1,2,4,8,12,16,24,32,40,48,56,64]}"
+      ],
+      "environment": {
+        "HF_HUB_OFFLINE": "1",
+        "EXL3_LOADER_REPORT_DIR": "/results/loader",
+        "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+        "EXL3_DRAFT_VOCAB": "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json",
+        "EXL3_KV_BLOCK_EXACT": "0",
+        "EXL3_ONEDNN_ATTN": "0",
+        "EXL3_FIX_SPARSE_GDN_RETIREMENT": "0",
+        "B70_ONEDNN_PREFILL": "0",
+        "EXL3_GUARDED_PREFILL": "1",
+        "EXL3_M04_LIBRARY": "/opt/exl3xpu/m04/m04.so",
+        "B70_ONEDNN_MIXED_ROUTE": "0",
+        "PYTHONPATH": "/opt/b70-runtime",
+        "ZE_AFFINITY_MASK": "0",
+        "EXL3_INT8_PREFILL": "1",
+        "EXL3_TARGET_RUNTIME": "vllm031",
+        "B70_GPTQ_W4A8_PREFILL": "0",
+        "EXL3_GUARDED_ATTN": "1",
+        "EXL3_M04_LIBRARY_SHA256": "03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+        "EXL3_SDPA_CACHE_CAPACITY": "64",
+        "PATH": "/opt/venv/bin:/root/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "DEBIAN_FRONTEND": "noninteractive",
+        "VIRTUAL_ENV": "/opt/venv",
+        "UV_PYTHON_INSTALL_DIR": "/opt/uv/python",
+        "UV_HTTP_TIMEOUT": "500",
+        "PIP_EXTRA_INDEX_URL": "https://download.pytorch.org/whl/xpu",
+        "UV_EXTRA_INDEX_URL": "https://download.pytorch.org/whl/xpu",
+        "UV_INDEX_STRATEGY": "unsafe-best-match",
+        "UV_LINK_MODE": "copy",
+        "LD_LIBRARY_PATH": "/opt/b70:/opt/intel/oneapi/compiler/2026.1/lib:/opt/ucx/lib:/opt/venv/lib:/usr/local/lib",
+        "VLLM_TARGET_DEVICE": "xpu",
+        "MODELS_DIR": "/models",
+        "B70_POLICY_SHA256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424"
+      },
+      "mounts": [
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424/194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec/reports",
+          "Destination": "/results",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424/194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec/vllm",
+          "Destination": "/root/.cache/vllm",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424/194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec/triton",
+          "Destination": "/root/.triton/cache",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424/194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec/neo_compiler_cache",
+          "Destination": "/root/.cache/neo_compiler_cache",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw",
+          "Destination": "/models/checkpoint",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/runtime",
+          "Destination": "/opt/b70-runtime",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ],
+      "verified_unix": 1791562274.1038933
+    }
+  },
+  "finished_unix": 1791562274.1039166
+}

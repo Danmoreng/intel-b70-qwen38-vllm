@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deploy only passed reviewed bytes; automatically recover v1 on failure."""
+"""Deploy only passed reviewed bytes; recover the saved release on failure."""
 import argparse
 import hashlib
 import importlib.util
@@ -62,16 +62,28 @@ def verify(image,policy):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--release-dir',type=Path,required=True);p.add_argument('--decision',type=Path,required=True)
-    p.add_argument('--out',type=Path,required=True);a=p.parse_args();out=a.out.resolve()
+    p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--rollback-release',type=Path,default=REPO/'config/releases/exl3-v1')
+    p.add_argument('--production-tag',default='local/b70-qwen38-vllm:production-exl3-v2')
+    a=p.parse_args();out=a.out.resolve()
     assert not (out/'promotion.json').exists(), 'Refuse to replace an existing deployment receipt'
     decision=json.loads(a.decision.read_text());assert decision['status']=='QUALIFIED_FOR_PRODUCTION_PROMOTION'
     for key in ('gate_assessment','benchmark_summary'):
         assert sha(REPO/decision[key]['path'])==decision[key]['sha256']
     gate=json.loads((REPO/decision['gate_assessment']['path']).read_text());assert gate['status']=='PASS_EXACT_IMAGE_RELEASE_GATES'
+    if decision.get('performance_review_triggers'):
+        reviewed=decision['performance_review']
+        assert sha(REPO/reviewed['path'])==reviewed['sha256']
+        performance=json.loads((REPO/reviewed['path']).read_text())
+        assert performance['status']=='PASS_REVIEWED_PERFORMANCE_TRADEOFF'
+        assert performance['image_id']==decision['image_id']
+        assert performance['reviewed_triggers']==decision['performance_review_triggers']
+        for receipt in performance['receipts'].values():
+            assert sha(REPO/receipt['path'])==receipt['sha256']
     candidate=json.loads((a.release_dir/'production_image.json').read_text());image=candidate['image_id'];policy=candidate['policy_sha256']
     assert image==decision['image_id']==gate['image_id'] and policy==decision['policy_sha256']
     assert sha(a.release_dir/'production_policy.json')==policy
-    saved=REPO/'config/releases/exl3-v1';old=json.loads((saved/'production_image.json').read_text())
+    saved=a.rollback_release.resolve();old=json.loads((saved/'production_image.json').read_text())
     assert old['image_id']==decision['immediate_rollback_image_id']
     inventory=json.loads((saved/'snapshot-inventory.json').read_text())
     for name,digest in inventory['files_sha256'].items():assert sha(saved/name)==digest
@@ -80,7 +92,8 @@ def main():
     started=subprocess.check_output(['systemctl','--user','show',SERVICE,'--property=ExecStart','--value'],text=True)
     expected=str(REPO/'scripts/run-server.sh')
     assert 'path='+expected+' ; argv[]='+expected+' ;' in started
-    tag='local/b70-qwen38-vllm:production-exl3-v2'
+    tag=a.production_tag
+    assert tag.startswith('local/b70-qwen38-vllm:production-exl3-') and tag!=old['image_tag']
     found=subprocess.run(['docker','image','inspect',tag,'--format','{{.Id}}'],capture_output=True,text=True)
     assert found.returncode!=0 or found.stdout.strip()==image, 'Refuse to overwrite a different release alias'
     current=json.loads((REPO/'config/production_image.json').read_text());assert current['image_id']==old['image_id']
@@ -101,11 +114,13 @@ def main():
         subprocess.run(['docker','tag',image,tag],check=True)
         candidate.update(status='QUALIFIED_RELEASE',image_tag=tag,
             qualification_review=dict(path=str(a.decision.resolve().relative_to(REPO)),sha256=sha(a.decision)),
-            qualification_note='Bounded review, exact-image full serving matrix, matched comparison, API/media, capacity, abort/restart, current-reference and original-tolerance candidate replay pass. Historical coding results retained explicitly.')
+            qualification_note=decision['rationale'])
         for name in ['production_policy.json','production_policy.sha256']:shutil.copyfile(a.release_dir/name,REPO/'config'/name)
         write(REPO/'config/production_image.json',candidate)
         text=original_env.decode() if original_env is not None else (REPO/'.env.example').read_text()
-        for key,value in [('VLLM_IMAGE',tag),('EXL3_SDPA_CACHE_CAPACITY','64')]:
+        from exl3_candidate_worker import profile
+        frozen_env=profile(image)['env']
+        for key,value in [('VLLM_IMAGE',tag),('EXL3_SDPA_CACHE_CAPACITY','64'),*frozen_env.items()]:
             text,count=re.subn(r'^(?:export\s+)?'+key+r'=.*$',key+'='+value,text,flags=re.MULTILINE)
             if not count:text+='\n'+key+'='+value+'\n'
         env_path.write_text(text)
@@ -131,7 +146,7 @@ def main():
             if original_env is None:env_path.unlink(missing_ok=True)
             else:env_path.write_bytes(original_env)
             subprocess.run(['systemctl','--user','start',SERVICE],check=True,timeout=90)
-            state['restoration']=helper.wait_for_qualified_service(old['image_id']);state['status']='FAILED_V1_RECOVERED';state['finished_unix']=time.time();save()
+            state['restoration']=helper.wait_for_qualified_service(old['image_id']);state['status']='FAILED_SAVED_RELEASE_RECOVERED';state['finished_unix']=time.time();save()
 
 
 if __name__=='__main__':main()

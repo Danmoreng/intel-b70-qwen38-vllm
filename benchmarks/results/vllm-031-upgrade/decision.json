@@ -1,0 +1,23 @@
+{
+  "status": "QUALIFIED_FOR_PRODUCTION_PROMOTION",
+  "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+  "source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
+  "gate_assessment": {
+    "path": "benchmarks/results/vllm-031-upgrade/assessment.json",
+    "sha256": "20bbd51ed70f5f134387f11ed3e852e6d91bcfc47cbc2dbfba76c035d022afee"
+  },
+  "benchmark_summary": {
+    "path": "benchmarks/results/vllm-031-upgrade/serving-summary.json",
+    "sha256": "95bad1bb58097b7e1cb5642a0e895dae6ec0b709bbfb6221b228d667ae87e696"
+  },
+  "immediate_rollback_image_id": "sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918",
+  "performance_review_triggers": [
+    "phase-64k-c1"
+  ],
+  "rationale": "vLLM 0.31/Torch 2.14 XPU upgrade: rebuilt C++20 EXL3/M04, guarded upstream integration, actual-state original-tolerance correctness, reviewed cross-version quality changes, full context/API/media/abort/restart contract and complete frozen serving benchmark qualified. Original references and historical v2 benchmark reused; no old baseline rerun. Reviewed reproducible 64K decode regression (-8.3%) is accepted explicitly; remaining measured load points are near the stored baseline. No universal speedup or bitidentical-generation claim; v2 rollback retained.",
+  "performance_review": {
+    "path": "benchmarks/results/vllm-031-upgrade/performance-review.json",
+    "sha256": "e74291bc71fbe2fdc61af8e569b8aeb19d25465c3aec45b7bed37d9bca730996"
+  }
+}

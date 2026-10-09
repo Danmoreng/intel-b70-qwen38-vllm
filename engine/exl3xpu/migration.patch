@@ -253,12 +253,12 @@ index 0000000..365fd94
 +CMD ["models/qwen3.8-27b-exl3-4.00bpw/migration-200704-c4.yaml", "--gpu", "0"]
 diff --git a/docker/Dockerfile.migration-target b/docker/Dockerfile.migration-target
 new file mode 100644
-index 0000000..927fd25
+index 0000000..ee29cdf
 --- /dev/null
 +++ b/docker/Dockerfile.migration-target
-@@ -0,0 +1,24 @@
-+# Initial functional port. Native attention; no inherited GPTQ performance routes.
-+ARG BASE_IMAGE=sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68
+@@ -0,0 +1,25 @@
++# vLLM 0.31 / Torch 2.14 port; independently rebuilt native artifacts.
++ARG BASE_IMAGE
 +FROM ${BASE_IMAGE}
 +USER root
 +WORKDIR /opt/exl3xpu
@@ -271,22 +271,23 @@ index 0000000..927fd25
 +COPY .native-target/_C.so .native-target/_C.so.manifest.json ./exl3xpu/
 +COPY .m04-target/ ./m04/
 +COPY .target-integration/ /tmp/exl3-integration/
++RUN mkdir -p /opt/b70 && cp /tmp/exl3-integration/libdnnl.so.3 /opt/b70/libdnnl.so.3
++ENV LD_LIBRARY_PATH=/opt/b70:/opt/intel/oneapi/compiler/2026.1/lib:/opt/ucx/lib:/opt/venv/lib:/usr/local/lib
 +RUN python scripts/verify_native_artifact.py \
-+ && python /tmp/exl3-integration/patch_mtp_format_guard.py --vllm-root /opt/venv/lib/python3.12/site-packages/vllm \
 + && python scripts/prepare_target_runtime.py \
 + && pip install --no-deps --no-build-isolation -e . \
 + && python -c "from importlib.metadata import entry_points; assert any(e.name=='exl3xpu' for e in entry_points(group='vllm.general_plugins'))" \
 + && rm -rf /tmp/exl3-integration
-+ENV MODELS_DIR=/models EXL3_TARGET_RUNTIME=vllm030 EXL3_FIX_SPARSE_GDN_RETIREMENT=0 \
++ENV MODELS_DIR=/models EXL3_TARGET_RUNTIME=vllm031 EXL3_FIX_SPARSE_GDN_RETIREMENT=0 EXL3_SDPA_CACHE_CAPACITY=64 \
 +    B70_GPTQ_W4A8_PREFILL=0 B70_ONEDNN_PREFILL=0 B70_ONEDNN_MIXED_ROUTE=0
 +ENTRYPOINT ["python", "scripts/serve.py"]
 +CMD ["models/qwen3.8-27b-exl3-4.00bpw/migration-target-200704-c4.yaml", "--gpu", "0"]
 diff --git a/exl3xpu/attention_dispatch.py b/exl3xpu/attention_dispatch.py
 new file mode 100644
-index 0000000..393c246
+index 0000000..0469da1
 --- /dev/null
 +++ b/exl3xpu/attention_dispatch.py
-@@ -0,0 +1,221 @@
+@@ -0,0 +1,219 @@
 +"""Opt-in, source-guarded attention compute; native V2 owns every KV write."""
 +from contextvars import ContextVar
 +from dataclasses import dataclass
@@ -301,16 +302,14 @@ index 0000000..393c246
 +from . import attention_metadata as metadata
 +from . import shared_kv_verify as verify
 +
-+SOURCE_HASHES = {
-+    'v1/attention/backends/flash_attn.py': 'b170a4789e18104c1bee35bea70df51abe6766693d8f4726a59f2e6f5c4282aa',
-+    'v1/attention/backends/fa_utils.py': '08fa6e231d3af3a71a6e59162dd12328aa8beb28548165ae58f130a92adb5a83',
-+    'v1/attention/backend.py': '01ac364372afa75fdb22486aa3a9c7cf9aebb742e3471dfb9e0f9d9d36b734bc',
-+    'v1/worker/gpu/model_runner.py': '174c93db921c23cf0396eee4764be25b2bd2d4b6a06e9fa41ce3598b884ce8ce',
-+    'v1/worker/gpu/attn_utils.py': 'b9b81e59dda2720b1f9c434471381f879228832443e52756e469b4ad4905888f',
-+    'v1/worker/gpu/model_states/mamba_hybrid.py': '573e130ac5587d4822fabf97adad1ad0fda02ff83c5e70df879a5bb175ae845c',
-+    'model_executor/layers/attention/attention.py': 'bc897e452f3aea603e353ca42a365d3be8836e9485d78cbf8cc4677baca2fb42',
-+    'model_executor/layers/quantization/kv_cache.py': '343665e0742ef111da53a3fc1fb4c4fd07b006895642e0ddbaaa57da68323a74',
-+}
++SOURCE_HASHES = {'v1/attention/backends/flash_attn.py': 'ea53fb41165323f13094604051c73d44a579994fe5a427243aa9faafc280b1c2',
++ 'v1/attention/backends/fa_utils.py': '3896d53947719ec9a226479fdbde60e83b1df116d634e2f4331499acf727dd99',
++ 'v1/attention/backend.py': '77ac35180c1e0f854c6307f5deb3c7c0ac4a9e8702578d406ce058981488a137',
++ 'v1/worker/gpu/model_runner.py': '725c47114e148ade3a26b4cc9c5f7295588fdd387afc3cb5fdb2d16513a1bb5c',
++ 'v1/worker/gpu/attn_utils.py': '0f9df8b0153bd0a2720ee957f6cd1600b9d865eb12b7bf432501ffaa12fb6a9c',
++ 'v1/worker/gpu/model_states/mamba_hybrid.py': '1ddd7dc921d74789e77d3319dc167820ad7fc47ed51d8d9a35ba3938f5c6a079',
++ 'model_executor/layers/attention/attention.py': 'bde77677fd0e95ea09c6a580dfaf09b57741e8183e00cb106e2d1cc64d8e03f2',
++ 'model_executor/layers/quantization/kv_cache.py': '32b45463d0b36c021cb5ae0937d60b5c797ca383a0ef3e291170337486feb1b0'}
 +
 +
 +@dataclass(frozen=True)
@@ -428,7 +427,7 @@ index 0000000..393c246
 +    from vllm.v1.attention.backend import AttentionType
 +    if getattr(fa, '_exl3_guarded_attention', False):
 +        return
-+    if vllm.__version__ != '0.30.0' or torch.__version__ != '2.13.0+xpu':
++    if vllm.__version__ != '0.31.0' or torch.__version__ != '2.14.0+xpu':
 +        raise RuntimeError('Unsupported guarded attention ABI')
 +    root = Path(vllm.__file__).parent
 +    actual = {name: hashlib.sha256((root/name).read_bytes()).hexdigest() for name in SOURCE_HASHES}
@@ -460,7 +459,7 @@ index 0000000..393c246
 +                 config.parallel_config.decode_context_parallel_size == 1 and
 +                 config.parallel_config.prefill_context_parallel_size == 1)
 +        result._exl3_fixed_query_partition = fixed
-+        # In this reviewed 0.30 source, ordinary fp8 uses load-time scalar
++        # In this reviewed 0.31 source, ordinary fp8 uses load-time scalar
 +        # scales; dynamic per-token/head formats have different dtype names.
 +        # The old calculate_kv_scales CacheConfig field no longer exists.
 +        result._exl3_static_kv_scales = config.cache_config.cache_dtype in ('fp8', 'fp8_e4m3')
@@ -757,11 +756,11 @@ index 0000000..fe92774
 +        return tensor.index_select(0, self.device_indices[key])
 diff --git a/exl3xpu/gdn_target_patch.py b/exl3xpu/gdn_target_patch.py
 new file mode 100644
-index 0000000..d196281
+index 0000000..bb82eb6
 --- /dev/null
 +++ b/exl3xpu/gdn_target_patch.py
 @@ -0,0 +1,70 @@
-+"""Semantic transformation of the reviewed 0.30 metadata builder, not a regex."""
++"""Semantic transformation of the reviewed 0.31 metadata builder, not a regex."""
 +import ast
 +from collections import Counter
 +
@@ -950,14 +949,14 @@ index 0000000..a7759a7
 +            'unowned_exl3_heads':unowned_heads,'scope':'Python-GC-visible XPU storage not referenced by model parameters/buffers/direct attributes/dictionaries; host metadata only'}
 diff --git a/exl3xpu/migration_trace.py b/exl3xpu/migration_trace.py
 new file mode 100644
-index 0000000..59a3a77
+index 0000000..01149a3
 --- /dev/null
 +++ b/exl3xpu/migration_trace.py
-@@ -0,0 +1,250 @@
-+"""Opt-in diagnostic trace for the pinned old EXL3 runtime. No production dispatch changes.
+@@ -0,0 +1,257 @@
++"""Opt-in diagnostic trace for the pinned EXL3 runtimes. No production dispatch changes.
 +
 +These runs are for memory/accounting diagnosis, not unbiased throughput timing.
-+Unknown scheduler/cache source fails closed; target-runtime port needs new guards.
++Unknown scheduler/cache source fails closed; vLLM 0.31 callbacks preserve native behavior.
 +"""
 +import functools
 +import hashlib
@@ -981,6 +980,11 @@ index 0000000..59a3a77
 + 'v1/core/single_type_kv_cache_manager.py':'0233531d85aeced9e57a38c76d83db970519c92902b7e55484390cb2b64985bf',
 + 'v1/worker/gpu_worker.py':'6994436e4547c0996ab555b3e814e8ccea26b650dfc1b378b97d640745309347',
 +}
++
++V031_SOURCE_HASHES={'v1/core/sched/scheduler.py': 'f820bee4f42b878b262a30f3728a97d7413477b2a277748e20f2528ac2ec2f2a',
++ 'v1/core/kv_cache_manager.py': 'bd9bf46a2101f9368d4941867415a239d18d95e0b956f82f885ce25e10e69f3b',
++ 'v1/core/single_type_kv_cache_manager.py': '3a3cb20bd6aa1e0ad46471fc9e5e01ee5797ab4bb759e00ef5fb309d2830db13',
++ 'v1/worker/gpu_worker.py': '43bd01925cd84f7d8a1d4a2ec30e289014a485fe4492a5343cbc893e8ed2f518'}
 +
 +def digest(path):
 +    with Path(path).open('rb') as f: return hashlib.file_digest(f,'sha256').hexdigest()
@@ -1062,7 +1066,9 @@ index 0000000..59a3a77
 +    from vllm.v1.core.single_type_kv_cache_manager import MambaManager
 +    if getattr(KVCacheManager,'_exl3_migration_traced',False): return
 +    root=Path(vllm.__file__).parent
-+    expected=TARGET_SOURCE_HASHES if os.environ.get('EXL3_TARGET_RUNTIME')=='vllm030' else OLD_SOURCE_HASHES
++    runtime=os.environ.get('EXL3_TARGET_RUNTIME')
++    expected=(V031_SOURCE_HASHES if runtime=='vllm031' else
++              TARGET_SOURCE_HASHES if runtime=='vllm030' else OLD_SOURCE_HASHES)
 +    actual={n:digest(root/n) for n in expected}
 +    if actual!=expected: raise RuntimeError(f'Unknown runtime for EXL3 diagnostic trace: {actual}')
 +    emit('trace_install',vllm_version=vllm.__version__,torch_version=torch.__version__,
@@ -1338,11 +1344,11 @@ index 0000000..efac016
 +    return run(d)
 diff --git a/exl3xpu/target_runtime.py b/exl3xpu/target_runtime.py
 new file mode 100644
-index 0000000..3167c10
+index 0000000..e5ac79f
 --- /dev/null
 +++ b/exl3xpu/target_runtime.py
-@@ -0,0 +1,39 @@
-+"""Reviewed vLLM 0.30 port. Deliberately do not apply legacy runner/cache patches."""
+@@ -0,0 +1,40 @@
++"""Reviewed vLLM 0.31 port. Deliberately do not apply legacy runner/cache patches."""
 +import hashlib
 +import inspect
 +import textwrap
@@ -1353,14 +1359,15 @@ index 0000000..3167c10
 +from .gdn_target_patch import transformed_build
 +
 +logger = init_logger('vllm.exl3xpu.port')
-+SOURCE_HASHES = {
-+    'v1/attention/backends/gdn_attn.py': 'd30bfce0df438e0d29d8a8744aeb9fb8e4bdcbca2410fde7afdb2a6cdb627f1b',
-+    'v1/worker/gpu/model_states/mamba_hybrid.py': '573e130ac5587d4822fabf97adad1ad0fda02ff83c5e70df879a5bb175ae845c',
-+    'platforms/xpu.py': '3736e6cba2a0d78b9bd93f6069f610e2b2725be00f398a6ad5672a9862d66285',
-+    'v1/core/single_type_kv_cache_manager.py': '0233531d85aeced9e57a38c76d83db970519c92902b7e55484390cb2b64985bf',
-+    'v1/worker/xpu_model_runner.py': '07fa0390d28f2b8c3c3c0019eb9c3b126e2397aea268ba47c889f06b423deb23',
-+    'v1/worker/xpu_worker.py': '711b56432506b58041cd86e71320c3960413f7bd61061990b66488421d81cfc3',
-+}
++SOURCE_HASHES = {'v1/attention/backends/gdn_attn.py': '496f383285de2fe92626091309a56a96a64b496f37d5585f8b7b55d0260e1a84',
++ 'v1/worker/gpu/model_states/mamba_hybrid.py': '1ddd7dc921d74789e77d3319dc167820ad7fc47ed51d8d9a35ba3938f5c6a079',
++ 'platforms/xpu.py': 'd13a446c60c0cc3d16902f75170646d87d6e4b5f153725290a2a4830b0b6b5b2',
++ 'v1/core/single_type_kv_cache_manager.py': '3a3cb20bd6aa1e0ad46471fc9e5e01ee5797ab4bb759e00ef5fb309d2830db13',
++ 'v1/worker/xpu_model_runner.py': '07fa0390d28f2b8c3c3c0019eb9c3b126e2397aea268ba47c889f06b423deb23',
++ 'v1/worker/xpu_worker.py': '3acd18a33f53b8da5a322079afc61ae7b1247212a7c881ab9aa4101a287c2ca5',
++ 'model_executor/models/qwen3_5_mtp.py': '04be8e53afff3c9e27198d18ad66bdee787b58c8c294326de1e907f9612a8241',
++ 'model_executor/models/b70_mtp_policy.py': 'c7c75d6b818c1cb0f1846f752060650af399f832e0dea3e8297ec274f2cfee3f',
++ '_xpu_ops.py': '713f181dcfc72814e227f9e1ffe8878b03cbfe524b0be60b3fc261bdb76cd448'}
 +
 +
 +def install():
@@ -1395,7 +1402,7 @@ index 0000000..05e2b6f
 +def int8_reference_pass(errors):
 +    return bool(errors) and all(math.isfinite(v) and v < INT8_REFERENCE_TOLERANCE for v in errors)
 diff --git a/exl3xpu/vllm_plugin.py b/exl3xpu/vllm_plugin.py
-index 353f1d9..58b8228 100644
+index 353f1d9..15fd1b3 100644
 --- a/exl3xpu/vllm_plugin.py
 +++ b/exl3xpu/vllm_plugin.py
 @@ -6,12 +6,15 @@ engine core, workers) imports it before model construction.
@@ -1670,7 +1677,7 @@ index 353f1d9..58b8228 100644
      if os.environ.get("EXL3_DRAFT_VOCAB"):
          _patch_mtp_draft_logits()
 -    if os.environ.get("EXL3_VLLM_PATCHES", "1") != "0":
-+    if os.environ.get('EXL3_TARGET_RUNTIME') == 'vllm030':
++    if os.environ.get('EXL3_TARGET_RUNTIME') == 'vllm031':
 +        from . import target_runtime
 +        target_runtime.install()
 +    elif os.environ.get("EXL3_VLLM_PATCHES", "1") != "0":
@@ -1801,10 +1808,10 @@ index 0000000..a6f7e2f
 +  B70_GPTQ_W4A8_PREFILL: '0'
 diff --git a/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml b/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml
 new file mode 100644
-index 0000000..e175c86
+index 0000000..68759cf
 --- /dev/null
 +++ b/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml
-@@ -0,0 +1,69 @@
+@@ -0,0 +1,68 @@
 +# Frozen optimized EXL3 candidate; release requires numerical, quality,
 +# operational and complete README benchmark qualification of this exact image.
 +id: qwen3.8-27b-exl3-4.00bpw
@@ -1856,7 +1863,6 @@ index 0000000..e175c86
 +    - 56
 +    - 64
 +env:
-+  VLLM_XPU_ENABLE_XPU_GRAPH: '1'
 +  VLLM_WORKER_MULTIPROC_METHOD: spawn
 +  EXL3_DRAFT_VOCAB: '{model_dir}/draft_vocab.json'
 +  EXL3_KV_BLOCK_EXACT: '0'
@@ -1865,7 +1871,7 @@ index 0000000..e175c86
 +  B70_MTP_BF16_DRAFT: null
 +  B70_DRAFT_LMHEAD_INT4: null
 +  B70_DRAFT_MTP_INT4: null
-+  EXL3_TARGET_RUNTIME: vllm030
++  EXL3_TARGET_RUNTIME: vllm031
 +  EXL3_FIX_SPARSE_GDN_RETIREMENT: '0'
 +  B70_ONEDNN_PREFILL: '0'
 +  B70_ONEDNN_MIXED_ROUTE: '0'
@@ -1873,7 +1879,7 @@ index 0000000..e175c86
 +  EXL3_GUARDED_ATTN: '1'
 +  EXL3_GUARDED_PREFILL: '1'
 +  EXL3_M04_LIBRARY: /opt/exl3xpu/m04/m04.so
-+  EXL3_M04_LIBRARY_SHA256: eaa18427db27d4fceeca8a17c8a3c6b019b7678f39bf98affc1736b9f2c2d631
++  EXL3_M04_LIBRARY_SHA256: 03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3
 diff --git a/models/qwen3.8-27b-exl3-4.00bpw/migration-target-upstream-expanded.yaml b/models/qwen3.8-27b-exl3-4.00bpw/migration-target-upstream-expanded.yaml
 new file mode 100644
 index 0000000..4c1a5cc
@@ -1947,7 +1953,7 @@ index 0000000..4c1a5cc
 +  B70_ONEDNN_MIXED_ROUTE: '0'
 +  B70_GPTQ_W4A8_PREFILL: '0'
 diff --git a/scripts/build_ext.sh b/scripts/build_ext.sh
-index f170d61..0a4eda4 100755
+index f170d61..0e44375 100755
 --- a/scripts/build_ext.sh
 +++ b/scripts/build_ext.sh
 @@ -1,19 +1,42 @@
@@ -1995,7 +2001,7 @@ index f170d61..0a4eda4 100755
 +mapfile -d '' -t extra_flags < "$flags_tmp"
 +if [[ ${#extra_flags[@]} == 1 && -z ${extra_flags[0]} ]]; then extra_flags=(); fi
 +compiler=${EXL3_CXX:-icpx}
-+command=("$compiler" -fsycl -fsycl-targets=spir64 -O3 -ffast-math -fPIC -std=c++17 -shared
++command=("$compiler" -fsycl -fsycl-targets=spir64 -O3 -ffast-math -fPIC -std=c++20 -shared
 + -fsycl-device-code-split=per_kernel "-D_GLIBCXX_USE_CXX11_ABI=$abi" "${extra_flags[@]}" "${dnnl_flags[@]}"
 + -I csrc "-I$T/include" "-I$T/include/torch/csrc/api/include"
 + -x c++ csrc/exl3_ops.sycl -x none -o "$tmp"
@@ -2010,10 +2016,10 @@ index f170d61..0a4eda4 100755
 +printf 'Installed verified library: %s\nManifest: %s\nBuild log: %s\n' "$out" "${out}.manifest.json" "$log"
 diff --git a/scripts/build_target_image.py b/scripts/build_target_image.py
 new file mode 100644
-index 0000000..9b434b0
+index 0000000..e2f425f
 --- /dev/null
 +++ b/scripts/build_target_image.py
-@@ -0,0 +1,95 @@
+@@ -0,0 +1,99 @@
 +#!/usr/bin/env python3
 +"""Build and attest an isolated target candidate; never overwrite a candidate tag."""
 +import argparse
@@ -2025,25 +2031,27 @@ index 0000000..9b434b0
 +import time
 +
 +ROOT=Path(__file__).resolve().parents[1]
-+BUILDER='sha256:ae6950731b3c031f812a95c0eb615a572239426440bf67fd1b3c9c9cbfce9eca'
-+BASE='sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68'
 +def sha(path):
 +    with Path(path).open('rb') as stream: return hashlib.file_digest(stream,'sha256').hexdigest()
 +
 +def main():
 +    p=argparse.ArgumentParser(description=__doc__)
 +    p.add_argument('--tag',required=True);p.add_argument('--output',type=Path,required=True)
++    p.add_argument('--builder-image',required=True,help='Immutable Torch 2.14 XPU compiler image')
++    p.add_argument('--base-image',required=True,help='Immutable vLLM 0.31 XPU runtime/compiler image')
 +    p.add_argument('--native-artifacts',type=Path,help='Reuse only an ABI/source/hash-verified native build')
 +    p.add_argument('--m04-artifacts',type=Path,help='Package the separately rebuilt, hash/ABI/source-verified M04 library')
 +    p.add_argument('--onednn',type=Path,default=ROOT.parent/'b70-onednn-3.13-install')
 +    p.add_argument('--gptq-repo',type=Path,default=ROOT.parent/'intel-b70-qwen38-vllm-onednn')
 +    a=p.parse_args();out=a.output.resolve()
++    builder=subprocess.check_output(['docker','image','inspect',a.builder_image,'--format','{{.Id}}'],text=True).strip()
++    base=subprocess.check_output(['docker','image','inspect',a.base_image,'--format','{{.Id}}'],text=True).strip()
 +    if out.exists(): raise SystemExit('Fresh build evidence directory required')
 +    if subprocess.run(['docker','image','inspect',a.tag],capture_output=True).returncode==0:
 +        raise SystemExit('Candidate tag already exists; choose a new immutable candidate name')
-+    for image in (BUILDER,BASE): subprocess.run(['docker','image','inspect',image],check=True,stdout=subprocess.DEVNULL)
++    for image in (builder,base): subprocess.run(['docker','image','inspect',image],check=True,stdout=subprocess.DEVNULL)
 +    out.mkdir(parents=True)
-+    state={'schema':1,'started_unix':time.time(),'builder_image':BUILDER,'base_image':BASE,'tag':a.tag,'commands':[],
++    state={'schema':1,'started_unix':time.time(),'builder_image':builder,'base_image':base,'tag':a.tag,'commands':[],
 +           'source_sha256':{str(f.relative_to(ROOT)):sha(f) for d in ('exl3xpu','csrc','scripts','models','docker','tests')
 +                            for f in (ROOT/d).rglob('*') if f.is_file() and '__pycache__' not in f.parts and f.suffix not in ('.so','.log')}}
 +    def save(): (out/'build.json').write_text(json.dumps(state,indent=2)+'\n')
@@ -2059,9 +2067,9 @@ index 0000000..9b434b0
 +            run(['docker','run','--rm','--network','none','--memory','12g','--entrypoint','/bin/bash',
 +                 '-v',str(ROOT)+':/work:ro','-v',str(a.onednn.resolve())+':/opt/intel/oneapi/dnnl/latest:ro',
 +                 '-v',str(native)+':/results','-w','/work','-e','EXL3_OUT=/results/_C.so',
-+                 '-e','EXL3_BUILD_LOG=/results/compiler.log',BUILDER,'scripts/build_ext.sh'],'native-build.log')
++                 '-e','EXL3_BUILD_LOG=/results/compiler.log',builder,'scripts/build_ext.sh'],'native-build.log')
 +        manifest=json.loads((native/'_C.so.manifest.json').read_text())
-+        assert manifest['torch_version']=='2.13.0+xpu' and manifest['torch_cxx11_abi'] is True
++        assert manifest['torch_version']=='2.14.0+xpu' and manifest['torch_cxx11_abi'] is True
 +        assert sha(native/'_C.so')==manifest['library_sha256']
 +        for path,h in manifest['source_sha256'].items(): assert sha(ROOT/path)==h,path
 +        state['native_manifest']=manifest
@@ -2073,7 +2081,7 @@ index 0000000..9b434b0
 +        if a.m04_artifacts:
 +            m04=a.m04_artifacts.resolve()
 +            receipt=json.loads((m04/'manifest.json').read_text())
-+            assert receipt['torch']=='2.13.0+xpu' and receipt['cxx11_abi'] is True
++            assert receipt['torch']=='2.14.0+xpu' and receipt['cxx11_abi'] is True
 +            assert sha(m04/'m04.so')==receipt['library_sha256']
 +            source=a.gptq_repo/'benchmarks/experiments/exl3-shared-kv-verify'
 +            for file in ('csrc/shared_kv_verification.cpp','patches/shared-kv-verification.patch'):
@@ -2089,7 +2097,9 @@ index 0000000..9b434b0
 +        for file in ('patch_mtp_format_guard.py','b70_mtp_policy.py'):
 +            source=a.gptq_repo/'docker/patches'/file;state['integration_sha256'][file]=sha(source)
 +            shutil.copyfile(source,stage/file)
-+        run(['docker','build','--build-arg','BASE_IMAGE='+BASE,'-f',str(ROOT/'docker/Dockerfile.migration-target'),
++        shutil.copyfile(a.onednn/'lib/libdnnl.so.3',stage/'libdnnl.so.3')
++        state['integration_sha256']['libdnnl.so.3']=sha(stage/'libdnnl.so.3')
++        run(['docker','build','--build-arg','BASE_IMAGE='+base,'-f',str(ROOT/'docker/Dockerfile.migration-target'),
 +             '-t',a.tag,str(ROOT)],'image-build.log')
 +        state['image_id']=subprocess.check_output(['docker','image','inspect',a.tag,'--format','{{.Id}}'],text=True).strip()
 +        if a.m04_artifacts:
@@ -2177,22 +2187,38 @@ index 0000000..a6f15f3
 +if __name__=='__main__': main()
 diff --git a/scripts/prepare_target_runtime.py b/scripts/prepare_target_runtime.py
 new file mode 100644
-index 0000000..5898fb2
+index 0000000..24bfb00
 --- /dev/null
 +++ b/scripts/prepare_target_runtime.py
-@@ -0,0 +1,12 @@
-+"""Remove the GPTQ-specific attention adapter at its reviewed import boundary."""
+@@ -0,0 +1,28 @@
++"""Install the EXL3 format policy on the exact pristine vLLM 0.31 boundary."""
++import hashlib
 +from pathlib import Path
-+path = Path('/opt/venv/lib/python3.12/site-packages/vllm/_xpu_ops.py')
++
++root = Path('/opt/venv/lib/python3.12/site-packages/vllm')
++native = root/'_xpu_ops.py'
++assert hashlib.sha256(native.read_bytes()).hexdigest() == '713f181dcfc72814e227f9e1ffe8878b03cbfe524b0be60b3fc261bdb76cd448'
++assert 'from vllm_xpu_kernels.flash_attn_interface import flash_attn_varlen_func' in native.read_text()
++path = root/'model_executor/models/qwen3_5_mtp.py'
 +source = path.read_text()
-+old = 'from b70_attention import flash_attn_varlen_func'
-+new = 'from vllm_xpu_kernels.flash_attn_interface import flash_attn_varlen_func'
-+if source.count(old) != 1:
-+    raise RuntimeError('Unknown target XPU attention import; do not inherit GPTQ routing')
-+source = source.replace(old, new, 1)
++assert hashlib.sha256(source.encode()).hexdigest() == 'd206addc79b7d01aabe54be57a6610b897a88d1130df51d39b3975b53599110b'
++
++def replace_once(old, new):
++    global source
++    assert source.count(old) == 1, old
++    source = source.replace(old, new, 1)
++
++replace_once('import torch\n', 'import torch\nfrom .b70_mtp_policy import resolve_mtp_policy\n# B70_MTP_FORMAT_GUARD_V031\n')
++replace_once('        quant_config = vllm_config.quant_config\n',
++             '        quant_config = vllm_config.quant_config\n'
++             '        self._b70_mtp_policy = resolve_mtp_policy(quant_config, model_config.hf_config)\n'
++             '        logger.info("B70 MTP quantization path: %s", self._b70_mtp_policy.description)\n')
++replace_once('if quant_config and quant_config.get_name() not in ("modelopt_fp4",):',
++             'if self._b70_mtp_policy.is_gptq:')
 +compile(source, str(path), 'exec')
 +path.write_text(source)
-+print('EXL3 initial port: native XPU attention restored; GPTQ adapter not imported')
++(path.parent/'b70_mtp_policy.py').write_bytes(Path('/tmp/exl3-integration/b70_mtp_policy.py').read_bytes())
++print('EXL3 0.31: native XPU attention; checkpoint-native EXL3 MTP policy; no inherited GPTQ patches')
 diff --git a/scripts/verify_native_artifact.py b/scripts/verify_native_artifact.py
 new file mode 100644
 index 0000000..4b68452
@@ -3166,11 +3192,11 @@ index 0000000..b262c1d
 +if __name__=='__main__':main()
 diff --git a/tests/test_target_gdn.py b/tests/test_target_gdn.py
 new file mode 100644
-index 0000000..efcf76e
+index 0000000..ad9d0c9
 --- /dev/null
 +++ b/tests/test_target_gdn.py
-@@ -0,0 +1,119 @@
-+"""Compare actual 0.30 build semantics and device row selection against native."""
+@@ -0,0 +1,122 @@
++"""Compare actual 0.31 build semantics and device row selection against native."""
 +import dataclasses
 +import inspect
 +from pathlib import Path
@@ -3264,8 +3290,11 @@ index 0000000..efcf76e
 +                    m = SimpleNamespace(query_start_loc=cpu.to(device), query_start_loc_cpu=cpu,
 +                                        block_table_tensor=torch.arange(n*4, dtype=torch.int32, device=device).reshape(n,4),
 +                                        seq_lens=torch.tensor(lens, dtype=torch.int32, device=device)+100,
++                                        seq_lens_cpu_upper_bound=torch.tensor(lens,dtype=torch.int32)+100,
++                                        is_prefilling=torch.tensor([x>1 for x in lens],dtype=torch.bool),
 +                                        num_reqs=n, num_actual_tokens=sum(lens),
 +                                        compute_num_computed_tokens=lambda: torch.full((n,),100,device=device))
++                    m.replace=lambda **updates: SimpleNamespace(**(vars(m)|updates))
 +                    accepted = torch.arange(1, n+1, dtype=torch.int32, device=device)
 +                    def split(*args, **kwargs):
 +                        nd = sum(x == 1 for x in lens)

@@ -1,25 +1,36 @@
-# Qualified EXL3 v2 engine source
+# Qualified EXL3 v3 engine source
 
-This directory publishes the complete tracked EXL3 source and upstream-to-release
-patch in the user-owned repository. The manifest pins the upstream base, source
-commit, all 74 build inputs, compiler/native identities and qualified image.
-Native binaries, weights, caches and large numerical arrays are omitted. The
-upstream license is preserved inside `source.tar.gz`.
+The complete source archive preserves the upstream license. The manifest pins
+upstream/base, source commit, all 74 build inputs,
+native compiler/ABI identities and the actual qualified production image.
+Weights, native binaries, caches and large numerical arrays are omitted.
+Prior v1/v2 configuration and source snapshots remain under `config/releases`.
 
-Extract `source.tar.gz`, or check out the upstream/base and apply `migration.patch`.
-The runtime parent and final metadata-only release child have identical filesystem
-layers. The child explicitly sets the partition-cache capacity to 64. The
-historical `review-candidate` directory preserves the pre-qualification build
-receipt; its old candidate status is not the current release decision.
+Extract `source.tar.gz`, or apply `migration.patch` to the recorded upstream
+base. The release child and runtime parent have identical filesystem layers.
+The native partition-cache capacity is 64 per inference thread/queue.
 
-Build with `scripts/build_target_image.py --tag <fresh-tag> --output <fresh-receipt-directory>
---gptq-repo <this-project> --m04-artifacts <verified-m04-directory> --onednn <oneDNN3.13-install>`.
-The source pins builder/base identities. Native recompilation uses Torch 2.13 /
-SYCL 9; `--native-artifacts` requires source/hash/ABI-verified reuse. M04 source
-and build recipe remain in `benchmarks/experiments/exl3-shared-kv-verify`.
+Current toolchain: vLLM 0.31.0,
+Torch 2.14.0+xpu, oneAPI 2026.1.1,
+oneDNN 3.13.0, C++20 and SYCL 9 for the 0.31 update.
+Runtime distribution pins are in `config/experiments/vllm-031-upgrade/runtime_requirements.json`.
+The default `scripts/build-image.sh` builds the pinned vLLM 0.31 XPU compiler/base;
+`docker/Dockerfile.vllm030-gptq-legacy` preserves the historical GPTQ base recipe.
 
-A build is not release approval. The [v2 release report](../../docs/EXL3_RELEASE_V2_REPORT.md)
-links the actual serving, numerical, operating and deployment gates. Use a fresh
-build tag, never overwrite a qualified production or rollback alias.
-The [saved v1 source and runtime](../../config/releases/exl3-v1/README.md) remain
-available for immediate rollback. No changes were pushed to 0xSero upstream.
+From the extracted source, build a fresh candidate with:
+
+```bash
+python3 scripts/build_target_image.py --tag <fresh-candidate-tag> \
+  --output <fresh-receipt-directory> --builder-image <pinned-builder-image> \
+  --base-image <pinned-base-image> --gptq-repo <this-project> \
+  --m04-artifacts <verified-Torch-2.14-M04-directory> \
+  --onednn <oneDNN-3.13-install>
+```
+
+`--native-artifacts` permits only source/hash/ABI-verified native reuse.
+M04 source remains in `benchmarks/experiments/exl3-shared-kv-verify`; the executed
+Torch 2.14 wrapper and qualification controllers are in
+`benchmarks/experiments/vllm-031-upgrade`. Native libraries must be rebuilt for
+the new Torch ABI. A build alone does not approve deployment: the release
+manifest links the actual gate assessment and strict service startup receipt.
+No changes were pushed to 0xSero upstream.

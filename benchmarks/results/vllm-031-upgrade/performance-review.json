@@ -1,0 +1,31 @@
+{
+  "status": "PASS_REVIEWED_PERFORMANCE_TRADEOFF",
+  "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "reviewed_triggers": [
+    "phase-64k-c1"
+  ],
+  "baseline_regenerated": false,
+  "receipts": {
+    "measurements": {
+      "path": "benchmarks/results/vllm-031-upgrade/performance-review-measurements.json",
+      "sha256": "eddee007a4b8b33b8ec3cc66df133a451a71336a35f0bb31151d42ab96c5617e"
+    },
+    "full_comparison": {
+      "path": "benchmarks/results/vllm-031-upgrade/benchmark-comparison.json",
+      "sha256": "dc6ea09b76457fef3e6cb5cab0aa48a72f81841ba3546fc266cd361062d06dbf"
+    },
+    "original_decision": {
+      "path": "benchmarks/results/vllm-031-upgrade/decision-before-performance-review.json",
+      "sha256": "0d140fd84b6b84e9dc8f30f5f6777ec13533913871e6188e3ee0cf5c6a95cad9"
+    }
+  },
+  "findings": [
+    "64K native request-weighted decode median is 48.294 tok/s versus stored v2 52.673 (-8.313%). A fresh new-image repeat gives 48.310 (-8.284%). This is a reproducible regression on these frozen tasks and remains in the primary table.",
+    "All three repeated outputs exactly match the new full campaign; MTP acceptance is unchanged between new campaigns (56.050%, stored v2 60.703%). The old outputs differ. No claim that generated text remains identical across versions.",
+    "Median same-window round-equivalent costs are 54.564 ms stored versus 54.239 ms new full and approximately 54.263 ms repeat. Lower acceptance with similar round cost is consistent with changed generated trajectories; this does not establish the exact upstream cause or rule out every acceptance-related issue.",
+    "64K end-to-end median is about 2.6% longer, while TTFT improves about 0.6%. Fully overlapped aggregate decode falls about 4.6%. These distinct measures are retained rather than substituting one for the native decode regression.",
+    "The other 19 frozen load points have no native-decode decrease or TTFT increase crossing the 5% review trigger. Decode changes are mixed; 4K C1 +1.63%, 128K C1 +5.16%, 200K -1.54%. No general speedup claim.",
+    "Qualification accepts this explicit bounded workload tradeoff for the authorized runtime upgrade: exact-image original-tolerance numerical/kernel gates, independent FP32 comparisons, matched-state replays, serving/media/restart gates and 262144-token capacity pass. No context, dtype, MTP3 or quality tolerances were reduced to improve throughput. Saved qualified v2 remains the immediate rollback."
+  ],
+  "scope": "Engineering release decision after inspecting hashed full and new-only repeat evidence. Not statistical equivalence, universal accuracy or a speed guarantee. The historical old baseline was not rerun; only the new image used the GPU."
+}

@@ -62,7 +62,7 @@ class BuildSafety(unittest.TestCase):
             with self.subTest(tag=tag):
                 run, calls = self.run_build(tag)
                 self.assertEqual(run.returncode, 0, run.stderr)
-                self.assertIn('-t ' + (tag or 'local/b70-qwen38-vllm:base-vllm-0.30.0-xpu-kernels-0.1.15.4'), calls)
+                self.assertIn('-t ' + (tag or 'local/b70-qwen38-vllm:base-vllm-0.31.0-xpu-kernels-0.1.15.4'), calls)
                 self.assertNotIn('production-', calls)
 
     def test_current_release_receipts_validate(self):

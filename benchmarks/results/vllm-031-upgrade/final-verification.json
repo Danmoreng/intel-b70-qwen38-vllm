@@ -1,0 +1,25 @@
+{
+  "status": "PASS_FINAL_QUALIFIED_RELEASE_VERIFICATION",
+  "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+  "service_active": "active",
+  "container_id": "b4608a5796de67058cb318941b34932cd3191ff9d155e61ac727aef2178a1893",
+  "models_endpoint": true,
+  "power_cap_w": 180,
+  "qualified_receipts_verified": true,
+  "source_manifest_sha256": "16d22be995bf426a0510005adf1326b9f296112b4ab963ba3252069ad9655888",
+  "saved_v2_rollback_cpu_preflight": {
+    "status": "PASS",
+    "path": "benchmark-results/vllm-031-upgrade-20261009/v2-rollback-after-upgrade-preflight.log",
+    "sha256": "8718134fa6619e311594a03abfb1357de6a57efeda0d19c1683a17055a06f732",
+    "gpu_inference_run": false
+  },
+  "host_unit_checks": {
+    "status": "PASS",
+    "tests_run": 22,
+    "skipped": 3,
+    "command": "PYTHONPATH=scripts python3 -m unittest discover -s tests/unit -q"
+  },
+  "baseline_regenerated": false,
+  "diff_check": "PASS excluding frozen .patch artifacts, whose context lines and hashes are preserved byte-for-byte"
+}

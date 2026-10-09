@@ -47,9 +47,8 @@ def main():
     a=p.parse_args(); root=a.out.resolve(); assert not root.exists()
     directory=a.release_dir.resolve(); receipt=json.loads(a.image_receipt.read_text())
     release=json.loads((directory/'production_image.json').read_text())
-    saved=json.loads((REPO/'config/releases/exl3-v1/production_image.json').read_text())
     assert release['image_id']==receipt['image_id'] and release['status']=='CANDIDATE_PREFLIGHT_ONLY'
-    assert receipt['runtime_image_id']=='sha256:0e711fea1f9231a25289d812fffbde51ed93cbe7bad16c34f7fde3edf3d91737'
+    assert receipt['runtime_image_id']==release['runtime_image_id']
     items=json.loads(subprocess.check_output(['docker','image','inspect',receipt['image_id'],receipt['runtime_image_id']],text=True))
     assert items[0]['RootFS']==items[1]['RootFS']==receipt['rootfs']
     assert items[0]['Config']['Labels']['org.local.b70.policy.sha256']==sha(directory/'production_policy.json')==receipt['policy_sha256']
@@ -63,7 +62,7 @@ def main():
     # These checks use CPU-only disposable containers, leaving the serving GPU alone.
     subprocess.run([sys.executable,str(REPO/'scripts/run-server-exl3.py'),'--check-only','--release-dir',str(directory)],check=True)
     with (REPO.parent/'Local-AI-B70/qwen38/context-benchmark/run.lock').open('a') as lock:
-        fcntl.flock(lock,fcntl.LOCK_EX)
+        fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         restore_image=current_qualified_image()
         root.mkdir(parents=True)
         state=dict(status='RUNNING',started_unix=time.time(),image_receipt=receipt,
@@ -96,8 +95,8 @@ def main():
         except BaseException as exc:
             state['status']='FAILED';state['error']=repr(exc);raise
         finally:
-            if not success or not a.leave_offline:state['restoration']=restore(restore_image)
-            state['production_left_offline']=success and a.leave_offline
+            if not a.leave_offline:state['restoration']=restore(restore_image)
+            state['production_left_offline']=a.leave_offline
             state['finished_unix']=time.time();save()
 
 

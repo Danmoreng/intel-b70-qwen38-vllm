@@ -1,0 +1,1911 @@
+{
+  "status": "COMPLETE_STORED_BASELINE_COMPARISON",
+  "baseline_regenerated": false,
+  "baseline_image_id": "sha256:8d0e1dbe1e6a3a31e79b5ddcc1c050589c08721360af9374b9acd01236f97918",
+  "candidate_image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "baseline_summary_sha256": "9dc0db6adfdedc8a955e2843b922d867944b7cb215c71212e79e71570e9b51f3",
+  "candidate_summary_sha256": "95bad1bb58097b7e1cb5642a0e895dae6ec0b709bbfb6221b228d667ae87e696",
+  "scenarios": [
+    {
+      "name": "phase-512-c1",
+      "concurrency": 1,
+      "prefill_tps_median": {
+        "stored_v2": 1718.8384072154379,
+        "v031": 1707.4308993223178,
+        "change_pct": -0.6636754127225086
+      },
+      "decode_tps_median": {
+        "stored_v2": 58.353030813406754,
+        "v031": 58.425370212661996,
+        "change_pct": 0.1239685381322575
+      },
+      "ttft_s_median": {
+        "stored_v2": 0.3015184730174951,
+        "v031": 0.2990282479877351,
+        "change_pct": -0.8258946806272593
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 17.836142804997507,
+        "v031": 17.815414322991273,
+        "change_pct": -0.11621616978995108
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 58.901368765045845,
+        "v031": 56.86921750429883,
+        "change_pct": -3.450091743798256
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5514083290133057,
+        "v031": 0.5270497311827957,
+        "change_pct": -4.417524463966194
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 45.10331474681673,
+        "v031": 45.19044074115413,
+        "change_pct": 0.1931698253808456
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 60.40954977040029,
+            "mtp_acceptance": 0.5640350877192982,
+            "round_equivalent_ms": 44.64338229570453,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 57.950763390928955,
+            "mtp_acceptance": 0.5346869712351946,
+            "round_equivalent_ms": 44.7373122680295,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 56.7482704314219,
+            "mtp_acceptance": 0.5191666666666667,
+            "round_equivalent_ms": 45.10331474681673,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 4,
+            "decode_tps": 61.30724604000876,
+            "mtp_acceptance": 0.5925925925925926,
+            "round_equivalent_ms": 45.17340424587341,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 5,
+            "decode_tps": 58.353030813406754,
+            "mtp_acceptance": 0.5500863557858376,
+            "round_equivalent_ms": 45.413368368667705,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 57.465672294321905,
+            "mtp_acceptance": 0.5277777777777778,
+            "round_equivalent_ms": 44.975209624341865,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 60.05731388525808,
+            "mtp_acceptance": 0.5729442970822282,
+            "round_equivalent_ms": 45.095924649459725,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 49.3788215660581,
+            "mtp_acceptance": 0.4119359534206696,
+            "round_equivalent_ms": 45.19044074115413,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 4,
+            "decode_tps": 61.26076822924344,
+            "mtp_acceptance": 0.5942028985507246,
+            "round_equivalent_ms": 45.38075198611801,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 5,
+            "decode_tps": 58.425370212661996,
+            "mtp_acceptance": 0.5541125541125541,
+            "round_equivalent_ms": 45.469788609014046,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "phase-2k-c1",
+      "concurrency": 1,
+      "prefill_tps_median": {
+        "stored_v2": 2431.55063156615,
+        "v031": 2492.7442153696156,
+        "change_pct": 2.5166485537688077
+      },
+      "decode_tps_median": {
+        "stored_v2": 59.89841120546793,
+        "v031": 59.64493881814081,
+        "change_pct": -0.42317046850816054
+      },
+      "ttft_s_median": {
+        "stored_v2": 0.8367970930121373,
+        "v031": 0.8189362959965365,
+        "change_pct": -2.134423884206993
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 17.91578544199001,
+        "v031": 17.9784971360059,
+        "change_pct": 0.3500359736889225
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 61.172857362055694,
+        "v031": 60.4635761861501,
+        "change_pct": -1.1594704032013237
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5952510422330977,
+        "v031": 0.5910485471936474,
+        "change_pct": -0.7060038103729349
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 45.47212061807568,
+        "v031": 45.860475452080394,
+        "change_pct": 0.8540504131455462
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 62.412157964830996,
+            "mtp_acceptance": 0.6183844011142061,
+            "round_equivalent_ms": 45.60206908504769,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 59.202047898843276,
+            "mtp_acceptance": 0.5681618293755497,
+            "round_equivalent_ms": 45.576724281134965,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 64.73028061644068,
+            "mtp_acceptance": 0.6512968299711815,
+            "round_equivalent_ms": 45.47212061807568,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 4,
+            "decode_tps": 59.25194142120323,
+            "mtp_acceptance": 0.5664028144239226,
+            "round_equivalent_ms": 45.46877728030525,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 5,
+            "decode_tps": 59.89841120546793,
+            "mtp_acceptance": 0.5777777777777777,
+            "round_equivalent_ms": 45.457214746587205,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 65.31927452319282,
+            "mtp_acceptance": 0.667644183773216,
+            "round_equivalent_ms": 45.860475452080394,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 57.83028262590484,
+            "mtp_acceptance": 0.5532467532467532,
+            "round_equivalent_ms": 45.939149870367835,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 62.62166592761091,
+            "mtp_acceptance": 0.6273408239700374,
+            "round_equivalent_ms": 45.80973475784935,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 4,
+            "decode_tps": 56.94552772523945,
+            "mtp_acceptance": 0.5387894288150042,
+            "round_equivalent_ms": 45.86655209633742,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 5,
+            "decode_tps": 59.64493881814081,
+            "mtp_acceptance": 0.5802139037433155,
+            "round_equivalent_ms": 45.78610835596919,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "phase-4k-c1",
+      "concurrency": 1,
+      "prefill_tps_median": {
+        "stored_v2": 2241.3797289916142,
+        "v031": 2291.425968008844,
+        "change_pct": 2.2328317852569057
+      },
+      "decode_tps_median": {
+        "stored_v2": 57.13718599670426,
+        "v031": 58.06644435243915,
+        "change_pct": 1.6263635310785007
+      },
+      "ttft_s_median": {
+        "stored_v2": 1.8316276450059377,
+        "v031": 1.7882732629950624,
+        "change_pct": -2.3669866596021327
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 19.735473227017792,
+        "v031": 19.407945159997325,
+        "change_pct": -1.6595906429650809
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 57.63418680984851,
+        "v031": 57.350228791468695,
+        "change_pct": -0.49269024878700884
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5496380558428128,
+        "v031": 0.540259297168202,
+        "change_pct": -1.7063517663873262
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 45.77923285562289,
+        "v031": 45.62237148635204,
+        "change_pct": -0.34264743964922406
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 55.44568003718486,
+            "mtp_acceptance": 0.5144747725392886,
+            "round_equivalent_ms": 45.813972255064535,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 58.60553135922531,
+            "mtp_acceptance": 0.5634295713035871,
+            "round_equivalent_ms": 45.77923285562289,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 54.49048842519837,
+            "mtp_acceptance": 0.4991869918699187,
+            "round_equivalent_ms": 45.774284761155194,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 4,
+            "decode_tps": 57.13718599670426,
+            "mtp_acceptance": 0.5413469735720375,
+            "round_equivalent_ms": 45.801354950602324,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 5,
+            "decode_tps": 63.99280717540513,
+            "mtp_acceptance": 0.6437440305635148,
+            "round_equivalent_ms": 45.731148002904774,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 58.717223251561286,
+            "mtp_acceptance": 0.5616797900262467,
+            "round_equivalent_ms": 45.80449534563678,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 54.70592491828103,
+            "mtp_acceptance": 0.5012224938875306,
+            "round_equivalent_ms": 45.62237148635204,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 54.68608933410141,
+            "mtp_acceptance": 0.49716139497161393,
+            "round_equivalent_ms": 45.39183243454497,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 4,
+            "decode_tps": 58.06644435243915,
+            "mtp_acceptance": 0.5503875968992248,
+            "round_equivalent_ms": 45.590450758514116,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 5,
+            "decode_tps": 61.15897647894213,
+            "mtp_acceptance": 0.599271402550091,
+            "round_equivalent_ms": 45.753122016522305,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "phase-8k-c1",
+      "concurrency": 1,
+      "prefill_tps_median": {
+        "stored_v2": 2305.633583294446,
+        "v031": 2325.5211566541775,
+        "change_pct": 0.8625643512407022
+      },
+      "decode_tps_median": {
+        "stored_v2": 54.90705611034754,
+        "v031": 54.96880509672446,
+        "change_pct": 0.11246093080061748
+      },
+      "ttft_s_median": {
+        "stored_v2": 3.567278416012414,
+        "v031": 3.533057798995287,
+        "change_pct": -0.9592920155466644
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 22.201733082998544,
+        "v031": 22.13365293800598,
+        "change_pct": -0.3066433811182878
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 55.13320972933299,
+        "v031": 55.374265560069304,
+        "change_pct": 0.43722437333095776
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5216157569687865,
+        "v031": 0.5227348712805082,
+        "change_pct": 0.21454764292880846
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 46.461988263178625,
+        "v031": 46.34083167162425,
+        "change_pct": -0.26076497387088615
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 55.03645508860372,
+            "mtp_acceptance": 0.52,
+            "round_equivalent_ms": 46.456822712148416,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 53.68478473947481,
+            "mtp_acceptance": 0.4983739837398374,
+            "round_equivalent_ms": 46.4882841203602,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 52.160639048701,
+            "mtp_acceptance": 0.47709320695102686,
+            "round_equivalent_ms": 46.461988263178625,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 4,
+            "decode_tps": 60.46868814525438,
+            "mtp_acceptance": 0.6043956043956044,
+            "round_equivalent_ms": 46.46853334992,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 5,
+            "decode_tps": 54.90705611034754,
+            "mtp_acceptance": 0.5187032418952618,
+            "round_equivalent_ms": 46.43572564391158,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 58.3240318356457,
+            "mtp_acceptance": 0.5696649029982364,
+            "round_equivalent_ms": 46.30372552267121,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 54.18484609721964,
+            "mtp_acceptance": 0.5061425061425061,
+            "round_equivalent_ms": 46.34083167162425,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 53.756954321081224,
+            "mtp_acceptance": 0.4983739837398374,
+            "round_equivalent_ms": 46.412913152331335,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 4,
+            "decode_tps": 55.35345696092576,
+            "mtp_acceptance": 0.5251256281407035,
+            "round_equivalent_ms": 46.399932648997456,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 5,
+            "decode_tps": 54.96880509672446,
+            "mtp_acceptance": 0.5178719866999169,
+            "round_equivalent_ms": 46.28128906550948,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "phase-16k-c1",
+      "concurrency": 1,
+      "prefill_tps_median": {
+        "stored_v2": 2168.199784518233,
+        "v031": 2183.4028699759397,
+        "change_pct": 0.7011847139854144
+      },
+      "decode_tps_median": {
+        "stored_v2": 56.24785275887057,
+        "v031": 56.72508062335075,
+        "change_pct": 0.8484374799621497
+      },
+      "ttft_s_median": {
+        "stored_v2": 7.577479408995714,
+        "v031": 7.521996883995598,
+        "change_pct": -0.7322029134681496
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 25.75452876999043,
+        "v031": 25.546318545995746,
+        "change_pct": -0.8084412099098159
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 56.644583518051995,
+        "v031": 56.249555278415684,
+        "change_pct": -0.6973804291639296
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.562904636920385,
+        "v031": 0.5548040235865418,
+        "change_pct": -1.4390738328540098
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 47.58151885107509,
+        "v031": 47.42092159288857,
+        "change_pct": -0.3375202432885138
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 60.17047742460317,
+            "mtp_acceptance": 0.6201117318435754,
+            "round_equivalent_ms": 47.390392828592766,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 56.24785275887057,
+            "mtp_acceptance": 0.5596170583115753,
+            "round_equivalent_ms": 47.583749651552196,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 56.57446360525872,
+            "mtp_acceptance": 0.5649122807017544,
+            "round_equivalent_ms": 47.58151885107509,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 4,
+            "decode_tps": 54.290784404497394,
+            "mtp_acceptance": 0.5294612794612794,
+            "round_equivalent_ms": 47.59873693116361,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 5,
+            "decode_tps": 55.48438631722917,
+            "mtp_acceptance": 0.5455326460481099,
+            "round_equivalent_ms": 47.41079684856953,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 56.72508062335075,
+            "mtp_acceptance": 0.5640350877192982,
+            "round_equivalent_ms": 47.40727890451316,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 58.252733844335374,
+            "mtp_acceptance": 0.5900900900900901,
+            "round_equivalent_ms": 47.42092159288857,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 59.689822826419764,
+            "mtp_acceptance": 0.6121883656509696,
+            "round_equivalent_ms": 47.42092554368124,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 4,
+            "decode_tps": 53.472080405797016,
+            "mtp_acceptance": 0.5153019023986766,
+            "round_equivalent_ms": 47.452567030129316,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 5,
+            "decode_tps": 52.82024861981443,
+            "mtp_acceptance": 0.5024509803921569,
+            "round_equivalent_ms": 47.39935251236242,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "phase-32k-c1",
+      "concurrency": 1,
+      "prefill_tps_median": {
+        "stored_v2": 1977.653997047513,
+        "v031": 1990.0548715267182,
+        "change_pct": 0.6270497517623763
+      },
+      "decode_tps_median": {
+        "stored_v2": 54.50002666502254,
+        "v031": 55.192979743268985,
+        "change_pct": 1.2714729159778004
+      },
+      "ttft_s_median": {
+        "stored_v2": 16.595009754993953,
+        "v031": 16.495080180000514,
+        "change_pct": -0.6021664130891335
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 35.38782802701462,
+        "v031": 35.02457283900003,
+        "change_pct": -1.0264975509016505
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 54.232790370059476,
+        "v031": 54.25437912768945,
+        "change_pct": 0.0398075730248415
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5661040787623066,
+        "v031": 0.5637254901960784,
+        "change_pct": -0.42016806722688926
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 49.80703767166014,
+        "v031": 49.566770098518,
+        "change_pct": -0.4823968346120977
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 53.25642126839619,
+            "mtp_acceptance": 0.5500863557858376,
+            "round_equivalent_ms": 49.7874867158029,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 58.04105346660554,
+            "mtp_acceptance": 0.6299435028248588,
+            "round_equivalent_ms": 49.82903795993959,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 58.03662682039866,
+            "mtp_acceptance": 0.6308851224105462,
+            "round_equivalent_ms": 49.82658862751738,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 4,
+            "decode_tps": 48.51936871340304,
+            "mtp_acceptance": 0.46901960784313723,
+            "round_equivalent_ms": 49.675152855481116,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 5,
+            "decode_tps": 54.50002666502254,
+            "mtp_acceptance": 0.5711759504862953,
+            "round_equivalent_ms": null,
+            "counter_window_valid": false
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 55.192979743268985,
+            "mtp_acceptance": 0.5793226381461676,
+            "round_equivalent_ms": 49.42758701344569,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 49.670067875382806,
+            "mtp_acceptance": 0.4919484702093398,
+            "round_equivalent_ms": 49.66896286619762,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 55.69965846381718,
+            "mtp_acceptance": 0.5925925925925926,
+            "round_equivalent_ms": 49.62916030410569,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 4,
+            "decode_tps": 51.75645349293753,
+            "mtp_acceptance": 0.5238095238095238,
+            "round_equivalent_ms": 49.50547331237552,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 5,
+            "decode_tps": 59.035952623364956,
+            "mtp_acceptance": 0.6475095785440613,
+            "round_equivalent_ms": 49.566770098518,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "phase-64k-c1",
+      "concurrency": 1,
+      "prefill_tps_median": {
+        "stored_v2": 1670.0191742641834,
+        "v031": 1678.9958470200856,
+        "change_pct": 0.5375191431474136
+      },
+      "decode_tps_median": {
+        "stored_v2": 52.67340247169696,
+        "v031": 48.29443299927862,
+        "change_pct": -8.313435751129417
+      },
+      "ttft_s_median": {
+        "stored_v2": 39.320852449018275,
+        "v031": 39.09250247600721,
+        "change_pct": -0.5807350522401111
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 58.730088728974806,
+        "v031": 60.26591210300103,
+        "change_pct": 2.615053726742489
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 51.76488197814014,
+        "v031": 49.36166112866963,
+        "change_pct": -4.642569938603103
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.6070336391437309,
+        "v031": 0.560500290866783,
+        "change_pct": -7.665695156958163
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 54.56381056431207,
+        "v031": 54.23856790153698,
+        "change_pct": -0.5960776188674299
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 48.213314729533145,
+            "mtp_acceptance": 0.5432733504712939,
+            "round_equivalent_ms": 54.46440870903868,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 52.67340247169696,
+            "mtp_acceptance": 0.6273408239700374,
+            "round_equivalent_ms": 54.628845712201844,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 54.36098086559503,
+            "mtp_acceptance": 0.6579710144927536,
+            "round_equivalent_ms": 54.56381056431207,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 48.16259132428138,
+            "mtp_acceptance": 0.5427350427350427,
+            "round_equivalent_ms": 54.23856790153698,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 48.29443299927862,
+            "mtp_acceptance": 0.5449871465295629,
+            "round_equivalent_ms": 54.20935441968466,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 51.15831661823129,
+            "mtp_acceptance": 0.5958219800181653,
+            "round_equivalent_ms": 54.26609249445784,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": true
+    },
+    {
+      "name": "phase-128k-c1",
+      "concurrency": 1,
+      "prefill_tps_median": {
+        "stored_v2": 1262.549916766922,
+        "v031": 1267.8216662800232,
+        "change_pct": 0.41754780885028264
+      },
+      "decode_tps_median": {
+        "stored_v2": 39.92785132812526,
+        "v031": 41.9864656871787,
+        "change_pct": 5.155835564843803
+      },
+      "ttft_s_median": {
+        "stored_v2": 103.9844079829927,
+        "v031": 103.54586273198947,
+        "change_pct": -0.4217413547951909
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 129.67505925902515,
+        "v031": 127.96451081200212,
+        "change_pct": -1.3191036555504576
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 41.417401868862555,
+        "v031": 42.025767289677454,
+        "change_pct": 1.468864277728299
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5445969125214408,
+        "v031": 0.5563278308717058,
+        "change_pct": 2.154055243528963
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 63.59361880238838,
+        "v031": 63.459798992086675,
+        "change_pct": -0.21042961986097453
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 38.80917949304434,
+            "mtp_acceptance": 0.4891566265060241,
+            "round_equivalent_ms": 63.59361880238838,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 39.92785132812526,
+            "mtp_acceptance": 0.5128205128205128,
+            "round_equivalent_ms": 63.59714370893328,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 46.30314692321104,
+            "mtp_acceptance": 0.6475095785440613,
+            "round_equivalent_ms": 63.36886169094967,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 42.63946694930673,
+            "mtp_acceptance": 0.575354609929078,
+            "round_equivalent_ms": 63.79753648657389,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 40.90982512756938,
+            "mtp_acceptance": 0.5343511450381679,
+            "round_equivalent_ms": 63.16034529337063,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 41.9864656871787,
+            "mtp_acceptance": 0.5602094240837696,
+            "round_equivalent_ms": 63.459798992086675,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "concurrency-2k-c2",
+      "concurrency": 2,
+      "prefill_tps_median": {
+        "stored_v2": 1641.5642176766364,
+        "v031": 1668.9053480484533,
+        "change_pct": 1.6655535054555415
+      },
+      "decode_tps_median": {
+        "stored_v2": 53.15265243120988,
+        "v031": 50.60290688351621,
+        "change_pct": -4.797024101466141
+      },
+      "ttft_s_median": {
+        "stored_v2": 1.259906110004522,
+        "v031": 1.2288453264991404,
+        "change_pct": -2.465325253900874
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 21.177104197005974,
+        "v031": 21.721658266993472,
+        "change_pct": 2.571428392294006
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 108.07642111691025,
+        "v031": 105.43712472478461,
+        "change_pct": -2.442064943352096
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5602558511411543,
+        "v031": 0.5371315192743764,
+        "change_pct": -4.127459234861575
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 49.47272577999662,
+        "v031": 49.50586691690387,
+        "change_pct": 0.0669887021277571
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 54.84240049643953,
+            "mtp_acceptance": 0.5900900900900901,
+            "round_equivalent_ms": 49.47272577999662,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 50.93971418039892,
+            "mtp_acceptance": 0.5301306363253266,
+            "round_equivalent_ms": 49.645869850362544,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 53.15265243120988,
+            "mtp_acceptance": 0.5625546806649169,
+            "round_equivalent_ms": 49.47019864083718,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 54.780725954365316,
+            "mtp_acceptance": 0.5895354082092918,
+            "round_equivalent_ms": 49.47448312462123,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 50.60290688351621,
+            "mtp_acceptance": 0.5232120451693852,
+            "round_equivalent_ms": 49.61974205623549,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 49.71585017003325,
+            "mtp_acceptance": 0.5032679738562091,
+            "round_equivalent_ms": 49.50586691690387,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "concurrency-2k-c3",
+      "concurrency": 3,
+      "prefill_tps_median": {
+        "stored_v2": 1092.736014876748,
+        "v031": 1106.388203194247,
+        "change_pct": 1.2493583199999936
+      },
+      "decode_tps_median": {
+        "stored_v2": 50.7354593523595,
+        "v031": 50.2062319491968,
+        "change_pct": -1.0431114843904243
+      },
+      "ttft_s_median": {
+        "stored_v2": 2.4368790200096555,
+        "v031": 2.3924107100028777,
+        "change_pct": -1.8248058127482092
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 22.81324829199002,
+        "v031": 23.50698205998924,
+        "change_pct": 3.040924988498017
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 154.1505233285229,
+        "v031": 152.95247834420394,
+        "change_pct": -0.7771916425906022
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5989883662114315,
+        "v031": 0.5854509217737918,
+        "change_pct": -2.2600513133941624
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 54.244762088188814,
+        "v031": 54.01900657057152,
+        "change_pct": -0.41617938567095614
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 48.254184327782475,
+            "mtp_acceptance": 0.5588491717523976,
+            "round_equivalent_ms": 54.244762088188814,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 50.7354593523595,
+            "mtp_acceptance": 0.6047008547008547,
+            "round_equivalent_ms": 54.35299235629615,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 52.28815568256224,
+            "mtp_acceptance": 0.6366792929292929,
+            "round_equivalent_ms": 54.20583313132928,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 47.7533451208533,
+            "mtp_acceptance": 0.547823596792669,
+            "round_equivalent_ms": 53.998049870862594,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 50.2062319491968,
+            "mtp_acceptance": 0.5888888888888889,
+            "round_equivalent_ms": 54.149350218182065,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 51.88376994078864,
+            "mtp_acceptance": 0.6227824463118581,
+            "round_equivalent_ms": 54.01900657057152,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "concurrency-2k-c4",
+      "concurrency": 4,
+      "prefill_tps_median": {
+        "stored_v2": 1002.6109931357615,
+        "v031": 1006.6164213479788,
+        "change_pct": 0.3994997301685066
+      },
+      "decode_tps_median": {
+        "stored_v2": 45.889179311142556,
+        "v031": 45.667093703672826,
+        "change_pct": -0.48396073062000333
+      },
+      "ttft_s_median": {
+        "stored_v2": 2.440539954986889,
+        "v031": 2.399101781003992,
+        "change_pct": -1.6979100833085736
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 25.770227216009516,
+        "v031": 26.04467319000105,
+        "change_pct": 1.0649730469626473
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 190.51642578743918,
+        "v031": 189.77192423577353,
+        "change_pct": -0.3907807678988795
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5897956116621581,
+        "v031": 0.5766666666666667,
+        "change_pct": -2.226016053000379
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 58.01087400757752,
+        "v031": 57.44187878064202,
+        "change_pct": -0.9808423621770923
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 45.889179311142556,
+            "mtp_acceptance": 0.5908372827804107,
+            "round_equivalent_ms": null,
+            "counter_window_valid": false
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 46.98491800566909,
+            "mtp_acceptance": 0.6099976963833218,
+            "round_equivalent_ms": 58.020143782606446,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 44.756651266611804,
+            "mtp_acceptance": 0.5694444444444444,
+            "round_equivalent_ms": 58.001604232548594,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 46.77083126962889,
+            "mtp_acceptance": 0.5971370143149284,
+            "round_equivalent_ms": 57.50526499383498,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 44.209622563216385,
+            "mtp_acceptance": 0.5528138528138529,
+            "round_equivalent_ms": 57.43773353335402,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 45.667093703672826,
+            "mtp_acceptance": 0.5811565081491404,
+            "round_equivalent_ms": 57.44187878064202,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "concurrency-4k-c2",
+      "concurrency": 2,
+      "prefill_tps_median": {
+        "stored_v2": 1405.7499643025735,
+        "v031": 1429.729428524482,
+        "change_pct": 1.7058128992238908
+      },
+      "decode_tps_median": {
+        "stored_v2": 51.94334965155108,
+        "v031": 51.898038031962564,
+        "change_pct": -0.08723276394856372
+      },
+      "ttft_s_median": {
+        "stored_v2": 2.939667065991671,
+        "v031": 2.8820720824951422,
+        "change_pct": -1.9592349134645803
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 22.91605946101481,
+        "v031": 23.058398758003023,
+        "change_pct": 0.6211333900156824
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 107.25772155298866,
+        "v031": 107.54009806032093,
+        "change_pct": 0.2632691644421703
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5688086854460094,
+        "v031": 0.5599185573007562,
+        "change_pct": -1.5629381851443247
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 50.10602684434562,
+        "v031": 49.77277578571095,
+        "change_pct": -0.6650917656471078
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 51.83085308844957,
+            "mtp_acceptance": 0.5559895833333334,
+            "round_equivalent_ms": 50.03067531096112,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 51.94334965155108,
+            "mtp_acceptance": 0.5564236111111112,
+            "round_equivalent_ms": 50.13640652855094,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 54.027912793131584,
+            "mtp_acceptance": 0.595108695652174,
+            "round_equivalent_ms": 50.10602684434562,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 51.898038031962564,
+            "mtp_acceptance": 0.5505181347150259,
+            "round_equivalent_ms": 49.77277578571095,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 51.42535957553957,
+            "mtp_acceptance": 0.5456885456885456,
+            "round_equivalent_ms": 49.7072431526153,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 53.75560790665696,
+            "mtp_acceptance": 0.5845670704351728,
+            "round_equivalent_ms": 49.90210646460698,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "concurrency-4k-c3",
+      "concurrency": 3,
+      "prefill_tps_median": {
+        "stored_v2": 1130.835304715685,
+        "v031": 1141.9654933276631,
+        "change_pct": 0.9842448821295369
+      },
+      "decode_tps_median": {
+        "stored_v2": 43.83954307319639,
+        "v031": 45.665326168917495,
+        "change_pct": 4.164694628939669
+      },
+      "ttft_s_median": {
+        "stored_v2": 4.069333749008365,
+        "v031": 3.998828276002314,
+        "change_pct": -1.7326048280810635
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 27.564307028020266,
+        "v031": 26.97313462899183,
+        "change_pct": -2.144702562003409
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 140.35500682798562,
+        "v031": 145.51347843272143,
+        "change_pct": 3.6753028775509566
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.534406476513226,
+        "v031": 0.5548169556840077,
+        "change_pct": 3.8192799054291626
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 55.3759114218761,
+        "v031": 54.83873289123867,
+        "change_pct": -0.9700581296892441
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 43.83954307319639,
+            "mtp_acceptance": 0.5172890733056709,
+            "round_equivalent_ms": 55.3759114218761,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 43.692454316488046,
+            "mtp_acceptance": 0.5190119344990286,
+            "round_equivalent_ms": 55.37836046645792,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 46.3474730252178,
+            "mtp_acceptance": 0.5688693098384728,
+            "round_equivalent_ms": 55.28046720176774,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 44.631283793314005,
+            "mtp_acceptance": 0.5300730747611018,
+            "round_equivalent_ms": 54.796180528802225,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 45.665326168917495,
+            "mtp_acceptance": 0.5527681660899654,
+            "round_equivalent_ms": 54.83873289123867,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 47.53062111654196,
+            "mtp_acceptance": 0.5831842576028623,
+            "round_equivalent_ms": 54.8488200149141,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "concurrency-4k-c4",
+      "concurrency": 4,
+      "prefill_tps_median": {
+        "stored_v2": 1024.5571601897282,
+        "v031": 1035.8620498231023,
+        "change_pct": 1.103392770324363
+      },
+      "decode_tps_median": {
+        "stored_v2": 41.69827795718012,
+        "v031": 41.42090530254334,
+        "change_pct": -0.6651897110034444
+      },
+      "ttft_s_median": {
+        "stored_v2": 4.609792751492932,
+        "v031": 4.540884391492,
+        "change_pct": -1.494825553244572
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 30.305281184992054,
+        "v031": 30.569885615987005,
+        "change_pct": 0.873129766985925
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 180.06958692151267,
+        "v031": 179.99339372313756,
+        "change_pct": -0.0423131966245438
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5489731437598736,
+        "v031": 0.5488802756244616,
+        "change_pct": -0.01691669919878791
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 58.96697556771075,
+        "v031": 58.62608914003813,
+        "change_pct": -0.5780971881136798
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 42.416948481974224,
+            "mtp_acceptance": 0.5706401766004415,
+            "round_equivalent_ms": null,
+            "counter_window_valid": false
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 39.86789105779742,
+            "mtp_acceptance": 0.5141733912683634,
+            "round_equivalent_ms": null,
+            "counter_window_valid": false
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 41.69827795718012,
+            "mtp_acceptance": 0.564321718167872,
+            "round_equivalent_ms": 58.96697556771075,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 41.125178544134464,
+            "mtp_acceptance": 0.5377579238459902,
+            "round_equivalent_ms": 58.50243390605654,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 41.98718674682799,
+            "mtp_acceptance": 0.5564236111111112,
+            "round_equivalent_ms": 58.6381168095333,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 41.42090530254334,
+            "mtp_acceptance": 0.5526714254812892,
+            "round_equivalent_ms": 58.62608914003813,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "concurrency-16k-c2",
+      "concurrency": 2,
+      "prefill_tps_median": {
+        "stored_v2": 1671.4387500455687,
+        "v031": 1682.2681648221335,
+        "change_pct": 0.6479097589588312
+      },
+      "decode_tps_median": {
+        "stored_v2": 44.32487665840246,
+        "v031": 44.211656759604026,
+        "change_pct": -0.25543195454548195
+      },
+      "ttft_s_median": {
+        "stored_v2": 11.882823955500498,
+        "v031": 11.803688360996603,
+        "change_pct": -0.6659662282320067
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 35.14498307998292,
+        "v031": 35.43299018101243,
+        "change_pct": 0.8194828273897947
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 103.06726487379913,
+        "v031": 101.64422565309306,
+        "change_pct": -1.3806898072327045
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5825503355704698,
+        "v031": 0.5670767428236673,
+        "change_pct": -2.656181243402733
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 53.325748928556486,
+        "v031": 53.13642890960431,
+        "change_pct": -0.3550255228591648
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 43.844181968421765,
+            "mtp_acceptance": 0.5539661898569571,
+            "round_equivalent_ms": 53.192160749244785,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 44.32487665840246,
+            "mtp_acceptance": 0.5716180371352785,
+            "round_equivalent_ms": 53.35109459354888,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 46.552481250795566,
+            "mtp_acceptance": 0.625,
+            "round_equivalent_ms": 53.325748928556486,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 45.46550008660738,
+            "mtp_acceptance": 0.5912375790424571,
+            "round_equivalent_ms": 53.12772517887462,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 43.30809018592636,
+            "mtp_acceptance": 0.5442875481386393,
+            "round_equivalent_ms": 53.304536403839634,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 44.211656759604026,
+            "mtp_acceptance": 0.5669740887132192,
+            "round_equivalent_ms": 53.13642890960431,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "concurrency-16k-c3",
+      "concurrency": 3,
+      "prefill_tps_median": {
+        "stored_v2": 1546.84576594021,
+        "v031": 1555.436889551913,
+        "change_pct": 0.5553962651525968
+      },
+      "decode_tps_median": {
+        "stored_v2": 34.922888431028234,
+        "v031": 34.008533884870985,
+        "change_pct": -2.6182099684081805
+      },
+      "ttft_s_median": {
+        "stored_v2": 16.241027807991486,
+        "v031": 16.142084051010897,
+        "change_pct": -0.6092210305304824
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 45.83134389301995,
+        "v031": 46.22208995600522,
+        "change_pct": 0.8525738714914244
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 134.6549120386037,
+        "v031": 131.4326910811213,
+        "change_pct": -2.392947207569096
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5778238956418619,
+        "v031": 0.5525759323337178,
+        "change_pct": -4.369491033266792
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 60.878991761566986,
+        "v031": 60.52492969002446,
+        "change_pct": -0.5815833365460765
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 34.708747428081914,
+            "mtp_acceptance": 0.5573913043478261,
+            "round_equivalent_ms": 60.96311749418017,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 34.922888431028234,
+            "mtp_acceptance": 0.5688693098384728,
+            "round_equivalent_ms": null,
+            "counter_window_valid": false
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 36.04880829094103,
+            "mtp_acceptance": 0.6087622549019608,
+            "round_equivalent_ms": 60.794866028953805,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 33.7711344350781,
+            "mtp_acceptance": 0.5255658005029338,
+            "round_equivalent_ms": 60.52492969002446,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 34.008533884870985,
+            "mtp_acceptance": 0.5343511450381679,
+            "round_equivalent_ms": 60.43462282104883,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 36.046212419785874,
+            "mtp_acceptance": 0.601581508515815,
+            "round_equivalent_ms": 60.527224068563164,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "concurrency-16k-c4",
+      "concurrency": 4,
+      "prefill_tps_median": {
+        "stored_v2": 1484.944942795754,
+        "v031": 1494.8667403189681,
+        "change_pct": 0.6681592857263885
+      },
+      "decode_tps_median": {
+        "stored_v2": 29.94919921338832,
+        "v031": 29.059843762481837,
+        "change_pct": -2.9695466799289583
+      },
+      "ttft_s_median": {
+        "stored_v2": 20.04126965200703,
+        "v031": 19.896241264497803,
+        "change_pct": -0.7236487010427672
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 55.61193027099944,
+        "v031": 55.715581413009204,
+        "change_pct": 0.18638292449959515
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 165.02043901168136,
+        "v031": 158.99957654302276,
+        "change_pct": -3.6485555999717145
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.591288648160686,
+        "v031": 0.555531453362256,
+        "change_pct": -6.047333211902428
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 66.89317999692496,
+        "v031": 66.47808355462205,
+        "change_pct": -0.6205362674072235
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 29.94919921338832,
+            "mtp_acceptance": 0.592944369063772,
+            "round_equivalent_ms": 66.77630110061727,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 29.98470543135401,
+            "mtp_acceptance": 0.5939764492753623,
+            "round_equivalent_ms": 66.89317999692496,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 29.819143329208202,
+            "mtp_acceptance": 0.5869809203142536,
+            "round_equivalent_ms": 66.89909750459104,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 29.501796429965385,
+            "mtp_acceptance": 0.5719019218025182,
+            "round_equivalent_ms": 66.24044231197671,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 28.743984039363426,
+            "mtp_acceptance": 0.5395913154533845,
+            "round_equivalent_ms": 66.5149130802358,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 29.059843762481837,
+            "mtp_acceptance": 0.5557003257328991,
+            "round_equivalent_ms": 66.47808355462205,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "prefix-16k-cold-warm",
+      "concurrency": 1,
+      "prefill_tps_median": {
+        "stored_v2": 2026.0216993041397,
+        "v031": 2064.478163242233,
+        "change_pct": 1.898126952505086
+      },
+      "decode_tps_median": {
+        "stored_v2": 62.3100047659999,
+        "v031": 61.17803902699343,
+        "change_pct": -1.8166677137282705
+      },
+      "ttft_s_median": {
+        "stored_v2": 1.0233810379868373,
+        "v031": 0.9933029020030517,
+        "change_pct": -2.9390945178107253
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 18.646626350004226,
+        "v031": 18.585677031005616,
+        "change_pct": -0.3268651275279977
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 62.44126939775027,
+        "v031": 61.39924169611949,
+        "change_pct": -1.6688124884090216
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.6663411458333334,
+        "v031": 0.6484674329501916,
+        "change_pct": -2.6823666818276304
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 48.16005334620547,
+        "v031": 48.04743679940455,
+        "change_pct": -0.23383808566689313
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 67.39125703179654,
+            "mtp_acceptance": 0.7389937106918238,
+            "round_equivalent_ms": 47.81816172903599,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 62.3100047659999,
+            "mtp_acceptance": 0.6705882352941176,
+            "round_equivalent_ms": 48.41489572783714,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 57.97885727681445,
+            "mtp_acceptance": 0.599271402550091,
+            "round_equivalent_ms": 48.16005334620547,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 61.17803902699343,
+            "mtp_acceptance": 0.6382575757575758,
+            "round_equivalent_ms": 47.39865710285293,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 65.26590420897995,
+            "mtp_acceptance": 0.7147239263803681,
+            "round_equivalent_ms": 48.04743679940455,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 58.123380867530436,
+            "mtp_acceptance": 0.599271402550091,
+            "round_equivalent_ms": 48.07510422992551,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "prefix-64k-cold-warm",
+      "concurrency": 1,
+      "prefill_tps_median": {
+        "stored_v2": 1269.1816417168036,
+        "v031": 1349.2670099041377,
+        "change_pct": 6.310000519626469
+      },
+      "decode_tps_median": {
+        "stored_v2": 49.72731632594507,
+        "v031": 49.87001423446084,
+        "change_pct": 0.2869608075779517
+      },
+      "ttft_s_median": {
+        "stored_v2": 2.522951941995416,
+        "v031": 2.4045227829919895,
+        "change_pct": -4.694071140719391
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 23.861903223994887,
+        "v031": 23.541040672003874,
+        "change_pct": -1.3446645432220294
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 49.82135197668617,
+        "v031": 49.80798229796702,
+        "change_pct": -0.026835238685207763
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.5776986951364176,
+        "v031": 0.5747635933806147,
+        "change_pct": -0.508067922000377
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 54.901712497194445,
+        "v031": 54.650690438666295,
+        "change_pct": -0.45722081718485574
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 49.72731632594507,
+            "mtp_acceptance": 0.5729442970822282,
+            "round_equivalent_ms": 54.4854340027714,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 52.04504192029299,
+            "mtp_acceptance": 0.6191806331471136,
+            "round_equivalent_ms": 54.901712497194445,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 47.89144613034161,
+            "mtp_acceptance": 0.5441302485004285,
+            "round_equivalent_ms": 54.995364528523346,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 50.74055202793538,
+            "mtp_acceptance": 0.5900900900900901,
+            "round_equivalent_ms": 54.40259290711357,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 2,
+            "decode_tps": 49.87001423446084,
+            "mtp_acceptance": 0.58266309204647,
+            "round_equivalent_ms": 54.75998921741373,
+            "counter_window_valid": true
+          },
+          {
+            "repeat": 3,
+            "decode_tps": 48.37746891422914,
+            "mtp_acceptance": 0.5523809523809524,
+            "round_equivalent_ms": 54.650690438666295,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    },
+    {
+      "name": "full-context-199680",
+      "concurrency": 1,
+      "prefill_tps_median": {
+        "stored_v2": 999.3468329499359,
+        "v031": 1002.6253398931669,
+        "change_pct": 0.3280649755554199
+      },
+      "decode_tps_median": {
+        "stored_v2": 38.50920392579898,
+        "v031": 37.917906343326464,
+        "change_pct": -1.535470802283656
+      },
+      "ttft_s_median": {
+        "stored_v2": 200.06786910400842,
+        "v031": 199.39976191500318,
+        "change_pct": -0.333940273366895
+      },
+      "batch_wall_s_median": {
+        "stored_v2": 226.5950832410017,
+        "v031": 226.347279833004,
+        "change_pct": -0.1093595697017613
+      },
+      "fully_overlapped_decode_tps": {
+        "stored_v2": 38.409584818045616,
+        "v031": 38.15421926458406,
+        "change_pct": -0.6648485128680215
+      },
+      "mtp_acceptance": {
+        "stored_v2": 0.6121883656509696,
+        "v031": 0.6062271062271062,
+        "change_pct": -0.9737622859794959
+      },
+      "round_equivalent_ms": {
+        "stored_v2": 73.59662063126504,
+        "v031": 73.79071178789778,
+        "change_pct": 0.26372291956879845
+      },
+      "paired_waves": {
+        "stored_v2": [
+          {
+            "repeat": 1,
+            "decode_tps": 38.50920392579898,
+            "mtp_acceptance": 0.6121883656509696,
+            "round_equivalent_ms": 73.59662063126504,
+            "counter_window_valid": true
+          }
+        ],
+        "v031": [
+          {
+            "repeat": 1,
+            "decode_tps": 37.917906343326464,
+            "mtp_acceptance": 0.6062271062271062,
+            "round_equivalent_ms": 73.79071178789778,
+            "counter_window_valid": true
+          }
+        ]
+      },
+      "review_trigger": false
+    }
+  ],
+  "scope": "Same frozen prompt bytes, sampling values, power cap and serving contract; a stored historical comparison is not a contemporaneous paired A/B or a statistical guarantee. Five-percent changes are review triggers, not correctness thresholds."
+}

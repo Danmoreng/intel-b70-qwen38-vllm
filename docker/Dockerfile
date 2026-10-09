@@ -1,7 +1,8 @@
-ARG BASE_IMAGE=vllm/vllm-openai-xpu@sha256:fc0e112afb64e3a06fe8daff34652435822a629412f38efce8f0f67a46636b8d
-FROM ${BASE_IMAGE}
-
+ARG UPSTREAM_IMAGE=vllm/vllm-openai-xpu@sha256:95ac815038c4b3537b173798bfe3b89bdf525a52bd653cd14d4deb01f1062be7
+FROM sha256:ae6950731b3c031f812a95c0eb615a572239426440bf67fd1b3c9c9cbfce9eca AS compiler
+FROM ${UPSTREAM_IMAGE}
 USER root
+COPY --from=compiler /opt/intel/oneapi/ /opt/intel/oneapi/
 
 # Measured Battlemage userspace. Every package is verified before
 # installation; the base image itself is pinned by digest above.
@@ -22,50 +23,4 @@ RUN echo "0a6e64a663ae65a0fa02d6912ae3b6b37cf85b90c21cc423fd9fef70aaf4f628  /tmp
  && rm -rf /tmp/intel-runtime \
  && ldconfig
 
-# Correctness and MTP support patches from the pinned public B70 cookbook.
-ARG COOKBOOK_COMMIT=966c593a8b375c4df5173d8d07b6be4db7835fdb
-ADD https://raw.githubusercontent.com/SergiioB/intel-arc-pro-b70-inference-cookbook/${COOKBOOK_COMMIT}/patches/patch_mtp_nightly.py /opt/b70-upstream/patch_mtp_nightly.py
-ADD https://raw.githubusercontent.com/SergiioB/intel-arc-pro-b70-inference-cookbook/${COOKBOOK_COMMIT}/patches/patch_mtp_boundary.py /opt/b70-upstream/patch_mtp_boundary.py
-ADD https://raw.githubusercontent.com/SergiioB/intel-arc-pro-b70-inference-cookbook/${COOKBOOK_COMMIT}/patches/patch_fix_accepted_sync.py /opt/b70-upstream/patch_fix_accepted_sync.py
-ADD https://raw.githubusercontent.com/SergiioB/intel-arc-pro-b70-inference-cookbook/${COOKBOOK_COMMIT}/patches/patch_fix_backward_copy.py /opt/b70-upstream/patch_fix_backward_copy.py
-
-RUN echo "4d7a02c4ea10ca7c00dc89ad927fa3dafa747dbf0553d2adf24e30a3c53e9c14  /opt/b70-upstream/patch_mtp_nightly.py" | sha256sum -c - \
- && echo "41d2f74e5fef1f074b76b5a90dd1016de437228431802cfb1fa7bd7ce4cc9b50  /opt/b70-upstream/patch_mtp_boundary.py" | sha256sum -c - \
- && echo "56ff7bdfd093a770db6ae3fa3b0af146fbe8f51022819595d660859251136f07  /opt/b70-upstream/patch_fix_accepted_sync.py" | sha256sum -c - \
- && echo "86fccfdb2d34c1546c3d3972827efd49ee73cdb49bb155d6ae1f4feaa56b64f2  /opt/b70-upstream/patch_fix_backward_copy.py" | sha256sum -c - \
- && python /opt/b70-upstream/patch_mtp_nightly.py \
- && python /opt/b70-upstream/patch_mtp_boundary.py \
- && python /opt/b70-upstream/patch_fix_backward_copy.py \
- && python /opt/b70-upstream/patch_fix_accepted_sync.py \
- && rm -rf /opt/b70-upstream
-
-# Local performance patches. They only alter the speculative draft; target
-# GPTQ weights and target verification stay unchanged. Supported for TP=1.
-COPY patches/ /opt/b70-local-patches/
-RUN python /opt/b70-local-patches/patch_draft_lmhead_int4.py \
- && python /opt/b70-local-patches/patch_draft_mtp_int4.py \
- && python /opt/b70-local-patches/patch_mtp_format_guard.py --vllm-root /opt/venv/lib/python3.12/site-packages/vllm \
- && rm -rf /opt/b70-local-patches
-
-# Exact Q128/KV32 prefill extension qualified with this pinned vLLM/XPU ABI.
-# The adapter fails closed to the native attention path for every unsupported
-# tensor shape, dtype, stride or option. Variant 1 is Q128/subgroup-16.
-COPY q128/tiles.so /opt/b70/tiles.so
-# Combined production adapter: Q128 prefill and M04 shared-KV verification.
-COPY m04/m04.so /opt/b70/m04.so
-COPY m04/b70_attention.py /opt/venv/lib/python3.12/site-packages/b70_attention.py
-COPY q128/patch_attention_import.py /tmp/patch_attention_import.py
-RUN echo "f38f23c4535407b6c3f083c5e81c89c7f704bae374571cf2e32f9da13abe0873  /opt/b70/tiles.so" | sha256sum -c - \
- && echo "784916abd42b614794becac634a6a154f854c73d6dfcb1a50cd939b563020c6a  /opt/b70/m04.so" | sha256sum -c - \
- && echo "d288bb54f52f5be166e851b2d7862da81c041bd7eff6b90e6eaca68c92333b64  /opt/venv/lib/python3.12/site-packages/b70_attention.py" | sha256sum -c - \
- && python /tmp/patch_attention_import.py \
- && rm /tmp/patch_attention_import.py
-
-# Published XPU kernel wheel promoted after the short A/B and serving checks.
-# Keep vLLM 0.30.0+xpu and Torch 2.13.0+xpu pinned.
-COPY wheel/vllm_xpu_kernels-0.1.15.4-cp38-abi3-manylinux_2_28_x86_64.whl /tmp/vllm_xpu_kernels-0.1.15.4-cp38-abi3-manylinux_2_28_x86_64.whl
-RUN echo "4ec262f7afdd07c62defc8286dc9f357569627b996c09b410f7972b653696fe7  /tmp/vllm_xpu_kernels-0.1.15.4-cp38-abi3-manylinux_2_28_x86_64.whl" | sha256sum -c - \
- && /opt/venv/bin/python -m pip install --no-deps --force-reinstall /tmp/vllm_xpu_kernels-0.1.15.4-cp38-abi3-manylinux_2_28_x86_64.whl \
- && rm /tmp/vllm_xpu_kernels-0.1.15.4-cp38-abi3-manylinux_2_28_x86_64.whl
-
-ENTRYPOINT ["vllm", "serve"]
+RUN python -c "import torch,vllm,importlib.metadata as m; assert torch.__version__=='2.14.0+xpu'; assert vllm.__version__=='0.31.0'; assert m.version('vllm_xpu_kernels')=='0.1.15.4'"

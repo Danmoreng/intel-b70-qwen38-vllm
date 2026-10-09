@@ -117,6 +117,9 @@ curl -fsS http://127.0.0.1:8081/v1/chat/completions \
 See the [current v3 qualification and limitations](benchmarks/results/vllm-031-upgrade/assessment.json),
 [stored-baseline comparison](benchmarks/results/vllm-031-upgrade/benchmark-comparison.json)
 and [reviewed performance tradeoff](benchmarks/results/vllm-031-upgrade/performance-review.json).
+The [public evidence manifest](benchmarks/results/vllm-031-upgrade/PUBLICATION_MANIFEST.json)
+maps the original local receipt paths to the exported benchmark counters,
+state-replay measurements and licensed runtime-source snapshot.
 The 64K C1 decode median fell **52.67 → 48.29 tok/s (−8.3%)**, reproduced on
 a fresh new-image worker. MTP acceptance fell **60.7% → 56.1%**, while measured
 round-equivalent cost stayed close; the exact upstream cause is unproven.
@@ -207,7 +210,10 @@ and Torch 2.13.0+xpu. All campaigns used the same immutable image, serving
 arguments, environment values, frozen prompts and sampling. The existing fresh 180 W matrix is the baseline; the
 other measured variants each repeat **20 scenarios / 70 measured waves / 124 requests** plus
 an isolated 64K cold/warm resend. All ordinary requests completed without
-preemptions. The production service is restored to **180 W**.
+preemptions. **180 W remains the selected production limit** because it
+produced the best measured performance per watt / output tokens per Wh in
+this comparison. This operating point is retained for vLLM 0.31; the power
+campaigns remain the historical measurements below.
 
 These are measured hardware variants; they do not change the qualified
 production policy. Power limits are not assumed actual consumption: the table

@@ -1,0 +1,31 @@
+{
+  "status": "COMPLETE_NEW_IMAGE_PERFORMANCE_REPEATS",
+  "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "baseline_regenerated": false,
+  "selected": [
+    "phase-64k-c1"
+  ],
+  "decision_sha256": "0d140fd84b6b84e9dc8f30f5f6777ec13533913871e6188e3ee0cf5c6a95cad9",
+  "started_unix": 1791561713.961629,
+  "argv": [
+    "/usr/bin/python3",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/scripts/current-profile-benchmark.py",
+    "--base",
+    "http://127.0.0.1:8082",
+    "--container",
+    "b70-exl3-performance-review",
+    "--expected-max-num-seqs",
+    "16",
+    "--fixture-root",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+    "--legacy-prefix-namespace",
+    "--output-root",
+    "benchmark-results/vllm-031-upgrade-20261009/performance-repeat-final/measurements",
+    "--execute",
+    "--only",
+    "phase-64k-c1"
+  ],
+  "raw_results_path": "benchmark-results/vllm-031-upgrade-20261009/performance-repeat-final/measurements/run-20261009-180238-w0.00/results.json",
+  "raw_results_sha256": "dd333f8ae76d76d8b677cf42fd0168b44386ab3f65e51cb26f60cb7efbfc601a",
+  "finished_unix": 1791562009.088403
+}

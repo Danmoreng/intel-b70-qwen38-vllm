@@ -1,0 +1,78 @@
+{
+  "status": "PASS_REVIEWED_V031_ACTIVE_SOURCE_CLOSURE",
+  "guards": {
+    "target_runtime.py": {
+      "v1/attention/backends/gdn_attn.py": {
+        "old": "d30bfce0df438e0d29d8a8744aeb9fb8e4bdcbca2410fde7afdb2a6cdb627f1b",
+        "new": "496f383285de2fe92626091309a56a96a64b496f37d5585f8b7b55d0260e1a84"
+      },
+      "v1/worker/gpu/model_states/mamba_hybrid.py": {
+        "old": "573e130ac5587d4822fabf97adad1ad0fda02ff83c5e70df879a5bb175ae845c",
+        "new": "1ddd7dc921d74789e77d3319dc167820ad7fc47ed51d8d9a35ba3938f5c6a079"
+      },
+      "platforms/xpu.py": {
+        "old": "3736e6cba2a0d78b9bd93f6069f610e2b2725be00f398a6ad5672a9862d66285",
+        "new": "d13a446c60c0cc3d16902f75170646d87d6e4b5f153725290a2a4830b0b6b5b2"
+      },
+      "v1/core/single_type_kv_cache_manager.py": {
+        "old": "0233531d85aeced9e57a38c76d83db970519c92902b7e55484390cb2b64985bf",
+        "new": "3a3cb20bd6aa1e0ad46471fc9e5e01ee5797ab4bb759e00ef5fb309d2830db13"
+      },
+      "v1/worker/xpu_model_runner.py": {
+        "old": "07fa0390d28f2b8c3c3c0019eb9c3b126e2397aea268ba47c889f06b423deb23",
+        "new": "07fa0390d28f2b8c3c3c0019eb9c3b126e2397aea268ba47c889f06b423deb23"
+      },
+      "v1/worker/xpu_worker.py": {
+        "old": "711b56432506b58041cd86e71320c3960413f7bd61061990b66488421d81cfc3",
+        "new": "3acd18a33f53b8da5a322079afc61ae7b1247212a7c881ab9aa4101a287c2ca5"
+      }
+    },
+    "attention_dispatch.py": {
+      "v1/attention/backends/flash_attn.py": {
+        "old": "b170a4789e18104c1bee35bea70df51abe6766693d8f4726a59f2e6f5c4282aa",
+        "new": "ea53fb41165323f13094604051c73d44a579994fe5a427243aa9faafc280b1c2"
+      },
+      "v1/attention/backends/fa_utils.py": {
+        "old": "08fa6e231d3af3a71a6e59162dd12328aa8beb28548165ae58f130a92adb5a83",
+        "new": "3896d53947719ec9a226479fdbde60e83b1df116d634e2f4331499acf727dd99"
+      },
+      "v1/attention/backend.py": {
+        "old": "01ac364372afa75fdb22486aa3a9c7cf9aebb742e3471dfb9e0f9d9d36b734bc",
+        "new": "77ac35180c1e0f854c6307f5deb3c7c0ac4a9e8702578d406ce058981488a137"
+      },
+      "v1/worker/gpu/model_runner.py": {
+        "old": "174c93db921c23cf0396eee4764be25b2bd2d4b6a06e9fa41ce3598b884ce8ce",
+        "new": "725c47114e148ade3a26b4cc9c5f7295588fdd387afc3cb5fdb2d16513a1bb5c"
+      },
+      "v1/worker/gpu/attn_utils.py": {
+        "old": "b9b81e59dda2720b1f9c434471381f879228832443e52756e469b4ad4905888f",
+        "new": "0f9df8b0153bd0a2720ee957f6cd1600b9d865eb12b7bf432501ffaa12fb6a9c"
+      },
+      "v1/worker/gpu/model_states/mamba_hybrid.py": {
+        "old": "573e130ac5587d4822fabf97adad1ad0fda02ff83c5e70df879a5bb175ae845c",
+        "new": "1ddd7dc921d74789e77d3319dc167820ad7fc47ed51d8d9a35ba3938f5c6a079"
+      },
+      "model_executor/layers/attention/attention.py": {
+        "old": "bc897e452f3aea603e353ca42a365d3be8836e9485d78cbf8cc4677baca2fb42",
+        "new": "bde77677fd0e95ea09c6a580dfaf09b57741e8183e00cb106e2d1cc64d8e03f2"
+      },
+      "model_executor/layers/quantization/kv_cache.py": {
+        "old": "343665e0742ef111da53a3fc1fb4c4fd07b006895642e0ddbaaa57da68323a74",
+        "new": "32b45463d0b36c021cb5ae0937d60b5c797ca383a0ef3e291170337486feb1b0"
+      }
+    }
+  },
+  "gdn_sites": {
+    "block_table_tensor": 3,
+    "query_lens": 2,
+    "num_accepted_tokens": 1,
+    "has_initial_state": 1
+  },
+  "final_image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "source_capture_sha256": "4574e62f9f26e13225699f7b98157b13d09ea7cff54a62250a5e7ad7297ec5e0",
+  "coverage": {
+    "required": 16,
+    "covered": 16
+  },
+  "numerical_review_sha256": "9f3bdb7695ed0876cd7475f338f21b308bb4c61f5f8e0f28606c431dc0728773"
+}

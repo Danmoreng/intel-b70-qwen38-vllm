@@ -1,0 +1,432 @@
+{
+  "status": "MEASURED_CROSS_VERSION_CHANGE_REQUIRES_NUMERICAL_REVIEW",
+  "reference_reused": true,
+  "short": {
+    "windows": 16,
+    "ppl_positions": 16368,
+    "kl_positions": 512,
+    "nll_mean": 1.2925809635108199,
+    "perplexity": 3.642174755384621,
+    "delta_nll": 0.010389793194551807,
+    "perplexity_ratio_to_original": 1.0104439545082964,
+    "kl_mean": 0.033352624575407504,
+    "kl_median": 0.0032604016689968297,
+    "kl_p95": 0.15187805544907804,
+    "kl_p99": 0.49346192966403124,
+    "reverse_kl_mean": 0.028408188808935666,
+    "js_mean": 0.006732310009921425,
+    "top1_agreement": 0.95703125,
+    "delta_nll_ci95": [
+      0.003670198639628119,
+      0.017829746455351236
+    ],
+    "kl_mean_ci95": [
+      0.01822610461815005,
+      0.05114101704043539
+    ],
+    "original_probability_outside_tokenizer_mean": 3.2511450249372214e-08,
+    "checkpoint_probability_outside_tokenizer_mean": 3.5696407023055825e-08
+  },
+  "long": {
+    "prefix_tokens": 32768,
+    "suffix_positions": 128,
+    "full_vocabulary_positions": 8,
+    "original_perplexity": 1.1846457377824584,
+    "perplexity": 1.1903566775132677,
+    "kl_mean": 0.0010863044326554177,
+    "top1_agreement": 1.0
+  },
+  "stored_v2": {
+    "status": "PASS_COMPACT_REFERENCE_SMOKE",
+    "reference_reused": true,
+    "short": {
+      "windows": 16,
+      "ppl_positions": 16368,
+      "kl_positions": 512,
+      "nll_mean": 1.2938287764063696,
+      "perplexity": 3.646722344692463,
+      "delta_nll": 0.011637606090101508,
+      "perplexity_ratio_to_original": 1.0117055864815843,
+      "kl_mean": 0.03248073565485585,
+      "kl_median": 0.0029088048905310257,
+      "kl_p95": 0.16562007193361064,
+      "kl_p99": 0.5312484964940013,
+      "reverse_kl_mean": 0.029587971848413316,
+      "js_mean": 0.006896480839354825,
+      "top1_agreement": 0.9609375,
+      "delta_nll_ci95": [
+        0.004824681284043797,
+        0.019170312138812762
+      ],
+      "kl_mean_ci95": [
+        0.017744477193470984,
+        0.04946443212112294
+      ],
+      "original_probability_outside_tokenizer_mean": 3.2511450249372214e-08,
+      "checkpoint_probability_outside_tokenizer_mean": 3.583581942170435e-08
+    },
+    "long": {
+      "prefix_tokens": 32768,
+      "suffix_positions": 128,
+      "full_vocabulary_positions": 8,
+      "original_perplexity": 1.1846457377824584,
+      "perplexity": 1.1941938503407235,
+      "kl_mean": 0.0009572604937071014,
+      "top1_agreement": 1.0
+    },
+    "scope": "Fresh candidate short panel plus first existing 32K-prefix suffix window. Long numerical attention/graph tolerances are separately checked by matched-state replay; not a new broad quality campaign.",
+    "short_v1_bitidentical_aggregate_arrays": 32
+  },
+  "short_arrays": [
+    {
+      "name": "window-000-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "141df16b1f21908e2e2ec04b0cb6bee35629bb1d838584afbe9e9062b87e390a",
+      "new_sha256": "ae9327e2d0bc6f91daee6ac5176c03118559bdb0b892fabd0b8a0c91935e75a1",
+      "max_absolute": 9.595629692077637
+    },
+    {
+      "name": "window-000-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "57de3fe717a550068199933326f09aac10004562ee9632546a75a6e147ecc11e",
+      "new_sha256": "9b3cd4c51b8d96a05dfcdb92e842f68391d816d1ebbec0372577a902a8014158",
+      "max_absolute": 0.43384790420532227
+    },
+    {
+      "name": "window-001-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "f0110be0e8dc1096867a396b0a114a47d7a53d16d095e02ec6195d32b6a8f916",
+      "new_sha256": "e920748046b4f32234ef17f59edba64caf05c191464a5e55d390b4d670e16d5e",
+      "max_absolute": 2.0790672302246094
+    },
+    {
+      "name": "window-001-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "a13e140b2b46b4668562c14efa5b7257c8509412ec65197ddf438b309a3dfc69",
+      "new_sha256": "5ce15912032de62e39e2f01d76850dac3c4ed47e5e111e49227ab5b45ff83c90",
+      "max_absolute": 0.34247827529907227
+    },
+    {
+      "name": "window-002-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "1648a66473bf6aa21a9d5d35f129cd489d19fb155e975a1c6057ec211291e816",
+      "new_sha256": "1a0f4cb5493c50e7974661cda1b13964dadf1a0cf5973b8bc3cb02214940fe4e",
+      "max_absolute": 4.699934005737305
+    },
+    {
+      "name": "window-002-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "297b49a4c640565fa91c0ee6c52f05ba76056d2ded35710ae06558324a3fef1f",
+      "new_sha256": "77832c58a428680bbbf0c8e9e87e789e691a095e9cf3e0a473f708d53e527ede",
+      "max_absolute": 0.5831632614135742
+    },
+    {
+      "name": "window-003-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "64b5e1dffcfc9329db24e036804e2edd0871d7763c0ac1cb9da4ef8ebc89885b",
+      "new_sha256": "95a4615597cab51032332df4f3677f4e474b6e5f59a7f64177bcfcbbc4c3b43f",
+      "max_absolute": 1.312063217163086
+    },
+    {
+      "name": "window-003-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "e0dc3b4fa5eff58bbedc2cc91ac3913cc3700962973f9acbd4c7e879a3eb9729",
+      "new_sha256": "399178564d0e5edcc672c8099b839af80f4fb14c07241397ed3325afe96bf607",
+      "max_absolute": 1.0644779205322266
+    },
+    {
+      "name": "window-004-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "d1562e9f33506b353a2bad6fc581e2e7a01da0cb309d2894fb9a19b952631aa2",
+      "new_sha256": "2ecef7b9ab7c5199f4777334746edd57a448fa6cb5794bc8fce1afdf45723b60",
+      "max_absolute": 9.138422012329102
+    },
+    {
+      "name": "window-004-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "da5363940448cd8759204de122da08ac819845257045762620d57a4e904ae0a6",
+      "new_sha256": "964e327c6c8e31a7b972548c83549048dabe94313f121f416148c073439d6c26",
+      "max_absolute": 1.5895938873291016
+    },
+    {
+      "name": "window-005-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "01c9db1bd6a575f946b609a1d9328e7ed5a3d19c78757aa365ab4c73a3024dc4",
+      "new_sha256": "66deac18e6c73b0cf476f0305b3e685e435c587195bb61f3325bee5ba3aa9e2a",
+      "max_absolute": 1.0356817245483398
+    },
+    {
+      "name": "window-005-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "02a08e482c57d7e3d6638d4c74ed8efabbce5f16f4e880dda4f3ac47cceffc55",
+      "new_sha256": "148f6d34304aedc2a3d0a8046fc4af5f9996eb4c99b8b63adbd549e0724efaea",
+      "max_absolute": 0.4931631088256836
+    },
+    {
+      "name": "window-006-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "798cd2a0318633bee564aaed6f6e7b874b0260b107f058941c28d1b9b59869ff",
+      "new_sha256": "bff3c1372326e692157637a3c1f1b828ac4f08fb48de262d97a86a4029702388",
+      "max_absolute": 1.5053462982177734
+    },
+    {
+      "name": "window-006-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "a96494a03f78cc182112111e467e5f9d66ebe6069d545dddfb7fa3602ef868c1",
+      "new_sha256": "817998f3e5c93343cadf76d24181e9c2b606f33ccb0e7f97a5a7c92a0c56c24e",
+      "max_absolute": 0.541318416595459
+    },
+    {
+      "name": "window-007-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "aab24c073ff748cd5ab4e901c75cd6f4eb5deea86e7dad5dfc8e96ccf2f5a4e3",
+      "new_sha256": "54e0ff58d02dfef0c02616f56246ecd2ecf94e27f707eef49e47ea34d092fc3d",
+      "max_absolute": 1.706634521484375
+    },
+    {
+      "name": "window-007-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "747abc33ae3766251b8a65bb6257b7034ab7653a45698b4c9cd7b493894c73e0",
+      "new_sha256": "00942b9d01445dd2a078ffa8970c7b91ff483fa3f4de8de39deef75b7d4c0d97",
+      "max_absolute": 1.1355829238891602
+    },
+    {
+      "name": "window-008-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "144481ec4c5a6d0d1c859efd3e90dae41e68ec6b6841e55f231941749083e1b9",
+      "new_sha256": "546a48103944720567c635fee3e5c1b54e66f59230988885b3ea9f788bc62601",
+      "max_absolute": 1.2265586853027344
+    },
+    {
+      "name": "window-008-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "fcfd0f3d9391fae1d83380a742a4a21595770294a3e6bc7f67acb542d5ad9935",
+      "new_sha256": "ecab78c0fe8b9370b01828dffbc1fb46f8ec98fb77683693ea9494b0994d48a3",
+      "max_absolute": 0.8692965507507324
+    },
+    {
+      "name": "window-009-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "fe70a25246098778e1421c5bbab6fc28cf6e7cead4da2a421d2deb2815430375",
+      "new_sha256": "82faa453449c21595e150e2304ebbc74612b53f112eb3c64f76264bd2c173cb3",
+      "max_absolute": 1.523606300354004
+    },
+    {
+      "name": "window-009-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "4f1e45b8737a4f4fd413a5e1e1247ec119bee99d064e6193002d9046cd3059f3",
+      "new_sha256": "4140be323acb19e2dd87ec43adbba37d44d1692129dd5acb0d025c81f3cfdc41",
+      "max_absolute": 1.5070323944091797
+    },
+    {
+      "name": "window-010-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "af3ec5615f96472d382fc67b92ac802ab7b6769bb7f88b59b656aa16208851d1",
+      "new_sha256": "12a8edb92a966e90568f66a6f55282c6a084f7f5353fa5e4218c783b3cb4e2a0",
+      "max_absolute": 2.0068359375
+    },
+    {
+      "name": "window-010-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "19c3ff24bddae2c244c224d0ecae50d967c429d0134443d0c43d402ed8627b7f",
+      "new_sha256": "add88160b4f2a8e5ae8261eef214d0a3a784d57a46951c40ca627db432b4e76a",
+      "max_absolute": 1.2941534519195557
+    },
+    {
+      "name": "window-011-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "240bb7995305e9cb1785932ff2dd604c61e1c2a8fa38369461571e3653b2ee5f",
+      "new_sha256": "c3a7671725f30dbe770fbbf6031015fea38546e866b1aff6b9e1ed33c4bfd57b",
+      "max_absolute": 1.9228038787841797
+    },
+    {
+      "name": "window-011-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "a8cf0613b13afd69d7435658c70f1601d35647e8b2a024607075bdfeaf107d08",
+      "new_sha256": "67cf2f3eaf484240bf77c9c2b7cad4986d65101819c43e9fb6969282f1625ee7",
+      "max_absolute": 1.285989761352539
+    },
+    {
+      "name": "window-012-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "94933f11325783a5706dbcbd9ad19bac9cf4b47d537ca497c58c3fd0805c4a4c",
+      "new_sha256": "aaf1c4a7c686ded8d08aa5deeefe754d5e8dc527aeb97dd2c9779aebaea775e3",
+      "max_absolute": 2.0409793853759766
+    },
+    {
+      "name": "window-012-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "a47fa8bae90a6712d1f91555f32e5c0c68bc941171c1143f41c9552c6756a7e7",
+      "new_sha256": "3cc1124c389b6bcefdafa14dfb4af9f703e78fb0a69b1d57a2f9eaf5de983f2b",
+      "max_absolute": 2.0790648460388184
+    },
+    {
+      "name": "window-013-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "eb986d6513f078a2c1ab803bbf6fb9bede27abdca4915073bb3008bf81c8ed75",
+      "new_sha256": "28c92e5e5a607505cb0b88eb8fa3ae1262d259c60ef7825a7b62e6854730d028",
+      "max_absolute": 4.707026481628418
+    },
+    {
+      "name": "window-013-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "27edd49a431b24b9eafdd7c710b1bc2f683e224c0330002c3f9a6abd46d19faf",
+      "new_sha256": "2335bc719eb75be5db373cd7126d1e276cff16a6851602fca64f94cd3435092e",
+      "max_absolute": 1.7226142883300781
+    },
+    {
+      "name": "window-014-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "b41ac7a01cd79e34f53f9fcd757c80eef91057dbf2fea2d2cce75e6506b022de",
+      "new_sha256": "f1669954c4ab0fd9ddb8c536e61d2f96d6fade27454d753ae533c85e5cfb7b64",
+      "max_absolute": 1.4134082794189453
+    },
+    {
+      "name": "window-014-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "5ef84e335bdf8e7e6827abbae5b125cd0c57321e7d66f85bba9400442ee2c681",
+      "new_sha256": "00235e524f9f56603278c3e55e07fc9f69c9f126bcd289d45f760373fd9a2527",
+      "max_absolute": 1.3465373516082764
+    },
+    {
+      "name": "window-015-logprobs.npy",
+      "bitidentical": false,
+      "old_sha256": "8d3596790625a22cb64a5fd154ca737af6feaa07ba45d83a35771ddb3e4e11dc",
+      "new_sha256": "9c19b6517f3e02d7bd1a391d35a7bec26d3d3868561ebf9f0a4e35d91f38c2c5",
+      "max_absolute": 4.187526702880859
+    },
+    {
+      "name": "window-015-nll.npy",
+      "bitidentical": false,
+      "old_sha256": "38f49f9f34bffe57d16daff4c2e0418310db9e8caf098596526c00a1dd56e63a",
+      "new_sha256": "4f47bf9d51f39019623ab4363bdb6376eba3be9624c1021eb9eeb65a4c164268",
+      "max_absolute": 0.7773656845092773
+    }
+  ],
+  "cross_version_windows": [
+    {
+      "window": 0,
+      "old_to_new_kl_mean": 0.0005452424861814038,
+      "js_mean": 0.00014526465237486098,
+      "top1_agreement": 0.96875,
+      "nll_delta": -0.000712663182670159
+    },
+    {
+      "window": 1,
+      "old_to_new_kl_mean": 0.0009575908477015379,
+      "js_mean": 0.00023809081853406864,
+      "top1_agreement": 0.9375,
+      "nll_delta": -0.00018464050742217353
+    },
+    {
+      "window": 2,
+      "old_to_new_kl_mean": 0.0007217935924432342,
+      "js_mean": 0.00018007625845314445,
+      "top1_agreement": 0.96875,
+      "nll_delta": -0.0020930345539817985
+    },
+    {
+      "window": 3,
+      "old_to_new_kl_mean": 0.001924477396634308,
+      "js_mean": 0.0004830716625870752,
+      "top1_agreement": 0.96875,
+      "nll_delta": -0.003215562179290643
+    },
+    {
+      "window": 4,
+      "old_to_new_kl_mean": 0.002897994956838133,
+      "js_mean": 0.0008286770247021148,
+      "top1_agreement": 1.0,
+      "nll_delta": 0.0008212765972823721
+    },
+    {
+      "window": 5,
+      "old_to_new_kl_mean": 0.0027993926754570917,
+      "js_mean": 0.0006541285216466185,
+      "top1_agreement": 1.0,
+      "nll_delta": -0.0021478678185635758
+    },
+    {
+      "window": 6,
+      "old_to_new_kl_mean": 0.001361621785547885,
+      "js_mean": 0.00033834089359855416,
+      "top1_agreement": 1.0,
+      "nll_delta": 0.0018335480020514883
+    },
+    {
+      "window": 7,
+      "old_to_new_kl_mean": 0.0021842995045296687,
+      "js_mean": 0.0005343702240958566,
+      "top1_agreement": 1.0,
+      "nll_delta": 0.0014515193154924777
+    },
+    {
+      "window": 8,
+      "old_to_new_kl_mean": 0.0024461166038208743,
+      "js_mean": 0.0006188922830648634,
+      "top1_agreement": 1.0,
+      "nll_delta": -0.0024158465437118526
+    },
+    {
+      "window": 9,
+      "old_to_new_kl_mean": 0.002850881814114409,
+      "js_mean": 0.0007266916308910013,
+      "top1_agreement": 0.96875,
+      "nll_delta": 0.00022245979113999503
+    },
+    {
+      "window": 10,
+      "old_to_new_kl_mean": 0.0035235155196648117,
+      "js_mean": 0.0008814985473599296,
+      "top1_agreement": 1.0,
+      "nll_delta": -0.0017673581767830848
+    },
+    {
+      "window": 11,
+      "old_to_new_kl_mean": 0.0019817462448770726,
+      "js_mean": 0.0004731985352487007,
+      "top1_agreement": 0.96875,
+      "nll_delta": -0.0029707453410156015
+    },
+    {
+      "window": 12,
+      "old_to_new_kl_mean": 0.005007349648726473,
+      "js_mean": 0.0012425803318831515,
+      "top1_agreement": 0.9375,
+      "nll_delta": 0.0016049514108119056
+    },
+    {
+      "window": 13,
+      "old_to_new_kl_mean": 0.0019379381304929276,
+      "js_mean": 0.0004618735775745141,
+      "top1_agreement": 1.0,
+      "nll_delta": -0.0012269852093598765
+    },
+    {
+      "window": 14,
+      "old_to_new_kl_mean": 0.002167069127323289,
+      "js_mean": 0.0005132937644967995,
+      "top1_agreement": 1.0,
+      "nll_delta": -0.003830429781209954
+    },
+    {
+      "window": 15,
+      "old_to_new_kl_mean": 0.0007280372856575654,
+      "js_mean": 0.00018066186220300144,
+      "top1_agreement": 1.0,
+      "nll_delta": -0.005333628151564684
+    }
+  ],
+  "paired_short_nll_delta_ci95": [
+    -0.002259589898590244,
+    -0.0002739944025067363
+  ],
+  "changes": {
+    "short_ppl_pct": -0.12470347007528249,
+    "short_kl_delta": 0.000871888920551657,
+    "short_js_delta": -0.00016417082943340038,
+    "long_ppl_pct": -0.3213190912313757,
+    "long_kl_delta": 0.00012904393894831636
+  },
+  "scope": "New Torch/vLLM changes cannot be approved by the old same-runtime bitidentity check. The failed old check remains evidence; review these differences together with unchanged FP32/native kernel and actual-state numerical gates. No old runtime was executed."
+}

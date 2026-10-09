@@ -1,0 +1,25 @@
+{
+  "status": "PASS_REVIEWED_CROSS_VERSION_NUMERICS",
+  "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+  "source_measurement_sha256": "95f879e1024200cbf89b37c6b17f308caf19f142accae433e5b47d30f3f61c59",
+  "matched_state_sha256": "da5d380690a5c802c2755e72f1cb529dd7cca1e80f9ce852ff3fef367b0b5cde",
+  "kernel_gates_sha256": "f163e7f8cb27f756da43f50f491b9c206c7e4e38d680b1debce1de597bef223c",
+  "review": {
+    "short_bitidentity": false,
+    "old_bitidentity_check_status": "FAILED_RETAINED_NOT_RELABELLED",
+    "short_ppl": 3.642174755384621,
+    "stored_short_ppl": 3.646722344692463,
+    "short_top1_agreement": 0.95703125,
+    "stored_short_top1_agreement": 0.9609375,
+    "numerical_changes": {
+      "short_ppl_pct": -0.12470347007528249,
+      "short_kl_delta": 0.000871888920551657,
+      "short_js_delta": -0.00016417082943340038,
+      "long_ppl_pct": -0.3213190912313757,
+      "long_kl_delta": 0.00012904393894831636
+    },
+    "rationale": "Engineering review of this explicitly hashed measurement: the same-runtime v2 bitidentity test is not satisfied across the upstream Torch/vLLM upgrade and remains a failed recorded check. On unchanged stored BF16 references, short PPL improves 0.125% and 32K-suffix PPL 0.321%; short JS, reverse KL and KL tails improve. Mean short KL increases 0.000872 and long KL 0.000129. BF16-relative top1 agreement changes from 492/512 to 490/512 short probes and stays 8/8 long probes. These are mixed distribution changes, not a claim of identical output or a general quality improvement. Independently referenced kernel math and all four actual-state replay cases pass the unchanged tolerances, including full-graph C4 and long prefill. Accept the bounded upgrade numerics with these explicit limitations; no attention tolerance was relaxed.",
+    "limits": "Finite engineered panels; stored references reused without executing old runtime or original BF16 model. Old and new isolated JIT caches can produce different floating-point execution choices; cause of every cross-version token difference is not proven. API, resource and performance gates are still required."
+  }
+}

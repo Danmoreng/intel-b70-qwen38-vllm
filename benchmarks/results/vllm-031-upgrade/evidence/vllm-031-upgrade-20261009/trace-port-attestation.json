@@ -1,0 +1,21 @@
+{
+  "status": "PASS_TRACE_ONLY_SOURCE_CHANGE",
+  "prior_image_id": "sha256:d0e1933cd4d5583a508e0799d1ffe308cf7d4f803ee4377471dc589b2da6b766",
+  "final_image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "unchanged_runtime_artifacts_sha256": {
+    "/opt/exl3xpu/exl3xpu/_C.so": "37c30b86542d96fcfb12464f88febe1b193479c12e08b57ac8cd789f89bb07d3",
+    "/opt/exl3xpu/m04/m04.so": "03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+    "/opt/b70/libdnnl.so.3": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20",
+    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "c7bd0941664d02fa4ec4bb118efdecbf9c63801cb9e4cdfaeb366efbe8c8800d",
+    "/opt/exl3xpu/exl3xpu/shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2",
+    "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "7d6c3dea198388ab7d8be7dc73f5d135026125f5988653de0fb45d385fca0a41",
+    "/opt/exl3xpu/csrc/exl3_ops.sycl": "b70880d1e92032de697c1d432c6899e34e17662e2086a7fbba80fa17b28e41cf",
+    "/opt/exl3xpu/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7"
+  },
+  "source_delta_files": [
+    "exl3xpu/migration_trace.py"
+  ],
+  "old_source_commit": "9ddc9e88fd7616b3923e8b85c0e733471d89742a",
+  "new_source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
+  "note": "All native libraries, serving YAML, dispatch source, FP16 weights/profile and MTP3 are unchanged. Only opt-in diagnostic source guards changed. Final image numerical gates nevertheless rerun on its immutable identity; original failed attempts retained."
+}

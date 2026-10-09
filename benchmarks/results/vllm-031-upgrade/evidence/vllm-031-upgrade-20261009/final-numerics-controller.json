@@ -1,0 +1,80 @@
+{
+  "status": "COMPLETE_FINAL_NUMERICS_REQUIRES_CROSS_VERSION_REVIEW",
+  "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "commands": [
+    {
+      "name": "kernels-final",
+      "status": "PASS",
+      "argv": [
+        "/usr/bin/python3",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/experiments/vllm-031-upgrade/run-kernel-gates.py",
+        "--image",
+        "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "--out",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/kernels-final"
+      ],
+      "started_unix": 1791556861.983869,
+      "finished_unix": 1791556896.543093
+    },
+    {
+      "name": "quality-final",
+      "status": "PASS",
+      "argv": [
+        "/usr/bin/python3",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/experiments/vllm-031-upgrade/run-quality.py",
+        "--out",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/quality-final",
+        "--capture-only"
+      ],
+      "started_unix": 1791556896.5432446,
+      "finished_unix": 1791557093.6230748
+    },
+    {
+      "name": "cross-version-final",
+      "status": "PASS",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/quality-final:/results",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/experiments/vllm-031-upgrade:/upgrade:ro",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/experiments/quantization-reference:/scripts:ro",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-optimized-quality-v2/short/target-optimized:/old-short:ro",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/exl3-long-quality-v3/bf16:/long-reference:ro",
+        "-v",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/results/exl3-review-release-v2/assessment.json:/old-assessment.json:ro",
+        "-e",
+        "PYTHONPATH=/scripts",
+        "--entrypoint",
+        "python",
+        "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "/upgrade/review-quality.py",
+        "--root",
+        "/results"
+      ],
+      "started_unix": 1791557093.6232386,
+      "finished_unix": 1791557102.8336096
+    },
+    {
+      "name": "replay-final",
+      "status": "PASS",
+      "argv": [
+        "/usr/bin/python3",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/experiments/vllm-031-upgrade/run-replay.py",
+        "--out",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/quality-final"
+      ],
+      "started_unix": 1791557102.8337603,
+      "finished_unix": 1791557274.7052388
+    }
+  ],
+  "started_unix": 1791556861.9838548,
+  "finished_unix": 1791557274.7053912
+}

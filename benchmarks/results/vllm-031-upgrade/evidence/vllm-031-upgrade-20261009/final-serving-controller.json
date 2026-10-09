@@ -1,0 +1,46 @@
+{
+  "status": "COMPLETE_FINAL_CONTRACT_AND_SERVING_MATRIX",
+  "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+  "commands": [
+    {
+      "name": "operations-final",
+      "status": "PASS",
+      "argv": [
+        "/usr/bin/python3",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmarks/experiments/vllm-031-upgrade/run-operations.py",
+        "--out",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/operations-final"
+      ],
+      "started_unix": 1791557322.2932885,
+      "finished_unix": 1791558244.4735148
+    },
+    {
+      "name": "serving-final",
+      "status": "PASS",
+      "argv": [
+        "/usr/bin/python3",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/scripts/run-exl3-review-serving.py",
+        "--release-dir",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/config/experiments/vllm-031-upgrade",
+        "--image-receipt",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/metadata-image-r2/image.json",
+        "--fixture-root",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+        "--out",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/vllm-031-upgrade-20261009/serving-final",
+        "--leave-offline"
+      ],
+      "started_unix": 1791558244.4739568,
+      "finished_unix": 1791561695.159739
+    }
+  ],
+  "started_unix": 1791557322.292754,
+  "sources_sha256": {
+    "benchmarks/experiments/vllm-031-upgrade/run-final-serving.py": "c79983235dd9368909843e9dad8a417d62559d6445eca8b22a90493cded9f002",
+    "benchmarks/experiments/vllm-031-upgrade/run-operations.py": "e46668d73d12c776036135f762d2fb2e1857df029c8b3ed1122d19ded47ec9b2",
+    "scripts/run-exl3-review-serving.py": "f1cb2d6587b41b2c382b6b6c99ac8d10710e28c81667bfaf48e772c6071cd599",
+    "scripts/current-profile-benchmark.py": "01105118930b595aaf31b2bf58f3427b76a3b94721ceeabd947b432105ad3345"
+  },
+  "finished_unix": 1791561695.15988
+}

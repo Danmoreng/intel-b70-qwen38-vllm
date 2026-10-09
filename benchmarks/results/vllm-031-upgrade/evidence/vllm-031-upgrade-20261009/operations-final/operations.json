@@ -1,0 +1,630 @@
+{
+  "status": "PASS_NEW_IMAGE_OPERATIONAL_GATES",
+  "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+  "cases": {
+    "api": {
+      "status": "PASS",
+      "checks": [
+        "text",
+        "stream",
+        "tool",
+        "reasoning",
+        "image",
+        "images_at_limit",
+        "over_image_limit",
+        "prefix_first",
+        "prefix_extension",
+        "prefix_native",
+        "after_abort",
+        "c4_usage",
+        "limits"
+      ],
+      "image_limit": 32,
+      "video_limit_configured": 4,
+      "abort_note": "client disconnected after first streamed content; correlate trace with scheduler abort",
+      "c4_note": "four simultaneous small requests; full long-context C4 load remains a separate release gate"
+    },
+    "media": {
+      "status": "PASS",
+      "responses": {
+        "videos_1": {
+          "id": "chatcmpl-af75b4ade9362285",
+          "object": "chat.completion",
+          "created": 1791557424,
+          "model": "Qwen3.8-27B",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Red",
+                "refusal": null,
+                "annotations": null,
+                "audio": null,
+                "function_call": null,
+                "reasoning": null
+              },
+              "logprobs": null,
+              "finish_reason": "stop",
+              "stop_reason": null,
+              "token_ids": null,
+              "routed_experts": null
+            }
+          ],
+          "service_tier": null,
+          "system_fingerprint": "vllm-0.31.0-cf4b6f14",
+          "usage": {
+            "prompt_tokens": 202,
+            "total_tokens": 204,
+            "completion_tokens": 2,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "prompt_logprobs": null,
+          "prompt_token_ids": null,
+          "prompt_text": null,
+          "kv_transfer_params": null,
+          "ec_transfer_params": null,
+          "metrics": null
+        },
+        "videos_4": {
+          "id": "chatcmpl-a1a23a014f88e991",
+          "object": "chat.completion",
+          "created": 1791557425,
+          "model": "Qwen3.8-27B",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Red",
+                "refusal": null,
+                "annotations": null,
+                "audio": null,
+                "function_call": null,
+                "reasoning": null
+              },
+              "logprobs": null,
+              "finish_reason": "stop",
+              "stop_reason": null,
+              "token_ids": null,
+              "routed_experts": null
+            }
+          ],
+          "service_tier": null,
+          "system_fingerprint": "vllm-0.31.0-cf4b6f14",
+          "usage": {
+            "prompt_tokens": 736,
+            "total_tokens": 738,
+            "completion_tokens": 2,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "prompt_logprobs": null,
+          "prompt_token_ids": null,
+          "prompt_text": null,
+          "kv_transfer_params": null,
+          "ec_transfer_params": null,
+          "metrics": null
+        },
+        "over_video_limit": {
+          "status": 400,
+          "error": "{\"error\":{\"message\":\"At most 4 video(s) may be provided in one prompt. (parameter=video)\",\"type\":\"BadRequestError\",\"param\":\"video\",\"code\":400}}"
+        },
+        "oversized_image": {
+          "id": "chatcmpl-bdeae9111c95b811",
+          "object": "chat.completion",
+          "created": 1791557425,
+          "model": "Qwen3.8-27B",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Red",
+                "refusal": null,
+                "annotations": null,
+                "audio": null,
+                "function_call": null,
+                "reasoning": null
+              },
+              "logprobs": null,
+              "finish_reason": "stop",
+              "stop_reason": null,
+              "token_ids": null,
+              "routed_experts": null
+            }
+          ],
+          "service_tier": null,
+          "system_fingerprint": "vllm-0.31.0-cf4b6f14",
+          "usage": {
+            "prompt_tokens": 4081,
+            "total_tokens": 4083,
+            "completion_tokens": 2,
+            "prompt_tokens_details": null,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "prompt_logprobs": null,
+          "prompt_token_ids": null,
+          "prompt_text": null,
+          "kv_transfer_params": null,
+          "ec_transfer_params": null,
+          "metrics": null
+        }
+      },
+      "video_fixture_sha256": "b860f60fd39a5e806d431e9ffd5e07033191e553fd885d45b2543f1ede28d344",
+      "fixture": "ffmpeg constant-red 320x240,4fps,2s; API decodes real H264 video",
+      "scope": "Small-media count limits and one 6.3MP image; does not promise 32 maximum-area images plus 4 long videos at maximum text context"
+    },
+    "near-limit": {
+      "status": "COMPLETE",
+      "usage": {
+        "prompt_tokens": 261120,
+        "total_tokens": 262144,
+        "completion_tokens": 1024,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": null
+      },
+      "native": {
+        "prefill_seconds": 306.2818977480056,
+        "draft_tokens": 767.0,
+        "prompt_tokens": 261120.0,
+        "prefill_tokens": 261120.0,
+        "preemptions": 0.0,
+        "generation_tokens": 1024.0,
+        "completed": 1.0,
+        "cached_tokens": 0.0,
+        "accepted_tokens": 767.0,
+        "decode_seconds": 20.957454485993367
+      },
+      "native_before": {
+        "draft_tokens": 672.0,
+        "accepted_tokens": 497.0,
+        "preemptions": 0.0,
+        "prompt_tokens": 25393.0,
+        "cached_tokens": 3200.0,
+        "generation_tokens": 706.0,
+        "completed": 16.0,
+        "prefill_seconds": 17.374208645982435,
+        "decode_seconds": 14.830006288044387,
+        "prefill_tokens": 22172.0
+      },
+      "native_after": {
+        "draft_tokens": 1439.0,
+        "accepted_tokens": 1264.0,
+        "preemptions": 0.0,
+        "prompt_tokens": 286513.0,
+        "cached_tokens": 3200.0,
+        "generation_tokens": 1730.0,
+        "completed": 17.0,
+        "prefill_seconds": 323.656106393988,
+        "decode_seconds": 35.787460774037754,
+        "prefill_tokens": 283292.0
+      },
+      "wall_s": 327.28466396199656,
+      "prompt_ids_sha256": "e8ac906288c498948179c06caab723a3256ece84484faa827f250c35ce8cd17d",
+      "prompt_recipe": "repeat frozen /tokenize code/prose token IDs to exactly 261120; output 1024; total 262144",
+      "qualification": "instrumented capacity diagnostic; preemptions preserved for analysis, not silently accepted"
+    },
+    "c4-long": {
+      "status": "PASS",
+      "usage": [
+        {
+          "prompt_tokens": 32768,
+          "total_tokens": 33024,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 32768,
+          "total_tokens": 33024,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 32768,
+          "total_tokens": 33024,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 32768,
+          "total_tokens": 33024,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        }
+      ],
+      "native": {
+        "prefill_seconds": 82.78702302298916,
+        "draft_tokens": 768.0,
+        "prompt_tokens": 131072.0,
+        "prefill_tokens": 131072.0,
+        "preemptions": 0.0,
+        "generation_tokens": 1024.0,
+        "completed": 4.0,
+        "cached_tokens": 0.0,
+        "accepted_tokens": 767.0,
+        "decode_seconds": 110.15988007001579
+      },
+      "request_sha256": [
+        "61312be016d9f6b43bb6b33bf6b9765fe65522a46c7f345b6239c557d09a00db",
+        "318f985cff39252247feaff983fe5afebcb4b840a9ecf3e0e9fca01af92bbe50",
+        "37d23dec5f89249116998fd64f6f91a3b80ebc5161869a88c48c4e1bb9ffa657",
+        "18a39981aca219b8cfda64eb30c9e3b184a9d2cb2ada3d8955e3c3056366bc41"
+      ],
+      "preemption_policy": "require-zero",
+      "purpose": "4 simultaneous independent 32768-token prompts; fixed output 256 each; not a claim of 4 simultaneous maximum-context sequences"
+    },
+    "c16-long": {
+      "status": "PASS",
+      "usage": [
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        }
+      ],
+      "native": {
+        "prefill_seconds": 114.6695435619913,
+        "draft_tokens": 3366.0,
+        "prompt_tokens": 131072.0,
+        "prefill_tokens": 131072.0,
+        "preemptions": 2.0,
+        "generation_tokens": 4096.0,
+        "completed": 16.0,
+        "cached_tokens": 0.0,
+        "accepted_tokens": 2970.0,
+        "decode_seconds": 434.53338686602365
+      },
+      "request_sha256": [
+        "08ea262450a09f400f15b5465c5bcec359ded5c74d7f0df8ed55a87c54aa7d92",
+        "23ca6548b8439010b8a365d972eed721d7dbd36106f440ef1e8809c7f274042e",
+        "4ea49950f51506dfefd1750c09ebad41bcfa18224edf0fae65fb01d2a8b3911c",
+        "fd63873c8f9ba9a1b53ca7235f9b74a3d435a47c7e54bd3c7b9c7d2515b113e1",
+        "61a5a519c47764747e9595e68d88824bec64d6da9791d153534524cd592f97e2",
+        "cb30aeb880c00d96c0df58a8273b1948b7cae6a7ec34d038847f6e72ab87b183",
+        "5f62aa66e700955de66b83a6b558d5ed088f8780ca3ef6c04c7cf87b91323f77",
+        "bcb2c3687da82b1dc46395c3e1843754894ef3da9d680ef708bf1deb54709cfc",
+        "27063c40a623838b8cf81897f71bee8088f148ea88eebcab65dd13a8a209d0cf",
+        "9a28d1bc05a9c5387a95b35f2c3b9f1e92026c3c0374dfd2b843bbdeb87b0097",
+        "deb31a3e7f8cb143c5b9b8f7697f225c15a45bc4a78efc73721fbcae109e240b",
+        "bb39dd9e294955ee377847986828d7dbcee980d51fa312a6fe84594a41bca22b",
+        "d0f70020edeb3cafaa268799e72b9464cca333e82c6e3a95580e4c7c045284fc",
+        "9ab03a2d4304cbb75f33a0bb4fd49d495836289b6d36c51f505c08b7cc8c535f",
+        "eb22e02e1f43a32d644c2c89175a98139c8862ff97a2afd96d7111bafd994b8b",
+        "4150e7aeb8927063325738fdbb1524af42e6043d5afb5cbb90ff7bcfe1d7cac7"
+      ],
+      "preemption_policy": "record-pressure",
+      "purpose": "16 simultaneous independent 8192-token prompts; fixed output 256 each; not a claim of 16 simultaneous maximum-context sequences"
+    },
+    "image-long": {
+      "status": "PASS",
+      "response": {
+        "id": "chatcmpl-91a365e3dee2f6d6",
+        "object": "chat.completion",
+        "created": 1791557898,
+        "model": "Qwen3.8-27B",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Red",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.31.0-cf4b6f14",
+        "usage": {
+          "prompt_tokens": 119093,
+          "total_tokens": 119095,
+          "completion_tokens": 2,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      },
+      "native": {
+        "prefill_seconds": 89.96202753100079,
+        "draft_tokens": 3.0,
+        "prompt_tokens": 119093.0,
+        "prefill_tokens": 119093.0,
+        "preemptions": 0.0,
+        "generation_tokens": 2.0,
+        "completed": 1.0,
+        "cached_tokens": 0.0,
+        "accepted_tokens": 3.0,
+        "decode_seconds": 0.1812652989901835
+      },
+      "purpose": "One allowed image in a long context"
+    },
+    "extension-abort-long": {
+      "status": "PASS",
+      "first_usage": {
+        "prompt_tokens": 50033,
+        "total_tokens": 50061,
+        "completion_tokens": 28,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "extension_usage": {
+        "prompt_tokens": 50038,
+        "total_tokens": 50075,
+        "completion_tokens": 37,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "extension_native": {
+        "prefill_seconds": 1.3608759379858384,
+        "draft_tokens": 30.0,
+        "prompt_tokens": 50038.0,
+        "prefill_tokens": 2038.0,
+        "preemptions": 0.0,
+        "generation_tokens": 37.0,
+        "completed": 1.0,
+        "cached_tokens": 48000.0,
+        "accepted_tokens": 28.0,
+        "decode_seconds": 0.5739714590017684
+      },
+      "restart": {
+        "id": "chatcmpl-8712990cd10184c4",
+        "object": "chat.completion",
+        "created": 1791558021,
+        "model": "Qwen3.8-27B",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```json\n{\n  \"ALPHA\": 17,\n  \"BETA\": 29,\n  \"sum\": 46\n}\n```",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.31.0-cf4b6f14",
+        "usage": {
+          "prompt_tokens": 50036,
+          "total_tokens": 50073,
+          "completion_tokens": 37,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      },
+      "purpose": "Long prefix extension and client abort/restart; trace must confirm FINISHED_ABORTED"
+    },
+    "independent32-max-area-images": {
+      "status": "PASS",
+      "usage": {
+        "prompt_tokens": 131164,
+        "total_tokens": 131166,
+        "completion_tokens": 2,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "native": {
+        "prefill_seconds": 157.02771441799996,
+        "draft_tokens": 3.0,
+        "prompt_tokens": 131164.0,
+        "prefill_tokens": 131164.0,
+        "preemptions": 0.0,
+        "generation_tokens": 2.0,
+        "completed": 1.0,
+        "cached_tokens": 0.0,
+        "accepted_tokens": 3.0,
+        "decode_seconds": 0.22833285899832845
+      },
+      "unique_images": 32,
+      "pixels_each": 4194304,
+      "fixture_sha256": [
+        "19cebdd9ca639a6f0e426d062569b636af951e3a9eaf461ac24154b1ee5ff28d",
+        "e806acc4a43195a9f8408d43e9330d311b04d6ec11501ad950e44a8fd4a67eb2",
+        "96cda4d2b7f824ed6c5231dffe0add4a3f2fdc3cbfe4523b463d98ce8958fd08",
+        "2393c779b376dea20795dae28e40ac41c78f3009ece8dc51dea38340554ca277",
+        "4620ffd781dae975452d60cf2ec5fd23baf3c54df3772597a488815e8fe349c3",
+        "f1cd43ec289b24c46ffa1ae762ab5f06a3cfb70820fa8d4e57b3912814a60e52",
+        "2b02950a80a954fdbd9375ca59d144d5346c0bdce96271aee9bf88fe1a8fe018",
+        "d77052dc702bb05a8d9a3817f8f60a61f58933b910e1f62bddc9309f7686bcc2",
+        "7030ff8a466f66731335ada8efef5a4ab765c22b8842db79d343ab54a28d0def",
+        "178c16a14cce004a6bf62ae59b6a1277d772d1c32de4d272e114ce301a3d87f3",
+        "f9674b525d92a9d6d3bbb3b04f0f40ecdce71e63114aadccd0a0469459cbc01e",
+        "c1e436a2e88ccafe13fb46bb756cb842625276c19e941010295a05a63bda4ef9",
+        "557d2117bc2789e74f0fde42201d30ed693f59f8d702ccb7bc6eae6500509a2f",
+        "c12ebb9e7ee33c215cf4c293ee9bdc4424b0ad1e8f661f6eacde0d988143fe0d",
+        "3d3189f40efeb79a3a1173f824484be81f02a628a29ec44500d93ccbfb8b30d3",
+        "15e1465ab8689cacefe075f7299fa99c6f89d019877be3b16da788c7dc2e9477",
+        "d795d96d34bb7fdff4062b48f63dc9501e802c07abc1505c984d5d18ffa4795a",
+        "3394edb324a4acad80c486509a2664a183859e0a934932930ad2312b0bc20c19",
+        "1152d7e4d3300ba4e028cb14fa7d7054d32f14345d79a86fb0215316382d7f7c",
+        "26a523e20ae7a05bb392bfc9e9dd4adf70b9435611ebe6ad8b836e28f14a5ae0",
+        "5d82116ff166a761b020dae56b2063ee3f383997a0f5da7b30b6f1ec4a67c8c4",
+        "da561aff1a6c60b9b17c44daadd6528032cd6cb0e9011c38d777210317fb2733",
+        "b3d3ccb7cee89fe27336d5c1ed3ed7edf6fe804ff12c2d9b4f5055e42b22f60f",
+        "7f0e8d82689b59b5a2e313a7bb8b37df5305ac2ddc431a4a9f32b6389162194d",
+        "d259f3f13f18cf4e584b52a300c17b32a8cc9283d1768120b620d66d6cba1e02",
+        "7e96173ca345f8565b97921ee414ed462ef3986a19bbcd99a3b15c07fb8e051c",
+        "12356e63363552bd560e6f6407da83eac41054777d1723c709178e4c53911769",
+        "e858021e13c2ac9d941c64c5f7a61d418b68893e65e71af3a171799e7965c0f0",
+        "176fe25f14f90de59f57693153a9a5458fd1a119caeca6fc2ad5aa61f8849f23",
+        "57e5c685f20f84374e87ae76d746c6e374e7f6f64f94062b738ceabf2fb75d33",
+        "498ad648b6e126d08e0dff65fc8251da5a203859bcde595b8a645981931b38b7",
+        "b965479517d27b87f7772d761de61b00d6afef7826555a346f20003efed96617"
+      ]
+    },
+    "worker-restart": {
+      "status": "PASS",
+      "loader": {
+        "path": "benchmark-results/vllm-031-upgrade-20261009/operations-final/restarted/loader/loader-67.json",
+        "sha256": "21288008cf4a7d975209860e206d9177f854c17b93c125d57e58550f0f2e3a98",
+        "loaded_modules": 409,
+        "mtp_loaded": 8
+      },
+      "reply": "Paris"
+    }
+  },
+  "started_unix": 1791557322.357151,
+  "loader": {
+    "path": "benchmark-results/vllm-031-upgrade-20261009/operations-final/serving/loader/loader-67.json",
+    "sha256": "21288008cf4a7d975209860e206d9177f854c17b93c125d57e58550f0f2e3a98",
+    "loaded_modules": 409,
+    "mtp_loaded": 8
+  },
+  "confirmed_abort_trace_occurrences": 2,
+  "finished_unix": 1791558244.4623933
+}

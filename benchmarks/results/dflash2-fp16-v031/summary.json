@@ -1,0 +1,17 @@
+{
+  "status": "PASS_NUMERICAL_FIX_NOT_FULL_SERVING_QUALIFICATION",
+  "cases": 12,
+  "unscaled_nonfinite_cases": 12,
+  "patched_finite_cases": 12,
+  "max_relative_l2": 0.005631439853459597,
+  "min_cosine": 0.9999949932098389,
+  "max_scaled_residual": 9848.0,
+  "parameters": 1924404480,
+  "fp16_parameter_gib": 3.5844826698303223,
+  "production_context_limit": 262144,
+  "full_dflash_context_capacity_tested": false,
+  "throughput_tested": false,
+  "speculative_acceptance_tested": false,
+  "failed_initial_captures_excluded": "v2-v4 had no explicit dtype and resolved the diagnostic target to BF16; corrected capture uses explicit FP16. No results from failed captures are used.",
+  "baseline_definition": "unscaled residual baseline with the same FP32-accumulating grouped convolution; not an upstream throughput baseline"
+}

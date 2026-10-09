@@ -1,0 +1,3823 @@
+{
+  "status": "PASS_REAL_WEIGHT_RESIDUAL_FIX_NOT_SERVING_QUALIFICATION",
+  "scope": "real-weight numerical replay; no paged KV/serving/acceptance qualification",
+  "checkpoint_sha256": "67fc76d68dc5a9415511a4f394ef744d67510cd20e93b37cc2cc7d28e4bab65c",
+  "cases": [
+    {
+      "case": "case-0",
+      "anchor": 511,
+      "block_size": 4,
+      "context_tokens": 512,
+      "old_finite": false,
+      "patched_finite": true,
+      "relative_l2": 0.0030412389896810055,
+      "min_cosine": 0.9999964237213135,
+      "traces": {
+        "old": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27856.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28544.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 27856.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 12984.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 42432.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 64704.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27760.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": Infinity,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          }
+        ],
+        "patched": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1741.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1784.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 1741.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 811.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 2650.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 4044.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1735.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 877.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 7856.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 871.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 816.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8560.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 157.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 5748.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 9080.0,
+            "dtype": "torch.float16"
+          }
+        ],
+        "reference": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27875.8046875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28519.0625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 27875.7890625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 12971.1240234375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 42312.375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 64722.1953125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27731.77734375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 14049.650390625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 125552.09375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 13974.0234375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 13026.0,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 136796.625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 2513.67919921875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 91824.53125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 145042.765625,
+            "dtype": "torch.float32"
+          }
+        ]
+      }
+    },
+    {
+      "case": "case-0",
+      "anchor": 511,
+      "block_size": 6,
+      "context_tokens": 512,
+      "old_finite": false,
+      "patched_finite": true,
+      "relative_l2": 0.0018039781134575605,
+      "min_cosine": 0.999998152256012,
+      "traces": {
+        "old": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 26848.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28352.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 26848.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 13488.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 42624.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 63552.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 33696.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": Infinity,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          }
+        ],
+        "patched": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1678.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1772.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 1678.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 841.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 2664.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 3972.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 2106.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 885.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 7788.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 990.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 824.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8488.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 267.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 5752.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8984.0,
+            "dtype": "torch.float16"
+          }
+        ],
+        "reference": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 26855.3359375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28325.140625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 26855.3203125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 13471.9521484375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 42652.6875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 63550.61328125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 33638.4765625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 14182.84375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 124678.703125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 15883.0546875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 13184.666015625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 135873.171875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 4278.447265625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 92143.3125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 143688.171875,
+            "dtype": "torch.float32"
+          }
+        ]
+      }
+    },
+    {
+      "case": "case-0",
+      "anchor": 511,
+      "block_size": 8,
+      "context_tokens": 512,
+      "old_finite": false,
+      "patched_finite": true,
+      "relative_l2": 0.0021294166799634695,
+      "min_cosine": 0.9999974966049194,
+      "traces": {
+        "old": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 25104.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28272.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 25104.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 13544.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 43040.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 61888.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 35520.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": Infinity,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          }
+        ],
+        "patched": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1569.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1767.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 1569.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 846.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 2690.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 3868.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 2220.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 834.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 7764.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1320.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 800.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8408.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 208.625,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 5700.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8896.0,
+            "dtype": "torch.float16"
+          }
+        ],
+        "reference": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 25120.5390625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28230.015625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 25120.5234375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 13541.546875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 43031.0,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 61863.625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 35523.2109375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 13353.6416015625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 124194.3515625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 21124.9296875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 12801.6376953125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 134533.171875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 3342.7119140625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 91264.03125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 142282.34375,
+            "dtype": "torch.float32"
+          }
+        ]
+      }
+    },
+    {
+      "case": "case-0",
+      "anchor": 4419,
+      "block_size": 4,
+      "context_tokens": 2048,
+      "old_finite": false,
+      "patched_finite": true,
+      "relative_l2": 0.002460762858390808,
+      "min_cosine": 0.9999961853027344,
+      "traces": {
+        "old": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 24192.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 29024.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 24192.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 7048.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 62848.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 58400.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 18800.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": Infinity,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          }
+        ],
+        "patched": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1512.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1814.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 1512.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 440.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 3928.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 3650.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1175.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1961.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8360.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1193.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 883.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 9064.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 279.25,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 5964.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 9848.0,
+            "dtype": "torch.float16"
+          }
+        ],
+        "reference": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 24191.15625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 29029.0,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 24191.15625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 7046.9541015625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 62883.0,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 58379.265625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 18785.8203125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 31320.830078125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 133760.484375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 19115.82421875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 14144.8330078125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 145043.234375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 4472.0869140625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 95363.7578125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 157667.765625,
+            "dtype": "torch.float32"
+          }
+        ]
+      }
+    },
+    {
+      "case": "case-0",
+      "anchor": 4419,
+      "block_size": 6,
+      "context_tokens": 2048,
+      "old_finite": false,
+      "patched_finite": true,
+      "relative_l2": 0.00244529964402318,
+      "min_cosine": 0.9999963641166687,
+      "traces": {
+        "old": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 23904.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 29072.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 23904.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 6864.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 62656.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 57824.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27968.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": Infinity,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          }
+        ],
+        "patched": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1494.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1817.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 1494.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 429.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 3914.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 3614.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1748.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1901.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8312.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1243.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 886.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 9008.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 283.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 6068.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 9792.0,
+            "dtype": "torch.float16"
+          }
+        ],
+        "reference": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 23896.4296875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 29022.5,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 23896.4296875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 6866.36767578125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 62702.625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 57791.984375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27954.40625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 30513.6171875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 133007.21875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 19879.4140625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 14166.01953125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 144211.078125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 4533.052734375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 96996.8515625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 156715.875,
+            "dtype": "torch.float32"
+          }
+        ]
+      }
+    },
+    {
+      "case": "case-0",
+      "anchor": 4419,
+      "block_size": 8,
+      "context_tokens": 2048,
+      "old_finite": false,
+      "patched_finite": true,
+      "relative_l2": 0.0023378056939691305,
+      "min_cosine": 0.9999969005584717,
+      "traces": {
+        "old": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 23632.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28976.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 23632.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 6012.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 61440.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 57568.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28992.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": Infinity,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          }
+        ],
+        "patched": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1477.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1811.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 1477.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 375.75,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 3840.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 3598.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1813.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1723.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8264.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1293.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1125.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8952.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 291.75,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 6136.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 9680.0,
+            "dtype": "torch.float16"
+          }
+        ],
+        "reference": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 23625.28125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28968.75,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 23625.28125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 6016.7421875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 61446.0,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 57558.5078125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 29011.03515625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27577.396484375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 132162.5,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 20698.876953125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 17977.2734375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 143091.703125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 4671.1201171875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 98199.3828125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 154691.28125,
+            "dtype": "torch.float32"
+          }
+        ]
+      }
+    },
+    {
+      "case": "case-1",
+      "anchor": 511,
+      "block_size": 4,
+      "context_tokens": 512,
+      "old_finite": false,
+      "patched_finite": true,
+      "relative_l2": 0.005631439853459597,
+      "min_cosine": 0.9999950528144836,
+      "traces": {
+        "old": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28192.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 26000.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 28192.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 10136.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 39104.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 63104.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27568.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": Infinity,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          }
+        ],
+        "patched": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1762.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1625.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 1762.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 634.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 2444.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 3944.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1723.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 701.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 7480.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1303.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 800.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8440.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 228.75,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 5812.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 9144.0,
+            "dtype": "torch.float16"
+          }
+        ],
+        "reference": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28187.015625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 25983.5,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 28187.015625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 10129.3203125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 39157.3125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 63098.19921875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27564.75390625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 11192.5,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 119744.265625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 20878.767578125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 12788.63671875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 135074.6875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 3663.3271484375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 92920.34375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 146260.203125,
+            "dtype": "torch.float32"
+          }
+        ]
+      }
+    },
+    {
+      "case": "case-1",
+      "anchor": 511,
+      "block_size": 6,
+      "context_tokens": 512,
+      "old_finite": false,
+      "patched_finite": true,
+      "relative_l2": 0.004552964586764574,
+      "min_cosine": 0.9999954104423523,
+      "traces": {
+        "old": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27232.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 25440.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 27232.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 12720.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 38976.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 61632.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 29808.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": Infinity,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          }
+        ],
+        "patched": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1702.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1590.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 1702.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 795.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 2438.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 3852.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1863.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 700.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 7388.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1538.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 782.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8344.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 262.25,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 5748.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 9032.0,
+            "dtype": "torch.float16"
+          }
+        ],
+        "reference": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27229.359375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 25443.6875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 27229.359375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 12710.93359375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 39032.5,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 61638.91015625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 29764.109375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 11208.3984375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 118255.515625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 24572.0390625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 12498.2578125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 133599.375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 4209.541015625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 91956.65625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 144529.921875,
+            "dtype": "torch.float32"
+          }
+        ]
+      }
+    },
+    {
+      "case": "case-1",
+      "anchor": 511,
+      "block_size": 8,
+      "context_tokens": 512,
+      "old_finite": false,
+      "patched_finite": true,
+      "relative_l2": 0.0024216657038778067,
+      "min_cosine": 0.9999963045120239,
+      "traces": {
+        "old": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 26000.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 24832.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 26000.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 12608.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 39488.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 59712.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 30928.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": Infinity,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          }
+        ],
+        "patched": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1625.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1552.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 1625.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 788.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 2468.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 3732.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1931.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 667.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 7308.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1718.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 739.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8216.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 260.25,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 5932.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8848.0,
+            "dtype": "torch.float16"
+          }
+        ],
+        "reference": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 26000.3671875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 24851.75,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 26000.3671875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 12627.3974609375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 39422.78125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 59748.58203125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 30899.916015625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 10685.796875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 116890.296875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27452.783203125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 11830.60546875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 131457.734375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 4163.1015625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 94896.0234375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 141591.828125,
+            "dtype": "torch.float32"
+          }
+        ]
+      }
+    },
+    {
+      "case": "case-1",
+      "anchor": 3624,
+      "block_size": 4,
+      "context_tokens": 2048,
+      "old_finite": false,
+      "patched_finite": true,
+      "relative_l2": 0.0026613683439791203,
+      "min_cosine": 0.9999963641166687,
+      "traces": {
+        "old": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 23424.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28224.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 23424.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 7640.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 56960.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 57216.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 13376.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": Infinity,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          }
+        ],
+        "patched": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1464.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1764.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 1464.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 477.5,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 3558.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 3576.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 836.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1732.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 7920.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1176.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 921.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8680.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 236.625,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 5476.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 9512.0,
+            "dtype": "torch.float16"
+          }
+        ],
+        "reference": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 23424.8671875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28200.171875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 23424.8671875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 7642.8017578125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 56962.5,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 57217.18359375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 13388.71875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27708.73046875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 126758.7890625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 18801.201171875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 14716.296875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 138968.078125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 3785.48876953125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 87652.5,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 152273.453125,
+            "dtype": "torch.float32"
+          }
+        ]
+      }
+    },
+    {
+      "case": "case-1",
+      "anchor": 3624,
+      "block_size": 6,
+      "context_tokens": 2048,
+      "old_finite": false,
+      "patched_finite": true,
+      "relative_l2": 0.0029368805699050426,
+      "min_cosine": 0.9999949932098389,
+      "traces": {
+        "old": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 23136.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28224.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 23136.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 7824.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 56608.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 56768.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 24640.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": Infinity,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          }
+        ],
+        "patched": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1446.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1764.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 1446.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 489.25,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 3538.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 3548.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1539.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1748.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 7872.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1200.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 907.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8640.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 246.25,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 5720.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 9456.0,
+            "dtype": "torch.float16"
+          }
+        ],
+        "reference": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 23118.3515625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28197.46875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 23118.3515625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 7825.55859375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 56656.25,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 56722.5625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 24607.85546875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 27928.3046875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 125890.765625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 19229.07421875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 14548.359375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 138133.375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 3957.23193359375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 91375.953125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 151289.765625,
+            "dtype": "torch.float32"
+          }
+        ]
+      }
+    },
+    {
+      "case": "case-1",
+      "anchor": 3624,
+      "block_size": 8,
+      "context_tokens": 2048,
+      "old_finite": false,
+      "patched_finite": true,
+      "relative_l2": 0.003032020293176174,
+      "min_cosine": 0.9999950528144836,
+      "traces": {
+        "old": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 22816.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28128.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 22816.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 7532.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 55264.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 56512.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 24160.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": Infinity,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": false,
+            "absmax": NaN,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": false,
+            "residual_finite": false,
+            "residual_absmax": NaN,
+            "dtype": "torch.float16"
+          }
+        ],
+        "patched": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1426.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1758.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 1426.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 470.75,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 3454.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 3532.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1511.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1816.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 7816.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1152.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 1107.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 8536.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 239.375,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 5964.0,
+            "dtype": "torch.float16"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 9304.0,
+            "dtype": "torch.float16"
+          }
+        ],
+        "reference": [
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 22823.625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 28148.109375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 0,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 22823.625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 7528.3212890625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 55226.09375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 1,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 56523.140625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 24137.609375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 29119.880859375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 2,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 125031.515625,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 18490.11328125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 17676.96875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 3,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 136600.96875,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 3826.439453125,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "conv-finish",
+            "finite": true,
+            "absmax": 95381.984375,
+            "dtype": "torch.float32"
+          },
+          {
+            "stage": "layer-output",
+            "layer": 4,
+            "hidden_finite": true,
+            "residual_finite": true,
+            "residual_absmax": 148922.140625,
+            "dtype": "torch.float32"
+          }
+        ]
+      }
+    }
+  ]
+}

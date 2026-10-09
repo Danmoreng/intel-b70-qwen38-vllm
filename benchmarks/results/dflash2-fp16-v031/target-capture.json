@@ -1,0 +1,157 @@
+{
+  "status": "CAPTURED_REAL_TARGET_STATES_NOT_SERVING_BENCHMARK",
+  "engine": {
+    "kv_cache_dtype": "fp8",
+    "enforce_eager": true,
+    "enable_prefix_caching": true,
+    "max_model_len": 262144,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 4096,
+    "gpu_memory_utilization": 0.965,
+    "limit_mm_per_prompt": {
+      "image": 32,
+      "video": 4
+    },
+    "mm_processor_kwargs": {
+      "max_pixels": 4194304
+    },
+    "mamba_cache_mode": "align",
+    "scheduler_reserve_full_isl": true,
+    "watermark": 0.0,
+    "speculative_config": {
+      "method": "mtp",
+      "num_speculative_tokens": 3
+    },
+    "compilation_config": {
+      "mode": 0
+    },
+    "dtype": "float16",
+    "async_scheduling": false
+  },
+  "identity": [
+    {
+      "layers": [
+        5,
+        19,
+        33,
+        47,
+        61
+      ],
+      "scope": "diagnostic eager hooks; target model arithmetic unchanged"
+    }
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "prompt_tokens": 4420,
+      "output_ids": [
+        248068,
+        198,
+        760,
+        1156,
+        6587,
+        728,
+        310,
+        10033,
+        279,
+        303,
+        52778,
+        314,
+        449,
+        436,
+        34810,
+        318,
+        78994,
+        39642,
+        11851,
+        8,
+        6297,
+        7873,
+        303,
+        12654,
+        321,
+        3300,
+        12152,
+        1970,
+        13,
+        561,
+        11173,
+        1414
+      ],
+      "files": {
+        "layer-33-chunk-1.pt": "44f636b636d225ffa79a4a3bdb03d7582f85beec96099deb469e0f4453c7ac5f",
+        "layer-5-chunk-1.pt": "467e2401f38e6f7c6a691e553a20a34fb95783198846a6c81bf9ccf53ddeaab8",
+        "prompt-embeddings-2.pt": "735ecfd404d4a69277b9c43e7697eeaf3f62329b6a319f011ab0255da03fc55d",
+        "mask-embedding.pt": "16faa43a9d65377efdb6072b22b30f57636282937b14bbf4814cc07cb9007306",
+        "layer-19-chunk-1.pt": "c6ccc828049d948e5046af32fb42a1783ba2a2808574727949eb26438c9b411d",
+        "layer-47-chunk-0.pt": "f5865828528af934f13aa4b994366801d466f52136b3414d544850adeaf0652e",
+        "layer-47-chunk-1.pt": "1b16030d478b662c1d1196dc9072d04cea39e05f0bbc721c2908f24134fb487b",
+        "layer-61-chunk-1.pt": "e3399a73c5fb91ec972d762a25cddd9c477f3bd7615c2a925fa131b08565ba8b",
+        "layer-5-chunk-0.pt": "d3de52005cf56c20135871259812c811d42e8cf3c28ee915953f18633150c72a",
+        "layer-33-chunk-0.pt": "268ebc462a876ed4ba3461b40025d5b1b4f29902819cf935df10c92a59d69615",
+        "layer-19-chunk-0.pt": "fc284cc18e0b055d242d9c95fb46e2c2eddebbc0db57fed4a5124ef9a879da38",
+        "prompt-embeddings-3.pt": "41097572522898ed31417371a55198414391c0d92ebcc3e562c9fda8ea25ce26",
+        "bonus-embedding.pt": "4dcbeefc67e04c0cb95bd9196aaffe64f4c2191299fd0957deb72b1b6b1e7ea3",
+        "layer-61-chunk-0.pt": "9dc32d34aaea8f380f99648611dafc25f396d7864182f2e8c1b15c606f6d93fc",
+        "prompt-embeddings-0.pt": "5ac5900e1a52f1d4743fc4759443c5c1e1e0641a80051cdcb8c3f79b34e18fd1",
+        "prompt-embeddings-1.pt": "6d874a2424018ca2babce84b176dc8b000c044974edb15cb7e6775bab4c4107b"
+      }
+    },
+    {
+      "case": 1,
+      "prompt_tokens": 3625,
+      "output_ids": [
+        248068,
+        198,
+        760,
+        1156,
+        369,
+        9859,
+        728,
+        310,
+        3165,
+        264,
+        2708,
+        15673,
+        314,
+        2943,
+        12960,
+        25,
+        198,
+        16,
+        13,
+        74537,
+        47096,
+        198,
+        17,
+        13,
+        1737,
+        3231,
+        13750,
+        198,
+        18,
+        13,
+        45928,
+        1406
+      ],
+      "files": {
+        "layer-61-chunk-2.pt": "ba714cd7e5bf1470661a3007c3d3cbfd066ad938665e498d273bf67025545bb0",
+        "layer-5-chunk-2.pt": "d3132b94ac159a71f7b9d2948fdb487ef41929b3fc8b2c14e56639e258b29e38",
+        "prompt-embeddings-4.pt": "80bd1e9c9ae1d6948534a8c49f8c19b61fa499a253e3adab5393d93e4205d558",
+        "layer-33-chunk-3.pt": "1d1ebee03d64af83abdee5e29f89ca6ffeada0c95f220679b115ecf361d2689f",
+        "mask-embedding.pt": "16faa43a9d65377efdb6072b22b30f57636282937b14bbf4814cc07cb9007306",
+        "layer-47-chunk-2.pt": "25b7ee9ec2b817c6babec979242aa8c7ba35cdc1aaee59f07051229daeaef4e6",
+        "prompt-embeddings-7.pt": "d19a7cc226d847229f45628d6cdb6a263b17af391e0799481ba32cc6eccb64dd",
+        "layer-33-chunk-2.pt": "d1661f9379290fb7415ebfda761e4b6d125ede64c02768b91c21f02fe1793621",
+        "layer-47-chunk-3.pt": "7c4ac0a08b07c2364509ac643e21d64da71e600f19832082dbfe4382a09d0e04",
+        "layer-61-chunk-3.pt": "43c8625c1a412e0ae332a5370f425552cbbbc02396d9dd1391f279560551b28b",
+        "layer-19-chunk-3.pt": "34f68b4bd6c3b4c9b433221c65c798a956b4a015290ae1059ba148a29f00fb5a",
+        "bonus-embedding.pt": "4dcbeefc67e04c0cb95bd9196aaffe64f4c2191299fd0957deb72b1b6b1e7ea3",
+        "layer-19-chunk-2.pt": "83fab8f57583a328997a41af96f97d97804fef07e04618691d37155be0c116dc",
+        "layer-5-chunk-3.pt": "6c3ad8b7fdcacc743138dbbf8efe2a65f0a78cfa6e5b20bc463424e8da07a9b7",
+        "prompt-embeddings-6.pt": "b3c275f9c3a9531f632653830ce266f186003a5f1994cb89cf7f28a8dd2d3796",
+        "prompt-embeddings-5.pt": "1fd6885d5dcdcc572ef00e17f382786ea4c9eef33a224560d72a65e17c63a53a"
+      }
+    }
+  ]
+}

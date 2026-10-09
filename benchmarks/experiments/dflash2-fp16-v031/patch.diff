@@ -1,0 +1,80 @@
+--- a/vllm/model_executor/models/qwen3_dflash2.py
++++ b/vllm/model_executor/models/qwen3_dflash2.py
+@@ -40,0 +41 @@
++    OUTPUT_SCALE: tl.constexpr,
+@@ -76 +77 @@
+-        accumulator,
++        accumulator * OUTPUT_SCALE,
+@@ -86,0 +88 @@
++    output_scale: float = 1.0,
+@@ -88,0 +91,5 @@
++    # Kernel channel/group offsets require unit inner strides.
++    # Normal model tensors already satisfy this; canonicalize other views.
++    x = x.contiguous()
++    delta = delta.contiguous()
++    base = base.contiguous()
+@@ -110,0 +118 @@
++        OUTPUT_SCALE=output_scale,
+@@ -121,0 +130 @@
++    output_scale: float = 1.0,
+@@ -139,0 +149 @@
++    output_scale: float = 1.0,
+@@ -141 +151,3 @@
+-    return torch.ops.vllm.dflash2_grouped_conv(x, delta, base, block_size, group_size)
++    return torch.ops.vllm.dflash2_grouped_conv(
++        x, delta, base, block_size, group_size, output_scale
++    )
+@@ -151,0 +164 @@
++    output_scale: float = 1.0,
+@@ -153,4 +166,11 @@
+-    if hidden_states.is_cuda:
+-        return dflash2_grouped_conv(hidden_states, delta, base, block_size, group_size)
+-
+-    blocks = hidden_states.unflatten(-1, (num_groups, group_size))
++    if hidden_states.is_cuda or (hidden_states.is_xpu and hidden_states.dtype == torch.float16):
++        return dflash2_grouped_conv(
++            hidden_states, delta, base, block_size, group_size, output_scale
++        )
++
++    # FP16 convolution must scale before the final narrow store.
++    # CPU fallback is also the reference for the FP32-accumulating device kernel.
++    accumulator_dtype = torch.float32 if hidden_states.dtype == torch.float16 else hidden_states.dtype
++    blocks = hidden_states.to(accumulator_dtype).unflatten(-1, (num_groups, group_size))
++    delta = delta.to(accumulator_dtype)
++    base = base.to(accumulator_dtype)
+@@ -167 +187 @@
+-    return output.flatten(-2)
++    return (output.flatten(-2) * output_scale).to(hidden_states.dtype)
+@@ -205 +225,2 @@
+-        self, hidden_states: torch.Tensor, delta: torch.Tensor, side: int
++        self, hidden_states: torch.Tensor, delta: torch.Tensor, side: int,
++        output_scale: float = 1.0,
+@@ -214,0 +236 @@
++            output_scale,
+@@ -224 +246,2 @@
+-        self, hidden_states: torch.Tensor, coefficients: torch.Tensor
++        self, hidden_states: torch.Tensor, coefficients: torch.Tensor,
++        output_scale: float = 1.0,
+@@ -226 +249 @@
+-        return self._convolve(hidden_states, coefficients, 1)
++        return self._convolve(hidden_states, coefficients, 1, output_scale)
+@@ -247,0 +271,5 @@
++        # Store the whole decoder residual stream in units of 1/16.
++        # RMSNorm(a*x, a*a*eps) == RMSNorm(x, eps); branch inputs stay unchanged.
++        self.residual_scale = 1.0 / 16 if vllm_config.model_config.dtype == torch.float16 else 1.0
++        self.input_layernorm.variance_epsilon *= self.residual_scale ** 2
++        self.post_attention_layernorm.variance_epsilon *= self.residual_scale ** 2
+@@ -274,2 +302,2 @@
+-            residual = hidden_states
+-            hidden_states = self.input_layernorm(hidden_states)
++            residual = hidden_states * self.residual_scale
++            hidden_states = self.input_layernorm(residual)
+@@ -281 +309 @@
+-        hidden_states = self.attention_conv.finish(hidden_states, coefficients)
++        hidden_states = self.attention_conv.finish(hidden_states, coefficients, self.residual_scale)
+@@ -286 +314 @@
+-        hidden_states = self.mlp_conv.finish(hidden_states, coefficients)
++        hidden_states = self.mlp_conv.finish(hidden_states, coefficients, self.residual_scale)
+@@ -376,0 +405,2 @@
++        if vllm_config.model_config.dtype == torch.float16:
++            self.norm.variance_epsilon *= (1.0 / 16) ** 2

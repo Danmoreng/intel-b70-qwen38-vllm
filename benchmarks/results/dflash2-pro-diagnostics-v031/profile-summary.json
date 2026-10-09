@@ -1,0 +1,826 @@
+{
+  "status": "DIAGNOSTIC_COST_SPLIT_NOT_THROUGHPUT",
+  "decode_cycles": 116,
+  "median_round_event_span_ms": 62.276275999999996,
+  "median_stage_event_spans_ms": {
+    "target_body": 48.083281,
+    "target_head": 2.048515,
+    "verification_sampler": 0.6821360000000001,
+    "sampled_token_commit": 0.0158335,
+    "draft_proposal_including_head_and_sampler": 11.0229685
+  },
+  "complete_draft_elimination_upper_bound_fraction": 0.17700108625634584,
+  "complete_draft_elimination_ideal_speedup": 1.215068432412874,
+  "kernel_buckets": {
+    "target_body_other": {
+      "kernel_count": 3464,
+      "total_gpu_kernel_ms": 11.71660099999988
+    },
+    "target_exl3_linear": {
+      "kernel_count": 6144,
+      "total_gpu_kernel_ms": 257.99109200000345
+    },
+    "target_gdn_and_speculative_state": {
+      "kernel_count": 768,
+      "total_gpu_kernel_ms": 16.261135000000014
+    },
+    "target_attention_M04_and_reduction": {
+      "kernel_count": 384,
+      "total_gpu_kernel_ms": 87.92910600000015
+    },
+    "commit_and_other": {
+      "kernel_count": 867,
+      "total_gpu_kernel_ms": 7.743857000000051
+    },
+    "target_full_head": {
+      "kernel_count": 24,
+      "total_gpu_kernel_ms": 15.862491
+    },
+    "target_sampling_and_rejection": {
+      "kernel_count": 120,
+      "total_gpu_kernel_ms": 6.022355999999994
+    },
+    "draft_other": {
+      "kernel_count": 556,
+      "total_gpu_kernel_ms": 1.662451999999999
+    },
+    "draft_dense_projections_unresolved_FC_KV_backbone_selector": {
+      "kernel_count": 255,
+      "total_gpu_kernel_ms": 49.57073899999998
+    },
+    "draft_RoPE_and_cache_write": {
+      "kernel_count": 86,
+      "total_gpu_kernel_ms": 0.39611
+    },
+    "draft_selector_and_convolution": {
+      "kernel_count": 156,
+      "total_gpu_kernel_ms": 0.20681699999999983
+    },
+    "draft_own_attention": {
+      "kernel_count": 76,
+      "total_gpu_kernel_ms": 12.300486000000003
+    },
+    "draft_shared_head_and_top16": {
+      "kernel_count": 28,
+      "total_gpu_kernel_ms": 15.175303000000003
+    }
+  },
+  "detailed_kernels": [
+    {
+      "stage": "target_body",
+      "name": "exl3::DpasKernel<4, 2, 8, 4, false>",
+      "kernel_count": 2048,
+      "total_gpu_kernel_ms": 243.20144800000043
+    },
+    {
+      "stage": "target_body",
+      "name": "_ZTSN6compat12experimental6detail13KernelFunctorIXadL_ZN7cutlass13device_kernelINS3_4fmha6kernel22XeFMHAFwdSplitKVKernelINS6_18DecodeProblemShapeILb1EEENS5_10collective17DecodeFwdMainloopINS5_9XeDefaultILi1EEELb1ELb1EN4cute8TiledMMAINSE_8MMA_AtomIJNSE_10XE_DPAS_TTILi8EfNS3_6half_tESI_fEEEEENSE_6LayoutINSE_5tupleIJNSE_1CILi1EEENSN_ILi4EEESO_EEENSM_IJNSN_ILi0EEESO_SR_EEEEEKNSM_IJNSL_INSN_ILi8EEESO_EENSL_INSN_ILi64EEESO_EESX_EEEEENSF_ISK_NSL_INSM_IJSO_SO_SP_EEENSM_IJSR_SR_SO_EEEEEKNSM_IJSV_NSL_INSN_ILi32EEESO_EESX_EEEEELi8ENSE_6TensorINSE_10ViewEngineINSE_8gmem_ptrIPSI_EEEENSL_INSM_IJiiiiEEENSM_IJiSO_iiEEEEEEENS19_INS1A_INS1B_IPNS3_12float_e4m3_tEEEEES1H_EENS19_IS1M_NSL_IS1F_NSM_IJSO_iiiEEEEEEEvvvLb0EEENSA_17DecodeFwdEpilogueIS1R_NSM_IJSU_NSN_ILi256EEEEEES1I_NS19_INS1A_INS1B_IPfEEEES1H_EEvLb0EEENS6_19DecodeTileSchedulerEEEEEvRKNT_6ParamsEEEN4sycl3_V18nd_rangeILi3EEENS27_3ext6oneapi12experimental10propertiesINS2C_6detail20properties_type_listIJNS2C_14property_valueINS2C_18sub_group_size_keyEJSt17integral_constantIjLj16EEEEENS2G_INS2A_5intel12experimental12grf_size_keyEJS2I_IjLj256EEEEEEEEEELb0EJNS21_6ParamsEEEE",
+      "kernel_count": 128,
+      "total_gpu_kernel_ms": 84.81244800000002
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "gemm_kernel",
+      "kernel_count": 255,
+      "total_gpu_kernel_ms": 49.57073899999998
+    },
+    {
+      "stage": "target_head",
+      "name": "exl3::DpasKernel<6, 2, 8, 4, false>",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 15.690102
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "exl3::DpasKernel<6, 2, 8, 4, false>",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 13.697706
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "_ZTSN6compat12experimental6detail13KernelFunctorIXadL_ZN7cutlass13device_kernelINS3_4fmha6kernel12vllm_xpu_xe215XeFMHAFwdKernelINS7_16FMHAProblemShapeILb1EEENS5_10collective12vllm_xpu_xe215FMHAFwdMainloopINS5_12vllm_xpu_xe29XeDefaultILi2EEELb0ELb1ELb1EN4cute8TiledMMAINSH_8MMA_AtomIJNSH_10XE_DPAS_TTILi8EfNS3_6half_tESL_fEEEEENSH_6LayoutINSH_5tupleIJNSH_1CILi16EEENSQ_ILi1EEESS_EEENSP_IJSS_NSQ_ILi0EEESU_EEEEEKNSP_IJNSO_INSP_IJNSQ_ILi8EEESR_NSQ_ILi2EEEEEENSP_IJSS_SR_SX_EEEEENSO_INSQ_ILi32EEESS_EES13_EEEEES16_Li4ENSH_6TensorINSH_10ViewEngineINSH_8gmem_ptrIPSL_EEEENSO_INSP_IJiiiiEEENSP_IJiSS_iiEEEEEEENS17_INS18_INS19_IPNS3_12float_e4m3_tEEEEES1F_EENS17_IS1K_NSO_IS1D_NSP_IJSS_iiiEEEEEEEvvvEENSC_15FMHAFwdEpilogueILb0ES1P_NSP_IJNSQ_ILi256EEENSQ_ILi128EEEEEES1G_vEENS7_29XeFHMAIndividualTileSchedulerELb0EEEEEvRKNT_6ParamsEEEN4sycl3_V18nd_rangeILi3EEENS22_3ext6oneapi12experimental10propertiesINS27_6detail20properties_type_listIJNS27_14property_valueINS27_18sub_group_size_keyEJSt17integral_constantIjLj16EEEEENS2B_INS25_5intel12experimental12grf_size_keyEJS2D_IjLj256EEEEEEEEEELb0EJNS1W_6ParamsEEEE",
+      "kernel_count": 38,
+      "total_gpu_kernel_ms": 12.229569
+    },
+    {
+      "stage": "target_body",
+      "name": "gdn::gated_delta_rule_spec_kernel<sycl::_V1::detail::half_impl::half, float, 4>",
+      "kernel_count": 384,
+      "total_gpu_kernel_ms": 10.786508
+    },
+    {
+      "stage": "target_body",
+      "name": "exl3::HadOutKernel<sycl::_V1::detail::half_impl::half, float>",
+      "kernel_count": 2048,
+      "total_gpu_kernel_ms": 8.808329999999977
+    },
+    {
+      "stage": "target_body",
+      "name": "exl3::HadInKernel<sycl::_V1::detail::half_impl::half>",
+      "kernel_count": 2048,
+      "total_gpu_kernel_ms": 5.981313999999982
+    },
+    {
+      "stage": "target_body",
+      "name": "gdn::causal_conv1d_spec_kernel<sycl::_V1::detail::half_impl::half, 4, true>",
+      "kernel_count": 384,
+      "total_gpu_kernel_ms": 5.47462699999999
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "_topk_topp_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 5.436248
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "gemm_kernel",
+      "kernel_count": 17,
+      "total_gpu_kernel_ms": 3.3607219999999995
+    },
+    {
+      "stage": "target_body",
+      "name": "gemm_kernel",
+      "kernel_count": 384,
+      "total_gpu_kernel_ms": 2.9614050000000005
+    },
+    {
+      "stage": "target_body",
+      "name": "_ZTSN6compat12experimental6detail13KernelFunctorIXadL_ZN7cutlass13device_kernelINS3_4fmha6kernel12ReduceSplitKINS6_18DecodeProblemShapeILb1EEENS6_27XeReduceSplitKTileSchedulerENS6_22XeFMHAFwdSplitKVKernelIS9_NS5_10collective17DecodeFwdMainloopINS5_9XeDefaultILi1EEELb1ELb1EN4cute8TiledMMAINSG_8MMA_AtomIJNSG_10XE_DPAS_TTILi8EfNS3_6half_tESK_fEEEEENSG_6LayoutINSG_5tupleIJNSG_1CILi1EEENSP_ILi4EEESQ_EEENSO_IJNSP_ILi0EEESQ_ST_EEEEEKNSO_IJNSN_INSP_ILi8EEESQ_EENSN_INSP_ILi64EEESQ_EESZ_EEEEENSH_ISM_NSN_INSO_IJSQ_SQ_SR_EEENSO_IJST_ST_SQ_EEEEEKNSO_IJSX_NSN_INSP_ILi32EEESQ_EESZ_EEEEELi8ENSG_6TensorINSG_10ViewEngineINSG_8gmem_ptrIPSK_EEEENSN_INSO_IJiiiiEEENSO_IJiSQ_iiEEEEEEENS1B_INS1C_INS1D_IPNS3_12float_e4m3_tEEEEES1J_EENS1B_IS1O_NSN_IS1H_NSO_IJSQ_iiiEEEEEEEvvvLb0EEENSC_17DecodeFwdEpilogueIS1T_NSO_IJSW_NSP_ILi256EEEEEES1K_NS1B_INS1C_INS1D_IPfEEEES1J_EEvLb0EEENS6_19DecodeTileSchedulerEEEEEEEvRKNT_6ParamsEEEN4sycl3_V18nd_rangeILi3EEENS2A_3ext6oneapi12experimental10propertiesINS2F_6detail20properties_type_listIJNS2F_14property_valueINS2F_18sub_group_size_keyEJSt17integral_constantIjLj16EEEEENS2J_INS2D_5intel12experimental12grf_size_keyEJS2L_IjLj256EEEEEEEEEELb0EJNS24_6ParamsEEEE",
+      "kernel_count": 128,
+      "total_gpu_kernel_ms": 2.9182820000000027
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "exl3::DpasKernel<6, 2, 8, 4, false>",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 2.179375
+    },
+    {
+      "stage": "target_body",
+      "name": "triton_per_fused__to_copy_add_linear_mean_mul_pow_rsqrt_silu_view_0",
+      "kernel_count": 384,
+      "total_gpu_kernel_ms": 1.8079739999999949
+    },
+    {
+      "stage": "target_body",
+      "name": "triton_red_fused__to_copy_add_fused_add_rms_norm_linear_1",
+      "kernel_count": 512,
+      "total_gpu_kernel_ms": 1.6581120000000034
+    },
+    {
+      "stage": "target_body",
+      "name": "triton_red_fused__to_copy_add_fused_add_rms_norm_3",
+      "kernel_count": 384,
+      "total_gpu_kernel_ms": 1.559641999999996
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "at::native::xpu::SbtopkGatherFunctor<c10::Half, 8, 32, 32, int>",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 1.34406
+    },
+    {
+      "stage": "target_body",
+      "name": "triton_poi_fused_linear_mul_silu_slice_2",
+      "kernel_count": 512,
+      "total_gpu_kernel_ms": 1.1841160000000028
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "_ZTSN6compat12experimental6detail13KernelFunctorIXadL_ZN7cutlass13device_kernelINS3_4fmha6kernel12vllm_xpu_xe215XeFMHAFwdKernelINS7_16FMHAProblemShapeILb1EEENS5_10collective12vllm_xpu_xe215FMHAFwdMainloopINS5_12vllm_xpu_xe29XeDefaultILi2EEELb0ELb1ELb1EN4cute8TiledMMAINSH_8MMA_AtomIJNSH_10XE_DPAS_TTILi8EfNS3_6half_tESL_fEEEEENSH_6LayoutINSH_5tupleIJNSH_1CILi16EEENSQ_ILi1EEESS_EEENSP_IJSS_NSQ_ILi0EEESU_EEEEEKNSP_IJNSO_INSP_IJNSQ_ILi8EEESR_NSQ_ILi2EEEEEENSP_IJSS_SR_SX_EEEEENSO_INSQ_ILi32EEESS_EES13_EEEEES16_Li4ENSH_6TensorINSH_10ViewEngineINSH_8gmem_ptrIPSL_EEEENSO_INSP_IJiiiiEEENSP_IJiSS_iiEEEEEEENS17_INS18_INS19_IPNS3_12float_e4m3_tEEEEES1F_EENS17_IS1K_NSO_IS1D_NSP_IJSS_iiiEEEEEEEvvvEENSC_15FMHAFwdEpilogueILb0ES1P_NSP_IJNSQ_ILi256EEENSQ_ILi128EEEEEES1G_vEENS7_29XeFHMAIndividualTileSchedulerELb0EEEEEvRKNT_6ParamsEEEN4sycl3_V18nd_rangeILi3EEENS22_3ext6oneapi12experimental10propertiesINS27_6detail20properties_type_listIJNS27_14property_valueINS27_18sub_group_size_keyEJSt17integral_constantIjLj16EEEEENS2B_INS25_5intel12experimental12grf_size_keyEJS2D_IjLj256EEEEEEEEEELb0EJNS1W_6ParamsEEEE",
+      "kernel_count": 2,
+      "total_gpu_kernel_ms": 0.6939569999999999
+    },
+    {
+      "stage": "target_body",
+      "name": "vllm::reshape_and_cache_flash_strided_kernel<c10::Half, unsigned char, (vllm::Fp8KVCacheDataType)1>",
+      "kernel_count": 128,
+      "total_gpu_kernel_ms": 0.6302489999999996
+    },
+    {
+      "stage": "target_body",
+      "name": "triton_red_fused__to_copy_add_fused_add_rms_norm_linear_3",
+      "kernel_count": 128,
+      "total_gpu_kernel_ms": 0.5169300000000004
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<8, at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, OffsetCalculator<1, unsigned int, false> >",
+      "kernel_count": 157,
+      "total_gpu_kernel_ms": 0.495756
+    },
+    {
+      "stage": "target_body",
+      "name": "_fused_qk_rmsnorm_rope_gate_kernel",
+      "kernel_count": 128,
+      "total_gpu_kernel_ms": 0.3907749999999994
+    },
+    {
+      "stage": "target_body",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<8, at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, OffsetCalculator<1, unsigned int, false> >",
+      "kernel_count": 256,
+      "total_gpu_kernel_ms": 0.3796910000000004
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "vllm::reshape_and_cache_flash_strided_kernel<c10::Half, unsigned char, (vllm::Fp8KVCacheDataType)1>",
+      "kernel_count": 78,
+      "total_gpu_kernel_ms": 0.371217
+    },
+    {
+      "stage": "target_body",
+      "name": "triton_poi_fused_zeros_4",
+      "kernel_count": 376,
+      "total_gpu_kernel_ms": 0.29407199999999933
+    },
+    {
+      "stage": "target_body",
+      "name": "(anonymous namespace)::shared_kv_verify_out(at::Tensor const&, at::Tensor const&, at::Tensor const&, at::Tensor const&, at::Tensor const&, at::Tensor const&, at::Tensor const&, at::Tensor const&, at::Tensor&, at::Tensor&, at::Tensor&, at::Tensor&, long, long, long, bool)::{lambda(sycl::_V1::id<1>)#1}",
+      "kernel_count": 128,
+      "total_gpu_kernel_ms": 0.19837599999999966
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "at::native::xpu::SbtopkGatherFunctor<c10::Half, 8, 32, 32, int>",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 0.18927000000000002
+    },
+    {
+      "stage": "target_body",
+      "name": "triton_poi_fused_linear_mul_sigmoid_view_0",
+      "kernel_count": 128,
+      "total_gpu_kernel_ms": 0.18683199999999967
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "_dflash2_grouped_conv_kernel",
+      "kernel_count": 149,
+      "total_gpu_kernel_ms": 0.18234099999999984
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.16801799999999997
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<int>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+      "kernel_count": 100,
+      "total_gpu_kernel_ms": 0.16350999999999982
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "_prepare_dflash_inputs_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.15687199999999998
+    },
+    {
+      "stage": "target_head",
+      "name": "exl3::HadOutKernel<sycl::_V1::detail::half_impl::half, float>",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.12635100000000002
+    },
+    {
+      "stage": "target_body",
+      "name": "at::native::xpu::ElementwiseKernelWithIndexFunctor<int, at::native::xpu::ArangeFunctor<int, long> >",
+      "kernel_count": 128,
+      "total_gpu_kernel_ms": 0.12191299999999979
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "triton_red_fused_fused_add_rms_norm_2",
+      "kernel_count": 37,
+      "total_gpu_kernel_ms": 0.11686099999999999
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "triton_per_fused_add_cat_index_select_mul_rms_norm_split_split_with_sizes_sub_unsqueeze_view_3",
+      "kernel_count": 30,
+      "total_gpu_kernel_ms": 0.107797
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "vllm::rms_norm_multi_row_kernel<sycl::_V1::detail::half_impl::half, 3, 8, 16, true>",
+      "kernel_count": 40,
+      "total_gpu_kernel_ms": 0.105921
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<int, int, int, at::native::xpu::DivFloorIntergerFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+      "kernel_count": 70,
+      "total_gpu_kernel_ms": 0.10518699999999992
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "exl3::HadOutKernel<sycl::_V1::detail::half_impl::half, float>",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.098748
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::ElementwiseKernelWithIndexFunctor<int, at::native::xpu::ArangeFunctor<int, long> >",
+      "kernel_count": 140,
+      "total_gpu_kernel_ms": 0.09683900000000006
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::ScatterGatherElementwiseKernelFunctor<at::native::xpu::ScatterGatherInternalKernelLoopFunctor<false, at::native::xpu::OpaqueType<4>, OffsetCalculator<3, unsigned int, false>, at::native::xpu::TensorAssign, long> >",
+      "kernel_count": 70,
+      "total_gpu_kernel_ms": 0.09623299999999996
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "triton_poi_fused_mul_silu_slice_1",
+      "kernel_count": 37,
+      "total_gpu_kernel_ms": 0.086958
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "triton_red_fused_fused_add_rms_norm_0",
+      "kernel_count": 37,
+      "total_gpu_kernel_ms": 0.08675100000000001
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::ElementwiseGlobalRangeKernel<at::native::xpu::LegacyKernelScalarFunctor<int, 3, OffsetCalculator<3, unsigned int, false>, at::native::xpu::BinaryFunctor<int, int, int, at::native::xpu::AddFunctor<int> > > >",
+      "kernel_count": 70,
+      "total_gpu_kernel_ms": 0.07703899999999997
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::ClampScalarFunctor<int>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+      "kernel_count": 70,
+      "total_gpu_kernel_ms": 0.072149
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::IndexSelectSmallIndexFunctor<c10::Half, long, unsigned int, 2, 2, -2>",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.070935
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "_ZTSN6compat12experimental6detail13KernelFunctorIXadL_ZN7cutlass13device_kernelINS3_4fmha6kernel12vllm_xpu_xe222XeFMHAFwdSplitKVKernelINS7_18DecodeProblemShapeILb1EEENS5_10collective12vllm_xpu_xe217DecodeFwdMainloopINS5_12vllm_xpu_xe29XeDefaultILi1EEELb1ELb0EN4cute8TiledMMAINSH_8MMA_AtomIJNSH_10XE_DPAS_TTILi8EfNS3_6half_tESL_fEEEEENSH_6LayoutINSH_5tupleIJNSH_1CILi1EEENSQ_ILi4EEESR_EEENSP_IJNSQ_ILi0EEESR_SU_EEEEEKNSP_IJNSO_INSQ_ILi8EEESR_EENSO_INSQ_ILi64EEESR_EES10_EEEEENSI_ISN_NSO_INSP_IJSR_SR_SS_EEENSP_IJSU_SU_SR_EEEEEKNSP_IJSY_NSO_INSQ_ILi32EEESR_EES10_EEEEELi4ENSH_6TensorINSH_10ViewEngineINSH_8gmem_ptrIPSL_EEEENSO_INSP_IJiiiiEEENSP_IJiSR_iiEEEEEEENS1C_INS1D_INS1E_IPNS3_12float_e4m3_tEEEEES1K_EENS1C_IS1P_NSO_IS1I_NSP_IJSR_iiiEEEEEEEvvvLb1EEENSC_17DecodeFwdEpilogueIS1U_NSP_IJSX_NSQ_ILi128EEEEEES1L_NS1C_INS1D_INS1E_IPfEEEES1K_EEvLb0EEENS7_19DecodeTileSchedulerEEEEEvRKNT_6ParamsEEEN4sycl3_V18nd_rangeILi3EEENS2A_3ext6oneapi12experimental10propertiesINS2F_6detail20properties_type_listIJNS2F_14property_valueINS2F_18sub_group_size_keyEJSt17integral_constantIjLj16EEEEENS2J_INS2D_5intel12experimental12grf_size_keyEJS2L_IjLj256EEEEEEEEEELb0EJNS24_6ParamsEEEE",
+      "kernel_count": 38,
+      "total_gpu_kernel_ms": 0.07091700000000001
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "_resample_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.068124
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "at::native::xpu::CatArrayBatchedCopy_contig<at::native::xpu::OpaqueType<2u>, unsigned int, 2, 64, 1>",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.066664
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexFunctor<at::native::xpu::OpaqueType<4> >, char*, OffsetCalculator<3, unsigned int, false> >",
+      "kernel_count": 16,
+      "total_gpu_kernel_ms": 0.06572300000000002
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "triton_per_fused_add_cat_index_select_mul_rms_norm_split_split_with_sizes_sub_unsqueeze_view_4",
+      "kernel_count": 30,
+      "total_gpu_kernel_ms": 0.06477800000000003
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<int, int, int, at::native::xpu::AddFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+      "kernel_count": 70,
+      "total_gpu_kernel_ms": 0.06455700000000002
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::BinaryFunctor<int, int, int, at::native::xpu::AddFunctor<int> >, at::detail::Array<char*, 3>, TrivialOffsetCalculator<2, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast>",
+      "kernel_count": 70,
+      "total_gpu_kernel_ms": 0.05841500000000002
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::CompareScalarFunctor<int, at::native::xpu::CompareFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+      "kernel_count": 38,
+      "total_gpu_kernel_ms": 0.056552000000000026
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "_compute_local_logits_stats_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.052601999999999996
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "at::native::xpu::SegmentedGroupRadixSortPairsFunctor<at::native::xpu::GroupRadixSort<c10::Half, 64, 32, 4, true, long, unsigned short, unsigned int, 4>, c10::Half, long>",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.05208
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::BinaryFunctor<int, int, int, at::native::xpu::AddFunctor<int> >, at::detail::Array<char*, 3>, TrivialOffsetCalculator<2, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast>",
+      "kernel_count": 38,
+      "total_gpu_kernel_ms": 0.04873400000000001
+    },
+    {
+      "stage": "target_head",
+      "name": "exl3::HadInKernel<sycl::_V1::detail::half_impl::half>",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.046037999999999996
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "_rejection_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.042809999999999994
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "_update_committed_marker_cache_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.042185999999999994
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "_gather_draft_sampled_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.042185
+    },
+    {
+      "stage": "unattributed",
+      "name": "_compute_slot_mappings_kernel",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.04093499999999999
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "triton_red_fused__to_copy_mul_rms_norm_0",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.040933
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<8, at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, OffsetCalculator<1, unsigned int, false> >",
+      "kernel_count": 11,
+      "total_gpu_kernel_ms": 0.039580000000000004
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "exl3::HadInKernel<sycl::_V1::detail::half_impl::half>",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.034789
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexPutFunctor<at::native::xpu::OpaqueType<8> >, char*, OffsetCalculator<3, unsigned int, false> >",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.032704
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<int>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+      "kernel_count": 16,
+      "total_gpu_kernel_ms": 0.031039
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexFunctor<at::native::xpu::OpaqueType<8> >, char*, OffsetCalculator<3, unsigned int, false> >",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.030101999999999997
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "triton_per_fused_add_cat_index_select_mul_rms_norm_split_split_with_sizes_sub_unsqueeze_view_1",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.028745999999999994
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "vllm::rms_norm_kernel<sycl::_V1::detail::half_impl::half, 2, 8, true>",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.028432999999999996
+    },
+    {
+      "stage": "unattributed",
+      "name": "_gather_block_tables_kernel",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.027290000000000002
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::VectorizedGatherKernel<16, long>",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.026457999999999995
+    },
+    {
+      "stage": "sampled_token_commit",
+      "name": "postprocess_mamba_fused_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.025831999999999997
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "vllm::rotary_embedding_kernel<sycl::_V1::detail::half_impl::half, true>",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.024893
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "_selector_walk_kernel",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.024475999999999998
+    },
+    {
+      "stage": "sampled_token_commit",
+      "name": "_post_update_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.024268000000000005
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "_thinking_budget_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.023433999999999996
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::IndexKernelFunctor<at::native::xpu::IndexFunctor<at::native::xpu::OpaqueType<4> >, char*, OffsetCalculator<3, unsigned int, false> >",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.021976
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.021143
+    },
+    {
+      "stage": "unattributed",
+      "name": "_prepare_rope_positions_kernel",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.020517
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<16, at::native::xpu::FillFunctor<bool>, at::detail::Array<char*, 1>, TrivialOffsetCalculator<0, unsigned int> >",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.019163999999999997
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "_insert_resampled_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.019162000000000002
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "triton_per_fused_add_cat_index_select_mul_rms_norm_split_split_with_sizes_sub_unsqueeze_view_2",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.018119999999999997
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::BUnaryFunctor<int, int, int, at::native::xpu::AddFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.018017
+    },
+    {
+      "stage": "unattributed",
+      "name": "precopy_mamba_align_fused_kernel",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.017915
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "at::native::xpu::ElementwiseGlobalRangeKernel<at::native::xpu::LegacyKernelScalarFunctor<long, 2, OffsetCalculator<2, unsigned int, false>, at::native::xpu::CopyScalarFunc<long> > >",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.017079999999999998
+    },
+    {
+      "stage": "target_body",
+      "name": "triton_red_fused_1",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.016248
+    },
+    {
+      "stage": "unattributed",
+      "name": "preprocess_mamba_align_fused_kernel",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.01583
+    },
+    {
+      "stage": "unattributed",
+      "name": "_combine_sampled_and_draft_tokens_kernel",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.015725
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "exl3::HadOutKernel<sycl::_V1::detail::half_impl::half, float>",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 0.015208000000000001
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "_dflash2_grouped_conv_kernel",
+      "kernel_count": 11,
+      "total_gpu_kernel_ms": 0.014060999999999999
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "triton_poi_fused_index_1",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.013226000000000002
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "triton_poi_fused__unsafe_view_cat_expand_index_mul_slice_unsqueeze_0",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.013019000000000001
+    },
+    {
+      "stage": "verification_sampler",
+      "name": "_get_num_sampled_and_rejected_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.012808000000000003
+    },
+    {
+      "stage": "sampled_token_commit",
+      "name": "_scatter_num_accepted_kernel",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.012183999999999999
+    },
+    {
+      "stage": "unattributed",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::FillFunctor<int>, at::detail::Array<char*, 1>, TrivialOffsetCalculator<0, unsigned int> >",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.011664
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "at::native::xpu::VectorizedGatherKernel<16, long>",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.011350000000000002
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "vllm::reshape_and_cache_flash_strided_kernel<c10::Half, unsigned char, (vllm::Fp8KVCacheDataType)1>",
+      "kernel_count": 2,
+      "total_gpu_kernel_ms": 0.010312
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<8, at::native::xpu::FillFunctor<c10::Half>, at::detail::Array<char*, 1>, TrivialOffsetCalculator<0, unsigned int> >",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.009998
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "triton_red_fused_fused_add_rms_norm_2",
+      "kernel_count": 3,
+      "total_gpu_kernel_ms": 0.009895000000000001
+    },
+    {
+      "stage": "unattributed",
+      "name": "_expand_idx_mapping_kernel",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.008644
+    },
+    {
+      "stage": "target_body",
+      "name": "triton_poi_fused_0",
+      "kernel_count": 8,
+      "total_gpu_kernel_ms": 0.008642
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "at::native::xpu::SegmentedGroupRadixSortPairsFunctor<at::native::xpu::GroupRadixSort<c10::Half, 64, 32, 4, true, long, unsigned short, unsigned int, 4>, c10::Half, long>",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 0.008228999999999998
+    },
+    {
+      "stage": "unattributed",
+      "name": "_prepare_pos_seq_lens_kernel",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.008225000000000001
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<2, at::native::xpu::BUnaryFunctor<long, long, long, at::native::xpu::AddFunctor<long> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.008225
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "triton_per_fused_add_cat_index_select_mul_rms_norm_split_split_with_sizes_sub_unsqueeze_view_3",
+      "kernel_count": 2,
+      "total_gpu_kernel_ms": 0.008020000000000001
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "triton_poi_fused_mul_silu_slice_1",
+      "kernel_count": 3,
+      "total_gpu_kernel_ms": 0.0077080000000000004
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "triton_red_fused_fused_add_rms_norm_0",
+      "kernel_count": 3,
+      "total_gpu_kernel_ms": 0.0073950000000000005
+    },
+    {
+      "stage": "draft_proposal_including_head_and_sampler",
+      "name": "triton_poi_fused_add_permute_unsqueeze_view_2",
+      "kernel_count": 7,
+      "total_gpu_kernel_ms": 0.006455000000000001
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "exl3::HadInKernel<sycl::_V1::detail::half_impl::half>",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 0.005312
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "triton_per_fused_add_cat_index_select_mul_rms_norm_split_split_with_sizes_sub_unsqueeze_view_4",
+      "kernel_count": 2,
+      "total_gpu_kernel_ms": 0.004581999999999999
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "_ZTSN6compat12experimental6detail13KernelFunctorIXadL_ZN7cutlass13device_kernelINS3_4fmha6kernel12vllm_xpu_xe222XeFMHAFwdSplitKVKernelINS7_18DecodeProblemShapeILb1EEENS5_10collective12vllm_xpu_xe217DecodeFwdMainloopINS5_12vllm_xpu_xe29XeDefaultILi1EEELb1ELb0EN4cute8TiledMMAINSH_8MMA_AtomIJNSH_10XE_DPAS_TTILi8EfNS3_6half_tESL_fEEEEENSH_6LayoutINSH_5tupleIJNSH_1CILi1EEENSQ_ILi4EEESR_EEENSP_IJNSQ_ILi0EEESR_SU_EEEEEKNSP_IJNSO_INSQ_ILi8EEESR_EENSO_INSQ_ILi64EEESR_EES10_EEEEENSI_ISN_NSO_INSP_IJSR_SR_SS_EEENSP_IJSU_SU_SR_EEEEEKNSP_IJSY_NSO_INSQ_ILi32EEESR_EES10_EEEEELi4ENSH_6TensorINSH_10ViewEngineINSH_8gmem_ptrIPSL_EEEENSO_INSP_IJiiiiEEENSP_IJiSR_iiEEEEEEENS1C_INS1D_INS1E_IPNS3_12float_e4m3_tEEEEES1K_EENS1C_IS1P_NSO_IS1I_NSP_IJSR_iiiEEEEEEEvvvLb1EEENSC_17DecodeFwdEpilogueIS1U_NSP_IJSX_NSQ_ILi128EEEEEES1L_NS1C_INS1D_INS1E_IPfEEEES1K_EEvLb0EEENS7_19DecodeTileSchedulerEEEEEvRKNT_6ParamsEEEN4sycl3_V18nd_rangeILi3EEENS2A_3ext6oneapi12experimental10propertiesINS2F_6detail20properties_type_listIJNS2F_14property_valueINS2F_18sub_group_size_keyEJSt17integral_constantIjLj16EEEEENS2J_INS2D_5intel12experimental12grf_size_keyEJS2L_IjLj256EEEEEEEEEELb0EJNS24_6ParamsEEEE",
+      "kernel_count": 2,
+      "total_gpu_kernel_ms": 0.00375
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "_selector_walk_kernel",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 0.00375
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::CopyScalarFunc<c10::Half>, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 0.003437
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<4, at::native::xpu::CompareScalarFunctor<int, at::native::xpu::CompareFunctor<int> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+      "kernel_count": 2,
+      "total_gpu_kernel_ms": 0.0029159999999999998
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "at::native::xpu::UnrolledElementwiseKernel<at::native::xpu::BinaryFunctor<int, int, int, at::native::xpu::AddFunctor<int> >, at::detail::Array<char*, 3>, TrivialOffsetCalculator<2, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast>",
+      "kernel_count": 2,
+      "total_gpu_kernel_ms": 0.0025
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "triton_poi_fused__unsafe_view_cat_expand_index_mul_slice_unsqueeze_0",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 0.002083
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "triton_poi_fused_index_1",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 0.001875
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "at::native::xpu::VectorizedGatherKernel<16, long>",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 0.00177
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<8, at::native::xpu::FillFunctor<c10::Half>, at::detail::Array<char*, 1>, TrivialOffsetCalculator<0, unsigned int> >",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 0.001562
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "at::native::xpu::VectorizedElementwiseKernel<2, at::native::xpu::BUnaryFunctor<long, long, long, at::native::xpu::AddFunctor<long> >, at::detail::Array<char*, 2>, TrivialOffsetCalculator<1, unsigned int> >",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 0.00125
+    },
+    {
+      "stage": "ambiguous_graph_annotation",
+      "name": "triton_poi_fused_add_permute_unsqueeze_view_2",
+      "kernel_count": 1,
+      "total_gpu_kernel_ms": 0.0010409999999999998
+    }
+  ],
+  "limits": [
+    "Event spans include dispatch gaps and medians are not additive",
+    "Profiler wave is perturbed and separate from tensor capture",
+    "Dense gemm symbols do not uniquely separate feature-FC, context-KV, backbone and selector projections; do not invent component attribution",
+    "Overlapping GPU streams can make sum of kernel durations exceed wall time"
+  ]
+}

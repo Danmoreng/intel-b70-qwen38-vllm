@@ -29,6 +29,51 @@ CASES = {
 }
 
 
+def gpu_greedy_test():
+    """Independent exact T0 prefix oracle, C4 slots and changed graph inputs."""
+    import torch
+    from vllm.v1.worker.gpu.spec_decode.rejection_sampler_utils import rejection_sample
+    device='xpu';n=4;steps=7
+    logits=torch.zeros(n*(steps+1),4,device=device,dtype=torch.float32)
+    proposed=torch.zeros(n*(steps+1),device=device,dtype=torch.int64)
+    slots=torch.tensor([2,0,3,1],device=device,dtype=torch.int32)
+    expanded=slots.repeat_interleave(steps+1)
+    local=torch.arange(steps+1,device=device,dtype=torch.int32).repeat(n)
+    cu=torch.arange(n+1,device=device,dtype=torch.int32)*(steps+1)
+    positions=torch.arange(n*(steps+1),device=device,dtype=torch.int64)+1000
+    temperatures=torch.zeros(n,device=device,dtype=torch.float32)
+    seeds=torch.arange(n,device=device,dtype=torch.int64)+20261010
+    prefixes=[7,0,3,6]
+    def update(offset):
+        target=[[(r+j+offset)%4 for j in range(steps+1)] for r in range(n)]
+        values=torch.zeros(n,steps+1,4)
+        draft=torch.zeros(n,steps+1,dtype=torch.int64)
+        for r in range(n):
+            for j in range(steps+1):values[r,j,target[r][j]]=10
+            for j in range(steps):draft[r,j+1]=target[r][j] if j<prefixes[r] else (target[r][j]+1)%4
+        logits.copy_(values.reshape(-1,4));proposed.copy_(draft.flatten())
+        return target,draft
+    def run():
+        return rejection_sample(logits,None,proposed,cu,positions,slots,expanded,local,
+            temperatures,seeds,steps,None,use_fp64=False)
+    def check(result,target,draft):
+        sampled,count=[v.cpu() for v in result]
+        assert count.tolist()==[k+1 for k in prefixes]
+        for r,k in enumerate(prefixes):
+            expected=draft[r,1:k+1].tolist()+[target[r][k]]
+            assert sampled[r,:k+1].tolist()==expected,(r,sampled[r,:k+1],expected)
+    target,draft=update(0);check(run(),target,draft)
+    torch.xpu.synchronize();graph=torch.xpu.XPUGraph()
+    with torch.xpu.graph(graph):result=run()
+    for offset in [1,2]:
+        target,draft=update(offset)
+        slots.copy_(slots.roll(1));expanded.copy_(slots.repeat_interleave(steps+1))
+        graph.replay();check(result,target,draft)
+    return dict(status='PASS_EXACT_T0_REJECTION_AND_GRAPH_SLOT_REPLAY',
+        requests=4,steps=7,prefixes=prefixes,graph_changed_input_replays=2,
+        scope='Exact argmax and first/middle/late rejection/all-accepted bonus. EOS and frontend token limits are separately covered by serving smokes.')
+
+
 def gpu_test():
     import torch
     from vllm.v1.worker.gpu.spec_decode.dflash2.speculator import CandidateSampler

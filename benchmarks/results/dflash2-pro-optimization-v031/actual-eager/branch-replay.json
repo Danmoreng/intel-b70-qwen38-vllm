@@ -1,0 +1,2609 @@
+{
+  "status": "PASS_ACTUAL_EAGER_BRANCH_SELECTOR_ROPE_STORED_KV_REPLAY",
+  "rounds": [
+    {
+      "round": 2,
+      "features_post_residual_exact": true,
+      "greedy_selector_walk_exact": true,
+      "checks": [
+        {
+          "kind": "feature_fc_selected_columns",
+          "max_abs": 0.17261561347913812,
+          "rms": 0.018046993490069392,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.input_layernorm",
+          "max_abs": 0.0009036690014707638,
+          "rms": 0.00010425249106803941,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.self_attn.q_norm",
+          "max_abs": 0.003201192577693135,
+          "rms": 0.0003285818259336827,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.self_attn.k_norm",
+          "max_abs": 0.002160299731206905,
+          "rms": 0.0003336194456223736,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.post_attention_layernorm",
+          "max_abs": 0.0019140491406970384,
+          "rms": 2.1158986275978754e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.input_layernorm",
+          "max_abs": 0.004089059292065045,
+          "rms": 4.408762344458672e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.self_attn.q_norm",
+          "max_abs": 0.0037408786557833196,
+          "rms": 0.0002798756634328623,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.self_attn.k_norm",
+          "max_abs": 0.003123006861198263,
+          "rms": 0.0003178457968091882,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.post_attention_layernorm",
+          "max_abs": 0.003478768017703082,
+          "rms": 3.6102711826854867e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.input_layernorm",
+          "max_abs": 0.0040767616915688976,
+          "rms": 6.098943582681131e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.self_attn.q_norm",
+          "max_abs": 0.0032623879279594092,
+          "rms": 0.0002842733922761042,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.self_attn.k_norm",
+          "max_abs": 0.0038951242836713362,
+          "rms": 0.00037809925911688324,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.post_attention_layernorm",
+          "max_abs": 0.005764321706825726,
+          "rms": 6.037359661518614e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.input_layernorm",
+          "max_abs": 0.007207965658992066,
+          "rms": 9.18469074230557e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.self_attn.q_norm",
+          "max_abs": 0.0037129695065516444,
+          "rms": 0.0002883140067825391,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.self_attn.k_norm",
+          "max_abs": 0.0019489965166608059,
+          "rms": 0.00033554551556347166,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.post_attention_layernorm",
+          "max_abs": 0.0036709223752335873,
+          "rms": 4.164916845433973e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.input_layernorm",
+          "max_abs": 0.009999040751493382,
+          "rms": 0.00012188372007847775,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.self_attn.q_norm",
+          "max_abs": 0.0019491658598509431,
+          "rms": 0.0002797414219706427,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.self_attn.k_norm",
+          "max_abs": 0.0026478738009743097,
+          "rms": 0.0003491641451144404,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.post_attention_layernorm",
+          "max_abs": 0.0035182712272678884,
+          "rms": 3.9911612404382655e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:norm",
+          "max_abs": 0.01235731158365283,
+          "rms": 0.0006774639702838806,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "context_norm_and_selected_kv_projection_columns",
+          "max_abs": 0.007799489996614284,
+          "rms": 0.0017576682415550832,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0032613608754706036,
+          "rms": 0.00036236744561264996,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.005582600831985474,
+          "rms": 0.00039287223991658524,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.00411224365234375,
+          "rms": 0.00038506776649656626,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0032613608754706036,
+          "rms": 0.00036236744561264996,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.0068343281745910645,
+          "rms": 0.00033785080812137597,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.0030937790870666504,
+          "rms": 0.00037697225843885836,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0032613608754706036,
+          "rms": 0.00036236744561264996,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.0035042352974414825,
+          "rms": 0.0003449000161048058,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.003535032272338867,
+          "rms": 0.00044655297670543513,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0032613608754706036,
+          "rms": 0.00036236744561264996,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.003444194793701172,
+          "rms": 0.0003478206320068716,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.0032901763916015625,
+          "rms": 0.0003947899683799882,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0032613608754706036,
+          "rms": 0.00036236744561264996,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.0037131309509277344,
+          "rms": 0.00033410018970744196,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.0032567381858825684,
+          "rms": 0.0004175781832559607,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "selector:hidden_projection",
+          "max_abs": 0.0019380489829927683,
+          "rms": 0.0004081203191174709,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "selector:unary_and_edges",
+          "max_abs": 0.0078125,
+          "rms": 0.003725955874249838,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "actual_paged_fp8_vs_dense_same_stored_kv",
+          "max_abs": 0.007671634260375981,
+          "rms": 0.0006055893388318812,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        }
+      ],
+      "ideal_fp64_rope_errors": [
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.0196477961759145,
+          "rms": 0.0012792011829739023,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.03702621055373223,
+          "rms": 0.0014221185134875784,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.01983577673478365,
+          "rms": 0.0009882709225801484,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.017385401898664554,
+          "rms": 0.0010162583648479482,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.014919122287255782,
+          "rms": 0.0008213340645225301,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.01273233657354167,
+          "rms": 0.0008314905177075856,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.020827999238699713,
+          "rms": 0.0009936283785204059,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.016646016312186873,
+          "rms": 0.001073421754033888,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.015250309428907816,
+          "rms": 0.0007782930176341458,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.013896016116074605,
+          "rms": 0.0008844652002093554,
+          "within_original_bounds": false
+        }
+      ],
+      "query_positions": [
+        32728,
+        32729,
+        32730,
+        32731,
+        32732,
+        32733,
+        32734,
+        32735
+      ],
+      "context_slots": [
+        [
+          310615,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ]
+      ],
+      "limitations": "Actual eager model path. Existing graph q captures and synthetic graph/paged gates are separate; not bit-identical branch captures inside a production graph."
+    },
+    {
+      "round": 16,
+      "features_post_residual_exact": true,
+      "greedy_selector_walk_exact": true,
+      "checks": [
+        {
+          "kind": "feature_fc_selected_columns",
+          "max_abs": 0.12665886589093134,
+          "rms": 0.021887418518202337,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.input_layernorm",
+          "max_abs": 0.0019392205204482593,
+          "rms": 9.828038905164386e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.self_attn.q_norm",
+          "max_abs": 0.003010041518905382,
+          "rms": 0.000326360243385211,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.self_attn.k_norm",
+          "max_abs": 0.002191346818051443,
+          "rms": 0.0003308311894591003,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.post_attention_layernorm",
+          "max_abs": 0.0019107464335119673,
+          "rms": 2.019157898195863e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.input_layernorm",
+          "max_abs": 0.003248411374253024,
+          "rms": 4.019568840357613e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.self_attn.q_norm",
+          "max_abs": 0.0036115290203646566,
+          "rms": 0.0002816347831003682,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.self_attn.k_norm",
+          "max_abs": 0.0027548770429337566,
+          "rms": 0.00030992392431739523,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.post_attention_layernorm",
+          "max_abs": 0.005685290126867137,
+          "rms": 5.1922244047417293e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.input_layernorm",
+          "max_abs": 0.0045377214997213144,
+          "rms": 5.496987266840995e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.self_attn.q_norm",
+          "max_abs": 0.003458003749690519,
+          "rms": 0.0002925763828420146,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.self_attn.k_norm",
+          "max_abs": 0.0029861565225548503,
+          "rms": 0.0003903414864634215,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.post_attention_layernorm",
+          "max_abs": 0.004548817995083887,
+          "rms": 5.488095184882408e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.input_layernorm",
+          "max_abs": 0.008441829486208974,
+          "rms": 8.884134949656648e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.self_attn.q_norm",
+          "max_abs": 0.0019358367408273125,
+          "rms": 0.0002872752384836373,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.self_attn.k_norm",
+          "max_abs": 0.0019431210982761016,
+          "rms": 0.0003343325449883992,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.post_attention_layernorm",
+          "max_abs": 0.003955873403748811,
+          "rms": 4.2865700328013894e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.input_layernorm",
+          "max_abs": 0.008349650296771927,
+          "rms": 0.00011477000877239762,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.self_attn.q_norm",
+          "max_abs": 0.0019501497054275063,
+          "rms": 0.0002818251877730028,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.self_attn.k_norm",
+          "max_abs": 0.0019506555469464004,
+          "rms": 0.0003614222890942889,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.post_attention_layernorm",
+          "max_abs": 0.0032423769715039796,
+          "rms": 3.971395178522134e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:norm",
+          "max_abs": 0.008943626691454654,
+          "rms": 0.0004960257559267141,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "context_norm_and_selected_kv_projection_columns",
+          "max_abs": 0.0074374491814523935,
+          "rms": 0.0016422907794567299,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0038820349636073392,
+          "rms": 0.00041123266392333274,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.005061574280261993,
+          "rms": 0.00040113163315095944,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.0031766891479492188,
+          "rms": 0.0003913400298522324,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0038820349636073392,
+          "rms": 0.00041123266392333274,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.005491912364959717,
+          "rms": 0.00034557509142033624,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.0035042166709899902,
+          "rms": 0.0003748813134091003,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0038820349636073392,
+          "rms": 0.00041123266392333274,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.0035004615783691406,
+          "rms": 0.00035105645469041025,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.003691110759973526,
+          "rms": 0.00045719967963379156,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0038820349636073392,
+          "rms": 0.00041123266392333274,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.003658294677734375,
+          "rms": 0.00034745369275029035,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.0036554336547851562,
+          "rms": 0.00040031595844514025,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0038820349636073392,
+          "rms": 0.00041123266392333274,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.0036520957946777344,
+          "rms": 0.00034161456514870335,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.0036630630493164062,
+          "rms": 0.0004236148773359313,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "selector:hidden_projection",
+          "max_abs": 0.0016964835176622728,
+          "rms": 0.00027406567288071836,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "selector:unary_and_edges",
+          "max_abs": 0.0078125,
+          "rms": 0.0035934967109687334,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "actual_paged_fp8_vs_dense_same_stored_kv",
+          "max_abs": 0.00584865250742439,
+          "rms": 0.00047613251021510133,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        }
+      ],
+      "ideal_fp64_rope_errors": [
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.023447281394312514,
+          "rms": 0.001453110078063214,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.041935431983354476,
+          "rms": 0.0016508783014790732,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.026014131861385792,
+          "rms": 0.0010282015986688296,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.016842916023192878,
+          "rms": 0.0010330285522845112,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.019154931925553953,
+          "rms": 0.0008912762844061169,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.012685626346484818,
+          "rms": 0.0008623568040964918,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.025506479044702157,
+          "rms": 0.0011328482898998464,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.01938666951866841,
+          "rms": 0.001220425841395994,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.024080892879926985,
+          "rms": 0.0009158494524329635,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.014908422923081144,
+          "rms": 0.0009304080355769066,
+          "within_original_bounds": false
+        }
+      ],
+      "query_positions": [
+        32759,
+        32760,
+        32761,
+        32762,
+        32763,
+        32764,
+        32765,
+        32766
+      ],
+      "context_slots": [
+        [
+          310645,
+          310646,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ]
+      ],
+      "limitations": "Actual eager model path. Existing graph q captures and synthetic graph/paged gates are separate; not bit-identical branch captures inside a production graph."
+    },
+    {
+      "round": 48,
+      "features_post_residual_exact": true,
+      "greedy_selector_walk_exact": true,
+      "checks": [
+        {
+          "kind": "feature_fc_selected_columns",
+          "max_abs": 0.08237573997212166,
+          "rms": 0.014600540460701392,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.input_layernorm",
+          "max_abs": 0.0019392205204482593,
+          "rms": 9.828038905164386e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.self_attn.q_norm",
+          "max_abs": 0.003010041518905382,
+          "rms": 0.000326360243385211,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.self_attn.k_norm",
+          "max_abs": 0.002191346818051443,
+          "rms": 0.0003308311894591003,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.post_attention_layernorm",
+          "max_abs": 0.0019462087162054331,
+          "rms": 1.975175886940216e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.input_layernorm",
+          "max_abs": 0.003312639601380951,
+          "rms": 4.603673912891828e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.self_attn.q_norm",
+          "max_abs": 0.003786525862835788,
+          "rms": 0.0002838440327303939,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.self_attn.k_norm",
+          "max_abs": 0.0019294221185477411,
+          "rms": 0.0003022946606874576,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.post_attention_layernorm",
+          "max_abs": 0.004154855504714838,
+          "rms": 3.631363239374633e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.input_layernorm",
+          "max_abs": 0.006070112676167305,
+          "rms": 6.810609118019127e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.self_attn.q_norm",
+          "max_abs": 0.0036875789568000528,
+          "rms": 0.00027645975927235224,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.self_attn.k_norm",
+          "max_abs": 0.0027785050870949846,
+          "rms": 0.00037289032423814264,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.post_attention_layernorm",
+          "max_abs": 0.004777816468183538,
+          "rms": 5.6889312046843237e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.input_layernorm",
+          "max_abs": 0.008144113595925262,
+          "rms": 9.901114587709543e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.self_attn.q_norm",
+          "max_abs": 0.003298132613474891,
+          "rms": 0.0002834993175708104,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.self_attn.k_norm",
+          "max_abs": 0.0019455020308560833,
+          "rms": 0.0003351715584415587,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.post_attention_layernorm",
+          "max_abs": 0.004987761237035926,
+          "rms": 5.735612067710322e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.input_layernorm",
+          "max_abs": 0.0077525974812573395,
+          "rms": 0.00011231696690555994,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.self_attn.q_norm",
+          "max_abs": 0.0019513154967336632,
+          "rms": 0.00027225051560293706,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.self_attn.k_norm",
+          "max_abs": 0.0032793593703104307,
+          "rms": 0.00035437538661530827,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.post_attention_layernorm",
+          "max_abs": 0.003328288892857856,
+          "rms": 5.1719271496912575e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:norm",
+          "max_abs": 0.012525712817218704,
+          "rms": 0.0006059860149980413,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "context_norm_and_selected_kv_projection_columns",
+          "max_abs": 0.007061216081638122,
+          "rms": 0.0012918428834514917,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0039964136541029704,
+          "rms": 0.00040288608523089247,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.0039730072021484375,
+          "rms": 0.00039462373166839875,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.004151344299316406,
+          "rms": 0.00040221455120981577,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0039964136541029704,
+          "rms": 0.00040288608523089247,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.005230903625488281,
+          "rms": 0.00034116712379735076,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.003522157669067383,
+          "rms": 0.0003623365374846858,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0039964136541029704,
+          "rms": 0.00040288608523089247,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.003413081169128418,
+          "rms": 0.0003280728220520252,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.004023164510726929,
+          "rms": 0.0004515638471028709,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0039964136541029704,
+          "rms": 0.00040288608523089247,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.0043315887451171875,
+          "rms": 0.00034445682534623085,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.003707870841026306,
+          "rms": 0.00040031486319408026,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.0039964136541029704,
+          "rms": 0.00040288608523089247,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.0037412643432617188,
+          "rms": 0.0003398808226627549,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.0038546323776245117,
+          "rms": 0.00042699242779673316,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "selector:hidden_projection",
+          "max_abs": 0.002383133949479088,
+          "rms": 0.0003992396261820602,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "selector:unary_and_edges",
+          "max_abs": 0.0078125,
+          "rms": 0.003549002142956931,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "actual_paged_fp8_vs_dense_same_stored_kv",
+          "max_abs": 0.0049845684369511645,
+          "rms": 0.0005482364490582253,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        }
+      ],
+      "ideal_fp64_rope_errors": [
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.02392985329552655,
+          "rms": 0.0014274596349184226,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.04614269162428464,
+          "rms": 0.00170191266752577,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.02634260379561848,
+          "rms": 0.0011221487603895412,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.028672639188562776,
+          "rms": 0.0011937185923566122,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.021882973283101403,
+          "rms": 0.0009215109553696318,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.012917225564857304,
+          "rms": 0.0008663340813762063,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.027476575875433618,
+          "rms": 0.0011493746002391315,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.021021983337210837,
+          "rms": 0.0011575076219486377,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.023959021861941654,
+          "rms": 0.0009341226469273681,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.020259381582980573,
+          "rms": 0.0009914404963448815,
+          "within_original_bounds": false
+        }
+      ],
+      "query_positions": [
+        32856,
+        32857,
+        32858,
+        32859,
+        32860,
+        32861,
+        32862,
+        32863
+      ],
+      "context_slots": [
+        [
+          310742,
+          310743,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ]
+      ],
+      "limitations": "Actual eager model path. Existing graph q captures and synthetic graph/paged gates are separate; not bit-identical branch captures inside a production graph."
+    },
+    {
+      "round": 80,
+      "features_post_residual_exact": true,
+      "greedy_selector_walk_exact": true,
+      "checks": [
+        {
+          "kind": "feature_fc_selected_columns",
+          "max_abs": 0.16352878416364547,
+          "rms": 0.018894699081391325,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.input_layernorm",
+          "max_abs": 0.0015052598821521102,
+          "rms": 0.00010252591421094768,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.self_attn.q_norm",
+          "max_abs": 0.002959183743017846,
+          "rms": 0.00032605436552797794,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.self_attn.k_norm",
+          "max_abs": 0.0032460515902261733,
+          "rms": 0.0003339121253728691,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.0.post_attention_layernorm",
+          "max_abs": 0.0015139003227364611,
+          "rms": 1.8508686010676352e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.input_layernorm",
+          "max_abs": 0.0019902454484936882,
+          "rms": 3.237178585120558e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.self_attn.q_norm",
+          "max_abs": 0.003842581933406919,
+          "rms": 0.00027655258637063836,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.self_attn.k_norm",
+          "max_abs": 0.0038410762647327346,
+          "rms": 0.0003182315989845169,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.1.post_attention_layernorm",
+          "max_abs": 0.004862865131366689,
+          "rms": 4.271177116712249e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.input_layernorm",
+          "max_abs": 0.004594150693880472,
+          "rms": 6.077261355402729e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.self_attn.q_norm",
+          "max_abs": 0.0019487338573807023,
+          "rms": 0.0002733999456601114,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.self_attn.k_norm",
+          "max_abs": 0.0034803509096175134,
+          "rms": 0.00038015487049094295,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.2.post_attention_layernorm",
+          "max_abs": 0.006293869317479661,
+          "rms": 6.71746690195968e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.input_layernorm",
+          "max_abs": 0.00746211211537684,
+          "rms": 9.779760577818648e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.self_attn.q_norm",
+          "max_abs": 0.0032045944072809363,
+          "rms": 0.000277076343432795,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.self_attn.k_norm",
+          "max_abs": 0.0019462539497325793,
+          "rms": 0.0003325798398189074,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.3.post_attention_layernorm",
+          "max_abs": 0.003137231884309699,
+          "rms": 3.970169464801926e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.input_layernorm",
+          "max_abs": 0.007217330650849618,
+          "rms": 0.00010706256122141657,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.self_attn.q_norm",
+          "max_abs": 0.001945143610983635,
+          "rms": 0.00026795276456405596,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.self_attn.k_norm",
+          "max_abs": 0.002690506478057131,
+          "rms": 0.0003525080464639672,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:layers.4.post_attention_layernorm",
+          "max_abs": 0.002891982052192432,
+          "rms": 3.5617339467705466e-05,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "norm:norm",
+          "max_abs": 0.015596508317337054,
+          "rms": 0.0006932041740097531,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.0.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.1.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.2.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.3.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.attention_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "conv:layers.4.mlp_conv",
+          "max_abs": 0.0,
+          "rms": 0.0,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "context_norm_and_selected_kv_projection_columns",
+          "max_abs": 0.00683644475066103,
+          "rms": 0.0011770335223128504,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.004308802827290431,
+          "rms": 0.0004462705577853817,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.005912291817367077,
+          "rms": 0.00040011706466405175,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.0058116912841796875,
+          "rms": 0.000402106725439416,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.004308802827290431,
+          "rms": 0.0004462705577853817,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.0070417895913124084,
+          "rms": 0.00034458025785564557,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.003271818161010742,
+          "rms": 0.0003823483203082267,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.004308802827290431,
+          "rms": 0.0004462705577853817,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.0036548376083374023,
+          "rms": 0.0003262775376020909,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.0033196210861206055,
+          "rms": 0.00044674180530180366,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.004308802827290431,
+          "rms": 0.0004462705577853817,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.003599405288696289,
+          "rms": 0.0003317624835174179,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.0035249199718236923,
+          "rms": 0.0003882370211429191,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_cache_theta:layers.0.self_attn.rotary_emb",
+          "max_abs": 0.004308802827290431,
+          "rms": 0.0004462705577853817,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:q",
+          "max_abs": 0.003688812255859375,
+          "rms": 0.0003169767441264434,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "rope_kernel_same_stored_coefficients:layers.0.self_attn.rotary_emb:k",
+          "max_abs": 0.003420591354370117,
+          "rms": 0.00042028967213501097,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "selector:hidden_projection",
+          "max_abs": 0.002165768761187792,
+          "rms": 0.00047413345721035634,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "selector:unary_and_edges",
+          "max_abs": 0.015625,
+          "rms": 0.003927709252261121,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        },
+        {
+          "kind": "actual_paged_fp8_vs_dense_same_stored_kv",
+          "max_abs": 0.00732312155981063,
+          "rms": 0.0004880829658988015,
+          "rtol": 0.01,
+          "atol": 0.005,
+          "finite": true,
+          "allclose": true
+        }
+      ],
+      "ideal_fp64_rope_errors": [
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.027549194337803007,
+          "rms": 0.0015899150026251066,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.04990543368686451,
+          "rms": 0.0018637827371087226,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.03039525911044194,
+          "rms": 0.0010204611525381152,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.016326837390917337,
+          "rms": 0.0010421409489303377,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.022932489785923327,
+          "rms": 0.001008719617679689,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.011873366339037128,
+          "rms": 0.0009481066285042968,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.02758436552758914,
+          "rms": 0.0011165118870651801,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.022055982171159227,
+          "rms": 0.0012895115768200528,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "q",
+          "max_abs": 0.016913958289150433,
+          "rms": 0.0008355072338533297,
+          "within_original_bounds": false
+        },
+        {
+          "name": "layers.0.self_attn.rotary_emb",
+          "which": "k",
+          "max_abs": 0.02890986235959292,
+          "rms": 0.0011776574944695219,
+          "within_original_bounds": false
+        }
+      ],
+      "query_positions": [
+        32968,
+        32969,
+        32970,
+        32971,
+        32972,
+        32973,
+        32974,
+        32975
+      ],
+      "context_slots": [
+        [
+          310855,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ]
+      ],
+      "limitations": "Actual eager model path. Existing graph q captures and synthetic graph/paged gates are separate; not bit-identical branch captures inside a production graph."
+    }
+  ]
+}

@@ -31,6 +31,12 @@ def cpu(value):
 
 
 class WorkerExtension(Attestation, ProfileWorkerExtension):
+    def rejection_greedy_test(self):
+        from rejection_reference import gpu_greedy_test
+        result=gpu_greedy_test()
+        Path('/results/rejection-greedy-graph.json').write_text(json.dumps(result,indent=2)+'\n')
+        return result
+
     def rejection_statistical_test(self):
         from rejection_reference import gpu_test
         result = gpu_test()
@@ -83,7 +89,7 @@ class WorkerExtension(Attestation, ProfileWorkerExtension):
         sources = {}
         destination = Path('/results/runtime-sources')
         for name, module in list(sys.modules.items()):
-            if not name.startswith(('vllm.', 'exl3xpu.')):
+            if not name.startswith(('vllm.', 'exl3xpu.')) and name!='triton.language.random':
                 continue
             source = getattr(module, '__file__', None)
             if source is None or not source.endswith('.py'):
@@ -123,8 +129,11 @@ class WorkerExtension(Attestation, ProfileWorkerExtension):
 
     def install_round_capture(self, selected=(2, 8, 16, 32, 48, 64, 80, 96)):
         runner = self.model_runner
-        assert hasattr(runner, '_exl3_event_capture')
-        assert not runner._exl3_event_capture.enabled
+        from profile_capture import MODEL_RUNNER_SHA256
+        path = Path(inspect.getfile(inspect.unwrap(runner.execute_model.__func__)))
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == MODEL_RUNNER_SHA256
+        if hasattr(runner, '_exl3_event_capture'):
+            assert not runner._exl3_event_capture.enabled
         rejection = runner.rejection_sampler
         assert rejection.synthetic_conditional_rates is None
         assert not rejection.use_block_verification
@@ -155,6 +164,9 @@ class WorkerExtension(Attestation, ProfileWorkerExtension):
                         proposed_tokens=cpu(runner.speculator.draft_tokens[:1]),
                         round=state['rounds'], mask_token_id=248070,
                         draft_sample_method=runner.vllm_config.speculative_config.draft_sample_method,
+                        use_fp64_gumbel=runner.sampler.use_fp64_gumbel,
+                        rng=dict(acceptance='Philox4x32-10(seed, absolute position)',
+                            draft_noise_salt=1<<30,target_noise_salt=0),
                         scope='Actual q before rejection and transformed target logits after sampling parameters; tensor copies perturb this wave')
             value = original(*args, **kwargs)
             if record is not None:
@@ -166,6 +178,7 @@ class WorkerExtension(Attestation, ProfileWorkerExtension):
 
         rejection._verify = verify
         runner._dflash_round_capture = state
+        runner._dflash_original_verify = original
         return dict(installed=True, selected=list(selected),
                     limitations=['Graph-internal unary/edges/branches and paged K/V not yet captured; this is not the complete A1 gate'])
 
@@ -182,3 +195,10 @@ class WorkerExtension(Attestation, ProfileWorkerExtension):
                       selected=sorted(state['selected']), status='PARTIAL_A1_CAPTURE')
         Path('/results/round-capture/index.json').write_text(json.dumps(result, indent=2)+'\n')
         return result
+
+    def uninstall_round_capture(self):
+        runner = self.model_runner
+        assert not runner._dflash_round_capture['enabled']
+        runner.rejection_sampler._verify = runner._dflash_original_verify
+        del runner._dflash_original_verify
+        return dict(uninstalled=True, original_verification_call_restored=True)

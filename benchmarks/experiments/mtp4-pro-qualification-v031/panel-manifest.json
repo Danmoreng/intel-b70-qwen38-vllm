@@ -1,0 +1,32 @@
+{
+  "panel_raw_sha256": "7efb48e8800273a279fade466fd10a0c91a049dff4ba741a162b9316f84ff11c",
+  "panel_gzip_sha256": "93ec00d10f0f47e0d7d938ba65bd092a2136ebfd42cf27c7c8e6bb6d7bfc9260",
+  "source_prose_panel_sha256": "cfcbcc54c2d8aa6f50c1a577c394f21c8e38b083dc7e88f1d2161fe109ed20e4",
+  "windows": [
+    {
+      "name": "source-32k",
+      "domain": "code",
+      "concurrency": 1,
+      "weight": 0.35,
+      "context_tokens": 32722,
+      "source_prompt_sha256": "12e77a588e47c5aa865da72dbfc12830741604d06d1595777a5968f8c6c49d7d"
+    },
+    {
+      "name": "source-64k",
+      "domain": "code",
+      "concurrency": 1,
+      "weight": 0.35,
+      "context_tokens": 65491,
+      "source_prompt_sha256": "21fe97c7452297aaafce0e25023f7f7b1822788f3fba2d2936e6ef52c01d56f3"
+    },
+    {
+      "name": "prose-32768",
+      "domain": "prose",
+      "context_tokens": 32768,
+      "ids_sha256": "b67588b06a5f1cf21394860b10c073e00bee54716690c23e54c209ba550187ed",
+      "recipe": "Repeat eight frozen prose source windows, followed by a fixed continuation instruction",
+      "concurrency": 4,
+      "weight": 0.3
+    }
+  ]
+}

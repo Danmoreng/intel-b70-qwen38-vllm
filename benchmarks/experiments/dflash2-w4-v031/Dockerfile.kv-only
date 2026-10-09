@@ -1,0 +1,5 @@
+FROM sha256:ebbd9575577f65f37cfe517666a5c9abe18601b94d990fd8ad8e1e1416049c05
+COPY draft_w4.py /opt/exl3xpu/exl3xpu/draft_w4.py
+COPY patch_kv_only.py /opt/dflash-w4/patch_kv_only.py
+RUN python /opt/dflash-w4/patch_kv_only.py /opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_dflash.py
+ENV B70_DFLASH_KV_ONLY=1

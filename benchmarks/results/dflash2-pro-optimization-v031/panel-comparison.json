@@ -1,0 +1,1348 @@
+{
+  "status": "OBSERVATIONAL_MATCHED_FIXTURE_PANEL_NO_PROMOTION",
+  "weights": {
+    "source-32k": 0.35,
+    "source-64k": 0.35,
+    "prose-32768": 0.3
+  },
+  "candidates": [
+    {
+      "projection": "full-qkv",
+      "image": "sha256:ebbd9575577f65f37cfe517666a5c9abe18601b94d990fd8ad8e1e1416049c05",
+      "max_model_len": 192000,
+      "cells": [
+        {
+          "window": "source-32k",
+          "mode": "cold",
+          "concurrency": 1,
+          "context_tokens": 32722,
+          "mtp3_native_rates": [
+            58.057480887628664,
+            54.757591586603006
+          ],
+          "dflash_native_rate": 53.048632455891116,
+          "relative_native_gain_vs_mean": -0.059547074828887436,
+          "mtp3_client_rates": [
+            58.11755543555108,
+            54.813967831981095
+          ],
+          "dflash_client_rate": 53.100132366003294,
+          "client_gains_vs_each_control": [
+            -0.08633231442626343,
+            -0.03126640040420259
+          ],
+          "ttft_changes_vs_each_control": [
+            -0.04639196179079341,
+            -0.051877459877829546
+          ],
+          "e2e_changes_vs_each_control": [
+            0.0028719648873274384,
+            -0.021433243951877734
+          ],
+          "acceptance_length": 3.1533742331288344,
+          "preemptions": 0.0
+        },
+        {
+          "window": "source-32k",
+          "mode": "warm",
+          "concurrency": 1,
+          "context_tokens": 32722,
+          "mtp3_native_rates": [
+            58.009173318227894,
+            53.84708105432456
+          ],
+          "dflash_native_rate": 52.94786989502137,
+          "relative_native_gain_vs_mean": -0.05328727138187028,
+          "mtp3_client_rates": [
+            58.07023856700735,
+            53.89951105652414
+          ],
+          "dflash_client_rate": 52.99671907652246,
+          "client_gains_vs_each_control": [
+            -0.08736866966080303,
+            -0.016749539324297902
+          ],
+          "ttft_changes_vs_each_control": [
+            0.15131365757922133,
+            0.1486207861220583
+          ],
+          "e2e_changes_vs_each_control": [
+            0.10354318691359476,
+            0.03440809815453427
+          ],
+          "acceptance_length": 3.1533742331288344,
+          "preemptions": 0.0
+        },
+        {
+          "window": "source-64k",
+          "mode": "cold",
+          "concurrency": 1,
+          "context_tokens": 65491,
+          "mtp3_native_rates": [
+            47.389382490827465,
+            47.4995798989784
+          ],
+          "dflash_native_rate": 44.532112524362084,
+          "relative_native_gain_vs_mean": -0.06138477220515448,
+          "mtp3_client_rates": [
+            47.46723207500426,
+            47.579282897478535
+          ],
+          "dflash_client_rate": 44.59987926156306,
+          "client_gains_vs_each_control": [
+            -0.0604069942167772,
+            -0.06261976756428522
+          ],
+          "ttft_changes_vs_each_control": [
+            -0.045344218099725664,
+            -0.04519463325747608
+          ],
+          "e2e_changes_vs_each_control": [
+            -0.021628907742824,
+            -0.021009991759874835
+          ],
+          "acceptance_length": 3.0416666666666665,
+          "preemptions": 0.0
+        },
+        {
+          "window": "source-64k",
+          "mode": "warm",
+          "concurrency": 1,
+          "context_tokens": 65491,
+          "mtp3_native_rates": [
+            47.40208468617552,
+            47.489711754505684
+          ],
+          "dflash_native_rate": 43.22519760962575,
+          "relative_native_gain_vs_mean": -0.08895817697693809,
+          "mtp3_client_rates": [
+            47.47932459457069,
+            47.56933480055846
+          ],
+          "dflash_client_rate": 43.29285652803909,
+          "client_gains_vs_each_control": [
+            -0.08817454970727046,
+            -0.08989989644482399
+          ],
+          "ttft_changes_vs_each_control": [
+            -0.22547457730375975,
+            -0.22411570365650435
+          ],
+          "e2e_changes_vs_each_control": [
+            0.037341534254431874,
+            0.03928108985240897
+          ],
+          "acceptance_length": 2.953757225433526,
+          "preemptions": 0.0
+        },
+        {
+          "window": "prose-32768",
+          "mode": "cold",
+          "concurrency": 4,
+          "context_tokens": 32768,
+          "mtp3_native_rates": [
+            13.426406901895737,
+            13.446800231110359
+          ],
+          "dflash_native_rate": 13.605231667257982,
+          "relative_native_gain_vs_mean": 0.012549905184024102,
+          "mtp3_client_rates": [
+            31.964211240735864,
+            32.36625356820475
+          ],
+          "dflash_client_rate": 25.733949206458178,
+          "client_gains_vs_each_control": [
+            -0.19491367978252216,
+            -0.20491418161111696
+          ],
+          "ttft_changes_vs_each_control": [
+            0.06213108220129482,
+            0.06315602668310949
+          ],
+          "e2e_changes_vs_each_control": [
+            0.02645902569397096,
+            0.027721097722955612
+          ],
+          "acceptance_length": 2.5092024539877302,
+          "preemptions": 0.0
+        },
+        {
+          "window": "prose-32768",
+          "mode": "warm",
+          "concurrency": 4,
+          "context_tokens": 32768,
+          "mtp3_native_rates": [
+            29.97884781701617,
+            30.11455337308722
+          ],
+          "dflash_native_rate": 27.76073463152128,
+          "relative_native_gain_vs_mean": -0.07608043206936621,
+          "mtp3_client_rates": [
+            102.57100438479816,
+            99.4476483676997
+          ],
+          "dflash_client_rate": 59.12297256704683,
+          "client_gains_vs_each_control": [
+            -0.42358980569942306,
+            -0.4054864691375669
+          ],
+          "ttft_changes_vs_each_control": [
+            0.91163431043137,
+            0.9152176065934878
+          ],
+          "e2e_changes_vs_each_control": [
+            0.24372412800096788,
+            0.24874622882497843
+          ],
+          "acceptance_length": 2.6854521625163827,
+          "preemptions": 0.0
+        }
+      ],
+      "weighted_relative_gains": {
+        "cold": -0.038561174906707435,
+        "warm": -0.07261003654639278
+      },
+      "combined_equal_cold_warm_gain": -0.05558560572655011,
+      "observed_c4_guards_clear_against_both_controls": false,
+      "warrants_additional_paired_qualification": false,
+      "promotion_qualified": false,
+      "restoration": {
+        "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "models_endpoint_healthy": true,
+        "verified_unix": 1791588719.6476448
+      },
+      "admission_evidence": {
+        "pool_blocks": 731,
+        "pool_stride_bytes": 13631488,
+        "actual_allocated_pool_bytes": 9964617728,
+        "bounded_group_reservation_blocks_per_request": 124,
+        "full_attention_groups": 4,
+        "reservation_model": [
+          {
+            "full_attention_tokens": 32768,
+            "blocks_per_request": 204,
+            "four_request_blocks": 816,
+            "available_blocks": 731,
+            "four_requests_fit_model": false
+          },
+          {
+            "full_attention_tokens": 33280,
+            "blocks_per_request": 204,
+            "four_request_blocks": 816,
+            "available_blocks": 731,
+            "four_requests_fit_model": false
+          },
+          {
+            "full_attention_tokens": 33288,
+            "blocks_per_request": 208,
+            "four_request_blocks": 832,
+            "available_blocks": 731,
+            "four_requests_fit_model": false
+          }
+        ],
+        "periodic_scheduler_observations": [
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 23.3
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 29.0
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 25.5
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 31.0
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 25.5
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 32.1
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.6
+          },
+          {
+            "running": 1,
+            "waiting": 3,
+            "kv_usage_percent": 24.4
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 42.5
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 51.2
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 71.5
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 78.1
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.0
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 72.6
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 78.4
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 3,
+            "kv_usage_percent": 25.5
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 43.6
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 52.3
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 72.6
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 78.4
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.0
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 68.2
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 77.0
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 53.7
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.0
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 76.4
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          }
+        ],
+        "largest_periodically_observed_running": 3,
+        "observed_running3_waiting1": true,
+        "worker_log": {
+          "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/worker.log",
+          "sha256": "b55f4bee9f415823386b9e02619a3418713e93c2373782e8329fdc2870c9c4a3"
+        },
+        "limits": [
+          "Periodic logs sample the scheduler; absence of Running4 is not proof it never occurred.",
+          "Reservation model uses actual per-request bounded-group maxima and hypothetical full-attention token counts; it is not an allocator trace or a measured maximum concurrency.",
+          "Configured max_num_seqs16 is preserved. Available KV/state capacity still constrains simultaneous long requests."
+        ]
+      }
+    },
+    {
+      "projection": "kv-only",
+      "image": "sha256:c6429913722c37b0091739698086fea23721de980bd549e1ab6d7d4f0bf46c74",
+      "max_model_len": 192000,
+      "cells": [
+        {
+          "window": "source-32k",
+          "mode": "cold",
+          "concurrency": 1,
+          "context_tokens": 32722,
+          "mtp3_native_rates": [
+            58.057480887628664,
+            54.757591586603006
+          ],
+          "dflash_native_rate": 52.51789170539759,
+          "relative_native_gain_vs_mean": -0.06895611457603223,
+          "mtp3_client_rates": [
+            58.11755543555108,
+            54.813967831981095
+          ],
+          "dflash_client_rate": 52.56823724270915,
+          "client_gains_vs_each_control": [
+            -0.09548437044974811,
+            -0.0409700424562528
+          ],
+          "ttft_changes_vs_each_control": [
+            -0.05040513051833284,
+            -0.055867543408416154
+          ],
+          "e2e_changes_vs_each_control": [
+            0.0041346052559332325,
+            -0.020201204436543496
+          ],
+          "acceptance_length": 3.1272727272727274,
+          "preemptions": 0.0
+        },
+        {
+          "window": "source-32k",
+          "mode": "warm",
+          "concurrency": 1,
+          "context_tokens": 32722,
+          "mtp3_native_rates": [
+            58.009173318227894,
+            53.84708105432456
+          ],
+          "dflash_native_rate": 52.436463477104525,
+          "relative_native_gain_vs_mean": -0.06243126463974458,
+          "mtp3_client_rates": [
+            58.07023856700735,
+            53.89951105652414
+          ],
+          "dflash_client_rate": 52.483524050440366,
+          "client_gains_vs_each_control": [
+            -0.09620615748152073,
+            -0.026270869221778903
+          ],
+          "ttft_changes_vs_each_control": [
+            0.1483907518365244,
+            0.14570471692594
+          ],
+          "e2e_changes_vs_each_control": [
+            0.11234113296180226,
+            0.04265486796591356
+          ],
+          "acceptance_length": 3.1272727272727274,
+          "preemptions": 0.0
+        },
+        {
+          "window": "source-64k",
+          "mode": "cold",
+          "concurrency": 1,
+          "context_tokens": 65491,
+          "mtp3_native_rates": [
+            47.389382490827465,
+            47.4995798989784
+          ],
+          "dflash_native_rate": 49.295653325202885,
+          "relative_native_gain_vs_mean": 0.03901764933829277,
+          "mtp3_client_rates": [
+            47.46723207500426,
+            47.579282897478535
+          ],
+          "dflash_client_rate": 49.37940132687396,
+          "client_gains_vs_each_control": [
+            0.04028398472546768,
+            0.03783408071269645
+          ],
+          "ttft_changes_vs_each_control": [
+            -0.049808941718905375,
+            -0.04966005645339422
+          ],
+          "e2e_changes_vs_each_control": [
+            -0.04741114313525652,
+            -0.04680853695304332
+          ],
+          "acceptance_length": 3.375,
+          "preemptions": 0.0
+        },
+        {
+          "window": "source-64k",
+          "mode": "warm",
+          "concurrency": 1,
+          "context_tokens": 65491,
+          "mtp3_native_rates": [
+            47.40208468617552,
+            47.489711754505684
+          ],
+          "dflash_native_rate": 41.57493867667163,
+          "relative_native_gain_vs_mean": -0.12374008636961642,
+          "mtp3_client_rates": [
+            47.47932459457069,
+            47.56933480055846
+          ],
+          "dflash_client_rate": 41.63689307979401,
+          "client_gains_vs_each_control": [
+            -0.12305211931015492,
+            -0.12471147106927394
+          ],
+          "ttft_changes_vs_each_control": [
+            -0.24000069916819955,
+            -0.23866731101647465
+          ],
+          "e2e_changes_vs_each_control": [
+            0.07024629894294288,
+            0.07224737778899626
+          ],
+          "acceptance_length": 2.85,
+          "preemptions": 0.0
+        },
+        {
+          "window": "prose-32768",
+          "mode": "cold",
+          "concurrency": 4,
+          "context_tokens": 32768,
+          "mtp3_native_rates": [
+            13.426406901895737,
+            13.446800231110359
+          ],
+          "dflash_native_rate": 14.042656589320089,
+          "relative_native_gain_vs_mean": 0.04510462929247305,
+          "mtp3_client_rates": [
+            31.964211240735864,
+            32.36625356820475
+          ],
+          "dflash_client_rate": 25.672749958555517,
+          "client_gains_vs_each_control": [
+            -0.19682829758559395,
+            -0.20680501669877072
+          ],
+          "ttft_changes_vs_each_control": [
+            0.055237283404974136,
+            0.056255575448918016
+          ],
+          "e2e_changes_vs_each_control": [
+            0.008263127732840658,
+            0.009502827184562967
+          ],
+          "acceptance_length": 2.5972045743329097,
+          "preemptions": 0.0
+        },
+        {
+          "window": "prose-32768",
+          "mode": "warm",
+          "concurrency": 4,
+          "context_tokens": 32768,
+          "mtp3_native_rates": [
+            29.97884781701617,
+            30.11455337308722
+          ],
+          "dflash_native_rate": 26.309927605422658,
+          "relative_native_gain_vs_mean": -0.12436550155674786,
+          "mtp3_client_rates": [
+            102.57100438479816,
+            99.4476483676997
+          ],
+          "dflash_client_rate": 58.60224927316797,
+          "client_gains_vs_each_control": [
+            -0.42866651618892315,
+            -0.41072262406355897
+          ],
+          "ttft_changes_vs_each_control": [
+            1.1095151987024665,
+            1.113469416135263
+          ],
+          "e2e_changes_vs_each_control": [
+            0.3305449699020815,
+            0.3359176492923803
+          ],
+          "acceptance_length": 2.563204005006258,
+          "preemptions": 0.0
+        }
+      ],
+      "weighted_relative_gains": {
+        "cold": 0.0030529259545331033,
+        "warm": -0.10246962332030071
+      },
+      "combined_equal_cold_warm_gain": -0.049708348682883804,
+      "observed_c4_guards_clear_against_both_controls": false,
+      "warrants_additional_paired_qualification": false,
+      "promotion_qualified": false,
+      "restoration": {
+        "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "models_endpoint_healthy": true,
+        "verified_unix": 1791589220.4189239
+      },
+      "admission_evidence": {
+        "pool_blocks": 729,
+        "pool_stride_bytes": 13631488,
+        "actual_allocated_pool_bytes": 9937354752,
+        "bounded_group_reservation_blocks_per_request": 124,
+        "full_attention_groups": 4,
+        "reservation_model": [
+          {
+            "full_attention_tokens": 32768,
+            "blocks_per_request": 204,
+            "four_request_blocks": 816,
+            "available_blocks": 729,
+            "four_requests_fit_model": false
+          },
+          {
+            "full_attention_tokens": 33280,
+            "blocks_per_request": 204,
+            "four_request_blocks": 816,
+            "available_blocks": 729,
+            "four_requests_fit_model": false
+          },
+          {
+            "full_attention_tokens": 33288,
+            "blocks_per_request": 208,
+            "four_request_blocks": 832,
+            "available_blocks": 729,
+            "four_requests_fit_model": false
+          }
+        ],
+        "periodic_scheduler_observations": [
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 22.3
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 28.8
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.5
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 31.0
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 26.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 32.1
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.7
+          },
+          {
+            "running": 0,
+            "waiting": 0,
+            "kv_usage_percent": 0.0
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.7
+          },
+          {
+            "running": 1,
+            "waiting": 3,
+            "kv_usage_percent": 25.5
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 43.7
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 52.5
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 72.8
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 78.6
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.2
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 72.8
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 78.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 3,
+            "kv_usage_percent": 24.5
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 42.6
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 51.4
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 71.7
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 78.3
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.2
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 65.1
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 78.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 3,
+            "kv_usage_percent": 26.9
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.2
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.2
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          }
+        ],
+        "largest_periodically_observed_running": 3,
+        "observed_running3_waiting1": true,
+        "worker_log": {
+          "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/worker.log",
+          "sha256": "3e26cae3c146ba0f3bd3a329c8d82df573a464bc4a1824b9d5b86796ef283aa6"
+        },
+        "limits": [
+          "Periodic logs sample the scheduler; absence of Running4 is not proof it never occurred.",
+          "Reservation model uses actual per-request bounded-group maxima and hypothetical full-attention token counts; it is not an allocator trace or a measured maximum concurrency.",
+          "Configured max_num_seqs16 is preserved. Available KV/state capacity still constrains simultaneous long requests."
+        ]
+      }
+    }
+  ],
+  "raw_manifest": [
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/campaign.json",
+      "sha256": "c2eb8140b50e5b402caab0bfba25de057a868c0d3ce66083193e883ce1cd65de"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-32k-c1-warmup/result.json",
+      "sha256": "9b60a47cf9e1ec2c225bba545ee0c167f1bf28495c5102c99de8fa1c97ef089e"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-32k-c1-warmup/metrics-before.prom",
+      "sha256": "d033b0ac674e690f4a6cfd3b53e49850a40bca0122ce51b46227c3b404094e9b"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-32k-c1-warmup/metrics-after.prom",
+      "sha256": "728f7fe662edc0ba61f0423834f81d048c042c187562c2752ba0e533bc4247f0"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-32k-c1-cold/result.json",
+      "sha256": "78d8cebde70be2b3423bbcc4d3d1e82afd423bd519797d00fd93349f14e11c6d"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-32k-c1-cold/metrics-before.prom",
+      "sha256": "98c4bf8f630317fa29d1855031737a8388ae13e711887b5c23484c8cf72b2297"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-32k-c1-cold/metrics-after.prom",
+      "sha256": "180149e2b39719c9f7a69e4cbbc863dd69b00fe8da404e3b3b828e54cf75594a"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-32k-c1-warm/result.json",
+      "sha256": "f1b7141cc3baf14849224a9fb7621b7d58b8769e0657e7ded23dde499a638607"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-32k-c1-warm/metrics-before.prom",
+      "sha256": "180149e2b39719c9f7a69e4cbbc863dd69b00fe8da404e3b3b828e54cf75594a"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-32k-c1-warm/metrics-after.prom",
+      "sha256": "653eded96d2df75e7ce7ac2ef0f4433f7ebe75dff016b95196e05a6cf8a36846"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-64k-c1-warmup/result.json",
+      "sha256": "4941ae51de7fccbb8cf4b01d3faa13668cef6766361b274aa0ff7eafd70ccd63"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-64k-c1-warmup/metrics-before.prom",
+      "sha256": "7e91d5d785a1d8046905b1fbfac2b6d000a825b3ceb686e1528a4ee8dea31441"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-64k-c1-warmup/metrics-after.prom",
+      "sha256": "f0b5797fca9e95027bf40ba911ed7a56d0e5c917026cf8be0ca096019579f081"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-64k-c1-cold/result.json",
+      "sha256": "372ff150e81bdebfeeb2e15b103a34331097999ea91ed8a9ccd92354f32a8bd1"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-64k-c1-cold/metrics-before.prom",
+      "sha256": "35b0a5e315e95b25cfffcd6b76ae9b3c628baaae69cf9350a6c8999ce601bc50"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-64k-c1-cold/metrics-after.prom",
+      "sha256": "ed670305796ba42116640af2239dedb57fc666587d872a8db3ff662044120695"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-64k-c1-warm/result.json",
+      "sha256": "02513994251460d763d58193b7431801177a3a25ed5f84e31ae42990cf8f51a4"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-64k-c1-warm/metrics-before.prom",
+      "sha256": "6a18095555acb3bfdccec3cabbc11ba3cec96290f626e77ee177bb52e02653d2"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/source-64k-c1-warm/metrics-after.prom",
+      "sha256": "dfbb27d92daf386c5e74733cb98aef2c5656e5ed6b5bcc9b35ccd6699ab21f81"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/prose-32768-c4-warmup/result.json",
+      "sha256": "38eeb1ed287ff15763564708191fc06fc096c007e277b39ab07831f0cd3317d5"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/prose-32768-c4-warmup/metrics-before.prom",
+      "sha256": "b4f8eee0d0ce9ecffc74b48bb1c64c175b917c2028d04dd1c9988a812b6bbc71"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/prose-32768-c4-warmup/metrics-after.prom",
+      "sha256": "c79b8745be5e59a44422b251027f10c990286d73ce2aea1f693d4a87515a3f90"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/prose-32768-c4-cold/result.json",
+      "sha256": "bb5ae6bbc08baa1db450eb843371b03ae7861550921b4d4f97212f27cda0bdb2"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/prose-32768-c4-cold/metrics-before.prom",
+      "sha256": "bf4a542c7e75b6142ff2bb0a3484c2a701c512f349702ccf3ab670c347b85292"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/prose-32768-c4-cold/metrics-after.prom",
+      "sha256": "c5062c0bb8c188413a333d41ddbf035463f03182d7b39333cef65b3025b2c227"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/prose-32768-c4-warm/result.json",
+      "sha256": "95b8d3cca918a55f2fc2b31497dc5ec8764e468884a84dfa7b900d5d227a3524"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/prose-32768-c4-warm/metrics-before.prom",
+      "sha256": "bb6845d001ac7e35b20849d492ac60d571c4ea5a03570a7a0632b9f9448a3c02"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-0-mtp3/prose-32768-c4-warm/metrics-after.prom",
+      "sha256": "41f3607b3ac631622ebde7cdd9eea25c588291e7c1b0603f77ff02db8f25f776"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-32k-c1-warmup/result.json",
+      "sha256": "2e7e4f4f08f66b051bd4ed6e62d26430ebbba82d2a20b4ab021168278b943beb"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-32k-c1-warmup/metrics-before.prom",
+      "sha256": "06d524a822ab255fb7c388f259de52ec35eb828dcfd220f0d6ab07932f3059c6"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-32k-c1-warmup/metrics-after.prom",
+      "sha256": "b4295c19c4d91b79c0be51a9af3dec46b9264077833c7e8f20d5fee2055ca436"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-32k-c1-cold/result.json",
+      "sha256": "721437affbcaa14625202b997a4dce971eb8ea41fb1bdfa04007c9c28b502a84"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-32k-c1-cold/metrics-before.prom",
+      "sha256": "c0f14a0c44fb42b9c83e6227f422a0d4aaa67aae75a4a5acc719324d4118a0c5"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-32k-c1-cold/metrics-after.prom",
+      "sha256": "5ed3bad7a1f479842128780fba9fcd74856bee9bef28afff30a047bf46f8a549"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-32k-c1-warm/result.json",
+      "sha256": "06f718544e44fc83b9705bb44c138dc7ab668fad49063ac0146f86f1f9fc9d87"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-32k-c1-warm/metrics-before.prom",
+      "sha256": "dc423edbf5d6961cbfbe4276f0b0fdf23564463f87eefa7d166638e2a977b988"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-32k-c1-warm/metrics-after.prom",
+      "sha256": "2ed3de541de62a40b28601fec5dd6e28e09693b537478ae6eb48e8fafe693025"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-64k-c1-warmup/result.json",
+      "sha256": "e7b6634424515d1ca79da05c91495feb5349a87798b7b350d8e649cb4201822a"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-64k-c1-warmup/metrics-before.prom",
+      "sha256": "ebd447805913f8afab7ec6aa8a4703061bbe99469ad4464c92f61245b9e0b4f1"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-64k-c1-warmup/metrics-after.prom",
+      "sha256": "842c3fb6d71472a272a7a3b1de01f330030acb8ccc9fff57852f5e91e8931438"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-64k-c1-cold/result.json",
+      "sha256": "7676008d1b9cbd0e0afa9ec7381383cd9a832ff7ccd2e45cb59540286df60b45"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-64k-c1-cold/metrics-before.prom",
+      "sha256": "7e029a4b64976b6e88552c29ac8262758daa7a105943200f3a93632b5d83666a"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-64k-c1-cold/metrics-after.prom",
+      "sha256": "eb3231a7956449a6536295f9917b1edfe0b85869aa54de79f4453dcb6cf58ecf"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-64k-c1-warm/result.json",
+      "sha256": "7176d615cf1324c3104342dc59de75706dfd2df20348c69f965e6d8de8bd72a5"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-64k-c1-warm/metrics-before.prom",
+      "sha256": "eb3231a7956449a6536295f9917b1edfe0b85869aa54de79f4453dcb6cf58ecf"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/source-64k-c1-warm/metrics-after.prom",
+      "sha256": "81c59b7ba38855785330e1c46eec81c114c28853e35117a3db822b296da5383f"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/prose-32768-c4-warmup/result.json",
+      "sha256": "5eb79e64ad54ad1d736cd6c4719cc34c8a192670bb28c0e0ed2c534a9f81fc65"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/prose-32768-c4-warmup/metrics-before.prom",
+      "sha256": "fe99897fc234e73dd314451485aa7df65358669d234e4a739a1c0eb5d12ec4d7"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/prose-32768-c4-warmup/metrics-after.prom",
+      "sha256": "87edd44bedaafeb7bafdd76750bf6537c735e6fd7c261bb544b579bdd09f12ac"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/prose-32768-c4-cold/result.json",
+      "sha256": "70e939a2c7d83c7749004a5bcf4a6c69fa18456a2f1fbdab291eaa2cdcba93eb"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/prose-32768-c4-cold/metrics-before.prom",
+      "sha256": "fd2ab3f7c962346e469a772f71b0130e797a3ff37f9d08f279a155711029ab4e"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/prose-32768-c4-cold/metrics-after.prom",
+      "sha256": "c002e899da06d414a3625ce7aab68e566b55d466ed4978d742ff338a24469915"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/prose-32768-c4-warm/result.json",
+      "sha256": "5e12b65d0979552b92a9225b176fb8f605fdec1b6197ed68696b92d460fe9562"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/prose-32768-c4-warm/metrics-before.prom",
+      "sha256": "c002e899da06d414a3625ce7aab68e566b55d466ed4978d742ff338a24469915"
+    },
+    {
+      "path": "benchmark-results/mtp4-pro-qualification-v031-abba/arm-3-mtp3/prose-32768-c4-warm/metrics-after.prom",
+      "sha256": "6880032ce68e2ca95ebef63671cc4b3d147a72156c9372679a070182abc0f805"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/campaign.json",
+      "sha256": "737412f0259967d5a43191b6a6193d169dafbc83a76ca687a62c2cb2ccaaf05b"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-32k-c1-warmup/result.json",
+      "sha256": "e6fc8dfb0205ef375f00ab52920e3336ff8d4c5bdbf8796461e4748b97a0db2e"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-32k-c1-warmup/metrics-before.prom",
+      "sha256": "4b8df1b8e045c6b92b27668c81db6c3931082622b14d9f46cde25992b86b7c72"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-32k-c1-warmup/metrics-after.prom",
+      "sha256": "96af96d0de41948745b0ea08be6d4f3f320dd3fc7c141568a668e7465a31048b"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-32k-c1-cold/result.json",
+      "sha256": "5f16a1e82a239241ca772579c507b8bc86d6205677aa5a3b958409b4e3e89257"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-32k-c1-cold/metrics-before.prom",
+      "sha256": "ecd320ce54b674785d0593afc073855568ef3ead2e14698366f3a696dc41b00a"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-32k-c1-cold/metrics-after.prom",
+      "sha256": "e7273d847997fd0ce79208f0bb6d0aa8e52a6f22503176d6692cebbf03fefa8a"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-32k-c1-warm/result.json",
+      "sha256": "18dce485532d012ceaea05b8d767f8da6d9449e96cc259360d0b38e27043afbf"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-32k-c1-warm/metrics-before.prom",
+      "sha256": "e7273d847997fd0ce79208f0bb6d0aa8e52a6f22503176d6692cebbf03fefa8a"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-32k-c1-warm/metrics-after.prom",
+      "sha256": "9001fc637e4cd7dd7d54ceb3d9d26438f742ef325f20c5871a51fbfae547fdef"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-64k-c1-warmup/result.json",
+      "sha256": "27213a3469a598a8abb02f0f0376949ad2f78df1e425d59379a06e07c17c7f42"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-64k-c1-warmup/metrics-before.prom",
+      "sha256": "9001fc637e4cd7dd7d54ceb3d9d26438f742ef325f20c5871a51fbfae547fdef"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-64k-c1-warmup/metrics-after.prom",
+      "sha256": "6427f1eaf5a9d1fa88b2575b065e6336bb0460c3b655912234d8221c1145950b"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-64k-c1-cold/result.json",
+      "sha256": "996122715904d3ef315428d6b036749cc835234bb1726ce7d25a059bdfa5b843"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-64k-c1-cold/metrics-before.prom",
+      "sha256": "210d6aa64b5660ad0be40808af8a9fc986fc628eae1ed4bfe3e6d459ac920586"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-64k-c1-cold/metrics-after.prom",
+      "sha256": "77cba2bc1b609b6982f42d6d1c1ecad2d6aed43705c4a540d0102c294f9520c4"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-64k-c1-warm/result.json",
+      "sha256": "15a49e32dbbcbd18f3467d5fa471d89c08904fbd1afdef7d8dfcdab664d2b57e"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-64k-c1-warm/metrics-before.prom",
+      "sha256": "b6701f878733c3bdb89fbe8fe8204b9d7f44fdc0103fde1e706db4e594f91e34"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/source-64k-c1-warm/metrics-after.prom",
+      "sha256": "64da5bdd01945e99c57435cb5636c3d780e1b059c7b22637e0e4638e80a81240"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/prose-32768-c4-warmup/result.json",
+      "sha256": "aaede88add04de41586e210e991b31c452ecaafc7270bb1860ee8d89d0dc4dae"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/prose-32768-c4-warmup/metrics-before.prom",
+      "sha256": "27783ffda596458ec3f7a76301eacf8a0954bf78b909e0b27cf9202821bbf2ea"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/prose-32768-c4-warmup/metrics-after.prom",
+      "sha256": "c0d73cd3d652a4cae59dd7df215f8cfe3345052aa859c5833adc55c1651df16d"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/prose-32768-c4-cold/result.json",
+      "sha256": "eae7a6915617b738cdd509cd030f854701b38f50693485f8d09e53c777ca2be7"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/prose-32768-c4-cold/metrics-before.prom",
+      "sha256": "ffd0121cf421c1a018202f2141e36c8a415ad8d5b6e1af30cf301c5dcd6f09dc"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/prose-32768-c4-cold/metrics-after.prom",
+      "sha256": "4321aa8a22e6a1646b6cdb02d66fcf63bd85249ff0f8151f543f25b8db39ec61"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/prose-32768-c4-warm/result.json",
+      "sha256": "2b37bda1cef7d8761c17ee40dcdac63de51c247e53cfbe45a0e4d7f2f6fc4460"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/prose-32768-c4-warm/metrics-before.prom",
+      "sha256": "4a8a4d1aaf6a15ac18cec8419aa6d883258ce96b61b6660492311c832c027d42"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/prose-32768-c4-warm/metrics-after.prom",
+      "sha256": "c0dbbf11b14082cc621bcc66d9defce1ce49f335c36fdfb8060e5a79dd73d060"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/inspect_dflash_setup.json",
+      "sha256": "e719117ebe8c824562bfda1c5f2162a62295f4355517ddcd7c94f5a38ff2d4e6"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/w4_numerical_probe.json",
+      "sha256": "72a57de1d49df76e771276d4683224cd4360319a591f8d3ad3739399506561ca"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/worker.log",
+      "sha256": "b55f4bee9f415823386b9e02619a3418713e93c2373782e8329fdc2870c9c4a3"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/campaign.json",
+      "sha256": "933ab4bc3483582cdf399d627e21d25f54384f3adb6b58459e154400a68d9ff2"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-32k-c1-warmup/result.json",
+      "sha256": "202e68c5d708c4a2055860738cee987671d2ea9c4b2d3277544a250db1279538"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-32k-c1-warmup/metrics-before.prom",
+      "sha256": "d0dc87a13467f164fd57c343794ccd006791ef90753c5e0455d3493c9435c369"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-32k-c1-warmup/metrics-after.prom",
+      "sha256": "8c4ce785328ac9abab25126213fe3008ec937972b4ed5c961a1feaba53b5e312"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-32k-c1-cold/result.json",
+      "sha256": "91b1cd82b2f1af560df76395cd6107328245cf43544266a45276ce7ddee4469c"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-32k-c1-cold/metrics-before.prom",
+      "sha256": "fded3735edf4d9df383bcbbbc0f46c31107e3ae3e04fea4d3bf6b73b50db8e5a"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-32k-c1-cold/metrics-after.prom",
+      "sha256": "529fe41fb69e700b3b8db0e2cd6c6fc652ef76df080b44745130163ac2fb458d"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-32k-c1-warm/result.json",
+      "sha256": "907eb33e76349a78d4b0f670f5787a9fe08d3e074781646cbaac36e97cd92f7f"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-32k-c1-warm/metrics-before.prom",
+      "sha256": "529fe41fb69e700b3b8db0e2cd6c6fc652ef76df080b44745130163ac2fb458d"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-32k-c1-warm/metrics-after.prom",
+      "sha256": "e76c806e971fc5e76e2ba8ae9b9d1ac8f16ee099134a8254665bfd3ec38f722f"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-64k-c1-warmup/result.json",
+      "sha256": "68d516d89c3a43d7117eb0cd4a74f7f15fb6d92350799e672d711eea3dba1a2c"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-64k-c1-warmup/metrics-before.prom",
+      "sha256": "55f6a4d7142c1b4302f85e2a7eeed66f172455f4e9efd5ca59bbbe1a1e1ad807"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-64k-c1-warmup/metrics-after.prom",
+      "sha256": "1b03d200f0d788676f7a7ddb9554e20a2bac7589ba3d22efddcd8dd832cfdffd"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-64k-c1-cold/result.json",
+      "sha256": "e9208e96e3543f241268787798e916063e0e0a98badf59587669462c5449e5b1"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-64k-c1-cold/metrics-before.prom",
+      "sha256": "3d0e015a6ac51a1f019341625f0cab95b8e2d11a7dfe5bae8f8b9cfd21f112c8"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-64k-c1-cold/metrics-after.prom",
+      "sha256": "c435fc0e8eab883012092fcaafd9e187faeb8757a0a96100552864e285a18984"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-64k-c1-warm/result.json",
+      "sha256": "e29cfcc5018abc15289b8c7719c9d11b1a9ee53db6a0bd73dc9902250d241921"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-64k-c1-warm/metrics-before.prom",
+      "sha256": "de5f08d13636dc467a5747b8b7fabd4b50d612772c6baed22dd0d099c34b1e15"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/source-64k-c1-warm/metrics-after.prom",
+      "sha256": "54b1f950bb4d08a27c4cf7934833082edbf4b95a8cc80b8e1541686f23ab595a"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/prose-32768-c4-warmup/result.json",
+      "sha256": "b17b993ca2f845609e69ebebd5aa697d758868be0128e800d186a01b02a2930c"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/prose-32768-c4-warmup/metrics-before.prom",
+      "sha256": "86255460785ad752579562f6931abca2151c9275811a2933f12dc569626100d2"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/prose-32768-c4-warmup/metrics-after.prom",
+      "sha256": "afde322ea0b53644ebd3c32cfc67fe785da2789766aa3b1ea018ef52bc1d74cd"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/prose-32768-c4-cold/result.json",
+      "sha256": "23bbffe8ab76eea0b4ae769dcfb53bfd977cd7acd539ef0a962d93e26d055add"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/prose-32768-c4-cold/metrics-before.prom",
+      "sha256": "5cdb04cb61d84c1877d08d4f6eb527a1db0557a696032e20f25180757b200dd3"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/prose-32768-c4-cold/metrics-after.prom",
+      "sha256": "8b9cfa3ab572949155eb0c77475c1e95d2ea3a8f56e51d4ea1d1a6bc873d3d56"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/prose-32768-c4-warm/result.json",
+      "sha256": "49f009a66647bc562cfde55f500a362e8d816202488ecaf8661a7ce44756b7c3"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/prose-32768-c4-warm/metrics-before.prom",
+      "sha256": "e57ab9f4020060fa2abffcae0999a16c0c84284832e8ba71b675aa14de2a8c60"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/prose-32768-c4-warm/metrics-after.prom",
+      "sha256": "ea1c5abe55b05df258621293cf681e1cb049038ad06803c1af4406c48c4d69bd"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/inspect_dflash_setup.json",
+      "sha256": "241f273425521812140836e3139b2a0735144d4d883b45cabcb99ad9669ad61e"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/w4_numerical_probe.json",
+      "sha256": "411e69a96cf9512908f01ce6ed2815240094bd0d0fd3ceb527ef24453b6f31a2"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/w4_prefill_kv_probe.json",
+      "sha256": "8308279088146f066619084b407b5d94155950a4197554c281d63decf1a319c7"
+    },
+    {
+      "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/worker.log",
+      "sha256": "3e26cae3c146ba0f3bd3a329c8d82df573a464bc4a1824b9d5b86796ef283aa6"
+    }
+  ],
+  "analysis_source_sha256": "5b8794267c2bc6ba00ae4da02739aa2159215252f675982497a6e5f2ee865a6d",
+  "limits": [
+    "One DFlash arm per projection, against two earlier MTP3 arms: different time and ordering, no paired confidence interval.",
+    "Native C4 request decode seconds include overlap and scheduling while other requests prefill; client aggregate decode and latency are separate guards.",
+    "512-output panel rates exclude the first output per request. Initial1024-token screens are a separate trajectory and measurement.",
+    "192K capacity is established by separate actual input-plus-output and context-end receipts, not by these32K/64K cells.",
+    "Four submitted requests do not imply four simultaneous decode requests. Scheduler observations and a separate reservation model document DFlash KV/state admission pressure.",
+    "Stochastic generated prefixes can differ at identical seeds; these comparisons do not establish target-distribution correctness."
+  ]
+}

@@ -202,6 +202,77 @@ The longest-context row is one capacity and throughput observation. The
 
 <!-- END CURRENT SERVING MEASUREMENTS -->
 
+## Pro follow-up: MTP4 and quantized DFlash experiments
+
+These experiments keep FP16 target/draft, FP8 KV, configured max_num_seqs=16
+and 180 W. They do not change the qualified MTP3 production profile above. The
+[Pro work order](benchmarks/experiments/dflash2-pro-diagnostics-v031/PRO_ASSIGNMENT.md),
+[initial diagnostic findings](benchmarks/results/dflash2-pro-diagnostics-v031/DECISION_A.md)
+and [completed decision](benchmarks/results/dflash2-pro-optimization-v031/DECISION.md)
+record scope, source/image identities, independent references and preserved failures.
+
+A bounded MTP3/MTP4 ABBA study uses three frozen 512-output cells: 32K C1, 64K C1
+and 32K prose C4, weighted 35/35/30 before measurement. Cold and warm cache states
+are checked separately. MTP4 gains +0.11% cold and −1.16% warm, or −0.53% with equal
+cold/warm weight. Its descriptive paired 95% interval is [−3.57%, +2.52%] from
+only two AB/BA blocks. Warm C4 aggregate client decode regresses 17–19%;
+mean request end-to-end latency rises 20–22%. MTP3 remains the production choice.
+[All waves and paired analysis](benchmarks/results/dflash2-pro-optimization-v031/mtp4-bounded/analysis.json)
+retain absolute rate corrections and the original raw source hashes.
+
+The draft-only W4/G128 integration uses oneDNN W4A16, while the target remains
+EXL3. Its logical draft parameters total approximately 1.193 GiB; the full target
+head and embeddings are shared aliases. Dense draft activations, norms,
+convolution projections and selector remain FP16. Source BF16 small tensors
+are converted offline once, with no BF16/FP16 serving bridge.
+
+An isolated cache grouping change from five to four layers per shared-memory
+group reduces 192K padding from approximately 1.530 to 0.076 GiB. This is unrelated
+to draft-token count: the draft still uses an eight-token block and seven
+proposals. Required 192K pool memory falls 8.918 → 7.465 GiB. Both the full-QKV and
+separate packed K/V-only candidates passed actual 190,976 input + 1,024 output
+tokens, with no preemption or unexpected recomputation, plus near-limit stochastic
+sampling and a one-token custom stop. 192K is a tested capacity; a larger
+allocator-derived estimate is not a qualified context limit.
+
+[Three-repeat diagnostic screens](benchmarks/results/dflash2-pro-optimization-v031/initial-screens.json)
+retain all values, including large acceptance-dependent outliers. Their best
+single samples cannot establish a stable speed gain. Matched-context grouping
+controls and the identical C1/C4 panel are reported separately from the current
+production benchmark.
+
+The completed 512-output panel uses the same frozen inputs, seeds and cache
+states. MTP3 controls use the common wide-M04 experiment image. DFlash has
+one later arm per projection, so these are observational comparisons:
+
+| Frozen cell, tok/s cold / warm | MTP3 reference mean | W4 DFlash full QKV | W4 DFlash K/V-only |
+|---|---:|---:|---:|
+| 32K C1 | 56.41 / 55.93 | 53.05 / 52.95 | 52.52 / 52.44 |
+| 64K C1 | 47.44 / 47.45 | 44.53 / 43.23 | 49.30 / 41.57 |
+| 32K prose C4, client aggregate | 32.17 / 101.01 | 25.73 / 59.12 | 25.67 / 58.60 |
+
+MTP3 values are means of two controls. C1 is native request-weighted decode;
+C4 is aggregate client decode, and all rates exclude the first output. On the
+35/35/30 weighted native mix, full-QKV DFlash is −5.56% and K/V-only −4.97%.
+Both fail C4 guards; warm client aggregate decode loses 41–43%. K/V-only's
+cold 64K gain does not persist in the warm cell. Production therefore keeps
+MTP3 at 262,144 tokens; the experimental DFlash candidates provide tested
+192,000 tokens without a demonstrated overall speed advantage.
+
+Configured max_num_seqs=16 does not guarantee sixteen simultaneous long
+requests. Both DFlash panels periodically show three running and one waiting
+request. Actual pool/spec ledgers document speculative-state and KV admission
+pressure. Registered draft weights/buffers occupy approximately 1.256 GiB,
+excluding shared target weights and separate KV/graph/work buffers.
+[Complete panel metrics and admission evidence](benchmarks/results/dflash2-pro-optimization-v031/panel-comparison.json)
+include throughput, latency, acceptance and the scope of the reservation model.
+Static B8/V4 remains unmeasured: its conditional long-C1 cost case did not
+justify implementation; this does not rule out a future C4-specific benefit.
+
+Numerical kernel, sampler and state probes have finite
+scope; graph-internal model branches and broad semantic quality are not
+qualified by these captures.
+
 <!-- BEGIN POWER COMPARISON -->
 ## Historical EXL3 v2 power-limit comparison: 150 / 180 / 230 / 275 W
 

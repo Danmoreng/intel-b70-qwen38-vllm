@@ -3,9 +3,11 @@
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path
 
 import torch
+from rng_reference import acceptance_uniform,known_answers,sampled_winner
 
 
 def main():
@@ -14,6 +16,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     rows = []
+    assert known_answers()==3
     for path in sorted(args.capture.glob('round-*.pt')):
         x = torch.load(path, weights_only=False, map_location='cpu')
         p = torch.softmax(x['processed_target_logits'].double(), -1)
@@ -54,6 +57,44 @@ def main():
         qy = q.gather(-1, drafted[:, None]).squeeze(-1)
         assert (qy > 0).all()
         ratio_acceptance = torch.minimum(torch.ones_like(py), py/qy)
+        # Replay the actual ordinary-rejection prefix with independent scalar
+        # Philox, including the installed FP32 uniform conversion. Require
+        # margin from the threshold before claiming a discrete exact match.
+        assert float(x['temperature'][0])>0, 'This actual-round oracle expects stochastic target sampling'
+        uniforms=[acceptance_uniform(int(x['seeds'][0]),int(pos)) for pos in positions]
+        log_margins=[float(a.log()-b.log())-math.log(u) for a,b,u in zip(py,qy,uniforms)]
+        assert all(abs(v)>1e-5 for v in log_margins),'Threshold too close for this FP64-vs-FP32 oracle'
+        prefix=0
+        for margin in log_margins:
+            if margin<=0:break
+            prefix+=1
+        assert int(x['num_sampled'][0])==prefix+1, (x['round'],prefix,x['num_sampled'])
+        assert torch.equal(x['sampled_token_ids'][0,:prefix],drafted[:prefix])
+        if prefix<len(drafted):assert x['sampled_token_ids'][0,prefix]!=drafted[prefix]
+        gumbel_replay=None
+        if 'use_fp64_gumbel' in x:
+            seed=int(x['seeds'][0]);fp64=bool(x['use_fp64_gumbel'])
+            proposal_checks=[]
+            if q_logits is not None:
+                for j in range(len(drafted)):
+                    winner,margin=sampled_winner(zip(ids[j].tolist(),(scores[j]/temperature).tolist()),
+                        seed,int(positions[j])+(1<<30),fp64)
+                    assert margin>1e-3,'Proposal winner too close for independent math-log comparison'
+                    assert winner==int(drafted[j]),(x['round'],j,winner,int(drafted[j]))
+                    proposal_checks.append(dict(step=j,token=winner,winner_margin=margin))
+            if prefix==len(drafted):
+                logits=p[prefix].log()
+            else:
+                # The Dirac residual is target logits with its proposal
+                # removed; normal q uses the independently normalized p-q.
+                logits=(p[prefix]-q[prefix]).clamp_min(0).log()
+            support=torch.where(torch.isfinite(logits))[0]
+            winner,margin=sampled_winner(zip(support.tolist(),logits[support].tolist()),
+                seed,int(x['pos'][prefix]),fp64)
+            assert margin>1e-3,'Residual/bonus winner too close for independent math-log comparison'
+            assert winner==int(x['sampled_token_ids'][0,prefix]),(x['round'],winner,x['sampled_token_ids'])
+            gumbel_replay=dict(proposal_draws=proposal_checks,residual_or_bonus_token=winner,
+                winner_margin=margin,use_fp64=fp64,draft_salt=1<<30,target_salt=0)
         positive = (p[:-1]-q).clamp_min(0)
         masses = positive.sum(-1)
         assert torch.allclose(masses, 1-overlap, atol=1e-12, rtol=0)
@@ -64,10 +105,15 @@ def main():
             drafted_tokens=drafted.tolist(), sampled=x['sampled_token_ids'].tolist(),
             num_sampled=x['num_sampled'].tolist(), coverage=coverage.tolist(), overlap=overlap.tolist(),
             probability_ratio_acceptance=ratio_acceptance.tolist(), residual_mass=masses.tolist(),
+            acceptance_uniforms=uniforms,acceptance_log_margins=log_margins,
+            independently_replayed_accepted_prefix=prefix,
+            gumbel_replay=gumbel_replay,
             q_tv=tv.tolist() if tv is not None else None, scores_exact=scores_exact))
     assert rows
     result = dict(status='PASS_CAPTURED_PROPOSAL_DISTRIBUTION_AUDIT', rows=rows,
-        scope='Independent CPU FP64 audit of actual proposal law, target coverage/overlap and residual normalization; RNG decisions and paged attention remain separate gates')
+        reference_sources={name:hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
+            for name in ['replay_rounds.py','rng_reference.py']},random123_known_answer_vectors=3,
+        scope='Independent CPU FP64 proposal/coverage/overlap/residual and Philox acceptance-prefix replay. Captures attesting the Gumbel mode also replay actual proposal and residual/bonus winners with an independent math-log oracle. Older captures lack that mode and do not claim this gate. Paged attention is separate.')
     args.output.write_text(json.dumps(result, indent=2)+'\n')
     print(result['status'], len(rows), flush=True)
 

@@ -1,0 +1,4 @@
+FROM sha256:80924cbf8d42a3b0baaf8813b150d2467f39a3601459e1bd813a2e0113323af5
+COPY patch_grouping.py /opt/dflash-w4/patch_grouping.py
+RUN python /opt/dflash-w4/patch_grouping.py /opt/venv/lib/python3.12/site-packages/vllm/v1/core/kv_cache_utils.py
+ENV B70_DFLASH_GROUP4=1

@@ -1,0 +1,403 @@
+{
+  "status": "DIAGNOSTIC_SCREENS_NOT_PRODUCTION_QUALIFIED",
+  "rows": [
+    {
+      "name": "pro-probabilistic-k7",
+      "image": "sha256:b0b9244420a2586f8328b14aeff21d94673632ad7342032a285f3b877f2de49b",
+      "raw_status": "PASS_UNQUANTIZED_DFLASH_STARTUP_ACCEPTANCE_AND_SPEED",
+      "draft_format": "fp16",
+      "draft_sample_method": "probabilistic",
+      "max_model_len": 96000,
+      "raw_results": "benchmark-results/dflash2-serving-v031-20261009/pro-probabilistic-k7/speed/run-20261009-232426-w0.00/results.json",
+      "raw_sha256": "eb02cf973887b59a447476aa290028ab5272e23afd9886437ce9dad5279e9e05",
+      "rollback": {
+        "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "models_endpoint_healthy": true,
+        "verified_unix": 1791581519.1688468
+      },
+      "scenario_results": [
+        {
+          "name": "phase-32k-c1",
+          "decode_tps": [
+            56.31376230811761,
+            54.03712993505384,
+            52.243610170663445
+          ],
+          "median_decode_tps": 54.03712993505384,
+          "preemptions": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceptance": [
+            0.36884021901443503,
+            0.3463927376970855,
+            0.3300970873786408
+          ],
+          "output_tokens": [
+            1024,
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "phase-64k-c1",
+          "decode_tps": [
+            48.78547823724362,
+            46.08027222077998,
+            44.15205012951053
+          ],
+          "median_decode_tps": 46.08027222077998,
+          "preemptions": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceptance": [
+            0.3610837438423645,
+            0.3355048859934853,
+            0.315625
+          ],
+          "output_tokens": [
+            1024,
+            1024,
+            1024
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pro-w4-k7-attempt3",
+      "image": "sha256:80924cbf8d42a3b0baaf8813b150d2467f39a3601459e1bd813a2e0113323af5",
+      "raw_status": "PASS_UNQUANTIZED_DFLASH_STARTUP_ACCEPTANCE_AND_SPEED",
+      "draft_format": "w4",
+      "draft_sample_method": "greedy",
+      "max_model_len": 96000,
+      "raw_results": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-k7-attempt3/speed/run-20261009-234014-w0.00/results.json",
+      "raw_sha256": "6945ae16f7f83d6b24f2cb0eedf4390029879b218f77b4ba002d969c2ead1710",
+      "rollback": {
+        "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "models_endpoint_healthy": true,
+        "verified_unix": 1791582539.3459325
+      },
+      "scenario_results": [
+        {
+          "name": "phase-32k-c1",
+          "decode_tps": [
+            56.443690262950405,
+            53.56462661000432,
+            57.9114413859207
+          ],
+          "median_decode_tps": 56.443690262950405,
+          "preemptions": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceptance": [
+            0.3344155844155844,
+            0.3082010582010582,
+            0.34782608695652173
+          ],
+          "output_tokens": [
+            1024,
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "phase-64k-c1",
+          "decode_tps": [
+            47.749439105943885,
+            43.949598842008896,
+            68.74382918803194
+          ],
+          "median_decode_tps": 47.749439105943885,
+          "preemptions": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceptance": [
+            0.32302092811646954,
+            0.2861332216170926,
+            0.5275229357798165
+          ],
+          "output_tokens": [
+            1024,
+            1024,
+            1024
+          ]
+        }
+      ],
+      "legacy_status_note": "The original controller emitted an unquantized label for this W4 arm. Actual image identity, W4 role inventory and packed GPU probes establish its format; the raw campaign was not rewritten."
+    },
+    {
+      "name": "pro-w4-group4-k7",
+      "image": "sha256:ebbd9575577f65f37cfe517666a5c9abe18601b94d990fd8ad8e1e1416049c05",
+      "raw_status": "PASS_W4_DFLASH_DIAGNOSTIC_SCREEN",
+      "draft_format": "w4",
+      "draft_sample_method": "greedy",
+      "max_model_len": 192000,
+      "raw_results": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-group4-k7/speed/run-20261009-235114-w0.00/results.json",
+      "raw_sha256": "d0f1cabd594ea7f3d54ce3ac97166539d0fd5cf74b9d5481f08d624c385de92c",
+      "rollback": {
+        "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "models_endpoint_healthy": true,
+        "verified_unix": 1791583502.5507019
+      },
+      "scenario_results": [
+        {
+          "name": "phase-32k-c1",
+          "decode_tps": [
+            56.1340929297906,
+            54.54377147969938,
+            55.90238726628493
+          ],
+          "median_decode_tps": 55.90238726628493,
+          "preemptions": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceptance": [
+            0.3300970873786408,
+            0.3181613339342046,
+            0.3305594082293111
+          ],
+          "output_tokens": [
+            1024,
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "phase-64k-c1",
+          "decode_tps": [
+            43.55349999711074,
+            52.5444289769776,
+            54.856198754353365
+          ],
+          "median_decode_tps": 52.5444289769776,
+          "preemptions": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceptance": [
+            0.2819767441860465,
+            0.37042606516290727,
+            0.3940345368916798
+          ],
+          "output_tokens": [
+            1024,
+            1024,
+            1024
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pro-w4-group4-kv-only-k7",
+      "image": "sha256:c6429913722c37b0091739698086fea23721de980bd549e1ab6d7d4f0bf46c74",
+      "raw_status": "PASS_W4_DFLASH_DIAGNOSTIC_SCREEN",
+      "draft_format": "w4",
+      "draft_sample_method": "greedy",
+      "max_model_len": 192000,
+      "raw_results": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-group4-kv-only-k7/speed/run-20261010-003551-w0.00/results.json",
+      "raw_sha256": "1937e69e1aa60985cd9a300435592e3007c324ed3a282c6d3410687af0dfe125",
+      "rollback": {
+        "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "models_endpoint_healthy": true,
+        "verified_unix": 1791586174.0014162
+      },
+      "scenario_results": [
+        {
+          "name": "phase-32k-c1",
+          "decode_tps": [
+            59.771359084557474,
+            46.795856961496895,
+            59.507258958327505
+          ],
+          "median_decode_tps": 59.507258958327505,
+          "preemptions": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceptance": [
+            0.3633217993079585,
+            0.25144397381594147,
+            0.36033382425135
+          ],
+          "output_tokens": [
+            1024,
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "phase-64k-c1",
+          "decode_tps": [
+            45.742171198639255,
+            40.41921097665542,
+            63.54201644755209
+          ],
+          "median_decode_tps": 45.742171198639255,
+          "preemptions": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceptance": [
+            0.3048780487804878,
+            0.25144397381594147,
+            0.47760290556900725
+          ],
+          "output_tokens": [
+            1024,
+            1024,
+            1024
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pro-w4-group5-matched96",
+      "image": "sha256:80924cbf8d42a3b0baaf8813b150d2467f39a3601459e1bd813a2e0113323af5",
+      "raw_status": "PASS_W4_DFLASH_DIAGNOSTIC_SCREEN",
+      "draft_format": "w4",
+      "draft_sample_method": "greedy",
+      "max_model_len": 96000,
+      "raw_results": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-group5-matched96/speed/run-20261010-010531-w0.00/results.json",
+      "raw_sha256": "2f9341e19301babb9bfdab5a57f0683b5b8c1621759550c84e15a34bbba01628",
+      "rollback": {
+        "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "models_endpoint_healthy": true,
+        "verified_unix": 1791587571.9482543
+      },
+      "scenario_results": [
+        {
+          "name": "phase-32k-c1",
+          "decode_tps": [
+            55.745996239474316,
+            53.358577906978184,
+            57.753997945063084
+          ],
+          "median_decode_tps": 55.745996239474316,
+          "preemptions": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceptance": [
+            0.3344155844155844,
+            0.3082010582010582,
+            0.34782608695652173
+          ],
+          "output_tokens": [
+            1024,
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "phase-64k-c1",
+          "decode_tps": [
+            45.86684703837726,
+            40.50741718855562,
+            62.1987033628598
+          ],
+          "median_decode_tps": 45.86684703837726,
+          "preemptions": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceptance": [
+            0.3040629095674967,
+            0.2525096525096525,
+            0.46473029045643155
+          ],
+          "output_tokens": [
+            1024,
+            1024,
+            1024
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pro-w4-group4-matched96",
+      "image": "sha256:ebbd9575577f65f37cfe517666a5c9abe18601b94d990fd8ad8e1e1416049c05",
+      "raw_status": "PASS_W4_DFLASH_DIAGNOSTIC_SCREEN",
+      "draft_format": "w4",
+      "draft_sample_method": "greedy",
+      "max_model_len": 96000,
+      "raw_results": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-group4-matched96/speed/run-20261010-011622-w0.00/results.json",
+      "raw_sha256": "a0df42b14fb64205cfef166e9db51c527584abf24919e120922f12c7a3bf2612",
+      "rollback": {
+        "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "models_endpoint_healthy": true,
+        "verified_unix": 1791588221.4652743
+      },
+      "scenario_results": [
+        {
+          "name": "phase-32k-c1",
+          "decode_tps": [
+            55.508318115503535,
+            54.31263757042574,
+            55.74735983585332
+          ],
+          "median_decode_tps": 55.508318115503535,
+          "preemptions": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceptance": [
+            0.3300970873786408,
+            0.3181613339342046,
+            0.3305594082293111
+          ],
+          "output_tokens": [
+            1024,
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "phase-64k-c1",
+          "decode_tps": [
+            49.1083818418959,
+            40.90300433049342,
+            68.01061010136266
+          ],
+          "median_decode_tps": 49.1083818418959,
+          "preemptions": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceptance": [
+            0.33817330210772834,
+            0.25644028103044497,
+            0.5233766233766234
+          ],
+          "output_tokens": [
+            1024,
+            1024,
+            1024
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "All three repeats retained. Initial grouping screen changes grouping and configured max context (96K to192K); it is not an isolated speed attribution. Stochastic outputs differ and require independent law/state gates. Historical figures are references, not paired promotion evidence."
+}

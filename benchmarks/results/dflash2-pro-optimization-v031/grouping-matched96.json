@@ -1,0 +1,186 @@
+{
+  "status": "MATCHED_96K_GROUPING_DIAGNOSTIC_NOT_PRODUCTION_PROMOTION",
+  "max_model_len": 96000,
+  "greedy_controls": [
+    {
+      "fixture": "phase-32k-c1-r1",
+      "mode": "cold",
+      "exact_tokens_equal": true,
+      "first_token_difference": null,
+      "group5_tps": 56.68182939620419,
+      "group4_tps": 56.48883232830655,
+      "relative_decode_gain": -0.0034049195298302415,
+      "grouping_counter_summaries": [
+        {
+          "rounds": 77.0,
+          "accepted_tokens": 180.0,
+          "useful_counter_estimate": 3.3376623376623376,
+          "native_decode_time_per_counter_round_ms": 58.425924973940326
+        },
+        {
+          "rounds": 77.0,
+          "accepted_tokens": 180.0,
+          "useful_counter_estimate": 3.3376623376623376,
+          "native_decode_time_per_counter_round_ms": 58.62554022078493
+        }
+      ],
+      "counter_note": "Decode-time per round is a counter equivalent, not a GPU kernel measurement; token-limit tails and prefix-dependent proposals can affect it."
+    },
+    {
+      "fixture": "phase-32k-c1-r1",
+      "mode": "warm",
+      "exact_tokens_equal": true,
+      "first_token_difference": null,
+      "group5_tps": 56.27414809341902,
+      "group4_tps": 55.82643239913178,
+      "relative_decode_gain": -0.00795597462522224,
+      "grouping_counter_summaries": [
+        {
+          "rounds": 77.0,
+          "accepted_tokens": 180.0,
+          "useful_counter_estimate": 3.3376623376623376,
+          "native_decode_time_per_counter_round_ms": 58.84919494810793
+        },
+        {
+          "rounds": 77.0,
+          "accepted_tokens": 180.0,
+          "useful_counter_estimate": 3.3376623376623376,
+          "native_decode_time_per_counter_round_ms": 59.32115253239459
+        }
+      ],
+      "counter_note": "Decode-time per round is a counter equivalent, not a GPU kernel measurement; token-limit tails and prefix-dependent proposals can affect it."
+    },
+    {
+      "fixture": "phase-64k-c1-r1",
+      "mode": "cold",
+      "exact_tokens_equal": true,
+      "first_token_difference": null,
+      "group5_tps": 43.89737419698141,
+      "group4_tps": 43.733971214417046,
+      "relative_decode_gain": -0.0037223862600783697,
+      "grouping_counter_summaries": [
+        {
+          "rounds": 86.0,
+          "accepted_tokens": 170.0,
+          "useful_counter_estimate": 2.9767441860465116,
+          "native_decode_time_per_counter_round_ms": 67.54655223258577
+        },
+        {
+          "rounds": 86.0,
+          "accepted_tokens": 170.0,
+          "useful_counter_estimate": 2.9767441860465116,
+          "native_decode_time_per_counter_round_ms": 67.79892602326284
+        }
+      ],
+      "counter_note": "Decode-time per round is a counter equivalent, not a GPU kernel measurement; token-limit tails and prefix-dependent proposals can affect it."
+    },
+    {
+      "fixture": "phase-64k-c1-r1",
+      "mode": "warm",
+      "exact_tokens_equal": true,
+      "first_token_difference": null,
+      "group5_tps": 44.75416905866636,
+      "group4_tps": 43.64489760956057,
+      "relative_decode_gain": -0.02478587967194057,
+      "grouping_counter_summaries": [
+        {
+          "rounds": 84.0,
+          "accepted_tokens": 172.0,
+          "useful_counter_estimate": 3.0476190476190474,
+          "native_decode_time_per_counter_round_ms": 67.83087139289516
+        },
+        {
+          "rounds": 86.0,
+          "accepted_tokens": 170.0,
+          "useful_counter_estimate": 2.9767441860465116,
+          "native_decode_time_per_counter_round_ms": 67.9372948837036
+        }
+      ],
+      "counter_note": "Decode-time per round is a counter equivalent, not a GPU kernel measurement; token-limit tails and prefix-dependent proposals can affect it."
+    }
+  ],
+  "stochastic_cases": [
+    {
+      "name": "phase-32k-c1",
+      "all_rates": [
+        [
+          55.745996239474316,
+          53.358577906978184,
+          57.753997945063084
+        ],
+        [
+          55.508318115503535,
+          54.31263757042574,
+          55.74735983585332
+        ]
+      ],
+      "medians": [
+        55.745996239474316,
+        55.508318115503535
+      ],
+      "median_ratio_gain": -0.004263590930364991
+    },
+    {
+      "name": "phase-64k-c1",
+      "all_rates": [
+        [
+          45.86684703837726,
+          40.50741718855562,
+          62.1987033628598
+        ],
+        [
+          49.1083818418959,
+          40.90300433049342,
+          68.01061010136266
+        ]
+      ],
+      "medians": [
+        45.86684703837726,
+        49.1083818418959
+      ],
+      "median_ratio_gain": 0.07067271924766083
+    }
+  ],
+  "deterministic_outputs_all_equal": true,
+  "raw_manifest": [
+    {
+      "path": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-group5-matched96/campaign.json",
+      "sha256": "3b3cff80f3a7a86f97ae2d3b7c5f0d36a49d0826883e1fc6d379cebedf6d3b1a"
+    },
+    {
+      "path": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-group5-matched96/greedy-control.json",
+      "sha256": "6023da3e96c4d17b47f420dcf87748bdb00a9aeed2d4fe3d49800b7b33fbc41a"
+    },
+    {
+      "path": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-group5-matched96/proposal-audit.json",
+      "sha256": "7d686d9fd94f871883830f9360bf5e0557d8bb4add3344d6d562f8394e95e857"
+    },
+    {
+      "path": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-group5-matched96/speed/run-20261010-010531-w0.00/results.json",
+      "sha256": "2f9341e19301babb9bfdab5a57f0683b5b8c1621759550c84e15a34bbba01628"
+    },
+    {
+      "path": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-group4-matched96/campaign.json",
+      "sha256": "40a04b99dbc48b828b38edcd32d87fbfbae78f6bf3365910f700118fbb4e8fae"
+    },
+    {
+      "path": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-group4-matched96/greedy-control.json",
+      "sha256": "17815198f39fe922a050e06f956ec38072c6a683e6b6ccc6754af1ce7177a09f"
+    },
+    {
+      "path": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-group4-matched96/proposal-audit.json",
+      "sha256": "1f667a4e6572030c73aa92c71a2033138d527ee3502cdc3c7275f74a4a068a41"
+    },
+    {
+      "path": "benchmark-results/dflash2-serving-v031-20261009/pro-w4-group4-matched96/speed/run-20261010-011622-w0.00/results.json",
+      "sha256": "a0df42b14fb64205cfef166e9db51c527584abf24919e120922f12c7a3bf2612"
+    }
+  ],
+  "limits": [
+    "One arm per grouping, not a randomized replicated confidence study.",
+    "Two short CPU-only audits overlapped group-five64K repeat2; cpu-reference-activity.json flags possible host interference. That sample is preserved.",
+    "Greedy controls hold outputs fixed only where their token IDs agree.",
+    "T1 repeats have different generated trajectories; report all repeats and acceptance.",
+    "96K matched diagnostics do not themselves qualify192K speed or general semantic quality."
+  ]
+}

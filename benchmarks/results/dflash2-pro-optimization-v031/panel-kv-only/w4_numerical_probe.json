@@ -1,0 +1,474 @@
+{
+  "results": [
+    {
+      "status": "PASS_ACTUAL_DRAFT_W4_PACKED_KERNEL_COLUMNS",
+      "checks": [
+        {
+          "module": "model.layers.0.self_attn.qkv_proj",
+          "shape": [
+            6144,
+            5120
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2048,
+            4095,
+            4096,
+            4608,
+            5119,
+            5120,
+            5632,
+            6143
+          ],
+          "max_abs": 0.0019439896786934696,
+          "rms": 0.0006205106840180588,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": {
+            "status": "PASS_KV_ONLY_VS_FULL_PACKED_QKV",
+            "max_abs": 0.0,
+            "rms": 0.0,
+            "rtol": 0.005,
+            "atol": 0.005,
+            "packed_storage_alias": true,
+            "weight_storage_offset": 2621440
+          }
+        },
+        {
+          "module": "model.layers.0.self_attn.o_proj",
+          "shape": [
+            5120,
+            4096
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2560,
+            5119
+          ],
+          "max_abs": 0.00145205995249853,
+          "rms": 0.0005241688943255688,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.0.mlp.gate_up_proj",
+          "shape": [
+            34816,
+            5120
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            8704,
+            17407,
+            17408,
+            26112,
+            34815
+          ],
+          "max_abs": 0.0026212604279862717,
+          "rms": 0.00073392538644329,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.0.mlp.down_proj",
+          "shape": [
+            5120,
+            17408
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2560,
+            5119
+          ],
+          "max_abs": 0.0030383821813302347,
+          "rms": 0.001176146959464984,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.1.self_attn.qkv_proj",
+          "shape": [
+            6144,
+            5120
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2048,
+            4095,
+            4096,
+            4608,
+            5119,
+            5120,
+            5632,
+            6143
+          ],
+          "max_abs": 0.002459478568198392,
+          "rms": 0.0006650752859200362,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": {
+            "status": "PASS_KV_ONLY_VS_FULL_PACKED_QKV",
+            "max_abs": 0.0,
+            "rms": 0.0,
+            "rtol": 0.005,
+            "atol": 0.005,
+            "packed_storage_alias": true,
+            "weight_storage_offset": 2621440
+          }
+        },
+        {
+          "module": "model.layers.1.self_attn.o_proj",
+          "shape": [
+            5120,
+            4096
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2560,
+            5119
+          ],
+          "max_abs": 0.0020323509961599484,
+          "rms": 0.0006237025195222241,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.1.mlp.gate_up_proj",
+          "shape": [
+            34816,
+            5120
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            8704,
+            17407,
+            17408,
+            26112,
+            34815
+          ],
+          "max_abs": 0.0018338316622248385,
+          "rms": 0.0006787619575280376,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.1.mlp.down_proj",
+          "shape": [
+            5120,
+            17408
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2560,
+            5119
+          ],
+          "max_abs": 0.002362104205531068,
+          "rms": 0.000996105315128817,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.2.self_attn.qkv_proj",
+          "shape": [
+            6144,
+            5120
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2048,
+            4095,
+            4096,
+            4608,
+            5119,
+            5120,
+            5632,
+            6143
+          ],
+          "max_abs": 0.0015082685531524476,
+          "rms": 0.00062100414037239,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": {
+            "status": "PASS_KV_ONLY_VS_FULL_PACKED_QKV",
+            "max_abs": 0.0,
+            "rms": 0.0,
+            "rtol": 0.005,
+            "atol": 0.005,
+            "packed_storage_alias": true,
+            "weight_storage_offset": 2621440
+          }
+        },
+        {
+          "module": "model.layers.2.self_attn.o_proj",
+          "shape": [
+            5120,
+            4096
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2560,
+            5119
+          ],
+          "max_abs": 0.002056353972875513,
+          "rms": 0.000854294154058205,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.2.mlp.gate_up_proj",
+          "shape": [
+            34816,
+            5120
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            8704,
+            17407,
+            17408,
+            26112,
+            34815
+          ],
+          "max_abs": 0.003064190033910563,
+          "rms": 0.0007710353893240484,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.2.mlp.down_proj",
+          "shape": [
+            5120,
+            17408
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2560,
+            5119
+          ],
+          "max_abs": 0.0035068981924268883,
+          "rms": 0.0015926915712368356,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.3.self_attn.qkv_proj",
+          "shape": [
+            6144,
+            5120
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2048,
+            4095,
+            4096,
+            4608,
+            5119,
+            5120,
+            5632,
+            6143
+          ],
+          "max_abs": 0.0024685557254997548,
+          "rms": 0.0008096591244269512,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": {
+            "status": "PASS_KV_ONLY_VS_FULL_PACKED_QKV",
+            "max_abs": 0.0,
+            "rms": 0.0,
+            "rtol": 0.005,
+            "atol": 0.005,
+            "packed_storage_alias": true,
+            "weight_storage_offset": 2621440
+          }
+        },
+        {
+          "module": "model.layers.3.self_attn.o_proj",
+          "shape": [
+            5120,
+            4096
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2560,
+            5119
+          ],
+          "max_abs": 0.0022782850501243956,
+          "rms": 0.000748865467312526,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.3.mlp.gate_up_proj",
+          "shape": [
+            34816,
+            5120
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            8704,
+            17407,
+            17408,
+            26112,
+            34815
+          ],
+          "max_abs": 0.0021593307319562882,
+          "rms": 0.0007406340857295029,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.3.mlp.down_proj",
+          "shape": [
+            5120,
+            17408
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2560,
+            5119
+          ],
+          "max_abs": 0.0031675340578658506,
+          "rms": 0.0010783760173758627,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.4.self_attn.qkv_proj",
+          "shape": [
+            6144,
+            5120
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2048,
+            4095,
+            4096,
+            4608,
+            5119,
+            5120,
+            5632,
+            6143
+          ],
+          "max_abs": 0.0038133577836561017,
+          "rms": 0.0009112756211010301,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": {
+            "status": "PASS_KV_ONLY_VS_FULL_PACKED_QKV",
+            "max_abs": 0.0,
+            "rms": 0.0,
+            "rtol": 0.005,
+            "atol": 0.005,
+            "packed_storage_alias": true,
+            "weight_storage_offset": 2621440
+          }
+        },
+        {
+          "module": "model.layers.4.self_attn.o_proj",
+          "shape": [
+            5120,
+            4096
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2560,
+            5119
+          ],
+          "max_abs": 0.0016035109765653033,
+          "rms": 0.0008376257059510693,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.4.mlp.gate_up_proj",
+          "shape": [
+            34816,
+            5120
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            8704,
+            17407,
+            17408,
+            26112,
+            34815
+          ],
+          "max_abs": 0.0016127542112371884,
+          "rms": 0.0006888659149463452,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.layers.4.mlp.down_proj",
+          "shape": [
+            5120,
+            17408
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2560,
+            5119
+          ],
+          "max_abs": 0.0043005348088627215,
+          "rms": 0.0018784161558669406,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        },
+        {
+          "module": "model.fc",
+          "shape": [
+            5120,
+            25600
+          ],
+          "rows": 8,
+          "columns": [
+            0,
+            2560,
+            5119
+          ],
+          "max_abs": 0.00829420573063544,
+          "rms": 0.0028038921054806035,
+          "rtol": 0.01,
+          "atol": 0.01,
+          "kv_only": null
+        }
+      ],
+      "actual_kv_only_projection_checks": 5,
+      "scope": "FP64 independent packed coefficient dot products across all runtime modules and fused shards; not draft acceptance qualification"
+    }
+  ]
+}

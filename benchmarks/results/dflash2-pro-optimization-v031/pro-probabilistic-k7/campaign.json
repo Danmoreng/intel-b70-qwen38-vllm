@@ -1,0 +1,43 @@
+{
+  "status": "PASS_UNQUANTIZED_DFLASH_STARTUP_ACCEPTANCE_AND_SPEED",
+  "image": "sha256:b0b9244420a2586f8328b14aeff21d94673632ad7342032a285f3b877f2de49b",
+  "production_image": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "method": "dflash",
+  "depth": 7,
+  "draft_sample_method": "probabilistic",
+  "wide_m04_requested": true,
+  "final_serving_minimum": 192000,
+  "low_context_experiment_authorized": true,
+  "baseline_regenerated": false,
+  "attempts": [
+    {
+      "max_model_len": 96000,
+      "status": "READY",
+      "worker_attested": true
+    }
+  ],
+  "started_unix": 1791580979.3540761,
+  "sources": {
+    "run_serving.py": "675ccd7d915073b53583f69cce14cdf6f3be6b571d98b87859cb08df2d8e5a0f",
+    "mtp_inspect.py": "655af86fdd98b59779a3113367c4f016c0cb190f1c87366a6ee53f8b3bf03e31",
+    "prepare_fp16.py": "c5a41580788acdf72f4391281106b2828375f002eaf2a5111662347bae25af13",
+    "publish_receipts.py": "e6dbf171ad224ec2abd7a7aa77cf361127c33710a2d3c4a3825db629dd705e3e",
+    "compare.py": "bca388bef5ceb3c5a6c120a23642e3c87f1dc8940e9241c0f8d59800138b3892",
+    "test_audit.py": "3fba2c90b0361ed170deca4413cf272002428e77b35bb11d14a34f4a3c57b538",
+    "review_completed_screen.py": "97ef16b36b972f34310a4280e7a004e43c39401d1746a712d42cc739e373e970",
+    "wide_inspect.py": "4594327fdc4cc4fdb09ada5b0dc49eaf788f7c276f7143c6a25bfec6a4e6e4d7",
+    "patch_audit.py": "9e5ccdceb14dcf8f7db63cf5f403c221def5ed89ae1396039c236d8d91855836",
+    "dflash_inspect.py": "e30c7db5bc6958fed91219db9f0e91ee1b8f435d16f8a8f19322ad4ada71393e"
+  },
+  "benchmark_results": "benchmark-results/dflash2-serving-v031-20261009/pro-probabilistic-k7/speed/run-20261009-232426-w0.00/results.json",
+  "benchmark_sha256": "eb02cf973887b59a447476aa290028ab5272e23afd9886437ce9dad5279e9e05",
+  "active_context_limit": 96000,
+  "restoration": {
+    "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+    "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+    "models_endpoint_healthy": true,
+    "verified_unix": 1791581519.1688468
+  },
+  "finished_unix": 1791581519.1688585,
+  "draft_checkpoint_output_sha256": "0d0555808925b63b1f3e466252ee229a3b1301fc37931ab259b9c85e22e7e79d"
+}

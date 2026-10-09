@@ -1,0 +1,536 @@
+[
+  {
+    "window": "source-32k",
+    "domain": "code",
+    "context_tokens": 32722,
+    "concurrency": 1,
+    "cache_mode": "cold",
+    "wall_s": 25.249582822987577,
+    "native": {
+      "prefill_seconds": 15.511601252001128,
+      "generation_tokens": 512.0,
+      "completed": 1.0,
+      "prompt_tokens": 32722.0,
+      "decode_seconds": 9.730017398003838,
+      "prefill_tokens": 32722.0,
+      "preemptions": 0.0,
+      "draft_tokens": 1155.0,
+      "accepted_tokens": 351.0,
+      "cached_tokens": 0.0
+    },
+    "speculative_rounds_sum": 165.0,
+    "accepted_tokens_by_position": {
+      "0": 112.0,
+      "1": 84.0,
+      "2": 55.0,
+      "3": 38.0,
+      "4": 28.0,
+      "5": 20.0,
+      "6": 14.0
+    },
+    "accepted_per_round_by_position": {
+      "0": 0.6787878787878788,
+      "1": 0.509090909090909,
+      "2": 0.3333333333333333,
+      "3": 0.23030303030303031,
+      "4": 0.1696969696969697,
+      "5": 0.12121212121212122,
+      "6": 0.08484848484848485
+    },
+    "generated_tokens_per_round": 3.103030303030303,
+    "mean_acceptance_length": 3.1272727272727274,
+    "native_prefill_tps": 2109.5178678460798,
+    "post_first_completion_tokens": 511.0,
+    "prefill_computed_tokens": 32722.0,
+    "prefill_recompute_excess": 0,
+    "native_request_weighted_decode_tps": 52.51789170539759,
+    "wave_aggregate_output_tps": 20.27756274586319,
+    "client_decode_interval_union_s": 9.72069878700131,
+    "client_aggregate_decode_tps": 52.56823724270915,
+    "native_ttft_seconds_sum": 15.51507568359375,
+    "client_ttft_s": [
+      15.527556426997762
+    ],
+    "energy_j": null,
+    "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+    "joules_per_output_token": null,
+    "load_classification": "no_observed_preemption",
+    "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows.",
+    "mean_client_e2e_s": 25.248255213999073,
+    "mean_client_ttft_s": 15.527556426997762,
+    "responses": [
+      {
+        "usage": {
+          "prompt_tokens": 32722,
+          "total_tokens": 33234,
+          "completion_tokens": 512
+        },
+        "finish_reason": "length",
+        "prompt_ids_verified": true,
+        "output_ids_sha256": "3f1d23713ef2a4e3686f608ab8b311d298df20140f1939771b3e9d456a4ba128",
+        "output_text_sha256": "6f4bc2c363c3fe2280a24f2b8d68cfa4e5ca7c256bc9068b5ff17bc82bed032c",
+        "wall_s": 25.248255213999073,
+        "ttft_client_s": 15.527556426997762
+      }
+    ]
+  },
+  {
+    "window": "source-32k",
+    "domain": "code",
+    "context_tokens": 32722,
+    "concurrency": 1,
+    "cache_mode": "warm",
+    "wall_s": 11.389881170995068,
+    "native": {
+      "prefill_seconds": 1.6032689600106096,
+      "generation_tokens": 512.0,
+      "completed": 1.0,
+      "prompt_tokens": 32722.0,
+      "decode_seconds": 9.745127075992059,
+      "prefill_tokens": 2770.0,
+      "preemptions": 0.0,
+      "draft_tokens": 1155.0,
+      "accepted_tokens": 351.0,
+      "cached_tokens": 29952.0
+    },
+    "speculative_rounds_sum": 165.0,
+    "accepted_tokens_by_position": {
+      "0": 112.0,
+      "1": 84.0,
+      "2": 55.0,
+      "3": 38.0,
+      "4": 28.0,
+      "5": 20.0,
+      "6": 14.0
+    },
+    "accepted_per_round_by_position": {
+      "0": 0.6787878787878788,
+      "1": 0.509090909090909,
+      "2": 0.3333333333333333,
+      "3": 0.23030303030303031,
+      "4": 0.1696969696969697,
+      "5": 0.12121212121212122,
+      "6": 0.08484848484848485
+    },
+    "generated_tokens_per_round": 3.103030303030303,
+    "mean_acceptance_length": 3.1272727272727274,
+    "native_prefill_tps": 1727.7200950623217,
+    "post_first_completion_tokens": 511.0,
+    "prefill_computed_tokens": 2770.0,
+    "prefill_recompute_excess": 0,
+    "native_request_weighted_decode_tps": 52.436463477104525,
+    "wave_aggregate_output_tps": 44.95218100289184,
+    "client_decode_interval_union_s": 9.736388880992308,
+    "client_aggregate_decode_tps": 52.483524050440366,
+    "native_ttft_seconds_sum": 1.6404218673706055,
+    "client_ttft_s": [
+      1.6522473320073914
+    ],
+    "energy_j": null,
+    "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+    "joules_per_output_token": null,
+    "load_classification": "no_observed_preemption",
+    "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows.",
+    "mean_client_e2e_s": 11.3886362129997,
+    "mean_client_ttft_s": 1.6522473320073914,
+    "responses": [
+      {
+        "usage": {
+          "prompt_tokens": 32722,
+          "total_tokens": 33234,
+          "completion_tokens": 512
+        },
+        "finish_reason": "length",
+        "prompt_ids_verified": true,
+        "output_ids_sha256": "3f1d23713ef2a4e3686f608ab8b311d298df20140f1939771b3e9d456a4ba128",
+        "output_text_sha256": "6f4bc2c363c3fe2280a24f2b8d68cfa4e5ca7c256bc9068b5ff17bc82bed032c",
+        "wall_s": 11.3886362129997,
+        "ttft_client_s": 1.6522473320073914
+      }
+    ]
+  },
+  {
+    "window": "source-64k",
+    "domain": "code",
+    "context_tokens": 65491,
+    "concurrency": 1,
+    "cache_mode": "cold",
+    "wall_s": 47.410214529008954,
+    "native": {
+      "prefill_seconds": 37.03129769299994,
+      "generation_tokens": 512.0,
+      "completed": 1.0,
+      "prompt_tokens": 65491.0,
+      "decode_seconds": 10.366025512004853,
+      "prefill_tokens": 65491.0,
+      "preemptions": 0.0,
+      "draft_tokens": 1064.0,
+      "accepted_tokens": 361.0,
+      "cached_tokens": 0.0
+    },
+    "speculative_rounds_sum": 152.0,
+    "accepted_tokens_by_position": {
+      "0": 121.0,
+      "1": 86.0,
+      "2": 57.0,
+      "3": 42.0,
+      "4": 29.0,
+      "5": 16.0,
+      "6": 10.0
+    },
+    "accepted_per_round_by_position": {
+      "0": 0.7960526315789473,
+      "1": 0.5657894736842105,
+      "2": 0.375,
+      "3": 0.27631578947368424,
+      "4": 0.19078947368421054,
+      "5": 0.10526315789473684,
+      "6": 0.06578947368421052
+    },
+    "generated_tokens_per_round": 3.3684210526315788,
+    "mean_acceptance_length": 3.375,
+    "native_prefill_tps": 1768.5310556205493,
+    "post_first_completion_tokens": 511.0,
+    "prefill_computed_tokens": 65491.0,
+    "prefill_recompute_excess": 0,
+    "native_request_weighted_decode_tps": 49.295653325202885,
+    "wave_aggregate_output_tps": 10.799360540474286,
+    "client_decode_interval_union_s": 10.348444620001828,
+    "client_aggregate_decode_tps": 49.37940132687396,
+    "native_ttft_seconds_sum": 37.037172079086304,
+    "client_ttft_s": [
+      37.05961287399987
+    ],
+    "energy_j": null,
+    "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+    "joules_per_output_token": null,
+    "load_classification": "no_observed_preemption",
+    "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows.",
+    "mean_client_e2e_s": 47.408057494001696,
+    "mean_client_ttft_s": 37.05961287399987,
+    "responses": [
+      {
+        "usage": {
+          "prompt_tokens": 65491,
+          "total_tokens": 66003,
+          "completion_tokens": 512
+        },
+        "finish_reason": "length",
+        "prompt_ids_verified": true,
+        "output_ids_sha256": "48929482cc09956c52d02c07fc83be23703f68ec0506a80b7bcbe52867e7defb",
+        "output_text_sha256": "2854561479c7b68c06ef7d29672aefcb7a42a7ff638013466883f4716bfe3da1",
+        "wall_s": 47.408057494001696,
+        "ttft_client_s": 37.05961287399987
+      }
+    ]
+  },
+  {
+    "window": "source-64k",
+    "domain": "code",
+    "context_tokens": 65491,
+    "concurrency": 1,
+    "cache_mode": "warm",
+    "wall_s": 14.122445146000246,
+    "native": {
+      "prefill_seconds": 1.8179149060015334,
+      "generation_tokens": 512.0,
+      "completed": 1.0,
+      "prompt_tokens": 65491.0,
+      "decode_seconds": 12.291058418006287,
+      "prefill_tokens": 2259.0,
+      "preemptions": 0.0,
+      "draft_tokens": 1260.0,
+      "accepted_tokens": 333.0,
+      "cached_tokens": 63232.0
+    },
+    "speculative_rounds_sum": 180.0,
+    "accepted_tokens_by_position": {
+      "0": 124.0,
+      "1": 79.0,
+      "2": 49.0,
+      "3": 30.0,
+      "4": 24.0,
+      "5": 16.0,
+      "6": 11.0
+    },
+    "accepted_per_round_by_position": {
+      "0": 0.6888888888888889,
+      "1": 0.4388888888888889,
+      "2": 0.2722222222222222,
+      "3": 0.16666666666666666,
+      "4": 0.13333333333333333,
+      "5": 0.08888888888888889,
+      "6": 0.06111111111111111
+    },
+    "generated_tokens_per_round": 2.8444444444444446,
+    "mean_acceptance_length": 2.85,
+    "native_prefill_tps": 1242.632420550764,
+    "post_first_completion_tokens": 511.0,
+    "prefill_computed_tokens": 2259.0,
+    "prefill_recompute_excess": 0,
+    "native_request_weighted_decode_tps": 41.57493867667163,
+    "wave_aggregate_output_tps": 36.25434510149317,
+    "client_decode_interval_union_s": 12.272769704999519,
+    "client_aggregate_decode_tps": 41.63689307979401,
+    "native_ttft_seconds_sum": 1.8238401412963867,
+    "client_ttft_s": [
+      1.8474321450048592
+    ],
+    "energy_j": null,
+    "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+    "joules_per_output_token": null,
+    "load_classification": "no_observed_preemption",
+    "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows.",
+    "mean_client_e2e_s": 14.120201850004378,
+    "mean_client_ttft_s": 1.8474321450048592,
+    "responses": [
+      {
+        "usage": {
+          "prompt_tokens": 65491,
+          "total_tokens": 66003,
+          "completion_tokens": 512
+        },
+        "finish_reason": "length",
+        "prompt_ids_verified": true,
+        "output_ids_sha256": "7867b7aa26e5a02aea3bcb0a80556e02bdda1ab440c72dec40162c15f9ef0d2d",
+        "output_text_sha256": "4bd0b4302b1915bb558509467b25e76fc0f8d208357d526662a40db548cf4739",
+        "wall_s": 14.120201850004378,
+        "ttft_client_s": 1.8474321450048592
+      }
+    ]
+  },
+  {
+    "window": "prose-32768",
+    "domain": "prose",
+    "context_tokens": 32768,
+    "concurrency": 4,
+    "cache_mode": "cold",
+    "wall_s": 95.26596481500019,
+    "native": {
+      "prefill_seconds": 69.00705214399204,
+      "generation_tokens": 2048.0,
+      "completed": 4.0,
+      "prompt_tokens": 131072.0,
+      "decode_seconds": 145.55650399900333,
+      "prefill_tokens": 131072.0,
+      "preemptions": 0.0,
+      "draft_tokens": 5509.0,
+      "accepted_tokens": 1257.0,
+      "cached_tokens": 0.0
+    },
+    "speculative_rounds_sum": 787.0,
+    "accepted_tokens_by_position": {
+      "0": 505.0,
+      "1": 290.0,
+      "2": 173.0,
+      "3": 110.0,
+      "4": 83.0,
+      "5": 59.0,
+      "6": 37.0
+    },
+    "accepted_per_round_by_position": {
+      "0": 0.6416772554002541,
+      "1": 0.3684879288437103,
+      "2": 0.21982210927573062,
+      "3": 0.1397712833545108,
+      "4": 0.10546378653113088,
+      "5": 0.07496823379923762,
+      "6": 0.04701397712833545
+    },
+    "generated_tokens_per_round": 2.602287166454892,
+    "mean_acceptance_length": 2.5972045743329097,
+    "native_prefill_tps": 1899.4000747416583,
+    "post_first_completion_tokens": 2044.0,
+    "prefill_computed_tokens": 131072.0,
+    "prefill_recompute_excess": 0,
+    "native_request_weighted_decode_tps": 14.042656589320089,
+    "wave_aggregate_output_tps": 21.497709113397132,
+    "client_decode_interval_union_s": 79.61749338499794,
+    "client_aggregate_decode_tps": 25.672749958555517,
+    "native_ttft_seconds_sum": 178.2776460647583,
+    "client_ttft_s": [
+      81.67977310200513,
+      48.875616474004346,
+      15.643917930996395,
+      32.142474674998084
+    ],
+    "energy_j": null,
+    "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+    "joules_per_output_token": null,
+    "load_classification": "no_observed_preemption",
+    "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows.",
+    "mean_client_e2e_s": 80.96524515474812,
+    "mean_client_ttft_s": 44.58544554550099,
+    "responses": [
+      {
+        "usage": {
+          "prompt_tokens": 32768,
+          "total_tokens": 33280,
+          "completion_tokens": 512
+        },
+        "finish_reason": "length",
+        "prompt_ids_verified": true,
+        "output_ids_sha256": "8d6725092637aafe37e57da9b72bf5d6e7db5b01fffa4f1c182dbb4e71d1658d",
+        "output_text_sha256": "b09fc9323c50cd53223abe229556a9520408f7d62e556179c0f4c2664340dd00",
+        "wall_s": 95.26147630599735,
+        "ttft_client_s": 81.67977310200513
+      },
+      {
+        "usage": {
+          "prompt_tokens": 32768,
+          "total_tokens": 33280,
+          "completion_tokens": 512
+        },
+        "finish_reason": "length",
+        "prompt_ids_verified": true,
+        "output_ids_sha256": "762436a8be25186790f092cebc69ff56acd531e965c13723c640329ad14da045",
+        "output_text_sha256": "f804aecdd4f8783b7c6a56842bed61cfc57ed60da990755d177a8acc50561bfb",
+        "wall_s": 81.93863869000052,
+        "ttft_client_s": 48.875616474004346
+      },
+      {
+        "usage": {
+          "prompt_tokens": 32768,
+          "total_tokens": 33280,
+          "completion_tokens": 512
+        },
+        "finish_reason": "length",
+        "prompt_ids_verified": true,
+        "output_ids_sha256": "883cb7090b7b2300010014b18a7f0e145e0ef0d0fc0d3558971b4c61a9fd2985",
+        "output_text_sha256": "abaa6c3476b189a3a1f2a43943621b7517af93d1d36e9e481c892e43cfc9bd8e",
+        "wall_s": 81.78286818700144,
+        "ttft_client_s": 15.643917930996395
+      },
+      {
+        "usage": {
+          "prompt_tokens": 32768,
+          "total_tokens": 33280,
+          "completion_tokens": 512
+        },
+        "finish_reason": "length",
+        "prompt_ids_verified": true,
+        "output_ids_sha256": "013091af4e7aeb78cc21e553f21cd4052f7ea685fbd068ce0b6cd0cfbb627158",
+        "output_text_sha256": "7f5945d63d98c7ff68c6d70f3ab140b08c8a6d5e01f5b44a1dfa2a075a290ef0",
+        "wall_s": 64.87799743599317,
+        "ttft_client_s": 32.142474674998084
+      }
+    ]
+  },
+  {
+    "window": "prose-32768",
+    "domain": "prose",
+    "context_tokens": 32768,
+    "concurrency": 4,
+    "cache_mode": "warm",
+    "wall_s": 36.54594942901167,
+    "native": {
+      "prefill_seconds": 10.082166544016218,
+      "generation_tokens": 2048.0,
+      "completed": 4.0,
+      "prompt_tokens": 131072.0,
+      "decode_seconds": 77.6893053699896,
+      "prefill_tokens": 11264.0,
+      "preemptions": 0.0,
+      "draft_tokens": 5593.0,
+      "accepted_tokens": 1249.0,
+      "cached_tokens": 119808.0
+    },
+    "speculative_rounds_sum": 799.0,
+    "accepted_tokens_by_position": {
+      "0": 512.0,
+      "1": 298.0,
+      "2": 174.0,
+      "3": 106.0,
+      "4": 74.0,
+      "5": 52.0,
+      "6": 33.0
+    },
+    "accepted_per_round_by_position": {
+      "0": 0.6408010012515645,
+      "1": 0.37296620775969963,
+      "2": 0.21777221526908636,
+      "3": 0.13266583229036297,
+      "4": 0.09261576971214018,
+      "5": 0.06508135168961202,
+      "6": 0.04130162703379224
+    },
+    "generated_tokens_per_round": 2.563204005006258,
+    "mean_acceptance_length": 2.563204005006258,
+    "native_prefill_tps": 1117.2201878261178,
+    "post_first_completion_tokens": 2044.0,
+    "prefill_computed_tokens": 11264.0,
+    "prefill_recompute_excess": 0,
+    "native_request_weighted_decode_tps": 26.309927605422658,
+    "wave_aggregate_output_tps": 56.039042137299454,
+    "client_decode_interval_union_s": 34.87920728899189,
+    "client_aggregate_decode_tps": 58.60224927316797,
+    "native_ttft_seconds_sum": 35.13231372833252,
+    "client_ttft_s": [
+      3.369261590007227,
+      25.076478642993607,
+      5.090374196995981,
+      1.6624668730073608
+    ],
+    "energy_j": null,
+    "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+    "joules_per_output_token": null,
+    "load_classification": "no_observed_preemption",
+    "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows.",
+    "mean_client_e2e_s": 28.212682032000885,
+    "mean_client_ttft_s": 8.799645325751044,
+    "responses": [
+      {
+        "usage": {
+          "prompt_tokens": 32768,
+          "total_tokens": 33280,
+          "completion_tokens": 512
+        },
+        "finish_reason": "length",
+        "prompt_ids_verified": true,
+        "output_ids_sha256": "8d6725092637aafe37e57da9b72bf5d6e7db5b01fffa4f1c182dbb4e71d1658d",
+        "output_text_sha256": "b09fc9323c50cd53223abe229556a9520408f7d62e556179c0f4c2664340dd00",
+        "wall_s": 27.832052602010663,
+        "ttft_client_s": 3.369261590007227
+      },
+      {
+        "usage": {
+          "prompt_tokens": 32768,
+          "total_tokens": 33280,
+          "completion_tokens": 512
+        },
+        "finish_reason": "length",
+        "prompt_ids_verified": true,
+        "output_ids_sha256": "762436a8be25186790f092cebc69ff56acd531e965c13723c640329ad14da045",
+        "output_text_sha256": "f804aecdd4f8783b7c6a56842bed61cfc57ed60da990755d177a8acc50561bfb",
+        "wall_s": 36.541492631993606,
+        "ttft_client_s": 25.076478642993607
+      },
+      {
+        "usage": {
+          "prompt_tokens": 32768,
+          "total_tokens": 33280,
+          "completion_tokens": 512
+        },
+        "finish_reason": "length",
+        "prompt_ids_verified": true,
+        "output_ids_sha256": "c9040dfbabe4da0a720ab0064a2313cf9169a9edc7e29f87f5f243754c7e3de5",
+        "output_text_sha256": "1210c830334014a6443a71a1673c3b262e5823a030eee7efaa00e6cf924852a6",
+        "wall_s": 23.29491138800222,
+        "ttft_client_s": 5.090374196995981
+      },
+      {
+        "usage": {
+          "prompt_tokens": 32768,
+          "total_tokens": 33280,
+          "completion_tokens": 512
+        },
+        "finish_reason": "length",
+        "prompt_ids_verified": true,
+        "output_ids_sha256": "45f1b6cf66143891415978d9f14f9646691f1f2e68707724e83bb0b0303517ee",
+        "output_text_sha256": "7df537d26b601843591602224a5bf8561ffccbb69a13fb69baaff28eaad672dd",
+        "wall_s": 25.18227150599705,
+        "ttft_client_s": 1.6624668730073608
+      }
+    ]
+  }
+]

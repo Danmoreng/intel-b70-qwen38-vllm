@@ -1,0 +1,1118 @@
+{
+  "status": "COMPLETE_BOUNDED_WORK_ORDER_NO_SERVING_PROMOTION",
+  "scope": "BEST_WITHIN_TESTED_CANDIDATES_NOT_GLOBAL_OPTIMUM",
+  "production_choice": "Retain qualified FP16 MTP3, FP8 KV,262144 total tokens,max_num_seqs16 and180W.",
+  "production_restoration": {
+    "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+    "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+    "models_endpoint_healthy": true,
+    "verified_unix": 1791589235.6809351
+  },
+  "production_defaults_modified": false,
+  "preferred_dflash_total_context": 192000,
+  "conditionally_acceptable_total_context": 166000,
+  "context_policy": "User permitted about166K only for a clear speed advantage; actual192K passed, so a166K fallback capacity run is unnecessary.",
+  "mtp4": {
+    "decision": "NO_PROMOTION_FOR_PREDECLARED_MIX",
+    "weighted_gain": {
+      "mean": -0.005268645735494823,
+      "lower": -0.03573695440734448,
+      "upper": 0.02519966293635483,
+      "independent_blocks": 2,
+      "method": "Student t, df=1; descriptive screening interval"
+    },
+    "reason": "Long C1 is faster, but the35/35/30 mix misses5% gain and warm prose/C4 throughput/latency guards. No further depth matrix.",
+    "long_c1_scope": "Potential specialist profile, not a promoted general serving default."
+  },
+  "dflash_candidates": [
+    {
+      "projection": "full-qkv",
+      "image": "sha256:ebbd9575577f65f37cfe517666a5c9abe18601b94d990fd8ad8e1e1416049c05",
+      "max_model_len": 192000,
+      "cells": [
+        {
+          "window": "source-32k",
+          "mode": "cold",
+          "concurrency": 1,
+          "context_tokens": 32722,
+          "mtp3_native_rates": [
+            58.057480887628664,
+            54.757591586603006
+          ],
+          "dflash_native_rate": 53.048632455891116,
+          "relative_native_gain_vs_mean": -0.059547074828887436,
+          "mtp3_client_rates": [
+            58.11755543555108,
+            54.813967831981095
+          ],
+          "dflash_client_rate": 53.100132366003294,
+          "client_gains_vs_each_control": [
+            -0.08633231442626343,
+            -0.03126640040420259
+          ],
+          "ttft_changes_vs_each_control": [
+            -0.04639196179079341,
+            -0.051877459877829546
+          ],
+          "e2e_changes_vs_each_control": [
+            0.0028719648873274384,
+            -0.021433243951877734
+          ],
+          "acceptance_length": 3.1533742331288344,
+          "preemptions": 0.0
+        },
+        {
+          "window": "source-32k",
+          "mode": "warm",
+          "concurrency": 1,
+          "context_tokens": 32722,
+          "mtp3_native_rates": [
+            58.009173318227894,
+            53.84708105432456
+          ],
+          "dflash_native_rate": 52.94786989502137,
+          "relative_native_gain_vs_mean": -0.05328727138187028,
+          "mtp3_client_rates": [
+            58.07023856700735,
+            53.89951105652414
+          ],
+          "dflash_client_rate": 52.99671907652246,
+          "client_gains_vs_each_control": [
+            -0.08736866966080303,
+            -0.016749539324297902
+          ],
+          "ttft_changes_vs_each_control": [
+            0.15131365757922133,
+            0.1486207861220583
+          ],
+          "e2e_changes_vs_each_control": [
+            0.10354318691359476,
+            0.03440809815453427
+          ],
+          "acceptance_length": 3.1533742331288344,
+          "preemptions": 0.0
+        },
+        {
+          "window": "source-64k",
+          "mode": "cold",
+          "concurrency": 1,
+          "context_tokens": 65491,
+          "mtp3_native_rates": [
+            47.389382490827465,
+            47.4995798989784
+          ],
+          "dflash_native_rate": 44.532112524362084,
+          "relative_native_gain_vs_mean": -0.06138477220515448,
+          "mtp3_client_rates": [
+            47.46723207500426,
+            47.579282897478535
+          ],
+          "dflash_client_rate": 44.59987926156306,
+          "client_gains_vs_each_control": [
+            -0.0604069942167772,
+            -0.06261976756428522
+          ],
+          "ttft_changes_vs_each_control": [
+            -0.045344218099725664,
+            -0.04519463325747608
+          ],
+          "e2e_changes_vs_each_control": [
+            -0.021628907742824,
+            -0.021009991759874835
+          ],
+          "acceptance_length": 3.0416666666666665,
+          "preemptions": 0.0
+        },
+        {
+          "window": "source-64k",
+          "mode": "warm",
+          "concurrency": 1,
+          "context_tokens": 65491,
+          "mtp3_native_rates": [
+            47.40208468617552,
+            47.489711754505684
+          ],
+          "dflash_native_rate": 43.22519760962575,
+          "relative_native_gain_vs_mean": -0.08895817697693809,
+          "mtp3_client_rates": [
+            47.47932459457069,
+            47.56933480055846
+          ],
+          "dflash_client_rate": 43.29285652803909,
+          "client_gains_vs_each_control": [
+            -0.08817454970727046,
+            -0.08989989644482399
+          ],
+          "ttft_changes_vs_each_control": [
+            -0.22547457730375975,
+            -0.22411570365650435
+          ],
+          "e2e_changes_vs_each_control": [
+            0.037341534254431874,
+            0.03928108985240897
+          ],
+          "acceptance_length": 2.953757225433526,
+          "preemptions": 0.0
+        },
+        {
+          "window": "prose-32768",
+          "mode": "cold",
+          "concurrency": 4,
+          "context_tokens": 32768,
+          "mtp3_native_rates": [
+            13.426406901895737,
+            13.446800231110359
+          ],
+          "dflash_native_rate": 13.605231667257982,
+          "relative_native_gain_vs_mean": 0.012549905184024102,
+          "mtp3_client_rates": [
+            31.964211240735864,
+            32.36625356820475
+          ],
+          "dflash_client_rate": 25.733949206458178,
+          "client_gains_vs_each_control": [
+            -0.19491367978252216,
+            -0.20491418161111696
+          ],
+          "ttft_changes_vs_each_control": [
+            0.06213108220129482,
+            0.06315602668310949
+          ],
+          "e2e_changes_vs_each_control": [
+            0.02645902569397096,
+            0.027721097722955612
+          ],
+          "acceptance_length": 2.5092024539877302,
+          "preemptions": 0.0
+        },
+        {
+          "window": "prose-32768",
+          "mode": "warm",
+          "concurrency": 4,
+          "context_tokens": 32768,
+          "mtp3_native_rates": [
+            29.97884781701617,
+            30.11455337308722
+          ],
+          "dflash_native_rate": 27.76073463152128,
+          "relative_native_gain_vs_mean": -0.07608043206936621,
+          "mtp3_client_rates": [
+            102.57100438479816,
+            99.4476483676997
+          ],
+          "dflash_client_rate": 59.12297256704683,
+          "client_gains_vs_each_control": [
+            -0.42358980569942306,
+            -0.4054864691375669
+          ],
+          "ttft_changes_vs_each_control": [
+            0.91163431043137,
+            0.9152176065934878
+          ],
+          "e2e_changes_vs_each_control": [
+            0.24372412800096788,
+            0.24874622882497843
+          ],
+          "acceptance_length": 2.6854521625163827,
+          "preemptions": 0.0
+        }
+      ],
+      "weighted_relative_gains": {
+        "cold": -0.038561174906707435,
+        "warm": -0.07261003654639278
+      },
+      "combined_equal_cold_warm_gain": -0.05558560572655011,
+      "observed_c4_guards_clear_against_both_controls": false,
+      "warrants_additional_paired_qualification": false,
+      "promotion_qualified": false,
+      "restoration": {
+        "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "models_endpoint_healthy": true,
+        "verified_unix": 1791588719.6476448
+      },
+      "admission_evidence": {
+        "pool_blocks": 731,
+        "pool_stride_bytes": 13631488,
+        "actual_allocated_pool_bytes": 9964617728,
+        "bounded_group_reservation_blocks_per_request": 124,
+        "full_attention_groups": 4,
+        "reservation_model": [
+          {
+            "full_attention_tokens": 32768,
+            "blocks_per_request": 204,
+            "four_request_blocks": 816,
+            "available_blocks": 731,
+            "four_requests_fit_model": false
+          },
+          {
+            "full_attention_tokens": 33280,
+            "blocks_per_request": 204,
+            "four_request_blocks": 816,
+            "available_blocks": 731,
+            "four_requests_fit_model": false
+          },
+          {
+            "full_attention_tokens": 33288,
+            "blocks_per_request": 208,
+            "four_request_blocks": 832,
+            "available_blocks": 731,
+            "four_requests_fit_model": false
+          }
+        ],
+        "periodic_scheduler_observations": [
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 23.3
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 29.0
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 25.5
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 31.0
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 25.5
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 32.1
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.6
+          },
+          {
+            "running": 1,
+            "waiting": 3,
+            "kv_usage_percent": 24.4
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 42.5
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 51.2
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 71.5
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 78.1
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.0
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 72.6
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 78.4
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 3,
+            "kv_usage_percent": 25.5
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 43.6
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 52.3
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 72.6
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 78.4
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.0
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 68.2
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 77.0
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 53.7
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.0
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 76.4
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          }
+        ],
+        "largest_periodically_observed_running": 3,
+        "observed_running3_waiting1": true,
+        "worker_log": {
+          "path": "benchmark-results/dflash2-w4-matched-panel-v031-full-qkv/worker/worker.log",
+          "sha256": "b55f4bee9f415823386b9e02619a3418713e93c2373782e8329fdc2870c9c4a3"
+        },
+        "limits": [
+          "Periodic logs sample the scheduler; absence of Running4 is not proof it never occurred.",
+          "Reservation model uses actual per-request bounded-group maxima and hypothetical full-attention token counts; it is not an allocator trace or a measured maximum concurrency.",
+          "Configured max_num_seqs16 is preserved. Available KV/state capacity still constrains simultaneous long requests."
+        ]
+      }
+    },
+    {
+      "projection": "kv-only",
+      "image": "sha256:c6429913722c37b0091739698086fea23721de980bd549e1ab6d7d4f0bf46c74",
+      "max_model_len": 192000,
+      "cells": [
+        {
+          "window": "source-32k",
+          "mode": "cold",
+          "concurrency": 1,
+          "context_tokens": 32722,
+          "mtp3_native_rates": [
+            58.057480887628664,
+            54.757591586603006
+          ],
+          "dflash_native_rate": 52.51789170539759,
+          "relative_native_gain_vs_mean": -0.06895611457603223,
+          "mtp3_client_rates": [
+            58.11755543555108,
+            54.813967831981095
+          ],
+          "dflash_client_rate": 52.56823724270915,
+          "client_gains_vs_each_control": [
+            -0.09548437044974811,
+            -0.0409700424562528
+          ],
+          "ttft_changes_vs_each_control": [
+            -0.05040513051833284,
+            -0.055867543408416154
+          ],
+          "e2e_changes_vs_each_control": [
+            0.0041346052559332325,
+            -0.020201204436543496
+          ],
+          "acceptance_length": 3.1272727272727274,
+          "preemptions": 0.0
+        },
+        {
+          "window": "source-32k",
+          "mode": "warm",
+          "concurrency": 1,
+          "context_tokens": 32722,
+          "mtp3_native_rates": [
+            58.009173318227894,
+            53.84708105432456
+          ],
+          "dflash_native_rate": 52.436463477104525,
+          "relative_native_gain_vs_mean": -0.06243126463974458,
+          "mtp3_client_rates": [
+            58.07023856700735,
+            53.89951105652414
+          ],
+          "dflash_client_rate": 52.483524050440366,
+          "client_gains_vs_each_control": [
+            -0.09620615748152073,
+            -0.026270869221778903
+          ],
+          "ttft_changes_vs_each_control": [
+            0.1483907518365244,
+            0.14570471692594
+          ],
+          "e2e_changes_vs_each_control": [
+            0.11234113296180226,
+            0.04265486796591356
+          ],
+          "acceptance_length": 3.1272727272727274,
+          "preemptions": 0.0
+        },
+        {
+          "window": "source-64k",
+          "mode": "cold",
+          "concurrency": 1,
+          "context_tokens": 65491,
+          "mtp3_native_rates": [
+            47.389382490827465,
+            47.4995798989784
+          ],
+          "dflash_native_rate": 49.295653325202885,
+          "relative_native_gain_vs_mean": 0.03901764933829277,
+          "mtp3_client_rates": [
+            47.46723207500426,
+            47.579282897478535
+          ],
+          "dflash_client_rate": 49.37940132687396,
+          "client_gains_vs_each_control": [
+            0.04028398472546768,
+            0.03783408071269645
+          ],
+          "ttft_changes_vs_each_control": [
+            -0.049808941718905375,
+            -0.04966005645339422
+          ],
+          "e2e_changes_vs_each_control": [
+            -0.04741114313525652,
+            -0.04680853695304332
+          ],
+          "acceptance_length": 3.375,
+          "preemptions": 0.0
+        },
+        {
+          "window": "source-64k",
+          "mode": "warm",
+          "concurrency": 1,
+          "context_tokens": 65491,
+          "mtp3_native_rates": [
+            47.40208468617552,
+            47.489711754505684
+          ],
+          "dflash_native_rate": 41.57493867667163,
+          "relative_native_gain_vs_mean": -0.12374008636961642,
+          "mtp3_client_rates": [
+            47.47932459457069,
+            47.56933480055846
+          ],
+          "dflash_client_rate": 41.63689307979401,
+          "client_gains_vs_each_control": [
+            -0.12305211931015492,
+            -0.12471147106927394
+          ],
+          "ttft_changes_vs_each_control": [
+            -0.24000069916819955,
+            -0.23866731101647465
+          ],
+          "e2e_changes_vs_each_control": [
+            0.07024629894294288,
+            0.07224737778899626
+          ],
+          "acceptance_length": 2.85,
+          "preemptions": 0.0
+        },
+        {
+          "window": "prose-32768",
+          "mode": "cold",
+          "concurrency": 4,
+          "context_tokens": 32768,
+          "mtp3_native_rates": [
+            13.426406901895737,
+            13.446800231110359
+          ],
+          "dflash_native_rate": 14.042656589320089,
+          "relative_native_gain_vs_mean": 0.04510462929247305,
+          "mtp3_client_rates": [
+            31.964211240735864,
+            32.36625356820475
+          ],
+          "dflash_client_rate": 25.672749958555517,
+          "client_gains_vs_each_control": [
+            -0.19682829758559395,
+            -0.20680501669877072
+          ],
+          "ttft_changes_vs_each_control": [
+            0.055237283404974136,
+            0.056255575448918016
+          ],
+          "e2e_changes_vs_each_control": [
+            0.008263127732840658,
+            0.009502827184562967
+          ],
+          "acceptance_length": 2.5972045743329097,
+          "preemptions": 0.0
+        },
+        {
+          "window": "prose-32768",
+          "mode": "warm",
+          "concurrency": 4,
+          "context_tokens": 32768,
+          "mtp3_native_rates": [
+            29.97884781701617,
+            30.11455337308722
+          ],
+          "dflash_native_rate": 26.309927605422658,
+          "relative_native_gain_vs_mean": -0.12436550155674786,
+          "mtp3_client_rates": [
+            102.57100438479816,
+            99.4476483676997
+          ],
+          "dflash_client_rate": 58.60224927316797,
+          "client_gains_vs_each_control": [
+            -0.42866651618892315,
+            -0.41072262406355897
+          ],
+          "ttft_changes_vs_each_control": [
+            1.1095151987024665,
+            1.113469416135263
+          ],
+          "e2e_changes_vs_each_control": [
+            0.3305449699020815,
+            0.3359176492923803
+          ],
+          "acceptance_length": 2.563204005006258,
+          "preemptions": 0.0
+        }
+      ],
+      "weighted_relative_gains": {
+        "cold": 0.0030529259545331033,
+        "warm": -0.10246962332030071
+      },
+      "combined_equal_cold_warm_gain": -0.049708348682883804,
+      "observed_c4_guards_clear_against_both_controls": false,
+      "warrants_additional_paired_qualification": false,
+      "promotion_qualified": false,
+      "restoration": {
+        "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "models_endpoint_healthy": true,
+        "verified_unix": 1791589220.4189239
+      },
+      "admission_evidence": {
+        "pool_blocks": 729,
+        "pool_stride_bytes": 13631488,
+        "actual_allocated_pool_bytes": 9937354752,
+        "bounded_group_reservation_blocks_per_request": 124,
+        "full_attention_groups": 4,
+        "reservation_model": [
+          {
+            "full_attention_tokens": 32768,
+            "blocks_per_request": 204,
+            "four_request_blocks": 816,
+            "available_blocks": 729,
+            "four_requests_fit_model": false
+          },
+          {
+            "full_attention_tokens": 33280,
+            "blocks_per_request": 204,
+            "four_request_blocks": 816,
+            "available_blocks": 729,
+            "four_requests_fit_model": false
+          },
+          {
+            "full_attention_tokens": 33288,
+            "blocks_per_request": 208,
+            "four_request_blocks": 832,
+            "available_blocks": 729,
+            "four_requests_fit_model": false
+          }
+        ],
+        "periodic_scheduler_observations": [
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 22.3
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 28.8
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.5
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 31.0
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.7
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 26.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 32.1
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.7
+          },
+          {
+            "running": 0,
+            "waiting": 0,
+            "kv_usage_percent": 0.0
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 35.7
+          },
+          {
+            "running": 1,
+            "waiting": 3,
+            "kv_usage_percent": 25.5
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 43.7
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 52.5
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 72.8
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 78.6
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.2
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 72.8
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 78.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 3,
+            "kv_usage_percent": 24.5
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 42.6
+          },
+          {
+            "running": 2,
+            "waiting": 2,
+            "kv_usage_percent": 51.4
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 71.7
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 78.3
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.2
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 65.1
+          },
+          {
+            "running": 3,
+            "waiting": 0,
+            "kv_usage_percent": 78.6
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          },
+          {
+            "running": 1,
+            "waiting": 3,
+            "kv_usage_percent": 26.9
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.2
+          },
+          {
+            "running": 3,
+            "waiting": 1,
+            "kv_usage_percent": 74.2
+          },
+          {
+            "running": 1,
+            "waiting": 0,
+            "kv_usage_percent": 24.7
+          }
+        ],
+        "largest_periodically_observed_running": 3,
+        "observed_running3_waiting1": true,
+        "worker_log": {
+          "path": "benchmark-results/dflash2-w4-matched-panel-v031/worker/worker.log",
+          "sha256": "3e26cae3c146ba0f3bd3a329c8d82df573a464bc4a1824b9d5b86796ef283aa6"
+        },
+        "limits": [
+          "Periodic logs sample the scheduler; absence of Running4 is not proof it never occurred.",
+          "Reservation model uses actual per-request bounded-group maxima and hypothetical full-attention token counts; it is not an allocator trace or a measured maximum concurrency.",
+          "Configured max_num_seqs16 is preserved. Available KV/state capacity still constrains simultaneous long requests."
+        ]
+      }
+    }
+  ],
+  "actual_capacity_gates": [
+    {
+      "candidate": "pro-w4-group4-k7",
+      "usage": {
+        "prompt_tokens": 190976,
+        "total_tokens": 192000,
+        "completion_tokens": 1024,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": null
+      },
+      "context_end": {
+        "status": "PASS_STOCHASTIC_CONTEXT_END_AND_CUSTOM_STOP",
+        "preemptions": 0,
+        "scope": "Near-limit sampling and custom stop; not a general semantic quality score",
+        "sampling_usage": {
+          "prompt_tokens": 191984,
+          "total_tokens": 192000,
+          "completion_tokens": 16,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "sampling_finish": "length",
+        "custom_stop_usage": {
+          "prompt_tokens": 191984,
+          "total_tokens": 191985,
+          "completion_tokens": 1,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "custom_stop_finish": "stop"
+      }
+    },
+    {
+      "candidate": "pro-w4-group4-kv-only-k7",
+      "usage": {
+        "prompt_tokens": 190976,
+        "total_tokens": 192000,
+        "completion_tokens": 1024,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": null
+      },
+      "context_end": {
+        "status": "PASS_STOCHASTIC_CONTEXT_END_AND_CUSTOM_STOP",
+        "preemptions": 0,
+        "scope": "Near-limit sampling and custom stop; not a general semantic quality score",
+        "sampling_usage": {
+          "prompt_tokens": 191984,
+          "total_tokens": 192000,
+          "completion_tokens": 16,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "sampling_finish": "length",
+        "custom_stop_usage": {
+          "prompt_tokens": 191984,
+          "total_tokens": 191985,
+          "completion_tokens": 1,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "custom_stop_finish": "stop"
+      }
+    }
+  ],
+  "concurrency_scope": "max_num_seqs16 is unchanged, but long-request KV/state admission is constrained by available pool capacity. Actual periodic scheduler observations and an explicitly hypothetical reservation model are included per DFlash candidate; C4 means four submitted requests, not a guaranteed four-request simultaneous decode batch.",
+  "grouping": {
+    "decision": "192K_CAPACITY_ENABLED_SPEED_NEUTRALITY_NOT_PROVEN",
+    "deterministic_outputs_all_equal": true,
+    "greedy_controls": [
+      {
+        "fixture": "phase-32k-c1-r1",
+        "mode": "cold",
+        "exact_tokens_equal": true,
+        "first_token_difference": null,
+        "group5_tps": 56.68182939620419,
+        "group4_tps": 56.48883232830655,
+        "relative_decode_gain": -0.0034049195298302415,
+        "grouping_counter_summaries": [
+          {
+            "rounds": 77.0,
+            "accepted_tokens": 180.0,
+            "useful_counter_estimate": 3.3376623376623376,
+            "native_decode_time_per_counter_round_ms": 58.425924973940326
+          },
+          {
+            "rounds": 77.0,
+            "accepted_tokens": 180.0,
+            "useful_counter_estimate": 3.3376623376623376,
+            "native_decode_time_per_counter_round_ms": 58.62554022078493
+          }
+        ],
+        "counter_note": "Decode-time per round is a counter equivalent, not a GPU kernel measurement; token-limit tails and prefix-dependent proposals can affect it."
+      },
+      {
+        "fixture": "phase-32k-c1-r1",
+        "mode": "warm",
+        "exact_tokens_equal": true,
+        "first_token_difference": null,
+        "group5_tps": 56.27414809341902,
+        "group4_tps": 55.82643239913178,
+        "relative_decode_gain": -0.00795597462522224,
+        "grouping_counter_summaries": [
+          {
+            "rounds": 77.0,
+            "accepted_tokens": 180.0,
+            "useful_counter_estimate": 3.3376623376623376,
+            "native_decode_time_per_counter_round_ms": 58.84919494810793
+          },
+          {
+            "rounds": 77.0,
+            "accepted_tokens": 180.0,
+            "useful_counter_estimate": 3.3376623376623376,
+            "native_decode_time_per_counter_round_ms": 59.32115253239459
+          }
+        ],
+        "counter_note": "Decode-time per round is a counter equivalent, not a GPU kernel measurement; token-limit tails and prefix-dependent proposals can affect it."
+      },
+      {
+        "fixture": "phase-64k-c1-r1",
+        "mode": "cold",
+        "exact_tokens_equal": true,
+        "first_token_difference": null,
+        "group5_tps": 43.89737419698141,
+        "group4_tps": 43.733971214417046,
+        "relative_decode_gain": -0.0037223862600783697,
+        "grouping_counter_summaries": [
+          {
+            "rounds": 86.0,
+            "accepted_tokens": 170.0,
+            "useful_counter_estimate": 2.9767441860465116,
+            "native_decode_time_per_counter_round_ms": 67.54655223258577
+          },
+          {
+            "rounds": 86.0,
+            "accepted_tokens": 170.0,
+            "useful_counter_estimate": 2.9767441860465116,
+            "native_decode_time_per_counter_round_ms": 67.79892602326284
+          }
+        ],
+        "counter_note": "Decode-time per round is a counter equivalent, not a GPU kernel measurement; token-limit tails and prefix-dependent proposals can affect it."
+      },
+      {
+        "fixture": "phase-64k-c1-r1",
+        "mode": "warm",
+        "exact_tokens_equal": true,
+        "first_token_difference": null,
+        "group5_tps": 44.75416905866636,
+        "group4_tps": 43.64489760956057,
+        "relative_decode_gain": -0.02478587967194057,
+        "grouping_counter_summaries": [
+          {
+            "rounds": 84.0,
+            "accepted_tokens": 172.0,
+            "useful_counter_estimate": 3.0476190476190474,
+            "native_decode_time_per_counter_round_ms": 67.83087139289516
+          },
+          {
+            "rounds": 86.0,
+            "accepted_tokens": 170.0,
+            "useful_counter_estimate": 2.9767441860465116,
+            "native_decode_time_per_counter_round_ms": 67.9372948837036
+          }
+        ],
+        "counter_note": "Decode-time per round is a counter equivalent, not a GPU kernel measurement; token-limit tails and prefix-dependent proposals can affect it."
+      }
+    ],
+    "stochastic_cases": [
+      {
+        "name": "phase-32k-c1",
+        "all_rates": [
+          [
+            55.745996239474316,
+            53.358577906978184,
+            57.753997945063084
+          ],
+          [
+            55.508318115503535,
+            54.31263757042574,
+            55.74735983585332
+          ]
+        ],
+        "medians": [
+          55.745996239474316,
+          55.508318115503535
+        ],
+        "median_ratio_gain": -0.004263590930364991
+      },
+      {
+        "name": "phase-64k-c1",
+        "all_rates": [
+          [
+            45.86684703837726,
+            40.50741718855562,
+            62.1987033628598
+          ],
+          [
+            49.1083818418959,
+            40.90300433049342,
+            68.01061010136266
+          ]
+        ],
+        "medians": [
+          45.86684703837726,
+          49.1083818418959
+        ],
+        "median_ratio_gain": 0.07067271924766083
+      }
+    ],
+    "reason": "Memory padding is reduced. Small negative greedy rate differences and stochastic variance do not establish zero overhead or an isolated speed gain."
+  },
+  "static_b8_v4": {
+    "decision": "CONDITIONAL_DEVELOPMENT_NOT_TRIGGERED_BY_LONG_C1_PROFILE",
+    "implemented": false,
+    "reason": "Measured prefix truncation needs about14\u201317% round-time savings. C1 EXL3 DPAS retains MB8 for five/eight target rows, M04 retains tile8, and the eight-row draft backbone remains. The profile does not supply an evidence-backed long-C1 saving of that size.",
+    "limits": "This is a development stop decision, not proof B8/V4 is universally slower. C4 MB24 versusMB32,64K split differences, shortened draft-head work and potentially smaller target speculative-state reservations could help. B8/V4 and its C4 admission behavior were not implemented or measured."
+  },
+  "conditional_diagnostics": {
+    "fp16_draft_kv": "No relevant same-stored-KV attention error triggered a separate dtype experiment.",
+    "original_target_teacher_forcing": "Not measured against original unquantized target weights; EXL3 dequantization would not isolate original quantization loss.",
+    "thinking_task_mix": "No causal task/thinking acceptance claim or extra task matrix from these frozen fixtures."
+  },
+  "correctness_scope": [
+    "Independent actual eager feature/FC/KV/norm/conv/selector/RoPE/paged-KV replay and small-epsilon probes pass their explicitly scoped frozen bounds.",
+    "Ideal FP64 full RoPE rotation exceeds original bounds at32K. Cache-theta and kernel-with-actual-FP16-coefficients gates are separate; ideal errors and failed attempts remain published.",
+    "Actual greedy W4 acceptance/residual/bonus decisions pass scalar Philox/Murmur/Gumbel replay. Older probabilistic captures have acceptance/q coverage but lack attested Gumbel-mode winner coverage.",
+    "Graph proposal/sampler and synthetic paged-attention gates are separate from eager branches. Actual graph-internal model branch equivalence and broad semantic qualification are not claimed.",
+    "A changed draft is not promoted solely by finite outputs, acceptance, capacity or these observational rates."
+  ],
+  "power": {
+    "selected_cap_w": 180,
+    "remeasured": false,
+    "historical_comparisons_retained": true
+  },
+  "source_sha256": "6004ddbb2202b83ac2bf0e52296765f5e1fa2a6b43691cbc3a53aea083f28863"
+}

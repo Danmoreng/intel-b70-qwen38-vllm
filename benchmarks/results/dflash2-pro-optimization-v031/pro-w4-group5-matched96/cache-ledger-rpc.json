@@ -1,0 +1,121 @@
+{
+  "results": [
+    {
+      "schema": 1,
+      "status": "ACTUAL_WORKER_LEDGER_CPU_CONTEXT_MODEL",
+      "configured_max_model_len": 96000,
+      "num_pool_blocks": 585,
+      "pool_stride_bytes": 17039360,
+      "total_device_kv_allocation_bytes": 9968025600,
+      "actual_unique_kv_storages": [
+        {
+          "device": "xpu:0",
+          "bytes": 9968025600
+        }
+      ],
+      "speculator_buffers": {
+        "idx_mapping": {
+          "shape": [
+            16
+          ],
+          "dtype": "torch.int32",
+          "logical_bytes": 64
+        },
+        "temperature": {
+          "shape": [
+            16
+          ],
+          "dtype": "torch.float32",
+          "logical_bytes": 64
+        },
+        "seeds": {
+          "shape": [
+            16
+          ],
+          "dtype": "torch.int64",
+          "logical_bytes": 128
+        },
+        "draft_tokens": {
+          "shape": [
+            16,
+            7
+          ],
+          "dtype": "torch.int64",
+          "logical_bytes": 896
+        },
+        "draft_is_prefilling": {
+          "shape": [
+            16
+          ],
+          "dtype": "torch.bool",
+          "logical_bytes": 16
+        },
+        "draft_token_confidence_probs": {
+          "shape": [
+            16,
+            7
+          ],
+          "dtype": "torch.float32",
+          "logical_bytes": 448
+        },
+        "hidden_states": {
+          "shape": [
+            4096,
+            5120
+          ],
+          "dtype": "torch.float16",
+          "logical_bytes": 41943040
+        },
+        "context_positions": {
+          "shape": [
+            4096
+          ],
+          "dtype": "torch.int64",
+          "logical_bytes": 32768
+        },
+        "sample_indices": {
+          "shape": [
+            112
+          ],
+          "dtype": "torch.int64",
+          "logical_bytes": 896
+        },
+        "sample_pos": {
+          "shape": [
+            112
+          ],
+          "dtype": "torch.int64",
+          "logical_bytes": 896
+        },
+        "sample_idx_mapping": {
+          "shape": [
+            112
+          ],
+          "dtype": "torch.int32",
+          "logical_bytes": 448
+        },
+        "sample_col": {
+          "shape": [
+            112
+          ],
+          "dtype": "torch.int32",
+          "logical_bytes": 448
+        },
+        "_context_slot_mappings": {
+          "shape": [
+            1,
+            4096
+          ],
+          "dtype": "torch.int64",
+          "logical_bytes": 32768
+        }
+      },
+      "torch_allocated_bytes": 28441062912,
+      "torch_reserved_bytes": 28758245376,
+      "device_free_bytes": 2809749504,
+      "device_total_bytes": 34242297856,
+      "graph_scratch_scope": "Included in device/allocator residency; not independently attributed by this ledger",
+      "prefix_marker_consumer": "KVCacheCoordinator.eagle_group_ids; empty DFlash markers conservatively flag all groups for last-block drop"
+    }
+  ]
+}

@@ -1,0 +1,1862 @@
+{
+  "status": "COMPLETE_BOUNDED_ABBA_SCREEN",
+  "image": "sha256:b0b9244420a2586f8328b14aeff21d94673632ad7342032a285f3b877f2de49b",
+  "production_image": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "panel": {
+    "panel_raw_sha256": "7efb48e8800273a279fade466fd10a0c91a049dff4ba741a162b9316f84ff11c",
+    "panel_gzip_sha256": "93ec00d10f0f47e0d7d938ba65bd092a2136ebfd42cf27c7c8e6bb6d7bfc9260",
+    "source_prose_panel_sha256": "cfcbcc54c2d8aa6f50c1a577c394f21c8e38b083dc7e88f1d2161fe109ed20e4",
+    "windows": [
+      {
+        "name": "source-32k",
+        "domain": "code",
+        "concurrency": 1,
+        "weight": 0.35,
+        "context_tokens": 32722,
+        "source_prompt_sha256": "12e77a588e47c5aa865da72dbfc12830741604d06d1595777a5968f8c6c49d7d"
+      },
+      {
+        "name": "source-64k",
+        "domain": "code",
+        "concurrency": 1,
+        "weight": 0.35,
+        "context_tokens": 65491,
+        "source_prompt_sha256": "21fe97c7452297aaafce0e25023f7f7b1822788f3fba2d2936e6ef52c01d56f3"
+      },
+      {
+        "name": "prose-32768",
+        "domain": "prose",
+        "context_tokens": 32768,
+        "ids_sha256": "b67588b06a5f1cf21394860b10c073e00bee54716690c23e54c209ba550187ed",
+        "recipe": "Repeat eight frozen prose source windows, followed by a fixed continuation instruction",
+        "concurrency": 4,
+        "weight": 0.3
+      }
+    ]
+  },
+  "order": [
+    3,
+    4,
+    4,
+    3
+  ],
+  "weights": {
+    "source-32k": 0.35,
+    "source-64k": 0.35,
+    "prose-32768": 0.3
+  },
+  "minimum_weighted_gain": 0.05,
+  "confidence_gate": "positive paired 95% CI; 2 independent AB/BA blocks are screening only",
+  "warm_cold_separate": true,
+  "power_w": 180,
+  "power_remeasured": false,
+  "pairing_reason": "vLLM 0.31 and wide M04 source identity differs from historical v0.30 ABBA; only three bounded cells",
+  "started_unix": 1791583503.6905844,
+  "arms": [
+    {
+      "index": 0,
+      "depth": 3,
+      "status": "COMPLETE",
+      "waves": [
+        {
+          "window": "source-32k",
+          "domain": "code",
+          "context_tokens": 32722,
+          "concurrency": 1,
+          "cache_mode": "warmup",
+          "wall_s": 25.568802375011728,
+          "native": {
+            "prefill_seconds": 16.281600778995198,
+            "decode_seconds": 9.274973887004307,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 32722.0,
+            "prompt_tokens": 32722.0,
+            "accepted_tokens": 323.0,
+            "draft_tokens": 564.0
+          },
+          "speculative_rounds_sum": 188.0,
+          "accepted_tokens_by_position": {
+            "0": 139.0,
+            "1": 99.0,
+            "2": 85.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7393617021276596,
+            "1": 0.526595744680851,
+            "2": 0.4521276595744681
+          },
+          "generated_tokens_per_round": 2.723404255319149,
+          "mean_acceptance_length": 2.7180851063829787,
+          "native_prefill_tps": 2009.753245038072,
+          "native_request_weighted_decode_tps": 55.20231175177671,
+          "wave_aggregate_output_tps": 20.024402883272124,
+          "client_decode_interval_union_s": 9.264638837994426,
+          "client_aggregate_decode_tps": 55.26389198252178,
+          "native_ttft_seconds_sum": 16.286733388900757,
+          "client_ttft_s": [
+            16.300899287001812
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-32k",
+          "domain": "code",
+          "context_tokens": 32722,
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "wall_s": 25.145667545002652,
+          "native": {
+            "prefill_seconds": 16.33502396500262,
+            "decode_seconds": 8.801621981998323,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 32722.0,
+            "prompt_tokens": 32722.0,
+            "accepted_tokens": 334.0,
+            "draft_tokens": 534.0
+          },
+          "speculative_rounds_sum": 178.0,
+          "accepted_tokens_by_position": {
+            "0": 140.0,
+            "1": 108.0,
+            "2": 86.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7865168539325843,
+            "1": 0.6067415730337079,
+            "2": 0.48314606741573035
+          },
+          "generated_tokens_per_round": 2.8764044943820224,
+          "mean_acceptance_length": 2.8764044943820224,
+          "native_prefill_tps": 2003.1804097812203,
+          "native_request_weighted_decode_tps": 58.17109631010935,
+          "wave_aggregate_output_tps": 20.3613604245616,
+          "client_decode_interval_union_s": 8.792523982992861,
+          "client_aggregate_decode_tps": 58.23128842074785,
+          "native_ttft_seconds_sum": 16.339022636413574,
+          "client_ttft_s": [
+            16.351769503002288
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-32k",
+          "domain": "code",
+          "context_tokens": 32722,
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "wall_s": 10.239687959008734,
+          "native": {
+            "prefill_seconds": 1.3971986480028136,
+            "decode_seconds": 8.808951597995474,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 30400.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 2322.0,
+            "prompt_tokens": 32722.0,
+            "accepted_tokens": 335.0,
+            "draft_tokens": 531.0
+          },
+          "speculative_rounds_sum": 177.0,
+          "accepted_tokens_by_position": {
+            "0": 137.0,
+            "1": 105.0,
+            "2": 93.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7740112994350282,
+            "1": 0.5932203389830508,
+            "2": 0.5254237288135594
+          },
+          "generated_tokens_per_round": 2.8926553672316384,
+          "mean_acceptance_length": 2.8926553672316384,
+          "native_prefill_tps": 1661.8968271398758,
+          "native_request_weighted_decode_tps": 58.12269420534771,
+          "wave_aggregate_output_tps": 50.001523684083516,
+          "client_decode_interval_union_s": 8.799688319006236,
+          "client_aggregate_decode_tps": 58.18387895559249,
+          "native_ttft_seconds_sum": 1.426546335220337,
+          "client_ttft_s": [
+            1.4387501199962571
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-64k",
+          "domain": "code",
+          "context_tokens": 65491,
+          "concurrency": 1,
+          "cache_mode": "warmup",
+          "wall_s": 49.70547751900449,
+          "native": {
+            "prefill_seconds": 38.88267573600751,
+            "decode_seconds": 10.789250349000213,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 65491.0,
+            "prompt_tokens": 65491.0,
+            "accepted_tokens": 314.0,
+            "draft_tokens": 591.0
+          },
+          "speculative_rounds_sum": 197.0,
+          "accepted_tokens_by_position": {
+            "0": 138.0,
+            "1": 101.0,
+            "2": 75.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.700507614213198,
+            "1": 0.5126903553299492,
+            "2": 0.38071065989847713
+          },
+          "generated_tokens_per_round": 2.598984771573604,
+          "mean_acceptance_length": 2.593908629441624,
+          "native_prefill_tps": 1684.323384652042,
+          "native_request_weighted_decode_tps": 47.45464081732467,
+          "wave_aggregate_output_tps": 10.300675610736079,
+          "client_decode_interval_union_s": 10.771554042003118,
+          "client_aggregate_decode_tps": 47.53260281696425,
+          "native_ttft_seconds_sum": 38.90793299674988,
+          "client_ttft_s": [
+            38.93166011798894
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-64k",
+          "domain": "code",
+          "context_tokens": 65491,
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "wall_s": 49.76973727600125,
+          "native": {
+            "prefill_seconds": 38.97234554900206,
+            "decode_seconds": 10.783006090001436,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 65491.0,
+            "prompt_tokens": 65491.0,
+            "accepted_tokens": 314.0,
+            "draft_tokens": 591.0
+          },
+          "speculative_rounds_sum": 197.0,
+          "accepted_tokens_by_position": {
+            "0": 138.0,
+            "1": 101.0,
+            "2": 75.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.700507614213198,
+            "1": 0.5126903553299492,
+            "2": 0.38071065989847713
+          },
+          "generated_tokens_per_round": 2.598984771573604,
+          "mean_acceptance_length": 2.593908629441624,
+          "native_prefill_tps": 1680.4479965840032,
+          "native_request_weighted_decode_tps": 47.48212100842204,
+          "wave_aggregate_output_tps": 10.287375984339064,
+          "client_decode_interval_union_s": 10.76532120500633,
+          "client_aggregate_decode_tps": 47.56012294012169,
+          "native_ttft_seconds_sum": 38.97877049446106,
+          "client_ttft_s": [
+            39.00227491199621
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-64k",
+          "domain": "code",
+          "context_tokens": 65491,
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "wall_s": 13.195522028006963,
+          "native": {
+            "prefill_seconds": 2.3775566480035195,
+            "decode_seconds": 10.780116599999019,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 62400.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 3091.0,
+            "prompt_tokens": 65491.0,
+            "accepted_tokens": 314.0,
+            "draft_tokens": 591.0
+          },
+          "speculative_rounds_sum": 197.0,
+          "accepted_tokens_by_position": {
+            "0": 138.0,
+            "1": 101.0,
+            "2": 75.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.700507614213198,
+            "1": 0.5126903553299492,
+            "2": 0.38071065989847713
+          },
+          "generated_tokens_per_round": 2.598984771573604,
+          "mean_acceptance_length": 2.593908629441624,
+          "native_prefill_tps": 1300.074175980443,
+          "native_request_weighted_decode_tps": 47.49484806129524,
+          "wave_aggregate_output_tps": 38.80104166499064,
+          "client_decode_interval_union_s": 10.762579382993863,
+          "client_aggregate_decode_tps": 47.57223912410997,
+          "native_ttft_seconds_sum": 2.407520055770874,
+          "client_ttft_s": [
+            2.4308340060088085
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "prose-32768",
+          "domain": "prose",
+          "context_tokens": 32768,
+          "concurrency": 4,
+          "cache_mode": "warmup",
+          "wall_s": 82.47656524801278,
+          "native": {
+            "prefill_seconds": 82.92193619201134,
+            "decode_seconds": 155.78569048200734,
+            "completed": 4.0,
+            "generation_tokens": 2048.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 131072.0,
+            "prompt_tokens": 131072.0,
+            "accepted_tokens": 1185.0,
+            "draft_tokens": 2589.0
+          },
+          "speculative_rounds_sum": 863.0,
+          "accepted_tokens_by_position": {
+            "0": 593.0,
+            "1": 365.0,
+            "2": 227.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.6871378910776361,
+            "1": 0.42294322132097334,
+            "2": 0.2630359212050985
+          },
+          "generated_tokens_per_round": 2.373117033603708,
+          "mean_acceptance_length": 2.373117033603708,
+          "native_prefill_tps": 1580.6673845204716,
+          "native_request_weighted_decode_tps": 13.146265190746362,
+          "wave_aggregate_output_tps": 24.831295942568914,
+          "client_decode_interval_union_s": 64.81676288000017,
+          "client_aggregate_decode_tps": 31.596764617690123,
+          "native_ttft_seconds_sum": 168.8582067489624,
+          "client_ttft_s": [
+            34.169339756001136,
+            66.26853630800906,
+            50.84638274299505,
+            17.65483996999683
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "prose-32768",
+          "domain": "prose",
+          "context_tokens": 32768,
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "wall_s": 81.61754438900971,
+          "native": {
+            "prefill_seconds": 82.9690275840112,
+            "decode_seconds": 152.23730480798986,
+            "completed": 4.0,
+            "generation_tokens": 2048.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 131072.0,
+            "prompt_tokens": 131072.0,
+            "accepted_tokens": 1231.0,
+            "draft_tokens": 2448.0
+          },
+          "speculative_rounds_sum": 816.0,
+          "accepted_tokens_by_position": {
+            "0": 588.0,
+            "1": 388.0,
+            "2": 255.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7205882352941176,
+            "1": 0.47549019607843135,
+            "2": 0.3125
+          },
+          "generated_tokens_per_round": 2.5098039215686274,
+          "mean_acceptance_length": 2.508578431372549,
+          "native_prefill_tps": 1579.7702325398668,
+          "native_request_weighted_decode_tps": 13.452681670783987,
+          "wave_aggregate_output_tps": 25.09264417756454,
+          "client_decode_interval_union_s": 63.946517703996506,
+          "client_aggregate_decode_tps": 32.026763513222626,
+          "native_ttft_seconds_sum": 168.93915438652039,
+          "client_ttft_s": [
+            66.29466652299743,
+            34.185442055008025,
+            17.666819406003924,
+            50.85940356498759
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "prose-32768",
+          "domain": "prose",
+          "context_tokens": 32768,
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "wall_s": 22.234299897012534,
+          "native": {
+            "prefill_seconds": 14.177111636017798,
+            "decode_seconds": 68.18140618599136,
+            "completed": 4.0,
+            "generation_tokens": 2048.0,
+            "cached_tokens": 121600.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 9472.0,
+            "prompt_tokens": 131072.0,
+            "accepted_tokens": 1217.0,
+            "draft_tokens": 2484.0
+          },
+          "speculative_rounds_sum": 828.0,
+          "accepted_tokens_by_position": {
+            "0": 590.0,
+            "1": 381.0,
+            "2": 246.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7125603864734299,
+            "1": 0.4601449275362319,
+            "2": 0.2971014492753623
+          },
+          "generated_tokens_per_round": 2.473429951690821,
+          "mean_acceptance_length": 2.4698067632850242,
+          "native_prefill_tps": 668.1191658204777,
+          "native_request_weighted_decode_tps": 30.0375148381845,
+          "wave_aggregate_output_tps": 92.10993867520764,
+          "client_decode_interval_union_s": 19.927659012988443,
+          "client_aggregate_decode_tps": 102.77173042077624,
+          "native_ttft_seconds_sum": 16.603785037994385,
+          "client_ttft_s": [
+            4.3008141339960275,
+            5.784789962999639,
+            4.2979364749917295,
+            2.3020852650079178
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "depth": 4,
+      "status": "COMPLETE",
+      "waves": [
+        {
+          "window": "source-32k",
+          "domain": "code",
+          "context_tokens": 32722,
+          "concurrency": 1,
+          "cache_mode": "warmup",
+          "wall_s": 24.22291190001124,
+          "native": {
+            "prefill_seconds": 15.778204177011503,
+            "decode_seconds": 8.434342385997297,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 32722.0,
+            "prompt_tokens": 32722.0,
+            "accepted_tokens": 356.0,
+            "draft_tokens": 628.0
+          },
+          "speculative_rounds_sum": 157.0,
+          "accepted_tokens_by_position": {
+            "0": 126.0,
+            "1": 97.0,
+            "2": 75.0,
+            "3": 58.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.802547770700637,
+            "1": 0.6178343949044586,
+            "2": 0.47770700636942676,
+            "3": 0.36942675159235666
+          },
+          "generated_tokens_per_round": 3.261146496815287,
+          "mean_acceptance_length": 3.267515923566879,
+          "native_prefill_tps": 2073.873530403114,
+          "native_request_weighted_decode_tps": 60.70419916199073,
+          "wave_aggregate_output_tps": 21.13701284607993,
+          "client_decode_interval_union_s": 8.425451589995646,
+          "client_aggregate_decode_tps": 60.76825610249154,
+          "native_ttft_seconds_sum": 15.783793210983276,
+          "client_ttft_s": [
+            15.796239959992818
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-32k",
+          "domain": "code",
+          "context_tokens": 32722,
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "wall_s": 24.289025217993185,
+          "native": {
+            "prefill_seconds": 15.837356495991116,
+            "decode_seconds": 8.443469575009658,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 32722.0,
+            "prompt_tokens": 32722.0,
+            "accepted_tokens": 356.0,
+            "draft_tokens": 628.0
+          },
+          "speculative_rounds_sum": 157.0,
+          "accepted_tokens_by_position": {
+            "0": 126.0,
+            "1": 97.0,
+            "2": 75.0,
+            "3": 58.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.802547770700637,
+            "1": 0.6178343949044586,
+            "2": 0.47770700636942676,
+            "3": 0.36942675159235666
+          },
+          "generated_tokens_per_round": 3.261146496815287,
+          "mean_acceptance_length": 3.267515923566879,
+          "native_prefill_tps": 2066.127639943122,
+          "native_request_weighted_decode_tps": 60.63857937208406,
+          "wave_aggregate_output_tps": 21.079479122970856,
+          "client_decode_interval_union_s": 8.435199839004781,
+          "client_aggregate_decode_tps": 60.698028472602,
+          "native_ttft_seconds_sum": 15.840753316879272,
+          "client_ttft_s": [
+            15.852545820001978
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-32k",
+          "domain": "code",
+          "context_tokens": 32722,
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "wall_s": 10.092821338999784,
+          "native": {
+            "prefill_seconds": 1.604399663003278,
+            "decode_seconds": 8.450665351992939,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 29952.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 2770.0,
+            "prompt_tokens": 32722.0,
+            "accepted_tokens": 356.0,
+            "draft_tokens": 628.0
+          },
+          "speculative_rounds_sum": 157.0,
+          "accepted_tokens_by_position": {
+            "0": 126.0,
+            "1": 97.0,
+            "2": 75.0,
+            "3": 58.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.802547770700637,
+            "1": 0.6178343949044586,
+            "2": 0.47770700636942676,
+            "3": 0.36942675159235666
+          },
+          "generated_tokens_per_round": 3.261146496815287,
+          "mean_acceptance_length": 3.267515923566879,
+          "native_prefill_tps": 1726.502481816054,
+          "native_request_weighted_decode_tps": 60.58694536747381,
+          "wave_aggregate_output_tps": 50.72912546480686,
+          "client_decode_interval_union_s": 8.441355795002892,
+          "client_aggregate_decode_tps": 60.653763735808106,
+          "native_ttft_seconds_sum": 1.637963056564331,
+          "client_ttft_s": [
+            1.650143794991891
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-64k",
+          "domain": "code",
+          "context_tokens": 65491,
+          "concurrency": 1,
+          "cache_mode": "warmup",
+          "wall_s": 48.06480379799905,
+          "native": {
+            "prefill_seconds": 37.773556518004625,
+            "decode_seconds": 10.253690455007018,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 65491.0,
+            "prompt_tokens": 65491.0,
+            "accepted_tokens": 341.0,
+            "draft_tokens": 680.0
+          },
+          "speculative_rounds_sum": 170.0,
+          "accepted_tokens_by_position": {
+            "0": 131.0,
+            "1": 93.0,
+            "2": 69.0,
+            "3": 48.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7705882352941177,
+            "1": 0.5470588235294118,
+            "2": 0.40588235294117647,
+            "3": 0.2823529411764706
+          },
+          "generated_tokens_per_round": 3.011764705882353,
+          "mean_acceptance_length": 3.0058823529411764,
+          "native_prefill_tps": 1733.7790252496866,
+          "native_request_weighted_decode_tps": 49.93324132873383,
+          "wave_aggregate_output_tps": 10.652285238732519,
+          "client_decode_interval_union_s": 10.235562743007904,
+          "client_aggregate_decode_tps": 50.02167568654262,
+          "native_ttft_seconds_sum": 37.803749322891235,
+          "client_ttft_s": [
+            37.8271206359932
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-64k",
+          "domain": "code",
+          "context_tokens": 65491,
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "wall_s": 48.36399408300349,
+          "native": {
+            "prefill_seconds": 37.787555311006145,
+            "decode_seconds": 10.563371497002663,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 65491.0,
+            "prompt_tokens": 65491.0,
+            "accepted_tokens": 336.0,
+            "draft_tokens": 700.0
+          },
+          "speculative_rounds_sum": 175.0,
+          "accepted_tokens_by_position": {
+            "0": 133.0,
+            "1": 95.0,
+            "2": 64.0,
+            "3": 44.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.76,
+            "1": 0.5428571428571428,
+            "2": 0.3657142857142857,
+            "3": 0.25142857142857145
+          },
+          "generated_tokens_per_round": 2.9257142857142857,
+          "mean_acceptance_length": 2.92,
+          "native_prefill_tps": 1733.1367287717828,
+          "native_request_weighted_decode_tps": 48.46937364129237,
+          "wave_aggregate_output_tps": 10.586387863692417,
+          "client_decode_interval_union_s": 10.546141505008563,
+          "client_aggregate_decode_tps": 48.54856155275761,
+          "native_ttft_seconds_sum": 37.792837381362915,
+          "client_ttft_s": [
+            37.81552998899133
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-64k",
+          "domain": "code",
+          "context_tokens": 65491,
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "wall_s": 11.875483953001094,
+          "native": {
+            "prefill_seconds": 1.8070959100004984,
+            "decode_seconds": 10.025124002990196,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 63232.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 2259.0,
+            "prompt_tokens": 65491.0,
+            "accepted_tokens": 349.0,
+            "draft_tokens": 664.0
+          },
+          "speculative_rounds_sum": 166.0,
+          "accepted_tokens_by_position": {
+            "0": 129.0,
+            "1": 96.0,
+            "2": 70.0,
+            "3": 54.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7771084337349398,
+            "1": 0.5783132530120482,
+            "2": 0.42168674698795183,
+            "3": 0.3253012048192771
+          },
+          "generated_tokens_per_round": 3.0843373493975905,
+          "mean_acceptance_length": 3.102409638554217,
+          "native_prefill_tps": 1250.0720008819992,
+          "native_request_weighted_decode_tps": 51.07168747711107,
+          "wave_aggregate_output_tps": 43.11403240712651,
+          "client_decode_interval_union_s": 10.007939690010971,
+          "client_aggregate_decode_tps": 51.159381037341035,
+          "native_ttft_seconds_sum": 1.8426721096038818,
+          "client_ttft_s": [
+            1.8653719339927193
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "prose-32768",
+          "domain": "prose",
+          "context_tokens": 32768,
+          "concurrency": 4,
+          "cache_mode": "warmup",
+          "wall_s": 86.17024408699945,
+          "native": {
+            "prefill_seconds": 71.8914150929777,
+            "decode_seconds": 174.36442149100185,
+            "completed": 4.0,
+            "generation_tokens": 2048.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 131072.0,
+            "prompt_tokens": 131072.0,
+            "accepted_tokens": 1165.0,
+            "draft_tokens": 3524.0
+          },
+          "speculative_rounds_sum": 881.0,
+          "accepted_tokens_by_position": {
+            "0": 573.0,
+            "1": 317.0,
+            "2": 181.0,
+            "3": 94.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.6503972758229285,
+            "1": 0.3598183881952327,
+            "2": 0.2054483541430193,
+            "3": 0.10669693530079455
+          },
+          "generated_tokens_per_round": 2.3246311010215663,
+          "mean_acceptance_length": 2.322360953461975,
+          "native_prefill_tps": 1823.1940466115964,
+          "native_request_weighted_decode_tps": 11.745515412418513,
+          "wave_aggregate_output_tps": 23.7669049414818,
+          "client_decode_interval_union_s": 70.2772322089877,
+          "client_aggregate_decode_tps": 29.141728204516326,
+          "native_ttft_seconds_sum": 164.81296801567078,
+          "client_ttft_s": [
+            49.59953976300312,
+            66.74442643899238,
+            32.646461614000145,
+            15.88852950000728
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "prose-32768",
+          "domain": "prose",
+          "context_tokens": 32768,
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "wall_s": 84.10248549099197,
+          "native": {
+            "prefill_seconds": 71.9012120480038,
+            "decode_seconds": 163.58982962399023,
+            "completed": 4.0,
+            "generation_tokens": 2048.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 131072.0,
+            "prompt_tokens": 131072.0,
+            "accepted_tokens": 1270.0,
+            "draft_tokens": 3100.0
+          },
+          "speculative_rounds_sum": 775.0,
+          "accepted_tokens_by_position": {
+            "0": 527.0,
+            "1": 353.0,
+            "2": 231.0,
+            "3": 159.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.68,
+            "1": 0.45548387096774196,
+            "2": 0.29806451612903223,
+            "3": 0.20516129032258065
+          },
+          "generated_tokens_per_round": 2.6425806451612903,
+          "mean_acceptance_length": 2.638709677419355,
+          "native_prefill_tps": 1822.9456259025465,
+          "native_request_weighted_decode_tps": 12.519115673066656,
+          "wave_aggregate_output_tps": 24.351242273563447,
+          "client_decode_interval_union_s": 68.19531457900302,
+          "client_aggregate_decode_tps": 30.03138870526698,
+          "native_ttft_seconds_sum": 164.86581134796143,
+          "client_ttft_s": [
+            66.7546084059868,
+            15.902608264004812,
+            49.612787509002374,
+            32.66088855000271
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "prose-32768",
+          "domain": "prose",
+          "context_tokens": 32768,
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "wall_s": 26.29256382600579,
+          "native": {
+            "prefill_seconds": 11.997581278992584,
+            "decode_seconds": 84.46490319998702,
+            "completed": 4.0,
+            "generation_tokens": 2048.0,
+            "cached_tokens": 119808.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 11264.0,
+            "prompt_tokens": 131072.0,
+            "accepted_tokens": 1212.0,
+            "draft_tokens": 3332.0
+          },
+          "speculative_rounds_sum": 833.0,
+          "accepted_tokens_by_position": {
+            "0": 563.0,
+            "1": 352.0,
+            "2": 184.0,
+            "3": 113.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.6758703481392557,
+            "1": 0.4225690276110444,
+            "2": 0.22088835534213686,
+            "3": 0.13565426170468187
+          },
+          "generated_tokens_per_round": 2.458583433373349,
+          "mean_acceptance_length": 2.454981992797119,
+          "native_prefill_tps": 938.8559025412011,
+          "native_request_weighted_decode_tps": 24.24675720223065,
+          "wave_aggregate_output_tps": 77.89274616020282,
+          "client_decode_interval_union_s": 24.648436230010702,
+          "client_aggregate_decode_tps": 83.08843534286599,
+          "native_ttft_seconds_sum": 17.06641936302185,
+          "client_ttft_s": [
+            5.161235854990082,
+            6.936656446006964,
+            3.395850298998994,
+            1.639616747997934
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "depth": 4,
+      "status": "COMPLETE",
+      "waves": [
+        {
+          "window": "source-32k",
+          "domain": "code",
+          "context_tokens": 32722,
+          "concurrency": 1,
+          "cache_mode": "warmup",
+          "wall_s": 24.210547762006172,
+          "native": {
+            "prefill_seconds": 15.778503271008958,
+            "decode_seconds": 8.421747015992878,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 32722.0,
+            "prompt_tokens": 32722.0,
+            "accepted_tokens": 356.0,
+            "draft_tokens": 628.0
+          },
+          "speculative_rounds_sum": 157.0,
+          "accepted_tokens_by_position": {
+            "0": 126.0,
+            "1": 97.0,
+            "2": 75.0,
+            "3": 58.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.802547770700637,
+            "1": 0.6178343949044586,
+            "2": 0.47770700636942676,
+            "3": 0.36942675159235666
+          },
+          "generated_tokens_per_round": 3.261146496815287,
+          "mean_acceptance_length": 3.267515923566879,
+          "native_prefill_tps": 2073.834218491599,
+          "native_request_weighted_decode_tps": 60.79498695789759,
+          "wave_aggregate_output_tps": 21.147807353763643,
+          "client_decode_interval_union_s": 8.412265010992996,
+          "client_aggregate_decode_tps": 60.86351289824175,
+          "native_ttft_seconds_sum": 15.7836172580719,
+          "client_ttft_s": [
+            15.79700145201059
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-32k",
+          "domain": "code",
+          "context_tokens": 32722,
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "wall_s": 24.279936495993752,
+          "native": {
+            "prefill_seconds": 15.837841906002723,
+            "decode_seconds": 8.43394075499964,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 32722.0,
+            "prompt_tokens": 32722.0,
+            "accepted_tokens": 356.0,
+            "draft_tokens": 628.0
+          },
+          "speculative_rounds_sum": 157.0,
+          "accepted_tokens_by_position": {
+            "0": 126.0,
+            "1": 97.0,
+            "2": 75.0,
+            "3": 58.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.802547770700637,
+            "1": 0.6178343949044586,
+            "2": 0.47770700636942676,
+            "3": 0.36942675159235666
+          },
+          "generated_tokens_per_round": 3.261146496815287,
+          "mean_acceptance_length": 3.267515923566879,
+          "native_prefill_tps": 2066.0643157195545,
+          "native_request_weighted_decode_tps": 60.707089944458815,
+          "wave_aggregate_output_tps": 21.087369815999363,
+          "client_decode_interval_union_s": 8.42468188899511,
+          "client_aggregate_decode_tps": 60.773808049513306,
+          "native_ttft_seconds_sum": 15.841355562210083,
+          "client_ttft_s": [
+            15.853991978001432
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-32k",
+          "domain": "code",
+          "context_tokens": 32722,
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "wall_s": 10.08195268799318,
+          "native": {
+            "prefill_seconds": 1.6044796890055295,
+            "decode_seconds": 8.440105397996376,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 29952.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 2770.0,
+            "prompt_tokens": 32722.0,
+            "accepted_tokens": 356.0,
+            "draft_tokens": 628.0
+          },
+          "speculative_rounds_sum": 157.0,
+          "accepted_tokens_by_position": {
+            "0": 126.0,
+            "1": 97.0,
+            "2": 75.0,
+            "3": 58.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.802547770700637,
+            "1": 0.6178343949044586,
+            "2": 0.47770700636942676,
+            "3": 0.36942675159235666
+          },
+          "generated_tokens_per_round": 3.261146496815287,
+          "mean_acceptance_length": 3.267515923566879,
+          "native_prefill_tps": 1726.4163697309687,
+          "native_request_weighted_decode_tps": 60.662749557789326,
+          "wave_aggregate_output_tps": 50.783813001795984,
+          "client_decode_interval_union_s": 8.431159592000768,
+          "client_aggregate_decode_tps": 60.72711522217778,
+          "native_ttft_seconds_sum": 1.6372385025024414,
+          "client_ttft_s": [
+            1.6494689069950255
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-64k",
+          "domain": "code",
+          "context_tokens": 65491,
+          "concurrency": 1,
+          "cache_mode": "warmup",
+          "wall_s": 48.357613593994756,
+          "native": {
+            "prefill_seconds": 37.78080990300805,
+            "decode_seconds": 10.539951359998668,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 65491.0,
+            "prompt_tokens": 65491.0,
+            "accepted_tokens": 336.0,
+            "draft_tokens": 700.0
+          },
+          "speculative_rounds_sum": 175.0,
+          "accepted_tokens_by_position": {
+            "0": 132.0,
+            "1": 95.0,
+            "2": 64.0,
+            "3": 45.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7542857142857143,
+            "1": 0.5428571428571428,
+            "2": 0.3657142857142857,
+            "3": 0.2571428571428571
+          },
+          "generated_tokens_per_round": 2.9257142857142857,
+          "mean_acceptance_length": 2.92,
+          "native_prefill_tps": 1733.4461640216375,
+          "native_request_weighted_decode_tps": 48.57707426840201,
+          "wave_aggregate_output_tps": 10.587784672310262,
+          "client_decode_interval_union_s": 10.521836919011548,
+          "client_aggregate_decode_tps": 48.660704774361655,
+          "native_ttft_seconds_sum": 37.80993938446045,
+          "client_ttft_s": [
+            37.83346006598731
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-64k",
+          "domain": "code",
+          "context_tokens": 65491,
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "wall_s": 48.42933857400203,
+          "native": {
+            "prefill_seconds": 37.80830727799912,
+            "decode_seconds": 10.608160253003007,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 65491.0,
+            "prompt_tokens": 65491.0,
+            "accepted_tokens": 339.0,
+            "draft_tokens": 704.0
+          },
+          "speculative_rounds_sum": 176.0,
+          "accepted_tokens_by_position": {
+            "0": 125.0,
+            "1": 91.0,
+            "2": 69.0,
+            "3": 54.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7102272727272727,
+            "1": 0.5170454545454546,
+            "2": 0.39204545454545453,
+            "3": 0.3068181818181818
+          },
+          "generated_tokens_per_round": 2.909090909090909,
+          "mean_acceptance_length": 2.9261363636363633,
+          "native_prefill_tps": 1732.1854564515138,
+          "native_request_weighted_decode_tps": 48.26473090421694,
+          "wave_aggregate_output_tps": 10.572103916258175,
+          "client_decode_interval_union_s": 10.590285081998445,
+          "client_aggregate_decode_tps": 48.34619616334094,
+          "native_ttft_seconds_sum": 37.813720703125,
+          "client_ttft_s": [
+            37.8367523229972
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-64k",
+          "domain": "code",
+          "context_tokens": 65491,
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "wall_s": 12.196078467997722,
+          "native": {
+            "prefill_seconds": 1.8116283160052262,
+            "decode_seconds": 10.370435777993407,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 63232.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 2259.0,
+            "prompt_tokens": 65491.0,
+            "accepted_tokens": 340.0,
+            "draft_tokens": 684.0
+          },
+          "speculative_rounds_sum": 171.0,
+          "accepted_tokens_by_position": {
+            "0": 131.0,
+            "1": 94.0,
+            "2": 68.0,
+            "3": 47.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7660818713450293,
+            "1": 0.5497076023391813,
+            "2": 0.39766081871345027,
+            "3": 0.27485380116959063
+          },
+          "generated_tokens_per_round": 2.9941520467836256,
+          "mean_acceptance_length": 2.988304093567251,
+          "native_prefill_tps": 1246.9445194924206,
+          "native_request_weighted_decode_tps": 49.37111717971294,
+          "wave_aggregate_output_tps": 41.980707269429125,
+          "client_decode_interval_union_s": 10.349893688995508,
+          "client_aggregate_decode_tps": 49.46910716043223,
+          "native_ttft_seconds_sum": 1.817730188369751,
+          "client_ttft_s": [
+            1.8437897900003009
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "prose-32768",
+          "domain": "prose",
+          "context_tokens": 32768,
+          "concurrency": 4,
+          "cache_mode": "warmup",
+          "wall_s": 85.0838595170062,
+          "native": {
+            "prefill_seconds": 71.91177171099116,
+            "decode_seconds": 169.84675046200573,
+            "completed": 4.0,
+            "generation_tokens": 2048.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 131072.0,
+            "prompt_tokens": 131072.0,
+            "accepted_tokens": 1208.0,
+            "draft_tokens": 3356.0
+          },
+          "speculative_rounds_sum": 839.0,
+          "accepted_tokens_by_position": {
+            "0": 566.0,
+            "1": 345.0,
+            "2": 187.0,
+            "3": 110.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.6746126340882003,
+            "1": 0.41120381406436235,
+            "2": 0.22288438617401668,
+            "3": 0.13110846245530394
+          },
+          "generated_tokens_per_round": 2.441001191895113,
+          "mean_acceptance_length": 2.439809296781883,
+          "native_prefill_tps": 1822.6779410576898,
+          "native_request_weighted_decode_tps": 12.05792865880076,
+          "wave_aggregate_output_tps": 24.07037023973571,
+          "client_decode_interval_union_s": 69.1447205709992,
+          "client_aggregate_decode_tps": 29.619036465655714,
+          "native_ttft_seconds_sum": 164.9995698928833,
+          "client_ttft_s": [
+            49.64920594799332,
+            32.69150275900029,
+            15.934791838997626,
+            66.79217587699532
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "prose-32768",
+          "domain": "prose",
+          "context_tokens": 32768,
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "wall_s": 86.05341900300118,
+          "native": {
+            "prefill_seconds": 71.91589079498954,
+            "decode_seconds": 176.28040376900753,
+            "completed": 4.0,
+            "generation_tokens": 2048.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 131072.0,
+            "prompt_tokens": 131072.0,
+            "accepted_tokens": 1148.0,
+            "draft_tokens": 3596.0
+          },
+          "speculative_rounds_sum": 899.0,
+          "accepted_tokens_by_position": {
+            "0": 579.0,
+            "1": 333.0,
+            "2": 160.0,
+            "3": 76.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.6440489432703004,
+            "1": 0.3704115684093437,
+            "2": 0.17797552836484984,
+            "3": 0.08453837597330367
+          },
+          "generated_tokens_per_round": 2.278086763070078,
+          "mean_acceptance_length": 2.2769744160177976,
+          "native_prefill_tps": 1822.5735446098645,
+          "native_request_weighted_decode_tps": 11.617854033756563,
+          "wave_aggregate_output_tps": 23.799170605046783,
+          "client_decode_interval_union_s": 70.14535239899124,
+          "client_aggregate_decode_tps": 29.196517373679235,
+          "native_ttft_seconds_sum": 164.8955307006836,
+          "client_ttft_s": [
+            32.66445626299537,
+            49.622899223002605,
+            66.7694703629968,
+            15.903526795998914
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "prose-32768",
+          "domain": "prose",
+          "context_tokens": 32768,
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "wall_s": 26.536974272996304,
+          "native": {
+            "prefill_seconds": 11.999040922019049,
+            "decode_seconds": 86.03683587600244,
+            "completed": 4.0,
+            "generation_tokens": 2048.0,
+            "cached_tokens": 119808.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 11264.0,
+            "prompt_tokens": 131072.0,
+            "accepted_tokens": 1197.0,
+            "draft_tokens": 3392.0
+          },
+          "speculative_rounds_sum": 848.0,
+          "accepted_tokens_by_position": {
+            "0": 566.0,
+            "1": 348.0,
+            "2": 182.0,
+            "3": 101.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.6674528301886793,
+            "1": 0.41037735849056606,
+            "2": 0.21462264150943397,
+            "3": 0.11910377358490566
+          },
+          "generated_tokens_per_round": 2.4150943396226414,
+          "mean_acceptance_length": 2.411556603773585,
+          "native_prefill_tps": 938.741693874033,
+          "native_request_weighted_decode_tps": 23.80375776430932,
+          "wave_aggregate_output_tps": 77.17533954441895,
+          "client_decode_interval_union_s": 24.89350550500967,
+          "client_aggregate_decode_tps": 82.27045401813145,
+          "native_ttft_seconds_sum": 17.067964792251587,
+          "client_ttft_s": [
+            3.396751944004791,
+            5.1629777410125826,
+            6.9355760580074275,
+            1.6390130189975025
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "depth": 3,
+      "status": "COMPLETE",
+      "waves": [
+        {
+          "window": "source-32k",
+          "domain": "code",
+          "context_tokens": 32722,
+          "concurrency": 1,
+          "cache_mode": "warmup",
+          "wall_s": 25.39242483799171,
+          "native": {
+            "prefill_seconds": 16.375929770001676,
+            "decode_seconds": 9.006131599002401,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 32722.0,
+            "prompt_tokens": 32722.0,
+            "accepted_tokens": 329.0,
+            "draft_tokens": 546.0
+          },
+          "speculative_rounds_sum": 182.0,
+          "accepted_tokens_by_position": {
+            "0": 137.0,
+            "1": 104.0,
+            "2": 88.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7527472527472527,
+            "1": 0.5714285714285714,
+            "2": 0.4835164835164835
+          },
+          "generated_tokens_per_round": 2.8131868131868134,
+          "mean_acceptance_length": 2.8076923076923075,
+          "native_prefill_tps": 1998.176620172245,
+          "native_request_weighted_decode_tps": 56.850157514544165,
+          "wave_aggregate_output_tps": 20.163493768974533,
+          "client_decode_interval_union_s": 8.997116692000418,
+          "client_aggregate_decode_tps": 56.907120083841214,
+          "native_ttft_seconds_sum": 16.381205558776855,
+          "client_ttft_s": [
+            16.394089973997325
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-32k",
+          "domain": "code",
+          "context_tokens": 32722,
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "wall_s": 25.770068664001883,
+          "native": {
+            "prefill_seconds": 16.430067267996492,
+            "decode_seconds": 9.332039361004718,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 32722.0,
+            "prompt_tokens": 32722.0,
+            "accepted_tokens": 324.0,
+            "draft_tokens": 561.0
+          },
+          "speculative_rounds_sum": 187.0,
+          "accepted_tokens_by_position": {
+            "0": 140.0,
+            "1": 99.0,
+            "2": 85.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7486631016042781,
+            "1": 0.5294117647058824,
+            "2": 0.45454545454545453
+          },
+          "generated_tokens_per_round": 2.7379679144385025,
+          "mean_acceptance_length": 2.732620320855615,
+          "native_prefill_tps": 1991.5925763577334,
+          "native_request_weighted_decode_tps": 54.86474930007972,
+          "wave_aggregate_output_tps": 19.86801070170259,
+          "client_decode_interval_union_s": 9.322441344993422,
+          "client_aggregate_decode_tps": 54.921235870791236,
+          "native_ttft_seconds_sum": 16.433435916900635,
+          "client_ttft_s": [
+            16.446374995997758
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-32k",
+          "domain": "code",
+          "context_tokens": 32722,
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "wall_s": 10.92398673700518,
+          "native": {
+            "prefill_seconds": 1.4012006429984467,
+            "decode_seconds": 9.489836588996695,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 30400.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 2322.0,
+            "prompt_tokens": 32722.0,
+            "accepted_tokens": 321.0,
+            "draft_tokens": 570.0
+          },
+          "speculative_rounds_sum": 190.0,
+          "accepted_tokens_by_position": {
+            "0": 135.0,
+            "1": 103.0,
+            "2": 83.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7105263157894737,
+            "1": 0.5421052631578948,
+            "2": 0.4368421052631579
+          },
+          "generated_tokens_per_round": 2.694736842105263,
+          "mean_acceptance_length": 2.689473684210526,
+          "native_prefill_tps": 1657.1502529652878,
+          "native_request_weighted_decode_tps": 53.95245694679878,
+          "wave_aggregate_output_tps": 46.86933555728256,
+          "client_decode_interval_union_s": 9.480605482007377,
+          "client_aggregate_decode_tps": 54.00498955174239,
+          "native_ttft_seconds_sum": 1.4294946193695068,
+          "client_ttft_s": [
+            1.4421231820015237
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-64k",
+          "domain": "code",
+          "context_tokens": 65491,
+          "concurrency": 1,
+          "cache_mode": "warmup",
+          "wall_s": 49.73530106298858,
+          "native": {
+            "prefill_seconds": 38.95612644999346,
+            "decode_seconds": 10.765811231001862,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 65491.0,
+            "prompt_tokens": 65491.0,
+            "accepted_tokens": 314.0,
+            "draft_tokens": 591.0
+          },
+          "speculative_rounds_sum": 197.0,
+          "accepted_tokens_by_position": {
+            "0": 138.0,
+            "1": 101.0,
+            "2": 75.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.700507614213198,
+            "1": 0.5126903553299492,
+            "2": 0.38071065989847713
+          },
+          "generated_tokens_per_round": 2.598984771573604,
+          "mean_acceptance_length": 2.593908629441624,
+          "native_prefill_tps": 1681.147638846187,
+          "native_request_weighted_decode_tps": 47.55795815234199,
+          "wave_aggregate_output_tps": 10.294498858096066,
+          "client_decode_interval_union_s": 10.747481282989611,
+          "client_aggregate_decode_tps": 47.63906877515191,
+          "native_ttft_seconds_sum": 38.96182465553284,
+          "client_ttft_s": [
+            38.98550035500375
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-64k",
+          "domain": "code",
+          "context_tokens": 65491,
+          "concurrency": 1,
+          "cache_mode": "cold",
+          "wall_s": 49.73871983299614,
+          "native": {
+            "prefill_seconds": 38.96701398999721,
+            "decode_seconds": 10.757989883000846,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 65491.0,
+            "prompt_tokens": 65491.0,
+            "accepted_tokens": 314.0,
+            "draft_tokens": 591.0
+          },
+          "speculative_rounds_sum": 197.0,
+          "accepted_tokens_by_position": {
+            "0": 138.0,
+            "1": 101.0,
+            "2": 75.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.700507614213198,
+            "1": 0.5126903553299492,
+            "2": 0.38071065989847713
+          },
+          "generated_tokens_per_round": 2.598984771573604,
+          "mean_acceptance_length": 2.593908629441624,
+          "native_prefill_tps": 1680.6779194528856,
+          "native_request_weighted_decode_tps": 47.59253406707816,
+          "wave_aggregate_output_tps": 10.293791270042794,
+          "client_decode_interval_union_s": 10.739968509005848,
+          "client_aggregate_decode_tps": 47.67239304013505,
+          "native_ttft_seconds_sum": 38.97270631790161,
+          "client_ttft_s": [
+            38.99616460999823
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "source-64k",
+          "domain": "code",
+          "context_tokens": 65491,
+          "concurrency": 1,
+          "cache_mode": "warm",
+          "wall_s": 13.171179088996723,
+          "native": {
+            "prefill_seconds": 2.3781753329967614,
+            "decode_seconds": 10.760225343998172,
+            "completed": 1.0,
+            "generation_tokens": 512.0,
+            "cached_tokens": 62400.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 3091.0,
+            "prompt_tokens": 65491.0,
+            "accepted_tokens": 314.0,
+            "draft_tokens": 591.0
+          },
+          "speculative_rounds_sum": 197.0,
+          "accepted_tokens_by_position": {
+            "0": 138.0,
+            "1": 101.0,
+            "2": 75.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.700507614213198,
+            "1": 0.5126903553299492,
+            "2": 0.38071065989847713
+          },
+          "generated_tokens_per_round": 2.598984771573604,
+          "mean_acceptance_length": 2.593908629441624,
+          "native_prefill_tps": 1299.7359602182912,
+          "native_request_weighted_decode_tps": 47.58264661116812,
+          "wave_aggregate_output_tps": 38.872753649498826,
+          "client_decode_interval_union_s": 10.74221454099461,
+          "client_aggregate_decode_tps": 47.66242547531493,
+          "native_ttft_seconds_sum": 2.4032297134399414,
+          "client_ttft_s": [
+            2.4265766750031617
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "prose-32768",
+          "domain": "prose",
+          "context_tokens": 32768,
+          "concurrency": 4,
+          "cache_mode": "warmup",
+          "wall_s": 80.7522496599995,
+          "native": {
+            "prefill_seconds": 82.80638036601886,
+            "decode_seconds": 152.80454388799262,
+            "completed": 4.0,
+            "generation_tokens": 2048.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 131072.0,
+            "prompt_tokens": 131072.0,
+            "accepted_tokens": 1236.0,
+            "draft_tokens": 2430.0
+          },
+          "speculative_rounds_sum": 810.0,
+          "accepted_tokens_by_position": {
+            "0": 594.0,
+            "1": 395.0,
+            "2": 247.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7333333333333333,
+            "1": 0.4876543209876543,
+            "2": 0.30493827160493825
+          },
+          "generated_tokens_per_round": 2.528395061728395,
+          "mean_acceptance_length": 2.525925925925926,
+          "native_prefill_tps": 1582.8731967348235,
+          "native_request_weighted_decode_tps": 13.402742797368683,
+          "wave_aggregate_output_tps": 25.36152254114195,
+          "client_decode_interval_union_s": 63.16634222099674,
+          "client_aggregate_decode_tps": 32.42233012060079,
+          "native_ttft_seconds_sum": 168.55414080619812,
+          "client_ttft_s": [
+            66.18165055400459,
+            50.76174536399776,
+            17.58148126299784,
+            34.09708249999676
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "prose-32768",
+          "domain": "prose",
+          "context_tokens": 32768,
+          "concurrency": 4,
+          "cache_mode": "cold",
+          "wall_s": 80.80377262599359,
+          "native": {
+            "prefill_seconds": 82.89981581200846,
+            "decode_seconds": 152.00642270798562,
+            "completed": 4.0,
+            "generation_tokens": 2048.0,
+            "cached_tokens": 0.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 131072.0,
+            "prompt_tokens": 131072.0,
+            "accepted_tokens": 1240.0,
+            "draft_tokens": 2412.0
+          },
+          "speculative_rounds_sum": 804.0,
+          "accepted_tokens_by_position": {
+            "0": 588.0,
+            "1": 391.0,
+            "2": 261.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7313432835820896,
+            "1": 0.486318407960199,
+            "2": 0.3246268656716418
+          },
+          "generated_tokens_per_round": 2.5472636815920398,
+          "mean_acceptance_length": 2.54228855721393,
+          "native_prefill_tps": 1581.0891582344573,
+          "native_request_weighted_decode_tps": 13.473114908666348,
+          "wave_aggregate_output_tps": 25.345351255804896,
+          "client_decode_interval_union_s": 63.15219633599918,
+          "client_aggregate_decode_tps": 32.42959261628342,
+          "native_ttft_seconds_sum": 168.7783694267273,
+          "client_ttft_s": [
+            66.23545583999658,
+            50.812333067005966,
+            34.14885575599328,
+            17.646754914996563
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        },
+        {
+          "window": "prose-32768",
+          "domain": "prose",
+          "context_tokens": 32768,
+          "concurrency": 4,
+          "cache_mode": "warm",
+          "wall_s": 22.854400532,
+          "native": {
+            "prefill_seconds": 14.155899371995474,
+            "decode_seconds": 67.87415953598975,
+            "completed": 4.0,
+            "generation_tokens": 2048.0,
+            "cached_tokens": 121600.0,
+            "preemptions": 0.0,
+            "prefill_tokens": 9472.0,
+            "prompt_tokens": 131072.0,
+            "accepted_tokens": 1213.0,
+            "draft_tokens": 2499.0
+          },
+          "speculative_rounds_sum": 833.0,
+          "accepted_tokens_by_position": {
+            "0": 589.0,
+            "1": 380.0,
+            "2": 244.0
+          },
+          "accepted_per_round_by_position": {
+            "0": 0.7070828331332533,
+            "1": 0.4561824729891957,
+            "2": 0.2929171668667467
+          },
+          "generated_tokens_per_round": 2.458583433373349,
+          "mean_acceptance_length": 2.4561824729891955,
+          "native_prefill_tps": 669.1203258154263,
+          "native_request_weighted_decode_tps": 30.173485962858425,
+          "wave_aggregate_output_tps": 89.6107512044543,
+          "client_decode_interval_union_s": 20.553527746000327,
+          "client_aggregate_decode_tps": 99.64226216098287,
+          "native_ttft_seconds_sum": 16.57337784767151,
+          "client_ttft_s": [
+            2.2965793129988015,
+            4.292557515000226,
+            4.2895089910016395,
+            5.775761873999727
+          ],
+          "energy_j": null,
+          "metrics_note": "Native request decode seconds can overlap at C4; weighted decode and wave wall throughput are reported separately. Warm cache hits must be observed, not assumed.",
+          "joules_per_output_token": null,
+          "load_classification": "no_observed_preemption",
+          "comparison_note": "Preempting waves include pressure/recompute effects and cannot establish clean kernel-speed gains. Logical cache-miss prefill tokens are not an accounting of additional recomputed rows."
+        }
+      ]
+    }
+  ],
+  "sources": {
+    "mtp_inspect.py": "655af86fdd98b59779a3113367c4f016c0cb190f1c87366a6ee53f8b3bf03e31",
+    "run.py": "6fc7fa5a61ac1a2c63ba81ea5eb4f3c5e31be9c67c9a0c0528aad603c0ed055a",
+    "build_panel.py": "e28d88a962a296dcfd926f7e8ea80890ae5ee3b77af01495f66b079b52704f23",
+    "wave.py": "b6256c2d7cb6d547c4f09d9818dc19a2655ab1d272daaa76fbcdf6732f75b275"
+  },
+  "restoration": {
+    "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+    "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+    "models_endpoint_healthy": true,
+    "verified_unix": 1791585220.184983
+  },
+  "finished_unix": 1791585220.1849954
+}

@@ -1,6 +1,6 @@
 {
-  "status": "VERIFIED_LOCAL_GATES_GIT_PUBLICATION_PENDING",
-  "scope": "Terminal experiment, qualification and real production deployment evidence audited. No demonstrated speed winner; reviewed maintenance tradeoff. Git publication remains pending.",
+  "status": "COMPLETE_REVIEWED_MAINTENANCE_RELEASE",
+  "scope": "All conditional plan items reached documented terminal decisions. Numerical, capacity, frozen serving and real deployment gates are complete; no performance survivor. Qualified payload published to main and campaign branch, with closing audit metadata in a subsequent descendant verified externally after push.",
   "items": [
     {
       "requirement": "Preserve supplied scope and preregister before native changes",
@@ -338,7 +338,7 @@
     },
     {
       "requirement": "Final candidate decision, README/current source, publication and production outcome",
-      "status": "VERIFIED_LOCAL_PUBLICATION_PENDING",
+      "status": "VERIFIED_DEPLOYED_AND_PUBLISHED_PAYLOAD",
       "evidence": [
         {
           "path": "benchmarks/results/b70-stack-20261010/decisions/E01.md",
@@ -350,7 +350,7 @@
         },
         {
           "path": "benchmarks/results/b70-stack-20261010/FINAL_DECISION.md",
-          "sha256": "2221e1ea17b29c1ccf465cfeb6093e90de182ad61a109ecdf5c269ecac866944"
+          "sha256": "e21e17eee9b7aaa01627cdd5948f9f42bd5ef428a131831b50202f4ee3844a56"
         },
         {
           "path": "benchmarks/results/b70-stack-20261010/decision.json",
@@ -362,10 +362,14 @@
         },
         {
           "path": "benchmarks/results/b70-stack-20261010/PUBLICATION_MANIFEST.json",
-          "sha256": "c058f71cac71b1edcc4dde9da524b6e48ae24a1851caf0b2a46e2621d6eaf8ec"
+          "sha256": "20a4e75300516973e8d07a575ecf4adb92f62160a8cf60d457a513333b4ac810"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/PUBLICATION_RECEIPT.json",
+          "sha256": "1b883296e9d87240be9d4d8c4206544608e8d19924eacc23ba9d0e9bc4fc53c1"
         }
       ],
-      "scope": "Actual permanent-service start/restart passed. Qualified defaults, matching source/native provenance and README updated; historical power values unchanged. Authorized GitHub publication is the only remaining closeout step."
+      "scope": "Actual permanent-service start/restart passed. Qualified source/defaults/README published to both GitHub refs. Historical power rows unchanged. Publication receipt records observed payload; closing metadata follows as a descendant."
     },
     {
       "requirement": "Named missing contemporary references for final historical review triggers",

@@ -1,6 +1,6 @@
 # B70 MTP3 stack campaign — evidence index
 
-**Maintenance survivor deployed and restart-verified. Publication closeout is pending.**
+**Maintenance survivor deployed, restart-verified and published. No performance survivor.**
 
 The supplied [implementation plan](../../experiments/b70-stack-20261010/B70_MTP3_CODEX_IMPLEMENTATION_PLAN_EN.md)
 and [pre-registered gates](../../experiments/b70-stack-20261010/gates.json)
@@ -25,7 +25,7 @@ whole-host upgrade experiments.
 | Exact-fixture historical-trigger controls | [All paired/per-fixture results](E01-frozen-trigger-reference-report.json), [observed clocks and thermal coverage](E01-frozen-trigger-comparability.json), [exact public export map](E01-frozen-reference-public-exports.json) |
 | Actual installed CPU model-route guard | [Passing CPU-only check](evidence/E01-cpu-route-guard-r2/report.json) |
 | Final candidate/release decision | [Decision report](FINAL_DECISION.md), [explicit performance tradeoff](performance-review.json), [promotion approval](decision.json) |
-| Requirement-by-requirement completion checkpoint | [Audit](COMPLETION_AUDIT.json) |
+| Publication and requirement-by-requirement completion | [Manifest](PUBLICATION_MANIFEST.json), [published payload](PUBLICATION_RECEIPT.json), [audit](COMPLETION_AUDIT.json) |
 
 The final matrix completed 70 waves / 124 requests plus three isolated 64K
 prefix resends. Its historical adverse cells remain visible. Three balanced

@@ -122,13 +122,15 @@ unbounded bisect is claimed. See the [evidence index](README.md),
 [exact-image assessment](assessment.json), [numerical review](E01-numerical-review.json),
 [memory ledger](E01-memory-ledger.json) and [operations](operations.json).
 
-## Deployment and publication checkpoint
+## Deployment and publication outcome
 
 Permanent-service promotion and real first start/restart passed. Qualified
 source/default README refresh is complete, with the 74 original source
 inputs, matching rebuild provenance and current runtime requirements. The
-public hash manifest and authorized GitHub push are the remaining closeout
-steps at this checkpoint. Historical power tables retain their exact values
+[public hash manifest](PUBLICATION_MANIFEST.json) is complete and the authorized
+GitHub push is verified for both main and the campaign branch; the
+[publication receipt](PUBLICATION_RECEIPT.json) records the published release
+payload. Closing audit metadata is published as its descendant. Historical power tables retain their exact values
 and older-stack scope; 180 W remains the previously selected
 performance-per-watt operating point. The original v3 rollback alias still
 points to image `194a8786` and was not overwritten.

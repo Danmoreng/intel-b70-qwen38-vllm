@@ -1,0 +1,147 @@
+{
+  "status": "COMPLETE_MATCHED_EMPTY_COMPILER_CACHE_ACCOUNTING",
+  "scope": "One named source32 C1 diagnostic pair. Not a performance promotion screen; no baseline full benchmark or numerical requalification. Both immutable images receive separate initially empty compiler-cache directories. Prefix-cache cold/warm is checked separately.",
+  "images": {
+    "baseline": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+    "candidate": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048"
+  },
+  "arms": {
+    "baseline": {
+      "num_blocks": 199,
+      "kv_pool_bytes": 11085414400,
+      "torch_allocated_bytes": 28706254336,
+      "torch_reserved_bytes": 28898754560,
+      "registered_tensor_dtypes": {
+        "target": {
+          "parameter:torch.float16": 1201,
+          "parameter:torch.float32": 48,
+          "parameter:torch.int16": 257,
+          "parameter:torch.int32": 257,
+          "buffer:torch.float16": 2,
+          "buffer:torch.float32": 64
+        },
+        "mtp": {
+          "parameter:torch.int16": 6,
+          "parameter:torch.float16": 20,
+          "parameter:torch.int32": 6,
+          "buffer:torch.float16": 1,
+          "buffer:torch.float32": 4
+        }
+      },
+      "inventory_sha256": "8506d1404f276d911fb35397174a05a0fa74def6849f0e2aae676a187c85af0c",
+      "launch_sha256": "e689baf42e1abd25da1a0ec93132f36de11129a7d5c0f0176b064050df4d9894",
+      "compiler_cache_root": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-firsttouch-controlled/block-0-baseline/compiler-cache",
+      "windows": [
+        {
+          "cache_mode": "cold",
+          "native_prefill_tps": 1558.884586329158,
+          "client_ttft_s": [
+            21.009726292992127
+          ],
+          "native_request_weighted_decode_tps": 55.250654625756376,
+          "native": {
+            "prefill_tokens": 32722.0,
+            "preemptions": 0.0,
+            "generation_tokens": 512.0,
+            "completed": 1.0,
+            "prefill_seconds": 20.99064952399931,
+            "accepted_tokens": 324.0,
+            "cached_tokens": 0.0,
+            "prompt_tokens": 32722.0,
+            "draft_tokens": 567.0,
+            "decode_seconds": 9.248759195004823
+          }
+        },
+        {
+          "cache_mode": "warm",
+          "native_prefill_tps": 1678.4793214961155,
+          "client_ttft_s": [
+            1.4000394070026232
+          ],
+          "native_request_weighted_decode_tps": 58.90250778187499,
+          "native": {
+            "prefill_tokens": 2322.0,
+            "preemptions": 0.0,
+            "generation_tokens": 512.0,
+            "completed": 1.0,
+            "prefill_seconds": 1.3833950590051245,
+            "accepted_tokens": 336.0,
+            "cached_tokens": 30400.0,
+            "prompt_tokens": 32722.0,
+            "draft_tokens": 528.0,
+            "decode_seconds": 8.67535219200363
+          }
+        }
+      ]
+    },
+    "candidate": {
+      "num_blocks": 199,
+      "kv_pool_bytes": 11085414400,
+      "torch_allocated_bytes": 28706254336,
+      "torch_reserved_bytes": 28898754560,
+      "registered_tensor_dtypes": {
+        "target": {
+          "parameter:torch.float16": 1201,
+          "parameter:torch.float32": 48,
+          "parameter:torch.int16": 257,
+          "parameter:torch.int32": 257,
+          "buffer:torch.float16": 2,
+          "buffer:torch.float32": 64
+        },
+        "mtp": {
+          "parameter:torch.int16": 6,
+          "parameter:torch.float16": 20,
+          "parameter:torch.int32": 6,
+          "buffer:torch.float16": 1,
+          "buffer:torch.float32": 4
+        }
+      },
+      "inventory_sha256": "dab9cb1129c8488b97dfcc36749c8485256f8231fbabc81ebccb14d7798993d7",
+      "launch_sha256": "4d2a7aebde2f07ba97cb0157a1ff04dc1694d05cb2f434d0f7af8d86bbfb816c",
+      "compiler_cache_root": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-firsttouch-controlled/block-0-candidate/compiler-cache",
+      "windows": [
+        {
+          "cache_mode": "cold",
+          "native_prefill_tps": 1554.7669070776408,
+          "client_ttft_s": [
+            21.065053055004682
+          ],
+          "native_request_weighted_decode_tps": 58.47439241842411,
+          "native": {
+            "prefill_tokens": 32722.0,
+            "preemptions": 0.0,
+            "generation_tokens": 512.0,
+            "completed": 1.0,
+            "prefill_seconds": 21.046241626987467,
+            "accepted_tokens": 333.0,
+            "cached_tokens": 0.0,
+            "prompt_tokens": 32722.0,
+            "draft_tokens": 534.0,
+            "decode_seconds": 8.738868056010688
+          }
+        },
+        {
+          "cache_mode": "warm",
+          "native_prefill_tps": 1677.7215608216375,
+          "client_ttft_s": [
+            1.4258325300033903
+          ],
+          "native_request_weighted_decode_tps": 54.330974718980244,
+          "native": {
+            "prefill_tokens": 2322.0,
+            "preemptions": 0.0,
+            "generation_tokens": 512.0,
+            "completed": 1.0,
+            "prefill_seconds": 1.384019884004374,
+            "accepted_tokens": 323.0,
+            "cached_tokens": 30400.0,
+            "prompt_tokens": 32722.0,
+            "draft_tokens": 573.0,
+            "decode_seconds": 9.40531626099255
+          }
+        }
+      ]
+    }
+  },
+  "interpretation": "Both images have 199 blocks and identical allocated/reserved bytes when their compiler caches are empty; subsequent ordinary warm-cache starts have 200 blocks. First source32 prefill is approximately 21 seconds on both. This reproduces cold compiler/profile variation on the qualified baseline and accounts for the initial E01 pool/TTFT difference without KV-memory overrides. A single pair does not establish a general performance effect."
+}

@@ -692,7 +692,7 @@
     "(EngineCore pid=168) INFO 10-09 14:26:50 [gpu_worker.py:892] CUDA graph pool memory: 0.07 GiB (actual), 0.17 GiB (estimated), difference: 0.1 GiB (148.4%).",
     "(EngineCore pid=168) INFO 10-09 14:26:50 [gpu_worker.py:955] Free memory on device (29.42/30.3 GiB) on startup. Desired GPU memory utilization is (0.965, 29.24 GiB). Actual usage is 17.79 GiB for consumed memory (weights + non-torch), 1.11 GiB for peak activation, and 0.07 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=10859974697` (10.11 GiB) to fit into requested memory, or `--kv-cache-memory=11059330560` (10.3 GiB) to fully utilize gpu memory. Current kv cache memory in use is 10.33 GiB."
   ],
-  "interpretation": "The archived v0.31 first start already has the same 10.33GiB KV estimate, 0.17GiB estimated/0.07GiB actual graph pool and 1.11GiB peak activations seen on the fresh E01 start. Later unchanged E01 starts match baseline 200 blocks/bytes. Evidence supports a pre-existing cold compiler/profile allocator effect; it does not uniquely prove every underlying allocator mechanism. No KV-memory override or utilization change is authorized by this receipt.",
+  "interpretation": "The archived v0.31 first start already has the same 10.33GiB KV estimate, 0.17GiB estimated/0.07GiB actual graph pool and 1.11GiB peak activations seen on the fresh E01 start. Later unchanged E01 starts match baseline 200 blocks/bytes. Evidence supports a pre-existing cold compiler/profile allocator effect; it does not uniquely prove every underlying allocator mechanism. No KV-memory override or utilization change is authorized by this receipt. A controlled pair with separate empty compiler caches now reproduces the same 199-block pool and ~21-second first source32 prefill on both the exact qualified image and E01. Warm compiler state is reported separately, not substituted for or used to erase the first-touch observations.",
   "existing_v031_cold_start_image": "sha256:d0e1933cd4d5583a508e0799d1ffe308cf7d4f803ee4377471dc589b2da6b766",
   "existing_v031_cold_start_core_artifacts_cpu_verified": {
     "_C.so": "37c30b86542d96fcfb12464f88febe1b193479c12e08b57ac8cd789f89bb07d3",
@@ -700,5 +700,13 @@
     "m04.so": "03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
     "optimized_yaml": "c7bd0941664d02fa4ec4bb118efdecbf9c63801cb9e4cdfaeb366efbe8c8800d"
   },
-  "scope_note": "Archived first-start image is the earlier v0.31 upgrade candidate, not the final production digest. Four core artifacts were CPU-verified identical to qualified production; this is supporting cold-start evidence, not a new baseline test or an attestation that every other source file is identical."
+  "scope_note": "Archived first-start image is the earlier v0.31 upgrade candidate, not the final production digest. Four core artifacts were CPU-verified identical to qualified production; this is supporting cold-start evidence, not a new baseline test or an attestation that every other source file is identical.",
+  "matched_empty_compiler_cache_diagnostic": {
+    "path": "benchmarks/results/b70-stack-20261010/E01-firsttouch-accounting.json",
+    "sha256": "1dd08f4046004a70d07f0a50fa9a7a7c2bcfd814791a9113d6cbdfab1b4940e4",
+    "both_num_blocks": 199,
+    "both_kv_pool_bytes": 11085414400,
+    "both_allocated_bytes": 28706254336,
+    "both_reserved_bytes": 28898754560
+  }
 }

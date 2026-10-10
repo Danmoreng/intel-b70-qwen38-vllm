@@ -23,5 +23,28 @@ No execution verbose profiler was requested from the queue.
 488 hits. Post-warmup growth: RSS 749568
 bytes, GPU allocated/reserved both zero growth. This finite soak is not a
 universal proof about all driver/oneDNN allocations or in-flight pressure;
-pressure_waits was zero. Near-limit serving and paired throughput remain
-pending. No release promotion or decode-speedup claim yet.
+pressure_waits was zero. The exact 261120-input + 1024-output capacity request completed without
+preemption. The first three paired serving blocks are effectively neutral
+(cold weighted decode +0.108%, warm +0.021%, both uncertainty intervals cross
+zero). No release promotion or decode-speedup claim yet.
+
+The exact short-path array comparison failed and remains a failed raw receipt.
+A separate changed-stack numerical review passed after the original-tolerance
+126 real-weight linear cases, four actual-state attention replays, 12 difficult
+FP16 SDPA cases, stored BF16 quality references evaluated on the CPU, and bounded
+same-prefix D64/rejection checks. Short and long quality panels are mixed or
+neutral; their results are not a general quality-improvement claim. See the
+linked JSON reviews, including the retained failure and its limitations.
+
+A controlled accounting pair with empty compiler caches on both images
+reproduced the same 199-block pool and approximately 21-second first source32
+prefill. Ordinary subsequent starts use the previous 200-block pool; no KV
+memory/utilization override was introduced. Runtime registered tensors show
+no BF16 in either target or MTP. Storage BF16 reference files do not establish
+a BF16 execution bridge. See E01-firsttouch-accounting.json and E01-memory-ledger.json.
+
+Three more independent paired blocks now include short C1, 128K C1 and the
+exact source32 fixture at C4. All previous measurements remain included.
+Only a reviewed non-regressing maintenance survivor can proceed to immutable
+metadata, operational gates and the full frozen final matrix. Production
+remains the original qualified image after every controller.

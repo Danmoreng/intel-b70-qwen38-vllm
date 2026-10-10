@@ -28,6 +28,7 @@ def main():
     parser.add_argument('--serving-review-sha256', required=True)
     parser.add_argument('--resume-metadata', action='store_true')
     parser.add_argument('--attempt', type=int, default=1)
+    parser.add_argument('--c16-review-sha256')
     args = parser.parse_args()
     review_path = PUBLIC / 'E01-maintenance-serving-review.json'
     assert sha(review_path) == args.serving_review_sha256
@@ -39,6 +40,19 @@ def main():
     assert numerical['status'] == 'PASS_REVIEWED_CHANGED_STACK_NUMERICS'
     assert numerical['image_id'] == review['runtime_image_id']
     assert args.attempt >= 1 and (not args.resume_metadata or args.attempt > 1)
+    if args.attempt >= 3:
+        # One prospectively bounded final-operations retry after all three
+        # matched reference pairs; retain the original <=2 pressure gate.
+        assert args.attempt == 3 and args.resume_metadata
+        pressure_path = PUBLIC / 'E01-c16-matched-review.json'
+        assert args.c16_review_sha256 and sha(pressure_path) == args.c16_review_sha256
+        pressure = json.loads(pressure_path.read_text())
+        assert pressure['status'] == 'PASS_REVIEWED_NO_REPRODUCED_C16_REGRESSION'
+        assert pressure['runtime_image_id'] == review['runtime_image_id']
+        for item in pressure['receipts'].values():
+            assert sha(REPO / item['path']) == item['sha256']
+        assert pressure['final_operations_retry_limit'] == 1
+        assert pressure['unchanged_preemption_limit'] == 2
     suffix = '' if args.attempt == 1 else f'-r{args.attempt}'
     out = ROOT / ('E01-final-controller' + suffix + '.json')
     assert not out.exists()
@@ -46,6 +60,7 @@ def main():
                  serving_review_sha256=args.serving_review_sha256,
                  runtime_image_id=review['runtime_image_id'], commands=[],
                  attempt=args.attempt,
+                 c16_review_sha256=args.c16_review_sha256,
                  sources_sha256={str(p.relative_to(REPO)): sha(p) for p in
                                  [Path(__file__), HERE / 'freeze_release.py',
                                   HERE / 'run_operations.py',

@@ -30,3 +30,19 @@ remain negative evidence unless a new, falsifiable hypothesis justifies retry.
 `serving_screen.py --protected` adds the existing 4K/128K code fixtures and the exact source32K fixture at C4. `analyze_screen.py` preserves all independent blocks, including first-touch compiler penalties; additional blocks do not replace unfavorable earlier observations. `run_operations.py` exercises only the candidate, including real decode/prefill overlap, media, abort, prefix extension and admission pressure. All GPU controllers restore the pinned qualified image in finally.
 
 `freeze_release.py` prepares candidate metadata only. It cannot approve or deploy a release; remaining gates and the final frozen serving campaign are required.
+
+The exact final image's first operational attempt stopped on a reporting path
+error (now fixed); its second completed C16 but recorded three preemptions
+against the archived count of two. Both failed receipts remain immutable.
+`compare_c16.py` supplies the specifically missing contemporaneous reference
+with three balanced, fresh-worker baseline/candidate pairs and identical
+API/media/C4 antecedents. It does not regenerate the old quality or full
+serving benchmark. A separately checksummed engineering review is required
+before one bounded final-operations retry. The retry retains the original
+maximum of two preemptions and zero recomputation; there is no retry-until-pass
+loop and no increased numerical tolerance or admission/memory setting.
+
+The upstream ordering-fix-only fallback is prepared as a read-only patch
+applicability review under `candidates/E01-minimal/`. No fallback library was
+built or tested. It is conditional on a clear unrelated stable-library
+regression, not another mandatory dependency sweep.

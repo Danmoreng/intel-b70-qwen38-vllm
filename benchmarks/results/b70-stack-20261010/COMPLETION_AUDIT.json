@@ -1,0 +1,323 @@
+{
+  "status": "IN_PROGRESS_NOT_COMPLETION_APPROVAL",
+  "scope": "Requirement-by-requirement audit checkpoint; hashes of running files are observation snapshots, not final immutable receipts. Rebuild audit after terminal benchmark and actual deployment/publication outcome.",
+  "items": [
+    {
+      "requirement": "Preserve supplied scope and preregister before native changes",
+      "status": "VERIFIED",
+      "evidence": [
+        {
+          "path": "benchmarks/experiments/b70-stack-20261010/B70_MTP3_CODEX_IMPLEMENTATION_PLAN_EN.md",
+          "sha256": "489e0b853dc935ad8625b11fcf1cab24cfd71eba729ff684583180ce2958b9a5"
+        },
+        {
+          "path": "benchmarks/experiments/b70-stack-20261010/baseline-manifest.json",
+          "sha256": "d90b8ab0668f26b28172141671908b74ca347c4ce5fef34157bcdaaa76ef8e51"
+        },
+        {
+          "path": "benchmarks/experiments/b70-stack-20261010/gates.json",
+          "sha256": "f373ed44bbf1b2cf74b6eae794208c2c505aea21531d0c51e394133bf7a4f0b7"
+        }
+      ],
+      "scope": "First commit 0c24b628 changes diagnostic infrastructure only; production config remains the qualified baseline until a separate reviewed promotion."
+    },
+    {
+      "requirement": "P0 actual graph routes, component costs and profiler controls",
+      "status": "VERIFIED",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/P0-route-and-cost-report.md",
+          "sha256": "062be2ccf4e5ad0602390a6999451e4624567f4f477edfd141e52b0e19d1029d"
+        }
+      ],
+      "scope": "Actual C1 T4/pad4 and C4 T16/pad16 with shortened tails. Kernel sums/event medians are not critical-path percentages; throughput controls are separate."
+    },
+    {
+      "requirement": "D64 bounded same-prefix sampling/state diagnosis",
+      "status": "VERIFIED_BOUNDED_INCONCLUSIVE",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/D64-same-prefix-review.json",
+          "sha256": "fb3af2e4b689264d4edc7fb7bf22c71068647661993454e20586edd33ee3af23"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/D64-same-prefix-review.md",
+          "sha256": "04eeffcc92b16895159cdaeac6cdefb5cb360fde13f6b3de490aa8db31c92a01"
+        }
+      ],
+      "scope": "Independent Philox known-answer and actual accepted-prefix checks. Padding excluded by actual sample count; uninitialized-buffer mismatch retained. No upstream root cause or sampler patch established."
+    },
+    {
+      "requirement": "E01 exact old/stable source-to-binary provenance and pinned builds",
+      "status": "VERIFIED",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-build-public-receipts.json",
+          "sha256": "24abc0d2ad731b354dc38a7bda3d412088050eabed602c3954bf891d1547f80f"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-build-and-local-gates.json",
+          "sha256": "5de53cbd077d0e678dc768dd63ac4bdcb5040d6ad6de891bafd6fc4cd2ec25b3"
+        }
+      ],
+      "scope": "Old source proven unpatched; stable c531fe1 contains b38 ordering fix. Matching EXL3 compiler/ABI/header rebuild. Historical CPU-stage GPU_UNTESTED receipts retain their original status."
+    },
+    {
+      "requirement": "E01 G1 independent numerical, edge-value and cache-pressure checks",
+      "status": "VERIFIED_FINITE",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-sdpa-edge-values.json",
+          "sha256": "d56e8b3e0d2c2ea4f6b0afeb902855907bf56a53ae6e73ef793309f475f03689"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-linear-reference.json",
+          "sha256": "9cbdc47f2b333f31fbbcfaf2e92618afbd4d00a7b6751815312fcde03b0fa516"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-inflight-cache-pressure.json",
+          "sha256": "0d16328a7875caf746936ae3a6b833a17f27c617f0f44c3ad0f570909f379fa5"
+        }
+      ],
+      "scope": "Original tolerances; real weights and difficult FP16 attention inputs; completion-aware bounded cache eviction under deliberately queued work. Wrong-device pointers were not dereferenced."
+    },
+    {
+      "requirement": "E01 G2 changed-stack quality and exact equality failure",
+      "status": "VERIFIED_REVIEWED_NOT_BITIDENTICAL",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-changed-stack-quality.json",
+          "sha256": "523312c44ffcb4efef88598c67642849c4d057a8b22e8cdd31b195b24606cc20"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-numerical-review.json",
+          "sha256": "886b8e8e24250b8e5f5dd150343908c5d64232e90157dfa41db1292fc2942266"
+        }
+      ],
+      "scope": "Exact short-array equality failed and remains failed. Separate finite independent/state/quality references support numerical review. No general task accuracy or quality gain is claimed; BF16 reference arrays evaluated on CPU only."
+    },
+    {
+      "requirement": "E01 G3 actual-state replay and original captured route",
+      "status": "VERIFIED_FINITE",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-numerical-review.json",
+          "sha256": "886b8e8e24250b8e5f5dd150343908c5d64232e90157dfa41db1292fc2942266"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-linear-reference.json",
+          "sha256": "9cbdc47f2b333f31fbbcfaf2e92618afbd4d00a7b6751815312fcde03b0fa516"
+        }
+      ],
+      "scope": "Four actual-state attention replays and 126 real-weight linear cases plus kernel graph/live-buffer gates. oneDNN prefill remains eager; frozen decode capture buckets are retained."
+    },
+    {
+      "requirement": "E01 G4 exact 262144 usable total-token request and no KV loss",
+      "status": "VERIFIED_RUNTIME_PARENT_IDENTICAL_ROOTFS",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-memory-ledger.json",
+          "sha256": "4d0a896c66cc646b77a017ee30e38108615609375126d4dd37b6e6c6fead4e21"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-firsttouch-accounting.json",
+          "sha256": "1dd08f4046004a70d07f0a50fa9a7a7c2bcfd814791a9113d6cbdfab1b4940e4"
+        },
+        {
+          "path": "config/experiments/b70-stack-20261010/production_image.json",
+          "sha256": "94cf2642933972ea73749b95bf3159a49ad9958782dd0f421e5ea9c9e7448c33"
+        }
+      ],
+      "scope": "261120 actual input plus 1024 actual output without preemption ran on b772 runtime parent; final 36e image is metadata-only with identical RootFS. Both old/new cold starts give 199 blocks; ordinary warm starts restore 200. No KV override or theoretical token multiplication is used."
+    },
+    {
+      "requirement": "E01 G5 independent core and protected cells with uncertainty",
+      "status": "VERIFIED_MAINTENANCE_SCREEN_ONLY",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-confirmation-eight-blocks.json",
+          "sha256": "d917a3d66e6165745fcb036cacefe71a5f39aee51baf7604a0a85d997abeba56"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-eight-block-counter-decomposition.json",
+          "sha256": "974448ddb4b3494326d6a1fa1fc0fb732641a28a6498eb8bc74a27988fbe1b51"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-maintenance-serving-review.json",
+          "sha256": "0096cb3abe91c771948b722d8eb1d5e116d57e90a189d955da73176bd7d3a562"
+        }
+      ],
+      "scope": "All eight core and five protected blocks retained; warm prose-C4 adverse result and wide interval retained. No >=3% performance survivor; no tight noninferiority proof."
+    },
+    {
+      "requirement": "E01 C16 failed comparison and contemporaneous reference",
+      "status": "VERIFIED_REVIEWED_REFERENCE",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-operations-attempts.json",
+          "sha256": "2d2bc5254fb0375aee49ab347d6861a84556a3bfc0b9a3b1770ad25fe3e6bd61"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-c16-matched-counters.json",
+          "sha256": "4b460349877b4cb0e4f36c89578b625b48d06ea14f2b0b49ec71fd41480d0ff1"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-c16-matched-review.json",
+          "sha256": "b17b14966418da60adb7aa26d28c1ab8bf5f57c9e5776238654bb2860b58f4ac"
+        }
+      ],
+      "scope": "Original 3-vs-archived2 failure retained. Three matched pairs: baseline2/3/3, candidate2/2/2, zero recompute and identical 200-block pools. One bounded final retry also recorded2; historical comparator is not relabeled."
+    },
+    {
+      "requirement": "E01 strict immutable-image launcher preflight",
+      "status": "VERIFIED",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-final-strict-preflight.json",
+          "sha256": "a25a6c933573f3a228bceefca59fbcee11740567d11fdf8c1bb9f9951d339a85"
+        }
+      ],
+      "scope": "Exact new image, new native library, 19 registrations, serving profile/checkpoint/power identity accepted without production promotion."
+    },
+    {
+      "requirement": "E01 final exact-image operational contract",
+      "status": "VERIFIED_LOCAL_RAW_PUBLIC_EXPORT_PENDING",
+      "evidence": [
+        {
+          "path": "benchmark-results/b70-stack-20261010/E01-operations-final-r3/operations.json",
+          "sha256": "7836964cdeb42dc6f4640bc28aed8bee15ce5ea33d57873aea3be7a247061341"
+        }
+      ],
+      "scope": "API/media/C4/C16/image-long/prefix-abort, real two/four-request overlap, 32 independent 4.2MP images with131164 input tokens, 16 active source guards, confirmed abort and 200-block restart passed. Raw responses stay private."
+    },
+    {
+      "requirement": "E02 conditional candidate decision",
+      "status": "VERIFIED_DOCUMENTED_STOP",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/decisions/E02.md",
+          "sha256": "a7475e553854772b9e8e3928249cbfc042de60fc3b11c1eb3a2dac4d93d8e553"
+        }
+      ],
+      "scope": "See per-candidate scope. Only E04a implemented; no ineligible/profile-gated candidate is described as benchmarked. E07 not launched; no forced dependency resolution or unrelated host upgrade."
+    },
+    {
+      "requirement": "E03 conditional candidate decision",
+      "status": "VERIFIED_DOCUMENTED_STOP",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/decisions/E03.md",
+          "sha256": "32077637739fea3d1942c1b36dd2682036ad2abaf0d4a6bd7bcaad46ec640ddd"
+        }
+      ],
+      "scope": "See per-candidate scope. Only E04a implemented; no ineligible/profile-gated candidate is described as benchmarked. E07 not launched; no forced dependency resolution or unrelated host upgrade."
+    },
+    {
+      "requirement": "E04a conditional candidate decision",
+      "status": "VERIFIED_DOCUMENTED_STOP",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/decisions/E04a.md",
+          "sha256": "d6da35ef7259740accbe481ac27badcf1f0eda359ec7d1e91d804ba3b6d86cc4"
+        }
+      ],
+      "scope": "See per-candidate scope. Only E04a implemented; no ineligible/profile-gated candidate is described as benchmarked. E07 not launched; no forced dependency resolution or unrelated host upgrade."
+    },
+    {
+      "requirement": "E04b conditional candidate decision",
+      "status": "VERIFIED_DOCUMENTED_STOP",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/decisions/E04b.md",
+          "sha256": "a3e9684436162f5ea4b8b049bf12bc391be1075c85b666f7614dec235f20b667"
+        }
+      ],
+      "scope": "See per-candidate scope. Only E04a implemented; no ineligible/profile-gated candidate is described as benchmarked. E07 not launched; no forced dependency resolution or unrelated host upgrade."
+    },
+    {
+      "requirement": "E05 conditional candidate decision",
+      "status": "VERIFIED_DOCUMENTED_STOP",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/decisions/E05.md",
+          "sha256": "7532501ec7d5b4f93a5a88d6588c9264a28c62e0202bf5b7a70f3eee3fd09194"
+        }
+      ],
+      "scope": "See per-candidate scope. Only E04a implemented; no ineligible/profile-gated candidate is described as benchmarked. E07 not launched; no forced dependency resolution or unrelated host upgrade."
+    },
+    {
+      "requirement": "E06 conditional candidate decision",
+      "status": "VERIFIED_DOCUMENTED_STOP",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/decisions/E06.md",
+          "sha256": "79162660e4b8dd94459f31cf1e1af6b9205ffdb2f022f80d717a14ef992d8355"
+        }
+      ],
+      "scope": "See per-candidate scope. Only E04a implemented; no ineligible/profile-gated candidate is described as benchmarked. E07 not launched; no forced dependency resolution or unrelated host upgrade."
+    },
+    {
+      "requirement": "E07 conditional candidate decision",
+      "status": "VERIFIED_DOCUMENTED_STOP",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/decisions/E07.md",
+          "sha256": "786f9d86dfaeac60f9fdddaac8ac828c3c4a04abf99277b4a84452e77a664cf3"
+        }
+      ],
+      "scope": "See per-candidate scope. Only E04a implemented; no ineligible/profile-gated candidate is described as benchmarked. E07 not launched; no forced dependency resolution or unrelated host upgrade."
+    },
+    {
+      "requirement": "Conditional E01-minimal fallback",
+      "status": "VERIFIED_NOT_REQUIRED_NOT_BUILT",
+      "evidence": [
+        {
+          "path": "benchmarks/experiments/b70-stack-20261010/candidates/E01-minimal/source-review.json",
+          "sha256": "0de8b97f0f71d30631ddd10f32c157d89968d7e832c69a5a4eb8ac8030b216f5"
+        }
+      ],
+      "scope": "Read-only exact upstream patch applies to old clean source; fallback only required for a clear unrelated stable-library regression. No such regression currently established by paired gates; final matrix still pending."
+    },
+    {
+      "requirement": "Original qualified rollback source/config and strict launcher",
+      "status": "VERIFIED_SAVED",
+      "evidence": [
+        {
+          "path": "config/releases/exl3-v3/snapshot-inventory.json",
+          "sha256": "4098b11668743565728761398a5c5c027797f1e8d1c9151cc0ebefe8c92a44a3"
+        },
+        {
+          "path": "config/releases/exl3-v3/README.md",
+          "sha256": "807d9d4ff4206975c37c53f4abf2fb968d811f15c2ccddf6b1c43c21de044da3"
+        },
+        {
+          "path": "scripts/run-server-exl3-v3-rollback.sh",
+          "sha256": "eddee025ea22c816e8e761776f67897c38ecb0dd072d8d7d5ae51be0a336486d"
+        }
+      ],
+      "scope": "Old v3 image194/policy9a retained; source archive and saved config are separate. Earlier strict rollback preflight passed; current full controller finally restores194."
+    },
+    {
+      "requirement": "Complete frozen final matrix and per-cell final tradeoff",
+      "status": "INCOMPLETE_RUNNING",
+      "evidence": [
+        {
+          "path": "benchmark-results/b70-stack-20261010/E01-final-controller-r3.json",
+          "sha256": "a523d3366e6996045ce1a400116a0e96cd5cc692ea15e6546b7b6e0a80834607"
+        }
+      ],
+      "scope": "Controller session41404 live, source-review stage running; exporter54491 waits for terminal success. Required70waves/124requests plus isolated64K prefix. Historical baseline full matrix is reused, not regenerated."
+    },
+    {
+      "requirement": "Final candidate decision, README/current source, publication and production outcome",
+      "status": "INCOMPLETE_PENDING_FINAL_EVIDENCE",
+      "evidence": [
+        {
+          "path": "benchmarks/experiments/b70-stack-20261010/README.md",
+          "sha256": "706c1f67ba9e0e0b1236bd2c40d6956ca0cd310b834675b4038a57c8b5092f90"
+        }
+      ],
+      "scope": "FINAL_DECISION, E01 one-page final decision, performance review and public manifest still required. If promotion approved, update qualified source/requirements/README, preserve historical power tables, deploy/restart strict new image, then push authorized GitHub changes. Otherwise retain old production and publish negative final result."
+    }
+  ]
+}

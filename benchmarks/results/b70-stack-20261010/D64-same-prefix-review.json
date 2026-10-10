@@ -1,0 +1,1693 @@
+{
+  "status": "PASS_ACTUAL_REJECTION_ORACLE_BOUNDED_D64_REVIEW_REQUIRED",
+  "known_answer_vectors": 3,
+  "source_sha256": {
+    "compare_d64.py": "75198f2e5306ae68f46aca6991cadd32a024091ecbcd7ca3aca071f187523ca8",
+    "rng_reference.py": "efa37056a638937a95639ec21df8b18c844852e061c34683137d6da2d9ab3764"
+  },
+  "source_capture_receipts": [
+    {
+      "role": "qualified",
+      "position": 0,
+      "repeat": 0,
+      "capture_sha256": "197f7d8f98e046675e3a2200a1b962642f91fc40dbf534cecb31df9805e3ea44",
+      "rejection": [
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.26997295022010803,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65491,
+              "absolute_decision_margin": 0.730027049779892,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.09665847569704056,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65492,
+              "absolute_decision_margin": 0.9033415243029594,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 0.8301746124542184,
+              "uniform": 0.6187757253646851,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65493,
+              "absolute_decision_margin": 0.21139888708953336,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        },
+        {
+          "native_accepted": 1,
+          "oracle_accepted": 1,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.5240193009376526,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65495,
+              "absolute_decision_margin": 0.4759806990623474,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 0.29421497216298875,
+              "uniform": 0.6212928295135498,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": false,
+              "accepted_in_prefix": false,
+              "position": 65496,
+              "absolute_decision_margin": 0.32707785735056105,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.023561695590615273,
+              "prefix_verifier_visits_this_step": false,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": false,
+              "position": 65497,
+              "absolute_decision_margin": 0.9764383044093847,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "qualified",
+      "position": 0,
+      "repeat": 1,
+      "capture_sha256": "197f7d8f98e046675e3a2200a1b962642f91fc40dbf534cecb31df9805e3ea44",
+      "rejection": [
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.26997295022010803,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65491,
+              "absolute_decision_margin": 0.730027049779892,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.09665847569704056,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65492,
+              "absolute_decision_margin": 0.9033415243029594,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 0.8301746124542184,
+              "uniform": 0.6187757253646851,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65493,
+              "absolute_decision_margin": 0.21139888708953336,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        },
+        {
+          "native_accepted": 1,
+          "oracle_accepted": 1,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.5240193009376526,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65495,
+              "absolute_decision_margin": 0.4759806990623474,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 0.29421497216298875,
+              "uniform": 0.6212928295135498,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": false,
+              "accepted_in_prefix": false,
+              "position": 65496,
+              "absolute_decision_margin": 0.32707785735056105,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.023561695590615273,
+              "prefix_verifier_visits_this_step": false,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": false,
+              "position": 65497,
+              "absolute_decision_margin": 0.9764383044093847,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "qualified",
+      "position": 32,
+      "repeat": 0,
+      "capture_sha256": "58dd111587436c8b328efc565fc9bc408532932e5c213db3880d04866152895e",
+      "rejection": [
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.609562337398529,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65523,
+              "absolute_decision_margin": 0.39043766260147095,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.6800476908683777,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65524,
+              "absolute_decision_margin": 0.3199523091316223,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.23448750376701355,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65525,
+              "absolute_decision_margin": 0.7655124962329865,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        },
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.6625706553459167,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65527,
+              "absolute_decision_margin": 0.33742934465408325,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.1498328298330307,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65528,
+              "absolute_decision_margin": 0.8501671701669693,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.26631420850753784,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65529,
+              "absolute_decision_margin": 0.7336857914924622,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "qualified",
+      "position": 32,
+      "repeat": 1,
+      "capture_sha256": "58dd111587436c8b328efc565fc9bc408532932e5c213db3880d04866152895e",
+      "rejection": [
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.609562337398529,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65523,
+              "absolute_decision_margin": 0.39043766260147095,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.6800476908683777,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65524,
+              "absolute_decision_margin": 0.3199523091316223,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.23448750376701355,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65525,
+              "absolute_decision_margin": 0.7655124962329865,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        },
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.6625706553459167,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65527,
+              "absolute_decision_margin": 0.33742934465408325,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.1498328298330307,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65528,
+              "absolute_decision_margin": 0.8501671701669693,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.26631420850753784,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65529,
+              "absolute_decision_margin": 0.7336857914924622,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "historical",
+      "position": 0,
+      "repeat": 0,
+      "capture_sha256": "fb64f07c2b1eb0126e580e5797b091792624952d8deadf41c0fa25bbcd47f73c",
+      "rejection": [
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.26997295022010803,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65491,
+              "absolute_decision_margin": 0.730027049779892,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.09665847569704056,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65492,
+              "absolute_decision_margin": 0.9033415243029594,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 0.8046349392896848,
+              "uniform": 0.6187757253646851,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65493,
+              "absolute_decision_margin": 0.1858592139249997,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        },
+        {
+          "native_accepted": 1,
+          "oracle_accepted": 1,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.5240193009376526,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65495,
+              "absolute_decision_margin": 0.4759806990623474,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 0.2751297238231752,
+              "uniform": 0.6212928295135498,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": false,
+              "accepted_in_prefix": false,
+              "position": 65496,
+              "absolute_decision_margin": 0.3461631056903746,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.023561695590615273,
+              "prefix_verifier_visits_this_step": false,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": false,
+              "position": 65497,
+              "absolute_decision_margin": 0.9764383044093847,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "historical",
+      "position": 0,
+      "repeat": 1,
+      "capture_sha256": "8c803c7948b1f01289d06903816f59dee49c00fb9baae7232fc494de181a62ed",
+      "rejection": [
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.26997295022010803,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65491,
+              "absolute_decision_margin": 0.730027049779892,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.09665847569704056,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65492,
+              "absolute_decision_margin": 0.9033415243029594,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 0.8046349392896848,
+              "uniform": 0.6187757253646851,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65493,
+              "absolute_decision_margin": 0.1858592139249997,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        },
+        {
+          "native_accepted": 1,
+          "oracle_accepted": 1,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.5240193009376526,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65495,
+              "absolute_decision_margin": 0.4759806990623474,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 0.2751297238231752,
+              "uniform": 0.6212928295135498,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": false,
+              "accepted_in_prefix": false,
+              "position": 65496,
+              "absolute_decision_margin": 0.3461631056903746,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.023561695590615273,
+              "prefix_verifier_visits_this_step": false,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": false,
+              "position": 65497,
+              "absolute_decision_margin": 0.9764383044093847,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "historical",
+      "position": 32,
+      "repeat": 0,
+      "capture_sha256": "51899b548744679d4c8a7776b86d2e92dd6f9c4f046216721102813c93b8b2c8",
+      "rejection": [
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.609562337398529,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65523,
+              "absolute_decision_margin": 0.39043766260147095,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.6800476908683777,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65524,
+              "absolute_decision_margin": 0.3199523091316223,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.23448750376701355,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65525,
+              "absolute_decision_margin": 0.7655124962329865,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        },
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.6625706553459167,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65527,
+              "absolute_decision_margin": 0.33742934465408325,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.1498328298330307,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65528,
+              "absolute_decision_margin": 0.8501671701669693,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.26631420850753784,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65529,
+              "absolute_decision_margin": 0.7336857914924622,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "historical",
+      "position": 32,
+      "repeat": 1,
+      "capture_sha256": "51899b548744679d4c8a7776b86d2e92dd6f9c4f046216721102813c93b8b2c8",
+      "rejection": [
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.609562337398529,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65523,
+              "absolute_decision_margin": 0.39043766260147095,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.6800476908683777,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65524,
+              "absolute_decision_margin": 0.3199523091316223,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.23448750376701355,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65525,
+              "absolute_decision_margin": 0.7655124962329865,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        },
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.6625706553459167,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65527,
+              "absolute_decision_margin": 0.33742934465408325,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.1498328298330307,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65528,
+              "absolute_decision_margin": 0.8501671701669693,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.26631420850753784,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65529,
+              "absolute_decision_margin": 0.7336857914924622,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "candidate",
+      "position": 0,
+      "repeat": 0,
+      "capture_sha256": "197f7d8f98e046675e3a2200a1b962642f91fc40dbf534cecb31df9805e3ea44",
+      "rejection": [
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.26997295022010803,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65491,
+              "absolute_decision_margin": 0.730027049779892,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.09665847569704056,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65492,
+              "absolute_decision_margin": 0.9033415243029594,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 0.8301746124542184,
+              "uniform": 0.6187757253646851,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65493,
+              "absolute_decision_margin": 0.21139888708953336,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        },
+        {
+          "native_accepted": 1,
+          "oracle_accepted": 1,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.5240193009376526,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65495,
+              "absolute_decision_margin": 0.4759806990623474,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 0.29421497216298875,
+              "uniform": 0.6212928295135498,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": false,
+              "accepted_in_prefix": false,
+              "position": 65496,
+              "absolute_decision_margin": 0.32707785735056105,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.023561695590615273,
+              "prefix_verifier_visits_this_step": false,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": false,
+              "position": 65497,
+              "absolute_decision_margin": 0.9764383044093847,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "candidate",
+      "position": 0,
+      "repeat": 1,
+      "capture_sha256": "197f7d8f98e046675e3a2200a1b962642f91fc40dbf534cecb31df9805e3ea44",
+      "rejection": [
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.26997295022010803,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65491,
+              "absolute_decision_margin": 0.730027049779892,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.09665847569704056,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65492,
+              "absolute_decision_margin": 0.9033415243029594,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 0.8301746124542184,
+              "uniform": 0.6187757253646851,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65493,
+              "absolute_decision_margin": 0.21139888708953336,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        },
+        {
+          "native_accepted": 1,
+          "oracle_accepted": 1,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.5240193009376526,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65495,
+              "absolute_decision_margin": 0.4759806990623474,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 0.29421497216298875,
+              "uniform": 0.6212928295135498,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": false,
+              "accepted_in_prefix": false,
+              "position": 65496,
+              "absolute_decision_margin": 0.32707785735056105,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.023561695590615273,
+              "prefix_verifier_visits_this_step": false,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": false,
+              "position": 65497,
+              "absolute_decision_margin": 0.9764383044093847,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "candidate",
+      "position": 32,
+      "repeat": 0,
+      "capture_sha256": "58dd111587436c8b328efc565fc9bc408532932e5c213db3880d04866152895e",
+      "rejection": [
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.609562337398529,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65523,
+              "absolute_decision_margin": 0.39043766260147095,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.6800476908683777,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65524,
+              "absolute_decision_margin": 0.3199523091316223,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.23448750376701355,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65525,
+              "absolute_decision_margin": 0.7655124962329865,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        },
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.6625706553459167,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65527,
+              "absolute_decision_margin": 0.33742934465408325,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.1498328298330307,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65528,
+              "absolute_decision_margin": 0.8501671701669693,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.26631420850753784,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65529,
+              "absolute_decision_margin": 0.7336857914924622,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "candidate",
+      "position": 32,
+      "repeat": 1,
+      "capture_sha256": "58dd111587436c8b328efc565fc9bc408532932e5c213db3880d04866152895e",
+      "rejection": [
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.609562337398529,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65523,
+              "absolute_decision_margin": 0.39043766260147095,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.6800476908683777,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65524,
+              "absolute_decision_margin": 0.3199523091316223,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.23448750376701355,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65525,
+              "absolute_decision_margin": 0.7655124962329865,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        },
+        {
+          "native_accepted": 3,
+          "oracle_accepted": 3,
+          "decisions": [
+            {
+              "step": 0,
+              "probability": 1.0,
+              "uniform": 0.6625706553459167,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65527,
+              "absolute_decision_margin": 0.33742934465408325,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 1,
+              "probability": 1.0,
+              "uniform": 0.1498328298330307,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65528,
+              "absolute_decision_margin": 0.8501671701669693,
+              "conditioning": "Own-version preceding draft branch"
+            },
+            {
+              "step": 2,
+              "probability": 1.0,
+              "uniform": 0.26631420850753784,
+              "prefix_verifier_visits_this_step": true,
+              "ratio_test_would_pass": true,
+              "accepted_in_prefix": true,
+              "position": 65529,
+              "absolute_decision_margin": 0.7336857914924622,
+              "conditioning": "Own-version preceding draft branch"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "repeatability": [
+    {
+      "role": "qualified",
+      "position": 0,
+      "heads_bitidentical": true,
+      "proposals_equal": true,
+      "valid_samples_equal": true,
+      "sample_buffer_bitidentical_including_unused_padding": true,
+      "padding_note": "Only columns before num_sampled are native outputs; uninitialized unused rejection suffix columns are retained in raw buffers and excluded from semantic equality."
+    },
+    {
+      "role": "qualified",
+      "position": 32,
+      "heads_bitidentical": true,
+      "proposals_equal": true,
+      "valid_samples_equal": true,
+      "sample_buffer_bitidentical_including_unused_padding": true,
+      "padding_note": "Only columns before num_sampled are native outputs; uninitialized unused rejection suffix columns are retained in raw buffers and excluded from semantic equality."
+    },
+    {
+      "role": "historical",
+      "position": 0,
+      "heads_bitidentical": true,
+      "proposals_equal": true,
+      "valid_samples_equal": true,
+      "sample_buffer_bitidentical_including_unused_padding": false,
+      "padding_note": "Only columns before num_sampled are native outputs; uninitialized unused rejection suffix columns are retained in raw buffers and excluded from semantic equality."
+    },
+    {
+      "role": "historical",
+      "position": 32,
+      "heads_bitidentical": true,
+      "proposals_equal": true,
+      "valid_samples_equal": true,
+      "sample_buffer_bitidentical_including_unused_padding": true,
+      "padding_note": "Only columns before num_sampled are native outputs; uninitialized unused rejection suffix columns are retained in raw buffers and excluded from semantic equality."
+    },
+    {
+      "role": "candidate",
+      "position": 0,
+      "heads_bitidentical": true,
+      "proposals_equal": true,
+      "valid_samples_equal": true,
+      "sample_buffer_bitidentical_including_unused_padding": true,
+      "padding_note": "Only columns before num_sampled are native outputs; uninitialized unused rejection suffix columns are retained in raw buffers and excluded from semantic equality."
+    },
+    {
+      "role": "candidate",
+      "position": 32,
+      "heads_bitidentical": true,
+      "proposals_equal": true,
+      "valid_samples_equal": true,
+      "sample_buffer_bitidentical_including_unused_padding": true,
+      "padding_note": "Only columns before num_sampled are native outputs; uninitialized unused rejection suffix columns are retained in raw buffers and excluded from semantic equality."
+    }
+  ],
+  "comparisons": [
+    {
+      "other": "historical",
+      "position": 0,
+      "same_conditioning_rows": [
+        {
+          "head": 0,
+          "row": 0,
+          "position": 65490,
+          "raw": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.0063185230275587785,
+            "js_divergence": 0.0016135944950490685,
+            "total_variation": 0.044840335239653584,
+            "top1_equal": true,
+            "x_top1": 1919,
+            "y_top1": 1919,
+            "max_finite_abs": 1.0224609375,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.0063185230275587785,
+            "js_divergence": 0.0016135944950490685,
+            "total_variation": 0.044840335239653584,
+            "top1_equal": true,
+            "x_top1": 1919,
+            "y_top1": 1919,
+            "max_finite_abs": 1.022705078125,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 0,
+          "position": 65491,
+          "raw": {
+            "bitidentical": false,
+            "kl_x_to_y": 8.983808132527766e-07,
+            "js_divergence": 2.159846311290428e-07,
+            "total_variation": 8.311083837968891e-06,
+            "top1_equal": true,
+            "x_top1": 383,
+            "y_top1": 383,
+            "max_finite_abs": 0.43359375,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 383,
+            "y_top1": 383,
+            "max_finite_abs": 0.234375,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 1,
+          "position": 65492,
+          "raw": {
+            "bitidentical": false,
+            "kl_x_to_y": 2.102055300102865e-06,
+            "js_divergence": 5.149248019093922e-07,
+            "total_variation": 6.567780537243944e-05,
+            "top1_equal": true,
+            "x_top1": 279,
+            "y_top1": 279,
+            "max_finite_abs": 0.53125,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 279,
+            "y_top1": 279,
+            "max_finite_abs": 0.25,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 2,
+          "position": 65493,
+          "raw": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.002342163880482133,
+            "js_divergence": 0.0005963670592448726,
+            "total_variation": 0.025127347415149062,
+            "top1_equal": true,
+            "x_top1": 3766,
+            "y_top1": 3766,
+            "max_finite_abs": 0.6328125,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.002311892131307723,
+            "js_divergence": 0.000590597600135064,
+            "total_variation": 0.025539673164533594,
+            "top1_equal": true,
+            "x_top1": 3766,
+            "y_top1": 3766,
+            "max_finite_abs": 0.296875,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 3,
+          "position": 65494,
+          "raw": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.0005356505899049602,
+            "js_divergence": 0.00013263750289999567,
+            "total_variation": 0.009721135600977007,
+            "top1_equal": true,
+            "x_top1": 3425,
+            "y_top1": 3425,
+            "max_finite_abs": 0.984375,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.00020488215888384356,
+            "js_divergence": 5.1419775497823107e-05,
+            "total_variation": 0.008775993836877188,
+            "top1_equal": true,
+            "x_top1": 3425,
+            "y_top1": 3425,
+            "max_finite_abs": 0.140625,
+            "support_mask_equal": true
+          }
+        }
+      ],
+      "first_proposal_equal_steps": [
+        true,
+        true,
+        true
+      ],
+      "first_proposal_common_prefix_length": 3,
+      "note": "Proposal step zero shares prefix and anchor. Any later step after a differing earlier proposal has different conditioning; it is not a numerical same-prefix comparison."
+    },
+    {
+      "other": "historical",
+      "position": 32,
+      "same_conditioning_rows": [
+        {
+          "head": 0,
+          "row": 0,
+          "position": 65522,
+          "raw": {
+            "bitidentical": false,
+            "kl_x_to_y": 1.7830646073129011e-06,
+            "js_divergence": 3.9314424070421616e-07,
+            "total_variation": 3.062891859858674e-06,
+            "top1_equal": true,
+            "x_top1": 22,
+            "y_top1": 22,
+            "max_finite_abs": 3.54296875,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": false,
+            "kl_x_to_y": 1.7830646073129011e-06,
+            "js_divergence": 3.9314424070421616e-07,
+            "total_variation": 3.062891859858674e-06,
+            "top1_equal": true,
+            "x_top1": 22,
+            "y_top1": 22,
+            "max_finite_abs": 3.54296875,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 0,
+          "position": 65523,
+          "raw": {
+            "bitidentical": false,
+            "kl_x_to_y": 3.333513511012522e-05,
+            "js_divergence": 8.716049519920031e-06,
+            "total_variation": 0.0002652496644151896,
+            "top1_equal": true,
+            "x_top1": 33,
+            "y_top1": 33,
+            "max_finite_abs": 0.576171875,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 33,
+            "y_top1": 33,
+            "max_finite_abs": 0.375,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 1,
+          "position": 65524,
+          "raw": {
+            "bitidentical": false,
+            "kl_x_to_y": 9.969928951412363e-05,
+            "js_divergence": 2.553812228472044e-05,
+            "total_variation": 0.0014370545584773576,
+            "top1_equal": true,
+            "x_top1": 8,
+            "y_top1": 8,
+            "max_finite_abs": 0.6279296875,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 8,
+            "y_top1": 8,
+            "max_finite_abs": 0.078125,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 2,
+          "position": 65525,
+          "raw": {
+            "bitidentical": false,
+            "kl_x_to_y": 7.166976093719889e-05,
+            "js_divergence": 1.7873962199367136e-05,
+            "total_variation": 0.0007518346532662269,
+            "top1_equal": true,
+            "x_top1": 383,
+            "y_top1": 383,
+            "max_finite_abs": 0.46875,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 383,
+            "y_top1": 383,
+            "max_finite_abs": 0.078125,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 3,
+          "position": 65526,
+          "raw": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.0014788991499835034,
+            "js_divergence": 0.0003755305579765393,
+            "total_variation": 0.02100963842478902,
+            "top1_equal": true,
+            "x_top1": 449,
+            "y_top1": 449,
+            "max_finite_abs": 0.25,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": false,
+            "kl_x_to_y": 0.0014166121860520846,
+            "js_divergence": 0.00035943373319596156,
+            "total_variation": 0.020457277474449864,
+            "top1_equal": true,
+            "x_top1": 449,
+            "y_top1": 449,
+            "max_finite_abs": 0.140625,
+            "support_mask_equal": true
+          }
+        }
+      ],
+      "first_proposal_equal_steps": [
+        true,
+        true,
+        true
+      ],
+      "first_proposal_common_prefix_length": 3,
+      "note": "Proposal step zero shares prefix and anchor. Any later step after a differing earlier proposal has different conditioning; it is not a numerical same-prefix comparison."
+    },
+    {
+      "other": "candidate",
+      "position": 0,
+      "same_conditioning_rows": [
+        {
+          "head": 0,
+          "row": 0,
+          "position": 65490,
+          "raw": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 1919,
+            "y_top1": 1919,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 1919,
+            "y_top1": 1919,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 0,
+          "position": 65491,
+          "raw": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": -4.8990003053586957e-17,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 383,
+            "y_top1": 383,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 383,
+            "y_top1": 383,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 1,
+          "position": 65492,
+          "raw": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": -3.759116898655677e-17,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 279,
+            "y_top1": 279,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 279,
+            "y_top1": 279,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 2,
+          "position": 65493,
+          "raw": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 3766,
+            "y_top1": 3766,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 3766,
+            "y_top1": 3766,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 3,
+          "position": 65494,
+          "raw": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 3425,
+            "y_top1": 3425,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 3425,
+            "y_top1": 3425,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          }
+        }
+      ],
+      "first_proposal_equal_steps": [
+        true,
+        true,
+        true
+      ],
+      "first_proposal_common_prefix_length": 3,
+      "note": "Proposal step zero shares prefix and anchor. Any later step after a differing earlier proposal has different conditioning; it is not a numerical same-prefix comparison."
+    },
+    {
+      "other": "candidate",
+      "position": 32,
+      "same_conditioning_rows": [
+        {
+          "head": 0,
+          "row": 0,
+          "position": 65522,
+          "raw": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 2.630839172153563e-17,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 22,
+            "y_top1": 22,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 2.630839172153563e-17,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 22,
+            "y_top1": 22,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 0,
+          "position": 65523,
+          "raw": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": -2.5127936195659418e-17,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 33,
+            "y_top1": 33,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 33,
+            "y_top1": 33,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 1,
+          "position": 65524,
+          "raw": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 1.1988168337517381e-17,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 8,
+            "y_top1": 8,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 8,
+            "y_top1": 8,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 2,
+          "position": 65525,
+          "raw": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": -8.557676131711071e-18,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 383,
+            "y_top1": 383,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 383,
+            "y_top1": 383,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          }
+        },
+        {
+          "head": 1,
+          "row": 3,
+          "position": 65526,
+          "raw": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 0.0,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 449,
+            "y_top1": 449,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          },
+          "processed": {
+            "bitidentical": true,
+            "kl_x_to_y": 0.0,
+            "js_divergence": 3.700937438466149e-17,
+            "total_variation": 0.0,
+            "top1_equal": true,
+            "x_top1": 449,
+            "y_top1": 449,
+            "max_finite_abs": 0.0,
+            "support_mask_equal": true
+          }
+        }
+      ],
+      "first_proposal_equal_steps": [
+        true,
+        true,
+        true
+      ],
+      "first_proposal_common_prefix_length": 3,
+      "note": "Proposal step zero shares prefix and anchor. Any later step after a differing earlier proposal has different conditioning; it is not a numerical same-prefix comparison."
+    }
+  ],
+  "limits": "Two frozen positions, two own-state reconstructions each. No throughput result, exhaustive quality proof, or claim of cross-version hidden-state identity. Raw arrays remain private. Different draft branches are excluded from same-prefix distribution comparisons."
+}

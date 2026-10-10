@@ -181,11 +181,15 @@
     },
     {
       "requirement": "E01 final exact-image operational contract",
-      "status": "VERIFIED_LOCAL_RAW_PUBLIC_EXPORT_PENDING",
+      "status": "VERIFIED_PUBLIC_EXACT_IMAGE_RECEIPT",
       "evidence": [
         {
-          "path": "benchmark-results/b70-stack-20261010/E01-operations-final-r3/operations.json",
-          "sha256": "7836964cdeb42dc6f4640bc28aed8bee15ce5ea33d57873aea3be7a247061341"
+          "path": "benchmarks/results/b70-stack-20261010/operations.json",
+          "sha256": "0e9220ef1aa410abcd023e5ae7f9014e1a3fa0e65c423a64149ff6a89bcfdd9b"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/SOURCE_GUARD_COVERAGE.json",
+          "sha256": "4574e62f9f26e13225699f7b98157b13d09ea7cff54a62250a5e7ad7297ec5e0"
         }
       ],
       "scope": "API/media/C4/C16/image-long/prefix-abort, real two/four-request overlap, 32 independent 4.2MP images with131164 input tokens, 16 active source guards, confirmed abort and 200-block restart passed. Raw responses stay private."
@@ -269,14 +273,14 @@
     },
     {
       "requirement": "Conditional E01-minimal fallback",
-      "status": "VERIFIED_NOT_REQUIRED_NOT_BUILT",
+      "status": "CONDITIONAL_PENDING_EXACT_TRIGGER_CONTROLS",
       "evidence": [
         {
           "path": "benchmarks/experiments/b70-stack-20261010/candidates/E01-minimal/source-review.json",
           "sha256": "0de8b97f0f71d30631ddd10f32c157d89968d7e832c69a5a4eb8ac8030b216f5"
         }
       ],
-      "scope": "Read-only exact upstream patch applies to old clean source; fallback only required for a clear unrelated stable-library regression. No such regression currently established by paired gates; final matrix still pending."
+      "scope": "Read-only upstream patch applies to old source. Stable final matrix has three historical review triggers; exact-fixture paired controls are running. Build fallback if a clear unrelated stable-library regression is confirmed."
     },
     {
       "requirement": "Original qualified rollback source/config and strict launcher",
@@ -299,25 +303,52 @@
     },
     {
       "requirement": "Complete frozen final matrix and per-cell final tradeoff",
-      "status": "INCOMPLETE_RUNNING",
+      "status": "VERIFIED_MATRIX_TRADEOFF_REVIEW_PENDING",
       "evidence": [
         {
-          "path": "benchmark-results/b70-stack-20261010/E01-final-controller-r3.json",
-          "sha256": "a523d3366e6996045ce1a400116a0e96cd5cc692ea15e6546b7b6e0a80834607"
+          "path": "benchmarks/results/b70-stack-20261010/serving-summary.json",
+          "sha256": "3e8d3c50b26380958d281770c0d074f067efe0b69a6cb94c21441876fab05328"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/benchmark-comparison.json",
+          "sha256": "59703f594f2ed36704d9d09565e2b2ed27613c7521754ed84e17e25175abffbe"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/final-review-pending.json",
+          "sha256": "739490618c20e34267a4fbe71f0387da85720589681f43883446e19de3c4f92a"
         }
       ],
-      "scope": "Controller session41404 live, source-review stage running; exporter54491 waits for terminal success. Required70waves/124requests plus isolated64K prefix. Historical baseline full matrix is reused, not regenerated."
+      "scope": "70 waves/124 requests plus three isolated prefix resends complete, zero preemption/excess recompute. Three historical review triggers require exact-fixture contemporary controls; no promotion approved."
     },
     {
       "requirement": "Final candidate decision, README/current source, publication and production outcome",
       "status": "INCOMPLETE_PENDING_FINAL_EVIDENCE",
       "evidence": [
         {
+          "path": "benchmarks/results/b70-stack-20261010/decisions/E01.md",
+          "sha256": "c153fe650e62d74ca7a957696fbea2fa5e1c91dbb3cb29b6240f7b824c9d5ca4"
+        },
+        {
           "path": "benchmarks/experiments/b70-stack-20261010/README.md",
-          "sha256": "706c1f67ba9e0e0b1236bd2c40d6956ca0cd310b834675b4038a57c8b5092f90"
+          "sha256": "922b580aa62d58fd72e6bac014935837d1e48f79eabf93b67a77472164b08520"
         }
       ],
-      "scope": "FINAL_DECISION, E01 one-page final decision, performance review and public manifest still required. If promotion approved, update qualified source/requirements/README, preserve historical power tables, deploy/restart strict new image, then push authorized GitHub changes. Otherwise retain old production and publish negative final result."
+      "scope": "Interim E01 decision records actual final matrix and unresolved triggers. FINAL_DECISION, final performance review, publication manifest and production outcome remain pending. No defaults changed. Preserve historical power comparisons."
+    },
+    {
+      "requirement": "Named missing contemporary references for final historical review triggers",
+      "status": "INCOMPLETE_RUNNING",
+      "evidence": [
+        {
+          "path": "benchmarks/experiments/b70-stack-20261010/confirm_frozen_triggers.py",
+          "sha256": "9ac539c8d0e36f99ae50909cf7cc4c3e324620624311de384c4c134de0881a41"
+        },
+        {
+          "path": "benchmarks/experiments/b70-stack-20261010/analyze_frozen_triggers.py",
+          "sha256": "e9acdae447aab2b4ab11f58cb616f19cd4e9ef33386448dacabacba0f5d1b428"
+        }
+      ],
+      "scope": "Controller session30000 confirmed live; three balanced pairs preserve exact frozen 4K C1/32K C1/4K C4 fixtures. CPU exporter13121 confirmed live, requires terminal success. No automatic promotion."
     }
   ]
 }

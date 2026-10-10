@@ -14,6 +14,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--image',required=True);p.add_argument('--out',type=Path,required=True)
     p.add_argument('--m04',type=Path);p.add_argument('--blocks',type=int,default=3);p.add_argument('--capacity',action='store_true')
     p.add_argument('--protected',action='store_true')
+    p.add_argument('--cold-compiler-cache',action='store_true');p.add_argument('--first-touch-only',action='store_true')
     p.add_argument('--onednn-receipt',type=Path);a=p.parse_args()
     baseline=json.loads((HERE/'baseline-manifest.json').read_text())['production']['image_id']
     image=subprocess.check_output(['docker','image','inspect',a.image,'--format','{{.Id}}'],text=True).strip()
@@ -22,6 +23,9 @@ def main():
     assert sha(folder/'panel.json.gz')==manifest['panel_gzip_sha256']
     panel=json.loads(gzip.decompress((folder/'panel.json.gz').read_bytes()))
     windows=[next(w for w in panel['windows'] if w['name']==n) for n in ['source-32k','source-64k','prose-32768']]
+    if a.first_touch_only:
+        assert a.cold_compiler_cache and not a.protected and not a.capacity
+        windows=windows[:1]
     if a.protected:
         protected_path=REPO/'benchmark-results/exl3-optimized-quality-v2/performance-panel.json.gz'
         assert sha(protected_path)=='e82311dbf9607f5b740df9e0d7305e50babd62c74d2e42f9171c8c1d59b976af'
@@ -34,6 +38,9 @@ def main():
     state=dict(status='RUNNING',baseline=baseline,candidate=image,blocks=[],capacity={},gates_sha256=sha(HERE/'gates.json'),
         panel=manifest,protected_panel_sha256='e82311dbf9607f5b740df9e0d7305e50babd62c74d2e42f9171c8c1d59b976af' if a.protected else None,output_budget=512,started_unix=time.time(),scope='Fixed-MTP3 paired candidate screen, not full release qualification')
     def save():(root/'campaign.json').write_text(json.dumps(state,indent=2)+'\n')
+    state['cold_compiler_cache']=a.cold_compiler_cache
+    state['first_touch_only']=a.first_touch_only
+    state['selected_windows']=[w['name'] for w in windows]
     snapshot=root/'diagnostic-sources';snapshot.mkdir()
     for name in ['inventory.py','profile_capture.py']:(snapshot/name).write_bytes((HERE/name).read_bytes())
     state['diagnostic_source_sha256']={p.name:sha(p) for p in snapshot.glob('*.py')}
@@ -50,7 +57,9 @@ def main():
                     if role=='candidate' and a.m04:
                         env.update(EXL3_M04_LIBRARY='/candidate-m04.so',EXL3_M04_LIBRARY_SHA256=sha(a.m04))
                         binds.append((a.m04,'/candidate-m04.so'))
-                    worker=Worker(baseline if role=='baseline' else image,destination,'b70-stack-screen',env=env,binds=binds)
+                    compiler_cache=destination/'compiler-cache' if a.cold_compiler_cache else None
+                    if compiler_cache is not None:assert not compiler_cache.exists()
+                    worker=Worker(baseline if role=='baseline' else image,destination,'b70-stack-screen',env=env,binds=binds,cache_root=compiler_cache)
                     worker.profile['argv']+=['--worker-extension-cls','inventory.WorkerExtension']
                     worker.start();arm=[];record['arms'][role]=arm;save()
                     kwargs=dict(label='initial')

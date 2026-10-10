@@ -1,0 +1,26 @@
+{
+  "status": "PASS_REVIEWED_CHANGED_STACK_NUMERICS",
+  "image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
+  "source_measurement_sha256": "d7c13ce19a9885f503f94771f4208909d64362127edd2a95bd63aaf8d7350410",
+  "failed_exact_campaign_sha256": "6dd1b16914b0ecb9003722d29b9a31e8cadb7abaa4f91c3d03af81338197bba8",
+  "matched_state_sha256": "745cf7caf48b3d2f617046499aba09fd736f00cc5290148a0d16c33ce121d47f",
+  "linear_gate_sha256": "c254dcd3842a58eb811487edf19ee11339a52fb3b2e68fc5435c4499bba6a71b",
+  "local_kernel_gate_sha256": "97b58b71ed3c7a1b72acecec439ea411f1c67ed5485bf8553a001501eebbe8b4",
+  "sdpa_edge_gate_sha256": "b784b9541f6e77bf4733b6502d19c2dee7c8072c838fb7b833dcaba5dede1007",
+  "D64_review_sha256": "fb3af2e4b689264d4edc7fb7bf22c71068647661993454e20586edd33ee3af23",
+  "exact_array_comparison": "FAILED_RETAINED_NOT_RELABELLED",
+  "numerical_changes": {
+    "short_ppl_pct": -0.00020227669913497337,
+    "short_kl_delta": -0.00028890835855305275,
+    "short_js_delta": 5.6953120304169616e-05,
+    "long_ppl_pct": -0.5828115723247596,
+    "long_kl_delta": -4.9532933991856863e-05
+  },
+  "paired_short_nll_delta_ci95": [
+    -0.0011988071359840535,
+    0.0011164946397438187
+  ],
+  "rationale": "Explicit engineering review of this hashed changed-stack measurement. Short PPL is 3.642167 versus qualified 3.642175 (about -0.0002%); paired mean NLL uncertainty spans zero. BF16-relative mean short KL improves 0.000289 and top1 agreement changes from 490/512 to 492/512, while JS worsens 0.000057, reverse KL and p95 also worsen slightly. These mixed changes are not bit identity or a general quality improvement. The 32K suffix PPL changes from 1.190357 to 1.183419 and all eight BF16-relative top1 probes agree. Independently referenced linear shapes/real weight groups, FP16 SDPA edge cases and all four actual-state attention cases pass their original tolerances. On two actual 64K prefixes, E01 target/sampler distributions and three MTP proposals are bit-identical to qualified v0.31, with independently checked native rejection prefixes. Accept the bounded numerical results as a maintenance candidate; no threshold was widened and the exact check remains failed.",
+  "limits": "Finite panels and four selected actual-state attention cases. Origin of every short-path array difference is not localized; a matching 64K probe does not make all other prefixes identical. Kernel linear references use the existing gated reconstruction plus independent FP32 transforms/matmul. Quality approval alone is not a release: protected serving, capacity/admission, operational and final frozen benchmark gates remain required.",
+  "source_receipt_sha256": "a5f05ef0dc95909f2fbb55f2aebeaa0669e7beb63e25f17d39ef8edaecaf9beb"
+}

@@ -17,6 +17,8 @@ def main():
     cells={};weighted={m:[] for m in ['cold','warm']}
     for b in d['blocks']:
         maps={role:{(r['window'],r['mode']):r['result'] for r in b['arms'][role]} for role in ['baseline','candidate']}
+        required={(name,mode) for name in ['source-32k','source-64k','prose-32768'] for mode in ['cold','warm']}
+        assert all(required<=set(m) for m in maps.values()),'Incomplete weighted panel; a first-touch diagnostic is not a promotion screen'
         scores={m:0 for m in weighted}
         for key,x in maps['baseline'].items():
             y=maps['candidate'][key];name,mode=key

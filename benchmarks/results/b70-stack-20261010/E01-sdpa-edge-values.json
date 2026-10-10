@@ -1,0 +1,154 @@
+{
+  "status": "PASS_FP16_SDPA_EDGE_VALUES_AND_EXISTING_INPUT_GUARDS",
+  "rtol": 0.01,
+  "atol": 0.003,
+  "cases": [
+    {
+      "family": "zero",
+      "Q": 64,
+      "L": 4096,
+      "allclose": true,
+      "finite": true,
+      "max_abs": 1.5243887901306152e-05,
+      "inputs_unchanged": true
+    },
+    {
+      "family": "low_variance",
+      "Q": 64,
+      "L": 4096,
+      "allclose": true,
+      "finite": true,
+      "max_abs": 1.8499791622161865e-05,
+      "inputs_unchanged": true
+    },
+    {
+      "family": "large_constant",
+      "Q": 64,
+      "L": 4096,
+      "allclose": true,
+      "finite": true,
+      "max_abs": 1.5243887901306152e-05,
+      "inputs_unchanged": true
+    },
+    {
+      "family": "large_random",
+      "Q": 64,
+      "L": 4096,
+      "allclose": true,
+      "finite": true,
+      "max_abs": 0.0017571449279785156,
+      "inputs_unchanged": true
+    },
+    {
+      "family": "zero",
+      "Q": 256,
+      "L": 4097,
+      "allclose": true,
+      "finite": true,
+      "max_abs": 1.5251338481903076e-05,
+      "inputs_unchanged": true
+    },
+    {
+      "family": "low_variance",
+      "Q": 256,
+      "L": 4097,
+      "allclose": true,
+      "finite": true,
+      "max_abs": 1.991167664527893e-05,
+      "inputs_unchanged": true
+    },
+    {
+      "family": "large_constant",
+      "Q": 256,
+      "L": 4097,
+      "allclose": true,
+      "finite": true,
+      "max_abs": 1.5273690223693848e-05,
+      "inputs_unchanged": true
+    },
+    {
+      "family": "large_random",
+      "Q": 256,
+      "L": 4097,
+      "allclose": true,
+      "finite": true,
+      "max_abs": 0.0019145011901855469,
+      "inputs_unchanged": true
+    },
+    {
+      "family": "zero",
+      "Q": 256,
+      "L": 8193,
+      "allclose": true,
+      "finite": true,
+      "max_abs": 1.5195459127426147e-05,
+      "inputs_unchanged": true
+    },
+    {
+      "family": "low_variance",
+      "Q": 256,
+      "L": 8193,
+      "allclose": true,
+      "finite": true,
+      "max_abs": 1.662224531173706e-05,
+      "inputs_unchanged": true
+    },
+    {
+      "family": "large_constant",
+      "Q": 256,
+      "L": 8193,
+      "allclose": true,
+      "finite": true,
+      "max_abs": 7.634982466697693e-06,
+      "inputs_unchanged": true
+    },
+    {
+      "family": "large_random",
+      "Q": 256,
+      "L": 8193,
+      "allclose": true,
+      "finite": true,
+      "max_abs": 0.0012135505676269531,
+      "inputs_unchanged": true
+    }
+  ],
+  "input_guards": [
+    {
+      "name": "fp32_query",
+      "rejected": true,
+      "error": "Expected q.scalar_type() == at::kHalf && k.scalar_type() == at::kHalf && v.scalar_type() == at::kHalf to be true, but got false.  (Could this error message be improved?  If so, please report an enhancement request to PyTorch.)"
+    },
+    {
+      "name": "fp32_key",
+      "rejected": true,
+      "error": "Expected q.scalar_type() == at::kHalf && k.scalar_type() == at::kHalf && v.scalar_type() == at::kHalf to be true, but got false.  (Could this error message be improved?  If so, please report an enhancement request to PyTorch.)"
+    },
+    {
+      "name": "fp32_value",
+      "rejected": true,
+      "error": "Expected q.scalar_type() == at::kHalf && k.scalar_type() == at::kHalf && v.scalar_type() == at::kHalf to be true, but got false.  (Could this error message be improved?  If so, please report an enhancement request to PyTorch.)"
+    },
+    {
+      "name": "noncontiguous_query",
+      "rejected": true,
+      "error": "Expected q.is_contiguous() && k.is_contiguous() && v.is_contiguous() && out.is_contiguous() to be true, but got false.  (Could this error message be improved?  If so, please report an enhancement request to PyTorch.)"
+    },
+    {
+      "name": "zero_scale",
+      "rejected": true,
+      "error": "oneDNN SDPA: scale must be finite and positive"
+    },
+    {
+      "name": "negative_scale",
+      "rejected": true,
+      "error": "oneDNN SDPA: scale must be finite and positive"
+    },
+    {
+      "name": "nan_scale",
+      "rejected": true,
+      "error": "oneDNN SDPA: scale must be finite and positive"
+    }
+  ],
+  "scope": "Same FP16 query/key/value data, independent FP32 matmul/causal softmax/value reference. This is diagnostics, never throughput. Large-constant raw products exceed FP16 accumulation range; SDPA score descriptor remains FP32. BF16 execution is not used. Guards unchanged; CPU operand/output pointers are never passed to the native XPU API; it assumes XPU operands and is reached through the existing guarded model route.",
+  "source_receipt_sha256": "b784b9541f6e77bf4733b6502d19c2dee7c8072c838fb7b833dcaba5dede1007"
+}

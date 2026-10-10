@@ -19,9 +19,9 @@ def main():
     k = torch.empty((1, 64, 4, 256), dtype=torch.float8_e4m3fn, device='cpu')
     scale = torch.ones(1, dtype=torch.float32, device='cpu')
     arguments = dict(q=q, k=k, v=torch.empty_like(k), out=torch.empty_like(q),
-                     cu_seqlens_q=torch.tensor([0, 64], dtype=torch.int32),
-                     seqused_k=torch.tensor([4096], dtype=torch.int32),
-                     block_table=torch.zeros((1, 64), dtype=torch.int32),
+                     cu_seqlens_q=torch.tensor([0, 64], dtype=torch.int32, device='cpu'),
+                     seqused_k=torch.tensor([4096], dtype=torch.int32, device='cpu'),
+                     block_table=torch.zeros((1, 64), dtype=torch.int32, device='cpu'),
                      k_descale=scale, v_descale=scale,
                      causal=True, softmax_scale=.0625, max_seqlen_q=64, max_seqlen_k=4096)
     assert all(t.device.type == 'cpu' for t in arguments.values() if isinstance(t, torch.Tensor))
@@ -34,7 +34,7 @@ def main():
     # being rejected first because a prefill-sized query is not q2–5.
     q4 = torch.empty((4, 24, 256), dtype=torch.float16, device='cpu')
     verification = dict(arguments, q=q4, out=torch.empty_like(q4), max_seqlen_q=4,
-                        cu_seqlens_q=torch.tensor([0, 4], dtype=torch.int32))
+                        cu_seqlens_q=torch.tensor([0, 4], dtype=torch.int32, device='cpu'))
     assert dispatch.supported_features(verification)
     assert not verify.eligible(verification)
     q4_context = dispatch.Context(True, plan=SimpleNamespace(tokens=4, requests=1, segments=[]), scales=(scale, scale))

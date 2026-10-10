@@ -18,7 +18,7 @@ def main():
                 try:values[str(path.relative_to(device))]=path.read_text().strip()
                 except OSError:continue
             assert values[str((hw[0]/'power1_cap').relative_to(device))]=='180000000'
-            f.write(json.dumps(dict(unix=time.time(),values=values,scope='Comparability only; first campaign block predates monitor start'))+'\n');f.flush()
+            f.write(json.dumps(dict(unix=time.time(),values=values,scope='Comparability only; observations before the first timestamp are unobserved'))+'\n');f.flush()
             time.sleep(15)
     print('COMPARABILITY_MONITOR_FINISHED',flush=True)
 if __name__=='__main__':main()

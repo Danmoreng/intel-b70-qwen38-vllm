@@ -31,8 +31,14 @@ class WorkerExtension(ProfileWorkerExtension):
             _fields_=[('major',ctypes.c_int),('minor',ctypes.c_int),('patch',ctypes.c_int),('hash',ctypes.c_char_p)]
         lib=ctypes.CDLL('/opt/b70/libdnnl.so.3');lib.dnnl_version.restype=ctypes.POINTER(Version);v=lib.dnnl_version().contents
         assert f'{v.major}.{v.minor}.{v.patch}'==expected_onednn_version
-        sources={};modules=[]
+        sources={};modules=[];tensor_dtypes={}
         for role,model in [('target',r.model),('mtp',r.speculator.model)]:
+            counts={}
+            for kind,tensors in [('parameter',model.parameters()),('buffer',model.buffers())]:
+                for tensor in tensors:
+                    key=kind+':'+str(tensor.dtype)
+                    counts[key]=counts.get(key,0)+1
+            tensor_dtypes[role]=counts
             for name,m in model.named_modules():
                 try:p=Path(inspect.getfile(type(m)))
                 except (TypeError,OSError):continue
@@ -57,6 +63,7 @@ class WorkerExtension(ProfileWorkerExtension):
             torch_allocated_bytes=torch.xpu.memory_allocated(),torch_reserved_bytes=torch.xpu.memory_reserved(),
             peak_allocated_bytes=torch.xpu.max_memory_allocated(),peak_reserved_bytes=torch.xpu.max_memory_reserved(),
             free_bytes=free,total_bytes=total,sdpa_partition_cache_stats=dict(stats),sources=sources,modules=modules,
+            registered_tensor_dtypes=tensor_dtypes,
             profiler_activities=[str(a) for a in torch.profiler.supported_activities()],
             route_scope='Model objects and sources establish eligibility, not captured execution. Kernel trace supplies graph-route evidence.',
             graph_pool_scope='Graph and native workspaces are included in allocator/device residency; independently attributed only where a later diagnostic proves ownership.')

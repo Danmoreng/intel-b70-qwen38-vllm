@@ -1,0 +1,52 @@
+{
+  "status": "FAILED_ATTEMPTS_RETAINED_MATCHED_C16_REFERENCE_PENDING",
+  "attempts": [
+    {
+      "attempt": "E01-operations-final",
+      "status": "FAILED",
+      "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+      "source_raw_sha256": "f25250c313e061252f3fd0823a63a33f6c3edfc1d22ae7477b2c7bb668e6f164",
+      "cases_completed": [],
+      "error": "ValueError(\"'/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-operations-final/compiler-prime/loader/loader-168.json' is not in the subpath of '/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010'\")",
+      "initial_num_blocks": null,
+      "compiler_first_start_num_blocks": 199,
+      "c16_pressure_comparison": null,
+      "restoration": {
+        "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "models_endpoint_healthy": true,
+        "verified_unix": 1791603783.0475907
+      }
+    },
+    {
+      "attempt": "E01-operations-final-r2",
+      "status": "FAILED",
+      "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+      "source_raw_sha256": "a7d88a68ef0e37178d8bce261f580468bb125d19b2edcda867487d6c92a423f4",
+      "cases_completed": [
+        "api",
+        "media",
+        "c4-long",
+        "c16-long",
+        "image-long",
+        "extension-abort-long"
+      ],
+      "error": "AssertionError()",
+      "initial_num_blocks": 200,
+      "compiler_first_start_num_blocks": 200,
+      "c16_pressure_comparison": {
+        "baseline_preemptions": 2.0,
+        "candidate_preemptions": 3.0,
+        "baseline_prefill_recompute_excess": 0,
+        "candidate_prefill_recompute_excess": 0
+      },
+      "restoration": {
+        "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+        "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "models_endpoint_healthy": true,
+        "verified_unix": 1791604494.352315
+      }
+    }
+  ],
+  "scope": "First failure is report-path handling after cold inventory, fixed without native/image/policy change. Second is real strict queue-count gate: 3 versus stored 2 preemptions, zero recompute. Neither failed receipt is relabeled. No production approval; named contemporaneous C16 control is running."
+}

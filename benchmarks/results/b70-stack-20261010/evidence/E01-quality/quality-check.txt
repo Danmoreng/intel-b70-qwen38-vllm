@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/stack-scripts/check_quality.py", line 53, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/stack-scripts/check_quality.py", line 25, in main
+    assert len(arrays)==32 and all(x['bitidentical'] for x in arrays), 'Short-path arrays changed; review before release'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Short-path arrays changed; review before release

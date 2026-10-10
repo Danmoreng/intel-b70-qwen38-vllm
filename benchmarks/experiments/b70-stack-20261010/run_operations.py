@@ -36,9 +36,21 @@ with (REPO.parent/'Local-AI-B70/qwen38/context-benchmark/run.lock').open('a') as
  try:
   subprocess.run(['systemctl','--user','stop','b70-qwen38-vllm.service'],check=True,timeout=90)
   assert subprocess.check_output(['docker','ps','--format','{{.Names}}'],text=True).splitlines()==['b70-chatui']
+  # A metadata-only child has a new compiler-cache namespace. Record its
+  # first-touch allocator profile, then compare operational admission with
+  # the qualified workload's normal warm-compiler 200-block pool. Prefix-cache
+  # cold/warm definitions in the actual cases remain unchanged.
+  w=worker(root/'compiler-prime')
+  try:
+   w.start();state['compiler_first_start_inventory']=inventory(w,'compiler-first-start')
+   state['compiler_first_start_loader']=S.loader(w.root)
+   state['compiler_priming_scope']='Startup and read-only inventory only; no serving performance measurement. First-start pool is retained and accounted separately, never forced with a KV-memory override.'
+   save()
+  finally:w.stop()
   w=worker(root/'serving',trace=True)
   try:
    w.start();state['loader']=S.loader(w.root);state['initial_inventory']=inventory(w,'initial');save()
+   assert state['initial_inventory']['num_blocks']==200 and state['initial_inventory']['kv_pool_bytes']==11141120000
    cases=[('api',lambda x:D.smoke(x,262144,{'image':32,'video':4})),('media',lambda x:D.media_case(x,{'image':32,'video':4})),*[(name,lambda x,n=name:D.operational(n,x,True)) for name in ['c4-long','c16-long','image-long','extension-abort-long']]]
    for name,fn in cases:
     print('START',name,flush=True);destination=root/name;destination.mkdir();state['cases'][name]=fn(destination)

@@ -7,12 +7,21 @@ SRC=REPO.parent/'exl3xpu-vllm031'
 OUT=REPO/'benchmark-results/b70-stack-20261010'
 p=argparse.ArgumentParser();p.add_argument('--runtime-image',default='sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048');p.add_argument('--image-tag',default='local/b70-qwen38-vllm:exl3-onednn3134-candidate-20261010');p.add_argument('--metadata-dir',default='E01-final-metadata');a=p.parse_args()
 CFG=REPO/'config/experiments/b70-stack-20261010'
-CFG.mkdir(parents=True,exist_ok=False)
 def write(p,d):p.write_text(json.dumps(d,indent=2)+'\n')
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+baseline=json.loads((Path(__file__).parent/'baseline-manifest.json').read_text())['production']
+assert sha(REPO/'config/production_policy.json')==baseline['policy_sha256']
+native=json.loads((OUT/'E01-native-build/receipt.json').read_text())
+assert sha(OUT/'E01-native-build/_C.so')==native['native']['library_sha256']
+assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=SRC,text=True).strip()==native['source_commit']
+assert not subprocess.check_output(['git','status','--porcelain'],cwd=SRC,text=True)
+a.runtime_image=subprocess.check_output(['docker','image','inspect',a.runtime_image,'--format','{{.Id}}'],text=True).strip()
+assert a.runtime_image==native['image_id']
+assert json.loads((REPO/'config/production_image.json').read_text())['image_id']==baseline['image_id']
+CFG.mkdir(parents=True,exist_ok=False)
 p=json.loads((REPO/'config/production_policy.json').read_text())
 p['policy_id']='b70-qwen38-exl3-production-v3'
-p['runtime'].update(vllm='0.31.0',torch='2.14.0+xpu',onednn='3.13.4',native_library_sha256=sha(OUT/'E01-native-build/_C.so'),exl3_source_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=SRC,text=True).strip())
+p['runtime'].update(vllm='0.31.0',torch='2.14.0+xpu',onednn='3.13.4',native_library_sha256=native['native']['library_sha256'],exl3_source_commit=native['source_commit'])
 assert p['attention']['m04_library_sha256']=='03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3'
 p['runtime']['onednn_source_commit']='c531fe1a5cd631b7f60277cdf6675c588cadbc28'
 p['runtime']['onednn_library_sha256']=json.loads((OUT/'E01-oneDNN-build/library-receipt.json').read_text())['library_sha256']

@@ -1,0 +1,457 @@
+{
+  "status": "PASS_NEW_IMAGE_OPERATIONAL_GATES",
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+  "reference_policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+  "started_unix": 1791606036.4777896,
+  "c16_reference_review_sha256": "b17b14966418da60adb7aa26d28c1ab8bf5f57c9e5776238654bb2860b58f4ac",
+  "diagnostic_source_sha256": {
+    "inventory.py": "a08dc11e55efeaad4e699d4e17d95573c7b9539e5d22e78d3c7c2c722711e3a9",
+    "profile_capture.py": "e941e2af8a30f0801716ace67968d5786dbec531d3c616686a60d7b9429841eb"
+  },
+  "compiler_first_start_inventory": {
+    "num_blocks": 200,
+    "kv_pool_bytes": 11141120000,
+    "torch_allocated_bytes": 28762877440,
+    "torch_reserved_bytes": 28955377664,
+    "registered_tensor_dtypes": {
+      "target": {
+        "parameter:torch.float16": 1201,
+        "parameter:torch.float32": 48,
+        "parameter:torch.int16": 257,
+        "parameter:torch.int32": 257,
+        "buffer:torch.float16": 2,
+        "buffer:torch.float32": 64
+      },
+      "mtp": {
+        "parameter:torch.int16": 6,
+        "parameter:torch.float16": 20,
+        "parameter:torch.int32": 6,
+        "buffer:torch.float16": 1,
+        "buffer:torch.float32": 4
+      }
+    }
+  },
+  "compiler_first_start_loader": {
+    "path": "benchmark-results/b70-stack-20261010/E01-operations-final-r3/compiler-prime/loader/loader-67.json",
+    "sha256": "21288008cf4a7d975209860e206d9177f854c17b93c125d57e58550f0f2e3a98",
+    "loaded_modules": 409,
+    "mtp_loaded": 8
+  },
+  "compiler_priming_scope": "Startup and read-only inventory only; no serving performance measurement. First-start pool is retained and accounted separately, never forced with a KV-memory override.",
+  "loader": {
+    "path": "benchmark-results/b70-stack-20261010/E01-operations-final-r3/serving/loader/loader-67.json",
+    "sha256": "21288008cf4a7d975209860e206d9177f854c17b93c125d57e58550f0f2e3a98",
+    "loaded_modules": 409,
+    "mtp_loaded": 8
+  },
+  "initial_inventory": {
+    "num_blocks": 200,
+    "kv_pool_bytes": 11141120000,
+    "torch_allocated_bytes": 28762877440,
+    "torch_reserved_bytes": 28955377664,
+    "registered_tensor_dtypes": {
+      "target": {
+        "parameter:torch.float16": 1201,
+        "parameter:torch.float32": 48,
+        "parameter:torch.int16": 257,
+        "parameter:torch.int32": 257,
+        "buffer:torch.float16": 2,
+        "buffer:torch.float32": 64
+      },
+      "mtp": {
+        "parameter:torch.int16": 6,
+        "parameter:torch.float16": 20,
+        "parameter:torch.int32": 6,
+        "buffer:torch.float16": 1,
+        "buffer:torch.float32": 4
+      }
+    }
+  },
+  "c16_pressure_comparison": {
+    "baseline_preemptions": 3.0,
+    "candidate_preemptions": 2.0,
+    "baseline_prefill_recompute_excess": 0,
+    "candidate_prefill_recompute_excess": 0,
+    "historical_baseline_preemptions": 2.0,
+    "reference": "reviewed_three_pair_contemporaneous_baseline",
+    "matched_review_sha256": "b17b14966418da60adb7aa26d28c1ab8bf5f57c9e5776238654bb2860b58f4ac"
+  },
+  "confirmed_abort_trace_occurrences": 2,
+  "restarted_inventory": {
+    "num_blocks": 200,
+    "kv_pool_bytes": 11141120000,
+    "torch_allocated_bytes": 28762877440,
+    "torch_reserved_bytes": 28955377664,
+    "registered_tensor_dtypes": {
+      "target": {
+        "parameter:torch.float16": 1201,
+        "parameter:torch.float32": 48,
+        "parameter:torch.int16": 257,
+        "parameter:torch.int32": 257,
+        "buffer:torch.float16": 2,
+        "buffer:torch.float32": 64
+      },
+      "mtp": {
+        "parameter:torch.int16": 6,
+        "parameter:torch.float16": 20,
+        "parameter:torch.int32": 6,
+        "buffer:torch.float16": 1,
+        "buffer:torch.float32": 4
+      }
+    }
+  },
+  "finished_unix": 1791606903.53668,
+  "cases": {
+    "api": {
+      "status": "PASS"
+    },
+    "media": {
+      "status": "PASS"
+    },
+    "c4-long": {
+      "status": "PASS",
+      "usage": [
+        {
+          "prompt_tokens": 32768,
+          "total_tokens": 33024,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 32768,
+          "total_tokens": 33024,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 32768,
+          "total_tokens": 33024,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 32768,
+          "total_tokens": 33024,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        }
+      ],
+      "native": {
+        "prefill_seconds": 82.09930345299654,
+        "generation_tokens": 1024.0,
+        "prefill_tokens": 131072.0,
+        "prompt_tokens": 131072.0,
+        "completed": 4.0,
+        "preemptions": 0.0,
+        "accepted_tokens": 767.0,
+        "decode_seconds": 109.5689036759868,
+        "draft_tokens": 768.0,
+        "cached_tokens": 0.0
+      },
+      "request_sha256": [
+        "61312be016d9f6b43bb6b33bf6b9765fe65522a46c7f345b6239c557d09a00db",
+        "318f985cff39252247feaff983fe5afebcb4b840a9ecf3e0e9fca01af92bbe50",
+        "37d23dec5f89249116998fd64f6f91a3b80ebc5161869a88c48c4e1bb9ffa657",
+        "18a39981aca219b8cfda64eb30c9e3b184a9d2cb2ada3d8955e3c3056366bc41"
+      ],
+      "preemption_policy": "require-zero",
+      "purpose": "4 simultaneous independent 32768-token prompts; fixed output 256 each; not a claim of 4 simultaneous maximum-context sequences"
+    },
+    "c16-long": {
+      "status": "PASS",
+      "usage": [
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        }
+      ],
+      "native": {
+        "prefill_seconds": 114.59974998001417,
+        "generation_tokens": 4096.0,
+        "prefill_tokens": 131072.0,
+        "prompt_tokens": 131072.0,
+        "completed": 16.0,
+        "preemptions": 2.0,
+        "accepted_tokens": 2968.0,
+        "decode_seconds": 448.7674919380079,
+        "draft_tokens": 3357.0,
+        "cached_tokens": 0.0
+      },
+      "request_sha256": [
+        "08ea262450a09f400f15b5465c5bcec359ded5c74d7f0df8ed55a87c54aa7d92",
+        "23ca6548b8439010b8a365d972eed721d7dbd36106f440ef1e8809c7f274042e",
+        "4ea49950f51506dfefd1750c09ebad41bcfa18224edf0fae65fb01d2a8b3911c",
+        "fd63873c8f9ba9a1b53ca7235f9b74a3d435a47c7e54bd3c7b9c7d2515b113e1",
+        "61a5a519c47764747e9595e68d88824bec64d6da9791d153534524cd592f97e2",
+        "cb30aeb880c00d96c0df58a8273b1948b7cae6a7ec34d038847f6e72ab87b183",
+        "5f62aa66e700955de66b83a6b558d5ed088f8780ca3ef6c04c7cf87b91323f77",
+        "bcb2c3687da82b1dc46395c3e1843754894ef3da9d680ef708bf1deb54709cfc",
+        "27063c40a623838b8cf81897f71bee8088f148ea88eebcab65dd13a8a209d0cf",
+        "9a28d1bc05a9c5387a95b35f2c3b9f1e92026c3c0374dfd2b843bbdeb87b0097",
+        "deb31a3e7f8cb143c5b9b8f7697f225c15a45bc4a78efc73721fbcae109e240b",
+        "bb39dd9e294955ee377847986828d7dbcee980d51fa312a6fe84594a41bca22b",
+        "d0f70020edeb3cafaa268799e72b9464cca333e82c6e3a95580e4c7c045284fc",
+        "9ab03a2d4304cbb75f33a0bb4fd49d495836289b6d36c51f505c08b7cc8c535f",
+        "eb22e02e1f43a32d644c2c89175a98139c8862ff97a2afd96d7111bafd994b8b",
+        "4150e7aeb8927063325738fdbb1524af42e6043d5afb5cbb90ff7bcfe1d7cac7"
+      ],
+      "preemption_policy": "record-pressure",
+      "purpose": "16 simultaneous independent 8192-token prompts; fixed output 256 each; not a claim of 16 simultaneous maximum-context sequences"
+    },
+    "image-long": {
+      "status": "PASS",
+      "native": {
+        "prefill_seconds": 89.9139072149992,
+        "generation_tokens": 2.0,
+        "prefill_tokens": 119093.0,
+        "prompt_tokens": 119093.0,
+        "completed": 1.0,
+        "preemptions": 0.0,
+        "accepted_tokens": 3.0,
+        "decode_seconds": 0.18077296599221881,
+        "draft_tokens": 3.0,
+        "cached_tokens": 0.0
+      },
+      "purpose": "One allowed image in a long context"
+    },
+    "extension-abort-long": {
+      "status": "PASS",
+      "purpose": "Long prefix extension and client abort/restart; trace must confirm FINISHED_ABORTED"
+    },
+    "mixed-2": {
+      "status": "COMPLETE",
+      "decoders": 1,
+      "total_admitted": 2,
+      "wall_s": 89.87396135200106,
+      "native": {
+        "prefill_seconds": 28.818900597994798,
+        "generation_tokens": 4352.0,
+        "prefill_tokens": 53248.0,
+        "prompt_tokens": 53248.0,
+        "completed": 2.0,
+        "preemptions": 0.0,
+        "accepted_tokens": 2938.0,
+        "decode_seconds": 92.91165984401596,
+        "draft_tokens": 4248.0,
+        "cached_tokens": 0.0
+      },
+      "incoming_prefill_client_s": 27.121297455989406,
+      "during_incoming_prefill_burst_gaps_s": {
+        "count": 19,
+        "p50": 1.6179088019998744,
+        "p95": 2.031255457292718,
+        "maximum": 2.0860056820092723
+      },
+      "purpose": "Actual incoming cold49K prefill overlapping existing 4096-output-token decoders on this exact image. SSE burst gaps are client observations, not per-token GPU latency or a paired ABBA performance comparison."
+    },
+    "mixed-4": {
+      "status": "COMPLETE",
+      "decoders": 3,
+      "total_admitted": 4,
+      "wall_s": 94.16134724899894,
+      "native": {
+        "prefill_seconds": 37.83612085301138,
+        "generation_tokens": 12544.0,
+        "prefill_tokens": 61440.0,
+        "prompt_tokens": 61440.0,
+        "completed": 4.0,
+        "preemptions": 0.0,
+        "accepted_tokens": 9132.0,
+        "decode_seconds": 273.9175375049963,
+        "draft_tokens": 10242.0,
+        "cached_tokens": 0.0
+      },
+      "incoming_prefill_client_s": 27.298024561998318,
+      "during_incoming_prefill_burst_gaps_s": {
+        "count": 57,
+        "p50": 1.630109021003591,
+        "p95": 2.0471265153959393,
+        "maximum": 2.095347385009518
+      },
+      "purpose": "Actual incoming cold49K prefill overlapping existing 4096-output-token decoders on this exact image. SSE burst gaps are client observations, not per-token GPU latency or a paired ABBA performance comparison."
+    },
+    "independent32-max-area-images": {
+      "status": "PASS",
+      "usage": {
+        "prompt_tokens": 131164,
+        "total_tokens": 131166,
+        "completion_tokens": 2,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "native": {
+        "prefill_seconds": 156.9659802709939,
+        "generation_tokens": 2.0,
+        "prefill_tokens": 131164.0,
+        "prompt_tokens": 131164.0,
+        "completed": 1.0,
+        "preemptions": 0.0,
+        "accepted_tokens": 3.0,
+        "decode_seconds": 0.2282409040053608,
+        "draft_tokens": 3.0,
+        "cached_tokens": 0.0
+      },
+      "unique_images": 32,
+      "pixels_each": 4194304,
+      "fixture_sha256": [
+        "19cebdd9ca639a6f0e426d062569b636af951e3a9eaf461ac24154b1ee5ff28d",
+        "e806acc4a43195a9f8408d43e9330d311b04d6ec11501ad950e44a8fd4a67eb2",
+        "96cda4d2b7f824ed6c5231dffe0add4a3f2fdc3cbfe4523b463d98ce8958fd08",
+        "2393c779b376dea20795dae28e40ac41c78f3009ece8dc51dea38340554ca277",
+        "4620ffd781dae975452d60cf2ec5fd23baf3c54df3772597a488815e8fe349c3",
+        "f1cd43ec289b24c46ffa1ae762ab5f06a3cfb70820fa8d4e57b3912814a60e52",
+        "2b02950a80a954fdbd9375ca59d144d5346c0bdce96271aee9bf88fe1a8fe018",
+        "d77052dc702bb05a8d9a3817f8f60a61f58933b910e1f62bddc9309f7686bcc2",
+        "7030ff8a466f66731335ada8efef5a4ab765c22b8842db79d343ab54a28d0def",
+        "178c16a14cce004a6bf62ae59b6a1277d772d1c32de4d272e114ce301a3d87f3",
+        "f9674b525d92a9d6d3bbb3b04f0f40ecdce71e63114aadccd0a0469459cbc01e",
+        "c1e436a2e88ccafe13fb46bb756cb842625276c19e941010295a05a63bda4ef9",
+        "557d2117bc2789e74f0fde42201d30ed693f59f8d702ccb7bc6eae6500509a2f",
+        "c12ebb9e7ee33c215cf4c293ee9bdc4424b0ad1e8f661f6eacde0d988143fe0d",
+        "3d3189f40efeb79a3a1173f824484be81f02a628a29ec44500d93ccbfb8b30d3",
+        "15e1465ab8689cacefe075f7299fa99c6f89d019877be3b16da788c7dc2e9477",
+        "d795d96d34bb7fdff4062b48f63dc9501e802c07abc1505c984d5d18ffa4795a",
+        "3394edb324a4acad80c486509a2664a183859e0a934932930ad2312b0bc20c19",
+        "1152d7e4d3300ba4e028cb14fa7d7054d32f14345d79a86fb0215316382d7f7c",
+        "26a523e20ae7a05bb392bfc9e9dd4adf70b9435611ebe6ad8b836e28f14a5ae0",
+        "5d82116ff166a761b020dae56b2063ee3f383997a0f5da7b30b6f1ec4a67c8c4",
+        "da561aff1a6c60b9b17c44daadd6528032cd6cb0e9011c38d777210317fb2733",
+        "b3d3ccb7cee89fe27336d5c1ed3ed7edf6fe804ff12c2d9b4f5055e42b22f60f",
+        "7f0e8d82689b59b5a2e313a7bb8b37df5305ac2ddc431a4a9f32b6389162194d",
+        "d259f3f13f18cf4e584b52a300c17b32a8cc9283d1768120b620d66d6cba1e02",
+        "7e96173ca345f8565b97921ee414ed462ef3986a19bbcd99a3b15c07fb8e051c",
+        "12356e63363552bd560e6f6407da83eac41054777d1723c709178e4c53911769",
+        "e858021e13c2ac9d941c64c5f7a61d418b68893e65e71af3a171799e7965c0f0",
+        "176fe25f14f90de59f57693153a9a5458fd1a119caeca6fc2ad5aa61f8849f23",
+        "57e5c685f20f84374e87ae76d746c6e374e7f6f64f94062b738ceabf2fb75d33",
+        "498ad648b6e126d08e0dff65fc8251da5a203859bcde595b8a645981931b38b7",
+        "b965479517d27b87f7772d761de61b00d6afef7826555a346f20003efed96617"
+      ]
+    },
+    "worker-restart": {
+      "status": "PASS",
+      "loader": {
+        "path": "benchmark-results/b70-stack-20261010/E01-operations-final-r3/restarted/loader/loader-67.json",
+        "sha256": "21288008cf4a7d975209860e206d9177f854c17b93c125d57e58550f0f2e3a98",
+        "loaded_modules": 409,
+        "mtp_loaded": 8
+      }
+    }
+  },
+  "source_raw_sha256": "7836964cdeb42dc6f4640bc28aed8bee15ce5ea33d57873aea3be7a247061341"
+}

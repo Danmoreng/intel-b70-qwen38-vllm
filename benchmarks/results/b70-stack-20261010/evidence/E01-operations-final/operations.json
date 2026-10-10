@@ -1,0 +1,43 @@
+{
+  "status": "FAILED",
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+  "reference_policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+  "cases": {},
+  "started_unix": 1791603622.321264,
+  "diagnostic_source_sha256": {
+    "inventory.py": "a08dc11e55efeaad4e699d4e17d95573c7b9539e5d22e78d3c7c2c722711e3a9",
+    "profile_capture.py": "e941e2af8a30f0801716ace67968d5786dbec531d3c616686a60d7b9429841eb"
+  },
+  "compiler_first_start_inventory": {
+    "num_blocks": 199,
+    "kv_pool_bytes": 11085414400,
+    "torch_allocated_bytes": 28706254336,
+    "torch_reserved_bytes": 28898754560,
+    "registered_tensor_dtypes": {
+      "target": {
+        "parameter:torch.float16": 1201,
+        "parameter:torch.float32": 48,
+        "parameter:torch.int16": 257,
+        "parameter:torch.int32": 257,
+        "buffer:torch.float16": 2,
+        "buffer:torch.float32": 64
+      },
+      "mtp": {
+        "parameter:torch.int16": 6,
+        "parameter:torch.float16": 20,
+        "parameter:torch.int32": 6,
+        "buffer:torch.float16": 1,
+        "buffer:torch.float32": 4
+      }
+    }
+  },
+  "error": "ValueError(\"'/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-operations-final/compiler-prime/loader/loader-168.json' is not in the subpath of '/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010'\")",
+  "restoration": {
+    "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+    "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+    "models_endpoint_healthy": true,
+    "verified_unix": 1791603783.0475907
+  },
+  "finished_unix": 1791603783.0476067
+}

@@ -1,0 +1,876 @@
+{
+  "status": "PASS_ALL_ACTIVE_SOURCE_GUARDS",
+  "vllm_version": "0.31.0",
+  "required_count": 16,
+  "covered_count": 16,
+  "guards": {
+    "v1/attention/backends/flash_attn.py": {
+      "expected_sha256": "ea53fb41165323f13094604051c73d44a579994fe5a427243aa9faafc280b1c2",
+      "declared_by": [
+        "attention_dispatch.py"
+      ],
+      "installed_path": "installed-vllm/v1/attention/backends/flash_attn.py",
+      "actual_sha256": "ea53fb41165323f13094604051c73d44a579994fe5a427243aa9faafc280b1c2"
+    },
+    "v1/attention/backends/fa_utils.py": {
+      "expected_sha256": "3896d53947719ec9a226479fdbde60e83b1df116d634e2f4331499acf727dd99",
+      "declared_by": [
+        "attention_dispatch.py"
+      ],
+      "installed_path": "installed-vllm/v1/attention/backends/fa_utils.py",
+      "actual_sha256": "3896d53947719ec9a226479fdbde60e83b1df116d634e2f4331499acf727dd99"
+    },
+    "v1/attention/backend.py": {
+      "expected_sha256": "77ac35180c1e0f854c6307f5deb3c7c0ac4a9e8702578d406ce058981488a137",
+      "declared_by": [
+        "attention_dispatch.py"
+      ],
+      "installed_path": "installed-vllm/v1/attention/backend.py",
+      "actual_sha256": "77ac35180c1e0f854c6307f5deb3c7c0ac4a9e8702578d406ce058981488a137"
+    },
+    "v1/worker/gpu/model_runner.py": {
+      "expected_sha256": "725c47114e148ade3a26b4cc9c5f7295588fdd387afc3cb5fdb2d16513a1bb5c",
+      "declared_by": [
+        "attention_dispatch.py"
+      ],
+      "installed_path": "installed-vllm/v1/worker/gpu/model_runner.py",
+      "actual_sha256": "725c47114e148ade3a26b4cc9c5f7295588fdd387afc3cb5fdb2d16513a1bb5c"
+    },
+    "v1/worker/gpu/attn_utils.py": {
+      "expected_sha256": "0f9df8b0153bd0a2720ee957f6cd1600b9d865eb12b7bf432501ffaa12fb6a9c",
+      "declared_by": [
+        "attention_dispatch.py"
+      ],
+      "installed_path": "installed-vllm/v1/worker/gpu/attn_utils.py",
+      "actual_sha256": "0f9df8b0153bd0a2720ee957f6cd1600b9d865eb12b7bf432501ffaa12fb6a9c"
+    },
+    "v1/worker/gpu/model_states/mamba_hybrid.py": {
+      "expected_sha256": "1ddd7dc921d74789e77d3319dc167820ad7fc47ed51d8d9a35ba3938f5c6a079",
+      "declared_by": [
+        "attention_dispatch.py",
+        "target_runtime.py"
+      ],
+      "installed_path": "installed-vllm/v1/worker/gpu/model_states/mamba_hybrid.py",
+      "actual_sha256": "1ddd7dc921d74789e77d3319dc167820ad7fc47ed51d8d9a35ba3938f5c6a079"
+    },
+    "model_executor/layers/attention/attention.py": {
+      "expected_sha256": "bde77677fd0e95ea09c6a580dfaf09b57741e8183e00cb106e2d1cc64d8e03f2",
+      "declared_by": [
+        "attention_dispatch.py"
+      ],
+      "installed_path": "installed-vllm/model_executor/layers/attention/attention.py",
+      "actual_sha256": "bde77677fd0e95ea09c6a580dfaf09b57741e8183e00cb106e2d1cc64d8e03f2"
+    },
+    "model_executor/layers/quantization/kv_cache.py": {
+      "expected_sha256": "32b45463d0b36c021cb5ae0937d60b5c797ca383a0ef3e291170337486feb1b0",
+      "declared_by": [
+        "attention_dispatch.py"
+      ],
+      "installed_path": "installed-vllm/model_executor/layers/quantization/kv_cache.py",
+      "actual_sha256": "32b45463d0b36c021cb5ae0937d60b5c797ca383a0ef3e291170337486feb1b0"
+    },
+    "v1/attention/backends/gdn_attn.py": {
+      "expected_sha256": "496f383285de2fe92626091309a56a96a64b496f37d5585f8b7b55d0260e1a84",
+      "declared_by": [
+        "target_runtime.py"
+      ],
+      "installed_path": "installed-vllm/v1/attention/backends/gdn_attn.py",
+      "actual_sha256": "496f383285de2fe92626091309a56a96a64b496f37d5585f8b7b55d0260e1a84"
+    },
+    "platforms/xpu.py": {
+      "expected_sha256": "d13a446c60c0cc3d16902f75170646d87d6e4b5f153725290a2a4830b0b6b5b2",
+      "declared_by": [
+        "target_runtime.py"
+      ],
+      "installed_path": "installed-vllm/platforms/xpu.py",
+      "actual_sha256": "d13a446c60c0cc3d16902f75170646d87d6e4b5f153725290a2a4830b0b6b5b2"
+    },
+    "v1/core/single_type_kv_cache_manager.py": {
+      "expected_sha256": "3a3cb20bd6aa1e0ad46471fc9e5e01ee5797ab4bb759e00ef5fb309d2830db13",
+      "declared_by": [
+        "target_runtime.py"
+      ],
+      "installed_path": "installed-vllm/v1/core/single_type_kv_cache_manager.py",
+      "actual_sha256": "3a3cb20bd6aa1e0ad46471fc9e5e01ee5797ab4bb759e00ef5fb309d2830db13"
+    },
+    "v1/worker/xpu_model_runner.py": {
+      "expected_sha256": "07fa0390d28f2b8c3c3c0019eb9c3b126e2397aea268ba47c889f06b423deb23",
+      "declared_by": [
+        "target_runtime.py"
+      ],
+      "installed_path": "installed-vllm/v1/worker/xpu_model_runner.py",
+      "actual_sha256": "07fa0390d28f2b8c3c3c0019eb9c3b126e2397aea268ba47c889f06b423deb23"
+    },
+    "v1/worker/xpu_worker.py": {
+      "expected_sha256": "3acd18a33f53b8da5a322079afc61ae7b1247212a7c881ab9aa4101a287c2ca5",
+      "declared_by": [
+        "target_runtime.py"
+      ],
+      "installed_path": "installed-vllm/v1/worker/xpu_worker.py",
+      "actual_sha256": "3acd18a33f53b8da5a322079afc61ae7b1247212a7c881ab9aa4101a287c2ca5"
+    },
+    "model_executor/models/qwen3_5_mtp.py": {
+      "expected_sha256": "04be8e53afff3c9e27198d18ad66bdee787b58c8c294326de1e907f9612a8241",
+      "declared_by": [
+        "target_runtime.py"
+      ],
+      "installed_path": "installed-vllm/model_executor/models/qwen3_5_mtp.py",
+      "actual_sha256": "04be8e53afff3c9e27198d18ad66bdee787b58c8c294326de1e907f9612a8241"
+    },
+    "model_executor/models/b70_mtp_policy.py": {
+      "expected_sha256": "c7c75d6b818c1cb0f1846f752060650af399f832e0dea3e8297ec274f2cfee3f",
+      "declared_by": [
+        "target_runtime.py"
+      ],
+      "installed_path": "installed-vllm/model_executor/models/b70_mtp_policy.py",
+      "actual_sha256": "c7c75d6b818c1cb0f1846f752060650af399f832e0dea3e8297ec274f2cfee3f"
+    },
+    "_xpu_ops.py": {
+      "expected_sha256": "713f181dcfc72814e227f9e1ffe8878b03cbfe524b0be60b3fc261bdb76cd448",
+      "declared_by": [
+        "target_runtime.py"
+      ],
+      "installed_path": "installed-vllm/_xpu_ops.py",
+      "actual_sha256": "713f181dcfc72814e227f9e1ffe8878b03cbfe524b0be60b3fc261bdb76cd448"
+    }
+  },
+  "workspace_relationship": [
+    {
+      "path": "_xpu_ops.py",
+      "workspace_sha256": "713f181dcfc72814e227f9e1ffe8878b03cbfe524b0be60b3fc261bdb76cd448",
+      "identical": true
+    },
+    {
+      "path": "compilation/backends.py",
+      "workspace_sha256": "16af622b799f22f30eaa1c78f7ccca9d54c7c72785ad89e90c87e859bf8ef876",
+      "identical": true
+    },
+    {
+      "path": "compilation/cuda_graph.py",
+      "workspace_sha256": "e09f694f4f50cda891b2db09d48993a9248f5a1318795b3798cd5478c268ca84",
+      "identical": true
+    },
+    {
+      "path": "model_executor/layers/attention/attention.py",
+      "workspace_sha256": "bde77677fd0e95ea09c6a580dfaf09b57741e8183e00cb106e2d1cc64d8e03f2",
+      "identical": true
+    },
+    {
+      "path": "model_executor/layers/mamba/gdn/__init__.py",
+      "workspace_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identical": true
+    },
+    {
+      "path": "model_executor/layers/mamba/gdn/base.py",
+      "workspace_sha256": "e326cba09aceca3e247d0b51e6073240d04591ca433dbb20359c720167869fa0",
+      "identical": true
+    },
+    {
+      "path": "model_executor/layers/mamba/gdn/kimi_gdn_linear_attn.py",
+      "workspace_sha256": "3bae1be0d5ed66d4ade10b40bda3230146c4516b95e7409c0293b8900c0dee34",
+      "identical": true
+    },
+    {
+      "path": "model_executor/layers/mamba/gdn/olmo_gdn_linear_attn.py",
+      "workspace_sha256": "c74cef04da82ccb697a29f1f6ae3d22bb2963c7a512b38156ef3be4438586726",
+      "identical": true
+    },
+    {
+      "path": "model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "workspace_sha256": "3bd2f805f0f4b821e6902ef18da8ba66ad42a7e5a633b76abe96892532293d9c",
+      "identical": true
+    },
+    {
+      "path": "model_executor/layers/quantization/kv_cache.py",
+      "workspace_sha256": "32b45463d0b36c021cb5ae0937d60b5c797ca383a0ef3e291170337486feb1b0",
+      "identical": true
+    },
+    {
+      "path": "model_executor/models/b70_mtp_policy.py",
+      "workspace_present": false
+    },
+    {
+      "path": "model_executor/models/qwen3_5.py",
+      "workspace_sha256": "d261726aae3ce5d52c37b868c317d9377d5e1d7c344961707acc07785a4ec4ab",
+      "identical": true
+    },
+    {
+      "path": "model_executor/models/qwen3_5_mtp.py",
+      "workspace_sha256": "d206addc79b7d01aabe54be57a6610b897a88d1130df51d39b3975b53599110b",
+      "identical": false
+    },
+    {
+      "path": "platforms/xpu.py",
+      "workspace_sha256": "d13a446c60c0cc3d16902f75170646d87d6e4b5f153725290a2a4830b0b6b5b2",
+      "identical": true
+    },
+    {
+      "path": "v1/attention/backend.py",
+      "workspace_sha256": "77ac35180c1e0f854c6307f5deb3c7c0ac4a9e8702578d406ce058981488a137",
+      "identical": true
+    },
+    {
+      "path": "v1/attention/backends/fa_utils.py",
+      "workspace_sha256": "3896d53947719ec9a226479fdbde60e83b1df116d634e2f4331499acf727dd99",
+      "identical": true
+    },
+    {
+      "path": "v1/attention/backends/flash_attn.py",
+      "workspace_sha256": "ea53fb41165323f13094604051c73d44a579994fe5a427243aa9faafc280b1c2",
+      "identical": true
+    },
+    {
+      "path": "v1/attention/backends/gdn_attn.py",
+      "workspace_sha256": "496f383285de2fe92626091309a56a96a64b496f37d5585f8b7b55d0260e1a84",
+      "identical": true
+    },
+    {
+      "path": "v1/core/kv_cache_manager.py",
+      "workspace_sha256": "bd9bf46a2101f9368d4941867415a239d18d95e0b956f82f885ce25e10e69f3b",
+      "identical": true
+    },
+    {
+      "path": "v1/core/kv_cache_utils.py",
+      "workspace_sha256": "1b20c836aece4982dd87f7e06e14f5ae07a1fc2636101074cfad11584b1a0dcf",
+      "identical": true
+    },
+    {
+      "path": "v1/core/sched/__init__.py",
+      "workspace_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identical": true
+    },
+    {
+      "path": "v1/core/sched/async_scheduler.py",
+      "workspace_sha256": "38d296e77e4d612e696241c67298eb1ca9b6a48b483cd33d35495bf31691032e",
+      "identical": true
+    },
+    {
+      "path": "v1/core/sched/diffusion_scheduler.py",
+      "workspace_sha256": "82fdaeebd4b852317c426b308554b2db510d8b075f90d6dca3dd8b245a6ff040",
+      "identical": true
+    },
+    {
+      "path": "v1/core/sched/interface.py",
+      "workspace_sha256": "783cbf3653329b705320a78a464abae2f7ab74d0a0a007a6c6aa683cad5f68b2",
+      "identical": true
+    },
+    {
+      "path": "v1/core/sched/output.py",
+      "workspace_sha256": "972e0bc8e7af1f4262ac73f660f6b8f798ba780f86c031a9c8a7f10cbfaad3a8",
+      "identical": true
+    },
+    {
+      "path": "v1/core/sched/request_queue.py",
+      "workspace_sha256": "db8d25daf9580d581f18c6b631a6576dfaa7d1474398cd8dc4db1d29745c214d",
+      "identical": true
+    },
+    {
+      "path": "v1/core/sched/scheduler.py",
+      "workspace_sha256": "f820bee4f42b878b262a30f3728a97d7413477b2a277748e20f2528ac2ec2f2a",
+      "identical": true
+    },
+    {
+      "path": "v1/core/sched/utils.py",
+      "workspace_sha256": "b6583424b6da15000545cd926ec887ee591bae8a56e6734b8ddf8f9e8f90cc4b",
+      "identical": true
+    },
+    {
+      "path": "v1/core/single_type_kv_cache_manager.py",
+      "workspace_sha256": "3a3cb20bd6aa1e0ad46471fc9e5e01ee5797ab4bb759e00ef5fb309d2830db13",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/__init__.py",
+      "workspace_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/async_utils.py",
+      "workspace_sha256": "10875f3e7ab28fea5b6ec0dfa1a840ae69675882468cb90f9f3ca0a66db1598f",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/attn_utils.py",
+      "workspace_sha256": "0f9df8b0153bd0a2720ee957f6cd1600b9d865eb12b7bf432501ffaa12fb6a9c",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/block_table.py",
+      "workspace_sha256": "fb5ca5b0be5d0dd9466d9a66d056fc5acbe2dedbcb0eeebb1c486031ed53b0a8",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/buffer_utils.py",
+      "workspace_sha256": "6597f701a30261bf250e9ad5a29737264624a1caa20527aeea0dad630325b093",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/cp_utils.py",
+      "workspace_sha256": "d91e59d28d03e1df79628b64a865d9b68d40bec4d7b6bf194317e47ca8152f3f",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/cudagraph_utils.py",
+      "workspace_sha256": "8e6ac6f655dd013dd2a3d3561bc88fe05ceeea2b060e5cb6bc85decb0bb2f813",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/dp_utils.py",
+      "workspace_sha256": "b81a663c7e736f93c7be6ff7b6facebeb93ee4a52c280163b2ba9146fe33c341",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/ec_connector.py",
+      "workspace_sha256": "ea65e79446ce84fa0573ed4dc52129a80d80be66a08380189c25e3811a793cc7",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/eplb_utils.py",
+      "workspace_sha256": "98aaa1e7763faa3ae6fbd012f5a222f050ab2d5a6d8942193341f2e5716228ae",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/input_batch.py",
+      "workspace_sha256": "96163c486368f2cf0e539fe68eaa06f4df3ac814da8f7a92af2b04242e01bc6d",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/kv_connector.py",
+      "workspace_sha256": "dad1aa1764f1bd0b95fe08a1b2bff6f6fffb633fd167bd65c0657fcb3d296fba",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/lora_utils.py",
+      "workspace_sha256": "68c797e20684c7a63745980539ff51e0f9e3942d09a557504b6d70cfb2bc35fd",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/metrics/__init__.py",
+      "workspace_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/metrics/logits.py",
+      "workspace_sha256": "ea058d7510a077a55f8ac7e4c3d596508346244e908cb372865d7159f62edc89",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/mm/__init__.py",
+      "workspace_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/mm/encoder_cache.py",
+      "workspace_sha256": "a27a52c2c52686a574b24910d38f7bd81508fa75d9d757f1b8d6e169575aa385",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/mm/encoder_runner.py",
+      "workspace_sha256": "0981e352d70301b7154a217a48665ffe35f215d053ec5740c2515a3e1e11b4e6",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/mm/lora.py",
+      "workspace_sha256": "a3eddfad6ad64de276964240c28dc080888df4a56dd5eac18f89428f2cbb7a01",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/mm/rope.py",
+      "workspace_sha256": "0924375bcb367267e783b57dd2ad9de1189d97025ce4313baaa54f2911eaaf1e",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/model_runner.py",
+      "workspace_sha256": "725c47114e148ade3a26b4cc9c5f7295588fdd387afc3cb5fdb2d16513a1bb5c",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/model_states/__init__.py",
+      "workspace_sha256": "07815d0b788fc88185772f581bbf892a675259f9288375571f29887622f8d93c",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/model_states/default.py",
+      "workspace_sha256": "f1d34d5c8c03be6e5afec8c2a24480ec259ca7c87392462f4e52d6c4eb775733",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/model_states/encoder_decoder.py",
+      "workspace_sha256": "df7ec035abe403c3b42a507a7619c1f7776d7b0a65eca07ca279069189433990",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/model_states/encoder_only.py",
+      "workspace_sha256": "6b5755a31a0457fd7dc26a62e827df64d87c5b02476dabc0794c9aedd4996a3c",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/model_states/interface.py",
+      "workspace_sha256": "4f4fdd3e0a2611836a79ed0392b843b627fd65382138530be1dd5ae33c2ab4b3",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/model_states/mamba_hybrid.py",
+      "workspace_sha256": "1ddd7dc921d74789e77d3319dc167820ad7fc47ed51d8d9a35ba3938f5c6a079",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/model_states/mm_pruning.py",
+      "workspace_sha256": "b150940b12ae76048f050a8eeb54d532bbdc530a18ffbf320ddeeb0cfaa90f93",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/model_states/prompt_embeds.py",
+      "workspace_sha256": "5fc1268429527fd913026c39a4019515ca4d4d3a72294592e51853030d792dbb",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/model_states/recoverssm.py",
+      "workspace_sha256": "b4b660e62eaf33f4fe8271f83ed1fb6de6bc08f800a8073b27803e42fb29a645",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/pcp_manager.py",
+      "workspace_sha256": "2ad4ef6ff9984fc85a97c05edecfee2dc897189b6b6abf7697f3194f54cec224",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/pool/__init__.py",
+      "workspace_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/pool/pooling_runner.py",
+      "workspace_sha256": "f8463f7648cce0f3f29418a4d9fee61634ead760957cf236d06d61cf8cd986e7",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/pp_utils.py",
+      "workspace_sha256": "c3e1054575c3427e232c9d3253763fb1d0a28edef88f8b32d2f168a83d4b5705",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/__init__.py",
+      "workspace_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/bad_words.py",
+      "workspace_sha256": "85c2f1a4a34eac0f1784cd75bd9ed317e1ef3b82a953c07de02a548a48b4aad4",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/batch_shard.py",
+      "workspace_sha256": "7f43326a0b11a6c17d8dcd65a6abf706b96b450a07ef592b06bd8fbf8c582225",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/gumbel.py",
+      "workspace_sha256": "f24793dbc02d196cb458148b42fb73b7663de55e7e6ded660ea51065b7143853",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/logit_bias.py",
+      "workspace_sha256": "39dc683f5dc58ee7a266702b1ddcd1e1e1f44457d5ff689a88bae3401305f5c2",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/logits_processor/__init__.py",
+      "workspace_sha256": "4d7bcc668f64162d168ee1f41a294d1fee98366200468df846952a08d8f23a45",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/logits_processor/interface.py",
+      "workspace_sha256": "4172bdc4d3b736cb6670323f84aa8eb310567cd4f288c6ea4ab29e4bb6c9bcdd",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/logits_processor/loader.py",
+      "workspace_sha256": "5a51b37ffb6f489029500021310b21a8e666c14842d1f91b58d33cac5a805348",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/logprob.py",
+      "workspace_sha256": "ac58bfedaa325ae29e7b652063455239c7354a2af4751396930d5670f890ce2d",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/min_p.py",
+      "workspace_sha256": "4cb5e2f45e1ced6f9685283a7a5c8cfd7204d9a249822e866cfff756c7f04f62",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/output.py",
+      "workspace_sha256": "436e2eb1d29faade2af25a3f7c27af5f2ef6314f79d006f65adc8c20fe946b9e",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/penalties.py",
+      "workspace_sha256": "a9171ecb6d291cb195efd77af41caa97fe44a687669b6583d9e3ead08e8374fa",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/prompt_logprob.py",
+      "workspace_sha256": "d65ae509ee6da4f4bedd7626807462a91bf6817613d907b02880c18b9af45d27",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/sampler.py",
+      "workspace_sha256": "ddbcdab46010bf38a5fab9b9b6a2deed2ec5e883ebfe81e83f6d22f41e546771",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/states.py",
+      "workspace_sha256": "7dbccea6fb6e24830dafb447a43f93fd0539f33ef02f1b5bf7c2547234cbffa3",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/thinking_budget.py",
+      "workspace_sha256": "89d4255450c1659c6d3f49dbfc0e8af5035904cdd98e3e8fc0a1bd21650203d0",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/trace_replay.py",
+      "workspace_sha256": "d2a7d3b3b55379efabe4740a4b7f14030126dc11be36f6ea974164ce42316a50",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/sample/watermark.py",
+      "workspace_sha256": "b66e64f8ef2a5910ad086899565b4972614a30990f0d1edfb60ab96628de5473",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/shutdown.py",
+      "workspace_sha256": "bb470f14b17c7e52571ef8938b2a9527e7c2846852ae8a3a94b69cd1c30aa4b1",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/__init__.py",
+      "workspace_sha256": "61b3acba401c1079039496f72445c28bbc6119d0b508f9a75d231f305aa1b7e8",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/acceptance_estimator.py",
+      "workspace_sha256": "12676553ce7f3a6c4dc5c836c2f05cf292e6138b5efd39fdd4638f0ad965a812",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/adaptive_verification.py",
+      "workspace_sha256": "d91b0b67474b17e2c2b579291182d70a26b3573ecc4b0756f1bb3018d936c3a6",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/autoregressive/__init__.py",
+      "workspace_sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/autoregressive/cudagraph_utils.py",
+      "workspace_sha256": "42ee43d95882608576c7a98e8c64865eb4053838d0c647661469d00dc71aa0b1",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/autoregressive/speculator.py",
+      "workspace_sha256": "c40e801436bc78a77624e1d2c688db823a21b73ffc65f75d18ad78ffeef18118",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/dflash/__init__.py",
+      "workspace_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/dflash/cudagraph.py",
+      "workspace_sha256": "2b29f8fc953714e768c18f7a283fb0e6bcad3d226815b383a921812711b840c9",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/dflash/speculator.py",
+      "workspace_sha256": "36d5bccd28eb64de1af348cbdd4d630bfd7d781479be472570e14c0865826058",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/dflash/utils.py",
+      "workspace_sha256": "f0584417149c0a6fa67e700b2a725e40a41f4546a806b26e6cc64b64c59cfd66",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/dflash2/__init__.py",
+      "workspace_sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/dflash2/speculator.py",
+      "workspace_sha256": "f9f5b5d2623e09fb9f16d4a2e1353c7014d6a01939563e511d9f3eeec7c8163d",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/draft_model/__init__.py",
+      "workspace_sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/draft_model/speculator.py",
+      "workspace_sha256": "f0c2c06c0c3e7fe1205001d99c722e76a2868eb23aa3071a0d9534d142d1d789",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/dspark/__init__.py",
+      "workspace_sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/dspark/speculator.py",
+      "workspace_sha256": "8b43305c582d728beeaaaaeb81e2cf22688a4fd1e9eaa7710f0e4a8d82a8a0cd",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/dspark/utils.py",
+      "workspace_sha256": "9d780d7895bde0bb7c38b5424e4a41d49814fb3381ca851d8e4ef8be151c4883",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/eagle/__init__.py",
+      "workspace_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/eagle/eagle3_utils.py",
+      "workspace_sha256": "201ee875fcc3d076a8fc1f3876dcbf85736b221a368555243a8987ff26a1674e",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/eagle/speculator.py",
+      "workspace_sha256": "746e318a4f266d75522ff7f3731ea9b4527b7b4824f71364d1a62184ea1f7b3d",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/eagle/utils.py",
+      "workspace_sha256": "a6d4830323e4c134b78d580e57036decee382c08e59ba17a2c5383e7af1f1802",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/extract_hidden_states.py",
+      "workspace_sha256": "93c4233be7b2d2290b33902ea9b3bb5274c11701830851d03967a22144536e2d",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/gemma4/__init__.py",
+      "workspace_sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/gemma4/speculator.py",
+      "workspace_sha256": "88bdbcf2571bb8b6653f7f4c9b3568cbeb91c2453f857701a91bf1315d7b6db7",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/lilicorr/__init__.py",
+      "workspace_sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/lilicorr/speculator.py",
+      "workspace_sha256": "c2f5629ce96597bae891151e30a16cb0f68dded14304d7a5df969155190fa953",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/mtp/__init__.py",
+      "workspace_sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/mtp/speculator.py",
+      "workspace_sha256": "926d6c9ffdb368c971647911a60493820d056ce236fcae9d94a42fa2e006255d",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/multi_module_mtp/__init__.py",
+      "workspace_sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/multi_module_mtp/speculator.py",
+      "workspace_sha256": "6dc8c68a1d24c868a567684ec5bfe54d382e418b028675c00f5f5b0a6537db96",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/rejection_sampler.py",
+      "workspace_sha256": "b682782f05f43b21f4ad1f995e37b6288d782b0dd4e3ba66db0919f5c5a9ae29",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/rejection_sampler_utils.py",
+      "workspace_sha256": "d9f29ad1ce4fe40a078a78b21d73fab97bbbe018775acb480c0ad14dea0c5c35",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/speculator.py",
+      "workspace_sha256": "da3b576318cfdc136579a3dc40254f416f4ccacbfd3c2149c74ff1c7c95825ce",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/spec_decode/utils.py",
+      "workspace_sha256": "282f2929eddae9ca7312269f799be07472334b6df9fd91878b5e839ec05e418c",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/states.py",
+      "workspace_sha256": "8c899b8ef63d95f450876d3f01e56772f9534938a95383a46659fddf85573fa3",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/structured_outputs.py",
+      "workspace_sha256": "18a10532db7e66b55e334acacd1fd989ad6361adf31dd0de9a9a65e23db25951",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/ubatch_utils.py",
+      "workspace_sha256": "995238da91dcb34ff7a0ad5ac5883f2bb4b5d6edddaa6bed8d0f1966166378c4",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/gpu/warmup.py",
+      "workspace_sha256": "423ac32d58fe008c228cfa223e4fcebfcf87e3463a9dbdf80a083c0578d73723",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/xpu_model_runner.py",
+      "workspace_sha256": "07fa0390d28f2b8c3c3c0019eb9c3b126e2397aea268ba47c889f06b423deb23",
+      "identical": true
+    },
+    {
+      "path": "v1/worker/xpu_worker.py",
+      "workspace_sha256": "3acd18a33f53b8da5a322079afc61ae7b1247212a7c881ab9aa4101a287c2ca5",
+      "identical": true
+    }
+  ],
+  "files_sha256": {
+    "vllm-LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "installed-vllm/_xpu_ops.py": "713f181dcfc72814e227f9e1ffe8878b03cbfe524b0be60b3fc261bdb76cd448",
+    "installed-vllm/compilation/backends.py": "16af622b799f22f30eaa1c78f7ccca9d54c7c72785ad89e90c87e859bf8ef876",
+    "installed-vllm/compilation/cuda_graph.py": "e09f694f4f50cda891b2db09d48993a9248f5a1318795b3798cd5478c268ca84",
+    "installed-vllm/model_executor/layers/attention/attention.py": "bde77677fd0e95ea09c6a580dfaf09b57741e8183e00cb106e2d1cc64d8e03f2",
+    "installed-vllm/model_executor/layers/mamba/gdn/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installed-vllm/model_executor/layers/mamba/gdn/base.py": "e326cba09aceca3e247d0b51e6073240d04591ca433dbb20359c720167869fa0",
+    "installed-vllm/model_executor/layers/mamba/gdn/kimi_gdn_linear_attn.py": "3bae1be0d5ed66d4ade10b40bda3230146c4516b95e7409c0293b8900c0dee34",
+    "installed-vllm/model_executor/layers/mamba/gdn/olmo_gdn_linear_attn.py": "c74cef04da82ccb697a29f1f6ae3d22bb2963c7a512b38156ef3be4438586726",
+    "installed-vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py": "3bd2f805f0f4b821e6902ef18da8ba66ad42a7e5a633b76abe96892532293d9c",
+    "installed-vllm/model_executor/layers/quantization/kv_cache.py": "32b45463d0b36c021cb5ae0937d60b5c797ca383a0ef3e291170337486feb1b0",
+    "installed-vllm/model_executor/models/b70_mtp_policy.py": "c7c75d6b818c1cb0f1846f752060650af399f832e0dea3e8297ec274f2cfee3f",
+    "installed-vllm/model_executor/models/qwen3_5.py": "d261726aae3ce5d52c37b868c317d9377d5e1d7c344961707acc07785a4ec4ab",
+    "installed-vllm/model_executor/models/qwen3_5_mtp.py": "04be8e53afff3c9e27198d18ad66bdee787b58c8c294326de1e907f9612a8241",
+    "workspace-vllm/model_executor/models/qwen3_5_mtp.py": "d206addc79b7d01aabe54be57a6610b897a88d1130df51d39b3975b53599110b",
+    "installed-vllm/platforms/xpu.py": "d13a446c60c0cc3d16902f75170646d87d6e4b5f153725290a2a4830b0b6b5b2",
+    "installed-vllm/v1/attention/backend.py": "77ac35180c1e0f854c6307f5deb3c7c0ac4a9e8702578d406ce058981488a137",
+    "installed-vllm/v1/attention/backends/fa_utils.py": "3896d53947719ec9a226479fdbde60e83b1df116d634e2f4331499acf727dd99",
+    "installed-vllm/v1/attention/backends/flash_attn.py": "ea53fb41165323f13094604051c73d44a579994fe5a427243aa9faafc280b1c2",
+    "installed-vllm/v1/attention/backends/gdn_attn.py": "496f383285de2fe92626091309a56a96a64b496f37d5585f8b7b55d0260e1a84",
+    "installed-vllm/v1/core/kv_cache_manager.py": "bd9bf46a2101f9368d4941867415a239d18d95e0b956f82f885ce25e10e69f3b",
+    "installed-vllm/v1/core/kv_cache_utils.py": "1b20c836aece4982dd87f7e06e14f5ae07a1fc2636101074cfad11584b1a0dcf",
+    "installed-vllm/v1/core/sched/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installed-vllm/v1/core/sched/async_scheduler.py": "38d296e77e4d612e696241c67298eb1ca9b6a48b483cd33d35495bf31691032e",
+    "installed-vllm/v1/core/sched/diffusion_scheduler.py": "82fdaeebd4b852317c426b308554b2db510d8b075f90d6dca3dd8b245a6ff040",
+    "installed-vllm/v1/core/sched/interface.py": "783cbf3653329b705320a78a464abae2f7ab74d0a0a007a6c6aa683cad5f68b2",
+    "installed-vllm/v1/core/sched/output.py": "972e0bc8e7af1f4262ac73f660f6b8f798ba780f86c031a9c8a7f10cbfaad3a8",
+    "installed-vllm/v1/core/sched/request_queue.py": "db8d25daf9580d581f18c6b631a6576dfaa7d1474398cd8dc4db1d29745c214d",
+    "installed-vllm/v1/core/sched/scheduler.py": "f820bee4f42b878b262a30f3728a97d7413477b2a277748e20f2528ac2ec2f2a",
+    "installed-vllm/v1/core/sched/utils.py": "b6583424b6da15000545cd926ec887ee591bae8a56e6734b8ddf8f9e8f90cc4b",
+    "installed-vllm/v1/core/single_type_kv_cache_manager.py": "3a3cb20bd6aa1e0ad46471fc9e5e01ee5797ab4bb759e00ef5fb309d2830db13",
+    "installed-vllm/v1/worker/gpu/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installed-vllm/v1/worker/gpu/async_utils.py": "10875f3e7ab28fea5b6ec0dfa1a840ae69675882468cb90f9f3ca0a66db1598f",
+    "installed-vllm/v1/worker/gpu/attn_utils.py": "0f9df8b0153bd0a2720ee957f6cd1600b9d865eb12b7bf432501ffaa12fb6a9c",
+    "installed-vllm/v1/worker/gpu/block_table.py": "fb5ca5b0be5d0dd9466d9a66d056fc5acbe2dedbcb0eeebb1c486031ed53b0a8",
+    "installed-vllm/v1/worker/gpu/buffer_utils.py": "6597f701a30261bf250e9ad5a29737264624a1caa20527aeea0dad630325b093",
+    "installed-vllm/v1/worker/gpu/cp_utils.py": "d91e59d28d03e1df79628b64a865d9b68d40bec4d7b6bf194317e47ca8152f3f",
+    "installed-vllm/v1/worker/gpu/cudagraph_utils.py": "8e6ac6f655dd013dd2a3d3561bc88fe05ceeea2b060e5cb6bc85decb0bb2f813",
+    "installed-vllm/v1/worker/gpu/dp_utils.py": "b81a663c7e736f93c7be6ff7b6facebeb93ee4a52c280163b2ba9146fe33c341",
+    "installed-vllm/v1/worker/gpu/ec_connector.py": "ea65e79446ce84fa0573ed4dc52129a80d80be66a08380189c25e3811a793cc7",
+    "installed-vllm/v1/worker/gpu/eplb_utils.py": "98aaa1e7763faa3ae6fbd012f5a222f050ab2d5a6d8942193341f2e5716228ae",
+    "installed-vllm/v1/worker/gpu/input_batch.py": "96163c486368f2cf0e539fe68eaa06f4df3ac814da8f7a92af2b04242e01bc6d",
+    "installed-vllm/v1/worker/gpu/kv_connector.py": "dad1aa1764f1bd0b95fe08a1b2bff6f6fffb633fd167bd65c0657fcb3d296fba",
+    "installed-vllm/v1/worker/gpu/lora_utils.py": "68c797e20684c7a63745980539ff51e0f9e3942d09a557504b6d70cfb2bc35fd",
+    "installed-vllm/v1/worker/gpu/metrics/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installed-vllm/v1/worker/gpu/metrics/logits.py": "ea058d7510a077a55f8ac7e4c3d596508346244e908cb372865d7159f62edc89",
+    "installed-vllm/v1/worker/gpu/mm/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installed-vllm/v1/worker/gpu/mm/encoder_cache.py": "a27a52c2c52686a574b24910d38f7bd81508fa75d9d757f1b8d6e169575aa385",
+    "installed-vllm/v1/worker/gpu/mm/encoder_runner.py": "0981e352d70301b7154a217a48665ffe35f215d053ec5740c2515a3e1e11b4e6",
+    "installed-vllm/v1/worker/gpu/mm/lora.py": "a3eddfad6ad64de276964240c28dc080888df4a56dd5eac18f89428f2cbb7a01",
+    "installed-vllm/v1/worker/gpu/mm/rope.py": "0924375bcb367267e783b57dd2ad9de1189d97025ce4313baaa54f2911eaaf1e",
+    "installed-vllm/v1/worker/gpu/model_runner.py": "725c47114e148ade3a26b4cc9c5f7295588fdd387afc3cb5fdb2d16513a1bb5c",
+    "installed-vllm/v1/worker/gpu/model_states/__init__.py": "07815d0b788fc88185772f581bbf892a675259f9288375571f29887622f8d93c",
+    "installed-vllm/v1/worker/gpu/model_states/default.py": "f1d34d5c8c03be6e5afec8c2a24480ec259ca7c87392462f4e52d6c4eb775733",
+    "installed-vllm/v1/worker/gpu/model_states/encoder_decoder.py": "df7ec035abe403c3b42a507a7619c1f7776d7b0a65eca07ca279069189433990",
+    "installed-vllm/v1/worker/gpu/model_states/encoder_only.py": "6b5755a31a0457fd7dc26a62e827df64d87c5b02476dabc0794c9aedd4996a3c",
+    "installed-vllm/v1/worker/gpu/model_states/interface.py": "4f4fdd3e0a2611836a79ed0392b843b627fd65382138530be1dd5ae33c2ab4b3",
+    "installed-vllm/v1/worker/gpu/model_states/mamba_hybrid.py": "1ddd7dc921d74789e77d3319dc167820ad7fc47ed51d8d9a35ba3938f5c6a079",
+    "installed-vllm/v1/worker/gpu/model_states/mm_pruning.py": "b150940b12ae76048f050a8eeb54d532bbdc530a18ffbf320ddeeb0cfaa90f93",
+    "installed-vllm/v1/worker/gpu/model_states/prompt_embeds.py": "5fc1268429527fd913026c39a4019515ca4d4d3a72294592e51853030d792dbb",
+    "installed-vllm/v1/worker/gpu/model_states/recoverssm.py": "b4b660e62eaf33f4fe8271f83ed1fb6de6bc08f800a8073b27803e42fb29a645",
+    "installed-vllm/v1/worker/gpu/pcp_manager.py": "2ad4ef6ff9984fc85a97c05edecfee2dc897189b6b6abf7697f3194f54cec224",
+    "installed-vllm/v1/worker/gpu/pool/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installed-vllm/v1/worker/gpu/pool/pooling_runner.py": "f8463f7648cce0f3f29418a4d9fee61634ead760957cf236d06d61cf8cd986e7",
+    "installed-vllm/v1/worker/gpu/pp_utils.py": "c3e1054575c3427e232c9d3253763fb1d0a28edef88f8b32d2f168a83d4b5705",
+    "installed-vllm/v1/worker/gpu/sample/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installed-vllm/v1/worker/gpu/sample/bad_words.py": "85c2f1a4a34eac0f1784cd75bd9ed317e1ef3b82a953c07de02a548a48b4aad4",
+    "installed-vllm/v1/worker/gpu/sample/batch_shard.py": "7f43326a0b11a6c17d8dcd65a6abf706b96b450a07ef592b06bd8fbf8c582225",
+    "installed-vllm/v1/worker/gpu/sample/gumbel.py": "f24793dbc02d196cb458148b42fb73b7663de55e7e6ded660ea51065b7143853",
+    "installed-vllm/v1/worker/gpu/sample/logit_bias.py": "39dc683f5dc58ee7a266702b1ddcd1e1e1f44457d5ff689a88bae3401305f5c2",
+    "installed-vllm/v1/worker/gpu/sample/logits_processor/__init__.py": "4d7bcc668f64162d168ee1f41a294d1fee98366200468df846952a08d8f23a45",
+    "installed-vllm/v1/worker/gpu/sample/logits_processor/interface.py": "4172bdc4d3b736cb6670323f84aa8eb310567cd4f288c6ea4ab29e4bb6c9bcdd",
+    "installed-vllm/v1/worker/gpu/sample/logits_processor/loader.py": "5a51b37ffb6f489029500021310b21a8e666c14842d1f91b58d33cac5a805348",
+    "installed-vllm/v1/worker/gpu/sample/logprob.py": "ac58bfedaa325ae29e7b652063455239c7354a2af4751396930d5670f890ce2d",
+    "installed-vllm/v1/worker/gpu/sample/min_p.py": "4cb5e2f45e1ced6f9685283a7a5c8cfd7204d9a249822e866cfff756c7f04f62",
+    "installed-vllm/v1/worker/gpu/sample/output.py": "436e2eb1d29faade2af25a3f7c27af5f2ef6314f79d006f65adc8c20fe946b9e",
+    "installed-vllm/v1/worker/gpu/sample/penalties.py": "a9171ecb6d291cb195efd77af41caa97fe44a687669b6583d9e3ead08e8374fa",
+    "installed-vllm/v1/worker/gpu/sample/prompt_logprob.py": "d65ae509ee6da4f4bedd7626807462a91bf6817613d907b02880c18b9af45d27",
+    "installed-vllm/v1/worker/gpu/sample/sampler.py": "ddbcdab46010bf38a5fab9b9b6a2deed2ec5e883ebfe81e83f6d22f41e546771",
+    "installed-vllm/v1/worker/gpu/sample/states.py": "7dbccea6fb6e24830dafb447a43f93fd0539f33ef02f1b5bf7c2547234cbffa3",
+    "installed-vllm/v1/worker/gpu/sample/thinking_budget.py": "89d4255450c1659c6d3f49dbfc0e8af5035904cdd98e3e8fc0a1bd21650203d0",
+    "installed-vllm/v1/worker/gpu/sample/trace_replay.py": "d2a7d3b3b55379efabe4740a4b7f14030126dc11be36f6ea974164ce42316a50",
+    "installed-vllm/v1/worker/gpu/sample/watermark.py": "b66e64f8ef2a5910ad086899565b4972614a30990f0d1edfb60ab96628de5473",
+    "installed-vllm/v1/worker/gpu/shutdown.py": "bb470f14b17c7e52571ef8938b2a9527e7c2846852ae8a3a94b69cd1c30aa4b1",
+    "installed-vllm/v1/worker/gpu/spec_decode/__init__.py": "61b3acba401c1079039496f72445c28bbc6119d0b508f9a75d231f305aa1b7e8",
+    "installed-vllm/v1/worker/gpu/spec_decode/acceptance_estimator.py": "12676553ce7f3a6c4dc5c836c2f05cf292e6138b5efd39fdd4638f0ad965a812",
+    "installed-vllm/v1/worker/gpu/spec_decode/adaptive_verification.py": "d91b0b67474b17e2c2b579291182d70a26b3573ecc4b0756f1bb3018d936c3a6",
+    "installed-vllm/v1/worker/gpu/spec_decode/autoregressive/__init__.py": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+    "installed-vllm/v1/worker/gpu/spec_decode/autoregressive/cudagraph_utils.py": "42ee43d95882608576c7a98e8c64865eb4053838d0c647661469d00dc71aa0b1",
+    "installed-vllm/v1/worker/gpu/spec_decode/autoregressive/speculator.py": "c40e801436bc78a77624e1d2c688db823a21b73ffc65f75d18ad78ffeef18118",
+    "installed-vllm/v1/worker/gpu/spec_decode/dflash/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installed-vllm/v1/worker/gpu/spec_decode/dflash/cudagraph.py": "2b29f8fc953714e768c18f7a283fb0e6bcad3d226815b383a921812711b840c9",
+    "installed-vllm/v1/worker/gpu/spec_decode/dflash/speculator.py": "36d5bccd28eb64de1af348cbdd4d630bfd7d781479be472570e14c0865826058",
+    "installed-vllm/v1/worker/gpu/spec_decode/dflash/utils.py": "f0584417149c0a6fa67e700b2a725e40a41f4546a806b26e6cc64b64c59cfd66",
+    "installed-vllm/v1/worker/gpu/spec_decode/dflash2/__init__.py": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+    "installed-vllm/v1/worker/gpu/spec_decode/dflash2/speculator.py": "f9f5b5d2623e09fb9f16d4a2e1353c7014d6a01939563e511d9f3eeec7c8163d",
+    "installed-vllm/v1/worker/gpu/spec_decode/draft_model/__init__.py": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+    "installed-vllm/v1/worker/gpu/spec_decode/draft_model/speculator.py": "f0c2c06c0c3e7fe1205001d99c722e76a2868eb23aa3071a0d9534d142d1d789",
+    "installed-vllm/v1/worker/gpu/spec_decode/dspark/__init__.py": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+    "installed-vllm/v1/worker/gpu/spec_decode/dspark/speculator.py": "8b43305c582d728beeaaaaeb81e2cf22688a4fd1e9eaa7710f0e4a8d82a8a0cd",
+    "installed-vllm/v1/worker/gpu/spec_decode/dspark/utils.py": "9d780d7895bde0bb7c38b5424e4a41d49814fb3381ca851d8e4ef8be151c4883",
+    "installed-vllm/v1/worker/gpu/spec_decode/eagle/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installed-vllm/v1/worker/gpu/spec_decode/eagle/eagle3_utils.py": "201ee875fcc3d076a8fc1f3876dcbf85736b221a368555243a8987ff26a1674e",
+    "installed-vllm/v1/worker/gpu/spec_decode/eagle/speculator.py": "746e318a4f266d75522ff7f3731ea9b4527b7b4824f71364d1a62184ea1f7b3d",
+    "installed-vllm/v1/worker/gpu/spec_decode/eagle/utils.py": "a6d4830323e4c134b78d580e57036decee382c08e59ba17a2c5383e7af1f1802",
+    "installed-vllm/v1/worker/gpu/spec_decode/extract_hidden_states.py": "93c4233be7b2d2290b33902ea9b3bb5274c11701830851d03967a22144536e2d",
+    "installed-vllm/v1/worker/gpu/spec_decode/gemma4/__init__.py": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+    "installed-vllm/v1/worker/gpu/spec_decode/gemma4/speculator.py": "88bdbcf2571bb8b6653f7f4c9b3568cbeb91c2453f857701a91bf1315d7b6db7",
+    "installed-vllm/v1/worker/gpu/spec_decode/lilicorr/__init__.py": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+    "installed-vllm/v1/worker/gpu/spec_decode/lilicorr/speculator.py": "c2f5629ce96597bae891151e30a16cb0f68dded14304d7a5df969155190fa953",
+    "installed-vllm/v1/worker/gpu/spec_decode/mtp/__init__.py": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+    "installed-vllm/v1/worker/gpu/spec_decode/mtp/speculator.py": "926d6c9ffdb368c971647911a60493820d056ce236fcae9d94a42fa2e006255d",
+    "installed-vllm/v1/worker/gpu/spec_decode/multi_module_mtp/__init__.py": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58",
+    "installed-vllm/v1/worker/gpu/spec_decode/multi_module_mtp/speculator.py": "6dc8c68a1d24c868a567684ec5bfe54d382e418b028675c00f5f5b0a6537db96",
+    "installed-vllm/v1/worker/gpu/spec_decode/rejection_sampler.py": "b682782f05f43b21f4ad1f995e37b6288d782b0dd4e3ba66db0919f5c5a9ae29",
+    "installed-vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py": "d9f29ad1ce4fe40a078a78b21d73fab97bbbe018775acb480c0ad14dea0c5c35",
+    "installed-vllm/v1/worker/gpu/spec_decode/speculator.py": "da3b576318cfdc136579a3dc40254f416f4ccacbfd3c2149c74ff1c7c95825ce",
+    "installed-vllm/v1/worker/gpu/spec_decode/utils.py": "282f2929eddae9ca7312269f799be07472334b6df9fd91878b5e839ec05e418c",
+    "installed-vllm/v1/worker/gpu/states.py": "8c899b8ef63d95f450876d3f01e56772f9534938a95383a46659fddf85573fa3",
+    "installed-vllm/v1/worker/gpu/structured_outputs.py": "18a10532db7e66b55e334acacd1fd989ad6361adf31dd0de9a9a65e23db25951",
+    "installed-vllm/v1/worker/gpu/ubatch_utils.py": "995238da91dcb34ff7a0ad5ac5883f2bb4b5d6edddaa6bed8d0f1966166378c4",
+    "installed-vllm/v1/worker/gpu/warmup.py": "423ac32d58fe008c228cfa223e4fcebfcf87e3463a9dbdf80a083c0578d73723",
+    "installed-vllm/v1/worker/xpu_model_runner.py": "07fa0390d28f2b8c3c3c0019eb9c3b126e2397aea268ba47c889f06b423deb23",
+    "installed-vllm/v1/worker/xpu_worker.py": "3acd18a33f53b8da5a322079afc61ae7b1247212a7c881ab9aa4101a287c2ca5",
+    "active-guards/attention_dispatch.py": "7d6c3dea198388ab7d8be7dc73f5d135026125f5988653de0fb45d385fca0a41",
+    "active-guards/target_runtime.py": "55e0ec104708e636c36396fa57e474f9e477b2427d6f4c9414f8818c5f065e5d"
+  }
+}

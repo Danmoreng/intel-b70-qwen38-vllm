@@ -1,0 +1,63 @@
+{
+  "status": "COMPLETE_FINAL_OPERATIONS_AND_FROZEN_SERVING_REVIEW_REQUIRED",
+  "started_unix": 1791606036.3991604,
+  "serving_review_sha256": "0096cb3abe91c771948b722d8eb1d5e116d57e90a189d955da73176bd7d3a562",
+  "runtime_image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
+  "commands": [
+    {
+      "name": "E01-operations-final-r3",
+      "argv": [
+        "/usr/bin/python3",
+        "-u",
+        "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/benchmarks/experiments/b70-stack-20261010/run_operations.py",
+        "--image",
+        "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+        "--out",
+        "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/benchmark-results/b70-stack-20261010/E01-operations-final-r3",
+        "--c16-review-sha256",
+        "b17b14966418da60adb7aa26d28c1ab8bf5f57c9e5776238654bb2860b58f4ac"
+      ],
+      "status": "PASS",
+      "started_unix": 1791606036.4092002,
+      "finished_unix": 1791606903.5594525
+    },
+    {
+      "name": "E01-serving-final",
+      "argv": [
+        "/usr/bin/python3",
+        "-u",
+        "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/scripts/run-exl3-review-serving.py",
+        "--release-dir",
+        "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/config/experiments/b70-stack-20261010",
+        "--image-receipt",
+        "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/benchmark-results/b70-stack-20261010/E01-final-metadata/image.json",
+        "--fixture-root",
+        "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+        "--out",
+        "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/benchmark-results/b70-stack-20261010/E01-serving-final"
+      ],
+      "status": "PASS",
+      "started_unix": 1791606903.5599763,
+      "finished_unix": 1791610408.2277048
+    }
+  ],
+  "attempt": 3,
+  "c16_review_sha256": "b17b14966418da60adb7aa26d28c1ab8bf5f57c9e5776238654bb2860b58f4ac",
+  "sources_sha256": {
+    "benchmarks/experiments/b70-stack-20261010/run_final.py": "0a648e52f7b5747256f84ec07a36863318b6303e70c291b53b409fcf532dd362",
+    "benchmarks/experiments/b70-stack-20261010/freeze_release.py": "536111595af111c9b68919b3145e2b4731929f11294f926547d725a5363b7b88",
+    "benchmarks/experiments/b70-stack-20261010/run_operations.py": "7498b624b59ce860fe55a8ded951281c495db95c2b4b704d07a82dfa58bc30e5",
+    "scripts/run-exl3-review-serving.py": "bf3f6f17a00950dc6a2b1316548ab3a9901dc2eb21d928fb277b525780cc740e",
+    "scripts/current-profile-benchmark.py": "01105118930b595aaf31b2bf58f3427b76a3b94721ceeabd947b432105ad3345",
+    "scripts/exl3_candidate_worker.py": "43c55e5a083a619733e53df038316561efb7a73b1e0356f8ebb1cd59973ac43d",
+    "scripts/summarize-readme-benchmarks.py": "1883a43758c8467de9cdba680133eb2a89d94c20986eb05c3c91e02bf9ba56e3"
+  },
+  "retry_provenance": {
+    "previous_controller_sha256": "8fdf09fe3fcf70c313056396d5186bff4a81754dee86e8c36c2237b1374e2ef4",
+    "failed_operations_sha256": "f25250c313e061252f3fd0823a63a33f6c3edfc1d22ae7477b2c7bb668e6f164",
+    "explanation": "Reporting path failure after first cold-start inventory/409+8 loader; no API cases ran. Failed receipts retained. Exact frozen image reused, no native rebuild or policy change."
+  },
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+  "finished_unix": 1791610408.227844
+}

@@ -1,0 +1,45 @@
+{
+  "status": "FAILED",
+  "started_unix": 1791603609.81489,
+  "serving_review_sha256": "0096cb3abe91c771948b722d8eb1d5e116d57e90a189d955da73176bd7d3a562",
+  "runtime_image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
+  "commands": [
+    {
+      "name": "E01-freeze",
+      "argv": [
+        "/usr/bin/python3",
+        "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/benchmarks/experiments/b70-stack-20261010/freeze_release.py",
+        "--runtime-image",
+        "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048"
+      ],
+      "status": "PASS",
+      "started_unix": 1791603609.819401,
+      "finished_unix": 1791603622.2616243
+    },
+    {
+      "name": "E01-operations-final",
+      "argv": [
+        "/usr/bin/python3",
+        "-u",
+        "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/benchmarks/experiments/b70-stack-20261010/run_operations.py",
+        "--image",
+        "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+        "--out",
+        "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/benchmark-results/b70-stack-20261010/E01-operations-final"
+      ],
+      "status": "RUNNING",
+      "started_unix": 1791603622.261921
+    }
+  ],
+  "sources_sha256": {
+    "benchmarks/experiments/b70-stack-20261010/run_final.py": "40f4e8be1fc14c715ce3fdd8f4db462a66d2e4575ee7afcafa2bc435557a4a9e",
+    "benchmarks/experiments/b70-stack-20261010/freeze_release.py": "536111595af111c9b68919b3145e2b4731929f11294f926547d725a5363b7b88",
+    "benchmarks/experiments/b70-stack-20261010/run_operations.py": "6a5025795b65ebe9b7e80a777ac7262d22fbd0b34f8fd3c26c558bc45788d475",
+    "scripts/run-exl3-review-serving.py": "f1cb2d6587b41b2c382b6b6c99ac8d10710e28c81667bfaf48e772c6071cd599",
+    "scripts/current-profile-benchmark.py": "01105118930b595aaf31b2bf58f3427b76a3b94721ceeabd947b432105ad3345"
+  },
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+  "error": "CalledProcessError(1, ['/usr/bin/python3', '-u', '/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/benchmarks/experiments/b70-stack-20261010/run_operations.py', '--image', 'sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a', '--out', '/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/benchmark-results/b70-stack-20261010/E01-operations-final'])",
+  "finished_unix": 1791603783.0574453
+}

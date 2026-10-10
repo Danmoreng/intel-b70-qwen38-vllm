@@ -49,7 +49,7 @@ applicability review under `candidates/E01-minimal/`. No fallback library was
 built or tested. It is conditional on a clear unrelated stable-library
 regression, not another mandatory dependency sweep.
 
-`confirm_frozen_triggers.py` is a conditional, not-yet-launched controller for
+`confirm_frozen_triggers.py` is a conditional controller for
 named missing contemporaneous references after the complete final matrix.
 Its guard requires terminal full-matrix success and the exported historical
 comparison, and accepts only cases marked as review triggers. Three balanced
@@ -58,3 +58,16 @@ value and 1024-output-token budget. Read-only inventory is outside timing;
 no event/trace hooks are installed. It does not repeat the entire baseline
 benchmark or its numerical/quality qualification. Historical median losses
 remain visible even when the broader paired screen is neutral.
+
+The final stable-library matrix completed 70 waves / 124 requests plus the
+three isolated 64K prefix resends. Exact-image numerical, operational and
+capacity gates passed with the separately documented numerical review;
+this is not a speed or production approval. The historical comparison
+flags `phase-4k-c1`, `phase-32k-c1` and `concurrency-4k-c4`. The three-block
+named-reference controller is now measuring those cases only.
+`analyze_frozen_triggers.py` checks every original prompt byte and request
+value, immutable result/inventory receipts and full original repeat counts
+before reporting paired uncertainty. It retains native, client and fully
+overlapped decode, TTFT, prefill, finite-panel E2E tails, output hashes and
+acceptance separately. Three paired starts do not establish formal
+equivalence; no automatic release decision is made by this script.

@@ -1,0 +1,1648 @@
+{
+  "status": "PASS_EXACT_IMAGE_RELEASE_GATES",
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+  "runtime_parent_image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
+  "source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
+  "runtime_artifacts_sha256": {
+    "/opt/exl3xpu/exl3xpu/_C.so": "00b65587220481ec89269f7510136146809d7e01938de3d30d5b67206948a95a",
+    "/opt/exl3xpu/m04/m04.so": "03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+    "/opt/b70/libdnnl.so.3": "90c0feddfb51a6219903d5e1ccabc9fd32dab0c702284a16dd7692bb6042e056",
+    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "c7bd0941664d02fa4ec4bb118efdecbf9c63801cb9e4cdfaeb366efbe8c8800d",
+    "/opt/exl3xpu/exl3xpu/shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2",
+    "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "7d6c3dea198388ab7d8be7dc73f5d135026125f5988653de0fb45d385fca0a41",
+    "/opt/exl3xpu/csrc/exl3_ops.sycl": "b70880d1e92032de697c1d432c6899e34e17662e2086a7fbba80fa17b28e41cf",
+    "/opt/exl3xpu/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7"
+  },
+  "rootfs_metadata_attestation": {
+    "status": "METADATA_FROZEN_NOT_RELEASE_APPROVED",
+    "image_tag": "local/b70-qwen38-vllm:exl3-onednn3134-candidate-20261010",
+    "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+    "runtime_image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
+    "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+    "rootfs_identical": true,
+    "rootfs": {
+      "Layers": [
+        "sha256:d81fb2a7c6ee3be05fdefaa7fd223be219c1ab172083ec1b994c3ecda33ac0a8",
+        "sha256:25c78002791717848c38a7895e3ead1daa9bb3c7a83f89f471f6fc23fe80052d",
+        "sha256:3d744a2d55ae618757ef863d1a37ab3b6166b9fd99ab361c5c8caa30e1e6bc6e",
+        "sha256:fa643a7e666b09f6c370268a3c103697877108d4c5eca81df1078a93b345dd79",
+        "sha256:94ec9e46834e7e7e53ce624281d605d1f3a779fb4da39fa838f62af55d8b6864",
+        "sha256:fc7e39ae63e0b038bf6ab830a816102b4984a7eb091bc3291e6bc9783baa2ee1",
+        "sha256:598a0fa94ceb234784d517b5e7869b531577bb94a16e0ec8e18c475a911aefaf",
+        "sha256:be0165c806debed38ee79c341b9c9332efc6f5d82322651db6af7efdb2c52119",
+        "sha256:e4c57eca079c4f399dc4738ca9fd651f0bcd7db0ea986f232502ec88a136a37b",
+        "sha256:902e0b50076f4b0a57988879c2af0349be3c8ec256b931ac3789d40e478b93b5",
+        "sha256:2fa19a7fc5480b95e2109c9452e20b0d0f391b22db03734cccdd61a2adcffb1e",
+        "sha256:b73c10130ddfd172fd2d4f5ad58b7989d00d67d372750895e4cf3e686d8e1114",
+        "sha256:291ad2943af71ea97ae36b69b910b5f0b376a352c14e590b5571545ce0e475cb",
+        "sha256:9ebc69e63c9a502fdb4357cfd22afe52046e9c7e2d1b45473baeb932eb4b4d65",
+        "sha256:6a19ffa98f67fb2b35fc1c0e48db540bea506edf1df78bf703b30207b5367f54",
+        "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+        "sha256:e4d683045f5b373a1a5bd6b818f9135181cbdca743e89006afb58d5321e1da14",
+        "sha256:7fce6f9c7218d45d8730848ac90e0c8c082014934760fc67342b9c1e4e4eed5b",
+        "sha256:797eda2626c4aa1c1593fd5a524560cf3e176e3a5f4307cc8ddf16e437d6c72d",
+        "sha256:9369f26f86668efde03cb52c0cbc2582cfb40e4df97cfa20c5da46fefe7ae8a7",
+        "sha256:fa6163e27799cd27115303b6c1a9b35b3dba17bb10f4d32e5d930046dd01f582",
+        "sha256:5625340cc613400ff661e85b7a00e8d77c387f94b16992771d2a5171a083ca16",
+        "sha256:c2dd6bf869369b2ea74eb614ce6b217d0edced0a1417e04bcd5e5975825969dd",
+        "sha256:cffecb0ebbfc0e18d41ceeb1cc765829d5b31258ac3b5bd0919e4899733b815a",
+        "sha256:70d11e4a830cc6dee1d0b95756bc1eec81f1c81b0446863117f6f35f36f68b6f",
+        "sha256:94349695e9b905862529bfe55650348c0f8fe17efb20b3915ca2b075d3d9f2e7",
+        "sha256:f2ebffedd0c06ef7e7da12d91ac77b4ff0396b9ee63e9ce3e54177783c6da301",
+        "sha256:cb06111c8b4fdd08c9136c53f8b166e2b0f48082474ab3268330d1b8c458eee0",
+        "sha256:5613764bb96ff3807f47a37ff0da36bf4a0ab642f50a6e4ed1830f428daf8f9b",
+        "sha256:051a18c7b8d1e722d9c6c9193cbdc36bfebdbeb231c475104f1f5e575bc34867",
+        "sha256:5d7220544a7ac1d0d6b159f05803aebf0a11f8f73c80199277b1591a67237857",
+        "sha256:7551c2efb9477c6bd4b09f5adf92c7058f462b5e46dda8d0d1fb8afa0d1d65d1",
+        "sha256:3bf45f23b4571aec1e5e60e21d58085b5aa2a8a060f16f190d1f522f271ab372",
+        "sha256:7fe5bee2b80fda8ad48378eb4e981c10907a7d8d245cecfef16a27b394664cd1",
+        "sha256:32a5f94c032411251c9e1e055001a4c15cc350530b48650c5ea54e5643ca1ccd",
+        "sha256:baf53963c05134678acf8d7c5c5744f57cde2f8a40856579f0815e595c71fd56",
+        "sha256:45034a67b25ffaebe9679416aa715c8c3262e18d63276789adda74ada9066977",
+        "sha256:40dab077fc03c9c846a174c45809294784426dcbef2a12a2dffae9645ed02cff",
+        "sha256:4754d18265e5ad82c2247749afb3d1d9477fc2d1b8fea1b09b23b14485bf9ac2",
+        "sha256:5918c0d2a1b4ca352b8bded78871f4777ce72e560bc05afc228e5f7dc80859a5",
+        "sha256:0c2531fb3d5417fc8ac16d1dc444ea80b41f0a18ede3a6853808008139264794",
+        "sha256:31cb68cfb037471386d9a2c61a0d2d9f627eb64065fdd9687eb584e31ee66b00",
+        "sha256:a8a9c366aa924e3a1c346cc116146280a341d901868149826c7b34a38b574ac1",
+        "sha256:c5c898e78a3634568f66190376532c263baab67cdaeb7e676a635058803e6921"
+      ],
+      "Type": "layers"
+    },
+    "environment_changes": {
+      "B70_POLICY_SHA256": [
+        "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649"
+      ]
+    },
+    "effective_partition_cache_capacity": 64,
+    "note": "Only labels, policy identity env, optional explicit reviewed cache capacity and default profile CMD differ. Frozen optimized YAML unchanged; no rebuild or tensor change."
+  },
+  "numerical_review": {
+    "status": "PASS_REVIEWED_CHANGED_STACK_NUMERICS",
+    "image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
+    "source_measurement_sha256": "d7c13ce19a9885f503f94771f4208909d64362127edd2a95bd63aaf8d7350410",
+    "failed_exact_campaign_sha256": "6dd1b16914b0ecb9003722d29b9a31e8cadb7abaa4f91c3d03af81338197bba8",
+    "matched_state_sha256": "745cf7caf48b3d2f617046499aba09fd736f00cc5290148a0d16c33ce121d47f",
+    "linear_gate_sha256": "c254dcd3842a58eb811487edf19ee11339a52fb3b2e68fc5435c4499bba6a71b",
+    "local_kernel_gate_sha256": "97b58b71ed3c7a1b72acecec439ea411f1c67ed5485bf8553a001501eebbe8b4",
+    "sdpa_edge_gate_sha256": "b784b9541f6e77bf4733b6502d19c2dee7c8072c838fb7b833dcaba5dede1007",
+    "D64_review_sha256": "fb3af2e4b689264d4edc7fb7bf22c71068647661993454e20586edd33ee3af23",
+    "exact_array_comparison": "FAILED_RETAINED_NOT_RELABELLED",
+    "numerical_changes": {
+      "short_ppl_pct": -0.00020227669913497337,
+      "short_kl_delta": -0.00028890835855305275,
+      "short_js_delta": 5.6953120304169616e-05,
+      "long_ppl_pct": -0.5828115723247596,
+      "long_kl_delta": -4.9532933991856863e-05
+    },
+    "paired_short_nll_delta_ci95": [
+      -0.0011988071359840535,
+      0.0011164946397438187
+    ],
+    "rationale": "Explicit engineering review of this hashed changed-stack measurement. Short PPL is 3.642167 versus qualified 3.642175 (about -0.0002%); paired mean NLL uncertainty spans zero. BF16-relative mean short KL improves 0.000289 and top1 agreement changes from 490/512 to 492/512, while JS worsens 0.000057, reverse KL and p95 also worsen slightly. These mixed changes are not bit identity or a general quality improvement. The 32K suffix PPL changes from 1.190357 to 1.183419 and all eight BF16-relative top1 probes agree. Independently referenced linear shapes/real weight groups, FP16 SDPA edge cases and all four actual-state attention cases pass their original tolerances. On two actual 64K prefixes, E01 target/sampler distributions and three MTP proposals are bit-identical to qualified v0.31, with independently checked native rejection prefixes. Accept the bounded numerical results as a maintenance candidate; no threshold was widened and the exact check remains failed.",
+    "limits": "Finite panels and four selected actual-state attention cases. Origin of every short-path array difference is not localized; a matching 64K probe does not make all other prefixes identical. Kernel linear references use the existing gated reconstruction plus independent FP32 transforms/matmul. Quality approval alone is not a release: protected serving, capacity/admission, operational and final frozen benchmark gates remain required."
+  },
+  "independent_paired_screen": {
+    "status": "PASS_REVIEWED_MAINTENANCE_SERVING_GATES",
+    "runtime_image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
+    "baseline_image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+    "independent_core_blocks": 8,
+    "independent_additional_protected_blocks": 5,
+    "performance_survivor": false,
+    "weighted_decode": {
+      "cold": {
+        "block_pct": [
+          -0.057643083484972546,
+          -0.23271718369221284,
+          0.615239238478492,
+          1.0325880409486987,
+          2.017035826405017,
+          0.5803852238460171,
+          -1.7409856138597384,
+          -1.325205354864853
+        ],
+        "mean_pct": 0.11108713672205603,
+        "bootstrap_95_pct": [
+          -0.7008094303986185,
+          0.8930915019286901
+        ]
+      },
+      "warm": {
+        "block_pct": [
+          -0.3716843643032386,
+          -0.11931639682334584,
+          0.5533357012899934,
+          -1.7491429285894449,
+          0.725970320223524,
+          -3.124229273503809,
+          0.877398205994299,
+          -2.806946950958361
+        ],
+        "mean_pct": -0.7518269608337979,
+        "bootstrap_95_pct": [
+          -1.8646833250132353,
+          0.23589532330171686
+        ]
+      }
+    },
+    "gate_cells": [
+      {
+        "cell": "source-32k/cold",
+        "critical_decode_definition": "native_decode",
+        "decode": {
+          "block_pct": [
+            -0.5754180164755263,
+            -1.646053166646655,
+            1.9103997827815355,
+            1.9701571500500448,
+            5.13886700910382,
+            1.5979538007266259,
+            -4.383720344500497,
+            -4.8809042495604915
+          ],
+          "mean_pct": -0.1085897543151429,
+          "bootstrap_95_pct": [
+            -2.30267134935227,
+            2.0542659420856593
+          ]
+        },
+        "prefill": {
+          "block_pct": [
+            -23.52743496820412,
+            0.07724246371052512,
+            -0.07846841324288256,
+            -0.9450219574065777,
+            0.128742036252949,
+            0.09361066605344526,
+            -0.22839471043162307,
+            -0.016116675582233952
+          ],
+          "mean_pct": -3.061980194856315,
+          "bootstrap_95_pct": [
+            -8.963839057488062,
+            0.030103454477113656
+          ]
+        },
+        "ttft": {
+          "block_pct": [
+            30.726738547207823,
+            -0.07837721441953382,
+            0.08607025775551058,
+            0.960086301014762,
+            -0.1338573925509179,
+            -0.09323318714434814,
+            0.2292359213738493,
+            0.018934166728445945
+          ],
+          "mean_pct": 3.964449674995699,
+          "bootstrap_95_pct": [
+            -0.03001865387110697,
+            11.66612862288118
+          ]
+        },
+        "e2e_slowest_request": {
+          "block_pct": [
+            20.249684640323927,
+            0.5336124160563172,
+            -0.6345233565218544,
+            -0.08891906130408245,
+            -1.8280398882730031,
+            -0.6073477023525564,
+            1.7693140605229418,
+            1.802027980070653
+          ],
+          "mean_pct": 2.6494761360652928,
+          "bootstrap_95_pct": [
+            -0.49510509347775733,
+            7.877789970116824
+          ]
+        }
+      },
+      {
+        "cell": "source-32k/warm",
+        "critical_decode_definition": "native_decode",
+        "decode": {
+          "block_pct": [
+            -0.3848835126581407,
+            0.20656521689552676,
+            0.4997780533373186,
+            2.695971646410955,
+            2.3601825393784415,
+            -1.8389291902658478,
+            0.22934975041124517,
+            -3.560997235044161
+          ],
+          "mean_pct": 0.025879658558167207,
+          "bootstrap_95_pct": [
+            -1.358210317682365,
+            1.3257216160711378
+          ]
+        },
+        "prefill": {
+          "block_pct": [
+            -0.3936783215894968,
+            -0.19306515083622466,
+            -0.30037723778754133,
+            -0.949512214831405,
+            0.2590870647188437,
+            0.17808816849087528,
+            -0.4863835566256691,
+            -0.08384793097867549
+          ],
+          "mean_pct": -0.24621114742991168,
+          "bootstrap_95_pct": [
+            -0.5053471882616969,
+            -0.005025899113704491
+          ]
+        },
+        "ttft": {
+          "block_pct": [
+            0.20055457390868447,
+            -1.5170011248196613,
+            -1.412650557008488,
+            0.9390277220118426,
+            1.5401985711467558,
+            -0.004544840182618692,
+            2.2434810066414457,
+            0.04142653036112165
+          ],
+          "mean_pct": 0.2538114852573853,
+          "bootstrap_95_pct": [
+            -0.5983987431710552,
+            1.0943254749513383
+          ]
+        },
+        "e2e_slowest_request": {
+          "block_pct": [
+            0.3586025276559601,
+            -0.38670156470338446,
+            -0.6293927976464331,
+            -2.1644454727329343,
+            -1.767087539525869,
+            1.6051904688637375,
+            0.11417959003543476,
+            3.1947389662621895
+          ],
+          "mean_pct": 0.04063552227608763,
+          "bootstrap_95_pct": [
+            -1.0334012822205918,
+            1.2334077900331821
+          ]
+        }
+      },
+      {
+        "cell": "source-64k/cold",
+        "critical_decode_definition": "native_decode",
+        "decode": {
+          "block_pct": [
+            -0.2762447835314652,
+            0.0731857871540953,
+            0.04131561110984894,
+            0.021686753310556917,
+            0.04994205900379356,
+            -0.1515472398044171,
+            0.10525593889085805,
+            0.22573073569187585
+          ],
+          "mean_pct": 0.01116560772814329,
+          "bootstrap_95_pct": [
+            -0.09578799687622319,
+            0.10601294496797031
+          ]
+        },
+        "prefill": {
+          "block_pct": [
+            -0.4688331412490032,
+            0.15904966572697354,
+            0.14162958061882946,
+            -0.4569969483743552,
+            0.10188618325801535,
+            0.13353951750361137,
+            -0.36728273237421893,
+            0.0405259425984017
+          ],
+          "mean_pct": -0.08956024153646824,
+          "bootstrap_95_pct": [
+            -0.28888206823408924,
+            0.08034804699292991
+          ]
+        },
+        "ttft": {
+          "block_pct": [
+            0.471868259929642,
+            -0.17780952969064234,
+            -0.14425459508186078,
+            0.45865323770730715,
+            -0.09944726994762787,
+            -0.131388637657881,
+            0.36937617813577184,
+            -0.04156352574359312
+          ],
+          "mean_pct": 0.08817926470638948,
+          "bootstrap_95_pct": [
+            -0.08569990009295037,
+            0.2900297911891697
+          ]
+        },
+        "e2e_slowest_request": {
+          "block_pct": [
+            0.42982641981026415,
+            -0.13940829998912996,
+            -0.12095281376234279,
+            0.35462127605789817,
+            -0.08765791519177446,
+            -0.07058246315893024,
+            0.2658857812092297,
+            -0.08084063227411509
+          ],
+          "mean_pct": 0.06886141908763743,
+          "bootstrap_95_pct": [
+            -0.07766387018296877,
+            0.23042911398002824
+          ]
+        }
+      },
+      {
+        "cell": "source-64k/warm",
+        "critical_decode_definition": "native_decode",
+        "decode": {
+          "block_pct": [
+            -0.19175115266892861,
+            0.022377895397429626,
+            0.0577190565174579,
+            0.020911005759050028,
+            0.05856668825585665,
+            -0.14465230941709262,
+            0.06707514073338583,
+            0.2227089279414507
+          ],
+          "mean_pct": 0.014119406564826187,
+          "bootstrap_95_pct": [
+            -0.07014734415406038,
+            0.09462591499661555
+          ]
+        },
+        "prefill": {
+          "block_pct": [
+            0.31225351376342747,
+            0.4148275389915135,
+            0.35789030732058524,
+            0.11701270746875547,
+            0.2983786094613361,
+            0.29839490811705005,
+            0.20771396062617686,
+            0.30754557854340003
+          ],
+          "mean_pct": 0.2892521405365306,
+          "bootstrap_95_pct": [
+            0.22762018580935184,
+            0.34525307514564063
+          ]
+        },
+        "ttft": {
+          "block_pct": [
+            -0.29285570159788277,
+            -0.5344882462962497,
+            -0.17746577824540033,
+            0.004159919663737632,
+            -0.255329804391935,
+            -0.1675749034093621,
+            -0.16290787157969833,
+            -0.38358924964100316
+          ],
+          "mean_pct": -0.24625645443722421,
+          "bootstrap_95_pct": [
+            -0.353384065667145,
+            -0.14342699649945861
+          ]
+        },
+        "e2e_slowest_request": {
+          "block_pct": [
+            0.09738459833528168,
+            -0.11544267889063153,
+            -0.08732014068000282,
+            -0.01900745557275041,
+            -0.09561754052398452,
+            0.07257450252966535,
+            -0.08852709022371119,
+            -0.25043759979533897
+          ],
+          "mean_pct": -0.06079917560268405,
+          "bootstrap_95_pct": [
+            -0.1328028664086267,
+            0.011496964505050555
+          ]
+        }
+      },
+      {
+        "cell": "prose-32768/cold",
+        "critical_decode_definition": "client_aggregate",
+        "decode": {
+          "block_pct": [
+            0.8070315350614754,
+            1.080188540588689,
+            -0.21123119120324274,
+            1.129172444093407,
+            0.7547459636656262,
+            0.25675211666515985,
+            -0.7445180018416542,
+            1.1345009463751499
+          ],
+          "mean_pct": 0.5258302941755764,
+          "bootstrap_95_pct": [
+            0.03917738283725214,
+            0.9427846208522994
+          ]
+        },
+        "prefill": {
+          "block_pct": [
+            -0.08258010772884683,
+            0.08400036648448239,
+            0.060409309189290994,
+            -0.22417272726523718,
+            -0.1863834175964585,
+            -0.21984018013301299,
+            -0.06199931030185235,
+            0.049964482462772075
+          ],
+          "mean_pct": -0.0725751981111078,
+          "bootstrap_95_pct": [
+            -0.15700932702078646,
+            0.010753592115882171
+          ]
+        },
+        "ttft": {
+          "block_pct": [
+            0.09916265240617061,
+            -0.07296284733910863,
+            -0.04630940309092724,
+            0.24119659309014274,
+            0.19647013724291007,
+            0.22700569376086221,
+            0.09918325326601085,
+            -0.042232664074781656
+          ],
+          "mean_pct": 0.08768917690765987,
+          "bootstrap_95_pct": [
+            0.0031131840044537618,
+            0.17116401949842097
+          ]
+        },
+        "e2e_slowest_request": {
+          "block_pct": [
+            -0.5796605867528948,
+            -0.8520661415104658,
+            0.16211813806605857,
+            -0.8160818615139842,
+            -0.5251526292861186,
+            -0.13478356211421572,
+            0.6248416275455915,
+            -0.8934302591674936
+          ],
+          "mean_pct": -0.37677690934169034,
+          "bootstrap_95_pct": [
+            -0.7023692591329997,
+            0.004214675207074581
+          ]
+        }
+      },
+      {
+        "cell": "prose-32768/warm",
+        "critical_decode_definition": "client_aggregate",
+        "decode": {
+          "block_pct": [
+            -0.5658276742508517,
+            -0.6626026438286692,
+            1.1975401867885704,
+            -8.616123825667355,
+            -0.37798649790729,
+            -7.915150168181906,
+            2.5996241527450614,
+            -5.370017680544647
+          ],
+          "mean_pct": -2.463818018855886,
+          "bootstrap_95_pct": [
+            -5.362779836349269,
+            0.13209850372811888
+          ]
+        },
+        "prefill": {
+          "block_pct": [
+            0.07565547487369262,
+            0.13609677795440867,
+            0.1127852629876358,
+            -7.0335729959909,
+            0.24091489779336506,
+            -6.393434504429085,
+            -0.40273877034080474,
+            0.07357671723238202
+          ],
+          "mean_pct": -1.6488396424899132,
+          "bootstrap_95_pct": [
+            -4.086245529351079,
+            0.0973201823960157
+          ]
+        },
+        "ttft": {
+          "block_pct": [
+            -0.07113334877338895,
+            -0.0688870926313534,
+            -0.00022547223665903005,
+            1.2257682889681432,
+            -0.2623092364166357,
+            0.5852598544991761,
+            0.4846958596490092,
+            0.05025207156101885
+          ],
+          "mean_pct": 0.24292761557741377,
+          "bootstrap_95_pct": [
+            -0.04276740507859894,
+            0.5841721225015611
+          ]
+        },
+        "e2e_slowest_request": {
+          "block_pct": [
+            0.49853731656157585,
+            0.5999864452503445,
+            -1.0556335701021435,
+            4.57625429084878,
+            0.32055838961757566,
+            3.775640648274714,
+            -2.2144287152749076,
+            5.07561262958669
+          ],
+          "mean_pct": 1.4470659293453285,
+          "bootstrap_95_pct": [
+            -0.27505101797853926,
+            3.255148313746234
+          ]
+        }
+      },
+      {
+        "cell": "code-4096/cold",
+        "critical_decode_definition": "native_decode",
+        "decode": {
+          "block_pct": [
+            2.3829576016449527,
+            3.0079623837364178,
+            3.0547918693399456,
+            -6.441162156871405,
+            3.2842896297100577
+          ],
+          "mean_pct": 1.0577678655119938,
+          "bootstrap_95_pct": [
+            -2.731247847851841,
+            3.137225076367285
+          ]
+        },
+        "prefill": {
+          "block_pct": [
+            -0.8654093061396306,
+            0.12450738509575121,
+            -0.7002726586634811,
+            -0.766285994640914,
+            0.15895559925114267
+          ],
+          "mean_pct": -0.40970099501942636,
+          "bootstrap_95_pct": [
+            -0.792732652044914,
+            -0.02666933799393867
+          ]
+        },
+        "ttft": {
+          "block_pct": [
+            0.8621848249238839,
+            -0.1118830290995354,
+            0.7046033787422745,
+            0.773133229486489,
+            -0.15987621808020158
+          ],
+          "mean_pct": 0.4136324371945821,
+          "bootstrap_95_pct": [
+            0.03221697687656011,
+            0.7950478975126041
+          ]
+        },
+        "e2e_slowest_request": {
+          "block_pct": [
+            -1.7653364449113251,
+            -2.42284491185748,
+            -2.3311955131387285,
+            5.787061767343515,
+            -2.6352986318689764
+          ],
+          "mean_pct": -0.673522746886599,
+          "bootstrap_95_pct": [
+            -2.4894965201183283,
+            2.592110045050049
+          ]
+        }
+      },
+      {
+        "cell": "code-4096/warm",
+        "critical_decode_definition": "native_decode",
+        "decode": {
+          "block_pct": [
+            -2.081290480563358,
+            3.397351704468976,
+            1.0257238793405898,
+            -2.16687486373921,
+            -0.35967120149927867
+          ],
+          "mean_pct": -0.03695219239845615,
+          "bootstrap_95_pct": [
+            -1.771200378020883,
+            1.827297702436832
+          ]
+        },
+        "prefill": {
+          "block_pct": [
+            -1.5937525243389539,
+            0.07004921326407842,
+            0.12948740894631605,
+            -0.5625055395299894,
+            0.8796901028082615
+          ],
+          "mean_pct": -0.21540626777005745,
+          "bootstrap_95_pct": [
+            -0.9750043334535752,
+            0.42956848649109425
+          ]
+        },
+        "ttft": {
+          "block_pct": [
+            4.136442441610599,
+            -0.021630486847568076,
+            -2.472974083990964,
+            0.5537172786925781,
+            -3.4117519093795012
+          ],
+          "mean_pct": -0.2432393519829712,
+          "bootstrap_95_pct": [
+            -2.430902506687378,
+            2.0980141039066824
+          ]
+        },
+        "e2e_slowest_request": {
+          "block_pct": [
+            2.3405808289136854,
+            -2.9305137558923278,
+            -1.191134444732167,
+            2.034335601892723,
+            -0.07875368708981645
+          ],
+          "mean_pct": 0.03490290861841938,
+          "bootstrap_95_pct": [
+            -1.6644100176677612,
+            1.7342158349046
+          ]
+        }
+      },
+      {
+        "cell": "code-131072/cold",
+        "critical_decode_definition": "native_decode",
+        "decode": {
+          "block_pct": [
+            -0.04031898347786056,
+            -0.05646892426873773,
+            -0.13875494453016168,
+            -0.17931057008526707,
+            0.06218014003516181
+          ],
+          "mean_pct": -0.07053465646537305,
+          "bootstrap_95_pct": [
+            -0.1434011276527647,
+            0.001493298419492639
+          ]
+        },
+        "prefill": {
+          "block_pct": [
+            0.053935918770919855,
+            0.20431387282680014,
+            0.15797691579331197,
+            -0.08659464801019645,
+            0.1404955715621936
+          ],
+          "mean_pct": 0.09402552618860582,
+          "bootstrap_95_pct": [
+            -0.0022763079415266674,
+            0.17301542976048356
+          ]
+        },
+        "ttft": {
+          "block_pct": [
+            -0.05627538303608626,
+            -0.20538973279169426,
+            -0.1590884942111459,
+            0.08704275730762046,
+            -0.14121304115025657
+          ],
+          "mean_pct": -0.0949847787763125,
+          "bootstrap_95_pct": [
+            -0.17403389903118738,
+            0.0010518731013964278
+          ]
+        },
+        "e2e_slowest_request": {
+          "block_pct": [
+            -0.042622815746051756,
+            -0.17408994242686937,
+            -0.12207818448622954,
+            0.09748228166506223,
+            -0.13099171807434695
+          ],
+          "mean_pct": -0.07446007581368708,
+          "bootstrap_95_pct": [
+            -0.14644830109773244,
+            0.015146817364453113
+          ]
+        }
+      },
+      {
+        "cell": "code-131072/warm",
+        "critical_decode_definition": "native_decode",
+        "decode": {
+          "block_pct": [
+            -0.025152062167499434,
+            -0.07750649782691799,
+            -0.12545331640415602,
+            -0.4196212553577272,
+            -0.017259288350357505
+          ],
+          "mean_pct": -0.13299848402133163,
+          "bootstrap_95_pct": [
+            -0.2818938289289674,
+            -0.03246583977252637
+          ]
+        },
+        "prefill": {
+          "block_pct": [
+            0.26646485685151156,
+            0.1994331002688865,
+            0.22714434456139188,
+            0.08937849139232235,
+            0.2578406882271844
+          ],
+          "mean_pct": 0.20805229626025934,
+          "bootstrap_95_pct": [
+            0.1450818525346076,
+            0.25515108694375677
+          ]
+        },
+        "ttft": {
+          "block_pct": [
+            -0.2581418114018019,
+            -0.06329705203147462,
+            -0.2448895959064723,
+            -0.0613106715136702,
+            -0.2828313800431359
+          ],
+          "mean_pct": -0.182094102179311,
+          "bootstrap_95_pct": [
+            -0.2653671957592696,
+            -0.09882100859935239
+          ]
+        },
+        "e2e_slowest_request": {
+          "block_pct": [
+            -0.03554445282303309,
+            0.04382352267406908,
+            0.053085375466643825,
+            0.3289689233480386,
+            -0.04188049267159766
+          ],
+          "mean_pct": 0.06969057519882416,
+          "bootstrap_95_pct": [
+            -0.022205273663038483,
+            0.20088953853754532
+          ]
+        }
+      },
+      {
+        "cell": "source-32k-c4-protected/cold",
+        "critical_decode_definition": "client_aggregate",
+        "decode": {
+          "block_pct": [
+            -1.3189913356644323,
+            -0.31058532934787886,
+            0.4966271995591187,
+            -0.9276051546467601,
+            -0.007673890105430736
+          ],
+          "mean_pct": -0.41364570204107665,
+          "bootstrap_95_pct": [
+            -0.9784506103490975,
+            0.13346425791189942
+          ]
+        },
+        "prefill": {
+          "block_pct": [
+            0.19607869882094509,
+            0.04783400159280582,
+            0.019313754331817812,
+            0.01159138775905788,
+            0.03435040869756989
+          ],
+          "mean_pct": 0.0618336502404393,
+          "bootstrap_95_pct": [
+            0.019232138575864255,
+            0.1295322971629398
+          ]
+        },
+        "ttft": {
+          "block_pct": [
+            -0.18584065545046435,
+            -0.03855444333012992,
+            -0.010588344668438499,
+            -0.002282137684173069,
+            -0.026404848464212094
+          ],
+          "mean_pct": -0.052734085919483586,
+          "bootstrap_95_pct": [
+            -0.11967170947313921,
+            -0.010429162633887046
+          ]
+        },
+        "e2e_slowest_request": {
+          "block_pct": [
+            0.9841938792916727,
+            0.23972947523509536,
+            -0.3885936571907611,
+            0.7313490681367885,
+            0.006559886000645498
+          ],
+          "mean_pct": 0.3146477302946882,
+          "bootstrap_95_pct": [
+            -0.10486761342902717,
+            0.7380981184024904
+          ]
+        }
+      },
+      {
+        "cell": "source-32k-c4-protected/warm",
+        "critical_decode_definition": "client_aggregate",
+        "decode": {
+          "block_pct": [
+            -7.7291827912002065,
+            -1.6626096604133278,
+            6.198246999802515,
+            2.8280956497067633,
+            2.7354662005910857
+          ],
+          "mean_pct": 0.4740032796973659,
+          "bootstrap_95_pct": [
+            -4.08923891272808,
+            4.157630299921928
+          ]
+        },
+        "prefill": {
+          "block_pct": [
+            -7.221051701115688,
+            0.08044970783815941,
+            7.523187581042223,
+            0.05818118006439832,
+            0.08556995768373987
+          ],
+          "mean_pct": 0.10526734510256652,
+          "bootstrap_95_pct": [
+            -4.299427087565033,
+            4.542662776174962
+          ]
+        },
+        "ttft": {
+          "block_pct": [
+            1.2187363312837096,
+            -0.09120518184811965,
+            -1.0896567310658578,
+            -0.012388521345230163,
+            -0.1041318600426
+          ],
+          "mean_pct": -0.0157291926036196,
+          "bootstrap_95_pct": [
+            -0.6770981149170807,
+            0.6947597260309779
+          ]
+        },
+        "e2e_slowest_request": {
+          "block_pct": [
+            3.088287593072714,
+            1.4840134572790653,
+            -1.1213726928250511,
+            -2.4411660730807583,
+            -2.3808985311282505
+          ],
+          "mean_pct": -0.27422724933645615,
+          "bootstrap_95_pct": [
+            -2.1531003802486137,
+            1.6735955410737913
+          ]
+        }
+      }
+    ],
+    "receipts": {
+      "E01-confirmation-eight-blocks.json": {
+        "path": "benchmarks/results/b70-stack-20261010/E01-confirmation-eight-blocks.json",
+        "sha256": "d917a3d66e6165745fcb036cacefe71a5f39aee51baf7604a0a85d997abeba56"
+      },
+      "E01-eight-block-counter-decomposition.json": {
+        "path": "benchmarks/results/b70-stack-20261010/E01-eight-block-counter-decomposition.json",
+        "sha256": "974448ddb4b3494326d6a1fa1fc0fb732641a28a6498eb8bc74a27988fbe1b51"
+      },
+      "E01-comparability.json": {
+        "path": "benchmarks/results/b70-stack-20261010/E01-comparability.json",
+        "sha256": "d98dca790872e87ab61855e1dc144d9c03fd85b204b6431e4d2f72197289451d"
+      },
+      "E01-memory-ledger.json": {
+        "path": "benchmarks/results/b70-stack-20261010/E01-memory-ledger.json",
+        "sha256": "4d0a896c66cc646b77a017ee30e38108615609375126d4dd37b6e6c6fead4e21"
+      },
+      "E01-firsttouch-accounting.json": {
+        "path": "benchmarks/results/b70-stack-20261010/E01-firsttouch-accounting.json",
+        "sha256": "1dd08f4046004a70d07f0a50fa9a7a7c2bcfd814791a9113d6cbdfab1b4940e4"
+      },
+      "E01-numerical-review.json": {
+        "path": "benchmarks/results/b70-stack-20261010/E01-numerical-review.json",
+        "sha256": "886b8e8e24250b8e5f5dd150343908c5d64232e90157dfa41db1292fc2942266"
+      },
+      "E01-inflight-cache-pressure.json": {
+        "path": "benchmarks/results/b70-stack-20261010/E01-inflight-cache-pressure.json",
+        "sha256": "0d16328a7875caf746936ae3a6b833a17f27c617f0f44c3ad0f570909f379fa5"
+      }
+    },
+    "rationale": [
+      "Relevant source-verified SDPA ordering fix from the old unpatched micro kernel to stable 3.13.4; actual FP16 micro implementation and Q>1 branch eligibility are documented. No old race reproducer or decode speed gain is claimed.",
+      "Original registered rule: no credible >3% critical C1/aggregate-C4 decode loss and no credible >5% protected latency/prefill loss. Every cell passes that rule without threshold changes.",
+      "Warm prose-C4 native TPS is -1.776%, aggregate -2.464% (CI [-5.363,0.132]); this smaller adverse effect and its request-counter decomposition remain explicit. Acceptance/counter arithmetic does not uniquely identify a kernel or numeric cause.",
+      "The initial unmatched compiler-state source32 penalty remains in the unfiltered eight-block report. The controlled empty-cache pair reproduces ~21-second prefill and 199 blocks on both exact images; ten later ordinary starts match the old 200-block pool. No KV/utilization override.",
+      "Quality has a separate explicit numerical review, retaining the failed exact short-array equality receipt and original independent/state tolerances."
+    ],
+    "limits": [
+      "This is maintenance-screen approval for remaining exact-image operations and the complete frozen matrix; it is not production release approval.",
+      "The wide prose-C4 warm interval cannot rule out >3% loss. The registered no-credible-loss rule is not a formal tight-margin noninferiority proof; finite block counts and cache/scheduling variability remain limits.",
+      "Slowest-request-per-wave tails are measured, not a population p99 guarantee. All original favorable and adverse blocks are retained.",
+      "Single maximum-context capacity was tested on this runtime image; final metadata must preserve RootFS and all serving parameters. C16 admission still requires its separate operational gate."
+    ]
+  },
+  "capacity": {
+    "runtime_image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
+    "rootfs_identical_final": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+    "evidence": {
+      "status": "COMPLETE",
+      "usage": {
+        "prompt_tokens": 261120,
+        "total_tokens": 262144,
+        "completion_tokens": 1024,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": null
+      },
+      "native": {
+        "prompt_tokens": 261120.0,
+        "cached_tokens": 0.0,
+        "prefill_seconds": 306.7084808899963,
+        "completed": 1.0,
+        "prefill_tokens": 261120.0,
+        "generation_tokens": 1024.0,
+        "decode_seconds": 21.046874161998858,
+        "accepted_tokens": 767.0,
+        "preemptions": 0.0,
+        "draft_tokens": 767.0
+      },
+      "native_before": {
+        "draft_tokens": 7248.0,
+        "accepted_tokens": 3719.0,
+        "preemptions": 0.0,
+        "prompt_tokens": 458570.0,
+        "cached_tokens": 214400.0,
+        "generation_tokens": 6144.0,
+        "completed": 12.0,
+        "prefill_seconds": 160.74194232000445,
+        "decode_seconds": 262.71466328101815,
+        "prefill_tokens": 244170.0
+      },
+      "native_after": {
+        "draft_tokens": 8015.0,
+        "accepted_tokens": 4486.0,
+        "preemptions": 0.0,
+        "prompt_tokens": 719690.0,
+        "cached_tokens": 214400.0,
+        "generation_tokens": 7168.0,
+        "completed": 13.0,
+        "prefill_seconds": 467.45042321000074,
+        "decode_seconds": 283.761537443017,
+        "prefill_tokens": 505290.0
+      },
+      "wall_s": 327.796657769999,
+      "prompt_ids_sha256": "e8ac906288c498948179c06caab723a3256ece84484faa827f250c35ce8cd17d",
+      "prompt_recipe": "repeat frozen /tokenize code/prose token IDs to exactly 261120; output 1024; total 262144",
+      "qualification": "instrumented capacity diagnostic; preemptions preserved for analysis, not silently accepted"
+    }
+  },
+  "operations": {
+    "path": "benchmarks/results/b70-stack-20261010/operations.json",
+    "sha256": "0e9220ef1aa410abcd023e5ae7f9014e1a3fa0e65c423a64149ff6a89bcfdd9b"
+  },
+  "source_guard_coverage": {
+    "required": 16,
+    "covered": 16
+  },
+  "serving": {
+    "scenarios": 20,
+    "waves": 70,
+    "requests": 124,
+    "preemptions": 0
+  },
+  "receipts_sha256": {
+    "config/experiments/b70-stack-20261010/production_image.json": "94cf2642933972ea73749b95bf3159a49ad9958782dd0f421e5ea9c9e7448c33",
+    "benchmark-results/b70-stack-20261010/E01-final-metadata/image.json": "9c863f15b9fa6589f50e5ca1a5aecf9980db069de41e3a636f8b2fcc76a7c9d0",
+    "benchmark-results/b70-stack-20261010/E01-final-controller-r3.json": "3f78ce1a7f5d79c38a25beddf3c57c0d0c426b93c62852ef9b59c9145cb74841",
+    "benchmarks/results/b70-stack-20261010/E01-final-strict-preflight.json": "a25a6c933573f3a228bceefca59fbcee11740567d11fdf8c1bb9f9951d339a85",
+    "benchmarks/experiments/b70-stack-20261010/run_final.py": "0a648e52f7b5747256f84ec07a36863318b6303e70c291b53b409fcf532dd362",
+    "benchmarks/experiments/b70-stack-20261010/freeze_release.py": "536111595af111c9b68919b3145e2b4731929f11294f926547d725a5363b7b88",
+    "benchmarks/experiments/b70-stack-20261010/run_operations.py": "7498b624b59ce860fe55a8ded951281c495db95c2b4b704d07a82dfa58bc30e5",
+    "scripts/run-exl3-review-serving.py": "bf3f6f17a00950dc6a2b1316548ab3a9901dc2eb21d928fb277b525780cc740e",
+    "scripts/current-profile-benchmark.py": "01105118930b595aaf31b2bf58f3427b76a3b94721ceeabd947b432105ad3345",
+    "scripts/exl3_candidate_worker.py": "43c55e5a083a619733e53df038316561efb7a73b1e0356f8ebb1cd59973ac43d",
+    "scripts/summarize-readme-benchmarks.py": "1883a43758c8467de9cdba680133eb2a89d94c20986eb05c3c91e02bf9ba56e3",
+    "benchmark-results/b70-stack-20261010/E01-gpu-gates/campaign.json": "97b58b71ed3c7a1b72acecec439ea411f1c67ed5485bf8553a001501eebbe8b4",
+    "benchmark-results/b70-stack-20261010/E01-quality/numerical-review.json": "a5f05ef0dc95909f2fbb55f2aebeaa0669e7beb63e25f17d39ef8edaecaf9beb",
+    "benchmark-results/b70-stack-20261010/E01-quality/replay-campaign.json": "745cf7caf48b3d2f617046499aba09fd736f00cc5290148a0d16c33ce121d47f",
+    "benchmarks/results/b70-stack-20261010/E01-maintenance-serving-review.json": "0096cb3abe91c771948b722d8eb1d5e116d57e90a189d955da73176bd7d3a562",
+    "benchmark-results/b70-stack-20261010/E01-quality/campaign.json": "6dd1b16914b0ecb9003722d29b9a31e8cadb7abaa4f91c3d03af81338197bba8",
+    "benchmark-results/b70-stack-20261010/E01-serving-screen/campaign.json": "879afb72c65576d35d2096438e014a086a15d385c88cb40279ada13a553107c9",
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/operations.json": "7836964cdeb42dc6f4640bc28aed8bee15ce5ea33d57873aea3be7a247061341",
+    "benchmarks/results/b70-stack-20261010/E01-c16-matched-review.json": "b17b14966418da60adb7aa26d28c1ab8bf5f57c9e5776238654bb2860b58f4ac",
+    "benchmark-results/b70-stack-20261010/E01-final-controller-r2.json": "2ffdee5ec3a3c8595d7f6eba25697e88cd26d5b005d8a59177588c12d9fc6d66",
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r2/operations.json": "a7d88a68ef0e37178d8bce261f580468bb125d19b2edcda867487d6c92a423f4",
+    "benchmarks/results/b70-stack-20261010/E01-operations-attempts.json": "2d2bc5254fb0375aee49ab347d6861a84556a3bfc0b9a3b1770ad25fe3e6bd61",
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/SOURCE_GUARD_COVERAGE.json": "4574e62f9f26e13225699f7b98157b13d09ea7cff54a62250a5e7ad7297ec5e0",
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/CAPTURE_IDENTITY.json": "81ba0426790e611768f884afdbadf6c21babab6d5cc428a865255bb1780af057",
+    "benchmark-results/b70-stack-20261010/E01-serving-final/campaign.json": "fc90532f98930623a988637213b9be029df4f16e637263cc9f29647c0c3a5e07",
+    "benchmarks/results/vllm-031-upgrade/serving-summary.json": "95bad1bb58097b7e1cb5642a0e895dae6ec0b709bbfb6221b228d667ae87e696",
+    "benchmark-results/b70-stack-20261010/E01-serving-final/source-review/run-20261010-063612-w0.00/results.json": "6d21914a849a08a87561becdf9945e338ef59e8fb56c1e2035bf4449ff091aaa",
+    "benchmark-results/b70-stack-20261010/E01-serving-final/prefix-64k-isolated/run-20261010-073045-w0.00/results.json": "b23ec0274761a79010aa7dfe26f3c84de080f4f6057023724a7bc4c25d7082d3",
+    "benchmark-results/b70-stack-20261010/E01-final-controller.json": "8fdf09fe3fcf70c313056396d5186bff4a81754dee86e8c36c2237b1374e2ef4",
+    "benchmark-results/b70-stack-20261010/E01-operations-final/operations.json": "f25250c313e061252f3fd0823a63a33f6c3edfc1d22ae7477b2c7bb668e6f164"
+  },
+  "public_receipt_mapping": {
+    "benchmark-results/b70-stack-20261010/E01-serving-final/prefix-64k-isolated/run-20261010-073045-w0.00/results.json": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-serving-final/prefix-64k-isolated/run-20261010-073045-w0.00/results.json",
+      "sha256": "b23ec0274761a79010aa7dfe26f3c84de080f4f6057023724a7bc4c25d7082d3"
+    },
+    "benchmark-results/b70-stack-20261010/E01-serving-final/source-review/run-20261010-063612-w0.00/results.json": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-serving-final/source-review/run-20261010-063612-w0.00/results.json",
+      "sha256": "6d21914a849a08a87561becdf9945e338ef59e8fb56c1e2035bf4449ff091aaa"
+    },
+    "benchmark-results/b70-stack-20261010/E01-final-metadata/image.json": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-final-metadata/image.json",
+      "sha256": "9c863f15b9fa6589f50e5ca1a5aecf9980db069de41e3a636f8b2fcc76a7c9d0"
+    },
+    "benchmark-results/b70-stack-20261010/E01-final-controller-r3.json": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-final-controller-r3.json",
+      "sha256": "3f78ce1a7f5d79c38a25beddf3c57c0d0c426b93c62852ef9b59c9145cb74841"
+    },
+    "benchmark-results/b70-stack-20261010/E01-final-controller.json": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-final-controller.json",
+      "sha256": "8fdf09fe3fcf70c313056396d5186bff4a81754dee86e8c36c2237b1374e2ef4"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final/operations.json": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final/operations.json",
+      "sha256": "f25250c313e061252f3fd0823a63a33f6c3edfc1d22ae7477b2c7bb668e6f164"
+    },
+    "benchmark-results/b70-stack-20261010/E01-quality/numerical-review.json": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-quality/numerical-review.json",
+      "sha256": "a5f05ef0dc95909f2fbb55f2aebeaa0669e7beb63e25f17d39ef8edaecaf9beb"
+    },
+    "benchmark-results/b70-stack-20261010/E01-quality/replay-campaign.json": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-quality/replay-campaign.json",
+      "sha256": "745cf7caf48b3d2f617046499aba09fd736f00cc5290148a0d16c33ce121d47f"
+    },
+    "benchmark-results/b70-stack-20261010/E01-gpu-gates/campaign.json": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-gpu-gates/campaign.json",
+      "sha256": "97b58b71ed3c7a1b72acecec439ea411f1c67ed5485bf8553a001501eebbe8b4"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/SOURCE_GUARD_COVERAGE.json": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/SOURCE_GUARD_COVERAGE.json",
+      "sha256": "4574e62f9f26e13225699f7b98157b13d09ea7cff54a62250a5e7ad7297ec5e0"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/CAPTURE_IDENTITY.json": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/CAPTURE_IDENTITY.json",
+      "sha256": "81ba0426790e611768f884afdbadf6c21babab6d5cc428a865255bb1780af057"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/vllm-LICENSE": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/vllm-LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/_xpu_ops.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/_xpu_ops.py",
+      "sha256": "713f181dcfc72814e227f9e1ffe8878b03cbfe524b0be60b3fc261bdb76cd448"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/compilation/backends.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/compilation/backends.py",
+      "sha256": "16af622b799f22f30eaa1c78f7ccca9d54c7c72785ad89e90c87e859bf8ef876"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/compilation/cuda_graph.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/compilation/cuda_graph.py",
+      "sha256": "e09f694f4f50cda891b2db09d48993a9248f5a1318795b3798cd5478c268ca84"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/attention/attention.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/attention/attention.py",
+      "sha256": "bde77677fd0e95ea09c6a580dfaf09b57741e8183e00cb106e2d1cc64d8e03f2"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/mamba/gdn/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/mamba/gdn/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/mamba/gdn/base.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/mamba/gdn/base.py",
+      "sha256": "e326cba09aceca3e247d0b51e6073240d04591ca433dbb20359c720167869fa0"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/mamba/gdn/kimi_gdn_linear_attn.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/mamba/gdn/kimi_gdn_linear_attn.py",
+      "sha256": "3bae1be0d5ed66d4ade10b40bda3230146c4516b95e7409c0293b8900c0dee34"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/mamba/gdn/olmo_gdn_linear_attn.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/mamba/gdn/olmo_gdn_linear_attn.py",
+      "sha256": "c74cef04da82ccb697a29f1f6ae3d22bb2963c7a512b38156ef3be4438586726"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "sha256": "3bd2f805f0f4b821e6902ef18da8ba66ad42a7e5a633b76abe96892532293d9c"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/quantization/kv_cache.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/layers/quantization/kv_cache.py",
+      "sha256": "32b45463d0b36c021cb5ae0937d60b5c797ca383a0ef3e291170337486feb1b0"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/models/b70_mtp_policy.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/models/b70_mtp_policy.py",
+      "sha256": "c7c75d6b818c1cb0f1846f752060650af399f832e0dea3e8297ec274f2cfee3f"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/models/qwen3_5.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/models/qwen3_5.py",
+      "sha256": "d261726aae3ce5d52c37b868c317d9377d5e1d7c344961707acc07785a4ec4ab"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/models/qwen3_5_mtp.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/model_executor/models/qwen3_5_mtp.py",
+      "sha256": "04be8e53afff3c9e27198d18ad66bdee787b58c8c294326de1e907f9612a8241"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/workspace-vllm/model_executor/models/qwen3_5_mtp.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/workspace-vllm/model_executor/models/qwen3_5_mtp.py",
+      "sha256": "d206addc79b7d01aabe54be57a6610b897a88d1130df51d39b3975b53599110b"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/platforms/xpu.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/platforms/xpu.py",
+      "sha256": "d13a446c60c0cc3d16902f75170646d87d6e4b5f153725290a2a4830b0b6b5b2"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/attention/backend.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/attention/backend.py",
+      "sha256": "77ac35180c1e0f854c6307f5deb3c7c0ac4a9e8702578d406ce058981488a137"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/attention/backends/fa_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/attention/backends/fa_utils.py",
+      "sha256": "3896d53947719ec9a226479fdbde60e83b1df116d634e2f4331499acf727dd99"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/attention/backends/flash_attn.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/attention/backends/flash_attn.py",
+      "sha256": "ea53fb41165323f13094604051c73d44a579994fe5a427243aa9faafc280b1c2"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/attention/backends/gdn_attn.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/attention/backends/gdn_attn.py",
+      "sha256": "496f383285de2fe92626091309a56a96a64b496f37d5585f8b7b55d0260e1a84"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/kv_cache_manager.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/kv_cache_manager.py",
+      "sha256": "bd9bf46a2101f9368d4941867415a239d18d95e0b956f82f885ce25e10e69f3b"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/kv_cache_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/kv_cache_utils.py",
+      "sha256": "1b20c836aece4982dd87f7e06e14f5ae07a1fc2636101074cfad11584b1a0dcf"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/async_scheduler.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/async_scheduler.py",
+      "sha256": "38d296e77e4d612e696241c67298eb1ca9b6a48b483cd33d35495bf31691032e"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/diffusion_scheduler.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/diffusion_scheduler.py",
+      "sha256": "82fdaeebd4b852317c426b308554b2db510d8b075f90d6dca3dd8b245a6ff040"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/interface.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/interface.py",
+      "sha256": "783cbf3653329b705320a78a464abae2f7ab74d0a0a007a6c6aa683cad5f68b2"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/output.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/output.py",
+      "sha256": "972e0bc8e7af1f4262ac73f660f6b8f798ba780f86c031a9c8a7f10cbfaad3a8"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/request_queue.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/request_queue.py",
+      "sha256": "db8d25daf9580d581f18c6b631a6576dfaa7d1474398cd8dc4db1d29745c214d"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/scheduler.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/scheduler.py",
+      "sha256": "f820bee4f42b878b262a30f3728a97d7413477b2a277748e20f2528ac2ec2f2a"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/sched/utils.py",
+      "sha256": "b6583424b6da15000545cd926ec887ee591bae8a56e6734b8ddf8f9e8f90cc4b"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/single_type_kv_cache_manager.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/core/single_type_kv_cache_manager.py",
+      "sha256": "3a3cb20bd6aa1e0ad46471fc9e5e01ee5797ab4bb759e00ef5fb309d2830db13"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/async_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/async_utils.py",
+      "sha256": "10875f3e7ab28fea5b6ec0dfa1a840ae69675882468cb90f9f3ca0a66db1598f"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/attn_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/attn_utils.py",
+      "sha256": "0f9df8b0153bd0a2720ee957f6cd1600b9d865eb12b7bf432501ffaa12fb6a9c"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/block_table.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/block_table.py",
+      "sha256": "fb5ca5b0be5d0dd9466d9a66d056fc5acbe2dedbcb0eeebb1c486031ed53b0a8"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/buffer_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/buffer_utils.py",
+      "sha256": "6597f701a30261bf250e9ad5a29737264624a1caa20527aeea0dad630325b093"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/cp_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/cp_utils.py",
+      "sha256": "d91e59d28d03e1df79628b64a865d9b68d40bec4d7b6bf194317e47ca8152f3f"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/cudagraph_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/cudagraph_utils.py",
+      "sha256": "8e6ac6f655dd013dd2a3d3561bc88fe05ceeea2b060e5cb6bc85decb0bb2f813"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/dp_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/dp_utils.py",
+      "sha256": "b81a663c7e736f93c7be6ff7b6facebeb93ee4a52c280163b2ba9146fe33c341"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/ec_connector.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/ec_connector.py",
+      "sha256": "ea65e79446ce84fa0573ed4dc52129a80d80be66a08380189c25e3811a793cc7"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/eplb_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/eplb_utils.py",
+      "sha256": "98aaa1e7763faa3ae6fbd012f5a222f050ab2d5a6d8942193341f2e5716228ae"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/input_batch.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/input_batch.py",
+      "sha256": "96163c486368f2cf0e539fe68eaa06f4df3ac814da8f7a92af2b04242e01bc6d"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/kv_connector.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/kv_connector.py",
+      "sha256": "dad1aa1764f1bd0b95fe08a1b2bff6f6fffb633fd167bd65c0657fcb3d296fba"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/lora_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/lora_utils.py",
+      "sha256": "68c797e20684c7a63745980539ff51e0f9e3942d09a557504b6d70cfb2bc35fd"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/metrics/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/metrics/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/metrics/logits.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/metrics/logits.py",
+      "sha256": "ea058d7510a077a55f8ac7e4c3d596508346244e908cb372865d7159f62edc89"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/mm/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/mm/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/mm/encoder_cache.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/mm/encoder_cache.py",
+      "sha256": "a27a52c2c52686a574b24910d38f7bd81508fa75d9d757f1b8d6e169575aa385"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/mm/encoder_runner.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/mm/encoder_runner.py",
+      "sha256": "0981e352d70301b7154a217a48665ffe35f215d053ec5740c2515a3e1e11b4e6"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/mm/lora.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/mm/lora.py",
+      "sha256": "a3eddfad6ad64de276964240c28dc080888df4a56dd5eac18f89428f2cbb7a01"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/mm/rope.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/mm/rope.py",
+      "sha256": "0924375bcb367267e783b57dd2ad9de1189d97025ce4313baaa54f2911eaaf1e"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_runner.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_runner.py",
+      "sha256": "725c47114e148ade3a26b4cc9c5f7295588fdd387afc3cb5fdb2d16513a1bb5c"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/__init__.py",
+      "sha256": "07815d0b788fc88185772f581bbf892a675259f9288375571f29887622f8d93c"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/default.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/default.py",
+      "sha256": "f1d34d5c8c03be6e5afec8c2a24480ec259ca7c87392462f4e52d6c4eb775733"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/encoder_decoder.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/encoder_decoder.py",
+      "sha256": "df7ec035abe403c3b42a507a7619c1f7776d7b0a65eca07ca279069189433990"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/encoder_only.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/encoder_only.py",
+      "sha256": "6b5755a31a0457fd7dc26a62e827df64d87c5b02476dabc0794c9aedd4996a3c"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/interface.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/interface.py",
+      "sha256": "4f4fdd3e0a2611836a79ed0392b843b627fd65382138530be1dd5ae33c2ab4b3"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/mamba_hybrid.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/mamba_hybrid.py",
+      "sha256": "1ddd7dc921d74789e77d3319dc167820ad7fc47ed51d8d9a35ba3938f5c6a079"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/mm_pruning.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/mm_pruning.py",
+      "sha256": "b150940b12ae76048f050a8eeb54d532bbdc530a18ffbf320ddeeb0cfaa90f93"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/prompt_embeds.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/prompt_embeds.py",
+      "sha256": "5fc1268429527fd913026c39a4019515ca4d4d3a72294592e51853030d792dbb"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/recoverssm.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/model_states/recoverssm.py",
+      "sha256": "b4b660e62eaf33f4fe8271f83ed1fb6de6bc08f800a8073b27803e42fb29a645"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/pcp_manager.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/pcp_manager.py",
+      "sha256": "2ad4ef6ff9984fc85a97c05edecfee2dc897189b6b6abf7697f3194f54cec224"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/pool/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/pool/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/pool/pooling_runner.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/pool/pooling_runner.py",
+      "sha256": "f8463f7648cce0f3f29418a4d9fee61634ead760957cf236d06d61cf8cd986e7"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/pp_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/pp_utils.py",
+      "sha256": "c3e1054575c3427e232c9d3253763fb1d0a28edef88f8b32d2f168a83d4b5705"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/bad_words.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/bad_words.py",
+      "sha256": "85c2f1a4a34eac0f1784cd75bd9ed317e1ef3b82a953c07de02a548a48b4aad4"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/batch_shard.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/batch_shard.py",
+      "sha256": "7f43326a0b11a6c17d8dcd65a6abf706b96b450a07ef592b06bd8fbf8c582225"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/gumbel.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/gumbel.py",
+      "sha256": "f24793dbc02d196cb458148b42fb73b7663de55e7e6ded660ea51065b7143853"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/logit_bias.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/logit_bias.py",
+      "sha256": "39dc683f5dc58ee7a266702b1ddcd1e1e1f44457d5ff689a88bae3401305f5c2"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/logits_processor/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/logits_processor/__init__.py",
+      "sha256": "4d7bcc668f64162d168ee1f41a294d1fee98366200468df846952a08d8f23a45"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/logits_processor/interface.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/logits_processor/interface.py",
+      "sha256": "4172bdc4d3b736cb6670323f84aa8eb310567cd4f288c6ea4ab29e4bb6c9bcdd"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/logits_processor/loader.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/logits_processor/loader.py",
+      "sha256": "5a51b37ffb6f489029500021310b21a8e666c14842d1f91b58d33cac5a805348"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/logprob.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/logprob.py",
+      "sha256": "ac58bfedaa325ae29e7b652063455239c7354a2af4751396930d5670f890ce2d"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/min_p.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/min_p.py",
+      "sha256": "4cb5e2f45e1ced6f9685283a7a5c8cfd7204d9a249822e866cfff756c7f04f62"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/output.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/output.py",
+      "sha256": "436e2eb1d29faade2af25a3f7c27af5f2ef6314f79d006f65adc8c20fe946b9e"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/penalties.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/penalties.py",
+      "sha256": "a9171ecb6d291cb195efd77af41caa97fe44a687669b6583d9e3ead08e8374fa"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/prompt_logprob.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/prompt_logprob.py",
+      "sha256": "d65ae509ee6da4f4bedd7626807462a91bf6817613d907b02880c18b9af45d27"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/sampler.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/sampler.py",
+      "sha256": "ddbcdab46010bf38a5fab9b9b6a2deed2ec5e883ebfe81e83f6d22f41e546771"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/states.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/states.py",
+      "sha256": "7dbccea6fb6e24830dafb447a43f93fd0539f33ef02f1b5bf7c2547234cbffa3"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/thinking_budget.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/thinking_budget.py",
+      "sha256": "89d4255450c1659c6d3f49dbfc0e8af5035904cdd98e3e8fc0a1bd21650203d0"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/trace_replay.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/trace_replay.py",
+      "sha256": "d2a7d3b3b55379efabe4740a4b7f14030126dc11be36f6ea974164ce42316a50"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/watermark.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/sample/watermark.py",
+      "sha256": "b66e64f8ef2a5910ad086899565b4972614a30990f0d1edfb60ab96628de5473"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/shutdown.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/shutdown.py",
+      "sha256": "bb470f14b17c7e52571ef8938b2a9527e7c2846852ae8a3a94b69cd1c30aa4b1"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/__init__.py",
+      "sha256": "61b3acba401c1079039496f72445c28bbc6119d0b508f9a75d231f305aa1b7e8"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/acceptance_estimator.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/acceptance_estimator.py",
+      "sha256": "12676553ce7f3a6c4dc5c836c2f05cf292e6138b5efd39fdd4638f0ad965a812"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/adaptive_verification.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/adaptive_verification.py",
+      "sha256": "d91b0b67474b17e2c2b579291182d70a26b3573ecc4b0756f1bb3018d936c3a6"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/autoregressive/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/autoregressive/__init__.py",
+      "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/autoregressive/cudagraph_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/autoregressive/cudagraph_utils.py",
+      "sha256": "42ee43d95882608576c7a98e8c64865eb4053838d0c647661469d00dc71aa0b1"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/autoregressive/speculator.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/autoregressive/speculator.py",
+      "sha256": "c40e801436bc78a77624e1d2c688db823a21b73ffc65f75d18ad78ffeef18118"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dflash/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dflash/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dflash/cudagraph.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dflash/cudagraph.py",
+      "sha256": "2b29f8fc953714e768c18f7a283fb0e6bcad3d226815b383a921812711b840c9"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dflash/speculator.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dflash/speculator.py",
+      "sha256": "36d5bccd28eb64de1af348cbdd4d630bfd7d781479be472570e14c0865826058"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dflash/utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dflash/utils.py",
+      "sha256": "f0584417149c0a6fa67e700b2a725e40a41f4546a806b26e6cc64b64c59cfd66"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dflash2/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dflash2/__init__.py",
+      "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dflash2/speculator.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dflash2/speculator.py",
+      "sha256": "f9f5b5d2623e09fb9f16d4a2e1353c7014d6a01939563e511d9f3eeec7c8163d"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/draft_model/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/draft_model/__init__.py",
+      "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/draft_model/speculator.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/draft_model/speculator.py",
+      "sha256": "f0c2c06c0c3e7fe1205001d99c722e76a2868eb23aa3071a0d9534d142d1d789"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dspark/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dspark/__init__.py",
+      "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dspark/speculator.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dspark/speculator.py",
+      "sha256": "8b43305c582d728beeaaaaeb81e2cf22688a4fd1e9eaa7710f0e4a8d82a8a0cd"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dspark/utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/dspark/utils.py",
+      "sha256": "9d780d7895bde0bb7c38b5424e4a41d49814fb3381ca851d8e4ef8be151c4883"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/eagle/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/eagle/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/eagle/eagle3_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/eagle/eagle3_utils.py",
+      "sha256": "201ee875fcc3d076a8fc1f3876dcbf85736b221a368555243a8987ff26a1674e"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/eagle/speculator.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/eagle/speculator.py",
+      "sha256": "746e318a4f266d75522ff7f3731ea9b4527b7b4824f71364d1a62184ea1f7b3d"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/eagle/utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/eagle/utils.py",
+      "sha256": "a6d4830323e4c134b78d580e57036decee382c08e59ba17a2c5383e7af1f1802"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/extract_hidden_states.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/extract_hidden_states.py",
+      "sha256": "93c4233be7b2d2290b33902ea9b3bb5274c11701830851d03967a22144536e2d"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/gemma4/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/gemma4/__init__.py",
+      "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/gemma4/speculator.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/gemma4/speculator.py",
+      "sha256": "88bdbcf2571bb8b6653f7f4c9b3568cbeb91c2453f857701a91bf1315d7b6db7"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/lilicorr/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/lilicorr/__init__.py",
+      "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/lilicorr/speculator.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/lilicorr/speculator.py",
+      "sha256": "c2f5629ce96597bae891151e30a16cb0f68dded14304d7a5df969155190fa953"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/mtp/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/mtp/__init__.py",
+      "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/mtp/speculator.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/mtp/speculator.py",
+      "sha256": "926d6c9ffdb368c971647911a60493820d056ce236fcae9d94a42fa2e006255d"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/multi_module_mtp/__init__.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/multi_module_mtp/__init__.py",
+      "sha256": "e3c55cbb0d7a8bd47df6f3378835644645f5d3bc89b45793b5d5a02d013e5c58"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/multi_module_mtp/speculator.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/multi_module_mtp/speculator.py",
+      "sha256": "6dc8c68a1d24c868a567684ec5bfe54d382e418b028675c00f5f5b0a6537db96"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/rejection_sampler.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/rejection_sampler.py",
+      "sha256": "b682782f05f43b21f4ad1f995e37b6288d782b0dd4e3ba66db0919f5c5a9ae29"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py",
+      "sha256": "d9f29ad1ce4fe40a078a78b21d73fab97bbbe018775acb480c0ad14dea0c5c35"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/speculator.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/speculator.py",
+      "sha256": "da3b576318cfdc136579a3dc40254f416f4ccacbfd3c2149c74ff1c7c95825ce"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/spec_decode/utils.py",
+      "sha256": "282f2929eddae9ca7312269f799be07472334b6df9fd91878b5e839ec05e418c"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/states.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/states.py",
+      "sha256": "8c899b8ef63d95f450876d3f01e56772f9534938a95383a46659fddf85573fa3"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/structured_outputs.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/structured_outputs.py",
+      "sha256": "18a10532db7e66b55e334acacd1fd989ad6361adf31dd0de9a9a65e23db25951"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/ubatch_utils.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/ubatch_utils.py",
+      "sha256": "995238da91dcb34ff7a0ad5ac5883f2bb4b5d6edddaa6bed8d0f1966166378c4"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/warmup.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/gpu/warmup.py",
+      "sha256": "423ac32d58fe008c228cfa223e4fcebfcf87e3463a9dbdf80a083c0578d73723"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/xpu_model_runner.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/xpu_model_runner.py",
+      "sha256": "07fa0390d28f2b8c3c3c0019eb9c3b126e2397aea268ba47c889f06b423deb23"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/xpu_worker.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/installed-vllm/v1/worker/xpu_worker.py",
+      "sha256": "3acd18a33f53b8da5a322079afc61ae7b1247212a7c881ab9aa4101a287c2ca5"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/active-guards/attention_dispatch.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/active-guards/attention_dispatch.py",
+      "sha256": "7d6c3dea198388ab7d8be7dc73f5d135026125f5988653de0fb45d385fca0a41"
+    },
+    "benchmark-results/b70-stack-20261010/E01-operations-final-r3/runtime-sources/active-guards/target_runtime.py": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-operations-final-r3/runtime-sources/active-guards/target_runtime.py",
+      "sha256": "55e0ec104708e636c36396fa57e474f9e477b2427d6f4c9414f8818c5f065e5d"
+    }
+  },
+  "limitations": [
+    "Maintenance candidate, not an evidenced decode speedup.",
+    "The exact short-array equality failure is retained; numerical review uses original tolerances and finite independent/state/quality gates.",
+    "The 262144 total-token capacity gate ran on the identical runtime parent; final image changes metadata only.",
+    "One maximum-context request and C16 admission pressure do not establish 16 simultaneous maximum contexts.",
+    "The retained C16 attempt failed against an archived count of two. Three contemporaneous matched pairs establish the reviewed current pressure reference; zero-preemption cases retain their zero gate.",
+    "Cold compiler state gives 199 blocks on both images; subsequent normal starts give the original 200 blocks. No KV override.",
+    "Source64 historical cross-version acceptance cause remains inconclusive; no sampler/state patch is justified.",
+    "The older power matrix was not rerun. 180W remains selected from its measured efficiency optimum."
+  ]
+}

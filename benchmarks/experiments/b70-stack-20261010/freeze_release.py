@@ -17,6 +17,10 @@ assert p['attention']['m04_library_sha256']=='03ed092ce98faa5e1da18ed7f07b5b6862
 p['runtime']['onednn_source_commit']='c531fe1a5cd631b7f60277cdf6675c588cadbc28'
 p['runtime']['onednn_library_sha256']=json.loads((OUT/'E01-oneDNN-build/library-receipt.json').read_text())['library_sha256']
 p['release']['immediate_exl3_rollback_image']=json.loads((REPO/'config/production_image.json').read_text())['image_id']
+requirements=json.loads((REPO/'config/experiments/vllm-031-upgrade/runtime_requirements.json').read_text())
+requirements['onednn']='3.13.4'
+requirements['maintenance_native_rebuild']=dict(onednn_source_commit=p['runtime']['onednn_source_commit'],onednn_library_sha256=p['runtime']['onednn_library_sha256'],native_library_sha256=p['runtime']['native_library_sha256'],exl3_source_commit=p['runtime']['exl3_source_commit'],scope='Only custom oneDNN and its linked EXL3 extension change. Python distribution requirements, Torch/vLLM, compiler and M04 remain the qualified v0.31 stack. Existing metadata conflicts are inherited, not fixed by bypassing dependency resolution.')
+write(CFG/'runtime_requirements.json',requirements)
 write(CFG/'production_policy.json',p);h=sha(CFG/'production_policy.json');(CFG/'production_policy.sha256').write_text(h+'  production_policy.json\n')
 subprocess.run([sys.executable,str(REPO/'scripts/prepare-exl3-release-image.py'),'--runtime-image',a.runtime_image,'--policy',str(CFG/'production_policy.json'),'--tag',a.image_tag,'--out',str(OUT/a.metadata_dir),'--cache-capacity','64'],check=True)
 m=json.loads((OUT/a.metadata_dir/'image.json').read_text())

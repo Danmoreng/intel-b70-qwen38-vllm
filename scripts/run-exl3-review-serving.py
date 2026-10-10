@@ -13,7 +13,7 @@ import subprocess
 import sys
 import time
 
-from exl3_candidate_worker import BASE, REPO, Worker, sha
+from exl3_candidate_worker import BASE, REPO, Worker, sha, repo_relative
 
 
 def loader(root):
@@ -22,7 +22,7 @@ def loader(root):
     d=json.loads(reports[0].read_text())
     assert d['status']=='PASS' and d['loaded_modules']==d['expected_modules']==409
     assert d['mtp_loaded']==d['mtp_expected']==8 and not d['missing'] and not d['unexpected_duplicates']
-    return dict(path=str(reports[0].relative_to(REPO)),sha256=sha(reports[0]),loaded_modules=409,mtp_loaded=8)
+    return dict(path=str(repo_relative(reports[0])),sha256=sha(reports[0]),loaded_modules=409,mtp_loaded=8)
 
 
 def restore(image):

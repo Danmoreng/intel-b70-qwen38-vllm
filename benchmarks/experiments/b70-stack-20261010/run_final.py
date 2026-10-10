@@ -26,6 +26,8 @@ def sha(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--serving-review-sha256', required=True)
+    parser.add_argument('--resume-metadata', action='store_true')
+    parser.add_argument('--attempt', type=int, default=1)
     args = parser.parse_args()
     review_path = PUBLIC / 'E01-maintenance-serving-review.json'
     assert sha(review_path) == args.serving_review_sha256
@@ -36,16 +38,21 @@ def main():
     numerical = json.loads((ROOT / 'E01-quality/numerical-review.json').read_text())
     assert numerical['status'] == 'PASS_REVIEWED_CHANGED_STACK_NUMERICS'
     assert numerical['image_id'] == review['runtime_image_id']
-    out = ROOT / 'E01-final-controller.json'
+    assert args.attempt >= 1 and (not args.resume_metadata or args.attempt > 1)
+    suffix = '' if args.attempt == 1 else f'-r{args.attempt}'
+    out = ROOT / ('E01-final-controller' + suffix + '.json')
     assert not out.exists()
     state = dict(status='RUNNING', started_unix=time.time(),
                  serving_review_sha256=args.serving_review_sha256,
                  runtime_image_id=review['runtime_image_id'], commands=[],
+                 attempt=args.attempt,
                  sources_sha256={str(p.relative_to(REPO)): sha(p) for p in
                                  [Path(__file__), HERE / 'freeze_release.py',
                                   HERE / 'run_operations.py',
                                   REPO / 'scripts/run-exl3-review-serving.py',
-                                  REPO / 'scripts/current-profile-benchmark.py']})
+                                  REPO / 'scripts/current-profile-benchmark.py',
+                                  REPO / 'scripts/exl3_candidate_worker.py',
+                                  REPO / 'scripts/summarize-readme-benchmarks.py']})
 
     def save():
         out.write_text(json.dumps(state, indent=2) + '\n')
@@ -63,15 +70,32 @@ def main():
         print('PASS', name, flush=True)
 
     try:
-        run('E01-freeze', [sys.executable, str(HERE / 'freeze_release.py'),
-                          '--runtime-image', review['runtime_image_id']])
+        if args.resume_metadata:
+            previous = json.loads((ROOT / 'E01-final-controller.json').read_text())
+            failed = json.loads((ROOT / 'E01-operations-final/operations.json').read_text())
+            assert previous['status'] == 'FAILED' and previous['commands'][0]['status'] == 'PASS'
+            assert failed['status'] == 'FAILED' and not failed['cases']
+            assert 'not in the subpath' in failed['error']
+            metadata = json.loads((ROOT / 'E01-final-metadata/image.json').read_text())
+            inspected = json.loads(subprocess.check_output(['docker', 'image', 'inspect',
+                                    metadata['image_id'], metadata['runtime_image_id']], text=True))
+            assert inspected[0]['RootFS'] == inspected[1]['RootFS'] == metadata['rootfs']
+            assert metadata['runtime_image_id'] == review['runtime_image_id']
+            assert metadata['policy_sha256'] == sha(CFG / 'production_policy.json')
+            state['retry_provenance'] = dict(previous_controller_sha256=sha(ROOT / 'E01-final-controller.json'),
+                failed_operations_sha256=sha(ROOT / 'E01-operations-final/operations.json'),
+                explanation='Reporting path failure after first cold-start inventory/409+8 loader; no API cases ran. Failed receipts retained. Exact frozen image reused, no native rebuild or policy change.')
+        else:
+            run('E01-freeze', [sys.executable, str(HERE / 'freeze_release.py'),
+                              '--runtime-image', review['runtime_image_id']])
         release = json.loads((CFG / 'production_image.json').read_text())
         state.update(image_id=release['image_id'], policy_sha256=release['policy_sha256'])
         save()
-        run('E01-operations-final', [sys.executable, '-u', str(HERE / 'run_operations.py'),
+        operations_name = 'E01-operations-final' + suffix
+        run(operations_name, [sys.executable, '-u', str(HERE / 'run_operations.py'),
                                    '--image', release['image_id'], '--out',
-                                   str(ROOT / 'E01-operations-final')])
-        operations = json.loads((ROOT / 'E01-operations-final/operations.json').read_text())
+                                   str(ROOT / operations_name)])
+        operations = json.loads((ROOT / operations_name / 'operations.json').read_text())
         assert operations['status'] == 'PASS_NEW_IMAGE_OPERATIONAL_GATES'
         run('E01-serving-final', [sys.executable, '-u',
                                  str(REPO / 'scripts/run-exl3-review-serving.py'),

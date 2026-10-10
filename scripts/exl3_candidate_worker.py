@@ -16,6 +16,19 @@ def sha(path):
     with Path(path).open('rb') as f: return hashlib.file_digest(f, 'sha256').hexdigest()
 
 
+def repo_relative(path, repo=REPO):
+    """Map an attested shared result tree to its logical repository path."""
+    root = Path(repo).resolve()
+    resolved = Path(path).resolve()
+    try:
+        return resolved.relative_to(root)
+    except ValueError:
+        storage = (root / 'benchmark-results').resolve()
+        # Reject unrelated external paths; only the explicit result tree may
+        # live outside a worktree through a symlink.
+        return Path('benchmark-results') / resolved.relative_to(storage)
+
+
 def profile(image, overrides=None):
     source = """import json,sys; sys.path.insert(0,'scripts'); import serve
 c=serve.load(sys.argv[1]); print(json.dumps({'config':c,'argv':serve.vllm_argv(c,'/models/checkpoint',8000,[]),'env':{k:str(v).replace('{model_dir}',c['_dir']) for k,v in c['env'].items() if v is not None}}))"""

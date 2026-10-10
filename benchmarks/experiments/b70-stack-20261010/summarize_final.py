@@ -3,6 +3,7 @@
 
 No production write, no automatic performance review, no GPU operations.
 """
+import argparse
 import hashlib
 import importlib.util
 import json
@@ -25,6 +26,11 @@ def write(path, value):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--controller', default='E01-final-controller.json')
+    parser.add_argument('--operations', default='E01-operations-final')
+    args = parser.parse_args()
+    operation_root = RAW / args.operations
     receipts = {}
 
     def read(path):
@@ -37,7 +43,7 @@ def main():
     metadata = read(RAW / 'E01-final-metadata/image.json')
     assert metadata['image_id'] == image and metadata['runtime_image_id'] == runtime
     assert metadata['rootfs'] == release['rootfs_metadata_attestation']['rootfs']
-    controller = read(RAW / 'E01-final-controller.json')
+    controller = read(RAW / args.controller)
     assert controller['status'] == 'COMPLETE_FINAL_OPERATIONS_AND_FROZEN_SERVING_REVIEW_REQUIRED'
     for name, digest in controller['sources_sha256'].items():
         assert sha(REPO / name) == digest
@@ -58,7 +64,7 @@ def main():
     assert all(boundary['usage'][key] == value for key, value in
                dict(prompt_tokens=261120, completion_tokens=1024, total_tokens=262144).items())
     assert boundary['native']['preemptions'] == 0
-    operations = read(RAW / 'E01-operations-final/operations.json')
+    operations = read(operation_root / 'operations.json')
     assert operations['status'] == 'PASS_NEW_IMAGE_OPERATIONAL_GATES'
     assert operations['image_id'] == image and operations['policy_sha256'] == policy
     assert operations['restarted_inventory']['num_blocks'] == 200
@@ -69,11 +75,11 @@ def main():
     pressure = operations['c16_pressure_comparison']
     assert pressure['candidate_preemptions'] <= pressure['baseline_preemptions']
     assert pressure['candidate_prefill_recompute_excess'] <= pressure['baseline_prefill_recompute_excess']
-    coverage = read(RAW / 'E01-operations-final/runtime-sources/SOURCE_GUARD_COVERAGE.json')
+    coverage = read(operation_root / 'runtime-sources/SOURCE_GUARD_COVERAGE.json')
     assert coverage['covered_count'] == coverage['required_count'] == 16
     for name, digest in coverage['files_sha256'].items():
-        assert sha(RAW / 'E01-operations-final/runtime-sources' / name) == digest
-    assert read(RAW / 'E01-operations-final/runtime-sources/CAPTURE_IDENTITY.json')['image_id'] == image
+        assert sha(operation_root / 'runtime-sources' / name) == digest
+    assert read(operation_root / 'runtime-sources/CAPTURE_IDENTITY.json')['image_id'] == image
     serving = read(RAW / 'E01-serving-final/campaign.json')
     assert serving['status'] == 'COMPLETE_REVIEW_SERVING_MATRIX'
     assert serving['image_receipt']['image_id'] == image
@@ -115,7 +121,7 @@ def main():
                                            'preemption_policy', 'purpose', 'unique_images',
                                            'pixels_each', 'fixture_sha256', 'loader')}
                            for name, case in operations['cases'].items()}
-    public_ops['source_raw_sha256'] = sha(RAW / 'E01-operations-final/operations.json')
+    public_ops['source_raw_sha256'] = sha(operation_root / 'operations.json')
     write(PUBLIC / 'operations.json', public_ops)
     for section in ['source_review']:
         read(REPO / summary[section]['raw_results_path'])
@@ -131,18 +137,19 @@ def main():
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(path, destination)
         exports[str(path.relative_to(REPO))] = dict(path=str(destination.relative_to(REPO)), sha256=sha(destination))
-    for path in [RAW / 'E01-final-metadata/image.json', RAW / 'E01-final-controller.json',
+    for path in [RAW / 'E01-final-metadata/image.json', RAW / args.controller,
+                 RAW / 'E01-final-controller.json', RAW / 'E01-operations-final/operations.json',
                  RAW / 'E01-quality/numerical-review.json', RAW / 'E01-quality/replay-campaign.json',
                  RAW / 'E01-gpu-gates/campaign.json',
-                 RAW / 'E01-operations-final/runtime-sources/SOURCE_GUARD_COVERAGE.json',
-                 RAW / 'E01-operations-final/runtime-sources/CAPTURE_IDENTITY.json']:
+                 operation_root / 'runtime-sources/SOURCE_GUARD_COVERAGE.json',
+                 operation_root / 'runtime-sources/CAPTURE_IDENTITY.json']:
         read(path)
         destination = PUBLIC / 'evidence' / path.relative_to(RAW)
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(path, destination)
         exports[str(path.relative_to(REPO))] = dict(path=str(destination.relative_to(REPO)), sha256=sha(destination))
     for name, digest in coverage['files_sha256'].items():
-        path = RAW / 'E01-operations-final/runtime-sources' / name
+        path = operation_root / 'runtime-sources' / name
         destination = PUBLIC / 'evidence' / path.relative_to(RAW)
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(path, destination)

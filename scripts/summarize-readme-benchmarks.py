@@ -12,6 +12,14 @@ from zoneinfo import ZoneInfo
 REPO = Path(__file__).resolve().parents[1]
 
 
+def result_reference(path):
+    resolved = Path(path).resolve()
+    try:
+        return resolved.relative_to(REPO.resolve())
+    except ValueError:
+        return Path('benchmark-results') / resolved.relative_to((REPO / 'benchmark-results').resolve())
+
+
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -184,7 +192,7 @@ def summarize(root, include_failed_coding_task=False, serving_only=False, experi
                 'ttft_s': row['requests'][0]['ttft_s'], 'wall_s': row['requests'][0]['wall_s']})
         prefix = [row for row in prefix if row['name'] != 'prefix-64k-cold-warm'] + replacement
         supplementary.append({'name': 'prefix-64k-cold-warm', 'run_id': separate_path.parent.name,
-            'raw_results_path': str(separate_path.relative_to(REPO)), 'raw_results_sha256': sha(separate_path),
+            'raw_results_path': str(result_reference(separate_path)), 'raw_results_sha256': sha(separate_path),
             'image_id': separate_live['image_id'], 'requests': 3,
             'started_at': separate['manifest']['started_at'],
             'finished_at': datetime.datetime.fromtimestamp(separate_path.stat().st_mtime,ZoneInfo('Europe/Berlin')).isoformat() if final else json.loads((isolated / 'state.json').read_text())['finished_at'],
@@ -239,7 +247,7 @@ def summarize(root, include_failed_coding_task=False, serving_only=False, experi
         'model_revision': json.loads(policy_path.read_text())['model']['revision'],
         'power_cap_w': 180,
         'source_review': {
-            'run_id': path.parent.name, 'raw_results_path': str(path.relative_to(REPO)),
+            'run_id': path.parent.name, 'raw_results_path': str(result_reference(path)),
             'prompt_namespace': manifest['prompt_namespace'],
             'scenario_plan_sha256': sha(REPO / 'benchmarks/current-profile-scenarios.json'),
             'runner_sha256': provenance['source_sha256']['scripts/current-profile-benchmark.py'],
@@ -264,7 +272,7 @@ def summarize(root, include_failed_coding_task=False, serving_only=False, experi
                 'reference_main_results_path': str(Path(manifest['fixture_root']) / 'results.json')},
         },
         'coding': None if serving_only else {**{key: coding[key] for key in ('fixture_id', 'fixture_manifest_sha256', 'fixture_project_sha256', 'tasks_sha256', 'runner_sha256', 'wall_s', 'requests', 'tool_calls', 'metrics')},
-            'raw_results_path': str(coding_path.relative_to(REPO)), 'raw_summary_sha256': sha(coding_path),
+            'raw_results_path': str(result_reference(coding_path)), 'raw_summary_sha256': sha(coding_path),
             'tasks_passed': sum(row['acceptance']['passed'] for row in coding['task_results']),
             'tasks_total': len(coding['task_results']),
             'acceptance_status': 'PASS' if coding_passed else 'FAIL_GENERATED_TASK_CASE',

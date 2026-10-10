@@ -31,6 +31,10 @@ def main():
         assert stage['image_id'] == source['image_id']
         assert stage['policy_sha256'] == source['policy_sha256']
         assert stage['models_endpoint'] and stage['streaming_done'] and stage['streaming_usage']
+        assert 'paris' in stage['real_generated_reply'].lower()
+        message = stage['defaults_response']['choices'][0]['message']
+        assert '377' in (message.get('content') or '')
+        assert message.get('reasoning') or message.get('reasoning_content')
         env = stage['environment']
         assert env['EXL3_SDPA_CACHE_CAPACITY'] == '64'
         assert 'EXL3_MIGRATION_TRACE' not in env and 'B70_REVIEW_CACHE_DIAGNOSTIC' not in env

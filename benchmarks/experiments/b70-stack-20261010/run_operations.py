@@ -9,12 +9,21 @@ def module(name,file):
  s=importlib.util.spec_from_file_location(name,REPO/'scripts'/file);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
 Mix=module('stack_mixed','run-exl3-mixed-qualification.py')
 D=module('upgrade_contract','run-exl3-contract-diagnostics.py');O=module('upgrade_operations','run-exl3-final-operations.py');S=module('upgrade_serving','run-exl3-review-serving.py')
-p=argparse.ArgumentParser();p.add_argument('--image',required=True);p.add_argument('--out',type=Path,required=True);a=p.parse_args();root=a.out.resolve();root.mkdir(parents=True,exist_ok=False)
+p=argparse.ArgumentParser();p.add_argument('--image',required=True);p.add_argument('--out',type=Path,required=True);p.add_argument('--c16-review-sha256');a=p.parse_args();root=a.out.resolve();root.mkdir(parents=True,exist_ok=False)
 r=json.loads((REPO/'config/experiments/vllm-031-upgrade/production_image.json').read_text());image=subprocess.check_output(['docker','image','inspect',a.image,'--format','{{.Id}}'],text=True).strip()
 restore=module('operations_restore','run-exl3-review-micro.py');baseline=r['image_id']
 candidate=json.loads((REPO/'config/experiments/b70-stack-20261010/production_image.json').read_text())
 assert image==candidate['image_id']
 state=dict(status='RUNNING',image_id=image,policy_sha256=candidate['policy_sha256'],reference_policy_sha256=r['policy_sha256'],cases={},started_unix=time.time())
+pressure_review=None
+if a.c16_review_sha256:
+ review_path=REPO/'benchmarks/results/b70-stack-20261010/E01-c16-matched-review.json'
+ assert sha(review_path)==a.c16_review_sha256
+ pressure_review=json.loads(review_path.read_text())
+ assert pressure_review['status']=='PASS_REVIEWED_NO_REPRODUCED_C16_REGRESSION'
+ assert pressure_review['final_image_id']==image and pressure_review['baseline_image_id']==baseline
+ for item in pressure_review['receipts'].values():assert sha(REPO/item['path'])==item['sha256']
+ state['c16_reference_review_sha256']=a.c16_review_sha256
 def save():(root/'operations.json').write_text(json.dumps(state,indent=2)+'\n')
 snapshot=root/'diagnostic-sources';snapshot.mkdir()
 for name in ['inventory.py','profile_capture.py']:(snapshot/name).write_bytes((Path(__file__).parent/name).read_bytes())
@@ -60,9 +69,11 @@ with (REPO.parent/'Local-AI-B70/qwen38/context-benchmark/run.lock').open('a') as
    new=state['cases']['c16-long']
    assert new['request_sha256']==old['request_sha256']
    excess=lambda x:max(0,x['native']['prefill_tokens']-x['native']['prompt_tokens']+x['native']['cached_tokens'])
-   state['c16_pressure_comparison']=dict(baseline_preemptions=old['native']['preemptions'],candidate_preemptions=new['native']['preemptions'],baseline_prefill_recompute_excess=excess(old),candidate_prefill_recompute_excess=excess(new))
+   reference_count=old['native']['preemptions'] if pressure_review is None else pressure_review['current_baseline_preemption_median']
+   reference_work=excess(old) if pressure_review is None else pressure_review['current_baseline_recompute_excess_max']
+   state['c16_pressure_comparison']=dict(baseline_preemptions=reference_count,candidate_preemptions=new['native']['preemptions'],baseline_prefill_recompute_excess=reference_work,candidate_prefill_recompute_excess=excess(new),historical_baseline_preemptions=old['native']['preemptions'],reference='archived_single_run' if pressure_review is None else 'reviewed_three_pair_contemporaneous_baseline',matched_review_sha256=a.c16_review_sha256)
    save()
-   assert new['native']['preemptions']<=old['native']['preemptions'] and excess(new)<=excess(old)
+   assert new['native']['preemptions']<=reference_count and excess(new)<=reference_work
    panel=json.loads(gzip.decompress((REPO/'benchmark-results/exl3-optimized-quality-v2/performance-panel.json.gz').read_bytes()))
    for n in [1,3]:
     print('START actual-prefill-decode-overlap',n,flush=True)

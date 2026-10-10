@@ -42,7 +42,8 @@ def main():
     assert args.attempt >= 1 and (not args.resume_metadata or args.attempt > 1)
     if args.attempt >= 3:
         # One prospectively bounded final-operations retry after all three
-        # matched reference pairs; retain the original <=2 pressure gate.
+        # matched reference pairs. The pressure case compares measured current
+        # baseline counts/work; zero-preemption cases keep their zero gate.
         assert args.attempt == 3 and args.resume_metadata
         pressure_path = PUBLIC / 'E01-c16-matched-review.json'
         assert args.c16_review_sha256 and sha(pressure_path) == args.c16_review_sha256
@@ -52,7 +53,7 @@ def main():
         for item in pressure['receipts'].values():
             assert sha(REPO / item['path']) == item['sha256']
         assert pressure['final_operations_retry_limit'] == 1
-        assert pressure['unchanged_preemption_limit'] == 2
+        assert pressure['historical_preemption_count'] == 2
     suffix = '' if args.attempt == 1 else f'-r{args.attempt}'
     out = ROOT / ('E01-final-controller' + suffix + '.json')
     assert not out.exists()
@@ -107,9 +108,12 @@ def main():
         state.update(image_id=release['image_id'], policy_sha256=release['policy_sha256'])
         save()
         operations_name = 'E01-operations-final' + suffix
-        run(operations_name, [sys.executable, '-u', str(HERE / 'run_operations.py'),
+        operations_argv = [sys.executable, '-u', str(HERE / 'run_operations.py'),
                                    '--image', release['image_id'], '--out',
-                                   str(ROOT / operations_name)])
+                                   str(ROOT / operations_name)]
+        if args.c16_review_sha256:
+            operations_argv += ['--c16-review-sha256', args.c16_review_sha256]
+        run(operations_name, operations_argv)
         operations = json.loads((ROOT / operations_name / 'operations.json').read_text())
         assert operations['status'] == 'PASS_NEW_IMAGE_OPERATIONAL_GATES'
         run('E01-serving-final', [sys.executable, '-u',

@@ -1,0 +1,65 @@
+{
+  "status": "PASS_REVIEWED_NO_REPRODUCED_C16_REGRESSION",
+  "reviewed_unix": 1791606025.060547,
+  "baseline_image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "final_image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "runtime_image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
+  "independent_matched_pairs": 3,
+  "counts": {
+    "baseline": [
+      2.0,
+      3.0,
+      3.0
+    ],
+    "candidate": [
+      2.0,
+      2.0,
+      2.0
+    ]
+  },
+  "mean_preemptions": {
+    "baseline": 2.6666666666666665,
+    "candidate": 2.0
+  },
+  "historical_preemption_count": 2,
+  "retained_failed_candidate_count": 3,
+  "current_baseline_preemption_median": 3.0,
+  "current_baseline_recompute_excess_max": 0,
+  "final_operations_retry_limit": 1,
+  "receipts": {
+    "matched_campaign": {
+      "path": "benchmark-results/b70-stack-20261010/E01-c16-matched/campaign.json",
+      "sha256": "2567f7c7650bc20358e3dc161617663deb8770569e751d482af91b718d38c13c"
+    },
+    "public_counters": {
+      "path": "benchmarks/results/b70-stack-20261010/E01-c16-matched-counters.json",
+      "sha256": "4b460349877b4cb0e4f36c89578b625b48d06ea14f2b0b49ec71fd41480d0ff1"
+    },
+    "failed_original_pressure_attempt": {
+      "path": "benchmark-results/b70-stack-20261010/E01-operations-final-r2/operations.json",
+      "sha256": "a7d88a68ef0e37178d8bce261f580468bb125d19b2edcda867487d6c92a423f4"
+    },
+    "failed_attempts_public": {
+      "path": "benchmarks/results/b70-stack-20261010/E01-operations-attempts.json",
+      "sha256": "2d2bc5254fb0375aee49ab347d6861a84556a3bfc0b9a3b1770ad25fe3e6bd61"
+    },
+    "comparison_source": {
+      "path": "benchmarks/experiments/b70-stack-20261010/compare_c16.py",
+      "sha256": "0a27605f439e82746f46be79bf21685f51bc71ae39321ac2a2aae5dd1c4caab4"
+    },
+    "frozen_metadata": {
+      "path": "benchmark-results/b70-stack-20261010/E01-final-metadata/image.json",
+      "sha256": "9c863f15b9fa6589f50e5ca1a5aecf9980db069de41e3a636f8b2fcc76a7c9d0"
+    }
+  },
+  "decision": "Proceed with one bounded final-operations retry and, only if passed, the complete frozen final matrix. This is not production approval.",
+  "reference_rule": "Compare this pressure workload to the median contemporaneous qualified-baseline count and zero recompute; all matched candidate counts must be within the observed baseline range and their mean no worse. Zero-preemption workloads retain their zero gate.",
+  "rationale": "The original hard comparison failed against an archived single count of two. Two of three current qualified-baseline arms recorded three, while all candidate arms recorded two, with identical pool, antecedent workloads, prompt hashes and exact token work. This finite matched evidence does not support a new candidate pressure regression. The failed attempt remains failed; the updated baseline reference is explicit and checksummed.",
+  "limitations": [
+    "Three pairs are a bounded engineering admission check, not a formal stochastic noninferiority proof or a universal maximum preemption count.",
+    "No root cause for count variability is established. Arrival/admission history must not be asserted causal without a trace reproducer.",
+    "Traced diagnostics are not unbiased throughput evidence.",
+    "The current baseline median is three; using a contemporaneous reference changes the archived-single-run comparator, not model capacity, scheduler settings or numerical tolerances.",
+    "A failed final retry stops final qualification; do not retry until favorable."
+  ]
+}

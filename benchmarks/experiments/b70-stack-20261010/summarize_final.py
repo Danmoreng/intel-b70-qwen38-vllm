@@ -73,6 +73,18 @@ def main():
     assert operations['confirmed_abort_trace_occurrences'] > 0
     assert operations['cases']['worker-restart']['status'] == 'PASS'
     pressure = operations['c16_pressure_comparison']
+    if operations.get('c16_reference_review_sha256'):
+        reviewed_path = PUBLIC / 'E01-c16-matched-review.json'
+        assert sha(reviewed_path) == operations['c16_reference_review_sha256'] == controller['c16_review_sha256']
+        reviewed = read(reviewed_path)
+        assert reviewed['status'] == 'PASS_REVIEWED_NO_REPRODUCED_C16_REGRESSION'
+        assert pressure['baseline_preemptions'] == reviewed['current_baseline_preemption_median']
+        assert pressure['historical_baseline_preemptions'] == 2
+        # Retain failed history as checksummed input and a sanitized public
+        # attempts receipt; never copy its synthetic raw API/media responses.
+        assert read(RAW / 'E01-final-controller-r2.json')['status'] == 'FAILED'
+        assert read(RAW / 'E01-operations-final-r2/operations.json')['status'] == 'FAILED'
+        read(PUBLIC / 'E01-operations-attempts.json')
     assert pressure['candidate_preemptions'] <= pressure['baseline_preemptions']
     assert pressure['candidate_prefill_recompute_excess'] <= pressure['baseline_prefill_recompute_excess']
     coverage = read(operation_root / 'runtime-sources/SOURCE_GUARD_COVERAGE.json')
@@ -171,6 +183,7 @@ def main():
                                    'The exact short-array equality failure is retained; numerical review uses original tolerances and finite independent/state/quality gates.',
                                    'The 262144 total-token capacity gate ran on the identical runtime parent; final image changes metadata only.',
                                    'One maximum-context request and C16 admission pressure do not establish 16 simultaneous maximum contexts.',
+                                   'The retained C16 attempt failed against an archived count of two. Three contemporaneous matched pairs establish the reviewed current pressure reference; zero-preemption cases retain their zero gate.',
                                    'Cold compiler state gives 199 blocks on both images; subsequent normal starts give the original 200 blocks. No KV override.',
                                    'Source64 historical cross-version acceptance cause remains inconclusive; no sampler/state patch is justified.',
                                    'The older power matrix was not rerun. 180W remains selected from its measured efficiency optimum.'])

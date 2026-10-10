@@ -38,9 +38,11 @@ against the archived count of two. Both failed receipts remain immutable.
 with three balanced, fresh-worker baseline/candidate pairs and identical
 API/media/C4 antecedents. It does not regenerate the old quality or full
 serving benchmark. A separately checksummed engineering review is required
-before one bounded final-operations retry. The retry retains the original
-maximum of two preemptions and zero recomputation; there is no retry-until-pass
-loop and no increased numerical tolerance or admission/memory setting.
+before one bounded final-operations retry. The pressure retry compares the reviewed current baseline median and actual
+recompute work, with all three matched pairs retained. The historical count
+of two and the original failed attempt remain recorded. Zero-preemption
+cases retain their zero gate. There is no retry-until-pass loop and no
+increased numerical tolerance or admission/memory setting.
 
 The upstream ordering-fix-only fallback is prepared as a read-only patch
 applicability review under `candidates/E01-minimal/`. No fallback library was

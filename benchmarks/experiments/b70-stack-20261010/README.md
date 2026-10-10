@@ -2,7 +2,7 @@
 
 The user supplied `B70_MTP3_CODEX_IMPLEMENTATION_PLAN_EN.md` and authorized
 overnight execution on 2026-10-10. The source plan is retained next to this
-file. Production defaults are immutable while experiments run.
+file. Production defaults remained immutable during experiments; the reviewed maintenance survivor is now deployed and restart-verified.
 
 First commit scope: diagnostic and experiment infrastructure only. `inventory.py`
 inspects the actual loaded worker, `profile_decode.py` uses the pinned-image
@@ -62,12 +62,21 @@ remain visible even when the broader paired screen is neutral.
 The final stable-library matrix completed 70 waves / 124 requests plus the
 three isolated 64K prefix resends. Exact-image numerical, operational and
 capacity gates passed with the separately documented numerical review;
-this is not a speed or production approval. The historical comparison
+this is a technical gate result, separate from the final maintenance approval. The historical comparison
 flags `phase-4k-c1`, `phase-32k-c1` and `concurrency-4k-c4`. The three-block
-named-reference controller is now measuring those cases only.
+named-reference controller completed those cases only.
 `analyze_frozen_triggers.py` checks every original prompt byte and request
 value, immutable result/inventory receipts and full original repeat counts
 before reporting paired uncertainty. It retains native, client and fully
 overlapped decode, TTFT, prefill, finite-panel E2E tails, output hashes and
 acceptance separately. Three paired starts do not establish formal
 equivalence; no automatic release decision is made by this script.
+
+The [final decision](../../results/b70-stack-20261010/FINAL_DECISION.md)
+selects oneDNN 3.13.4 as a maintenance survivor, not a performance survivor.
+The original M04 remains selected. All conditional E02–E07 decisions are
+recorded, including candidates stopped before implementation and the
+unsuccessful E04a operator prototype. The exact-image permanent service
+start/restart passed; v3 remains an available saved rollback. See the
+[completion audit](../../results/b70-stack-20261010/COMPLETION_AUDIT.json)
+for requirement-level evidence and publication scope.

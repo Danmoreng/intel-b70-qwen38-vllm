@@ -6,9 +6,11 @@ The reviewed [release decision](decision.json) and
 [performance tradeoff](performance-review.json) select frozen image
 `36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a`,
 policy `d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649`.
-Actual permanent-service deployment/restart is **pending** at this decision
-checkpoint. The old qualified image `194a8786` remains running until that
-separate deployment succeeds; the [saved v3 release](../../../config/releases/exl3-v3/README.md)
+Actual permanent-service deployment/restart **passed**. Image `36e41ea0`
+is running under alias `local/b70-qwen38-vllm:production-exl3-v4`;
+the [sanitized actual receipt](promotion.json) pins both distinct container
+starts, real API/streaming and default-reasoning checks. The original
+`decision.json` remains the immutable pre-deployment approval checkpoint; the [saved v3 release](../../../config/releases/exl3-v3/README.md)
 and strict rollback launcher are retained.
 
 The maintenance benefit is the identified upstream SDPA initialization/barrier
@@ -122,8 +124,11 @@ unbounded bisect is claimed. See the [evidence index](README.md),
 
 ## Deployment and publication checkpoint
 
-Permanent-service promotion, real first start/restart receipt, qualified
-source/default README refresh, public hash manifest and authorized GitHub
-push are pending. The goal is not complete at this checkpoint. Historical
-power tables will retain their values and older-stack scope; 180 W remains
-the previously selected performance-per-watt operating point.
+Permanent-service promotion and real first start/restart passed. Qualified
+source/default README refresh is complete, with the 74 original source
+inputs, matching rebuild provenance and current runtime requirements. The
+public hash manifest and authorized GitHub push are the remaining closeout
+steps at this checkpoint. Historical power tables retain their exact values
+and older-stack scope; 180 W remains the previously selected
+performance-per-watt operating point. The original v3 rollback alias still
+points to image `194a8786` and was not overwritten.

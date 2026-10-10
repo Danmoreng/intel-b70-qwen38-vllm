@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "status": "QUALIFIED_RELEASE",
-  "image_tag": "local/b70-qwen38-vllm:production-exl3-v3",
-  "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
-  "runtime_image_id": "sha256:5e82390519f27950025ff4457833e15168db2b770f06a5c74c13db158acb9b1a",
-  "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+  "image_tag": "local/b70-qwen38-vllm:production-exl3-v4",
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "runtime_image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
+  "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
   "vllm_config": {
     "dtype": "float16",
     "max_model_len": 262144,
@@ -71,9 +71,9 @@
     "vocab.json": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003"
   },
   "runtime_artifacts_sha256": {
-    "/opt/exl3xpu/exl3xpu/_C.so": "37c30b86542d96fcfb12464f88febe1b193479c12e08b57ac8cd789f89bb07d3",
+    "/opt/exl3xpu/exl3xpu/_C.so": "00b65587220481ec89269f7510136146809d7e01938de3d30d5b67206948a95a",
     "/opt/exl3xpu/m04/m04.so": "03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
-    "/opt/b70/libdnnl.so.3": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20",
+    "/opt/b70/libdnnl.so.3": "90c0feddfb51a6219903d5e1ccabc9fd32dab0c702284a16dd7692bb6042e056",
     "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "c7bd0941664d02fa4ec4bb118efdecbf9c63801cb9e4cdfaeb366efbe8c8800d",
     "/opt/exl3xpu/exl3xpu/shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2",
     "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "7d6c3dea198388ab7d8be7dc73f5d135026125f5988653de0fb45d385fca0a41",
@@ -82,10 +82,10 @@
   },
   "rootfs_metadata_attestation": {
     "status": "METADATA_FROZEN_NOT_RELEASE_APPROVED",
-    "image_tag": "local/b70-qwen38-vllm:exl3-release-candidate-v3-r2",
-    "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
-    "runtime_image_id": "sha256:5e82390519f27950025ff4457833e15168db2b770f06a5c74c13db158acb9b1a",
-    "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+    "image_tag": "local/b70-qwen38-vllm:exl3-onednn3134-candidate-20261010",
+    "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+    "runtime_image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
+    "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
     "rootfs_identical": true,
     "rootfs": {
       "Layers": [
@@ -128,14 +128,18 @@
         "sha256:45034a67b25ffaebe9679416aa715c8c3262e18d63276789adda74ada9066977",
         "sha256:40dab077fc03c9c846a174c45809294784426dcbef2a12a2dffae9645ed02cff",
         "sha256:4754d18265e5ad82c2247749afb3d1d9477fc2d1b8fea1b09b23b14485bf9ac2",
-        "sha256:5918c0d2a1b4ca352b8bded78871f4777ce72e560bc05afc228e5f7dc80859a5"
+        "sha256:5918c0d2a1b4ca352b8bded78871f4777ce72e560bc05afc228e5f7dc80859a5",
+        "sha256:0c2531fb3d5417fc8ac16d1dc444ea80b41f0a18ede3a6853808008139264794",
+        "sha256:31cb68cfb037471386d9a2c61a0d2d9f627eb64065fdd9687eb584e31ee66b00",
+        "sha256:a8a9c366aa924e3a1c346cc116146280a341d901868149826c7b34a38b574ac1",
+        "sha256:c5c898e78a3634568f66190376532c263baab67cdaeb7e676a635058803e6921"
       ],
       "Type": "layers"
     },
     "environment_changes": {
       "B70_POLICY_SHA256": [
-        null,
-        "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424"
+        "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+        "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649"
       ]
     },
     "effective_partition_cache_capacity": 64,
@@ -146,12 +150,13 @@
   },
   "source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
   "qualification_review": {
-    "path": "benchmarks/results/vllm-031-upgrade/decision.json",
-    "sha256": "de5416d31553453e2894171718bd7c5a956e8dbedd1320cffe72f77e46996345"
+    "path": "benchmarks/results/b70-stack-20261010/decision.json",
+    "sha256": "9ca38e058460e88b59f08b783958d02a03f4687cef9cb354f966f0e0ea980a72"
   },
-  "qualification_note": "vLLM 0.31/Torch 2.14 XPU upgrade: rebuilt C++20 EXL3/M04, guarded upstream integration, actual-state original-tolerance correctness, reviewed cross-version quality changes, full context/API/media/abort/restart contract and complete frozen serving benchmark qualified. Original references and historical v2 benchmark reused; no old baseline rerun. Reviewed reproducible 64K decode regression (-8.3%) is accepted explicitly; remaining measured load points are near the stored baseline. No universal speedup or bitidentical-generation claim; v2 rollback retained.",
+  "qualification_note": "Qualified oneDNN 3.13.4 SDPA ordering-fix maintenance release with matching EXL3 rebuild; native MTP3/FP16/FP8-KV/262144/max-seqs16/180W and original M04 retained. No established weighted speedup. Small measured C4 client-throughput loss and numerical equality failure are explicitly reviewed and retained in the linked performance/numerical receipts.",
   "production_start_receipt": {
-    "path": "benchmarks/results/vllm-031-upgrade/promotion.json",
-    "sha256": "644ef0b730d0280f232e90686ecd00c11f543249cfea25edced08cd7ce339775"
+    "path": "benchmarks/results/b70-stack-20261010/promotion.json",
+    "sha256": "c59e1ffeed27b937c64608596527c5079773292ce44bb72d6baa136f3ea32c93",
+    "private_source_sha256": "ec57fbd469e09dd9709e47d13d96de0aebf4c1d4818f42bdc4fd6583a61be1a7"
   }
 }

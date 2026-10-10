@@ -3,8 +3,8 @@
   "base_commit": "15ded2f3add148c4db3c900cba7de878238f53bc",
   "source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
   "source_commit_note": "Complete tracked source; all 74 build inputs verified against the archive. Prior EXL3 source/runtime snapshots retained separately.",
-  "runtime_image": "sha256:5e82390519f27950025ff4457833e15168db2b770f06a5c74c13db158acb9b1a",
-  "production_image": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "runtime_image": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
+  "production_image": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
   "source_sha256": {
     "exl3xpu/vllm_patches.py": "8847b7ac3b614a43e3f12eae29457295ad0cd92bd1565c069a839054a16db92d",
     "exl3xpu/migration_trace.py": "c10193b4b33f20104bbfe90bce5c564480391761040bb262bc1bf146d18ee34c",
@@ -83,7 +83,7 @@
   },
   "native_manifest": {
     "schema": 1,
-    "build_unix": 1791555467.031124,
+    "build_unix": 1791593615.397309,
     "source_sha256": {
       "csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7",
       "csrc/exl3_esimd.h": "aabdb13eddbcf7387dac2716b26e1005259a0a658d4b7d8b0e6b338499d0fdc6",
@@ -105,7 +105,7 @@
       "-fsycl-device-code-split=per_kernel",
       "-D_GLIBCXX_USE_CXX11_ABI=1",
       "-DEXL3_DNNL",
-      "-I/opt/intel/oneapi/dnnl/latest/include",
+      "-I/opt/b70/include",
       "-I",
       "csrc",
       "-I/opt/venv/lib/python3.12/site-packages/torch/include",
@@ -116,7 +116,7 @@
       "-x",
       "none",
       "-o",
-      "/results/_C.so.pending.Mo2CEp.so",
+      "/results/_C.so.pending.spPC9T.so",
       "-L/opt/venv/lib/python3.12/site-packages/torch/lib",
       "-Wl,-rpath,/opt/venv/lib/python3.12/site-packages/torch/lib",
       "-lc10",
@@ -124,8 +124,8 @@
       "-ltorch_cpu",
       "-lc10_xpu",
       "-ltorch_xpu",
-      "-L/opt/intel/oneapi/dnnl/latest/lib",
-      "-Wl,-rpath,/opt/intel/oneapi/dnnl/latest/lib",
+      "-L/opt/b70/lib",
+      "-Wl,-rpath,/opt/b70/lib",
       "-ldnnl"
     ],
     "torch_version": "2.14.0+xpu",
@@ -133,8 +133,8 @@
     "python_version": "3.12.3",
     "oneDNN_enabled": true,
     "oneDNN_version_headers": {
-      "/opt/intel/oneapi/dnnl/latest/include/dnnl_version.h": "/*******************************************************************************\n* Copyright 2020 Intel Corporation\n*\n* Licensed under the Apache License, Version 2.0 (the \"License\");\n* you may not use this file except in compliance with the License.\n* You may obtain a copy of the License at\n*\n*     http://www.apache.org/licenses/LICENSE-2.0\n*\n* Unless required by applicable law or agreed to in writing, software\n* distributed under the License is distributed on an \"AS IS\" BASIS,\n* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n* See the License for the specific language governing permissions and\n* limitations under the License.\n*******************************************************************************/\n\n#ifndef DNNL_VERSION_H\n#define DNNL_VERSION_H\n\n#include \"oneapi/dnnl/dnnl_version.h\"\n\n#endif /* DNNL_VERSION_H */\n",
-      "/opt/intel/oneapi/dnnl/latest/include/oneapi/dnnl/dnnl_version.h": "/*******************************************************************************\n* Copyright 2019 Intel Corporation\n*\n* Licensed under the Apache License, Version 2.0 (the \"License\");\n* you may not use this file except in compliance with the License.\n* You may obtain a copy of the License at\n*\n*     http://www.apache.org/licenses/LICENSE-2.0\n*\n* Unless required by applicable law or agreed to in writing, software\n* distributed under the License is distributed on an \"AS IS\" BASIS,\n* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n* See the License for the specific language governing permissions and\n* limitations under the License.\n*******************************************************************************/\n\n#ifndef ONEAPI_DNNL_DNNL_VERSION_H\n#define ONEAPI_DNNL_DNNL_VERSION_H\n\n// clang-format off\n\n/// Major version\n#define DNNL_VERSION_MAJOR 3\n\n/// Minor version\n#define DNNL_VERSION_MINOR 13\n\n/// Patch version\n#define DNNL_VERSION_PATCH 0\n\n// clang-format on\n\n#endif\n"
+      "/opt/b70/include/dnnl_version.h": "/*******************************************************************************\n* Copyright 2020 Intel Corporation\n*\n* Licensed under the Apache License, Version 2.0 (the \"License\");\n* you may not use this file except in compliance with the License.\n* You may obtain a copy of the License at\n*\n*     http://www.apache.org/licenses/LICENSE-2.0\n*\n* Unless required by applicable law or agreed to in writing, software\n* distributed under the License is distributed on an \"AS IS\" BASIS,\n* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n* See the License for the specific language governing permissions and\n* limitations under the License.\n*******************************************************************************/\n\n#ifndef DNNL_VERSION_H\n#define DNNL_VERSION_H\n\n#include \"oneapi/dnnl/dnnl_version.h\"\n\n#endif /* DNNL_VERSION_H */\n",
+      "/opt/b70/include/oneapi/dnnl/dnnl_version.h": "/*******************************************************************************\n* Copyright 2019 Intel Corporation\n*\n* Licensed under the Apache License, Version 2.0 (the \"License\");\n* you may not use this file except in compliance with the License.\n* You may obtain a copy of the License at\n*\n*     http://www.apache.org/licenses/LICENSE-2.0\n*\n* Unless required by applicable law or agreed to in writing, software\n* distributed under the License is distributed on an \"AS IS\" BASIS,\n* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n* See the License for the specific language governing permissions and\n* limitations under the License.\n*******************************************************************************/\n\n#ifndef ONEAPI_DNNL_DNNL_VERSION_H\n#define ONEAPI_DNNL_DNNL_VERSION_H\n\n// clang-format off\n\n/// Major version\n#define DNNL_VERSION_MAJOR 3\n\n/// Minor version\n#define DNNL_VERSION_MINOR 13\n\n/// Patch version\n#define DNNL_VERSION_PATCH 4\n\n// clang-format on\n\n#endif\n"
     },
     "driver_packages": {
       "intel-igc-core-2": "2.41.5",
@@ -143,8 +143,8 @@
       "intel-opencl-icd": "26.35.39758.10-0"
     },
     "oneDNN_library_sha256": {
-      "/opt/intel/oneapi/dnnl/latest/lib/libdnnl.so.3.13": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20",
-      "/opt/intel/oneapi/dnnl/latest/lib/libdnnl.so.3": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20"
+      "/opt/b70/lib/libdnnl.so.3.13": "90c0feddfb51a6219903d5e1ccabc9fd32dab0c702284a16dd7692bb6042e056",
+      "/opt/b70/lib/libdnnl.so.3": "90c0feddfb51a6219903d5e1ccabc9fd32dab0c702284a16dd7692bb6042e056"
     },
     "registered_ops": [
       "exl3_supported",
@@ -182,8 +182,8 @@
     "operator_smoke": "PASS (registration and host capability queries; GPU numerical tests separate)",
     "library": "/results/_C.so",
     "library_bytes": 2462152,
-    "library_sha256": "37c30b86542d96fcfb12464f88febe1b193479c12e08b57ac8cd789f89bb07d3",
-    "compiler_log": "/results/compiler.log",
+    "library_sha256": "00b65587220481ec89269f7510136146809d7e01938de3d30d5b67206948a95a",
+    "compiler_log": "/results/build.log",
     "compiler_log_sha256": "ad3ff4321e9c118a8f1966571957d91119f82689b0a5a1e920f51cba4b5f6023"
   },
   "m04_manifest": {
@@ -241,27 +241,28 @@
     ]
   },
   "build_receipt": {
-    "path": "engine/exl3xpu/v031-candidate/build-receipt.json",
-    "sha256": "ae19d58d8ddd121637c28a17c226e23204ab60c29bf30c47df0ef35415f0a59b"
+    "path": "engine/exl3xpu/onednn3134-candidate/build-receipt.json",
+    "sha256": "2f4eb39f31718d4862f80fa20186e60055a1a114e8f93c29750f9ec92e5e2d31"
   },
   "qualification_review": {
-    "path": "benchmarks/results/vllm-031-upgrade/decision.json",
-    "sha256": "de5416d31553453e2894171718bd7c5a956e8dbedd1320cffe72f77e46996345"
+    "path": "benchmarks/results/b70-stack-20261010/decision.json",
+    "sha256": "9ca38e058460e88b59f08b783958d02a03f4687cef9cb354f966f0e0ea980a72"
   },
   "production_start_receipt": {
-    "path": "benchmarks/results/vllm-031-upgrade/promotion.json",
-    "sha256": "644ef0b730d0280f232e90686ecd00c11f543249cfea25edced08cd7ce339775"
+    "path": "benchmarks/results/b70-stack-20261010/promotion.json",
+    "sha256": "c59e1ffeed27b937c64608596527c5079773292ce44bb72d6baa136f3ea32c93",
+    "private_source_sha256": "ec57fbd469e09dd9709e47d13d96de0aebf4c1d4818f42bdc4fd6583a61be1a7"
   },
   "files_sha256": {
     "source.tar.gz": "c5b46a9af81ca41bf04a95b9bf4a48044b5bad3654cb61fe327af857ae93da43",
     "migration.patch": "4a2834c08dfb69a936e8bd93a7e0cc9814d15e72ad9b75768b01ce36c66d58be"
   },
   "m04_controller_attestation": {
-    "path": "engine/exl3xpu/v031-candidate/m04-controller-attestation.json",
+    "path": "engine/exl3xpu/onednn3134-candidate/m04-controller-attestation.json",
     "sha256": "1b39f7cfb31949a929179fa3145f4dd33ec1206ba887a7f1fe1e66914dd1beb3"
   },
   "runtime_requirements": {
-    "path": "config/experiments/vllm-031-upgrade/runtime_requirements.json",
-    "sha256": "d0205370d68ed9965dc47bf52c36aa5ed141c588c9b6c96722919a8d5ea4ddbc"
+    "path": "config/experiments/b70-stack-20261010/runtime_requirements.json",
+    "sha256": "2775490a4b1b2462d6536ec3ab6b785b4b6338f9b8d4aa48a7f344e85fc8fde8"
   }
 }

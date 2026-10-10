@@ -1,0 +1,83 @@
+{
+  "status": "PASS_STRICT_PRODUCTION_DEPLOYMENT_AND_RESTART",
+  "started_unix": 1791614355.9546435,
+  "finished_unix": 1791614543.7990184,
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+  "rollback_image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "decision_sha256": "9ca38e058460e88b59f08b783958d02a03f4687cef9cb354f966f0e0ea980a72",
+  "stages": {
+    "first_start_readiness": {
+      "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+      "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+      "models_endpoint_healthy": true,
+      "verified_unix": 1791614483.4805963
+    },
+    "restart_readiness": {
+      "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+      "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+      "models_endpoint_healthy": true,
+      "verified_unix": 1791614542.7615902
+    },
+    "first_start_api": {
+      "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+      "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+      "container_id": "9a5cbcf50b8c6ee9cace96e99b6766a78e4ef8ee57bbac8eac9251c3c1c5fb54",
+      "models_endpoint": true,
+      "streaming_done": true,
+      "streaming_usage": {
+        "prompt_tokens": 23,
+        "total_tokens": 25,
+        "completion_tokens": 2,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "default_contract": "16384 completion,8192 thinking budget,medium reasoning; unchanged hashed middleware plus live request with no overrides",
+      "verified_unix": 1791614484.8232846,
+      "environment_contract": {
+        "partition_cache_capacity": 64,
+        "migration_trace": false,
+        "review_cache_diagnostic": false,
+        "server_dev_mode": false
+      },
+      "verified_requests": {
+        "real_generated_reply": true,
+        "stream_done_with_usage": true,
+        "default_reasoning_present": true,
+        "default_math_answer_correct": true
+      }
+    },
+    "restart_api": {
+      "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+      "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+      "container_id": "204bde9f865eb227ca5938aa052e5e34888875c9bc38a354714a7c549ec5575e",
+      "models_endpoint": true,
+      "streaming_done": true,
+      "streaming_usage": {
+        "prompt_tokens": 23,
+        "total_tokens": 25,
+        "completion_tokens": 2,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "default_contract": "16384 completion,8192 thinking budget,medium reasoning; unchanged hashed middleware plus live request with no overrides",
+      "verified_unix": 1791614543.798991,
+      "environment_contract": {
+        "partition_cache_capacity": 64,
+        "migration_trace": false,
+        "review_cache_diagnostic": false,
+        "server_dev_mode": false
+      },
+      "verified_requests": {
+        "real_generated_reply": true,
+        "stream_done_with_usage": true,
+        "default_reasoning_present": true,
+        "default_math_answer_correct": true
+      }
+    }
+  },
+  "private_source_sha256": "ec57fbd469e09dd9709e47d13d96de0aebf4c1d4818f42bdc4fd6583a61be1a7",
+  "scope": "Sanitized export of the actual permanent-service first start and restart. Original verifier checked real completions, streaming and default reasoning. Environment values, mount paths and generated responses remain private; this does not add a new quality/performance benchmark."
+}

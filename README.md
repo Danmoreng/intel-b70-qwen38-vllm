@@ -8,8 +8,8 @@ OpenAI-compatible API at `http://127.0.0.1:8081/v1`, model `Qwen3.8-27B`.
 
 The local release uses the immutable image recorded in
 [config/production_image.json](config/production_image.json):
-`sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec`,
-alias `local/b70-qwen38-vllm:production-exl3-v3`.
+`sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a`,
+alias `local/b70-qwen38-vllm:production-exl3-v4`.
 The strict launcher checks image/policy identity, native libraries, serving
 arguments, checkpoint files, middleware and the 180 W cap before loading.
 Compiler caches are isolated by policy and image ID.
@@ -40,10 +40,10 @@ its process being active does not mean model loading has finished. Check the
 API readiness endpoint. The host defaults are loopback and port 8081; the
 recovery helper targets that endpoint and the standard container name.
 
-The immediate rollback is the [saved EXL3 v2 release](config/releases/exl3-v2/production_image.json),
-with its [strict launcher](scripts/run-server-exl3-v2-rollback.sh), policy, source
-snapshot and compiler namespace. The older
-[saved EXL3 v1 rollback](config/releases/exl3-v1/README.md) also remains available.
+The immediate rollback is the [saved qualified EXL3 v3 release](config/releases/exl3-v3/README.md),
+with its [strict launcher](scripts/run-server-exl3-v3-rollback.sh), policy,
+source snapshot and compiler namespace. The older [v2](config/releases/exl3-v2/README.md)
+and [v1](config/releases/exl3-v1/README.md) snapshots remain available.
 
 The [EXL3 source snapshot/build instructions](engine/exl3xpu/README.md) contain
 immutable upstream and native/header pins. A rebuilt image needs its own
@@ -89,7 +89,7 @@ curl -fsS http://127.0.0.1:8081/v1/chat/completions \
 | Admission / batch | 16 sequences; 4,096 max batched tokens; full-ISL, watermark 0.0 |
 | Graphs / cache | FULL_DECODE_ONLY, capture sizes 1/2/4/8/12/16/24/32/40/48/56/64; FP8 KV, prefix reuse, Mamba alignment |
 | Memory / power | 0.965 GPU fraction / 180 W card cap |
-| Runtime | vLLM 0.31.0, Torch 2.14.0+xpu, oneAPI 2026.1.1 / SYCL 9, oneDNN 3.13.0; Intel Runtime 26.35.39758.10, IGC 2.41.5 |
+| Runtime | vLLM 0.31.0, Torch 2.14.0+xpu, oneAPI 2026.1.1 / SYCL 9, oneDNN 3.13.4; Intel Runtime 26.35.39758.10, IGC 2.41.5 |
 | Tools / reasoning / media | qwen3_xml / qwen3; 32 images or 4 videos within the total context limit; image cap 4,194,304 pixels |
 
 ## Capacity and operating limits
@@ -114,44 +114,71 @@ curl -fsS http://127.0.0.1:8081/v1/chat/completions \
   same failure in its native-attention control. Coding tasks were not rerun
   for this release; the failed task remains documented.
 
-See the [current v3 qualification and limitations](benchmarks/results/vllm-031-upgrade/assessment.json),
-[stored-baseline comparison](benchmarks/results/vllm-031-upgrade/benchmark-comparison.json)
-and [reviewed performance tradeoff](benchmarks/results/vllm-031-upgrade/performance-review.json).
-The [public evidence manifest](benchmarks/results/vllm-031-upgrade/PUBLICATION_MANIFEST.json)
-maps the original local receipt paths to the exported benchmark counters,
-state-replay measurements and licensed runtime-source snapshot.
-The 64K C1 decode median fell **52.67 → 48.29 tok/s (−8.3%)**, reproduced on
-a fresh new-image worker. MTP acceptance fell **60.7% → 56.1%**, while measured
-round-equivalent cost stayed close; the exact upstream cause is unproven.
-The other 19 load points have no native-decode decrease or TTFT increase
-crossing the 5% review trigger. Performance changes are mixed.
+This is a **oneDNN 3.13.4 maintenance release**, incorporating the upstream
+SDPA initialization-order fix and a matching EXL3 rebuild. MTP3, original M04,
+FP16, FP8 KV, 262,144 total tokens and 180 W remain unchanged. It is not a
+demonstrated decode speedup. Eight independent paired core blocks give weighted
+cold decode **+0.111%** (95% bootstrap interval −0.701% to +0.893%) and warm
+decode **−0.752%** (−1.865% to +0.236%). Warm prose-C4 client throughput is
+**−2.464%** (−5.363% to +0.132%); that adverse result remains visible and the
+interval does not establish tight-margin noninferiority.
 
-The [v2 report](docs/EXL3_RELEASE_V2_REPORT.md),
-[v1 report](docs/EXL3_RELEASE_REPORT.md), coding measurements and
-[bounded review experiments](docs/EXL3_PRO_REVIEW_FOLLOWUP.md) remain historical.
-The serving measurements below are fresh measurements of the deployed v3 image.
-[Runtime distribution and ABI pins](config/experiments/vllm-031-upgrade/runtime_requirements.json)
-include the official XPU image’s inherited dependency metadata conflicts;
-actual XPU/native and serving qualification applies to this exact pinned image.
+The full-matrix historical comparison flagged 4K/32K C1 decode losses and
+4K C4 TTFT. Three balanced fresh-worker pairs retaining all original prompt
+bytes, repeats and 1,024-output budgets did not reproduce a clear loss beyond
+the pre-registered guardrails. Paired per-fixture native decode effects are
+**+1.873%** at 4K (−2.160% to +4.211%) and **+1.404%** at 32K
+(+0.581% to +2.945%). The 4K C4 client rate is **−0.923%**
+(−1.413% to −0.152%), with finite-panel request E2E p95 **+0.882%**
+(+0.122% to +1.544%). This smaller systematic C4 loss is an explicit
+maintenance tradeoff. The historical adverse table and the alternate
+within-arm median ratios remain published; these three paired starts are
+not a formal universal noninferiority proof.
+[Exact-fixture controls and counter-window limitations](benchmarks/results/b70-stack-20261010/E01-frozen-trigger-reference-report.json).
+
+See the [qualification and limitations](benchmarks/results/b70-stack-20261010/assessment.json),
+[full frozen-matrix comparison](benchmarks/results/b70-stack-20261010/benchmark-comparison.json),
+[reviewed final tradeoff](benchmarks/results/b70-stack-20261010/performance-review.json), and
+[overnight candidate decisions](benchmarks/results/b70-stack-20261010/FINAL_DECISION.md).
+The [public evidence manifest](benchmarks/results/b70-stack-20261010/PUBLICATION_MANIFEST.json) maps
+private receipt hashes to public counters and licensed runtime sources.
+
+The exact short-array equality check failed and remains a failed receipt.
+Original-tolerance independent references, actual-state replays, finite quality
+panels and sampling/state checks support the separate numerical review;
+they do not prove general task accuracy or identical generated text.
+No BF16 model execution or FP16/BF16 serving bridge was introduced.
+
+The [v3 qualification](benchmarks/results/vllm-031-upgrade/assessment.json)
+and its recorded 64K acceptance/decode loss remain historical. The bounded
+same-prefix investigation did not establish its upstream cause; no sampler
+or state patch is claimed. The [v2 report](docs/EXL3_RELEASE_V2_REPORT.md),
+[v1 report](docs/EXL3_RELEASE_REPORT.md), coding results and power comparisons
+retain their original measurement scope. Coding tasks were not rerun here.
+
+The serving tables below use fresh measurements of the exact deployed image.
+[Runtime distribution and ABI pins](config/experiments/b70-stack-20261010/runtime_requirements.json)
+record the unchanged Python stack and the rebuilt custom libraries. Existing
+official-image metadata conflicts were not bypassed with forced installs.
 
 <!-- BEGIN CURRENT SERVING MEASUREMENTS -->
 ## Source-review serving benchmark
 
-Measured **2026-10-09** on a fresh isolated worker with the
+Measured **2026-10-10** on a fresh isolated worker with the
 [frozen public corpus](benchmarks/meaningful-corpus.json). The
-[current summary](benchmarks/results/vllm-031-upgrade/serving-summary.json) records scenario results, fixture hashes,
+[current summary](benchmarks/results/b70-stack-20261010/serving-summary.json) records scenario results, fixture hashes,
 fixed prompt namespace `20260923-201101` and image identity. Raw prompts,
 responses and stream events remain local under `benchmark-results/`.
 
 The complete run covered **20 scenarios, 70 measured waves and 124 successful
-requests** in **53.9 minutes**. Each request sampled at temperature 1.0,
+requests** in **53.8 minutes**. Each request sampled at temperature 1.0,
 top-p 0.95 and top-k 20 with thinking disabled. `ignore_eos=true` required
 exactly 1,024 output tokens. These are throughput measurements rather than
 semantic answer scores. All prompt/output counts matched, all requests
 finished at the output cap, with **0 preemptions** and **0 excess recomputed
 prefill tokens**. All 124 measured prompts were verified byte-for-byte
 against the frozen original full-run fixtures; request payload values match.
-Three additional 64K resends on a fresh worker on 2026-10-09 supply the
+Three additional 64K resends on a fresh worker on 2026-10-10 supply the
 cold/warm 64K row, because the complete run's first 64K prefix request
 reused 14,400 tokens from preceding requests. Those extra prompts and
 payloads match the same frozen fixtures.
@@ -165,14 +192,14 @@ across drafted tokens.
 
 | Input / output budget | Waves | Actual input | Prefill tok/s | Decode tok/s | MTP accepted | TTFT | End to end |
 |---:|---:|---:|---:|---:|---:|---:|---:|
-| 512 / 1,024 | 5 | 479–507 | 1,707.4 | 58.4 | 52.7% | 0.30 s | 17.82 s |
-| 2,048 / 1,024 | 5 | 1,992–2,047 | 2,492.7 | 59.6 | 59.1% | 0.82 s | 17.98 s |
-| 4,096 / 1,024 | 5 | 4,052–4,094 | 2,291.4 | 58.1 | 54.0% | 1.79 s | 19.41 s |
-| 8,192 / 1,024 | 5 | 8,167–8,186 | 2,325.5 | 55.0 | 52.3% | 3.53 s | 22.13 s |
-| 16,384 / 1,024 | 5 | 16,335–16,379 | 2,183.4 | 56.7 | 55.5% | 7.52 s | 25.55 s |
-| 32,768 / 1,024 | 5 | 32,704–32,762 | 1,990.1 | 55.2 | 56.4% | 16.50 s | 35.02 s |
-| 65,536 / 1,024 | 3 | 65,491–65,532 | 1,679.0 | 48.3 | 56.1% | 39.09 s | 60.27 s |
-| 131,072 / 1,024 | 3 | 131,034–131,070 | 1,267.8 | 42.0 | 55.6% | 103.55 s | 127.96 s |
+| 512 / 1,024 | 5 | 479–507 | 1,712.2 | 58.4 | 52.7% | 0.30 s | 17.82 s |
+| 2,048 / 1,024 | 5 | 1,992–2,047 | 2,492.8 | 59.7 | 59.1% | 0.82 s | 17.97 s |
+| 4,096 / 1,024 | 5 | 4,052–4,094 | 2,274.8 | 55.3 | 52.3% | 1.80 s | 20.28 s |
+| 8,192 / 1,024 | 5 | 8,167–8,186 | 2,324.6 | 54.9 | 52.3% | 3.53 s | 22.15 s |
+| 16,384 / 1,024 | 5 | 16,335–16,379 | 2,181.3 | 56.8 | 55.5% | 7.53 s | 25.54 s |
+| 32,768 / 1,024 | 5 | 32,704–32,762 | 1,988.7 | 53.4 | 55.9% | 16.50 s | 35.65 s |
+| 65,536 / 1,024 | 3 | 65,491–65,532 | 1,681.1 | 48.4 | 56.1% | 39.06 s | 60.20 s |
+| 131,072 / 1,024 | 3 | 131,034–131,070 | 1,269.6 | 42.1 | 55.6% | 103.40 s | 127.48 s |
 
 ### One to four simultaneous requests
 
@@ -183,9 +210,9 @@ separate serving load points, not paired scaling measurements.
 
 | Input / output per request | C1 | C2 | C3 | C4 |
 |---|---:|---:|---:|---:|
-| 2,048 / 1,024 | 60.5 tok/s | 105.4 tok/s | 153.0 tok/s | 189.8 tok/s |
-| 4,096 / 1,024 | 57.4 tok/s | 107.5 tok/s | 145.5 tok/s | 180.0 tok/s |
-| 16,384 / 1,024 | 56.2 tok/s | 101.6 tok/s | 131.4 tok/s | 159.0 tok/s |
+| 2,048 / 1,024 | 60.5 tok/s | 108.1 tok/s | 155.6 tok/s | 190.8 tok/s |
+| 4,096 / 1,024 | 56.0 tok/s | 108.9 tok/s | 149.1 tok/s | 181.4 tok/s |
+| 16,384 / 1,024 | 56.3 tok/s | 101.6 tok/s | 132.7 tok/s | 162.1 tok/s |
 
 Some requests briefly entered the scheduler waiting queue; no request was preempted.
 
@@ -193,9 +220,9 @@ Some requests briefly entered the scheduler waiting queue; no request was preemp
 
 | Scenario | Measured result |
 |---|---|
-| 16K exact resend | 14,400 / 16,382 prompt tokens cached; TTFT **7.54 s cold → 0.99 s warm** |
-| 64K exact resend | 62,400 / 65,469 prompt tokens cached; TTFT **38.82 s cold → 2.36–2.38 s warm** |
-| Frozen 200K comparison | **199,673 input + 1,024 output**; 1,002.6 prefill tok/s, 37.9 decode tok/s, 199.40 s TTFT, 226.35 s end to end |
+| 16K exact resend | 14,400 / 16,382 prompt tokens cached; TTFT **7.53 s cold → 0.97–0.99 s warm** |
+| 64K exact resend | 62,400 / 65,469 prompt tokens cached; TTFT **38.78 s cold → 2.38 s warm** |
+| Frozen 200K comparison | **199,673 input + 1,024 output**; 1,004.8 prefill tok/s, 37.9 decode tok/s, 198.98 s TTFT, 225.91 s end to end |
 
 The longest-context row is one capacity and throughput observation. The
 16K/64K resends reused the same prompt on the same worker.
@@ -283,8 +310,9 @@ other measured variants each repeat **20 scenarios / 70 measured waves / 124 req
 an isolated 64K cold/warm resend. All ordinary requests completed without
 preemptions. **180 W remains the selected production limit** because it
 produced the best measured performance per watt / output tokens per Wh in
-this comparison. This operating point is retained for vLLM 0.31; the power
-campaigns remain the historical measurements below.
+this comparison. This operating point is retained for vLLM 0.31 / oneDNN 3.13.4.
+The power campaigns were not repeated for this maintenance release; the
+historical measurements below remain on the older stack.
 
 These are measured hardware variants; they do not change the qualified
 production policy. Power limits are not assumed actual consumption: the table
@@ -343,18 +371,19 @@ decode were **1,388.7 / 53.9 tok/s**. Adaptive histories and tool work contribut
 to task duration. QueueKit took **7 min 36 s**, with the failure noted above.
 [Full coding results and 10K context bands](docs/EXL3_CODING_BENCHMARKS.md).
 
-The new v3 run of the frozen short panel gives PPL **3.64217** (stored v2:
-**3.64672**), with mean KL against the stored BF16 reference **0.033353** (stored v2: **0.032481**).
-Thus PPL improves slightly while mean KL increases. The 32K suffix PPL is
-**1.19036** versus **1.19419** in stored v2. These finite checkpoint/path
-measurements do not establish a general coding ranking or bitidentical text.
-[Current quality scope and metric receipts](benchmarks/results/vllm-031-upgrade/assessment.json).
+The changed-stack short panel gives PPL **3.642167** versus stored v3
+**3.642175**, with mean KL against the stored BF16 reference **0.033064**
+versus **0.033353**. Short JS divergence slightly worsens; quality results are
+mixed. The 32K suffix PPL is **1.183419** versus stored v3 **1.190357**.
+These finite probes do not establish a general accuracy or coding improvement.
+The BF16 reference was evaluated from stored arrays on the CPU.
+[Current quality scope and metric receipts](benchmarks/results/b70-stack-20261010/E01-numerical-review.json).
 
 ## Rollback and benchmark reproduction
 
-The immediate rollback is the [saved EXL3 v2 release](config/releases/exl3-v2/production_image.json).
-Use `scripts/run-server-exl3-v2-rollback.sh`; it retains its own image, policy,
-source snapshot and compiler namespace. The saved v1 and GPTQ releases also remain available.
+The immediate rollback is the [saved qualified EXL3 v3 release](config/releases/exl3-v3/README.md).
+Use `scripts/run-server-exl3-v3-rollback.sh`; it retains its own image, policy,
+source snapshot and compiler namespace. The saved v2, v1 and GPTQ releases also remain available.
 Stop the current service before using that launcher; verify the API and a real reply.
 
 For the additional GPTQ rollback, stop `b70-qwen38-vllm.service` before switching to

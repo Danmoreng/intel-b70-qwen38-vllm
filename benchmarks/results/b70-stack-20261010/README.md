@@ -1,6 +1,6 @@
 # B70 MTP3 stack campaign — evidence index
 
-**Maintenance survivor selected for promotion. Actual deployment/publication is pending.**
+**Maintenance survivor deployed and restart-verified. Publication closeout is pending.**
 
 The supplied [implementation plan](../../experiments/b70-stack-20261010/B70_MTP3_CODEX_IMPLEMENTATION_PLAN_EN.md)
 and [pre-registered gates](../../experiments/b70-stack-20261010/gates.json)
@@ -33,7 +33,7 @@ fresh-worker control pairs completed only those named missing
 contemporary references, with every original prompt, request value, repeat
 and 1,024-output budget retained. The final decision permits a maintenance
 promotion with smaller systematic C4 loss explicitly retained; no weighted
-performance gain is established. Actual service start/restart is still required.
+performance gain is established. Actual permanent-service start/restart passed; [sanitized receipt](promotion.json).
 
 Public JSON includes scalar counters, timings, output hashes and source
 identities. Private raw prompts, responses, streams and full-vocabulary

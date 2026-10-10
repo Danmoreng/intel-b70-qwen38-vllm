@@ -1,6 +1,6 @@
 {
-  "status": "IN_PROGRESS_NOT_COMPLETION_APPROVAL",
-  "scope": "Requirement-by-requirement audit checkpoint; hashes of running files are observation snapshots, not final immutable receipts. Rebuild audit after terminal benchmark and actual deployment/publication outcome.",
+  "status": "VERIFIED_LOCAL_GATES_GIT_PUBLICATION_PENDING",
+  "scope": "Terminal experiment, qualification and real production deployment evidence audited. No demonstrated speed winner; reviewed maintenance tradeoff. Git publication remains pending.",
   "items": [
     {
       "requirement": "Preserve supplied scope and preregister before native changes",
@@ -273,14 +273,22 @@
     },
     {
       "requirement": "Conditional E01-minimal fallback",
-      "status": "CONDITIONAL_PENDING_EXACT_TRIGGER_CONTROLS",
+      "status": "VERIFIED_CONDITIONAL_NOT_REQUIRED",
       "evidence": [
         {
           "path": "benchmarks/experiments/b70-stack-20261010/candidates/E01-minimal/source-review.json",
           "sha256": "0de8b97f0f71d30631ddd10f32c157d89968d7e832c69a5a4eb8ac8030b216f5"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-frozen-trigger-reference-report.json",
+          "sha256": "79fbb493cfb4466c85bc9491b8c22f6287e65ccd8039ea9bec2653b5e9fb0a9f"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/performance-review.json",
+          "sha256": "31ce2f382c0cfebb0decbfd15f16afbbd5d34d7d15e831453018a8dc5e811b64"
         }
       ],
-      "scope": "Read-only upstream patch applies to old source. Stable final matrix has three historical review triggers; exact-fixture paired controls are running. Build fallback if a clear unrelated stable-library regression is confirmed."
+      "scope": "No clear unrelated stable-library regression confirmed in the completed named-fixture controls; ordering-fix-only source applicability retained, fallback not built."
     },
     {
       "requirement": "Original qualified rollback source/config and strict launcher",
@@ -299,11 +307,11 @@
           "sha256": "eddee025ea22c816e8e761776f67897c38ecb0dd072d8d7d5ae51be0a336486d"
         }
       ],
-      "scope": "Old v3 image194/policy9a retained; source archive and saved config are separate. Earlier strict rollback preflight passed; current full controller finally restores194."
+      "scope": "Old v3 image194/policy9a and separate source/config remain saved. Strict rollback preflight passed; production now runs36 after reviewed promotion."
     },
     {
       "requirement": "Complete frozen final matrix and per-cell final tradeoff",
-      "status": "VERIFIED_MATRIX_TRADEOFF_REVIEW_PENDING",
+      "status": "VERIFIED_REVIEWED_MAINTENANCE_TRADEOFF",
       "evidence": [
         {
           "path": "benchmarks/results/b70-stack-20261010/serving-summary.json",
@@ -316,28 +324,52 @@
         {
           "path": "benchmarks/results/b70-stack-20261010/final-review-pending.json",
           "sha256": "739490618c20e34267a4fbe71f0387da85720589681f43883446e19de3c4f92a"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/performance-review.json",
+          "sha256": "31ce2f382c0cfebb0decbfd15f16afbbd5d34d7d15e831453018a8dc5e811b64"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-frozen-trigger-reference-report.json",
+          "sha256": "79fbb493cfb4466c85bc9491b8c22f6287e65ccd8039ea9bec2653b5e9fb0a9f"
         }
       ],
-      "scope": "70 waves/124 requests plus three isolated prefix resends complete, zero preemption/excess recompute. Three historical review triggers require exact-fixture contemporary controls; no promotion approved."
+      "scope": "70 waves/124 requests plus three isolated prefix resends complete. All historical adverse cells retained. Contemporary named controls and explicit smaller C4 loss reviewed; no performance survivor."
     },
     {
       "requirement": "Final candidate decision, README/current source, publication and production outcome",
-      "status": "INCOMPLETE_PENDING_FINAL_EVIDENCE",
+      "status": "VERIFIED_LOCAL_PUBLICATION_PENDING",
       "evidence": [
         {
           "path": "benchmarks/results/b70-stack-20261010/decisions/E01.md",
-          "sha256": "c153fe650e62d74ca7a957696fbea2fa5e1c91dbb3cb29b6240f7b824c9d5ca4"
+          "sha256": "2134c25d7c5359b89fe2e957572fba3b0d3f262d1c1d6275d6768d55180d370e"
         },
         {
           "path": "benchmarks/experiments/b70-stack-20261010/README.md",
-          "sha256": "922b580aa62d58fd72e6bac014935837d1e48f79eabf93b67a77472164b08520"
+          "sha256": "5b40a80837e64cde73204ae6c5141721a89c368e8f7730903612b2856d7e3f01"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/FINAL_DECISION.md",
+          "sha256": "2221e1ea17b29c1ccf465cfeb6093e90de182ad61a109ecdf5c269ecac866944"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/decision.json",
+          "sha256": "9ca38e058460e88b59f08b783958d02a03f4687cef9cb354f966f0e0ea980a72"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/promotion.json",
+          "sha256": "c59e1ffeed27b937c64608596527c5079773292ce44bb72d6baa136f3ea32c93"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/PUBLICATION_MANIFEST.json",
+          "sha256": "c058f71cac71b1edcc4dde9da524b6e48ae24a1851caf0b2a46e2621d6eaf8ec"
         }
       ],
-      "scope": "Interim E01 decision records actual final matrix and unresolved triggers. FINAL_DECISION, final performance review, publication manifest and production outcome remain pending. No defaults changed. Preserve historical power comparisons."
+      "scope": "Actual permanent-service start/restart passed. Qualified defaults, matching source/native provenance and README updated; historical power values unchanged. Authorized GitHub publication is the only remaining closeout step."
     },
     {
       "requirement": "Named missing contemporary references for final historical review triggers",
-      "status": "INCOMPLETE_RUNNING",
+      "status": "VERIFIED_TERMINAL_CONTROLS",
       "evidence": [
         {
           "path": "benchmarks/experiments/b70-stack-20261010/confirm_frozen_triggers.py",
@@ -345,10 +377,33 @@
         },
         {
           "path": "benchmarks/experiments/b70-stack-20261010/analyze_frozen_triggers.py",
-          "sha256": "e9acdae447aab2b4ab11f58cb616f19cd4e9ef33386448dacabacba0f5d1b428"
+          "sha256": "1ec908d48c43a50894245e91b4430e0a1463e9b79c8b198a6cf7d54a2e6dcccc"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-frozen-trigger-reference-report.json",
+          "sha256": "79fbb493cfb4466c85bc9491b8c22f6287e65ccd8039ea9bec2653b5e9fb0a9f"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-frozen-trigger-comparability.json",
+          "sha256": "5f8596bf7dc17f7d258cdb009c3c07a905a87333327721c1eb57279a621bb8f7"
+        },
+        {
+          "path": "benchmarks/results/b70-stack-20261010/E01-frozen-reference-public-exports.json",
+          "sha256": "9bf181aa2820099cf1ed6d719bac0d2283d6b09f848a68f166b9e6e04b091a0e"
         }
       ],
-      "scope": "Controller session30000 confirmed live; three balanced pairs preserve exact frozen 4K C1/32K C1/4K C4 fixtures. CPU exporter13121 confirmed live, requires terminal success. No automatic promotion."
+      "scope": "Three balanced fresh-worker pairs complete with all frozen fixture bytes/repeats/request values and 1024 actual outputs. Startup-block uncertainty and invalid overlapping round windows retained. No universal noninferiority claim."
+    },
+    {
+      "requirement": "Actual CPU-only installed model route guard",
+      "status": "VERIFIED_ROUTE_EXCLUSION_ONLY",
+      "scope": "CPU tensors excluded from custom GPU attention routes without native calls. Initial file-permission failure retained; retry uses existing production user. Not direct native-API CPU support.",
+      "evidence": [
+        {
+          "path": "benchmarks/results/b70-stack-20261010/evidence/E01-cpu-route-guard-r2/report.json",
+          "sha256": "e65f35efd6b8bbfba62d016973c932ec338927af4f6075f6ed312298281bcb7a"
+        }
+      ]
     }
   ]
 }

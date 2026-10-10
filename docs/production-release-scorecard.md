@@ -1,12 +1,35 @@
-# B70 oneDNN production candidate: qualification scorecard
+# B70 production qualification and release history
 
-The current production image is v2,
+## Current v4 maintenance release
+
+The permanent service runs `local/b70-qwen38-vllm:production-exl3-v4`,
+image `sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a`,
+with vLLM 0.31.0 / Torch 2.14.0+xpu / oneDNN 3.13.4. Native MTP3, FP16,
+FP8 KV, 262,144 total tokens, 16 admissions and 180 W remain selected.
+This is a reviewed maintenance release, not an established speed gain.
+The frozen final matrix completed 70 waves / 124 requests plus isolated
+64K prefix resends; actual permanent-service start and restart passed.
+The exact short-array failure, finite numerical review and smaller
+consistent C4 client-throughput loss remain documented. Coding tasks and
+the historical power matrix were not rerun.
+
+See [the final decision](../benchmarks/results/b70-stack-20261010/FINAL_DECISION.md),
+[performance tradeoff](../benchmarks/results/b70-stack-20261010/performance-review.json),
+[exact-image assessment](../benchmarks/results/b70-stack-20261010/assessment.json),
+and [actual service receipt](../benchmarks/results/b70-stack-20261010/promotion.json).
+Immediate rollback is the [saved v3 release](../config/releases/exl3-v3/README.md).
+The older v0.31 upgrade and its inconclusive 64K acceptance investigation
+remain historical evidence.
+
+## Historical v2 release
+
+The v2 production image was
 `sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68`,
-pinned in `config/production_image.json` and running under the permanent
+then pinned in the production configuration and run under the permanent
 `b70-qwen38-vllm.service`. The 2026-09-30 full README run completed 20 scenarios,
 70 waves and 124 requests in 53.7 minutes, without preemption or recompute.
 Its fresh QueueKit v2 coding session passed 2/2 tasks and 8/8 tests in 452.03 s.
-An isolated 64K cold/warm prefix run completed on 2026-10-01. Current public
+An isolated 64K cold/warm prefix run completed on 2026-10-01. Its historical public
 numbers are in `benchmarks/runs/2026-09-30-production/summary.json`.
 
 The row-dispatch fix and targeted T0–T3 gates are recorded in

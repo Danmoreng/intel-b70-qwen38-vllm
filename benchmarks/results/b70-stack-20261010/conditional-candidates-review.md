@@ -1,0 +1,13 @@
+# Conditional candidates: measured selection, not a kernel checklist
+
+E02 and E03 are stopped by the P0 component-budget gate. Actual compiled GDN norm costs about 0.210 ms at C1 and 0.247 ms at C4 per observed round; the already fused QKV Triton op costs about 0.054/0.060 ms. These diagnostics do not justify replacing either kernel for completeness.
+
+E04b is not implemented. All target-graph copies together cost about 0.258/0.299 ms in these traces, including unrelated copies; there is no materially expensive M04 epilogue copy isolated by this evidence. The copy total is an upper screening budget, not a disjoint critical-path attribution.
+
+E05 has a valid geometric boundary: 48 GDN output projections have width 6144, aligned with the existing HadIn 128-element groups. Fusion must preserve the norm-to-Half and Half product boundaries before FWHT. Stored norm weights are BF16, while the frozen model executes this norm in FP16; storage does not authorize a BF16 runtime bridge. Even assigning uniform per-call HadIn time to those 48 projections gives a small elimination budget (about 0.351/0.428 ms including norm). This allocation is an estimate, not a measured GDN-only kernel fraction. Stop at the profile gate; do not implement or rerun previously rejected broad GEMM fusion/MB4 changes. See `E05-boundary-audit.json`.
+
+E06 remains inconclusive. Timeline interval unions cover roughly 81.6%/88.0% of the instrumented target envelopes, but the remainder is not identified as an avoidable host operation. Device scheduling, graph dependencies, queue barriers, instrumentation distortion and visibility limitations prevent calling it removable host idle. No async/piecewise patch is justified. See `E06-timeline-review.json`.
+
+E07 is on hold, not a measured performance failure. Official Torch v2.14.0...v2.14.1 source comparison contains five maintenance/release commits, with no identified relevant XPU inference fix. Installed vLLM requires torch==2.14.0 exactly. The official 2.14.1 XPU wheel retains the same relevant oneAPI/Triton dependency generation; that is not proof of ABI or graph compatibility. The plan's explicit vLLM pin resolution and complete affected native rebuild are not justified absent an applicable fix. Do not force-install or ignore pip constraints. See `E07-constraint-review.json` for primary URLs and hashed receipts.
+
+These are conditional stop decisions under the Pro plan. None is a claim that an unimplemented candidate was benchmarked or could never help another workload. Production algorithms, FP16, MTP3, M04 q2–5 and the serving recipe remain unchanged.

@@ -1,0 +1,137 @@
+{
+  "status": "DIAGNOSTIC_TIMELINE_ONLY_NO_HOST_PATCH_JUSTIFIED",
+  "reports": {
+    "prose-32768-trace.json": {
+      "trace_sha256": "4e5d38988ede5ca3b044eac9866d8e8320040ecd0ba3d86b32d5cbd9785c2e37",
+      "cycles": [
+        {
+          "cycle": 0,
+          "annotation_span_ms": 85.45000708007812,
+          "visible_kernel_memcpy_union_ms": 75.31172973632812,
+          "unaccounted_interval_ms": 10.13827734375,
+          "visible_work_fraction": 0.8813542831629133
+        },
+        {
+          "cycle": 1,
+          "annotation_span_ms": 88.2408759765625,
+          "visible_kernel_memcpy_union_ms": 77.67887475585937,
+          "unaccounted_interval_ms": 10.562001220703126,
+          "visible_work_fraction": 0.8803048915390587
+        },
+        {
+          "cycle": 2,
+          "annotation_span_ms": 83.85304907226562,
+          "visible_kernel_memcpy_union_ms": 73.84375170898437,
+          "unaccounted_interval_ms": 10.00929736328125,
+          "visible_work_fraction": 0.8806328753215031
+        },
+        {
+          "cycle": 3,
+          "annotation_span_ms": 82.01188488769532,
+          "visible_kernel_memcpy_union_ms": 72.139654296875,
+          "unaccounted_interval_ms": 9.872230590820312,
+          "visible_work_fraction": 0.8796243909728565
+        },
+        {
+          "cycle": 4,
+          "annotation_span_ms": 81.66228308105468,
+          "visible_kernel_memcpy_union_ms": 71.86955224609375,
+          "unaccounted_interval_ms": 9.792730834960938,
+          "visible_work_fraction": 0.8800825734293877
+        },
+        {
+          "cycle": 5,
+          "annotation_span_ms": 81.19511096191407,
+          "visible_kernel_memcpy_union_ms": 71.40710131835938,
+          "unaccounted_interval_ms": 9.788009643554688,
+          "visible_work_fraction": 0.8794507510662074
+        },
+        {
+          "cycle": 6,
+          "annotation_span_ms": 80.91831201171875,
+          "visible_kernel_memcpy_union_ms": 71.14936791992187,
+          "unaccounted_interval_ms": 9.768944091796875,
+          "visible_work_fraction": 0.8792740005453633
+        },
+        {
+          "cycle": 7,
+          "annotation_span_ms": 80.99968200683594,
+          "visible_kernel_memcpy_union_ms": 71.19094458007812,
+          "unaccounted_interval_ms": 9.808737426757812,
+          "visible_work_fraction": 0.8789040008091635
+        }
+      ],
+      "median_visible_work_fraction": 0.8798534822011221
+    },
+    "source-64k-trace.json": {
+      "trace_sha256": "400db39e7dbae89c5a188f7415e8edf477ec5db9cd4944774eb84f00074fa90c",
+      "cycles": [
+        {
+          "cycle": 0,
+          "annotation_span_ms": 66.90357702636719,
+          "visible_kernel_memcpy_union_ms": 55.07731469726563,
+          "unaccounted_interval_ms": 11.826262329101562,
+          "visible_work_fraction": 0.8232342296968554
+        },
+        {
+          "cycle": 1,
+          "annotation_span_ms": 67.08848608398438,
+          "visible_kernel_memcpy_union_ms": 54.0065712890625,
+          "unaccounted_interval_ms": 13.081914794921875,
+          "visible_work_fraction": 0.8050050678063394
+        },
+        {
+          "cycle": 2,
+          "annotation_span_ms": 64.38386999511718,
+          "visible_kernel_memcpy_union_ms": 52.59967358398438,
+          "unaccounted_interval_ms": 11.784196411132813,
+          "visible_work_fraction": 0.8169697408368507
+        },
+        {
+          "cycle": 3,
+          "annotation_span_ms": 63.114586059570314,
+          "visible_kernel_memcpy_union_ms": 51.50094702148437,
+          "unaccounted_interval_ms": 11.613639038085937,
+          "visible_work_fraction": 0.8159912032517416
+        },
+        {
+          "cycle": 4,
+          "annotation_span_ms": 62.161441040039065,
+          "visible_kernel_memcpy_union_ms": 50.7899814453125,
+          "unaccounted_interval_ms": 11.371459594726563,
+          "visible_work_fraction": 0.8170657017522801
+        },
+        {
+          "cycle": 5,
+          "annotation_span_ms": 61.51937609863281,
+          "visible_kernel_memcpy_union_ms": 50.21134326171875,
+          "unaccounted_interval_ms": 11.308032836914062,
+          "visible_work_fraction": 0.8161874590733151
+        },
+        {
+          "cycle": 6,
+          "annotation_span_ms": 61.068448974609375,
+          "visible_kernel_memcpy_union_ms": 49.79880200195313,
+          "unaccounted_interval_ms": 11.26964697265625,
+          "visible_work_fraction": 0.8154587653381885
+        },
+        {
+          "cycle": 7,
+          "annotation_span_ms": 60.76451696777344,
+          "visible_kernel_memcpy_union_ms": 49.45551513671875,
+          "unaccounted_interval_ms": 11.309001831054687,
+          "visible_work_fraction": 0.8138880650190565
+        }
+      ],
+      "median_visible_work_fraction": 0.8160893311625284
+    }
+  },
+  "limitations": [
+    "Union avoids double-counting simultaneous kernels across queues.",
+    "Annotation envelope is not a calibrated whole-round critical path.",
+    "Unaccounted intervals include barriers, device graph dependencies, scheduling and profiler overhead; they do not prove avoidable host idle.",
+    "Engine scheduler and client live in other processes and are not fully covered by worker Kineto.",
+    "Trace waves are slower than uninstrumented controls; no async or graph-policy retry justified from this subtraction."
+  ],
+  "E06_decision": "INCONCLUSIVE_AVOIDABLE_HOST_OPERATION_NOT_IDENTIFIED"
+}

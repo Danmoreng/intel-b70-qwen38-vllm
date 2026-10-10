@@ -17,17 +17,23 @@ class WorkerExtension:
         assert hashlib.sha256(p.read_bytes()).hexdigest()==RUNNERS[vllm.__version__]
         assert r.vllm_config.speculative_config.num_speculative_tokens==3
         assert r.speculator.draft_logits is None,'This probe attests greedy Dirac MTP only'
-        self._d64=dict(active=False,folder=None,heads=[],samples=[],processed=[],proposals=[],forced=False)
+        assert not r.rejection_sampler.use_block_verification
+        assert r.rejection_sampler.synthetic_conditional_rates is None
+        self._d64=dict(active=False,folder=None,heads=[],samples=[],processed=[],proposals=[],forced=False,current_capture=False)
         state=self._d64
         original_head=r.model.compute_logits
         def head(*args,**kwargs):
             value=original_head(*args,**kwargs)
+            state['current_capture']=False
             if state['active'] and isinstance(value,torch.Tensor) and value.shape[0]>0 and len(state['heads'])<3:
                 frame=inspect.currentframe().f_back
                 batch=frame.f_locals.get('input_batch')
                 assert batch is not None and batch.num_reqs==1
                 ix=batch.logits_indices
-                row=dict(logits=cpu(value),input_ids=cpu(batch.input_ids[ix]),positions=cpu(batch.positions[ix]),
+                positions=cpu(batch.positions[ix])
+                if int(positions[-1])<state['prefix_tokens']-1:return value
+                state['current_capture']=True
+                row=dict(logits=cpu(value),input_ids=cpu(batch.input_ids[ix]),positions=positions,
                     logits_indices=cpu(ix),has_prefill=bool(batch.has_prefill),draft_tokens=int(batch.num_draft_tokens),
                     request_slots=cpu(batch.idx_mapping))
                 state['heads'].append(row)
@@ -37,7 +43,7 @@ class WorkerExtension:
         original_process=sampler.apply_sampling_params
         def process(*args,**kwargs):
             value=original_process(*args,**kwargs)
-            if state['active'] and value.shape[0]>0 and len(state['processed'])<3:
+            if state['active'] and state['current_capture'] and value.shape[0]>0 and len(state['processed'])<3:
                 state['processed'].append(cpu(value))
             return value
         sampler.apply_sampling_params=process
@@ -46,12 +52,13 @@ class WorkerExtension:
             def __getattr__(self,name):return getattr(self.original,name)
             def __call__(self,logits,batch,*args,**kwargs):
                 value=self.original(logits,batch,*args,**kwargs)
-                if state['active'] and batch.num_reqs==1 and len(state['samples'])<3:
+                if state['active'] and state['current_capture'] and batch.num_reqs==1 and len(state['samples'])<3:
                     ix=batch.logits_indices
                     item=dict(actual_sampled=cpu(value.sampled_token_ids),num_sampled=cpu(value.num_sampled),num_rejected=cpu(value.num_rejected),
                         positions=cpu(batch.positions[ix]),input_ids=cpu(batch.input_ids[ix]),has_prefill=bool(batch.has_prefill),
                         seed=cpu(sampler.sampling_states.seeds.gpu[batch.idx_mapping]),
                         temperature=cpu(sampler.sampling_states.temperature.gpu[batch.idx_mapping]))
+                    item['use_fp64_gumbel']=bool(sampler.use_fp64_gumbel)
                     state['samples'].append(item)
                     # One anchor is teacher-forced only AFTER the real target
                     # logits, sampling transforms and native RNG result were
@@ -81,7 +88,7 @@ class WorkerExtension:
         return dict(status='INSTALLED_BOUNDED_TEACHER_FORCED_DIAGNOSTIC',vllm=vllm.__version__,runner_sha256=RUNNERS[vllm.__version__])
     def arm_d64_probe(self,label,prefix_tokens,anchor):
         state=self._d64;assert not state['active'];folder=Path('/results/d64')/label;folder.mkdir(parents=True,exist_ok=False)
-        state.update(active=True,folder=str(folder),heads=[],samples=[],processed=[],proposals=[],forced=False,prefix_tokens=prefix_tokens,anchor=anchor)
+        state.update(active=True,folder=str(folder),heads=[],samples=[],processed=[],proposals=[],forced=False,current_capture=False,prefix_tokens=prefix_tokens,anchor=anchor)
         return {'status':'ARMED','prefix_tokens':prefix_tokens,'anchor':anchor}
     def finish_d64_probe(self):
         state=self._d64;state['active']=False
@@ -91,6 +98,7 @@ class WorkerExtension:
         torch.save(payload,Path(state['folder'])/'capture.pt')
         report=dict(status='COMPLETE_SAME_PREFIX_ACTUAL_RESULT_CAPTURE_NOT_BENCHMARK',
             prefix_tokens=state['prefix_tokens'],anchor=state['anchor'],head_rows=[list(x['logits'].shape) for x in state['heads']],
+            head_logits_sha256=[hashlib.sha256(x['logits'].contiguous().view(torch.uint8).numpy().tobytes()).hexdigest() for x in state['heads']],
             actual_samples=[x['actual_sampled'].tolist() for x in state['samples']],
             proposals=[x['tokens'].tolist() for x in state['proposals']],
             scope='Own-version states reconstructed from frozen prompt IDs; one shared anchor teacher-forced after native-result capture. No process-specific state/graphs transplanted or repeated shadow replay. Later draft-branch divergence is reported as differing conditioning, not same-prefix numerical error.')

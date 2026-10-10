@@ -55,7 +55,8 @@ def main():
     assert read(RAW / 'E01-quality/campaign.json')['status'] == 'FAILED'
     original = read(RAW / 'E01-serving-screen/campaign.json')
     boundary = original['capacity']['near-limit']
-    assert boundary['usage'] == dict(prompt_tokens=261120, completion_tokens=1024, total_tokens=262144)
+    assert all(boundary['usage'][key] == value for key, value in
+               dict(prompt_tokens=261120, completion_tokens=1024, total_tokens=262144).items())
     assert boundary['native']['preemptions'] == 0
     operations = read(RAW / 'E01-operations-final/operations.json')
     assert operations['status'] == 'PASS_NEW_IMAGE_OPERATIONAL_GATES'

@@ -1,5 +1,5 @@
 """CPU-only comparison of actual same-prefix operands; no synthetic outputs."""
-import argparse,hashlib,json,sys
+import argparse,hashlib,json,math,sys
 from pathlib import Path
 import torch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'dflash2-pro-diagnostics-v031'))
@@ -13,9 +13,11 @@ def compare(x,y,scores=False):
     kl=float((p[mask]*(a[mask]-b[mask])).sum())
     tv=float((p-q).abs().sum()/2)
     finite=torch.isfinite(x)&torch.isfinite(y)
-    return dict(bitidentical=torch.equal(x,y),kl_x_to_y=kl,total_variation=tv,
+    middle=torch.logaddexp(a,b)-math.log(2);mask_q=q>0
+    js=float(.5*((p[mask]*(a[mask]-middle[mask])).sum()+(q[mask_q]*(b[mask_q]-middle[mask_q])).sum()))
+    return dict(bitidentical=torch.equal(x,y),kl_x_to_y=kl if math.isfinite(kl) else 'infinite_due_to_removed_support',js_divergence=js,total_variation=tv,
         top1_equal=int(x.argmax())==int(y.argmax()),x_top1=int(x.argmax()),y_top1=int(y.argmax()),
-        max_finite_abs=float((x[finite]-y[finite]).abs().max()),
+        max_finite_abs=float((x[finite]-y[finite]).abs().max()) if finite.any() else None,
         support_mask_equal=bool(torch.equal(torch.isfinite(x),torch.isfinite(y))))
 def oracle(d):
     rows=[]
@@ -81,7 +83,7 @@ def main():
                 first_proposal_equal_steps=equal.tolist(),first_proposal_common_prefix_length=prefix,
                 note='Proposal step zero shares prefix and anchor. Any later step after a differing earlier proposal has different conditioning; it is not a numerical same-prefix comparison.'))
     report=dict(status='PASS_ACTUAL_REJECTION_ORACLE_BOUNDED_D64_REVIEW_REQUIRED',known_answer_vectors=known_answers(),
-        source_capture_receipts=receipts,repeatability=repeatability,comparisons=pairs,
+        source_sha256={'compare_d64.py':sha(Path(__file__)), 'rng_reference.py':sha(Path(__file__).resolve().parents[1]/'dflash2-pro-diagnostics-v031/rng_reference.py')},source_capture_receipts=receipts,repeatability=repeatability,comparisons=pairs,
         limits='Two frozen positions, two own-state reconstructions each. No throughput result, exhaustive quality proof, or claim of cross-version hidden-state identity. Raw arrays remain private. Different draft branches are excluded from same-prefix distribution comparisons.')
-    a.out.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(dict(status=report['status'],repeatability=repeatability)),flush=True)
+    a.out.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n');print(json.dumps(dict(status=report['status'],repeatability=repeatability)),flush=True)
 if __name__=='__main__':main()

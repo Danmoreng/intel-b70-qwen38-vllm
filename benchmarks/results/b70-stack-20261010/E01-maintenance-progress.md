@@ -75,3 +75,15 @@ the rebuilt EXL3 library. The original v3 rollback passes strict preflight.
 Exact-image operational gates and then the complete frozen serving matrix
 are now running. See E01-maintenance-serving-review.json for the full tradeoff
 and limits. Do not infer final approval from this progress report.
+
+The exact-image operations are now complete and passed. The original C16
+comparison failure (3 versus an archived 2) remains failed. Three named
+contemporaneous reference pairs recorded baseline 2/3/3 and candidate 2/2/2,
+all without extra prefill work; the separate reviewed reference is explicit.
+The final operations run also recorded two, matching the old count. Actual
+incoming-prefill/decode overlap passed at two and four admitted requests,
+32 distinct maximum-area images used 131164 input tokens without preemption,
+16 active source guards passed, abort was confirmed and the worker restarted
+with the original 200-block pool. The strict exact-image launcher preflight
+passed. The full 70-wave/124-request serving matrix is running; there is still
+no production promotion or claimed speedup.

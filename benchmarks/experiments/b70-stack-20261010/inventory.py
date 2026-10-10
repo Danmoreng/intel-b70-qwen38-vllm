@@ -14,7 +14,7 @@ def plain(value):
     return str(value)
 
 class WorkerExtension(ProfileWorkerExtension):
-    def inventory(self,label='initial'):
+    def inventory(self,label='initial',expected_onednn_sha256='ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20',expected_onednn_version='3.13.0'):
         r=self.model_runner;c=r.vllm_config
         assert type(r).__name__=='XPUModelRunnerV2'
         assert c.speculative_config.method=='mtp' and c.speculative_config.num_speculative_tokens==3
@@ -25,10 +25,12 @@ class WorkerExtension(ProfileWorkerExtension):
                 p=Path(line.split()[-1])
                 if str(p) not in [i['path'] for i in mapped]:
                     mapped.append(dict(path=str(p),bytes=p.stat().st_size,sha256=hashlib.sha256(p.read_bytes()).hexdigest()))
-        assert any(i['path']=='/opt/b70/libdnnl.so.3' and i['sha256']=='ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20' for i in mapped),mapped
+        assert len(expected_onednn_sha256)==64
+        assert any(i['path']=='/opt/b70/libdnnl.so.3' and i['sha256']==expected_onednn_sha256 for i in mapped),mapped
         class Version(ctypes.Structure):
             _fields_=[('major',ctypes.c_int),('minor',ctypes.c_int),('patch',ctypes.c_int),('hash',ctypes.c_char_p)]
         lib=ctypes.CDLL('/opt/b70/libdnnl.so.3');lib.dnnl_version.restype=ctypes.POINTER(Version);v=lib.dnnl_version().contents
+        assert f'{v.major}.{v.minor}.{v.patch}'==expected_onednn_version
         sources={};modules=[]
         for role,model in [('target',r.model),('mtp',r.speculator.model)]:
             for name,m in model.named_modules():

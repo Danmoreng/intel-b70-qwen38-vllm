@@ -1,0 +1,88 @@
+diff --git a/csrc/xpu/attn/xe_2/collective/chunk_prefill_mainloop.hpp b/csrc/xpu/attn/xe_2/collective/chunk_prefill_mainloop.hpp
+index ac6dde0..282f260 100644
+--- a/csrc/xpu/attn/xe_2/collective/chunk_prefill_mainloop.hpp
++++ b/csrc/xpu/attn/xe_2/collective/chunk_prefill_mainloop.hpp
+@@ -1221,6 +1221,28 @@ struct DecodeFwdMainloop<
+       prefetch(prefetch_v, pVgV(_, _, _, tile_idx));
+ 
+       /* Causal masking */
++#ifdef B70_VERIFY_MASK
++      // Packed verification maps local Q rows as
++      // [verification_row][six_query_heads_for_this_kv_head]. All rows share
++      // historical KV loads, while row r sees seq_len-verify_rows+r tokens.
++      if constexpr (CausalMask) {
++        const int verify_rows = -discard_seq_coord;
++        Tensor cPgP = make_identity_tensor(make_shape(seq_len, seq_len));
++        Tensor gP = local_tile(
++            cPgP, take<0, 2>(TileShapeQK{}), make_coord(get<0>(blk_qv), K));
++        auto cS_thread = thr_mma_qk.partition_C(gP);
++        CUTLASS_PRAGMA_UNROLL
++        for (int i = 0; i < tSrS.size(); ++i) {
++          const int packed_q = get<0>(cS_thread(i));
++          const int col = get<1>(cS_thread(i));
++          const int verify_row = packed_q / 6;
++          const int last_visible = seq_len - verify_rows + verify_row;
++          if (verify_row >= verify_rows || col > last_visible) {
++            tSrS(i) = ElementS(-INFINITY);
++          }
++        }
++      }
++#endif
+       // No Causal masking in decoding
+       // if constexpr (CausalMask) {
+       //   if (K == blk_k1 - 1) {
+diff --git a/csrc/xpu/attn/xe_2/kernel/paged_decode_kernel.hpp b/csrc/xpu/attn/xe_2/kernel/paged_decode_kernel.hpp
+index e6ee515..456c9e0 100644
+--- a/csrc/xpu/attn/xe_2/kernel/paged_decode_kernel.hpp
++++ b/csrc/xpu/attn/xe_2/kernel/paged_decode_kernel.hpp
+@@ -220,10 +220,18 @@ class XeFMHAFwdSplitKVKernel {
+   Shape<int, int> get_sequence_length_shape(
+       ProblemShape const& problem_shape, int const& batch) {
+     if constexpr (is_var_len) {
++#ifdef B70_VERIFY_MASK
++      // The M04 extension packs all verification rows into the query-head
++      // dimension and therefore exposes one physical decode row to the
++      // scheduler, irrespective of the caller's original q_len metadata.
++      return Shape<int, int>{
++          1, problem_shape.seq_len_kv.cumulative_length[batch]};
++#else
+       auto q_len = cutlass::fmha::collective::apply_variable_length(
+           Shape<VariableLength>{problem_shape.seq_len_qo}, batch);
+       return Shape<int, int>{
+           get<0>(q_len), problem_shape.seq_len_kv.cumulative_length[batch]};
++#endif
+     } else {
+       return Shape<int, int>{
+           problem_shape.seq_len_qo, problem_shape.seq_len_kv};
+@@ -281,6 +289,15 @@ class XeFMHAFwdSplitKVKernel {
+ 
+       auto offset = cute::min(seq_len_qo, seq_len_kv);
+       auto discard_seq_coord = seq_len_qo - offset;
++#ifdef B70_VERIFY_MASK
++      // M04 experiment: Causal=true is reserved for packed speculative
++      // verification. Each KV head owns six ordinary GQA query heads; the
++      // packed Q group concatenates 2..5 verification rows. Pass the row
++      // count through the otherwise-unused negative decode coordinate.
++      if constexpr (CollectiveMainloop::CausalMask) {
++        discard_seq_coord = -(head_group_q / 6);
++      }
++#endif
+       auto full_tile_offset = seq_len_kv - offset;
+       int seq_coord =
+           cute::min(seq_len_qo, (blk_q * get<0>(TileShapeQK{}) + q_offset_sg));
+@@ -648,10 +665,15 @@ class ReduceSplitK {
+   Shape<int, int> get_sequence_length_shape(
+       ProblemShape const& problem_shape, int const& batch) {
+     if constexpr (is_var_len) {
++#ifdef B70_VERIFY_MASK
++      return Shape<int, int>{
++          1, problem_shape.seq_len_kv.cumulative_length[batch]};
++#else
+       auto q_len = cutlass::fmha::collective::apply_variable_length(
+           Shape<VariableLength>{problem_shape.seq_len_qo}, batch);
+       return Shape<int, int>{
+           get<0>(q_len), problem_shape.seq_len_kv.cumulative_length[batch]};
++#endif
+     } else {
+       return Shape<int, int>{
+           problem_shape.seq_len_qo, problem_shape.seq_len_kv};

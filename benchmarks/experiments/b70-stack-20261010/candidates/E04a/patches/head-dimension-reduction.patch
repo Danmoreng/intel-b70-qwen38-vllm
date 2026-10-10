@@ -1,0 +1,72 @@
+--- a/csrc/xpu/attn/xe_2/collective/chunk_prefill_scheduler.hpp
++++ b/csrc/xpu/attn/xe_2/collective/chunk_prefill_scheduler.hpp
+@@ -223,6 +223,7 @@
+     dim3 grid;
+     FastDivmod divmod_num_heads;
+     int num_kv_splits = -1;
++    int num_hd_tiles = 1;
+   };
+ 
+   bool valid_ = true;
+@@ -236,11 +237,12 @@
+       ProblemShape const& shape,
+       KernelHardwareInfo hw_info,
+       TileShape const& tile_shape,
+-      const int& num_kv_splits = -1) {
+-    using namespace cute;
+-
+-    dim3 grid(shape.seq_len_qo, shape.num_heads_q, shape.batch);
+-    return Params{grid, {shape.num_heads_q}, num_kv_splits};
++      const int& num_kv_splits = -1,
++      const int& num_hd_tiles = 1) {
++    using namespace cute;
++
++    dim3 grid(shape.seq_len_qo * num_hd_tiles, shape.num_heads_q, shape.batch);
++    return Params{grid, {shape.num_heads_q}, num_kv_splits, num_hd_tiles};
+   }
+ 
+   template <int Num_SGs>
+@@ -255,7 +257,9 @@
+   auto get_block_coord() {
+     using namespace cute;
+ 
+-    return make_coord(BlockIdxX(), BlockIdxY(), BlockIdxZ());
++    const int combined = BlockIdxX();
++    return make_coord(combined / params.num_hd_tiles, BlockIdxY(),
++                      BlockIdxZ(), combined % params.num_hd_tiles);
+   }
+ 
+   CUTLASS_DEVICE
+--- a/csrc/xpu/attn/xe_2/kernel/paged_decode_kernel.hpp
++++ b/csrc/xpu/attn/xe_2/kernel/paged_decode_kernel.hpp
+@@ -610,7 +610,8 @@
+     return {
+         args.kernel,
+         TileScheduler::to_underlying_arguments(
+-            args.kernel.shape, args.hw_info, TileShapeO{}, args.num_kv_splits)};
++            args.kernel.shape, args.hw_info, TileShapeO{}, args.num_kv_splits,
++            cute::max(1, num_vals_per_thread))};
+   }
+ 
+   static bool can_implement(Arguments const& args) {
+@@ -681,7 +682,7 @@
+ 
+     CUTLASS_PRAGMA_NO_UNROLL
+     for (; tile_scheduler.is_valid(); ++tile_scheduler) {
+-      auto [seq_idx, head_q, idx_b] = tile_scheduler.get_block_coord();
++      auto [seq_idx, head_q, idx_b, hd_tile_idx] = tile_scheduler.get_block_coord();
+ 
+       // Skip prefill batches when is_prefill mask is provided
+       if (p.is_prefill != nullptr && p.is_prefill[idx_b]) continue;
+@@ -817,7 +818,10 @@
+       global_max_logits =
+           sycl::group_broadcast(get_work_group<1>(), global_max_logits, 0);
+ 
+-      for (int idx = thr_id; idx < s.head_size_vo;
++      const int hd_tile_size = cute::ceil_div(s.head_size_vo, params.scheduler.num_hd_tiles);
++      const int hd_start = hd_tile_idx * hd_tile_size;
++      const int hd_stop = cute::min(hd_start + hd_tile_size, s.head_size_vo);
++      for (int idx = hd_start + thr_id; idx < hd_stop;
+            idx += SGPerWG::value * intel::sg_size) {
+         ElementLSE acc = 0;
+         global_exp_sums = 0;

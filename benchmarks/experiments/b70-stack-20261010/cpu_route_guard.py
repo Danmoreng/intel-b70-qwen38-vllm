@@ -23,13 +23,22 @@ def main():
                      seqused_k=torch.tensor([4096], dtype=torch.int32),
                      block_table=torch.zeros((1, 64), dtype=torch.int32),
                      k_descale=scale, v_descale=scale,
-                     causal=True, softmax_scale=.0625)
+                     causal=True, softmax_scale=.0625, max_seqlen_q=64, max_seqlen_k=4096)
     assert all(t.device.type == 'cpu' for t in arguments.values() if isinstance(t, torch.Tensor))
     context = dispatch.Context(True, plan=SimpleNamespace(tokens=64, requests=1, segments=[]), scales=(scale, scale))
     assert dispatch.supported_features(arguments)
     assert not dispatch.prefill_eligible(arguments, context, capturing=False)
-    assert not verify.eligible(arguments)
     assert dispatch.select_route(arguments, context, capturing=False,
+                                 native_op=object(), m04=True, onednn=True) == 'native'
+    # Otherwise-supported q4 shape reaches the M04 device check, rather than
+    # being rejected first because a prefill-sized query is not q2–5.
+    q4 = torch.empty((4, 24, 256), dtype=torch.float16, device='cpu')
+    verification = dict(arguments, q=q4, out=torch.empty_like(q4), max_seqlen_q=4,
+                        cu_seqlens_q=torch.tensor([0, 4], dtype=torch.int32))
+    assert dispatch.supported_features(verification)
+    assert not verify.eligible(verification)
+    q4_context = dispatch.Context(True, plan=SimpleNamespace(tokens=4, requests=1, segments=[]), scales=(scale, scale))
+    assert dispatch.select_route(verification, q4_context, capturing=False,
                                  native_op=object(), m04=True, onednn=True) == 'native'
     paths = [Path(dispatch.__file__), Path(verify.__file__)]
     report = dict(status='PASS_CPU_OPERANDS_EXCLUDED_FROM_CUSTOM_ATTENTION_ROUTES',

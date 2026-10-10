@@ -30,7 +30,7 @@ def oracle(d):
             pos=int(h['positions'][i]);u=acceptance_uniform(seed,pos)
             prob=float(dist(processed[i])[token].exp()) if token>=0 else 0
             accepted=token>=0 and prob>u
-            details.append(dict(step=i,probability=prob,uniform=u,accepted=accepted,position=pos,
+            details.append(dict(step=i,probability=prob,uniform=u,prefix_verifier_visits_this_step=verifying,ratio_test_would_pass=accepted,accepted_in_prefix=verifying and accepted,position=pos,
                 absolute_decision_margin=abs(prob-u),conditioning='Own-version preceding draft branch'))
             if verifying and accepted:expected+=1
             else:verifying=False

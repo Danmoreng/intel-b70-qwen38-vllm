@@ -19,6 +19,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--exl3-repo', type=Path, required=True)
     parser.add_argument('--candidate-dir',type=Path,default=REPO/'engine/exl3xpu/review-candidate')
+    parser.add_argument('--runtime-requirements', type=Path)
     args = parser.parse_args()
     release = json.loads((REPO/'config/production_image.json').read_text())
     assert release['status'] == 'QUALIFIED_RELEASE'
@@ -29,7 +30,7 @@ def main():
     candidate = args.candidate_dir.resolve()
     candidate_path = str(candidate.relative_to(REPO))
     policy = json.loads((REPO/'config/production_policy.json').read_text())
-    version = policy['policy_id'].rsplit('-',1)[-1]
+    version = release['image_tag'].rsplit('-',1)[-1]
     manifest = json.loads((candidate/'manifest.json').read_text())
     build = json.loads((candidate/'build-receipt.json').read_text())
     assert manifest['source_commit'] == release['source_commit']
@@ -57,8 +58,15 @@ def main():
     if attestation.exists():
         assert manifest['files_sha256']['m04-controller-attestation.json']==sha(attestation)
         published['m04_controller_attestation']=dict(path=candidate_path+'/m04-controller-attestation.json',sha256=sha(attestation))
+    requirements_path='config/experiments/vllm-031-upgrade/runtime_requirements.json'
     if policy['runtime']['vllm']=='0.31.0':
-        requirements=REPO/'config/experiments/vllm-031-upgrade/runtime_requirements.json'
+        requirements=(args.runtime_requirements or REPO/'config/experiments/vllm-031-upgrade/runtime_requirements.json').resolve()
+        requirements_path=str(requirements.relative_to(REPO))
+        pins=json.loads(requirements.read_text())
+        assert pins['onednn']==policy['runtime']['onednn']
+        if pins.get('maintenance_native_rebuild'):
+            assert pins['maintenance_native_rebuild']['native_library_sha256']==build['native_manifest']['library_sha256']
+            assert pins['maintenance_native_rebuild']['onednn_library_sha256']==release['runtime_artifacts_sha256']['/opt/b70/libdnnl.so.3']
         published['runtime_requirements']=dict(path=str(requirements.relative_to(REPO)),sha256=sha(requirements))
     (source/'manifest.json').write_text(json.dumps(published, indent=2)+'\n')
     (source/'README.md').write_text(f"""# Qualified EXL3 {version} engine source
@@ -67,7 +75,7 @@ The complete source archive preserves the upstream license. The manifest pins
 upstream/base, source commit, all {len(build['source_sha256'])} build inputs,
 native compiler/ABI identities and the actual qualified production image.
 Weights, native binaries, caches and large numerical arrays are omitted.
-Prior v1/v2 configuration and source snapshots remain under `config/releases`.
+Prior release configuration and source snapshots remain under `config/releases`.
 
 Extract `source.tar.gz`, or apply `migration.patch` to the recorded upstream
 base. The release child and runtime parent have identical filesystem layers.
@@ -76,7 +84,7 @@ The native partition-cache capacity is 64 per inference thread/queue.
 Current toolchain: vLLM {policy['runtime']['vllm']},
 Torch {policy['runtime']['torch']}, oneAPI {policy['runtime']['oneapi_compiler']},
 oneDNN {policy['runtime']['onednn']}, C++20 and SYCL 9 for the 0.31 update.
-Runtime distribution pins are in `config/experiments/vllm-031-upgrade/runtime_requirements.json`.
+Runtime distribution pins are in `{requirements_path}`.
 The default `scripts/build-image.sh` builds the pinned vLLM 0.31 XPU compiler/base;
 `docker/Dockerfile.vllm030-gptq-legacy` preserves the historical GPTQ base recipe.
 

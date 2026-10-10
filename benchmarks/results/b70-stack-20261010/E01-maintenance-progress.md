@@ -61,3 +61,17 @@ See the unfiltered six-block report and counter decomposition.
 Two further unchanged protected blocks are running to resolve the remaining
 C4 concern and bring the protected cells to five independent paired starts.
 No release review is approved from the six-block file alone.
+
+Eight unfiltered core blocks and five protected blocks are complete. Weighted
+cold decode +0.111% [-0.701,0.893], warm -0.752% [-1.865,0.236]. Warm prose-C4
+native -1.776%, client aggregate -2.464% [-5.363,0.132] remain adverse results.
+The registered no-credible-loss screening rule passes, but the wide interval
+is not a tight-margin noninferiority proof. This is maintenance-screen approval,
+not a performance or production promotion.
+
+Final metadata image `36e41ea...` preserves the exact tested parent RootFS
+`b772d379...`; new policy and requirements explicitly pin oneDNN 3.13.4 and
+the rebuilt EXL3 library. The original v3 rollback passes strict preflight.
+Exact-image operational gates and then the complete frozen serving matrix
+are now running. See E01-maintenance-serving-review.json for the full tradeoff
+and limits. Do not infer final approval from this progress report.

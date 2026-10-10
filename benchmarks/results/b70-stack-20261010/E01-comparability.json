@@ -1,0 +1,3568 @@
+{
+  "status": "COMPLETE_OBSERVED_COMPARABILITY_ONLY",
+  "campaigns": [
+    {
+      "root": "benchmark-results/b70-stack-20261010/E01-serving-screen",
+      "samples": 61,
+      "first_unix": 1791595037.9551783,
+      "last_unix": 1791595938.0653083,
+      "power_cap_w": 180,
+      "source_sha256": "e7d2ef8017041cfb514c5bbdc6c3b24d8afb39730d16be7cbf9dbf96ca39ba11",
+      "arms": [
+        {
+          "arm": "block-0-baseline",
+          "sampled_rows": 0,
+          "interval_unix": [
+            1791594014.9533968,
+            1791594216.3474414
+          ],
+          "metrics": {}
+        },
+        {
+          "arm": "block-0-candidate",
+          "sampled_rows": 0,
+          "interval_unix": [
+            1791594325.6472034,
+            1791594859.774385
+          ],
+          "metrics": {}
+        },
+        {
+          "arm": "block-1-baseline",
+          "sampled_rows": 13,
+          "interval_unix": [
+            1791595177.2716844,
+            1791595380.9266863
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 66000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 70000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 64000.0,
+              "median": 74000.0,
+              "max": 76000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 63000.0,
+              "median": 67000.0,
+              "max": 68000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 47000.0,
+              "median": 51000.0,
+              "max": 51000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 63000.0,
+              "median": 68000.0,
+              "max": 68000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1783.0,
+              "median": 1900.0,
+              "max": 2033.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 13
+            }
+          }
+        },
+        {
+          "arm": "block-1-candidate",
+          "sampled_rows": 7,
+          "interval_unix": [
+            1791594924.9362085,
+            1791595128.0713797
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 70000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 72000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 70000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 68000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 74000.0,
+              "median": 76000.0,
+              "max": 78000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 70000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 68000.0,
+              "median": 70000.0,
+              "max": 70000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 68000.0,
+              "median": 68000.0,
+              "max": 70000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 74000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 70000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 70000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 70000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 67000.0,
+              "median": 67000.0,
+              "max": 68000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 76000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 51000.0,
+              "median": 51000.0,
+              "max": 51000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 68000.0,
+              "median": 68000.0,
+              "max": 68000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 72000.0,
+              "median": 74000.0,
+              "max": 76000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 70000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 76000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 7
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 70000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 7
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1850.0,
+              "median": 1867.0,
+              "max": 2000.0,
+              "nonzero_samples": 7
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 7
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 7
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 7
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 7
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 7
+            }
+          }
+        },
+        {
+          "arm": "block-2-baseline",
+          "sampled_rows": 13,
+          "interval_unix": [
+            1791595430.1565776,
+            1791595634.6461892
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 76000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 66000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 62000.0,
+              "median": 68000.0,
+              "max": 70000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 66000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 62000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 63000.0,
+              "median": 67000.0,
+              "max": 68000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 66000.0,
+              "median": 74000.0,
+              "max": 80000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 48000.0,
+              "median": 51000.0,
+              "max": 51000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 64000.0,
+              "median": 68000.0,
+              "max": 69000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 76000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 66000.0,
+              "median": 74000.0,
+              "max": 80000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1800.0,
+              "median": 1900.0,
+              "max": 2033.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 13
+            }
+          }
+        },
+        {
+          "arm": "block-2-candidate",
+          "sampled_rows": 13,
+          "interval_unix": [
+            1791595683.7510517,
+            1791595887.8374398
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 78000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 64000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 66000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 64000.0,
+              "median": 67000.0,
+              "max": 68000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 48000.0,
+              "median": 51000.0,
+              "max": 51000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 64000.0,
+              "median": 68000.0,
+              "max": 68000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 13
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1800.0,
+              "median": 1917.0,
+              "max": 2033.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 13
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 13
+            }
+          }
+        }
+      ]
+    },
+    {
+      "root": "benchmark-results/b70-stack-20261010/E01-firsttouch-controlled",
+      "samples": 24,
+      "first_unix": 1791597917.0714805,
+      "last_unix": 1791598262.1332161,
+      "power_cap_w": 180,
+      "source_sha256": "6bb2a237d227b29fd8a1ca2e0249a59b1d1b1500a7ae17f7afe7a0f5720e3796",
+      "arms": [
+        {
+          "arm": "block-0-baseline",
+          "sampled_rows": 2,
+          "interval_unix": [
+            1791598024.8260224,
+            1791598065.3217492
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 44000.0,
+              "median": 47000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 42000.0,
+              "median": 46000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 42000.0,
+              "median": 46000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 40000.0,
+              "median": 43000.0,
+              "max": 46000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 42000.0,
+              "median": 46000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 42000.0,
+              "median": 46000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 42000.0,
+              "median": 46000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 40000.0,
+              "median": 43000.0,
+              "max": 46000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 42000.0,
+              "median": 45000.0,
+              "max": 48000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 42000.0,
+              "median": 46000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 42000.0,
+              "median": 46000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 42000.0,
+              "median": 45000.0,
+              "max": 48000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 44000.0,
+              "median": 47000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 44000.0,
+              "median": 47000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 33000.0,
+              "median": 35500.0,
+              "max": 38000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 44000.0,
+              "median": 47000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 40000.0,
+              "median": 44000.0,
+              "max": 48000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 42000.0,
+              "median": 46000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 42000.0,
+              "median": 46000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 42000.0,
+              "median": 46000.0,
+              "max": 50000.0,
+              "nonzero_samples": 2
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1883.0,
+              "median": 1966.5,
+              "max": 2050.0,
+              "nonzero_samples": 2
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 2
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 2
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 2
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 2
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 2
+            }
+          }
+        },
+        {
+          "arm": "block-0-candidate",
+          "sampled_rows": 3,
+          "interval_unix": [
+            1791598170.8024983,
+            1791598211.5645213
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 46000.0,
+              "median": 50000.0,
+              "max": 56000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 44000.0,
+              "median": 48000.0,
+              "max": 54000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 46000.0,
+              "median": 50000.0,
+              "max": 56000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 42000.0,
+              "median": 46000.0,
+              "max": 52000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 46000.0,
+              "median": 48000.0,
+              "max": 54000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 46000.0,
+              "median": 48000.0,
+              "max": 54000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 44000.0,
+              "median": 48000.0,
+              "max": 56000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 42000.0,
+              "median": 46000.0,
+              "max": 52000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 44000.0,
+              "median": 48000.0,
+              "max": 52000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 46000.0,
+              "median": 48000.0,
+              "max": 54000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 46000.0,
+              "median": 48000.0,
+              "max": 56000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 44000.0,
+              "median": 46000.0,
+              "max": 52000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 46000.0,
+              "median": 51000.0,
+              "max": 56000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 46000.0,
+              "median": 50000.0,
+              "max": 56000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 35000.0,
+              "median": 38000.0,
+              "max": 42000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 46000.0,
+              "median": 51000.0,
+              "max": 57000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 44000.0,
+              "median": 46000.0,
+              "max": 52000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 46000.0,
+              "median": 48000.0,
+              "max": 56000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 46000.0,
+              "median": 48000.0,
+              "max": 56000.0,
+              "nonzero_samples": 3
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 46000.0,
+              "median": 48000.0,
+              "max": 56000.0,
+              "nonzero_samples": 3
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1833.0,
+              "median": 1917.0,
+              "max": 1967.0,
+              "nonzero_samples": 3
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 3
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 3
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 3
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 3
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "root": "benchmark-results/b70-stack-20261010/E01-confirmation-protected",
+      "samples": 206,
+      "first_unix": 1791598277.4421258,
+      "last_unix": 1791601352.7979543,
+      "power_cap_w": 180,
+      "source_sha256": "e489ada8b281ba63b96ac8580032dc039c391ffa3d13271f00f6fadc7a727f2a",
+      "arms": [
+        {
+          "arm": "block-0-baseline",
+          "sampled_rows": 30,
+          "interval_unix": [
+            1791598324.9313989,
+            1791598782.3700814
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 54000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 52000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 54000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 50000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 52000.0,
+              "median": 73000.0,
+              "max": 78000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 52000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 52000.0,
+              "median": 68000.0,
+              "max": 70000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 48000.0,
+              "median": 68000.0,
+              "max": 70000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 52000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 52000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 54000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 50000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 54000.0,
+              "median": 67000.0,
+              "max": 68000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 54000.0,
+              "median": 74000.0,
+              "max": 80000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 41000.0,
+              "median": 51000.0,
+              "max": 51000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 55000.0,
+              "median": 68000.0,
+              "max": 68000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 50000.0,
+              "median": 70000.0,
+              "max": 76000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 52000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 54000.0,
+              "median": 74000.0,
+              "max": 80000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 54000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1800.0,
+              "median": 1958.5,
+              "max": 2083.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 30
+            }
+          }
+        },
+        {
+          "arm": "block-0-candidate",
+          "sampled_rows": 31,
+          "interval_unix": [
+            1791598827.5234642,
+            1791599286.6202478
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 64000.0,
+              "median": 76000.0,
+              "max": 78000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 58000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 64000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 61000.0,
+              "median": 68000.0,
+              "max": 68000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 46000.0,
+              "median": 51000.0,
+              "max": 52000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 61000.0,
+              "median": 68000.0,
+              "max": 69000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 62000.0,
+              "median": 74000.0,
+              "max": 76000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1800.0,
+              "median": 1933.0,
+              "max": 2083.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 31
+            }
+          }
+        },
+        {
+          "arm": "block-1-baseline",
+          "sampled_rows": 31,
+          "interval_unix": [
+            1791599835.2832882,
+            1791600294.9630208
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 58000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 64000.0,
+              "median": 76000.0,
+              "max": 78000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 58000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 64000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 68000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 64000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 45000.0,
+              "median": 51000.0,
+              "max": 52000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 69000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 60000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 64000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1800.0,
+              "median": 1933.0,
+              "max": 2083.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 31
+            }
+          }
+        },
+        {
+          "arm": "block-1-candidate",
+          "sampled_rows": 30,
+          "interval_unix": [
+            1791599331.780119,
+            1791599790.1495605
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 66000.0,
+              "median": 75000.0,
+              "max": 80000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 66000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 64000.0,
+              "median": 68000.0,
+              "max": 68000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 68000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 48000.0,
+              "median": 51000.0,
+              "max": 51000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 64000.0,
+              "median": 68000.0,
+              "max": 69000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 78000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 68000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 64000.0,
+              "median": 71000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1783.0,
+              "median": 1933.0,
+              "max": 2067.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 30
+            }
+          }
+        },
+        {
+          "arm": "block-2-baseline",
+          "sampled_rows": 31,
+          "interval_unix": [
+            1791600340.023002,
+            1791600797.8485177
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 64000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 64000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 62000.0,
+              "median": 68000.0,
+              "max": 68000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 47000.0,
+              "median": 51000.0,
+              "max": 52000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 62000.0,
+              "median": 68000.0,
+              "max": 69000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 64000.0,
+              "median": 74000.0,
+              "max": 76000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1783.0,
+              "median": 1950.0,
+              "max": 2083.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 31
+            }
+          }
+        },
+        {
+          "arm": "block-2-candidate",
+          "sampled_rows": 30,
+          "interval_unix": [
+            1791600842.885305,
+            1791601300.3658435
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 66000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 66000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 62000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 68000.0,
+              "median": 76000.0,
+              "max": 78000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 66000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 62000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 66000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 66000.0,
+              "median": 71000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 66000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 64000.0,
+              "median": 68000.0,
+              "max": 68000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 68000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 49000.0,
+              "median": 51000.0,
+              "max": 51000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 65000.0,
+              "median": 68000.0,
+              "max": 69000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 66000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 68000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 66000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1783.0,
+              "median": 1933.0,
+              "max": 2083.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 30
+            }
+          }
+        }
+      ]
+    },
+    {
+      "root": "benchmark-results/b70-stack-20261010/E01-protected-extended",
+      "samples": 139,
+      "first_unix": 1791601389.1854825,
+      "last_unix": 1791603459.4343154,
+      "power_cap_w": 180,
+      "source_sha256": "f85a9e1a9dd84c263cacd2b47643b49e92c54d561d272668c090f4960d7b6c88",
+      "arms": [
+        {
+          "arm": "block-0-baseline",
+          "sampled_rows": 30,
+          "interval_unix": [
+            1791601436.7512844,
+            1791601894.617781
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 58000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 56000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 58000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 52000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 58000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 58000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 56000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 54000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 56000.0,
+              "median": 72000.0,
+              "max": 78000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 58000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 58000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 54000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 57000.0,
+              "median": 67000.0,
+              "max": 68000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 58000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 44000.0,
+              "median": 51000.0,
+              "max": 51000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 58000.0,
+              "median": 68000.0,
+              "max": 69000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 54000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 56000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 58000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 58000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1817.0,
+              "median": 1933.0,
+              "max": 2083.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 30
+            }
+          }
+        },
+        {
+          "arm": "block-0-candidate",
+          "sampled_rows": 31,
+          "interval_unix": [
+            1791601939.6664767,
+            1791602399.0630817
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 78000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 58000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 64000.0,
+              "median": 76000.0,
+              "max": 78000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 61000.0,
+              "median": 68000.0,
+              "max": 68000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 46000.0,
+              "median": 51000.0,
+              "max": 52000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 62000.0,
+              "median": 68000.0,
+              "max": 69000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 78000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1817.0,
+              "median": 1917.0,
+              "max": 2083.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 31
+            }
+          }
+        },
+        {
+          "arm": "block-1-baseline",
+          "sampled_rows": 31,
+          "interval_unix": [
+            1791602947.6345623,
+            1791603405.9057589
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 58000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 64000.0,
+              "median": 76000.0,
+              "max": 78000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 58000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 64000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 60000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 68000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 64000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 45000.0,
+              "median": 51000.0,
+              "max": 51000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 61000.0,
+              "median": 68000.0,
+              "max": 69000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 62000.0,
+              "median": 74000.0,
+              "max": 78000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 64000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 31
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 62000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1800.0,
+              "median": 1950.0,
+              "max": 2083.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 31
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 31
+            }
+          }
+        },
+        {
+          "arm": "block-1-candidate",
+          "sampled_rows": 30,
+          "interval_unix": [
+            1791602444.114186,
+            1791602902.4852052
+          ],
+          "metrics": {
+            "hwmon/hwmon2/power1_cap": {
+              "min": 180000000.0,
+              "median": 180000000.0,
+              "max": 180000000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp10_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp11_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 76000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp12_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp13_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp14_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 78000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp15_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp16_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp17_input": {
+              "min": 60000.0,
+              "median": 68000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp18_input": {
+              "min": 66000.0,
+              "median": 75000.0,
+              "max": 78000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp19_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp20_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp21_input": {
+              "min": 62000.0,
+              "median": 70000.0,
+              "max": 72000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp2_input": {
+              "min": 63000.0,
+              "median": 68000.0,
+              "max": 68000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp3_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp4_input": {
+              "min": 47000.0,
+              "median": 51000.0,
+              "max": 52000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp5_input": {
+              "min": 63000.0,
+              "median": 68000.0,
+              "max": 69000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp6_input": {
+              "min": 62000.0,
+              "median": 73000.0,
+              "max": 76000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp7_input": {
+              "min": 64000.0,
+              "median": 70000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp8_input": {
+              "min": 66000.0,
+              "median": 76000.0,
+              "max": 80000.0,
+              "nonzero_samples": 30
+            },
+            "hwmon/hwmon2/temp9_input": {
+              "min": 64000.0,
+              "median": 72000.0,
+              "max": 74000.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/act_freq": {
+              "min": 1783.0,
+              "median": 1908.5,
+              "max": 2083.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/cur_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/max_freq": {
+              "min": 2800.0,
+              "median": 2800.0,
+              "max": 2800.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/min_freq": {
+              "min": 1200.0,
+              "median": 1200.0,
+              "max": 1200.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/throttle/reason_pl1": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_pl2": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 30
+            },
+            "tile0/gt0/freq0/throttle/reason_pl4": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_prochot": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_ratl": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_thermal": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_tdc": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reason_vr_thermalert": {
+              "min": 0.0,
+              "median": 0.0,
+              "max": 0.0,
+              "nonzero_samples": 0
+            },
+            "tile0/gt0/freq0/throttle/reasons": {
+              "observed_values": [
+                "pl2"
+              ]
+            },
+            "tile0/gt0/freq0/throttle/status": {
+              "min": 1.0,
+              "median": 1.0,
+              "max": 1.0,
+              "nonzero_samples": 30
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "limits": "15-second snapshots, not continuous monitoring. Arm intervals use host inventory-file write timestamps outside timed waves. Earlier unobserved intervals remain unobserved. Power-limit throttling is expected under the fixed cap; no new energy or power-efficiency comparison was performed."
+}

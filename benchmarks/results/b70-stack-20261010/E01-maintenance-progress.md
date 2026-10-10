@@ -48,3 +48,16 @@ exact source32 fixture at C4. All previous measurements remain included.
 Only a reviewed non-regressing maintenance survivor can proceed to immutable
 metadata, operational gates and the full frozen final matrix. Production
 remains the original qualified image after every controller.
+
+Six core paired blocks now show weighted cold decode +0.659% [0.102,1.285]
+and warm -0.681% [-1.823,0.316]. Neither meets the performance gate. Prose-C4
+warm native decode averages -1.882%; its counter decomposition is -1.630%
+usable tokens per request round and +0.256% request-round equivalent time.
+These are an exact algebraic decomposition of overlapping request counters,
+not causal kernel attribution or GPU group-round latency. Client aggregate
+prose-C4 warm averages -2.824% with wide paired uncertainty [-5.82,0.05].
+See the unfiltered six-block report and counter decomposition.
+
+Two further unchanged protected blocks are running to resolve the remaining
+C4 concern and bring the protected cells to five independent paired starts.
+No release review is approved from the six-block file alone.

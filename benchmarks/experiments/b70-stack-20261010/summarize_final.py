@@ -45,6 +45,10 @@ def main():
     assert metadata['rootfs'] == release['rootfs_metadata_attestation']['rootfs']
     controller = read(RAW / args.controller)
     assert controller['status'] == 'COMPLETE_FINAL_OPERATIONS_AND_FROZEN_SERVING_REVIEW_REQUIRED'
+    strict = read(PUBLIC / 'E01-final-strict-preflight.json')
+    assert strict['status'] == 'LAUNCH_PREFLIGHT_PASS' and strict['image_id'] == image
+    assert strict['policy_sha256'] == policy and strict['native']['ops'] == 19
+    assert strict['launcher_sha256'] == sha(REPO / 'scripts/run-server-exl3.py')
     for name, digest in controller['sources_sha256'].items():
         assert sha(REPO / name) == digest
         receipts[name] = digest

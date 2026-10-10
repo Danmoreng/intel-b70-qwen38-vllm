@@ -1,0 +1,25 @@
+{
+  "status": "LAUNCH_PREFLIGHT_PASS",
+  "release_status": "CANDIDATE_PREFLIGHT_ONLY",
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+  "cache": "/home/sebastian/.cache/b70-qwen38-vllm-production/d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649/36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "verified_unix": 1791606933.0502071,
+  "native": {
+    "native_artifact": "PASS",
+    "torch": "2.14.0+xpu",
+    "sha256": "00b65587220481ec89269f7510136146809d7e01938de3d30d5b67206948a95a",
+    "ops": 19
+  },
+  "command": [
+    "python3",
+    "scripts/run-server-exl3.py",
+    "--release-dir",
+    "config/experiments/b70-stack-20261010",
+    "--check-only"
+  ],
+  "source_log_sha256": "593a1d4e935372a75120b2b6bbb5524a13a0625903c38f0c6dd11407cd28d3d8",
+  "launcher_sha256": "018465995a857feb31585a2df18480d114a2ad8fd45e2fc5585cdf50a823c7b5",
+  "release_config_sha256": "94cf2642933972ea73749b95bf3159a49ad9958782dd0f421e5ea9c9e7448c33",
+  "scope": "Strict CPU/import/artifact/checkpoint/serving-profile/power-cap preflight on the exact final candidate, no production promotion and no GPU inference during this command."
+}

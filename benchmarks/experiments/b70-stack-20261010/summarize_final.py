@@ -70,6 +70,12 @@ def main():
     assert operations['restarted_inventory']['num_blocks'] == 200
     assert operations['restarted_inventory']['kv_pool_bytes'] == 11141120000
     assert operations['cases']['c4-long']['native']['preemptions'] == 0
+    for name, decoders in [('mixed-2', 1), ('mixed-4', 3)]:
+        case = operations['cases'][name]
+        assert case['status'] == 'COMPLETE' and case['decoders'] == decoders
+        assert case['total_admitted'] == decoders + 1
+        assert case['native']['preemptions'] == 0
+        assert case['during_incoming_prefill_burst_gaps_s']['count'] > 0
     assert operations['confirmed_abort_trace_occurrences'] > 0
     assert operations['cases']['worker-restart']['status'] == 'PASS'
     pressure = operations['c16_pressure_comparison']
@@ -131,8 +137,13 @@ def main():
     public_ops['cases'] = {name: {key: value for key, value in case.items()
                                 if key in ('status', 'usage', 'native', 'request_sha256',
                                            'preemption_policy', 'purpose', 'unique_images',
-                                           'pixels_each', 'fixture_sha256', 'loader')}
+                                           'pixels_each', 'fixture_sha256', 'loader',
+                                           'decoders', 'total_admitted', 'wall_s',
+                                           'incoming_prefill_client_s',
+                                           'during_incoming_prefill_burst_gaps_s')}
                            for name, case in operations['cases'].items()}
+    for name in ['mixed-2', 'mixed-4']:
+        public_ops['cases'][name]['purpose'] = 'Actual incoming cold49K prefill overlapping existing 4096-output-token decoders on this exact image. SSE burst gaps are client observations, not per-token GPU latency or a paired ABBA performance comparison.'
     public_ops['source_raw_sha256'] = sha(operation_root / 'operations.json')
     write(PUBLIC / 'operations.json', public_ops)
     for section in ['source_review']:

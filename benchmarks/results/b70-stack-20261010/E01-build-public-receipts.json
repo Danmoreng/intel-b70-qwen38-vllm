@@ -1,0 +1,18 @@
+{
+  "status": "COMPLETE_EXISTING_BUILD_PROVENANCE_EXPORT",
+  "receipts": {
+    "oneDNN-provenance-r2/audit.json": {
+      "public_path": "benchmarks/results/b70-stack-20261010/evidence/oneDNN-provenance-r2/audit.json",
+      "sha256": "1efdfac13181787b208ec63518c33ffcbd868e180d038e4ee7f79bf082ebdbdd"
+    },
+    "E01-oneDNN-build/build-receipt.json": {
+      "public_path": "benchmarks/results/b70-stack-20261010/evidence/E01-oneDNN-build/build-receipt.json",
+      "sha256": "6009b6a5af0b4fe006232a0ab0dec6018fd786aaff794eef9023c2980dbb5a3c"
+    },
+    "E01-native-build/receipt.json": {
+      "public_path": "benchmarks/results/b70-stack-20261010/evidence/E01-native-build/receipt.json",
+      "sha256": "1aec78f27b535bc7547e54bed223254fec6b06bd1c9feb746f3a05709f75c458"
+    }
+  },
+  "scope": "Exact original/stable source and embedded-kernel ordering, original CMake feature flags, clean pinned build commands and CPU native manifests. Historical GPU_UNTESTED statuses in build receipts remain CPU-stage statuses; separate local GPU and release gates qualify later stages. No native library, checkpoint weights or private logits exported."
+}

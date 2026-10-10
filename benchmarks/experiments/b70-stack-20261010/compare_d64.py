@@ -19,6 +19,12 @@ def compare(x,y,scores=False):
         top1_equal=int(x.argmax())==int(y.argmax()),x_top1=int(x.argmax()),y_top1=int(y.argmax()),
         max_finite_abs=float((x[finite]-y[finite]).abs().max()) if finite.any() else None,
         support_mask_equal=bool(torch.equal(torch.isfinite(x),torch.isfinite(y))))
+def valid_samples_equal(x,y):
+    if not torch.equal(x['num_sampled'],y['num_sampled']) or not torch.equal(x['num_rejected'],y['num_rejected']):return False
+    for i,n in enumerate(x['num_sampled'].flatten().tolist()):
+        if not torch.equal(x['actual_sampled'][i,:n],y['actual_sampled'][i,:n]):return False
+    return True
+
 def oracle(d):
     rows=[]
     for h,s,processed in zip(d['heads'],d['samples'],d['processed']):
@@ -57,7 +63,9 @@ def main():
             exact=all(torch.equal(h['logits'],j['logits']) for h,j in zip(x['heads'],y['heads']))
             repeatability.append(dict(role=role,position=pos,heads_bitidentical=exact,
                 proposals_equal=all(torch.equal(h['tokens'],j['tokens']) for h,j in zip(x['proposals'],y['proposals'])),
-                samples_equal=all(torch.equal(h['actual_sampled'],j['actual_sampled']) for h,j in zip(x['samples'],y['samples']))))
+                valid_samples_equal=all(valid_samples_equal(h,j) for h,j in zip(x['samples'],y['samples'])),
+                sample_buffer_bitidentical_including_unused_padding=all(torch.equal(h['actual_sampled'],j['actual_sampled']) for h,j in zip(x['samples'],y['samples'])),
+                padding_note='Only columns before num_sampled are native outputs; uninitialized unused rejection suffix columns are retained in raw buffers and excluded from semantic equality.'))
     for other in [r for r in roles if r!='qualified']:
         for pos in campaign['positions']:
             x,y=data['qualified',pos,0],data[other,pos,0]

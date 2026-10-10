@@ -48,3 +48,13 @@ The upstream ordering-fix-only fallback is prepared as a read-only patch
 applicability review under `candidates/E01-minimal/`. No fallback library was
 built or tested. It is conditional on a clear unrelated stable-library
 regression, not another mandatory dependency sweep.
+
+`confirm_frozen_triggers.py` is a conditional, not-yet-launched controller for
+named missing contemporaneous references after the complete final matrix.
+Its guard requires terminal full-matrix success and the exported historical
+comparison, and accepts only cases marked as review triggers. Three balanced
+fresh-worker pairs retain every original repeat, prompt byte, seed, sampling
+value and 1024-output-token budget. Read-only inventory is outside timing;
+no event/trace hooks are installed. It does not repeat the entire baseline
+benchmark or its numerical/quality qualification. Historical median losses
+remain visible even when the broader paired screen is neutral.

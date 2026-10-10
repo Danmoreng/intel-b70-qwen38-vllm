@@ -17,7 +17,7 @@ for name,panel in [('short','quantization-reference-20261001'),('long','exl3-lon
 (root/'short/bf16').symlink_to('/reference/bf16',target_is_directory=True)
 cfg=profile(image)
 cache=Path.home()/'.cache/exl3xpu/optimized-qualification'/image.removeprefix('sha256:')
-snapshot=root/'diagnostic-sources';snapshot.mkdir();(snapshot/'check_quality.py').write_bytes((Path(__file__).parent/'check_quality.py').read_bytes());state['quality_checker_sha256']=sha(snapshot/'check_quality.py')
+snapshot=root/'diagnostic-sources';snapshot.mkdir();(snapshot/'check_quality.py').write_bytes((Path(__file__).parent/'check_quality.py').read_bytes());state['quality_checker_sha256']=sha(snapshot/'check_quality.py');(snapshot/'sdpa_edge_values.py').write_bytes((Path(__file__).parent/'sdpa_edge_values.py').read_bytes());state['sdpa_edge_checker_sha256']=sha(snapshot/'sdpa_edge_values.py')
 common=['docker','run','--rm','--name','b70-stack-quality','--network','none','--device','/dev/dri','--memory','14g','--shm-size','4g','-v',str(MODEL)+':/models/checkpoint:ro','-v',str(MODEL)+':/exl3:ro','-v',str(REPO/'benchmarks/experiments/quantization-reference')+':/scripts:ro','-v',str(REPO/'benchmarks/experiments/vllm-031-upgrade')+':/upgrade-scripts:ro','-v',str(REPO/'benchmarks/experiments/vllm-031-upgrade/native_capture.py')+':/scripts/native_capture.py:ro','-v',str(REPO/'benchmarks/experiments/exl3-review-release-v2')+':/review:ro','-v',str(root)+':/results','-v',str(REPO/'benchmark-results/quantization-reference-20261001')+':/reference:ro','-v',str(REPO/'benchmark-results/exl3-long-quality-v3/bf16')+':/long-reference:ro','-v',str(REPO/'benchmark-results/vllm-031-upgrade-20261009/quality-final/short/candidate')+':/old-short:ro']
 common+=['-v',str(snapshot)+':/stack-scripts:ro','-v',str(REPO/'benchmark-results/vllm-031-upgrade-20261009/quality-final/long/candidate')+':/qualified-long:ro']
 for k,target in [('vllm','/root/.cache/vllm'),('triton','/root/.triton/cache'),('neo_compiler_cache','/root/.cache/neo_compiler_cache')]:
@@ -33,6 +33,7 @@ with (REPO.parent/'Local-AI-B70/qwen38/context-benchmark/run.lock').open('a') as
  try:
   subprocess.run(['systemctl','--user','stop','b70-qwen38-vllm.service'],check=True,timeout=90)
   assert subprocess.check_output(['docker','ps','--format','{{.Names}}'],text=True).splitlines()==['b70-chatui']
+  command('sdpa-edge-references',['/stack-scripts/sdpa_edge_values.py','--out','/results/sdpa-edge-values.json'])
   command('short-capture',['/scripts/run_native.py','--model','/models/checkpoint','--quantization','exl3','--panel','/results/short/panel.json','--out','/results/short/candidate','--engine-config','/results/config.json'])
   command('short-compare',['/scripts/compare.py','--root','/results/short','--arms','candidate','--tokenizer','/models/checkpoint/tokenizer.json'])
   command('long-capture',['/scripts/run_native.py','--model','/models/checkpoint','--quantization','exl3','--panel','/results/long/panel.json','--out','/results/long/candidate','--engine-config','/results/config.json','--windows','1'])

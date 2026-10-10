@@ -80,7 +80,9 @@ class WorkerExtension:
                 bound=sig.bind(*args,**kwargs).arguments
                 batch=bound.get('input_batch')
                 assert batch is not None and batch.num_reqs==1
-                state['proposals'].append(dict(tokens=cpu(value),sample_src_positions=cpu(r.speculator.sample_src_positions[:1]),
+                actual_anchor=cpu(bound['last_sampled'][batch.idx_mapping])
+                if not state['proposals']:assert int(actual_anchor[0])==state['anchor']
+                state['proposals'].append(dict(conditioning_anchor=actual_anchor,tokens=cpu(value),sample_src_positions=cpu(r.speculator.sample_src_positions[:1]),
                     method='greedy',q_semantics='Dirac at each actual autoregressive proposal',
                     conditioning='First step shares the forced anchor; later steps condition on this version\'s earlier actual proposals'))
             return value

@@ -1,0 +1,551 @@
+{
+  "status": "PASS_REVIEWED_PERFORMANCE_TRADEOFF",
+  "decision": "MAINTENANCE_SURVIVOR",
+  "reviewed_unix": 1791613942.4683838,
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+  "reviewed_triggers": [
+    "phase-4k-c1",
+    "phase-32k-c1",
+    "concurrency-4k-c4"
+  ],
+  "receipts": {
+    "assessment": {
+      "path": "benchmarks/results/b70-stack-20261010/assessment.json",
+      "sha256": "e3f77e0c3abeec0d5fcf6035f62dfd073537db82aa44a4c7e44510a358ac4ba4"
+    },
+    "full_matrix": {
+      "path": "benchmarks/results/b70-stack-20261010/serving-summary.json",
+      "sha256": "3e8d3c50b26380958d281770c0d074f067efe0b69a6cb94c21441876fab05328"
+    },
+    "historical_comparison": {
+      "path": "benchmarks/results/b70-stack-20261010/benchmark-comparison.json",
+      "sha256": "59703f594f2ed36704d9d09565e2b2ed27613c7521754ed84e17e25175abffbe"
+    },
+    "paired_core": {
+      "path": "benchmarks/results/b70-stack-20261010/E01-confirmation-eight-blocks.json",
+      "sha256": "d917a3d66e6165745fcb036cacefe71a5f39aee51baf7604a0a85d997abeba56"
+    },
+    "protected_review": {
+      "path": "benchmarks/results/b70-stack-20261010/E01-maintenance-serving-review.json",
+      "sha256": "0096cb3abe91c771948b722d8eb1d5e116d57e90a189d955da73176bd7d3a562"
+    },
+    "exact_trigger_controls": {
+      "path": "benchmarks/results/b70-stack-20261010/E01-frozen-trigger-reference-report.json",
+      "sha256": "79fbb493cfb4466c85bc9491b8c22f6287e65ccd8039ea9bec2653b5e9fb0a9f"
+    },
+    "control_export_map": {
+      "path": "benchmarks/results/b70-stack-20261010/E01-frozen-reference-public-exports.json",
+      "sha256": "9bf181aa2820099cf1ed6d719bac0d2283d6b09f848a68f166b9e6e04b091a0e"
+    },
+    "control_comparability": {
+      "path": "benchmarks/results/b70-stack-20261010/E01-frozen-trigger-comparability.json",
+      "sha256": "5f8596bf7dc17f7d258cdb009c3c07a905a87333327721c1eb57279a621bb8f7"
+    },
+    "counter_decomposition": {
+      "path": "benchmarks/results/b70-stack-20261010/E01-eight-block-counter-decomposition.json",
+      "sha256": "974448ddb4b3494326d6a1fa1fc0fb732641a28a6498eb8bc74a27988fbe1b51"
+    },
+    "numerical_review": {
+      "path": "benchmarks/results/b70-stack-20261010/E01-numerical-review.json",
+      "sha256": "886b8e8e24250b8e5f5dd150343908c5d64232e90157dfa41db1292fc2942266"
+    },
+    "memory_ledger": {
+      "path": "benchmarks/results/b70-stack-20261010/E01-memory-ledger.json",
+      "sha256": "4d0a896c66cc646b77a017ee30e38108615609375126d4dd37b6e6c6fead4e21"
+    },
+    "operations": {
+      "path": "benchmarks/results/b70-stack-20261010/operations.json",
+      "sha256": "0e9220ef1aa410abcd023e5ae7f9014e1a3fa0e65c423a64149ff6a89bcfdd9b"
+    },
+    "c16_reference": {
+      "path": "benchmarks/results/b70-stack-20261010/E01-c16-matched-review.json",
+      "sha256": "b17b14966418da60adb7aa26d28c1ab8bf5f57c9e5776238654bb2860b58f4ac"
+    },
+    "cpu_route_guard": {
+      "path": "benchmarks/results/b70-stack-20261010/evidence/E01-cpu-route-guard-r2/report.json",
+      "sha256": "e65f35efd6b8bbfba62d016973c932ec338927af4f6075f6ed312298281bcb7a"
+    }
+  },
+  "performance_survivor": false,
+  "weighted_decode": {
+    "cold": {
+      "block_pct": [
+        -0.057643083484972546,
+        -0.23271718369221284,
+        0.615239238478492,
+        1.0325880409486987,
+        2.017035826405017,
+        0.5803852238460171,
+        -1.7409856138597384,
+        -1.325205354864853
+      ],
+      "mean_pct": 0.11108713672205603,
+      "bootstrap_95_pct": [
+        -0.7008094303986185,
+        0.8930915019286901
+      ]
+    },
+    "warm": {
+      "block_pct": [
+        -0.3716843643032386,
+        -0.11931639682334584,
+        0.5533357012899934,
+        -1.7491429285894449,
+        0.725970320223524,
+        -3.124229273503809,
+        0.877398205994299,
+        -2.806946950958361
+      ],
+      "mean_pct": -0.7518269608337979,
+      "bootstrap_95_pct": [
+        -1.8646833250132353,
+        0.23589532330171686
+      ]
+    }
+  },
+  "exact_trigger_paired_fixture_effects": {
+    "concurrency-4k-c4": {
+      "native_decode_tps": {
+        "block_pct": [
+          -2.3953151553324536,
+          0.3169574071420667,
+          1.3344472073331244
+        ],
+        "mean_pct": -0.24797018028575418,
+        "bootstrap_95_pct": [
+          -2.3953151553324536,
+          1.3344472073331244
+        ]
+      },
+      "client_aggregate_decode_tps": {
+        "block_pct": [
+          -1.4132275654584558,
+          -0.1521687443558228,
+          -1.2039301883778806
+        ],
+        "mean_pct": -0.9231088327307198,
+        "bootstrap_95_pct": [
+          -1.4132275654584558,
+          -0.1521687443558228
+        ]
+      },
+      "fully_overlapped_decode_tps_unfiltered_counter_rate": {
+        "block_pct": [
+          -2.4474475918193144,
+          0.2767866594751337,
+          1.408156108879708
+        ],
+        "mean_pct": -0.25416827448815754,
+        "bootstrap_95_pct": [
+          -2.4474475918193144,
+          1.408156108879708
+        ]
+      },
+      "prefill_tps": {
+        "block_pct": [
+          -0.1622496771848793,
+          2.2397838101962364,
+          -0.041727942609570315
+        ],
+        "mean_pct": 0.6786020634672623,
+        "bootstrap_95_pct": [
+          -0.1622496771848793,
+          2.2397838101962364
+        ]
+      },
+      "ttft_median_s": {
+        "block_pct": [
+          0.18917700729238338,
+          -2.925868394894705,
+          0.018723623103213325
+        ],
+        "mean_pct": -0.905989254833036,
+        "bootstrap_95_pct": [
+          -2.925868394894705,
+          0.18917700729238338
+        ]
+      },
+      "ttft_p95_s": {
+        "block_pct": [
+          0.15519270377571598,
+          -1.3152754996445966,
+          0.05408405197733052
+        ],
+        "mean_pct": -0.36866624796385,
+        "bootstrap_95_pct": [
+          -1.3152754996445966,
+          0.15519270377571598
+        ]
+      },
+      "batch_wall_median_s": {
+        "block_pct": [
+          1.3552634366363476,
+          0.11651631336154168,
+          1.129698046404141
+        ],
+        "mean_pct": 0.8671592654673435,
+        "bootstrap_95_pct": [
+          0.11651631336154168,
+          1.3552634366363476
+        ]
+      },
+      "slowest_request_per_wave_median_s": {
+        "block_pct": [
+          1.3550856213789508,
+          0.11596823552467561,
+          1.1298119536901303
+        ],
+        "mean_pct": 0.866955270197919,
+        "bootstrap_95_pct": [
+          0.11596823552467561,
+          1.3550856213789508
+        ]
+      },
+      "request_wall_p95_s": {
+        "block_pct": [
+          1.5444211023597605,
+          0.12238270507826372,
+          0.9778172053940057
+        ],
+        "mean_pct": 0.8815403376106766,
+        "bootstrap_95_pct": [
+          0.12238270507826372,
+          1.5444211023597605
+        ]
+      },
+      "mtp_acceptance": {
+        "block_pct": [
+          -4.020746169181467,
+          0.5352252843973395,
+          1.6728105577144694
+        ],
+        "mean_pct": -0.604236775689886,
+        "bootstrap_95_pct": [
+          -4.020746169181467,
+          1.6728105577144694
+        ]
+      },
+      "usable_tokens_per_request_round_equivalent": {
+        "block_pct": [
+          -2.4918275206464506,
+          0.32667121267981747,
+          1.0069206256873569
+        ],
+        "mean_pct": -0.38607856075975877,
+        "bootstrap_95_pct": [
+          -2.4918275206464506,
+          1.0069206256873569
+        ]
+      },
+      "request_round_equivalent_ms": {
+        "block_pct": [
+          -0.09888087387155743,
+          0.00968311419007972,
+          -0.3232134685411178
+        ],
+        "mean_pct": -0.13747040940753186,
+        "bootstrap_95_pct": [
+          -0.3232134685411178,
+          0.00968311419007972
+        ]
+      }
+    },
+    "phase-32k-c1": {
+      "native_decode_tps": {
+        "block_pct": [
+          0.6854035635378419,
+          2.9446067586041407,
+          0.5813982627924767
+        ],
+        "mean_pct": 1.4038028616448197,
+        "bootstrap_95_pct": [
+          0.5813982627924767,
+          2.9446067586041407
+        ]
+      },
+      "client_aggregate_decode_tps": {
+        "block_pct": [
+          0.6836263294641128,
+          2.944632379181357,
+          0.5757327828459143
+        ],
+        "mean_pct": 1.4013304971637948,
+        "bootstrap_95_pct": [
+          0.5757327828459143,
+          2.944632379181357
+        ]
+      },
+      "fully_overlapped_decode_tps_unfiltered_counter_rate": {
+        "block_pct": [
+          0.6602945869561673,
+          2.996599760406035,
+          0.847633604682887
+        ],
+        "mean_pct": 1.5015093173483631,
+        "bootstrap_95_pct": [
+          0.6602945869561673,
+          2.996599760406035
+        ]
+      },
+      "prefill_tps": {
+        "block_pct": [
+          0.03477521000869454,
+          0.2464776237071036,
+          0.06528302598399223
+        ],
+        "mean_pct": 0.11551195323326346,
+        "bootstrap_95_pct": [
+          0.03477521000869454,
+          0.2464776237071036
+        ]
+      },
+      "ttft_median_s": {
+        "block_pct": [
+          -0.023958382991929556,
+          -0.2381737338614645,
+          -0.06199949054180134
+        ],
+        "mean_pct": -0.1080438691317318,
+        "bootstrap_95_pct": [
+          -0.2381737338614645,
+          -0.023958382991929556
+        ]
+      },
+      "ttft_p95_s": {
+        "block_pct": [
+          -0.023958382991929556,
+          -0.2381737338614645,
+          -0.06199949054180134
+        ],
+        "mean_pct": -0.1080438691317318,
+        "bootstrap_95_pct": [
+          -0.2381737338614645,
+          -0.023958382991929556
+        ]
+      },
+      "batch_wall_median_s": {
+        "block_pct": [
+          -0.48657693427818566,
+          -1.6753605107059584,
+          -0.360699103518962
+        ],
+        "mean_pct": -0.8408788495010353,
+        "bootstrap_95_pct": [
+          -1.6753605107059584,
+          -0.360699103518962
+        ]
+      },
+      "slowest_request_per_wave_median_s": {
+        "block_pct": [
+          -0.4866261112281654,
+          -1.6752699066990666,
+          -0.3607858427438341
+        ],
+        "mean_pct": -0.840893953557022,
+        "bootstrap_95_pct": [
+          -1.6752699066990666,
+          -0.3607858427438341
+        ]
+      },
+      "request_wall_p95_s": {
+        "block_pct": [
+          -0.4866261112281654,
+          -1.6752699066990666,
+          -0.3607858427438341
+        ],
+        "mean_pct": -0.840893953557022,
+        "bootstrap_95_pct": [
+          -1.6752699066990666,
+          -0.3607858427438341
+        ]
+      },
+      "mtp_acceptance": {
+        "block_pct": [
+          1.627774862320348,
+          5.07031334262637,
+          1.1913661521252465
+        ],
+        "mean_pct": 2.629818119023988,
+        "bootstrap_95_pct": [
+          1.1913661521252465,
+          5.07031334262637
+        ]
+      },
+      "usable_tokens_per_request_round_equivalent": {
+        "block_pct": [
+          0.7593624225676933,
+          3.0817314752494904,
+          0.681078335747969
+        ],
+        "mean_pct": 1.5073907445217176,
+        "bootstrap_95_pct": [
+          0.681078335747969,
+          3.0817314752494904
+        ]
+      },
+      "request_round_equivalent_ms": {
+        "block_pct": [
+          0.07345539314759414,
+          0.13320242892072423,
+          0.0991038846915352
+        ],
+        "mean_pct": 0.10192056891995119,
+        "bootstrap_95_pct": [
+          0.07345539314759414,
+          0.13320242892072423
+        ]
+      }
+    },
+    "phase-4k-c1": {
+      "native_decode_tps": {
+        "block_pct": [
+          -2.160411080539509,
+          4.210678834756732,
+          3.5696302334827132
+        ],
+        "mean_pct": 1.873299329233312,
+        "bootstrap_95_pct": [
+          -2.160411080539509,
+          4.210678834756732
+        ]
+      },
+      "client_aggregate_decode_tps": {
+        "block_pct": [
+          -2.157338084712405,
+          4.224511206491162,
+          3.574570197354199
+        ],
+        "mean_pct": 1.8805811063776519,
+        "bootstrap_95_pct": [
+          -2.157338084712405,
+          4.224511206491162
+        ]
+      },
+      "fully_overlapped_decode_tps_unfiltered_counter_rate": {
+        "block_pct": [
+          -2.2399125264593787,
+          4.182530144350029,
+          3.9235116146000504
+        ],
+        "mean_pct": 1.9553764108302334,
+        "bootstrap_95_pct": [
+          -2.2399125264593787,
+          4.182530144350029
+        ]
+      },
+      "prefill_tps": {
+        "block_pct": [
+          -0.3456721220926172,
+          0.7431637720663473,
+          0.048428483744041496
+        ],
+        "mean_pct": 0.14864004457259053,
+        "bootstrap_95_pct": [
+          -0.3456721220926172,
+          0.7431637720663473
+        ]
+      },
+      "ttft_median_s": {
+        "block_pct": [
+          0.41839691994747347,
+          -0.6857881910823862,
+          -0.006684787571515262
+        ],
+        "mean_pct": -0.091358686235476,
+        "bootstrap_95_pct": [
+          -0.6857881910823862,
+          0.41839691994747347
+        ]
+      },
+      "ttft_p95_s": {
+        "block_pct": [
+          0.41839691994747347,
+          -0.6857881910823862,
+          -0.006684787571515262
+        ],
+        "mean_pct": -0.091358686235476,
+        "bootstrap_95_pct": [
+          -0.6857881910823862,
+          0.41839691994747347
+        ]
+      },
+      "batch_wall_median_s": {
+        "block_pct": [
+          2.0400523704883198,
+          -3.7495391856031937,
+          -3.1468922182183037
+        ],
+        "mean_pct": -1.618793011111059,
+        "bootstrap_95_pct": [
+          -3.7495391856031937,
+          2.0400523704883198
+        ]
+      },
+      "slowest_request_per_wave_median_s": {
+        "block_pct": [
+          2.035781049807575,
+          -3.7540082359477887,
+          -3.1460327003718334
+        ],
+        "mean_pct": -1.6214199621706824,
+        "bootstrap_95_pct": [
+          -3.7540082359477887,
+          2.035781049807575
+        ]
+      },
+      "request_wall_p95_s": {
+        "block_pct": [
+          2.035781049807575,
+          -3.7540082359477887,
+          -3.1460327003718334
+        ],
+        "mean_pct": -1.6214199621706824,
+        "bootstrap_95_pct": [
+          -3.7540082359477887,
+          2.035781049807575
+        ]
+      },
+      "mtp_acceptance": {
+        "block_pct": [
+          -3.074515439027474,
+          6.972599037788804,
+          5.652286609534228
+        ],
+        "mean_pct": 3.183456736098519,
+        "bootstrap_95_pct": [
+          -3.074515439027474,
+          6.972599037788804
+        ]
+      },
+      "usable_tokens_per_request_round_equivalent": {
+        "block_pct": [
+          -1.9190388068204185,
+          4.116461678327912,
+          3.406007652117143
+        ],
+        "mean_pct": 1.8678101745415456,
+        "bootstrap_95_pct": [
+          -1.9190388068204185,
+          4.116461678327912
+        ]
+      },
+      "request_round_equivalent_ms": {
+        "block_pct": [
+          0.24670205219054706,
+          -0.0904102703123409,
+          -0.15798316649070204
+        ],
+        "mean_pct": -0.0005637948708319638,
+        "bootstrap_95_pct": [
+          -0.15798316649070204,
+          0.24670205219054706
+        ]
+      }
+    }
+  },
+  "historical_adverse_cells_retained": true,
+  "smaller_systematic_c4_loss_retained": true,
+  "rationale": "Accept stable oneDNN 3.13.4 as maintenance only. The relevant S_max-before-Q_arrive barrier ordering fix is present and the mapped old source/binary lacks it. Original quality/operator/graph tolerances, actual 262144 total-token use, matched 200-block warm pools and exact-image operational gates pass with the separately retained numerical review. Eight core and five protected startup blocks do not establish a >=3% weighted speed gain. The three named historical review triggers are not reproduced as clear threshold-exceeding losses in three balanced exact-fixture startup pairs; both median ratios and paired per-fixture log-ratios and all original repeats remain published. The 4K C4 client rate is consistently about 0.9% lower by paired-fixture effects (1.3% by within-arm median ratios), with finite-panel E2E p95 about 0.9% higher. This smaller loss is an explicit maintenance tradeoff, not a hidden neutral or speed claim. Prior warm prose C4 client loss and wider uncertainty are also retained. No sampled thermal flag or changed 180-W cap explains a clear regression; early first-arm telemetry is incomplete. Bounded counter decomposition and output hashes show changed acceptance/histories, but do not prove the cause of every speed difference. No clear unrelated stable-library regression requires E01-minimal; its applicability review remains unbuilt.",
+  "limits": "Engineering maintenance approval from finite panels, not formal universal noninferiority or accuracy improvement. Exact short arrays remain failed; independent finite reference/quality/state checks support the separate numerical review. Three control startup blocks are low-powered and the first baseline telemetry interval is partly unobserved. Eight overlap windows have a one-token round-accounting residual and remain invalid; their unfiltered counter rates are not validated physical round timings. All actual completion counts are exact and C4 overlap windows are valid. RootFS identity relates the exact final image to the capacity-tested runtime parent. No sampler patch, MTP-depth/DFlash sweep, model recipe change, context reduction, broad dependency force-install or new power sweep is included."
+}

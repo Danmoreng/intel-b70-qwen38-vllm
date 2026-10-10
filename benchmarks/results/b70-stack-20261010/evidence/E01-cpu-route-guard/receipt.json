@@ -1,0 +1,32 @@
+{
+  "status": "FAILED",
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--name",
+    "b70-stack-cpu-route-guard",
+    "--network",
+    "none",
+    "--cpus",
+    "1",
+    "--memory",
+    "2g",
+    "--user",
+    "1000:1000",
+    "-v",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-cpu-route-guard:/results",
+    "--entrypoint",
+    "python3",
+    "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+    "/results/cpu_route_guard.py",
+    "--out",
+    "/results/report.json"
+  ],
+  "script_sha256": "f50e7f7bfec47092f63d7f778da52e22a3abbbf28853f00e5ea316a635018a36",
+  "started_unix": 1791613587.6983197,
+  "gpu_devices_mounted": false,
+  "error": "CalledProcessError(1, ['docker', 'run', '--rm', '--name', 'b70-stack-cpu-route-guard', '--network', 'none', '--cpus', '1', '--memory', '2g', '--user', '1000:1000', '-v', '/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-cpu-route-guard:/results', '--entrypoint', 'python3', 'sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a', '/results/cpu_route_guard.py', '--out', '/results/report.json'])",
+  "finished_unix": 1791613588.9146519
+}

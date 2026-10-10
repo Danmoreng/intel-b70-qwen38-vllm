@@ -1,0 +1,33 @@
+{
+  "status": "PASS_CPU_ONLY_INSTALLED_ROUTE_GUARD",
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--name",
+    "b70-stack-cpu-route-guard",
+    "--network",
+    "none",
+    "--cpus",
+    "1",
+    "--memory",
+    "2g",
+    "--user",
+    "0:0",
+    "-v",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-cpu-route-guard-r2:/results",
+    "--entrypoint",
+    "python3",
+    "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+    "/results/cpu_route_guard.py",
+    "--out",
+    "/results/report.json"
+  ],
+  "script_sha256": "f50e7f7bfec47092f63d7f778da52e22a3abbbf28853f00e5ea316a635018a36",
+  "started_unix": 1791613651.1708195,
+  "gpu_devices_mounted": false,
+  "previous_attempt": "E01-cpu-route-guard failed before guard execution because UID1000 could not read root-owned image source",
+  "report_sha256": "e65f35efd6b8bbfba62d016973c932ec338927af4f6075f6ed312298281bcb7a",
+  "finished_unix": 1791613652.4364448
+}

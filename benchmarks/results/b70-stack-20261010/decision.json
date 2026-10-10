@@ -1,0 +1,27 @@
+{
+  "status": "QUALIFIED_FOR_PRODUCTION_PROMOTION",
+  "classification": "MAINTENANCE_SURVIVOR",
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+  "immediate_rollback_image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "gate_assessment": {
+    "path": "benchmarks/results/b70-stack-20261010/assessment.json",
+    "sha256": "e3f77e0c3abeec0d5fcf6035f62dfd073537db82aa44a4c7e44510a358ac4ba4"
+  },
+  "benchmark_summary": {
+    "path": "benchmarks/results/b70-stack-20261010/serving-summary.json",
+    "sha256": "3e8d3c50b26380958d281770c0d074f067efe0b69a6cb94c21441876fab05328"
+  },
+  "performance_review_triggers": [
+    "phase-4k-c1",
+    "phase-32k-c1",
+    "concurrency-4k-c4"
+  ],
+  "performance_review": {
+    "path": "benchmarks/results/b70-stack-20261010/performance-review.json",
+    "sha256": "31ce2f382c0cfebb0decbfd15f16afbbd5d34d7d15e831453018a8dc5e811b64"
+  },
+  "rationale": "Qualified oneDNN 3.13.4 SDPA ordering-fix maintenance release with matching EXL3 rebuild; native MTP3/FP16/FP8-KV/262144/max-seqs16/180W and original M04 retained. No established weighted speedup. Small measured C4 client-throughput loss and numerical equality failure are explicitly reviewed and retained in the linked performance/numerical receipts.",
+  "planned_production_alias": "local/b70-qwen38-vllm:production-exl3-v4",
+  "deployment_status": "PENDING_ACTUAL_PERMANENT_SERVICE_START_AND_RESTART"
+}

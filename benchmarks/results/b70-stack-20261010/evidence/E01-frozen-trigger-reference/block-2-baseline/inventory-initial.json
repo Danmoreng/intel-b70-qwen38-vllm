@@ -1,0 +1,2398 @@
+{
+  "status": "ACTUAL_WORKER_READ_ONLY_INVENTORY",
+  "runner": "XPUModelRunnerV2",
+  "speculator": "MTPSpeculator",
+  "custom_oneDNN": {
+    "version": "3.13.0",
+    "git": "0e2a5bfeef1bfbffc3137464606540233086ce9b",
+    "mapped_libraries": [
+      {
+        "path": "/opt/b70/libdnnl.so.3",
+        "bytes": 43182192,
+        "sha256": "ee8fc42adcf851ea0f8013ebda24f07629f49ca6ed815835a16da45ad718ca20"
+      }
+    ]
+  },
+  "configured_max_model_len": 262144,
+  "mtp_tokens": 3,
+  "kv_pool_bytes": 11141120000,
+  "num_blocks": 200,
+  "pool_stride_bytes": 55705600,
+  "groups": [
+    {
+      "index": 0,
+      "layers": [
+        "language_model.model.layers.0.linear_attn",
+        "language_model.model.layers.4.linear_attn",
+        "language_model.model.layers.8.linear_attn",
+        "language_model.model.layers.12.linear_attn",
+        "language_model.model.layers.16.linear_attn",
+        "language_model.model.layers.20.linear_attn",
+        "language_model.model.layers.24.linear_attn",
+        "language_model.model.layers.28.linear_attn",
+        "language_model.model.layers.32.linear_attn",
+        "language_model.model.layers.36.linear_attn",
+        "language_model.model.layers.40.linear_attn",
+        "language_model.model.layers.44.linear_attn",
+        "language_model.model.layers.48.linear_attn",
+        "language_model.model.layers.52.linear_attn",
+        "language_model.model.layers.56.linear_attn",
+        "language_model.model.layers.60.linear_attn"
+      ],
+      "spec_type": "MambaSpec",
+      "page_size_bytes": 3276800,
+      "max_request_bytes": 16384000,
+      "host_resident": false
+    },
+    {
+      "index": 1,
+      "layers": [
+        "language_model.model.layers.1.linear_attn",
+        "language_model.model.layers.5.linear_attn",
+        "language_model.model.layers.9.linear_attn",
+        "language_model.model.layers.13.linear_attn",
+        "language_model.model.layers.17.linear_attn",
+        "language_model.model.layers.21.linear_attn",
+        "language_model.model.layers.25.linear_attn",
+        "language_model.model.layers.29.linear_attn",
+        "language_model.model.layers.33.linear_attn",
+        "language_model.model.layers.37.linear_attn",
+        "language_model.model.layers.41.linear_attn",
+        "language_model.model.layers.45.linear_attn",
+        "language_model.model.layers.49.linear_attn",
+        "language_model.model.layers.53.linear_attn",
+        "language_model.model.layers.57.linear_attn",
+        "language_model.model.layers.61.linear_attn"
+      ],
+      "spec_type": "MambaSpec",
+      "page_size_bytes": 3276800,
+      "max_request_bytes": 16384000,
+      "host_resident": false
+    },
+    {
+      "index": 2,
+      "layers": [
+        "language_model.model.layers.2.linear_attn",
+        "language_model.model.layers.6.linear_attn",
+        "language_model.model.layers.10.linear_attn",
+        "language_model.model.layers.14.linear_attn",
+        "language_model.model.layers.18.linear_attn",
+        "language_model.model.layers.22.linear_attn",
+        "language_model.model.layers.26.linear_attn",
+        "language_model.model.layers.30.linear_attn",
+        "language_model.model.layers.34.linear_attn",
+        "language_model.model.layers.38.linear_attn",
+        "language_model.model.layers.42.linear_attn",
+        "language_model.model.layers.46.linear_attn",
+        "language_model.model.layers.50.linear_attn",
+        "language_model.model.layers.54.linear_attn",
+        "language_model.model.layers.58.linear_attn",
+        "language_model.model.layers.62.linear_attn"
+      ],
+      "spec_type": "MambaSpec",
+      "page_size_bytes": 3276800,
+      "max_request_bytes": 16384000,
+      "host_resident": false
+    },
+    {
+      "index": 3,
+      "layers": [
+        "language_model.model.layers.3.self_attn.attn",
+        "language_model.model.layers.7.self_attn.attn",
+        "language_model.model.layers.11.self_attn.attn",
+        "language_model.model.layers.15.self_attn.attn",
+        "language_model.model.layers.19.self_attn.attn",
+        "language_model.model.layers.23.self_attn.attn",
+        "language_model.model.layers.27.self_attn.attn",
+        "language_model.model.layers.31.self_attn.attn",
+        "language_model.model.layers.35.self_attn.attn",
+        "language_model.model.layers.39.self_attn.attn",
+        "language_model.model.layers.43.self_attn.attn",
+        "language_model.model.layers.47.self_attn.attn",
+        "language_model.model.layers.51.self_attn.attn",
+        "language_model.model.layers.55.self_attn.attn",
+        "language_model.model.layers.59.self_attn.attn",
+        "language_model.model.layers.63.self_attn.attn",
+        "mtp.layers.0.self_attn.attn"
+      ],
+      "spec_type": "FullAttentionSpec",
+      "page_size_bytes": 3276800,
+      "max_request_bytes": 537395200,
+      "host_resident": false
+    }
+  ],
+  "torch_allocated_bytes": 28762877440,
+  "torch_reserved_bytes": 28955377664,
+  "peak_allocated_bytes": 28852941312,
+  "peak_reserved_bytes": 29100081152,
+  "free_bytes": 2613714944,
+  "total_bytes": 34242297856,
+  "sdpa_partition_cache_stats": {
+    "capacity": 64,
+    "entries": 0,
+    "hits": 0,
+    "misses": 0,
+    "evictions": 0,
+    "pressure_waits": 0,
+    "compile_microseconds": 0,
+    "peak_entries": 0,
+    "scale_constants": 0
+  },
+  "sources": {
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_5.py": "d261726aae3ce5d52c37b868c317d9377d5e1d7c344961707acc07785a4ec4ab",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_vl.py": "8081274b53fd41f0bf386e5c3f4c9438d00b2e4400c2acd98a53261ff3228465",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/conv.py": "2def9222052fd0734467e531a61b6c2996ca87693bc9b352caad0f349b2bb159",
+    "/opt/venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py": "4897b5402c35e49c830edaee1eacc1b1c3f802ddc8e7ddf4112a71c78bea81f5",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/rotary_embedding/base.py": "c81804498f08f072356a26b41967f211475df2694dabf5da9f488c074d1fdef5",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/rotary_embedding/common.py": "af4825138c1d8ee3823bfad04dadd91f6657818f867756c676faeb9d14d64f02",
+    "/opt/venv/lib/python3.12/site-packages/torch/nn/modules/normalization.py": "96284b63a2088c7d378716d5114eb5b6a1c072d479116170fcfd284c57e84b4f",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/linear.py": "7a9b90937865fa35d955ffc2017f23d3997bc4fba954e2667870b1b4854a38e0",
+    "/opt/venv/lib/python3.12/site-packages/torch/nn/modules/activation.py": "9b1ef5c6daeaf392b9267f82a7212da22233c23b8b344a7494d58426a2bf3679",
+    "/opt/venv/lib/python3.12/site-packages/torch/nn/modules/container.py": "5a8e13284e662bab0848deb80cd79148f9121b857897e2bf164ae0e506141c75",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py": "2bf91675732b6bafb29e16cc8921e148a20c81f691ba0af80124692aee0389f3",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py": "336e665cd84574d72185338018e0860850032d0ee39f584acaa64181243e0aba",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/vocab_parallel_embedding.py": "01576027a0262d2135800aab0ddb2fe2701fae2177c33f8ad2426240b6e04073",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py": "3bd2f805f0f4b821e6902ef18da8ba66ad42a7e5a633b76abe96892532293d9c",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py": "d7e98b3f305435fd464cb088ed1f4d22488d7ef21a9bb47cef45e155bf600534",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_moe.py": "382904901ed32374009fbecfd08c37d3337d721d30d3d25010d39de32cfbb2f8",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/activation.py": "bebeddbd4997f49f54471ee31ac42b22c3c11dfe25244e55d20c36f390489c05",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py": "5b5ec10a81777057f9bc8160df99b1b77e17813647cf90d2cd69966e6201c99c",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/rotary_embedding/mrope.py": "829b128590cd2f2ddee09f5332e0ffec210e028fb1775931fa5ebe1193742097",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py": "bde77677fd0e95ea09c6a580dfaf09b57741e8183e00cb106e2d1cc64d8e03f2",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/logits_processor.py": "35cf8235cb529ba2d37358fe9b9e5a29f40b5c3cbcc9e6750c8480c51bd7da83",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_5_mtp.py": "04be8e53afff3c9e27198d18ad66bdee787b58c8c294326de1e907f9612a8241"
+  },
+  "modules": [
+    {
+      "role": "target",
+      "name": "visual.blocks.0.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.0.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.1.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.1.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.2.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.2.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.3.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.3.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.4.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.4.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.5.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.5.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.6.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.6.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.7.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.7.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.8.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.8.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.9.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.9.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.10.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.10.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.11.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.11.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.12.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.12.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.13.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.13.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.14.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.14.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.15.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.15.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.16.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.16.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.17.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.17.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.18.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.18.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.19.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.19.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.20.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.20.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.21.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.21.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.22.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.22.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.23.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.23.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.24.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.24.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.25.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.25.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.26.attn",
+      "type": "Qwen2_5_VisionAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2_5_vl.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "visual.blocks.26.attn.attn",
+      "type": "MMEncoderAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/mm_encoder_attention.py",
+      "attributes": {
+        "num_heads": 16,
+        "num_kv_heads": 16
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.0.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.0.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.0.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.1.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.1.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.1.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.2.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.2.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.2.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.3.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.3.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.4.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.4.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.4.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.5.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.5.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.5.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.6.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.6.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.6.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.7.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.7.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.8.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.8.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.8.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.9.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.9.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.9.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.10.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.10.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.10.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.11.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.11.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.12.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.12.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.12.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.13.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.13.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.13.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.14.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.14.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.14.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.15.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.15.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.16.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.16.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.16.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.17.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.17.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.17.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.18.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.18.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.18.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.19.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.19.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.20.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.20.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.20.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.21.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.21.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.21.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.22.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.22.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.22.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.23.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.23.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.24.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.24.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.24.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.25.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.25.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.25.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.26.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.26.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.26.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.27.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.27.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.28.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.28.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.28.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.29.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.29.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.29.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.30.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.30.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.30.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.31.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.31.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.32.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.32.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.32.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.33.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.33.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.33.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.34.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.34.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.34.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.35.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.35.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.36.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.36.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.36.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.37.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.37.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.37.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.38.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.38.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.38.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.39.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.39.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.40.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.40.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.40.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.41.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.41.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.41.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.42.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.42.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.42.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.43.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.43.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.44.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.44.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.44.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.45.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.45.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.45.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.46.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.46.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.46.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.47.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.47.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.48.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.48.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.48.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.49.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.49.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.49.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.50.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.50.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.50.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.51.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.51.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.52.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.52.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.52.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.53.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.53.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.53.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.54.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.54.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.54.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.55.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.55.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.56.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.56.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.56.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.57.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.57.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.57.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.58.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.58.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.58.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.59.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.59.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.60.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.60.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.60.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.61.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.61.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.61.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.62.linear_attn",
+      "type": "QwenGatedDeltaNetAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {
+        "num_v_heads": 48,
+        "activation": "silu"
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.62.linear_attn.norm",
+      "type": "RMSNormGated",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/layernorm.py",
+      "attributes": {
+        "eps": 1e-06,
+        "norm_before_gate": true,
+        "activation": "silu",
+        "group_size": null
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.62.linear_attn.chunk_gated_delta_rule",
+      "type": "ChunkGatedDeltaRule",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py",
+      "attributes": {}
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.63.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "target",
+      "name": "language_model.model.layers.63.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    },
+    {
+      "role": "mtp",
+      "name": "model.layers.0.self_attn",
+      "type": "Qwen3NextAttention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_next.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4,
+        "head_dim": 256
+      }
+    },
+    {
+      "role": "mtp",
+      "name": "model.layers.0.self_attn.attn",
+      "type": "Attention",
+      "source": "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/layers/attention/attention.py",
+      "attributes": {
+        "num_heads": 24,
+        "num_kv_heads": 4
+      }
+    }
+  ],
+  "registered_tensor_dtypes": {
+    "target": {
+      "parameter:torch.float16": 1201,
+      "parameter:torch.float32": 48,
+      "parameter:torch.int16": 257,
+      "parameter:torch.int32": 257,
+      "buffer:torch.float16": 2,
+      "buffer:torch.float32": 64
+    },
+    "mtp": {
+      "parameter:torch.int16": 6,
+      "parameter:torch.float16": 20,
+      "parameter:torch.int32": 6,
+      "buffer:torch.float16": 1,
+      "buffer:torch.float32": 4
+    }
+  },
+  "profiler_activities": [
+    "ProfilerActivity.CPU",
+    "ProfilerActivity.XPU"
+  ],
+  "route_scope": "Model objects and sources establish eligibility, not captured execution. Kernel trace supplies graph-route evidence.",
+  "graph_pool_scope": "Graph and native workspaces are included in allocator/device residency; independently attributed only where a later diagnostic proves ownership."
+}

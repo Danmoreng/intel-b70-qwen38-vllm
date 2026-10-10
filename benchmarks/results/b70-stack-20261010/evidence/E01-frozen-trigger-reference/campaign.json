@@ -1,0 +1,232 @@
+{
+  "status": "COMPLETE_NAMED_FROZEN_REFERENCES_REVIEW_REQUIRED",
+  "baseline": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+  "candidate": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "cases": [
+    "phase-4k-c1",
+    "phase-32k-c1",
+    "concurrency-4k-c4"
+  ],
+  "independent_blocks": 3,
+  "blocks": [
+    {
+      "index": 0,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "arms": {
+        "baseline": {
+          "status": "COMPLETE",
+          "inventory_sha256": "2b05f7a1e7a034ba49a92ac5e8132e0b93ccfc4bb4530dcae6e3280fbe073c9c",
+          "num_blocks": 200,
+          "kv_pool_bytes": 11141120000,
+          "command": [
+            "/usr/bin/python3",
+            "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/scripts/current-profile-benchmark.py",
+            "--base",
+            "http://127.0.0.1:8082",
+            "--container",
+            "b70-stack-frozen-reference",
+            "--expected-max-num-seqs",
+            "16",
+            "--fixture-root",
+            "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+            "--legacy-prefix-namespace",
+            "--output-root",
+            "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-frozen-trigger-reference/block-0-baseline/measured",
+            "--execute",
+            "--only",
+            "phase-4k-c1",
+            "--only",
+            "phase-32k-c1",
+            "--only",
+            "concurrency-4k-c4"
+          ],
+          "results_sha256": "7aa6475e96f7797853a2f2f85ee52ef8833c839744d20bb03d87e333c1ef3265",
+          "results_path": "block-0-baseline/measured/run-20261010-073455-w0.00/results.json"
+        },
+        "candidate": {
+          "status": "COMPLETE",
+          "inventory_sha256": "cd02eb7c7916daa3b25182ed17dbeb8b2438726473429c32b5b9ed017788b2ed",
+          "num_blocks": 200,
+          "kv_pool_bytes": 11141120000,
+          "command": [
+            "/usr/bin/python3",
+            "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/scripts/current-profile-benchmark.py",
+            "--base",
+            "http://127.0.0.1:8082",
+            "--container",
+            "b70-stack-frozen-reference",
+            "--expected-max-num-seqs",
+            "16",
+            "--fixture-root",
+            "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+            "--legacy-prefix-namespace",
+            "--output-root",
+            "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-frozen-trigger-reference/block-0-candidate/measured",
+            "--execute",
+            "--only",
+            "phase-4k-c1",
+            "--only",
+            "phase-32k-c1",
+            "--only",
+            "concurrency-4k-c4"
+          ],
+          "results_sha256": "e3158813c88d8263b5aa5d3f556b91735159741a4425e2fa68561c7e6a8fa47f",
+          "results_path": "block-0-candidate/measured/run-20261010-074321-w0.00/results.json"
+        }
+      }
+    },
+    {
+      "index": 1,
+      "order": [
+        "candidate",
+        "baseline"
+      ],
+      "arms": {
+        "candidate": {
+          "status": "COMPLETE",
+          "inventory_sha256": "3eef210bdac2832f5f6fed1a2c96927c8563df99dfd517984c6b09aa97b93ca8",
+          "num_blocks": 200,
+          "kv_pool_bytes": 11141120000,
+          "command": [
+            "/usr/bin/python3",
+            "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/scripts/current-profile-benchmark.py",
+            "--base",
+            "http://127.0.0.1:8082",
+            "--container",
+            "b70-stack-frozen-reference",
+            "--expected-max-num-seqs",
+            "16",
+            "--fixture-root",
+            "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+            "--legacy-prefix-namespace",
+            "--output-root",
+            "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-frozen-trigger-reference/block-1-candidate/measured",
+            "--execute",
+            "--only",
+            "phase-4k-c1",
+            "--only",
+            "phase-32k-c1",
+            "--only",
+            "concurrency-4k-c4"
+          ],
+          "results_sha256": "4b218dc82341e1f849210fa7f2924f26fb2200e83179ab5f9c0e82ee864c97fb",
+          "results_path": "block-1-candidate/measured/run-20261010-075152-w0.00/results.json"
+        },
+        "baseline": {
+          "status": "COMPLETE",
+          "inventory_sha256": "4e71366c6ae4ab83dbe6c86e00c6562bdc9dfef283ddb50b15436021753df878",
+          "num_blocks": 200,
+          "kv_pool_bytes": 11141120000,
+          "command": [
+            "/usr/bin/python3",
+            "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/scripts/current-profile-benchmark.py",
+            "--base",
+            "http://127.0.0.1:8082",
+            "--container",
+            "b70-stack-frozen-reference",
+            "--expected-max-num-seqs",
+            "16",
+            "--fixture-root",
+            "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+            "--legacy-prefix-namespace",
+            "--output-root",
+            "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-frozen-trigger-reference/block-1-baseline/measured",
+            "--execute",
+            "--only",
+            "phase-4k-c1",
+            "--only",
+            "phase-32k-c1",
+            "--only",
+            "concurrency-4k-c4"
+          ],
+          "results_sha256": "23a2630e5ded8f15c26c387635fdf68319263ab37b1901874ad827b1f84efc3f",
+          "results_path": "block-1-baseline/measured/run-20261010-080022-w0.00/results.json"
+        }
+      }
+    },
+    {
+      "index": 2,
+      "order": [
+        "baseline",
+        "candidate"
+      ],
+      "arms": {
+        "baseline": {
+          "status": "COMPLETE",
+          "inventory_sha256": "7af8c882cc029fa4e6cc719655ed2a714a4704f1544a8df54d25f4c4a8c21e16",
+          "num_blocks": 200,
+          "kv_pool_bytes": 11141120000,
+          "command": [
+            "/usr/bin/python3",
+            "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/scripts/current-profile-benchmark.py",
+            "--base",
+            "http://127.0.0.1:8082",
+            "--container",
+            "b70-stack-frozen-reference",
+            "--expected-max-num-seqs",
+            "16",
+            "--fixture-root",
+            "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+            "--legacy-prefix-namespace",
+            "--output-root",
+            "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-frozen-trigger-reference/block-2-baseline/measured",
+            "--execute",
+            "--only",
+            "phase-4k-c1",
+            "--only",
+            "phase-32k-c1",
+            "--only",
+            "concurrency-4k-c4"
+          ],
+          "results_sha256": "6fd2801917b58b1ba29d629d671b80f979aea83cede93991362c7a7bc470484a",
+          "results_path": "block-2-baseline/measured/run-20261010-080901-w0.00/results.json"
+        },
+        "candidate": {
+          "status": "COMPLETE",
+          "inventory_sha256": "5329b8a0147aa9167de27fc50ee1f89ae5fc8eb964c0158988264cd6f7d6a14f",
+          "num_blocks": 200,
+          "kv_pool_bytes": 11141120000,
+          "command": [
+            "/usr/bin/python3",
+            "/home/sebastian/LocalLLM/intel-b70-mtp3-stack-20261010/scripts/current-profile-benchmark.py",
+            "--base",
+            "http://127.0.0.1:8082",
+            "--container",
+            "b70-stack-frozen-reference",
+            "--expected-max-num-seqs",
+            "16",
+            "--fixture-root",
+            "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+            "--legacy-prefix-namespace",
+            "--output-root",
+            "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/benchmark-results/b70-stack-20261010/E01-frozen-trigger-reference/block-2-candidate/measured",
+            "--execute",
+            "--only",
+            "phase-4k-c1",
+            "--only",
+            "phase-32k-c1",
+            "--only",
+            "concurrency-4k-c4"
+          ],
+          "results_sha256": "cb490a09a375620e8317e9bd9ed49d3fdbb8ebd98b7d7d3135fdfe9dc941ff5a",
+          "results_path": "block-2-candidate/measured/run-20261010-081733-w0.00/results.json"
+        }
+      }
+    }
+  ],
+  "started_unix": 1791610445.693563,
+  "source_sha256": "9ac539c8d0e36f99ae50909cf7cc4c3e324620624311de384c4c134de0881a41",
+  "comparison_sha256": "59703f594f2ed36704d9d09565e2b2ed27613c7521754ed84e17e25175abffbe",
+  "benchmark_sha256": "01105118930b595aaf31b2bf58f3427b76a3b94721ceeabd947b432105ad3345",
+  "scope": "Three balanced fresh-worker pairs for explicitly named historical final-matrix review triggers only. Original frozen prompt bytes, all original repeats, seeds, sampling, 1024 output budget and warmups retained. No profiling hooks installed; read-only inventory is outside measurement. Not old full-matrix or quality requalification.",
+  "restoration": {
+    "image_id": "sha256:194a8786f12065e65647d914ddc7fdc136bafbeec73f476730ef1324e4d2c7ec",
+    "policy_sha256": "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
+    "models_endpoint_healthy": true,
+    "verified_unix": 1791613576.1170907
+  },
+  "finished_unix": 1791613576.1171033
+}

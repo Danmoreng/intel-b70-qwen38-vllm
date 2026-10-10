@@ -1,6 +1,6 @@
 # B70 MTP3 stack campaign — evidence index
 
-**Review in progress. These results do not approve a production update.**
+**Maintenance survivor selected for promotion. Actual deployment/publication is pending.**
 
 The supplied [implementation plan](../../experiments/b70-stack-20261010/B70_MTP3_CODEX_IMPLEMENTATION_PLAN_EN.md)
 and [pre-registered gates](../../experiments/b70-stack-20261010/gates.json)
@@ -21,14 +21,19 @@ whole-host upgrade experiments.
 | Independent startup-paired performance screen | [Eight core / five protected blocks](E01-confirmation-eight-blocks.json), [counter decomposition](E01-eight-block-counter-decomposition.json) |
 | Failed operational attempts and missing contemporary C16 reference | [Original attempts](E01-operations-attempts.json), [matched counters](E01-c16-matched-counters.json), [review](E01-c16-matched-review.json) |
 | Exact frozen candidate's strict preflight and operations | [Preflight](E01-final-strict-preflight.json), [operations](operations.json), [assessment](assessment.json) |
-| Complete final frozen serving matrix | [Summary](serving-summary.json), [all historical comparison cells](benchmark-comparison.json), [unresolved review triggers](final-review-pending.json) |
+| Complete final frozen serving matrix | [Summary](serving-summary.json), [all historical comparison cells](benchmark-comparison.json), [original review-trigger checkpoint](final-review-pending.json) |
+| Exact-fixture historical-trigger controls | [All paired/per-fixture results](E01-frozen-trigger-reference-report.json), [observed clocks and thermal coverage](E01-frozen-trigger-comparability.json), [exact public export map](E01-frozen-reference-public-exports.json) |
+| Actual installed CPU model-route guard | [Passing CPU-only check](evidence/E01-cpu-route-guard-r2/report.json) |
+| Final candidate/release decision | [Decision report](FINAL_DECISION.md), [explicit performance tradeoff](performance-review.json), [promotion approval](decision.json) |
 | Requirement-by-requirement completion checkpoint | [Audit](COMPLETION_AUDIT.json) |
 
 The final matrix completed 70 waves / 124 requests plus three isolated 64K
 prefix resends. Its historical adverse cells remain visible. Three balanced
-fresh-worker control pairs are now measuring only those named missing
+fresh-worker control pairs completed only those named missing
 contemporary references, with every original prompt, request value, repeat
-and 1,024-output budget retained. A final release decision is still required.
+and 1,024-output budget retained. The final decision permits a maintenance
+promotion with smaller systematic C4 loss explicitly retained; no weighted
+performance gain is established. Actual service start/restart is still required.
 
 Public JSON includes scalar counters, timings, output hashes and source
 identities. Private raw prompts, responses, streams and full-vocabulary

@@ -1,0 +1,12 @@
+{
+  "status": "PASS_CPU_OPERANDS_EXCLUDED_FROM_CUSTOM_ATTENTION_ROUTES",
+  "source_sha256": {
+    "attention_dispatch.py": "7d6c3dea198388ab7d8be7dc73f5d135026125f5988653de0fb45d385fca0a41",
+    "shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2"
+  },
+  "cpu_prefill_excluded": true,
+  "cpu_m04_excluded": true,
+  "any_custom_native_op_called": false,
+  "any_gpu_tensor_allocated": false,
+  "scope": "Actual installed Python predicates executed on real CPU tensors in a container with no GPU device mounts. This tests model-route exclusion, not CPU support or rejection by the direct XPU-native API, whose operand precondition remains XPU. No wrong-device pointer is supplied to a native operation."
+}

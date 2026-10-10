@@ -57,6 +57,19 @@ decode **−0.752%** (−1.865% to +0.236%). Warm prose-C4 client throughput is
 **−2.464%** (−5.363% to +0.132%); that adverse result remains visible and the
 interval does not establish tight-margin noninferiority.
 
+The full-matrix historical comparison flagged 4K/32K C1 decode losses and
+4K C4 TTFT. Three balanced fresh-worker pairs retaining all original prompt
+bytes, repeats and 1,024-output budgets did not reproduce a clear loss beyond
+the pre-registered guardrails. Paired per-fixture native decode effects are
+**+1.873%** at 4K (−2.160% to +4.211%) and **+1.404%** at 32K
+(+0.581% to +2.945%). The 4K C4 client rate is **−0.923%**
+(−1.413% to −0.152%), with finite-panel request E2E p95 **+0.882%**
+(+0.122% to +1.544%). This smaller systematic C4 loss is an explicit
+maintenance tradeoff. The historical adverse table and the alternate
+within-arm median ratios remain published; these three paired starts are
+not a formal universal noninferiority proof.
+[Exact-fixture controls and counter-window limitations]({relative}/E01-frozen-trigger-reference-report.json).
+
 See the [qualification and limitations]({relative}/assessment.json),
 [full frozen-matrix comparison]({relative}/benchmark-comparison.json),
 [reviewed final tradeoff]({relative}/performance-review.json), and

@@ -24,3 +24,9 @@ results are published under `benchmarks/results/b70-stack-20261010/` later.
 Existing references remain in the original qualified checkout and are reused,
 not regenerated. Historical failed MB4/full-fusion/async/piecewise experiments
 remain negative evidence unless a new, falsifiable hypothesis justifies retry.
+
+`run_d64.py` captures bounded actual same-prefix operands on the already qualified v0.31 image and, only for named missing references, the archived v0.30 image. `compare_d64.py` independently checks actual greedy-Dirac rejection against the scalar Philox known-answer oracle. Raw logits remain private. `run_quality.py` captures only the changed-stack candidate and compares against stored current-v0.31 arrays, then reuses the guarded state replay; a failed exact comparison stays failed pending numerical review.
+
+`serving_screen.py --protected` adds the existing 4K/128K code fixtures and the exact source32K fixture at C4. `analyze_screen.py` preserves all independent blocks, including first-touch compiler penalties; additional blocks do not replace unfavorable earlier observations. `run_operations.py` exercises only the candidate, including real decode/prefill overlap, media, abort, prefix extension and admission pressure. All GPU controllers restore the pinned qualified image in finally.
+
+`freeze_release.py` prepares candidate metadata only. It cannot approve or deploy a release; remaining gates and the final frozen serving campaign are required.

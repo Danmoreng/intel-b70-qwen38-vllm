@@ -13,6 +13,7 @@ D=module('screen_capacity',REPO/'scripts/run-exl3-contract-diagnostics.py')
 def main():
     p=argparse.ArgumentParser();p.add_argument('--image',required=True);p.add_argument('--out',type=Path,required=True)
     p.add_argument('--m04',type=Path);p.add_argument('--blocks',type=int,default=3);p.add_argument('--capacity',action='store_true')
+    p.add_argument('--protected',action='store_true')
     p.add_argument('--onednn-receipt',type=Path);a=p.parse_args()
     baseline=json.loads((HERE/'baseline-manifest.json').read_text())['production']['image_id']
     image=subprocess.check_output(['docker','image','inspect',a.image,'--format','{{.Id}}'],text=True).strip()
@@ -21,10 +22,17 @@ def main():
     assert sha(folder/'panel.json.gz')==manifest['panel_gzip_sha256']
     panel=json.loads(gzip.decompress((folder/'panel.json.gz').read_bytes()))
     windows=[next(w for w in panel['windows'] if w['name']==n) for n in ['source-32k','source-64k','prose-32768']]
+    if a.protected:
+        protected_path=REPO/'benchmark-results/exl3-optimized-quality-v2/performance-panel.json.gz'
+        assert sha(protected_path)=='e82311dbf9607f5b740df9e0d7305e50babd62c74d2e42f9171c8c1d59b976af'
+        protected_panel=json.loads(gzip.decompress(protected_path.read_bytes()))
+        for name in ['code-4096','code-131072']:
+            w=next(w for w in protected_panel['windows'] if w['name']==name);windows.append({**w,'concurrency':1})
+        w=next(w for w in panel['windows'] if w['name']=='source-32k');windows.append({**w,'name':'source-32k-c4-protected','concurrency':4})
     # The frozen source window has its own stable name; assert it instead of
     # substituting text or retokenizing if the panel contract differs.
     state=dict(status='RUNNING',baseline=baseline,candidate=image,blocks=[],capacity={},gates_sha256=sha(HERE/'gates.json'),
-        panel=manifest,output_budget=512,started_unix=time.time(),scope='Fixed-MTP3 paired candidate screen, not full release qualification')
+        panel=manifest,protected_panel_sha256='e82311dbf9607f5b740df9e0d7305e50babd62c74d2e42f9171c8c1d59b976af' if a.protected else None,output_budget=512,started_unix=time.time(),scope='Fixed-MTP3 paired candidate screen, not full release qualification')
     def save():(root/'campaign.json').write_text(json.dumps(state,indent=2)+'\n')
     snapshot=root/'diagnostic-sources';snapshot.mkdir()
     for name in ['inventory.py','profile_capture.py']:(snapshot/name).write_bytes((HERE/name).read_bytes())

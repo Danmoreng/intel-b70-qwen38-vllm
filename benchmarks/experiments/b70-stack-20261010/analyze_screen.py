@@ -9,8 +9,11 @@ def ci(x):
 def summarize(x):
     return dict(block_pct=x,mean_pct=statistics.mean(x),bootstrap_95_pct=ci(x))
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--out',type=Path,required=True);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--additional',type=Path,action='append',default=[]);p.add_argument('--out',type=Path,required=True);a=p.parse_args()
     d=json.loads((a.root/'campaign.json').read_text());assert d['status']=='COMPLETE_PAIRED_SCREEN_REVIEW_REQUIRED'
+    for root in a.additional:
+        extra=json.loads((root/'campaign.json').read_text());assert extra['status']==d['status'] and extra['baseline']==d['baseline'] and extra['candidate']==d['candidate']
+        d['blocks'].extend(extra['blocks'])
     cells={};weighted={m:[] for m in ['cold','warm']}
     for b in d['blocks']:
         maps={role:{(r['window'],r['mode']):r['result'] for r in b['arms'][role]} for role in ['baseline','candidate']}
@@ -22,7 +25,7 @@ def main():
                 cell[field].append(100*(y[metric]/x[metric]-1))
             cell['ttft'].append(100*(statistics.mean(y['client_ttft_s'])/statistics.mean(x['client_ttft_s'])-1))
             cell['acceptance'].append(dict(baseline=x['mean_acceptance_length'],candidate=y['mean_acceptance_length']))
-            weight={'source-32k':.35,'source-64k':.35,'prose-32768':.30}[name]
+            weight={'source-32k':.35,'source-64k':.35,'prose-32768':.30}.get(name,0)
             metric='client_aggregate_decode_tps' if name=='prose-32768' else 'native_request_weighted_decode_tps'
             scores[mode]+=weight*math.log(y[metric]/x[metric])
         for mode,v in scores.items():weighted[mode].append(100*math.expm1(v))

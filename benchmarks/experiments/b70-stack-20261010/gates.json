@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "declared_before_measurement": true,
+  "fixed": {
+    "mtp_tokens": 3,
+    "dtype": "float16",
+    "kv_cache_dtype": "fp8",
+    "max_model_len": 262144,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 4096,
+    "gpu_memory_utilization": 0.965,
+    "power_w": 180,
+    "cudagraph_mode": "FULL_DECODE_ONLY",
+    "cudagraph_capture_sizes": [1,2,4,8,12,16,24,32,40,48,56,64],
+    "sdpa_partition_cache_capacity": 64
+  },
+  "weighted_panel": {
+    "source": "benchmarks/experiments/mtp4-pro-qualification-v031/panel-manifest.json",
+    "panel_gzip_sha256": "93ec00d10f0f47e0d7d938ba65bd092a2136ebfd42cf27c7c8e6bb6d7bfc9260",
+    "weights": {"source-32k": 0.35, "source-64k": 0.35, "prose-32768": 0.30},
+    "protected_additional_cells": ["short-C1", "128K-C1", "source-C4", "262144-boundary", "16-admission-smoke"],
+    "cold_and_warm_separate": true
+  },
+  "performance_promotion": {
+    "weighted_gain_min_pct": 3,
+    "paired_uncertainty_supports_positive_effect": true,
+    "critical_decode_cell_max_credible_regression_pct": 3,
+    "ttft_prefill_e2e_tail_max_credible_regression_pct": 5,
+    "independent_screen_blocks": 3,
+    "independent_confirmation_blocks_typical_min": 5,
+    "unit_of_uncertainty": "Independent paired block; never tokens or graph iterations"
+  },
+  "mandatory": ["original_numerical_tolerances", "actual_graph_route", "actual_boundary_decode", "no_KV_capacity_loss", "no_BF16_bridge", "unchanged_checkpoint_and_recipe", "no_new_oom_or_driver_reset", "no_unbounded_cache", "no_new_preemptions_or_recompute_in_protected_cases"],
+  "maintenance_promotion": "Identified relevant fix plus nonregression, correctness and capacity; no speedup claim required",
+  "candidate_decisions": ["INACTIVE_ROUTE", "CORRECTNESS_FAIL", "CAPACITY_FAIL", "NO_MATERIAL_GAIN", "INCONCLUSIVE", "MAINTENANCE_SURVIVOR", "PERFORMANCE_SURVIVOR"],
+  "not_in_scope": ["DFlash", "MTP4+", "broad_dependency_sweep", "host_rolling_upgrade", "sampling_changes", "weight_format_changes", "power_matrix_rerun"]
+}

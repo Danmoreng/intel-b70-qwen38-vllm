@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 
 from exl3_candidate_worker import REPO, MODEL, profile, sha
+from ram_kv_release import load_overlay, serving_arguments
 
 RUNTIME_VERSIONS = {
     'b70-qwen38-exl3-production-v1': ('0.30.0', '2.13.0+xpu'),
@@ -53,6 +54,8 @@ def main():
     for key,value in cfg['env'].items():
         assert os.environ.get(key,value)==value, 'Frozen EXL3 environment override: '+key
     assert cfg['config']['vllm']==release['vllm_config'], 'Frozen serving arguments changed'
+    overlay = load_overlay(REPO, release)
+    serving_argv = serving_arguments(cfg['argv'][1:], overlay)
     for path,digest_expected in release['checkpoint_files_sha256'].items():
         assert sha(MODEL/path)==digest_expected, 'Checkpoint identity mismatch: '+path
     verify="""import hashlib,json,pathlib,runpy,torch,vllm
@@ -71,8 +74,13 @@ assert torch._C._dispatch_has_kernel_for_dispatch_key('b70_exl3_attention::share
     assert len(caps)==1 and int(caps[0].read_text())==180000000, 'Card power limit must be180W'
     cache=Path(os.environ.get('XDG_CACHE_HOME',str(Path.home()/'.cache')))/'b70-qwen38-vllm-production'/digest/release['image_id'].removeprefix('sha256:')
     print(json.dumps(dict(status='LAUNCH_PREFLIGHT_PASS',release_status=release['status'],
-                         image_id=release['image_id'],policy_sha256=digest,cache=str(cache))),flush=True)
+                         image_id=release['image_id'],policy_sha256=digest,cache=str(cache),
+                         ram_kv=overlay)),flush=True)
     if a.check_only:return
+    if overlay:
+        available = next(int(line.split()[1])*1024 for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:'))
+        if available < (overlay['cpu_gib'] + 7)*1024**3:
+            raise SystemExit('Insufficient available RAM for cache plus 7 GiB runtime/headroom')
     env={**cfg['env'],'HF_HUB_OFFLINE':'1','PYTHONPATH':'/opt/b70-runtime','ZE_AFFINITY_MASK':'0',
          'EXL3_LOADER_REPORT_DIR':'/results/loader'}
     results=cache/'reports';results.mkdir(parents=True,exist_ok=True)
@@ -81,10 +89,15 @@ assert torch._C._dispatch_has_kernel_for_dispatch_key('b70_exl3_attention::share
         '-p',os.environ.get('VLLM_HOST','127.0.0.1')+':'+os.environ.get('PORT','8081')+':8000',
         '-v',str(MODEL)+':/models/checkpoint:ro','-v',str(REPO/'runtime')+':/opt/b70-runtime:ro',
         '-v',str(results)+':/results']
+    if overlay:
+        argv[argv.index('--shm-size') + 1] = str(overlay['cpu_gib'] + 2) + 'g'
+        argv += ['--memory','23g','--memory-swap','23g',
+                 '--label','org.local.b70.runtime-extension.sha256='+overlay['sha256'],
+                 '--label','org.local.b70.kv-ram-gib='+str(overlay['cpu_gib'])]
     for key,target in [('vllm','/root/.cache/vllm'),('triton','/root/.triton/cache'),('neo_compiler_cache','/root/.cache/neo_compiler_cache')]:
         (cache/key).mkdir(parents=True,exist_ok=True);argv+=['-v',str(cache/key)+':'+target]
     for key,value in env.items():argv+=['-e',key+'='+value]
-    argv+=['--entrypoint','/opt/venv/bin/vllm',release['image_id'],*cfg['argv'][1:]]
+    argv+=['--entrypoint','/opt/venv/bin/vllm',release['image_id'],*serving_argv]
     os.execvp(argv[0],argv)
 
 

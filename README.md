@@ -4,10 +4,17 @@ The qualified production profile serves **EXL3 4.00 bpw on one 32 GB Intel Arc
 Pro B70 at 180 W**, using vLLM 0.31.0 and Torch 2.14.0+xpu. It exposes an
 OpenAI-compatible API at `http://127.0.0.1:8081/v1`, model `Qwen3.8-27B`.
 
-The isolated [RAM prefix-cache and admission candidate](docs/KV_RAM_ADMISSION_CANDIDATE.md)
-adds a bounded host-memory cache and queues requests whose full input/output
-reservations would exceed GPU capacity. It is a separate test launcher on
-localhost port 8082; the production release and service remain unchanged.
+The production runtime adds a **12 GiB host RAM prefix cache** and an async
+scheduler that queues requests whose full input/output reservations exceed GPU
+capacity. Set `B70_KV_RAM_GIB=1..12` in `.env` to change the RAM budget.
+The pinned [runtime manifest](config/production_ram_kv.json) verifies the overlay
+modules in addition to the immutable base image. The container uses a 23 GiB
+host-memory limit, bounded 128 MiB transfer batches and no developer endpoints.
+See the [measured cache capacity and limitations](benchmarks/results/kv-ram-admission/README.md).
+The cache is inclusive: two alternating maximum-length histories are not guaranteed
+to remain cached. The admission scheduler prevents competing large active requests
+from repeatedly preempting each other. Historical candidate reports retain their
+original qualification status.
 
 ## Start and recover the qualified service
 

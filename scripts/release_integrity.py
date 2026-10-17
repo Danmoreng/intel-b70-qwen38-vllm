@@ -23,6 +23,9 @@ def load_release(repo=REPO):
         path = Path(repo) / receipt['path']
         if hashlib.sha256(path.read_bytes()).hexdigest() != receipt['sha256']:
             raise RuntimeError('Release receipt changed: ' + key)
+    if 'ram_kv_runtime' in release:
+        from ram_kv_release import load_overlay
+        load_overlay(repo, release)
     return release
 
 

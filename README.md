@@ -4,6 +4,11 @@ The qualified production profile serves **EXL3 4.00 bpw on one 32 GB Intel Arc
 Pro B70 at 180 W**, using vLLM 0.31.0 and Torch 2.14.0+xpu. It exposes an
 OpenAI-compatible API at `http://127.0.0.1:8081/v1`, model `Qwen3.8-27B`.
 
+The isolated [RAM prefix-cache and admission candidate](docs/KV_RAM_ADMISSION_CANDIDATE.md)
+adds a bounded host-memory cache and queues requests whose full input/output
+reservations would exceed GPU capacity. It is a separate test launcher on
+localhost port 8082; the production release and service remain unchanged.
+
 ## Start and recover the qualified service
 
 The local release uses the immutable image recorded in

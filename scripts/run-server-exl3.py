@@ -92,6 +92,8 @@ assert torch._C._dispatch_has_kernel_for_dispatch_key('b70_exl3_attention::share
     if overlay:
         argv[argv.index('--shm-size') + 1] = str(overlay['cpu_gib'] + 2) + 'g'
         argv += ['--memory','23g','--memory-swap','23g',
+                 '--label','org.local.b70.release-status=PRODUCTION',
+                 '--label','org.local.b70.experiment=',
                  '--label','org.local.b70.runtime-extension.sha256='+overlay['sha256'],
                  '--label','org.local.b70.kv-ram-gib='+str(overlay['cpu_gib'])]
     for key,target in [('vllm','/root/.cache/vllm'),('triton','/root/.triton/cache'),('neo_compiler_cache','/root/.cache/neo_compiler_cache')]:

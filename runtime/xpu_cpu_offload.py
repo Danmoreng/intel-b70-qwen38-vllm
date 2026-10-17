@@ -10,7 +10,7 @@ Large XPU H2D batches additionally need a pinned staging allocation. Bound
 those batches and drain each one before submitting the next, so restoring a
 full history cannot allocate another full-history-sized host buffer.
 
-This adapter targets only the pinned vLLM 0.31.0 runtime; it is experimental.
+This production adapter targets only the pinned vLLM 0.31.0 runtime.
 """
 from vllm.platforms import current_platform
 from vllm.logger import init_logger

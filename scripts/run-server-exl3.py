@@ -15,6 +15,9 @@ RUNTIME_VERSIONS = {
     'b70-qwen38-exl3-production-v3': ('0.31.0', '2.14.0+xpu'),
 }
 
+# Diagnostics only: keep the frozen model/runtime/image and sampling arguments.
+OBSERVABILITY_FLAGS = ['--enable-per-request-metrics', '--enable-prompt-tokens-details']
+
 
 def main():
     if not __debug__:
@@ -56,6 +59,7 @@ def main():
     assert cfg['config']['vllm']==release['vllm_config'], 'Frozen serving arguments changed'
     overlay = load_overlay(REPO, release)
     serving_argv = serving_arguments(cfg['argv'][1:], overlay)
+    serving_argv += OBSERVABILITY_FLAGS
     for path,digest_expected in release['checkpoint_files_sha256'].items():
         assert sha(MODEL/path)==digest_expected, 'Checkpoint identity mismatch: '+path
     verify="""import hashlib,json,pathlib,runpy,torch,vllm
@@ -75,7 +79,7 @@ assert torch._C._dispatch_has_kernel_for_dispatch_key('b70_exl3_attention::share
     cache=Path(os.environ.get('XDG_CACHE_HOME',str(Path.home()/'.cache')))/'b70-qwen38-vllm-production'/digest/release['image_id'].removeprefix('sha256:')
     print(json.dumps(dict(status='LAUNCH_PREFLIGHT_PASS',release_status=release['status'],
                          image_id=release['image_id'],policy_sha256=digest,cache=str(cache),
-                         ram_kv=overlay)),flush=True)
+                         ram_kv=overlay, observability_flags=OBSERVABILITY_FLAGS)),flush=True)
     if a.check_only:return
     if overlay:
         available = next(int(line.split()[1])*1024 for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:'))

@@ -4,6 +4,17 @@ The qualified production profile serves **EXL3 4.00 bpw on one 32 GB Intel Arc
 Pro B70 at 180 W**, using vLLM 0.31.0 and Torch 2.14.0+xpu. It exposes an
 OpenAI-compatible API at `http://127.0.0.1:8081/v1`, model `Qwen3.8-27B`.
 
+Since 2026-11-07 the launcher also enables the installed vLLM diagnostics
+`--enable-per-request-metrics` and `--enable-prompt-tokens-details`. These add
+server timing/cache fields to completed responses (the final usage event for
+SSE); they do not change the pinned image, model, numerical or sampling profile.
+The preflight receipt lists these extra diagnostic flags explicitly. The agent
+runtime sends model requests through the Observatory gateway, which retains the
+request metadata; task metrics share its request IDs. vLLM's prompt interval is
+scheduling to first token, excluding queue time; decode spans first to last
+token and therefore uses N-1 output tokens. These are server intervals, not
+isolated GPU-kernel timings.
+
 The production runtime adds a **12 GiB host RAM prefix cache** and an async
 scheduler that queues requests whose full input/output reservations exceed GPU
 capacity. Set `B70_KV_RAM_GIB=1..12` in `.env` to change the RAM budget.

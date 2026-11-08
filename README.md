@@ -1,8 +1,16 @@
 # Intel Arc Pro B70: Qwen3.8-27B with vLLM
 
 The qualified production profile serves **EXL3 4.00 bpw on one 32 GB Intel Arc
-Pro B70 at 180 W**, using vLLM 0.31.0 and Torch 2.14.0+xpu. It exposes an
+Pro B70 at 180 W**, using vLLM 0.33.0 and Torch 2.14.0+xpu. It exposes an
 OpenAI-compatible API at `http://127.0.0.1:8081/v1`, model `Qwen3.8-27B`.
+
+The 2026-11-08 upgrade retains the native EXL3/M04/oneDNN and Intel stack.
+The paired 70-wave, 124-request serving comparison is effectively unchanged:
+total measured wave time +0.264%, weighted native decode +0.215%, and weighted
+prefill -0.236%. Original-tolerance numerical checks, actual RAM restoration,
+API/media/context, admission and restart tests passed. Sampled output changes
+across versions; finite distribution checks do not establish general coding
+accuracy. See the [qualification and deployment evidence](benchmarks/results/vllm-033-upgrade-20261108/README.md).
 
 Since 2026-11-07 the launcher also enables the installed vLLM diagnostics
 `--enable-per-request-metrics` and `--enable-prompt-tokens-details`. These add
@@ -33,16 +41,16 @@ the frozen EXL3 oneDNN prefill and M04 verification guards from selecting their
 optimized paths. At 230 W, the same-host 131K cold code prompt improved from
 **141.76 to 89.22 s TTFT** with the RAM cache retained (two repeats per arm).
 The launcher passes the validated layout into Docker and rejects conflicting
-host overrides. The image, native guards, checkpoint and 180 W production cap
-are unchanged. See the [cause, controls, production checks and reproduction
+host overrides. That layout comparison kept the image, native guards and
+checkpoint fixed; the production cap remains 180 W. See the [cause, controls, production checks and reproduction
 commands](benchmarks/results/ram-kv-layout-20261108/README.md).
 
 ## Start and recover the qualified service
 
 The local release uses the immutable image recorded in
 [config/production_image.json](config/production_image.json):
-`sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a`,
-alias `local/b70-qwen38-vllm:production-exl3-v4`.
+`sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e`,
+alias `local/b70-qwen38-vllm:production-exl3-v5`.
 The strict launcher checks image/policy identity, native libraries, serving
 arguments, checkpoint files, middleware and the 180 W cap before loading.
 Compiler caches are isolated by policy and image ID.
@@ -73,9 +81,9 @@ its process being active does not mean model loading has finished. Check the
 API readiness endpoint. The host defaults are loopback and port 8081; the
 recovery helper targets that endpoint and the standard container name.
 
-The immediate rollback is the [saved qualified EXL3 v3 release](config/releases/exl3-v3/README.md),
-with its [strict launcher](scripts/run-server-exl3-v3-rollback.sh), policy,
-source snapshot and compiler namespace. The older [v2](config/releases/exl3-v2)
+The immediate rollback is the [saved qualified EXL3 v4 release](config/releases/exl3-v4/README.md),
+with its [strict launcher](scripts/run-server-exl3-v4-rollback.sh), policy,
+original RAM modules, source snapshot and compiler namespace. The older [v3](config/releases/exl3-v3/README.md), [v2](config/releases/exl3-v2)
 and [v1](config/releases/exl3-v1/README.md) snapshots remain available.
 
 The [EXL3 source snapshot/build instructions](engine/exl3xpu/README.md) contain
@@ -88,8 +96,9 @@ B70_BASE_BUILD_IMAGE=local/b70-qwen38-vllm:base-development ./scripts/build-imag
 ```
 
 This helper does not load the serving `.env` and rejects production/rollback
-aliases before any build or download. It builds the base image; use the EXL3
-build workflow to produce an EXL3 candidate.
+aliases before any build or download. It intentionally builds the pinned 0.31
+native bootstrap. Follow the [native and Python-overlay build workflow](engine/exl3xpu/README.md)
+to produce a 0.33 EXL3 candidate; a rebuild needs its own qualification.
 
 ## API defaults and example
 
@@ -119,10 +128,10 @@ curl -fsS http://127.0.0.1:8081/v1/chat/completions \
 | oneDNN partition cache | 64 exact-shape entries per inference thread/queue; completion-aware LRU eviction; oneDNN internal caches are a separate scope |
 | MTP | 3 draft tokens, FP16; 65,536-row draft vocabulary; full 248,320-row target vocabulary |
 | Context | 262,144 total input+output tokens |
-| Admission / batch | 16 sequences; 4,096 max batched tokens; full-ISL, watermark 0.0 |
+| Admission / batch | 16 sequences; 4,096 max batched tokens; full-ISL; RAM overlay watermark 0.05 (base default 0.0) |
 | Graphs / cache | FULL_DECODE_ONLY, capture sizes 1/2/4/8/12/16/24/32/40/48/56/64; FP8 KV, prefix reuse, Mamba alignment |
 | Memory / power | 0.965 GPU fraction / 180 W card cap |
-| Runtime | vLLM 0.31.0, Torch 2.14.0+xpu, oneAPI 2026.1.1 / SYCL 9, oneDNN 3.13.4; Intel Runtime 26.35.39758.10, IGC 2.41.5 |
+| Runtime | vLLM 0.33.0, Torch 2.14.0+xpu, oneAPI 2026.1.1 / SYCL 9, oneDNN 3.13.4; Intel Runtime 26.35.39758.10, IGC 2.41.5 |
 | Tools / reasoning / media | qwen3_xml / qwen3; 32 images or 4 videos within the total context limit; image cap 4,194,304 pixels |
 
 ## Capacity and operating limits
@@ -414,9 +423,9 @@ The BF16 reference was evaluated from stored arrays on the CPU.
 
 ## Rollback and benchmark reproduction
 
-The immediate rollback is the [saved qualified EXL3 v3 release](config/releases/exl3-v3/README.md).
-Use `scripts/run-server-exl3-v3-rollback.sh`; it retains its own image, policy,
-source snapshot and compiler namespace. The saved v2, v1 and GPTQ releases also remain available.
+The immediate rollback is the [saved qualified EXL3 v4 release](config/releases/exl3-v4/README.md).
+Use `scripts/run-server-exl3-v4-rollback.sh`; it retains its own image, policy,
+original RAM modules, source snapshot and compiler namespace. The saved v3, v2, v1 and GPTQ releases also remain available.
 Stop the current service before using that launcher; verify the API and a real reply.
 
 For the additional GPTQ rollback, stop `b70-qwen38-vllm.service` before switching to

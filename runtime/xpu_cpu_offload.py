@@ -1,17 +1,14 @@
-"""Bound the XPU CPU cache with vLLM's mmap allocator instead of pinned pools.
+"""Bound XPU cache-restore batches on the pinned vLLM 0.33 runtime.
 
-PyTorch XPU's per-tensor pinned allocations round up and retain their backing
-allocations. A logical 10 GiB cache can therefore consume substantially more
-physical RAM. The upstream shared-region layout allocates exactly the budget
-(rounded down to complete pages). XPU uses the upstream DMA transfer path;
-CUDA host registration and the CUDA-only UVA kernels remain disabled.
-
-Large XPU H2D batches additionally need a pinned staging allocation. Bound
-those batches and drain each one before submitting the next, so restoring a
-full history cannot allocate another full-history-sized host buffer.
-
-This production adapter targets only the pinned vLLM 0.31.0 runtime.
+Shared mmap allocation and XPU host registration are now upstream features.
+Registration can fall back to pageable memory, whose H2D copies may allocate
+pinned staging. Keep both the normal and expedited load queues in at most
+128 MiB batches, draining each batch before another staging allocation.
+The native allocator, registration, transfer ordering and cache policy remain
+upstream; no whole-history-sized staging allocation is needed on fallback.
 """
+from functools import partial
+
 from vllm.platforms import current_platform
 from vllm.logger import init_logger
 from vllm.v1.kv_offload.cpu.spec import CPUOffloadingSpec
@@ -52,18 +49,13 @@ class BoundedXPUOffloadingSpec(CPUOffloadingSpec):
             self.kv_bytes_per_chunk, self.num_chunks,
             [(g.group_id,len(g.layer_names),g.tokens_per_block) for g in config.groups])
 
-    def _uses_shared_region(self):
-        return current_platform.is_xpu() or super()._uses_shared_region()
-
     def create_worker(self, kv_caches):
         worker = super().create_worker(kv_caches)
         if current_platform.is_xpu():
-            handler = worker._load_handler
-            original = handler._swap_blocks_batch
-
-            def copy(src, dst, sizes, **kwargs):
-                return bounded_load(original, current_platform.current_stream().synchronize,
-                                    src, dst, sizes, **kwargs)
-
-            handler._swap_blocks_batch = copy
+            # vLLM 0.33 has independent normal and expedited H2D queues.
+            # Both can restore a whole history and need bounded staging.
+            for handler in (worker._load_handler, worker._expedited_load_handler):
+                handler._swap_blocks_batch = partial(
+                    bounded_load, handler._swap_blocks_batch,
+                    lambda: current_platform.current_stream().synchronize())
         return worker

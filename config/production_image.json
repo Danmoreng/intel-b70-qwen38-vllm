@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "status": "QUALIFIED_RELEASE",
-  "image_tag": "local/b70-qwen38-vllm:production-exl3-v4",
-  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
-  "runtime_image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
-  "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+  "image_tag": "local/b70-qwen38-vllm:production-exl3-v5",
+  "image_id": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e",
+  "runtime_image_id": "sha256:b4440db13db7ec82dc525ff4cca284cad7025b6ea82bbacbacf914231d5c762d",
+  "policy_sha256": "e7b35f388ecee964c1b988b0ddb0eb7b4029236b27aa287c169d59f8d7c69ea5",
   "vllm_config": {
     "dtype": "float16",
     "max_model_len": 262144,
@@ -74,18 +74,23 @@
     "/opt/exl3xpu/exl3xpu/_C.so": "00b65587220481ec89269f7510136146809d7e01938de3d30d5b67206948a95a",
     "/opt/exl3xpu/m04/m04.so": "03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
     "/opt/b70/libdnnl.so.3": "90c0feddfb51a6219903d5e1ccabc9fd32dab0c702284a16dd7692bb6042e056",
-    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "c7bd0941664d02fa4ec4bb118efdecbf9c63801cb9e4cdfaeb366efbe8c8800d",
+    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "4fa3dd0304db3e3af016e1c90d392542143e3c3dc3fd56b77da50e6aae66ef08",
     "/opt/exl3xpu/exl3xpu/shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2",
-    "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "7d6c3dea198388ab7d8be7dc73f5d135026125f5988653de0fb45d385fca0a41",
+    "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "bd6a715c941f363ae6adc812bc6edf859589f788c7ef50a2ac2629d997f4f8dc",
     "/opt/exl3xpu/csrc/exl3_ops.sycl": "b70880d1e92032de697c1d432c6899e34e17662e2086a7fbba80fa17b28e41cf",
-    "/opt/exl3xpu/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7"
+    "/opt/exl3xpu/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7",
+    "/opt/exl3xpu/exl3xpu/target_runtime.py": "afb6baf2ed7161adf66127b21fdc866714474fb0d09e86b9a5f5311bfe21dfc6",
+    "/opt/exl3xpu/exl3xpu/gdn_target_patch.py": "b661bc5514547d61413f81b947d664a87bca5a16afb36abd11bbd419434c59b7",
+    "/opt/exl3xpu/exl3xpu/vllm_plugin.py": "0c45fb9f834e84c9cf5702f8a4e4cd775e506b0ecd60a634e6ac542183165f25",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_5_mtp.py": "39068e51c14f5c1dbfd5e9683a81e5c36c1726709c3037928cc7914c3e9ef303",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/b70_mtp_policy.py": "c7c75d6b818c1cb0f1846f752060650af399f832e0dea3e8297ec274f2cfee3f"
   },
   "rootfs_metadata_attestation": {
     "status": "METADATA_FROZEN_NOT_RELEASE_APPROVED",
-    "image_tag": "local/b70-qwen38-vllm:exl3-onednn3134-candidate-20261010",
-    "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
-    "runtime_image_id": "sha256:b772d37937d188bc8492e2e796eafc46668290e68d356f648257e99b06967048",
-    "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+    "image_tag": "local/b70-qwen38-vllm:exl3-v033-frozen-20261108",
+    "image_id": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e",
+    "runtime_image_id": "sha256:b4440db13db7ec82dc525ff4cca284cad7025b6ea82bbacbacf914231d5c762d",
+    "policy_sha256": "e7b35f388ecee964c1b988b0ddb0eb7b4029236b27aa287c169d59f8d7c69ea5",
     "rootfs_identical": true,
     "rootfs": {
       "Layers": [
@@ -132,14 +137,22 @@
         "sha256:0c2531fb3d5417fc8ac16d1dc444ea80b41f0a18ede3a6853808008139264794",
         "sha256:31cb68cfb037471386d9a2c61a0d2d9f627eb64065fdd9687eb584e31ee66b00",
         "sha256:a8a9c366aa924e3a1c346cc116146280a341d901868149826c7b34a38b574ac1",
-        "sha256:c5c898e78a3634568f66190376532c263baab67cdaeb7e676a635058803e6921"
+        "sha256:c5c898e78a3634568f66190376532c263baab67cdaeb7e676a635058803e6921",
+        "sha256:c22329fd6323b7dd6b0bf1a3c64445d8fc9ab147782599e6b08c8eec7360153f",
+        "sha256:98d9a07b37706a9240fa1aa1deb46614de14e6fccb5bf462c2da838d0077a4af",
+        "sha256:1854341e3996dd15f420ff4058e8f1d004edeb50149b563f9ba190ce4d6c47ab",
+        "sha256:9c0449718ee2236f702e2b3637acc8f5ff56497f550ad4fcfb844af9274fd7f0",
+        "sha256:3f37b63086f6261101362552c53259ea92e4268f50edc4b0812277cbec96dc00",
+        "sha256:c319d21de10403e7e26ec168166799574427bc50dce0381965cd3edf2f3833a6",
+        "sha256:c75d295be832c31524e5128e5e26f32a1db2c36e54891ef9c778655d569a4d06",
+        "sha256:6a2abc9843cd487f77211c5f02285ccf243764ff15d5abcf431b2bab688d6038"
       ],
       "Type": "layers"
     },
     "environment_changes": {
       "B70_POLICY_SHA256": [
-        "9a78131764c773a5b732c93c25d353e2ca13ac9e22929e6f5274016e38bbb424",
-        "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649"
+        "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+        "e7b35f388ecee964c1b988b0ddb0eb7b4029236b27aa287c169d59f8d7c69ea5"
       ]
     },
     "effective_partition_cache_capacity": 64,
@@ -149,18 +162,23 @@
     "EXL3_SDPA_CACHE_CAPACITY": "64"
   },
   "source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
-  "qualification_review": {
-    "path": "benchmarks/results/b70-stack-20261010/decision.json",
-    "sha256": "9ca38e058460e88b59f08b783958d02a03f4687cef9cb354f966f0e0ea980a72"
-  },
-  "qualification_note": "Qualified oneDNN 3.13.4 SDPA ordering-fix maintenance release with matching EXL3 rebuild; native MTP3/FP16/FP8-KV/262144/max-seqs16/180W and original M04 retained. No established weighted speedup. Small measured C4 client-throughput loss and numerical equality failure are explicitly reviewed and retained in the linked performance/numerical receipts.",
-  "production_start_receipt": {
-    "path": "benchmarks/results/b70-stack-20261010/promotion.json",
-    "sha256": "c59e1ffeed27b937c64608596527c5079773292ce44bb72d6baa136f3ea32c93",
-    "private_source_sha256": "ec57fbd469e09dd9709e47d13d96de0aebf4c1d4818f42bdc4fd6583a61be1a7"
-  },
+  "qualification_note": "Upgrade to final vLLM0.33XPU while keeping Torch/native/Intel stack and model fixed. Full matched serving matrix has no investigation triggers; original-tolerance numerical, finite distribution, loader, API/media/context, actual RAM restore, admission and restart gates pass. Independently tested0.31RAM/LBNHC rollback retained. Finite scopes and sampled-output changes are recorded in the review.",
   "ram_kv_runtime": {
     "path": "config/production_ram_kv.json",
-    "sha256": "b6f53f3e9aa946dff4a030e402c3677ce8f1c7c76078219819262f58714b5c42"
+    "sha256": "0a70c12aaffa1c9360d640ecad04e17cedfedec0124c6f2100e964fb6cbc7504"
+  },
+  "python_runtime_port": {
+    "official_xpu_wheel_sha256": "0e3735aa6b9ac132a32b54a948bb0de079e1b783ec5b04b184f4bdaf873eb995",
+    "source_port_script": "benchmarks/experiments/vllm-033-upgrade/port-source.py",
+    "source_port_script_sha256": "b68b666a568407aa98cbf21fdc54b28769223f5568bee25381648b3840776d86",
+    "native_source_archive_sha256": "c5b46a9af81ca41bf04a95b9bf4a48044b5bad3654cb61fe327af857ae93da43"
+  },
+  "qualification_review": {
+    "path": "benchmarks/results/vllm-033-upgrade-20261108/decision.json",
+    "sha256": "e12a9d09073f9ddb61b074012a0a5ad34248bba0fff1e3cd6c98f45fe5b33062"
+  },
+  "production_start_receipt": {
+    "path": "benchmarks/results/vllm-033-upgrade-20261108/deployment/promotion.json",
+    "sha256": "b0e2b38cdbe6b3e455e65e594b7db37990a10d6ad8ce982d5b7b5e93c0932d92"
   }
 }

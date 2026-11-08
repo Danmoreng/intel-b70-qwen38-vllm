@@ -2,7 +2,7 @@
   "schema_version": 1,
   "status": "PRODUCTION",
   "release_date": "2026-11-08",
-  "base_image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "base_image_id": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e",
   "default_cpu_gib": 12,
   "allowed_cpu_gib": [
     1,
@@ -10,10 +10,10 @@
   ],
   "runtime_sha256": {
     "kv_admission.py": "4b237a0d1c54b49958e3111d46ebc221b8f2768075d7eff9c7923eb3bdb1df6f",
-    "xpu_cpu_offload.py": "149cf02d3d3507951fc96333e303a2d08b7a21bb6fd553128bcdd410c497f8b7"
+    "xpu_cpu_offload.py": "6f0b474b078b3dd6a6ad63c10d84d620592d6c5733e62d51b9a3de33f20e9b36"
   },
-  "validation": "benchmarks/results/kv-ram-admission/README.md",
-  "note": "Operator-approved bounded XPU RAM prefix cache and completion-reserved async admission. Inclusive ARC cache: no guarantee of retaining two alternating maximum-length histories. Explicit LBNHC preserves the frozen oneDNN prefill and M04 verification dispatch with RAM offload.",
+  "validation": "benchmarks/results/vllm-033-upgrade-20261108/README.md",
+  "note": "0.33 candidate RAM format: native XPU mmap/host registration, independent128MiB+drain normal and expedited H2D queues, completion reservation, ARC ready-prefix access and explicitLBNHC. Outer image manifest remains CANDIDATE_PREFLIGHT_ONLY until qualification.",
   "kv_cache_layout": "LBNHC",
   "layout_validation": "benchmarks/results/ram-kv-layout-20261108/README.md"
 }

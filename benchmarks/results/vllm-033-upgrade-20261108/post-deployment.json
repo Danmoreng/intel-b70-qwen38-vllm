@@ -1,0 +1,39 @@
+{
+  "status": "PASS_QUALIFIED_PRODUCTION_DEPLOYMENT",
+  "image_id": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e",
+  "image_tag": "local/b70-qwen38-vllm:production-exl3-v5",
+  "policy_sha256": "e7b35f388ecee964c1b988b0ddb0eb7b4029236b27aa287c169d59f8d7c69ea5",
+  "power_cap_w": 180,
+  "release_receipt_integrity": "PASS",
+  "canonical_runtime_sha256": {
+    "request_defaults.py": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2",
+    "kv_admission.py": "4b237a0d1c54b49958e3111d46ebc221b8f2768075d7eff9c7923eb3bdb1df6f",
+    "xpu_cpu_offload.py": "6f0b474b078b3dd6a6ad63c10d84d620592d6c5733e62d51b9a3de33f20e9b36"
+  },
+  "ram_manifest": {
+    "path": "config/production_ram_kv.json",
+    "sha256": "0a70c12aaffa1c9360d640ecad04e17cedfedec0124c6f2100e964fb6cbc7504"
+  },
+  "production_start_receipt": {
+    "path": "benchmarks/results/vllm-033-upgrade-20261108/deployment/promotion.json",
+    "sha256": "b0e2b38cdbe6b3e455e65e594b7db37990a10d6ad8ce982d5b7b5e93c0932d92"
+  },
+  "loader_audit": {
+    "status": "PASS",
+    "expected_modules": 409,
+    "loaded_modules": 409,
+    "mtp_expected": 8,
+    "mtp_loaded": 8,
+    "shared_head_load_count": 2,
+    "missing": [],
+    "unexpected_duplicates": {}
+  },
+  "loader_raw_receipt_sha256": "21288008cf4a7d975209860e206d9177f854c17b93c125d57e58550f0f2e3a98",
+  "host_tests": {
+    "tests": 41,
+    "passed": 38,
+    "skipped_image_dependent": 3,
+    "raw_log_sha256": "206bce17c23f94283ffee62c6717619e8afa8ec926ab3839f6a4ba2e96ff5dc9"
+  },
+  "limits": "Finite qualification scope; all124 sampled serving outputs differ across versions. No universal byte-identity, task-accuracy or statistical-equivalence claim."
+}

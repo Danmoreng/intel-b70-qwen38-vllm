@@ -1,7 +1,8 @@
 # vLLM 0.33 qualification on the B70, 2026-11-08
 
-**Qualification passed; permanent-service deployment is the next step.**
-The current decision is recorded in [decision.json](decision.json).
+**Qualified and deployed as the permanent 180 W production service.**
+The approval is recorded in [decision.json](decision.json); the actual
+[deployment and restart receipt](deployment/promotion.json) records both live starts.
 
 The comparison holds the model revision, EXL3 quantization, native libraries,
 Torch 2.14.0+xpu, Triton 3.8.0+xpu, Intel userspace and 180 W power cap fixed.
@@ -101,4 +102,32 @@ The fused SYCL GDN operator was already used by the qualified 0.31 engine;
 
 The independent [0.31 release archive](../../../config/releases/exl3-v4/README.md)
 retains its image, policy and original runtime modules. [Live rollback](live-rollback.json) is validated. Permanent-service deployment
-remains pending; [decision.json](decision.json) records the approval for that step.
+passed; [post-deployment checks](post-deployment.json) verify the canonical
+runtime hashes, release receipts and fresh loader audit.
+
+## Operational result and deployment
+
+[Operational evidence](operations.json) covers all 12 groups: actual rendered
+tokenizer equality, API/streaming/tools/reasoning, images/videos and limits,
+261120 input + 1024 output = 262144 total tokens, C4 and C16 long-request
+accounting, large image context, disconnect/recovery, structured JSON and a
+forced named tool, 32 distinct 4194304-pixel images, natural CPU-cache restore,
+and completion-reserved admission for 200023- and 131020-token requests.
+The latter queued safely with zero preemptions. C4/C16 also had zero
+preemptions in these runs; this is not a universal no-preemption guarantee.
+
+The natural restore transferred 1772355584 bytes from CPU to GPU after a large
+competing history displaced the original GPU cache. Markers and the answer
+remained correct. This is actual CPU restoration rather than only a warm
+GPU-prefix hit. Abort testing checks client disconnect and subsequent
+recovery, not an engine-side finish-reason trace.
+
+The permanent user service uses image
+`sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e`,
+alias `local/b70-qwen38-vllm:production-exl3-v5`, with the canonical `runtime/`
+modules and attested 12 GiB/LBNHC overlay. The promotion helper preserves the
+previous config, modules and private environment, checks the strict launcher,
+then verifies real text, SSE usage/default reasoning and a complete permanent
+service restart. The new loader audit contains all 409 expected modules and
+all eight MTP modules. Post-deployment host tests pass (38 passed, three
+image-dependent skips); device numerical gates were run separately.

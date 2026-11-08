@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "status": "PRODUCTION",
+  "release_date": "2026-11-08",
+  "base_image_id": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e",
+  "default_cpu_gib": 12,
+  "allowed_cpu_gib": [
+    1,
+    12
+  ],
+  "runtime_sha256": {
+    "kv_admission.py": "4b237a0d1c54b49958e3111d46ebc221b8f2768075d7eff9c7923eb3bdb1df6f",
+    "xpu_cpu_offload.py": "6f0b474b078b3dd6a6ad63c10d84d620592d6c5733e62d51b9a3de33f20e9b36"
+  },
+  "validation": "benchmarks/results/vllm-033-upgrade-20261108/README.md",
+  "note": "0.33 candidate RAM format: native XPU mmap/host registration, independent128MiB+drain normal and expedited H2D queues, completion reservation, ARC ready-prefix access and explicitLBNHC. Outer image manifest remains CANDIDATE_PREFLIGHT_ONLY until qualification.",
+  "kv_cache_layout": "LBNHC",
+  "layout_validation": "benchmarks/results/ram-kv-layout-20261108/README.md",
+  "runtime_directory": "benchmarks/experiments/vllm-033-upgrade/runtime"
+}

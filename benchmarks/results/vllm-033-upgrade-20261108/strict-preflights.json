@@ -1,0 +1,68 @@
+{
+  "candidate": {
+    "status": "LAUNCH_PREFLIGHT_PASS",
+    "release_status": "CANDIDATE_PREFLIGHT_ONLY",
+    "image_id": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e",
+    "policy_sha256": "e7b35f388ecee964c1b988b0ddb0eb7b4029236b27aa287c169d59f8d7c69ea5",
+    "ram_kv": {
+      "sha256": "d01675c06d8eb32f773634d0a5372ca0df8806cc75741f0ea4579b5ac5b2780a",
+      "cpu_gib": 12,
+      "runtime_directory": "benchmarks/experiments/vllm-033-upgrade/runtime",
+      "environment": {
+        "VLLM_KV_CACHE_LAYOUT": "LBNHC"
+      },
+      "scheduler": "kv_admission.CompletionReservedScheduler",
+      "watermark": "0.05",
+      "transfer": {
+        "kv_connector": "OffloadingConnector",
+        "kv_role": "kv_both",
+        "kv_connector_extra_config": {
+          "cpu_bytes_to_use": 12884901888,
+          "spec_name": "BoundedXPUOffloadingSpec",
+          "spec_module_path": "xpu_cpu_offload",
+          "blocks_per_chunk": 1,
+          "eviction_policy": "arc",
+          "store_threshold": 0
+        }
+      }
+    },
+    "observability_flags": [
+      "--enable-per-request-metrics",
+      "--enable-prompt-tokens-details"
+    ],
+    "raw_receipt_sha256": "cdc2cad280d70f11659c4aa128c568c7afa79fa9b2a99f099e2db3d60aadcb27"
+  },
+  "rollback": {
+    "status": "LAUNCH_PREFLIGHT_PASS",
+    "release_status": "QUALIFIED_RELEASE",
+    "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+    "policy_sha256": "d2b7a88f5c8646f8626c3d4f86e96acac0f476be9dbaa1eb6424063572364649",
+    "ram_kv": {
+      "sha256": "16741560de5ca195398cfa0ad6eccc42a70e3643d4d204e8ba1783705a89d431",
+      "cpu_gib": 12,
+      "runtime_directory": "config/releases/exl3-v4/runtime",
+      "environment": {
+        "VLLM_KV_CACHE_LAYOUT": "LBNHC"
+      },
+      "scheduler": "kv_admission.CompletionReservedScheduler",
+      "watermark": "0.05",
+      "transfer": {
+        "kv_connector": "OffloadingConnector",
+        "kv_role": "kv_both",
+        "kv_connector_extra_config": {
+          "cpu_bytes_to_use": 12884901888,
+          "spec_name": "BoundedXPUOffloadingSpec",
+          "spec_module_path": "xpu_cpu_offload",
+          "blocks_per_chunk": 1,
+          "eviction_policy": "arc",
+          "store_threshold": 0
+        }
+      }
+    },
+    "observability_flags": [
+      "--enable-per-request-metrics",
+      "--enable-prompt-tokens-details"
+    ],
+    "raw_receipt_sha256": "eac1c4178ff79f27eee4a3c8c955579c1fea6a15b77c88ee842401f3d4b90125"
+  }
+}

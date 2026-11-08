@@ -1,0 +1,9 @@
+FROM local/b70-qwen38-vllm:pinned-v033-20261108
+COPY exl3xpu/ /opt/exl3xpu/exl3xpu/
+COPY tests/ /opt/exl3xpu/tests/
+COPY qwen3_5_mtp.py b70_mtp_policy.py /opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/
+COPY migration-target-optimized.yaml /opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/
+ENV EXL3_TARGET_RUNTIME=vllm033
+RUN python /opt/exl3xpu/scripts/verify_native_artifact.py
+RUN python -m unittest discover -s /opt/exl3xpu/tests -p test_target_gdn.py -v
+RUN python -m unittest discover -s /opt/exl3xpu/tests -p test_attention_metadata.py -v

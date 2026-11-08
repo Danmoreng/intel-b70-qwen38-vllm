@@ -53,10 +53,17 @@ def verify(image,policy):
     default=http('/v1/chat/completions',dict(model='Qwen3.8-27B',messages=[dict(role='user',content='Calculate 13 times 29 and state the answer briefly.')],temperature=0,seed=20261001))
     message=default['choices'][0]['message'];assert '377' in (message.get('content') or '')
     assert message.get('reasoning') or message.get('reasoning_content')
+    # The public receipt needs the frozen runtime settings, not unrelated
+    # inherited image variables or possible host/application credentials.
+    from exl3_candidate_worker import profile
+    recorded_keys=set(profile(image)['env']) | {
+        'EXL3_SDPA_CACHE_CAPACITY','VLLM_KV_CACHE_LAYOUT','HF_HUB_OFFLINE',
+        'ZE_AFFINITY_MASK','PYTHONPATH'}
     return dict(image_id=image,policy_sha256=policy,container_id=d['Id'],models_endpoint=True,
         real_generated_reply=reply['choices'][0]['message']['content'],streaming_done=True,streaming_usage=usage,
         defaults_response=default,default_contract='16384 completion,8192 thinking budget,medium reasoning; unchanged hashed middleware plus live request with no overrides',
-        command=d['Config']['Cmd'],environment=env,mounts=d['Mounts'],verified_unix=time.time())
+        command=d['Config']['Cmd'],environment={key:env[key] for key in sorted(recorded_keys) if key in env},
+        mounts=d['Mounts'],verified_unix=time.time())
 
 
 def main():
@@ -65,6 +72,8 @@ def main():
     p.add_argument('--out',type=Path,required=True)
     p.add_argument('--rollback-release',type=Path,default=REPO/'config/releases/exl3-v1')
     p.add_argument('--production-tag',default='local/b70-qwen38-vllm:production-exl3-v2')
+    p.add_argument('--runtime-dir',type=Path,
+                   help='Install the reviewed RAM-overlay modules with this release; restore them on failure')
     a=p.parse_args();out=a.out.resolve()
     assert not (out/'promotion.json').exists(), 'Refuse to replace an existing deployment receipt'
     decision=json.loads(a.decision.read_text());assert decision['status']=='QUALIFIED_FOR_PRODUCTION_PROMOTION'
@@ -83,6 +92,18 @@ def main():
     candidate=json.loads((a.release_dir/'production_image.json').read_text());image=candidate['image_id'];policy=candidate['policy_sha256']
     assert image==decision['image_id']==gate['image_id'] and policy==decision['policy_sha256']
     assert sha(a.release_dir/'production_policy.json')==policy
+    runtime_source = None
+    ram_manifest = None
+    runtime_names = ('request_defaults.py', 'kv_admission.py', 'xpu_cpu_offload.py')
+    if a.runtime_dir:
+        from ram_kv_release import load_overlay
+        overlay = load_overlay(REPO, candidate, {})
+        assert overlay is not None, 'Runtime installation requires an attested RAM overlay'
+        runtime_source = a.runtime_dir.resolve()
+        assert runtime_source == (REPO / overlay['runtime_directory']).resolve()
+        assert sha(runtime_source/'request_defaults.py') == candidate['request_defaults_sha256']
+        ram_manifest = json.loads((REPO/candidate['ram_kv_runtime']['path']).read_text())
+        ram_manifest.pop('runtime_directory', None)
     saved=a.rollback_release.resolve();old=json.loads((saved/'production_image.json').read_text())
     assert old['image_id']==decision['immediate_rollback_image_id']
     inventory=json.loads((saved/'snapshot-inventory.json').read_text())
@@ -103,7 +124,15 @@ def main():
     env_path=REPO/'.env';original_env=env_path.read_bytes() if env_path.exists() else None
     if original_env is not None:
         (private/'env.before').write_bytes(original_env);(private/'env.before').chmod(0o600)
-    original_config={name:(REPO/'config'/name).read_bytes() for name in ['production_policy.json','production_policy.sha256','production_image.json']}
+    config_names = ['production_policy.json','production_policy.sha256','production_image.json']
+    if runtime_source:
+        config_names.append('production_ram_kv.json')
+    original_config={name:((REPO/'config'/name).read_bytes() if (REPO/'config'/name).exists() else None)
+                     for name in config_names}
+    original_runtime={name:(REPO/'runtime'/name).read_bytes() for name in runtime_names} if runtime_source else {}
+    for name,data in original_config.items():
+        if data is not None:(private/('config-'+name)).write_bytes(data)
+    for name,data in original_runtime.items():(private/('runtime-'+name)).write_bytes(data)
     def save():write(out/'promotion.json',state)
     spec=importlib.util.spec_from_file_location('production_recovery',REPO/'scripts/run-exl3-review-micro.py')
     helper=importlib.util.module_from_spec(spec);spec.loader.exec_module(helper)
@@ -115,6 +144,11 @@ def main():
         candidate.update(status='QUALIFIED_RELEASE',image_tag=tag,
             qualification_review=dict(path=str(a.decision.resolve().relative_to(REPO)),sha256=sha(a.decision)),
             qualification_note=decision['rationale'])
+        if runtime_source:
+            for name in runtime_names:shutil.copyfile(runtime_source/name,REPO/'runtime'/name)
+            write(REPO/'config/production_ram_kv.json',ram_manifest)
+            candidate['ram_kv_runtime'] = dict(path='config/production_ram_kv.json',
+                                               sha256=sha(REPO/'config/production_ram_kv.json'))
         for name in ['production_policy.json','production_policy.sha256']:shutil.copyfile(a.release_dir/name,REPO/'config'/name)
         write(REPO/'config/production_image.json',candidate)
         text=original_env.decode() if original_env is not None else (REPO/'.env.example').read_text()
@@ -142,7 +176,11 @@ def main():
     finally:
         if not success:
             subprocess.run(['systemctl','--user','stop',SERVICE],check=True,timeout=90)
-            for name,data in original_config.items():(REPO/'config'/name).write_bytes(data)
+            for name,data in original_config.items():
+                path=REPO/'config'/name
+                if data is None:path.unlink(missing_ok=True)
+                else:path.write_bytes(data)
+            for name,data in original_runtime.items():(REPO/'runtime'/name).write_bytes(data)
             if original_env is None:env_path.unlink(missing_ok=True)
             else:env_path.write_bytes(original_env)
             subprocess.run(['systemctl','--user','start',SERVICE],check=True,timeout=90)

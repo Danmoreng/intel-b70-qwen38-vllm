@@ -1,0 +1,56 @@
+{
+  "status": "PASS_KERNEL_STATE_AND_STARTUP_GATES_NOT_YET_PERFORMANCE_QUALIFIED",
+  "runtime_image_id": "sha256:b4440db13db7ec82dc525ff4cca284cad7025b6ea82bbacbacf914231d5c762d",
+  "frozen_image_id": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e",
+  "receipts": {
+    "gpu-r4/native-artifact.log": "ae0f7d9740c99b2a809dcf170e6be65aaef4405758b0bc6cc7f7a21582efcb8a",
+    "gpu-r4/gdn-semantics-and-graphs.log": "9f814f4ae0cdc41cd42878020de97cd3b38f8bcdce389ced4681ed345fb9a362",
+    "gpu-r4/attention-metadata.log": "658cacff9f49e8506e7a34f90d8bdc72dd5787ddc87671e063d78f241df694b7",
+    "gpu-r4/m04-copy.log": "9e693792c9f4686491a5f6d383bfd66c3254e2c9bd1cb80ca63bc61c6c597561",
+    "gpu-r4/checkpoint-inventory.log": "bc4fe1dfb2703094fc1ad8575e54fbb28a66c75aff299617495cd65ebe985a8a",
+    "gpu-r4/kernels/attention/result.json": "fa7557cfba6ee9240aef3b1e311790ca62e597b27743fba74fdf9074868a37d3",
+    "gpu-r4-resume/kernels/linear/result.json": "85fee9bdcbf067c6b702719e1f1e8ea07e391781112080ba72d10d041790d5da",
+    "gpu-r4-resume/campaign.json": "ffce49ac527f49accc27f50d5059312a2e735d01a4061902ff89dcd0e826ce29",
+    "port-reproducibility.json": "78b8d9baec77bf3659271f61442c46e20db053342dc6fbad6b5c9adcb6817a6e",
+    "reproduced-build/image.json": "2a5cff9afcbef79782cf3c9a0f5bcf983fa2846d450956691d89a470388babb2",
+    "frozen-image/image.json": "d44193d98a483076a30965ed5cd4f4eef8081fe9b35a0f2fea8d372a0351a8af"
+  },
+  "attention": {
+    "status": "PASS_ATTENTION_MICRO_GATES_SERVING_UNQUALIFIED",
+    "tolerance": {
+      "rtol": 0.01,
+      "atol": 0.003
+    },
+    "cases": 31,
+    "graphs": 2
+  },
+  "linear": {
+    "status": "PASS_EXPANDED_ROW_PADDING_GRAPH_GATE",
+    "tolerance": 0.002,
+    "groups": 7,
+    "row_cases": 126
+  },
+  "state_replay": [
+    {
+      "label": "long-prefill",
+      "graph_mode": "NONE",
+      "status": "PASS_LOCAL_ATTENTION_ORIGINAL_TOLERANCE"
+    },
+    {
+      "label": "early-mixed",
+      "graph_mode": "NONE",
+      "status": "PASS_LOCAL_ATTENTION_ORIGINAL_TOLERANCE"
+    },
+    {
+      "label": "c4-verification",
+      "graph_mode": "FULL",
+      "status": "PASS_LOCAL_ATTENTION_ORIGINAL_TOLERANCE"
+    },
+    {
+      "label": "prefill",
+      "graph_mode": "NONE",
+      "status": "PASS_LOCAL_ATTENTION_ORIGINAL_TOLERANCE"
+    }
+  ],
+  "setup_failure_retained": "gpu-r4 initial linear invocation lacked EXL3_LIB. Resumed unchanged test with explicit native path; all126rowcases passed. gpu-r4/campaign.json remains FAILED and is not counted as a full pass."
+}

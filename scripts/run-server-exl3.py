@@ -13,6 +13,7 @@ RUNTIME_VERSIONS = {
     'b70-qwen38-exl3-production-v1': ('0.30.0', '2.13.0+xpu'),
     'b70-qwen38-exl3-production-v2': ('0.30.0', '2.13.0+xpu'),
     'b70-qwen38-exl3-production-v3': ('0.31.0', '2.14.0+xpu'),
+    'b70-qwen38-exl3-production-v4': ('0.33.0', '2.14.0+xpu'),
 }
 
 # Diagnostics only: keep the frozen model/runtime/image and sampling arguments.
@@ -41,13 +42,12 @@ def main():
     assert inspected['Id']==release['image_id'], 'Production image tag moved'
     assert inspected['Config']['Labels']['org.local.b70.policy.sha256']==digest
     cfg=profile(release['image_id'])
-    if policy['policy_id'] in ('b70-qwen38-exl3-production-v2','b70-qwen38-exl3-production-v3'):
+    if policy['policy_id'] in ('b70-qwen38-exl3-production-v2','b70-qwen38-exl3-production-v3','b70-qwen38-exl3-production-v4'):
         assert policy['attention']['partition_cache']['capacity']==64
         image_env=dict(x.split('=',1) for x in inspected['Config']['Env'])
         assert image_env.get('EXL3_SDPA_CACHE_CAPACITY')=='64'
         assert release['environment_overrides']=={'EXL3_SDPA_CACHE_CAPACITY':'64'}
         cfg['env'].update(release['environment_overrides'])
-    assert sha(REPO/'runtime/request_defaults.py')==release['request_defaults_sha256'], 'Serving middleware changed'
     required={'VLLM_IMAGE':image,'MODEL_ID':policy['model']['id'],'MODEL_REVISION':policy['model']['revision'],
         'SERVED_MODEL_NAME':policy['model']['served_name'],'CONTEXT_SIZE':'262144','GPU_MEMORY_UTILIZATION':'0.965',
         'MAX_NUM_BATCHED_TOKENS':'4096','MAX_NUM_SEQS':'16','SPECULATIVE_TOKENS':'3',
@@ -58,6 +58,8 @@ def main():
         assert os.environ.get(key,value)==value, 'Frozen EXL3 environment override: '+key
     assert cfg['config']['vllm']==release['vllm_config'], 'Frozen serving arguments changed'
     overlay = load_overlay(REPO, release)
+    runtime = REPO / (overlay['runtime_directory'] if overlay else 'runtime')
+    assert sha(runtime/'request_defaults.py')==release['request_defaults_sha256'], 'Serving middleware changed'
     serving_argv = serving_arguments(cfg['argv'][1:], overlay)
     serving_argv += OBSERVABILITY_FLAGS
     for path,digest_expected in release['checkpoint_files_sha256'].items():
@@ -92,7 +94,7 @@ assert torch._C._dispatch_has_kernel_for_dispatch_key('b70_exl3_attention::share
     argv=['docker','run','--rm','--name',os.environ.get('VLLM_CONTAINER','b70-qwen38-vllm'),
         '--device','/dev/dri','--group-add',str(node.stat().st_gid),'--shm-size','8g',
         '-p',os.environ.get('VLLM_HOST','127.0.0.1')+':'+os.environ.get('PORT','8081')+':8000',
-        '-v',str(MODEL)+':/models/checkpoint:ro','-v',str(REPO/'runtime')+':/opt/b70-runtime:ro',
+        '-v',str(MODEL)+':/models/checkpoint:ro','-v',str(runtime)+':/opt/b70-runtime:ro',
         '-v',str(results)+':/results']
     if overlay:
         argv[argv.index('--shm-size') + 1] = str(overlay['cpu_gib'] + 2) + 'g'

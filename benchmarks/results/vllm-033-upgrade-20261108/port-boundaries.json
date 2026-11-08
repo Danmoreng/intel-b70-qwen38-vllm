@@ -1,0 +1,49 @@
+{
+  "target_runtime.py": {
+    "old": {
+      "v1/attention/backends/gdn_attn.py": "496f383285de2fe92626091309a56a96a64b496f37d5585f8b7b55d0260e1a84",
+      "v1/worker/gpu/model_states/mamba_hybrid.py": "1ddd7dc921d74789e77d3319dc167820ad7fc47ed51d8d9a35ba3938f5c6a079",
+      "platforms/xpu.py": "d13a446c60c0cc3d16902f75170646d87d6e4b5f153725290a2a4830b0b6b5b2",
+      "v1/core/single_type_kv_cache_manager.py": "3a3cb20bd6aa1e0ad46471fc9e5e01ee5797ab4bb759e00ef5fb309d2830db13",
+      "v1/worker/xpu_model_runner.py": "07fa0390d28f2b8c3c3c0019eb9c3b126e2397aea268ba47c889f06b423deb23",
+      "v1/worker/xpu_worker.py": "3acd18a33f53b8da5a322079afc61ae7b1247212a7c881ab9aa4101a287c2ca5",
+      "model_executor/models/qwen3_5_mtp.py": "04be8e53afff3c9e27198d18ad66bdee787b58c8c294326de1e907f9612a8241",
+      "model_executor/models/b70_mtp_policy.py": "c7c75d6b818c1cb0f1846f752060650af399f832e0dea3e8297ec274f2cfee3f",
+      "_xpu_ops.py": "713f181dcfc72814e227f9e1ffe8878b03cbfe524b0be60b3fc261bdb76cd448"
+    },
+    "new": {
+      "v1/attention/backends/gdn_attn.py": "90f67d9fa8b06fd531579ed1198678c3251baabb47a7b0c9dfdc828d4361ec5e",
+      "v1/worker/gpu/model_states/mamba_hybrid.py": "262de489e3c02a2b1b93acd2a0d88ddced82ecebe050ca95ea91ba3fe501e6f4",
+      "platforms/xpu.py": "cffd8bb94d6d4d6997d30299b91e3d2f249372cad43cb8fa06937e8a111bad18",
+      "v1/core/single_type_kv_cache_manager.py": "4b8c34ff759855b94a5a3a4a3a1b4784077f27077539e01509c1b3f72e75455f",
+      "v1/worker/xpu_model_runner.py": "3b079556316176408068357974a9c7b020c827a50781d264123314ce30f42cc6",
+      "v1/worker/xpu_worker.py": "7846750f1f5a563257ec785e75dac508894ddd8e5f200a466d0940986ed83213",
+      "model_executor/models/qwen3_5_mtp.py": "39068e51c14f5c1dbfd5e9683a81e5c36c1726709c3037928cc7914c3e9ef303",
+      "model_executor/models/b70_mtp_policy.py": "c7c75d6b818c1cb0f1846f752060650af399f832e0dea3e8297ec274f2cfee3f",
+      "_xpu_ops.py": "a42c3b1f71197e85a29ce21a75711f32ed8d47892ac59431050e5a7442c14410",
+      "model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py": "c6c037ad94d217aa2710cf29d25d8fa6e3856d1be9fc67fa8bd8681b1f5417f9"
+    }
+  },
+  "attention_dispatch.py": {
+    "old": {
+      "v1/attention/backends/flash_attn.py": "ea53fb41165323f13094604051c73d44a579994fe5a427243aa9faafc280b1c2",
+      "v1/attention/backends/fa_utils.py": "3896d53947719ec9a226479fdbde60e83b1df116d634e2f4331499acf727dd99",
+      "v1/attention/backend.py": "77ac35180c1e0f854c6307f5deb3c7c0ac4a9e8702578d406ce058981488a137",
+      "v1/worker/gpu/model_runner.py": "725c47114e148ade3a26b4cc9c5f7295588fdd387afc3cb5fdb2d16513a1bb5c",
+      "v1/worker/gpu/attn_utils.py": "0f9df8b0153bd0a2720ee957f6cd1600b9d865eb12b7bf432501ffaa12fb6a9c",
+      "v1/worker/gpu/model_states/mamba_hybrid.py": "1ddd7dc921d74789e77d3319dc167820ad7fc47ed51d8d9a35ba3938f5c6a079",
+      "model_executor/layers/attention/attention.py": "bde77677fd0e95ea09c6a580dfaf09b57741e8183e00cb106e2d1cc64d8e03f2",
+      "model_executor/layers/quantization/kv_cache.py": "32b45463d0b36c021cb5ae0937d60b5c797ca383a0ef3e291170337486feb1b0"
+    },
+    "new": {
+      "v1/attention/backends/flash_attn.py": "7991393d7895994550028637790145d03d1fe28586cac03aa2946ba13afc99c5",
+      "v1/attention/backends/fa_utils.py": "d2ab2c0bf1daea3a6b73481c9e4438833fcd1ee714fa66869d279ca552948cdf",
+      "v1/attention/backend.py": "1583b551b8996887d7ad372763f2de1bbb2143e1153329b261128646ff24b3af",
+      "v1/worker/gpu/model_runner.py": "9145e2601f9e93db5e6c7e648c6741cff55f2a49f046800f79311e4977550121",
+      "v1/worker/gpu/attn_utils.py": "705a1eb16d26dc0ec658af9e10e00831f16d1925c14361228853807e456f6553",
+      "v1/worker/gpu/model_states/mamba_hybrid.py": "262de489e3c02a2b1b93acd2a0d88ddced82ecebe050ca95ea91ba3fe501e6f4",
+      "model_executor/layers/attention/attention.py": "3914b60f5407d193cfd1cbe75c6689a6da71f89e37d177a04bb0d95b3244ea44",
+      "model_executor/layers/quantization/kv_cache.py": "127f6e15ef103ad3fdd055d2957a73cacfbb2a31c4ccfe650ddb29d884d42885"
+    }
+  }
+}

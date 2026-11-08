@@ -1,0 +1,16 @@
+{
+  "status": "QUALIFIED_FOR_PRODUCTION_PROMOTION",
+  "image_id": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e",
+  "policy_sha256": "e7b35f388ecee964c1b988b0ddb0eb7b4029236b27aa287c169d59f8d7c69ea5",
+  "immediate_rollback_image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "gate_assessment": {
+    "path": "benchmarks/results/vllm-033-upgrade-20261108/gate-assessment.json",
+    "sha256": "755091cf4c97363a240f5e19cf100c12711772357c51f5a9466ea01a17a404db"
+  },
+  "benchmark_summary": {
+    "path": "benchmarks/results/vllm-033-upgrade-20261108/serving.json",
+    "sha256": "d9aefa14e23997acf0eec47bf844de60a8e4bc75f9ea75b2be26421b3d6a3f73"
+  },
+  "performance_review_triggers": [],
+  "rationale": "Upgrade to final vLLM0.33XPU while keeping Torch/native/Intel stack and model fixed. Full matched serving matrix has no investigation triggers; original-tolerance numerical, finite distribution, loader, API/media/context, actual RAM restore, admission and restart gates pass. Independently tested0.31RAM/LBNHC rollback retained. Finite scopes and sampled-output changes are recorded in the review."
+}

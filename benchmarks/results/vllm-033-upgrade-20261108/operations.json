@@ -1,0 +1,536 @@
+{
+  "status": "PASS_ESTABLISHED_OPERATIONAL_AND_NEW_RAM_GATES",
+  "image_id": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e",
+  "raw_receipt_sha256": "87e7ac9ccd94ebcc709ce4a434a988ca1b611f8abe0a2033d842a95bdb17a990",
+  "cases": {
+    "paired-tokenizer": {
+      "status": "PASS_ALL124_RENDERED_TOKEN_IDS_IDENTICAL"
+    },
+    "api": {
+      "status": "PASS",
+      "checks": [
+        "text",
+        "stream",
+        "tool",
+        "reasoning",
+        "image",
+        "images_at_limit",
+        "over_image_limit",
+        "prefix_first",
+        "prefix_extension",
+        "prefix_native",
+        "after_abort",
+        "c4_usage",
+        "limits"
+      ],
+      "image_limit": 32,
+      "video_limit_configured": 4,
+      "abort_note": "client disconnected after first streamed content; correlate trace with scheduler abort",
+      "c4_note": "four simultaneous small requests; full long-context C4 load remains a separate release gate"
+    },
+    "media": {
+      "status": "PASS",
+      "video_fixture_sha256": "779d1910eae95ecdda9d39712972cca54ec05d674d1f85a8634beaf996078444",
+      "fixture": "ffmpeg constant-red 320x240,4fps,2s; API decodes real H264 video",
+      "scope": "Small-media count limits and one 6.3MP image; does not promise 32 maximum-area images plus 4 long videos at maximum text context"
+    },
+    "near-limit": {
+      "status": "COMPLETE",
+      "usage": {
+        "prompt_tokens": 261120,
+        "total_tokens": 262144,
+        "completion_tokens": 1024,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": null,
+          "multimodal_tokens": null
+        },
+        "completion_tokens_details": null
+      },
+      "native": {
+        "prompt_tokens": 261120.0,
+        "decode_seconds": 20.857483575000515,
+        "accepted_tokens": 767.0,
+        "generation_tokens": 1024.0,
+        "completed": 1.0,
+        "draft_tokens": 767.0,
+        "prefill_tokens": 261120.0,
+        "prefill_seconds": 312.30779643799906,
+        "cached_tokens": 0.0,
+        "preemptions": 0.0
+      },
+      "prompt_ids_sha256": "e8ac906288c498948179c06caab723a3256ece84484faa827f250c35ce8cd17d",
+      "prompt_recipe": "repeat frozen /tokenize code/prose token IDs to exactly 261120; output 1024; total 262144",
+      "qualification": "instrumented capacity diagnostic; preemptions preserved for analysis, not silently accepted"
+    },
+    "c4-long": {
+      "status": "PASS",
+      "usage": [
+        {
+          "prompt_tokens": 32768,
+          "total_tokens": 33024,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 32768,
+          "total_tokens": 33024,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 32768,
+          "total_tokens": 33024,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 32768,
+          "total_tokens": 33024,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        }
+      ],
+      "native": {
+        "prompt_tokens": 131072.0,
+        "decode_seconds": 117.28043854399584,
+        "accepted_tokens": 767.0,
+        "generation_tokens": 1024.0,
+        "completed": 4.0,
+        "draft_tokens": 768.0,
+        "prefill_tokens": 131072.0,
+        "prefill_seconds": 90.12975767399985,
+        "cached_tokens": 0.0,
+        "preemptions": 0.0
+      },
+      "preemption_policy": "require-zero",
+      "purpose": "4 simultaneous independent 32768-token prompts; fixed output 256 each; not a claim of 4 simultaneous maximum-context sequences"
+    },
+    "c16-long": {
+      "status": "PASS",
+      "usage": [
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        {
+          "prompt_tokens": 8192,
+          "total_tokens": 8448,
+          "completion_tokens": 256,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        }
+      ],
+      "native": {
+        "prompt_tokens": 131072.0,
+        "decode_seconds": 400.0482842069978,
+        "accepted_tokens": 2997.0,
+        "generation_tokens": 4096.0,
+        "completed": 16.0,
+        "draft_tokens": 3282.0,
+        "prefill_tokens": 131072.0,
+        "prefill_seconds": 109.9829908180036,
+        "cached_tokens": 0.0,
+        "preemptions": 0.0
+      },
+      "preemption_policy": "record-pressure",
+      "purpose": "16 simultaneous independent 8192-token prompts; fixed output 256 each; not a claim of 16 simultaneous maximum-context sequences"
+    },
+    "image-long": {
+      "status": "PASS",
+      "native": {
+        "prompt_tokens": 119093.0,
+        "decode_seconds": 0.005221952997089829,
+        "accepted_tokens": 3.0,
+        "generation_tokens": 2.0,
+        "completed": 1.0,
+        "draft_tokens": 3.0,
+        "prefill_tokens": 119093.0,
+        "prefill_seconds": 90.76896374500211,
+        "cached_tokens": 0.0,
+        "preemptions": 0.0
+      },
+      "purpose": "One allowed image in a long context"
+    },
+    "extension-abort-long": {
+      "status": "PASS",
+      "first_usage": {
+        "prompt_tokens": 50033,
+        "total_tokens": 50061,
+        "completion_tokens": 28,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 48000
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "extension_usage": {
+        "prompt_tokens": 50038,
+        "total_tokens": 50075,
+        "completion_tokens": 37,
+        "prompt_tokens_details": {
+          "cached_tokens": 48000,
+          "created_cache_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "extension_native": {
+        "prompt_tokens": 50038.0,
+        "decode_seconds": 0.5804470609982673,
+        "accepted_tokens": 28.0,
+        "generation_tokens": 37.0,
+        "completed": 1.0,
+        "draft_tokens": 30.0,
+        "prefill_tokens": 2038.0,
+        "prefill_seconds": 1.3381488200029708,
+        "cached_tokens": 48000.0,
+        "preemptions": 0.0
+      },
+      "purpose": "Long prefix extension and client abort/restart; trace must confirm FINISHED_ABORTED"
+    },
+    "structured-json-and-forced-tool": {
+      "status": "PASS_STRUCTURED_JSON_AND_FORCED_TOOL"
+    },
+    "32-unique-max-area-images": {
+      "status": "PASS",
+      "usage": {
+        "prompt_tokens": 131165,
+        "total_tokens": 131167,
+        "completion_tokens": 2,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 128000,
+          "multimodal_tokens": {
+            "image": 131072
+          }
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "native": {
+        "prompt_tokens": 131165.0,
+        "decode_seconds": 0.004474327997741057,
+        "accepted_tokens": 3.0,
+        "generation_tokens": 2.0,
+        "completed": 1.0,
+        "draft_tokens": 3.0,
+        "prefill_tokens": 131165.0,
+        "prefill_seconds": 157.54462017200058,
+        "cached_tokens": 0.0,
+        "preemptions": 0.0
+      },
+      "pixels_each": 4194304,
+      "unique_images": 32,
+      "fixture_sha256": [
+        "19cebdd9ca639a6f0e426d062569b636af951e3a9eaf461ac24154b1ee5ff28d",
+        "e806acc4a43195a9f8408d43e9330d311b04d6ec11501ad950e44a8fd4a67eb2",
+        "96cda4d2b7f824ed6c5231dffe0add4a3f2fdc3cbfe4523b463d98ce8958fd08",
+        "2393c779b376dea20795dae28e40ac41c78f3009ece8dc51dea38340554ca277",
+        "4620ffd781dae975452d60cf2ec5fd23baf3c54df3772597a488815e8fe349c3",
+        "f1cd43ec289b24c46ffa1ae762ab5f06a3cfb70820fa8d4e57b3912814a60e52",
+        "2b02950a80a954fdbd9375ca59d144d5346c0bdce96271aee9bf88fe1a8fe018",
+        "d77052dc702bb05a8d9a3817f8f60a61f58933b910e1f62bddc9309f7686bcc2",
+        "7030ff8a466f66731335ada8efef5a4ab765c22b8842db79d343ab54a28d0def",
+        "178c16a14cce004a6bf62ae59b6a1277d772d1c32de4d272e114ce301a3d87f3",
+        "f9674b525d92a9d6d3bbb3b04f0f40ecdce71e63114aadccd0a0469459cbc01e",
+        "c1e436a2e88ccafe13fb46bb756cb842625276c19e941010295a05a63bda4ef9",
+        "557d2117bc2789e74f0fde42201d30ed693f59f8d702ccb7bc6eae6500509a2f",
+        "c12ebb9e7ee33c215cf4c293ee9bdc4424b0ad1e8f661f6eacde0d988143fe0d",
+        "3d3189f40efeb79a3a1173f824484be81f02a628a29ec44500d93ccbfb8b30d3",
+        "15e1465ab8689cacefe075f7299fa99c6f89d019877be3b16da788c7dc2e9477",
+        "d795d96d34bb7fdff4062b48f63dc9501e802c07abc1505c984d5d18ffa4795a",
+        "3394edb324a4acad80c486509a2664a183859e0a934932930ad2312b0bc20c19",
+        "1152d7e4d3300ba4e028cb14fa7d7054d32f14345d79a86fb0215316382d7f7c",
+        "26a523e20ae7a05bb392bfc9e9dd4adf70b9435611ebe6ad8b836e28f14a5ae0",
+        "5d82116ff166a761b020dae56b2063ee3f383997a0f5da7b30b6f1ec4a67c8c4",
+        "da561aff1a6c60b9b17c44daadd6528032cd6cb0e9011c38d777210317fb2733",
+        "b3d3ccb7cee89fe27336d5c1ed3ed7edf6fe804ff12c2d9b4f5055e42b22f60f",
+        "7f0e8d82689b59b5a2e313a7bb8b37df5305ac2ddc431a4a9f32b6389162194d",
+        "d259f3f13f18cf4e584b52a300c17b32a8cc9283d1768120b620d66d6cba1e02",
+        "7e96173ca345f8565b97921ee414ed462ef3986a19bbcd99a3b15c07fb8e051c",
+        "12356e63363552bd560e6f6407da83eac41054777d1723c709178e4c53911769",
+        "e858021e13c2ac9d941c64c5f7a61d418b68893e65e71af3a171799e7965c0f0",
+        "176fe25f14f90de59f57693153a9a5458fd1a119caeca6fc2ad5aa61f8849f23",
+        "57e5c685f20f84374e87ae76d746c6e374e7f6f64f94062b738ceabf2fb75d33",
+        "498ad648b6e126d08e0dff65fc8251da5a203859bcde595b8a645981931b38b7",
+        "b965479517d27b87f7772d761de61b00d6afef7826555a346f20003efed96617"
+      ]
+    },
+    "natural-cpu-restore": {
+      "status": "PASS",
+      "restore_delta": {
+        "vllm:kv_offload_total_bytes_total": 1772355584.0,
+        "vllm:kv_offload_total_bytes_total:CPU_to_GPU": 1772355584.0,
+        "vllm:kv_offload_total_bytes_total:GPU_to_CPU": 0.0,
+        "vllm:kv_offload_total_bytes_created": 0.0,
+        "vllm:kv_offload_total_bytes_created:CPU_to_GPU": 0.0,
+        "vllm:kv_offload_total_bytes_created:GPU_to_CPU": 0.0,
+        "vllm:kv_offload_total_time_total": 0.1695553650000008,
+        "vllm:kv_offload_total_time_total:CPU_to_GPU": 0.16955536499999999,
+        "vllm:kv_offload_total_time_total:GPU_to_CPU": 0.0,
+        "vllm:kv_offload_total_time_created": 0.0,
+        "vllm:kv_offload_total_time_created:CPU_to_GPU": 0.0,
+        "vllm:kv_offload_total_time_created:GPU_to_CPU": 0.0,
+        "vllm:kv_offload_size_bucket": 1.0,
+        "vllm:kv_offload_size_bucket:CPU_to_GPU": 1.0,
+        "vllm:kv_offload_size_count": 1.0,
+        "vllm:kv_offload_size_count:CPU_to_GPU": 1.0,
+        "vllm:kv_offload_size_sum": 1772355584.0,
+        "vllm:kv_offload_size_sum:CPU_to_GPU": 1772355584.0,
+        "vllm:kv_offload_size_bucket:GPU_to_CPU": 0.0,
+        "vllm:kv_offload_size_count:GPU_to_CPU": 0.0,
+        "vllm:kv_offload_size_sum:GPU_to_CPU": 0.0,
+        "vllm:kv_offload_size_created": 0.0,
+        "vllm:kv_offload_size_created:CPU_to_GPU": 0.0,
+        "vllm:kv_offload_size_created:GPU_to_CPU": 0.0,
+        "vllm:kv_offload_cpu_cache_usage_perc": 0.0,
+        "vllm:kv_offload_cpu_cache_write_usage_perc": 0.0,
+        "vllm:kv_offload_cpu_cache_read_usage_perc": 0.0,
+        "vllm:kv_offload_cpu_allocation_size_bucket": 0.0,
+        "vllm:kv_offload_cpu_allocation_size_count": 0.0,
+        "vllm:kv_offload_cpu_allocation_size_sum": 0.0,
+        "vllm:kv_offload_cpu_allocation_size_created": 0.0,
+        "vllm:kv_offload_load_bytes_total": 1772355584.0,
+        "vllm:kv_offload_load_bytes_created": 1794160057.879421,
+        "vllm:kv_offload_load_time_total": 0.16955536499999999,
+        "vllm:kv_offload_load_time_created": 1794160057.8794358,
+        "vllm:kv_offload_load_size_bucket": 1.0,
+        "vllm:kv_offload_load_size_count": 1.0,
+        "vllm:kv_offload_load_size_sum": 1772355584.0,
+        "vllm:kv_offload_load_size_created": 1794160057.8794556,
+        "vllm:kv_offload_store_bytes_total": 0.0,
+        "vllm:kv_offload_store_bytes_created": 0.0,
+        "vllm:kv_offload_store_time_total": 0.0,
+        "vllm:kv_offload_store_time_created": 0.0,
+        "vllm:kv_offload_store_size_bucket": 0.0,
+        "vllm:kv_offload_store_size_count": 0.0,
+        "vllm:kv_offload_store_size_sum": 0.0,
+        "vllm:kv_offload_store_size_created": 0.0,
+        "vllm:kv_offload_lookup_sync_delay_seconds_bucket": 10.0,
+        "vllm:kv_offload_lookup_sync_delay_seconds_count": 1.0,
+        "vllm:kv_offload_lookup_sync_delay_seconds_sum": 6.004000169923529e-05,
+        "vllm:kv_offload_lookup_sync_delay_seconds_created": 0.0,
+        "vllm:kv_offload_config_info": 0.0,
+        "vllm:prefix_cache_queries_total": 48056.0,
+        "vllm:prefix_cache_queries_created": 0.0,
+        "vllm:prefix_cache_hits_total": 0.0,
+        "vllm:prefix_cache_hits_created": 0.0,
+        "vllm:external_prefix_cache_queries_total": 48056.0,
+        "vllm:external_prefix_cache_queries_created": 0.0,
+        "vllm:external_prefix_cache_hits_total": 46400.0,
+        "vllm:external_prefix_cache_hits_created": 0.0
+      },
+      "correct_markers": true,
+      "same_answer": true
+    },
+    "completion-reserved-admission": {
+      "status": "PASS",
+      "preemptions": 0.0,
+      "prompt_tokens": [
+        200023,
+        131020
+      ]
+    }
+  },
+  "restart_scope": "PASS: same frozen image and command restarted with reused compile-cache paths, real Paris decode, graceful shutdown, prior service restored.",
+  "controller": {
+    "status": "PASS_REQUESTED_STAGES",
+    "image_id": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e",
+    "baseline_image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+    "production_restored": true,
+    "started_utc": "2026-11-08T17:26:41.574421+00:00",
+    "finished_utc": "2026-11-08T17:56:25.133930+00:00"
+  },
+  "controller_sha256": "205404ea06f3db77043f000874ca729bc5b2e5d9e3936296114fba5833e6a7cf",
+  "restart_receipt_sha256": "81c2ba6271bd9509d3861190c2cbe466ca5a0bf27dd0d48cb43d6755d32233cf"
+}

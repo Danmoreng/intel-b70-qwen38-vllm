@@ -1,0 +1,62 @@
+{
+  "status": "PASS_EXACT_IMAGE_RELEASE_GATES",
+  "image_id": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e",
+  "policy_sha256": "e7b35f388ecee964c1b988b0ddb0eb7b4029236b27aa287c169d59f8d7c69ea5",
+  "assessed_utc": "2026-11-08T18:03:07.508105+00:00",
+  "receipts": {
+    "gpu-preflight.json": {
+      "path": "benchmarks/results/vllm-033-upgrade-20261108/gpu-preflight.json",
+      "sha256": "22cc550b93294d845533e171d753cb25dacb396139a0ada589285e79b3e8f156"
+    },
+    "quality.json": {
+      "path": "benchmarks/results/vllm-033-upgrade-20261108/quality.json",
+      "sha256": "30896b013e809d92ab968bfc6e809b7a7efa34d3b0e67ed928c394538593f0ec"
+    },
+    "serving.json": {
+      "path": "benchmarks/results/vllm-033-upgrade-20261108/serving.json",
+      "sha256": "d9aefa14e23997acf0eec47bf844de60a8e4bc75f9ea75b2be26421b3d6a3f73"
+    },
+    "operations.json": {
+      "path": "benchmarks/results/vllm-033-upgrade-20261108/operations.json",
+      "sha256": "df0633c1714d1a74bcbb486f4639f7b71114109c15cfefca4a08813cc80ab0a0"
+    },
+    "tokenizer.json": {
+      "path": "benchmarks/results/vllm-033-upgrade-20261108/tokenizer.json",
+      "sha256": "32ad9846952cc5e5ce5c3b3185241ee9b6d12a05cdaa29d0334c9866395712d7"
+    },
+    "strict-preflights.json": {
+      "path": "benchmarks/results/vllm-033-upgrade-20261108/strict-preflights.json",
+      "sha256": "bfbf469f1de58823180a8958595381e0d7e4a068dedc417ef04a654a3071f7ab"
+    },
+    "live-rollback.json": {
+      "path": "benchmarks/results/vllm-033-upgrade-20261108/live-rollback.json",
+      "sha256": "ba5444602de3355c8a78f4bc95c865f7b11aa86d80e762814218770e3c695b36"
+    },
+    "runtime-identity.json": {
+      "path": "benchmarks/results/vllm-033-upgrade-20261108/runtime-identity.json",
+      "sha256": "6612d6d2ff8fd967cf6922706a84251c9440bb86eda0e44ee8ad597e2894adbe"
+    },
+    "port-reproducibility.json": {
+      "path": "benchmarks/results/vllm-033-upgrade-20261108/port-reproducibility.json",
+      "sha256": "78b8d9baec77bf3659271f61442c46e20db053342dc6fbad6b5c9adcb6817a6e"
+    },
+    "cached-build-reproduction.json": {
+      "path": "benchmarks/results/vllm-033-upgrade-20261108/cached-build-reproduction.json",
+      "sha256": "4d14fcb28b0d01aec5b3895b8a7ff0f5ba24721955dae68fa29660de39510cb1"
+    },
+    "host-tests.json": {
+      "path": "benchmarks/results/vllm-033-upgrade-20261108/host-tests.json",
+      "sha256": "221f69f29d0c7a4a2348dcdefbb518b77f878dd271bf3eded0701ebb66733270"
+    }
+  },
+  "kernel_image_scope": "Numerical kernels/state/loader gates executed on runtime parent b4440db13db7; frozen f1822d3b533e has byte-identical RootFS. Full quality, 70-wave serving, operations and restart used frozen f182. Only policy metadata/capacity labels differ from parent.",
+  "performance_review": "No predeclared5% cell or2% weighted investigation threshold triggered. Measured total wave time+0.264%, not a meaningful speedup.",
+  "quality_review": "Short arrays byte-identical. Four long finite windows: full-promptPPL+0.061910%, suffixPPL-0.054686%;544/544 selected top1. Not task accuracy or sampled text identity.",
+  "correctness_scope": "12 completed operations groups, actual1.772GB CPU restore with same markers/answer, max262144total,C4/C16 zero preemptions,32unique4MPimages,structuredJSON/tool,admission,restart. Abort verifies disconnect/recovery, not a per-request engine-finish trace.",
+  "excluded_harness_attempts": [
+    "Initial GPU campaign failed at standalone linear test missingEXL3_LIB; native kernel/state/startup gates resumed successfully with explicit same library.",
+    "Initial operations campaign failed before cases due missing host import path; corrected host import preflight then full12groups and restart pass."
+  ],
+  "rollback": "Independent0.31 archive strict preflight, actual archived-module mount/LBNHC and real decode pass; previous permanent service restored.",
+  "limits": "One B70/180W and finite source-review/numerical/operational fixtures. All124 sampled serving outputs differ across versions; no general generated-text or coding-accuracy equivalence asserted."
+}

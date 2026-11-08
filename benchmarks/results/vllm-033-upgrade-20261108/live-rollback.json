@@ -1,0 +1,93 @@
+{
+  "status": "PASS_ARCHIVED_RUNTIME_STRICT_LAUNCH_AND_REAL_DECODE",
+  "rollback_image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "production_image_before": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "models": {
+    "object": "list",
+    "data": [
+      {
+        "id": "Qwen3.8-27B",
+        "object": "model",
+        "created": 1794160706,
+        "owned_by": "vllm",
+        "root": "/models/checkpoint",
+        "parent": null,
+        "max_model_len": 262144,
+        "permission": [
+          {
+            "id": "modelperm-81f9cb432ab972b2",
+            "object": "model_permission",
+            "created": 1794160706,
+            "allow_create_engine": false,
+            "allow_sampling": true,
+            "allow_logprobs": true,
+            "allow_search_indices": false,
+            "allow_view": true,
+            "allow_fine_tuning": false,
+            "organization": "*",
+            "group": null,
+            "is_blocking": false
+          }
+        ]
+      }
+    ]
+  },
+  "reply": {
+    "id": "chatcmpl-b0227fc4fd7ae739",
+    "object": "chat.completion",
+    "created": 1794160706,
+    "model": "Qwen3.8-27B",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Paris",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.31.0-bba00267",
+    "usage": {
+      "prompt_tokens": 23,
+      "total_tokens": 25,
+      "completion_tokens": 2,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "created_cache_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": {
+      "time_to_first_token_ms": 83.08398699955433,
+      "generation_time_ms": 35.590803003287874,
+      "queue_time_ms": 0.025919998734025285,
+      "mean_itl_ms": 35.590803003287874,
+      "tokens_per_second": 16.85277892593786,
+      "speculative_decoding": null
+    }
+  },
+  "runtime_mount": "config/releases/exl3-v4/runtime",
+  "kv_layout": "LBNHC",
+  "production_restored": true,
+  "finished_utc": "2026-11-08T18:00:10.561372+00:00",
+  "raw_receipt_sha256": "4eba211cbc8e37314066a4fc8f9f7e2e8febf784d75add7aaa4a84b88d983ae5"
+}

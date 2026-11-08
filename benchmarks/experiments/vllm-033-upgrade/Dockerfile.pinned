@@ -1,0 +1,7 @@
+FROM sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a
+USER root
+COPY vllm-0.33.0+xpu-cp38-abi3-manylinux_2_34_x86_64.whl /tmp/vllm-0.33.0+xpu-cp38-abi3-manylinux_2_34_x86_64.whl
+RUN pip install --no-cache-dir --no-deps /tmp/vllm-0.33.0+xpu-cp38-abi3-manylinux_2_34_x86_64.whl tokenizers==0.23.3 aiohttp==3.14.5 multidict==7.2.1 orjson==3.13.0 pillow==13.0.0 certifi==2026.10.23 xgrammar==0.2.8 mcp==2.3.0 mcp-types==2.3.0 yarl==1.25.1 auto-round-lib==0.16.0 && rm /tmp/*.whl
+RUN python -c "import torch,vllm,importlib.metadata as m; assert vllm.__version__=='0.33.0'; assert torch.__version__=='2.14.0+xpu'; assert m.version('vllm-xpu-kernels')=='0.1.15.4'; assert m.version('triton')=='3.8.0+xpu'"
+
+RUN python -c "import importlib.metadata as m; assert all(m.version(n)==v for n,v in {'intel-sycl-rt':'2026.1.1','dpcpp-cpp-rt':'2026.1.1','intel-pti':'1.1.0'}.items())"

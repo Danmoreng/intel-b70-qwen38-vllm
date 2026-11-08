@@ -5,12 +5,23 @@ import os
 from pathlib import Path
 
 
+def checkout_path(root, value):
+    """Resolve an attested file/directory within this release checkout."""
+    relative = Path(value)
+    if relative.is_absolute() or '..' in relative.parts:
+        raise RuntimeError('RAM-KV path must remain inside the release checkout')
+    path = (root / relative).resolve()
+    if not path.is_relative_to(root.resolve()):
+        raise RuntimeError('RAM-KV path must remain inside the release checkout')
+    return path
+
+
 def load_overlay(repo, release, environ=None):
     attestation = release.get('ram_kv_runtime')
     if attestation is None:
         return None
     root = Path(repo)
-    path = root / 'config/production_ram_kv.json'
+    path = checkout_path(root, attestation['path'])
     raw = path.read_bytes()
     if hashlib.sha256(raw).hexdigest() != attestation['sha256']:
         raise RuntimeError('RAM-KV release manifest changed')
@@ -20,8 +31,10 @@ def load_overlay(repo, release, environ=None):
     expected = {'kv_admission.py', 'xpu_cpu_offload.py'}
     if set(data['runtime_sha256']) != expected:
         raise RuntimeError('Unexpected RAM-KV runtime modules')
+    runtime_directory = data.get('runtime_directory', 'runtime')
+    runtime = checkout_path(root, runtime_directory)
     for name, digest in data['runtime_sha256'].items():
-        if hashlib.sha256((root / 'runtime' / name).read_bytes()).hexdigest() != digest:
+        if hashlib.sha256((runtime / name).read_bytes()).hexdigest() != digest:
             raise RuntimeError('RAM-KV module changed: ' + name)
     env = os.environ if environ is None else environ
     # OffloadingConnector prefers LBHNC. The frozen EXL3 oneDNN/M04 guards
@@ -35,6 +48,7 @@ def load_overlay(repo, release, environ=None):
     if not 1 <= budget <= 12:
         raise ValueError('B70_KV_RAM_GIB must be an integer from 1 to 12 GiB')
     return {'sha256': attestation['sha256'], 'cpu_gib': budget,
+            'runtime_directory': runtime_directory,
             'environment': {'VLLM_KV_CACHE_LAYOUT': layout},
             'scheduler': 'kv_admission.CompletionReservedScheduler', 'watermark': '0.05',
             'transfer': {'kv_connector': 'OffloadingConnector', 'kv_role': 'kv_both',

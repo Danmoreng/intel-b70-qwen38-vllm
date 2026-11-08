@@ -1,0 +1,344 @@
+{
+  "rows": [
+    {
+      "arm": "nooffload",
+      "depth": "32k",
+      "n": 2,
+      "ttft_s": 13.906500000000001,
+      "ttft_min": 13.816,
+      "ttft_max": 13.997,
+      "decode_tok_s": 74.47999999999999
+    },
+    {
+      "arm": "nooffload",
+      "depth": "128k",
+      "n": 2,
+      "ttft_s": 88.6505,
+      "ttft_min": 88.33,
+      "ttft_max": 88.971,
+      "decode_tok_s": 56.370000000000005
+    },
+    {
+      "arm": "noprefix",
+      "depth": "32k",
+      "n": 2,
+      "ttft_s": 13.032,
+      "ttft_min": 12.977,
+      "ttft_max": 13.087,
+      "decode_tok_s": 72.045
+    },
+    {
+      "arm": "noprefix",
+      "depth": "128k",
+      "n": 2,
+      "ttft_s": 83.868,
+      "ttft_min": 83.812,
+      "ttft_max": 83.924,
+      "decode_tok_s": 58.099999999999994
+    },
+    {
+      "arm": "baseline",
+      "depth": "32k",
+      "n": 2,
+      "ttft_s": 17.378,
+      "ttft_min": 17.307,
+      "ttft_max": 17.449,
+      "decode_tok_s": 71.295
+    },
+    {
+      "arm": "baseline",
+      "depth": "128k",
+      "n": 2,
+      "ttft_s": 141.75900000000001,
+      "ttft_min": 141.619,
+      "ttft_max": 141.899,
+      "decode_tok_s": 49.085
+    },
+    {
+      "arm": "tokenlayout",
+      "depth": "32k",
+      "n": 2,
+      "ttft_s": 14.1415,
+      "ttft_min": 14.115,
+      "ttft_max": 14.168,
+      "decode_tok_s": 72.685
+    },
+    {
+      "arm": "tokenlayout",
+      "depth": "128k",
+      "n": 2,
+      "ttft_s": 89.2165,
+      "ttft_min": 89.065,
+      "ttft_max": 89.368,
+      "decode_tok_s": 56.9
+    }
+  ],
+  "validation": [
+    {
+      "arm": "nooffload",
+      "rep": 0,
+      "depth": "32k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "nooffload",
+      "rep": 0,
+      "depth": "128k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "nooffload",
+      "rep": 1,
+      "depth": "32k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "nooffload",
+      "rep": 1,
+      "depth": "128k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "noprefix",
+      "rep": 0,
+      "depth": "32k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "noprefix",
+      "rep": 0,
+      "depth": "128k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "noprefix",
+      "rep": 1,
+      "depth": "32k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "noprefix",
+      "rep": 1,
+      "depth": "128k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "baseline",
+      "rep": 0,
+      "depth": "32k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "baseline",
+      "rep": 0,
+      "depth": "128k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "baseline",
+      "rep": 1,
+      "depth": "32k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "baseline",
+      "rep": 1,
+      "depth": "128k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "tokenlayout",
+      "rep": 0,
+      "depth": "32k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "tokenlayout",
+      "rep": 0,
+      "depth": "128k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "tokenlayout",
+      "rep": 1,
+      "depth": "32k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    },
+    {
+      "arm": "tokenlayout",
+      "rep": 1,
+      "depth": "128k",
+      "checks": {
+        "512_tokens": true,
+        "no_gpu_hits": true,
+        "no_cpu_hits": true,
+        "no_preemptions": true,
+        "one_request": true,
+        "no_foreign_output": true,
+        "no_reasoning": true,
+        "client_matches_server_prefill": true
+      },
+      "ok": true
+    }
+  ],
+  "all_cells_valid": true,
+  "cause": "RAM OffloadingConnector prefers LBHNC; guarded oneDNN prefill requires compatible token-major strides. The production cache layout caused fallback to native FP8 attention. Explicit LBNHC restores oneDNN while preserving RAM offload.",
+  "limitations": "Two repeats per diagnostic cell, C1, one host, 230 W. Separate 180 W production checks are in production-180w.jsonl. These checks do not requalify the full original release matrix or establish general MTP losslessness. Copy-call host time includes GPU waits and is not additive request overhead.",
+  "source_commit": "7f9d65020456b968416f5ecf95ff8a459aa100f7",
+  "source_repository": "https://github.com/SergiioB/intel-arc-pro-b70-inference-cookbook",
+  "harness_sha256": "45d16c62eb2c14cb5bc7e2e8d586b7c077bb93b8e016dca371c7bdfa27224f33",
+  "prompts_sha256": "74afe579763ef91a9321bfc9ab43ea0f55959176c7423347ab5872dbd73eca64",
+  "image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
+  "model_revision": "113cf7ab958054860e43fb7f3063b1af19171095",
+  "production_ram_manifest_sha256": "b6f53f3e9aa946dff4a030e402c3677ce8f1c7c76078219819262f58714b5c42"
+}

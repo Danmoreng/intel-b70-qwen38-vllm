@@ -1,0 +1,81 @@
+{
+  "cold": {
+    "wall_s": 16.313,
+    "ttft_s": 16.274,
+    "completion_tokens": 9,
+    "prompt_tokens": 36907,
+    "chunks": 3,
+    "decode_tok_s": 204.83,
+    "e2e_tok_s": 0.55,
+    "sha256": "a82ab1743fdbc9e38583b68631ed79bf33cacbab77b1ecddb4549b3389250e38",
+    "chars": 10,
+    "energy_j": 3753.5,
+    "avg_w": 230.1,
+    "decode_avg_w": 227.3,
+    "decode_j_per_tok": 1.112,
+    "last_chunk_extra": {
+      "usage": {
+        "prompt_tokens": 36907,
+        "total_tokens": 36916,
+        "completion_tokens": 9,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 35200
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "system_fingerprint": "vllm-0.31.0-bba00267",
+      "metrics": {
+        "time_to_first_token_ms": 16221.679363000021,
+        "generation_time_ms": 44.44804800004931,
+        "queue_time_ms": 0.00821999992695055,
+        "mean_itl_ms": 5.556006000006164,
+        "tokens_per_second": 0.5532970308540491
+      }
+    }
+  },
+  "reload": {
+    "wall_s": 1.226,
+    "ttft_s": 1.114,
+    "completion_tokens": 9,
+    "prompt_tokens": 36907,
+    "chunks": 3,
+    "decode_tok_s": 71.15,
+    "e2e_tok_s": 7.34,
+    "sha256": "a82ab1743fdbc9e38583b68631ed79bf33cacbab77b1ecddb4549b3389250e38",
+    "chars": 10,
+    "energy_j": 265.86,
+    "avg_w": 216.9,
+    "decode_avg_w": 222.7,
+    "decode_j_per_tok": 3.132,
+    "last_chunk_extra": {
+      "usage": {
+        "prompt_tokens": 36907,
+        "total_tokens": 36916,
+        "completion_tokens": 9,
+        "prompt_tokens_details": {
+          "cached_tokens": 35200,
+          "created_cache_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "system_fingerprint": "vllm-0.31.0-bba00267",
+      "metrics": {
+        "time_to_first_token_ms": 941.5353790000154,
+        "generation_time_ms": 117.71566200013694,
+        "queue_time_ms": 130.45275099966602,
+        "mean_itl_ms": 14.714457750017118,
+        "tokens_per_second": 8.496569417106388
+      }
+    }
+  },
+  "cold_text": "PLUM731956",
+  "reload_text": "PLUM731956",
+  "cpu_hit_tokens": 35200.0,
+  "loaded_bytes": 1382416384.0,
+  "scope": "230 W isolated same-image LBNHC candidate, developer GPU-cache reset on loopback only; no developer endpoints enabled in production."
+}

@@ -1,0 +1,58 @@
+{
+  "tool": {
+    "passed": true,
+    "message": {
+      "role": "assistant",
+      "content": null,
+      "refusal": null,
+      "annotations": null,
+      "audio": null,
+      "function_call": null,
+      "tool_calls": [
+        {
+          "id": "chatcmpl-tool-acedb481ec1691a6",
+          "type": "function",
+          "function": {
+            "name": "get_weather",
+            "arguments": "{\"city\": \"Berlin\"}"
+          }
+        }
+      ],
+      "reasoning": null
+    },
+    "usage": {
+      "prompt_tokens": 287,
+      "total_tokens": 313,
+      "completion_tokens": 26,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "created_cache_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    }
+  },
+  "vision": {
+    "passed": true,
+    "content": "red",
+    "usage": {
+      "prompt_tokens": 94,
+      "total_tokens": 96,
+      "completion_tokens": 2,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "created_cache_tokens": 0,
+        "multimodal_tokens": {
+          "image": 64
+        }
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "fixture": "64x64 RGB solid red PNG",
+    "fixture_sha256": "ca96adb50da6a5f6cbfe03c9c5eb8ad8f1a6c88f526b8a4b9d9d7d3b9ef90157"
+  }
+}

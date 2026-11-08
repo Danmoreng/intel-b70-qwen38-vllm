@@ -24,10 +24,18 @@ def load_overlay(repo, release, environ=None):
         if hashlib.sha256((root / 'runtime' / name).read_bytes()).hexdigest() != digest:
             raise RuntimeError('RAM-KV module changed: ' + name)
     env = os.environ if environ is None else environ
+    # OffloadingConnector prefers LBHNC. The frozen EXL3 oneDNN/M04 guards
+    # require token-major strides, so use vLLM's validated explicit override.
+    layout = data.get('kv_cache_layout')
+    if layout != 'LBNHC':
+        raise RuntimeError('RAM-KV release requires the validated LBNHC layout')
+    if env.get('VLLM_KV_CACHE_LAYOUT', layout) != layout:
+        raise RuntimeError('Production profile override: VLLM_KV_CACHE_LAYOUT')
     budget = int(env.get('B70_KV_RAM_GIB', str(data['default_cpu_gib'])))
     if not 1 <= budget <= 12:
         raise ValueError('B70_KV_RAM_GIB must be an integer from 1 to 12 GiB')
     return {'sha256': attestation['sha256'], 'cpu_gib': budget,
+            'environment': {'VLLM_KV_CACHE_LAYOUT': layout},
             'scheduler': 'kv_admission.CompletionReservedScheduler', 'watermark': '0.05',
             'transfer': {'kv_connector': 'OffloadingConnector', 'kv_role': 'kv_both',
                          'kv_connector_extra_config': {

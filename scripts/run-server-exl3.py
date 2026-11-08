@@ -85,7 +85,8 @@ assert torch._C._dispatch_has_kernel_for_dispatch_key('b70_exl3_attention::share
         available = next(int(line.split()[1])*1024 for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:'))
         if available < (overlay['cpu_gib'] + 7)*1024**3:
             raise SystemExit('Insufficient available RAM for cache plus 7 GiB runtime/headroom')
-    env={**cfg['env'],'HF_HUB_OFFLINE':'1','PYTHONPATH':'/opt/b70-runtime','ZE_AFFINITY_MASK':'0',
+    env={**cfg['env'],**(overlay['environment'] if overlay else {}),
+         'HF_HUB_OFFLINE':'1','PYTHONPATH':'/opt/b70-runtime','ZE_AFFINITY_MASK':'0',
          'EXL3_LOADER_REPORT_DIR':'/results/loader'}
     results=cache/'reports';results.mkdir(parents=True,exist_ok=True)
     argv=['docker','run','--rm','--name',os.environ.get('VLLM_CONTAINER','b70-qwen38-vllm'),

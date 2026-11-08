@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "status": "PRODUCTION",
-  "release_date": "2026-10-17",
+  "release_date": "2026-11-08",
   "base_image_id": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a",
   "default_cpu_gib": 12,
   "allowed_cpu_gib": [
@@ -13,5 +13,7 @@
     "xpu_cpu_offload.py": "149cf02d3d3507951fc96333e303a2d08b7a21bb6fd553128bcdd410c497f8b7"
   },
   "validation": "benchmarks/results/kv-ram-admission/README.md",
-  "note": "Operator-approved bounded XPU RAM prefix cache and completion-reserved async admission. Inclusive ARC cache: no guarantee of retaining two alternating maximum-length histories."
+  "note": "Operator-approved bounded XPU RAM prefix cache and completion-reserved async admission. Inclusive ARC cache: no guarantee of retaining two alternating maximum-length histories. Explicit LBNHC preserves the frozen oneDNN prefill and M04 verification dispatch with RAM offload.",
+  "kv_cache_layout": "LBNHC",
+  "layout_validation": "benchmarks/results/ram-kv-layout-20261108/README.md"
 }

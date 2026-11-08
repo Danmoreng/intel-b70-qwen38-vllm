@@ -27,6 +27,16 @@ to remain cached. The admission scheduler prevents competing large active reques
 from repeatedly preempting each other. Historical candidate reports retain their
 original qualification status.
 
+Since 2026-11-08 the attested RAM profile explicitly sets
+`VLLM_KV_CACHE_LAYOUT=LBNHC`. The connector's default `LBHNC` layout prevented
+the frozen EXL3 oneDNN prefill and M04 verification guards from selecting their
+optimized paths. At 230 W, the same-host 131K cold code prompt improved from
+**141.76 to 89.22 s TTFT** with the RAM cache retained (two repeats per arm).
+The launcher passes the validated layout into Docker and rejects conflicting
+host overrides. The image, native guards, checkpoint and 180 W production cap
+are unchanged. See the [cause, controls, production checks and reproduction
+commands](benchmarks/results/ram-kv-layout-20261108/README.md).
+
 ## Start and recover the qualified service
 
 The local release uses the immutable image recorded in
@@ -65,7 +75,7 @@ recovery helper targets that endpoint and the standard container name.
 
 The immediate rollback is the [saved qualified EXL3 v3 release](config/releases/exl3-v3/README.md),
 with its [strict launcher](scripts/run-server-exl3-v3-rollback.sh), policy,
-source snapshot and compiler namespace. The older [v2](config/releases/exl3-v2/README.md)
+source snapshot and compiler namespace. The older [v2](config/releases/exl3-v2)
 and [v1](config/releases/exl3-v1/README.md) snapshots remain available.
 
 The [EXL3 source snapshot/build instructions](engine/exl3xpu/README.md) contain

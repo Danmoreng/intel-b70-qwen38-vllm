@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -19,6 +20,7 @@ class ProductionOverlay(unittest.TestCase):
         for budget in (10, 12):
             overlay = load_overlay(ROOT, self.release, {'B70_KV_RAM_GIB': str(budget)})
             self.assertEqual(overlay['transfer']['kv_connector_extra_config']['cpu_bytes_to_use'], budget * 1024**3)
+            self.assertEqual(overlay['environment'], {'VLLM_KV_CACHE_LAYOUT': 'LBNHC'})
             args = serving_arguments(['serve', 'model', '--watermark', '0.0'], overlay)
             self.assertEqual(args.count('--watermark'), 1)
             self.assertEqual(args[args.index('--watermark') + 1], '0.05')
@@ -26,6 +28,30 @@ class ProductionOverlay(unittest.TestCase):
         for budget in ('0', '13', '1.5'):
             with self.assertRaises(ValueError):
                 load_overlay(ROOT, self.release, {'B70_KV_RAM_GIB': budget})
+
+    def test_layout_conflict_refuses_launch(self):
+        load_overlay(ROOT, self.release, {'VLLM_KV_CACHE_LAYOUT': 'LBNHC'})
+        for layout in ('LBHNC', 'NHD', '', 'invalid'):
+            with self.assertRaisesRegex(RuntimeError, 'profile override'):
+                load_overlay(ROOT, self.release, {'VLLM_KV_CACHE_LAYOUT': layout})
+
+    def test_attested_manifest_cannot_select_an_unvalidated_layout(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            shutil.copytree(ROOT / 'config', root / 'config')
+            shutil.copytree(ROOT / 'runtime', root / 'runtime')
+            manifest = root / 'config/production_ram_kv.json'
+            data = json.loads(manifest.read_text())
+            for layout in ('LBHNC', None):
+                if layout is None:
+                    data.pop('kv_cache_layout')
+                else:
+                    data['kv_cache_layout'] = layout
+                manifest.write_text(json.dumps(data))
+                release = copy.deepcopy(self.release)
+                release['ram_kv_runtime']['sha256'] = hashlib.sha256(manifest.read_bytes()).hexdigest()
+                with self.assertRaisesRegex(RuntimeError, 'validated LBNHC'):
+                    load_overlay(root, release, {})
 
     def test_modified_manifest_or_runtime_refuses_launch(self):
         with tempfile.TemporaryDirectory() as directory:

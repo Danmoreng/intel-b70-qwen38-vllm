@@ -6,6 +6,8 @@ native compiler/ABI identities and the previous qualified 0.31 image.
 Weights, native binaries, caches and large numerical arrays are omitted.
 Prior release configuration and source snapshots remain under `config/releases`.
 
+Current production also uses the [MB4/K4 patch and compiled source inputs](mb4-k4/README.md).
+
 This archive supplies the unchanged native bootstrap. Current production adds
 the separately guarded [vLLM 0.33 Python port](../../benchmarks/experiments/vllm-033-upgrade/README.md).
 The archive alone does not contain the current Python runtime. The

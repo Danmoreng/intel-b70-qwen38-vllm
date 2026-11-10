@@ -18,7 +18,7 @@
     "torch": "2.14.0+xpu",
     "oneapi_compiler": "2026.1.1",
     "onednn": "3.13.4",
-    "native_library_sha256": "00b65587220481ec89269f7510136146809d7e01938de3d30d5b67206948a95a",
+    "native_library_sha256": "d91199a8dcf983240a82fb7acd886677cde7e1cd9d9491880a155cab3f3f4e17",
     "exl3_source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
     "onednn_source_commit": "c531fe1a5cd631b7f60277cdf6675c588cadbc28",
     "onednn_library_sha256": "90c0feddfb51a6219903d5e1ccabc9fd32dab0c702284a16dd7692bb6042e056",
@@ -27,10 +27,14 @@
     "python_adapter_port_sha256": "b68b666a568407aa98cbf21fdc54b28769223f5568bee25381648b3840776d86"
   },
   "linears": {
-    "small_matrix_kernel": "native EXL3 SmallM opaque row dispatch",
+    "small_matrix_kernel": "native EXL3 SmallM; true MB4 for M<=4, original24/40/48 blocks; exact K4 window decode",
     "small_matrix_max_rows": 128,
     "large_matrix_kernel": "native EXL3 INT8 prefill; eager only",
-    "padded_gemm_multiple_rows": 256
+    "padded_gemm_multiple_rows": 256,
+    "matrix_patch": "engine/exl3xpu/mb4-k4/mb4-k4-window.patch",
+    "native_extra_build_flags": [
+      "-DEXL3_DPAS_MB4"
+    ]
   },
   "attention": {
     "long_prefill": "guarded exact-K oneDNN, eager only",
@@ -102,6 +106,6 @@
     "cache_isolation": "policy_sha256 + image_id",
     "diagnostic_validation_in_production": false,
     "gptq_rollback_image": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
-    "immediate_exl3_rollback_image": "sha256:36e41ea027758060f9352bdd7f9ed47de5143d0424b238653960dbf8357c176a"
+    "immediate_exl3_rollback_image": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e"
   }
 }

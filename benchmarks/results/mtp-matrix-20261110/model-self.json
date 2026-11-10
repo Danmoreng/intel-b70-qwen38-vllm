@@ -1,0 +1,96 @@
+{
+  "status": "PASS_MATCHED_FULL_MODEL_STATES_LOGITS_AND_TARGET_P",
+  "self_repeat": true,
+  "reference": "/results/diag-A-r1",
+  "candidate": "/results/diag-A-self-r1",
+  "rows": [
+    {
+      "key": "(('diag-c1-0',), 'NONE', (1598,))",
+      "matched_inputs": true,
+      "mode": "NONE",
+      "query_widths": [
+        1598
+      ],
+      "state_tensors": 112,
+      "bit_identical_state_tensors": 112,
+      "max_state_abs": 0.0,
+      "max_raw_logits_abs": 0.0,
+      "max_target_probability_abs": 0.0,
+      "sampled_tokens_identical": true
+    },
+    {
+      "key": "(('diag-c1-0',), 'FULL', (4,))",
+      "matched_inputs": true,
+      "mode": "FULL",
+      "query_widths": [
+        4
+      ],
+      "state_tensors": 352,
+      "bit_identical_state_tensors": 352,
+      "max_state_abs": 0.0,
+      "max_raw_logits_abs": 0.0,
+      "max_target_probability_abs": 0.0,
+      "sampled_tokens_identical": true
+    },
+    {
+      "key": "(('diag-c2-0',), 'NONE', (3198,))",
+      "matched_inputs": true,
+      "mode": "NONE",
+      "query_widths": [
+        3198
+      ],
+      "state_tensors": 112,
+      "bit_identical_state_tensors": 112,
+      "max_state_abs": 0.0,
+      "max_raw_logits_abs": 0.0,
+      "max_target_probability_abs": 0.0,
+      "sampled_tokens_identical": true
+    },
+    {
+      "key": "(('diag-c2-0', 'diag-c2-1'), 'NONE', (4, 3198))",
+      "matched_inputs": true,
+      "mode": "NONE",
+      "query_widths": [
+        4,
+        3198
+      ],
+      "state_tensors": 448,
+      "bit_identical_state_tensors": 448,
+      "max_state_abs": 0.0,
+      "max_raw_logits_abs": 0.0,
+      "max_target_probability_abs": 0.0,
+      "sampled_tokens_identical": true
+    },
+    {
+      "key": "(('diag-c2-0', 'diag-c2-1'), 'FULL', (4, 4))",
+      "matched_inputs": true,
+      "mode": "FULL",
+      "query_widths": [
+        4,
+        4
+      ],
+      "state_tensors": 688,
+      "bit_identical_state_tensors": 688,
+      "max_state_abs": 0.0,
+      "max_raw_logits_abs": 0.0,
+      "max_target_probability_abs": 0.0,
+      "sampled_tokens_identical": true
+    },
+    {
+      "key": "(('diag-c2-1',), 'FULL', (4,))",
+      "matched_inputs": true,
+      "mode": "FULL",
+      "query_widths": [
+        4
+      ],
+      "state_tensors": 352,
+      "bit_identical_state_tensors": 352,
+      "max_state_abs": 0.0,
+      "max_raw_logits_abs": 0.0,
+      "max_target_probability_abs": 0.0,
+      "sampled_tokens_identical": true
+    }
+  ],
+  "errors": [],
+  "scope": "Actual complete target layers and initialized KV writes, canonical initial SSM/Conv and all computed speculative SSM rows; real native target filtering plus independent CPU reference. Synchronizing diagnostic, not a speed claim; finite selected steps, not universal distribution identity."
+}

@@ -1,0 +1,95 @@
+{
+  "status": "PASS_NO_REPRODUCIBLE_PREFILL_REGRESSION_AT_HALF_PERCENT_TOLERANCE",
+  "followup_cases": [
+    {
+      "input_tokens": 4096,
+      "reference_launch_s": [
+        1.7448382549955568,
+        1.7623876684992865
+      ],
+      "candidate_launch_s": [
+        1.759426272001292,
+        1.7670651230000658
+      ],
+      "paired_ratios": [
+        1.0083606700873098,
+        1.002654044047393
+      ],
+      "time_ratio": 1.0054930796951105
+    },
+    {
+      "input_tokens": 65536,
+      "reference_launch_s": [
+        38.7347703399937,
+        39.098036593997676
+      ],
+      "candidate_launch_s": [
+        38.88778614298644,
+        38.94946128999436
+      ],
+      "paired_ratios": [
+        1.0039503474952773,
+        0.9961999292817142
+      ],
+      "time_ratio": 1.0000570517647294
+    }
+  ],
+  "followup_c1_geometric_ratio": 1.0029124072010065,
+  "all_measurements": [
+    {
+      "input_tokens": 4096,
+      "reference_s": [
+        1.7300268960025278,
+        1.883275214000605,
+        1.7346716940010083,
+        1.7392321000006632,
+        1.7433345369936433,
+        1.7463419729974703,
+        1.7612987730026362,
+        1.7634765639959369
+      ],
+      "candidate_s": [
+        1.752154864003387,
+        1.7519292029937787,
+        1.8810231239986024,
+        1.7317431030023727,
+        1.7583944650032208,
+        1.7604580789993634,
+        1.767007624002872,
+        1.7671226219972596
+      ],
+      "time_ratio": 1.0048345615962462
+    },
+    {
+      "input_tokens": 65536,
+      "reference_s": [
+        38.64420470899495,
+        38.90144316900114,
+        38.7347703399937,
+        39.098036593997676
+      ],
+      "candidate_s": [
+        38.9329397689944,
+        39.16843178296767,
+        38.88778614298644,
+        38.94946128999436
+      ],
+      "time_ratio": 1.0036051598893374
+    },
+    {
+      "input_tokens": 131072,
+      "reference_s": [
+        103.34207808798601,
+        103.35944686400035
+      ],
+      "candidate_s": [
+        103.52402010601509,
+        103.83781634298794
+      ],
+      "time_ratio": 1.0031945168143779
+    }
+  ],
+  "all_measurements_c1_geometric_ratio": 1.0038778376632722,
+  "repeated_half_percent_harm": false,
+  "scope": "Fixed bounded native prefill-only follow-up. No earlier timing discarded, no additional decode estimate. Few startup pairs, local operational evidence only; not proof of zero slowdown at every context."
+}

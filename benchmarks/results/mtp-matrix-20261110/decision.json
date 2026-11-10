@@ -1,0 +1,46 @@
+{
+  "status": "OPERATOR_APPROVED_PRODUCTION_WITH_DOCUMENTED_OPEN_FOLLOWUPS",
+  "approved_at_Berlin": "2026-11-10T22:28:47.897780+01:00",
+  "approval": "User explicitly requests new default and publiccommit/push after completed70wave sweep, beforefurtherexperiments; informed of C2prefillflag.",
+  "measured_runtime_image_id": "sha256:dfd1514f44b59b634eb20148bd4343a8807c3991bdcf46c11a21aa06eae583bb",
+  "baseline_image_id": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e",
+  "native_binary_sha256": "d91199a8dcf983240a82fb7acd886677cde7e1cd9d9491880a155cab3f3f4e17",
+  "source_hashes": {
+    "current-profile-benchmark.py": "01105118930b595aaf31b2bf58f3427b76a3b94721ceeabd947b432105ad3345",
+    "decode_overlap.py": "233f5424137c9078e87a2bf974e956d826bb0ce54c6c5203ed47a8afee84d56f",
+    "run_full_serving.py": "602116bc81b3fedf69f288d96ea460c2572c26542f249c3678e9149ab6d542a1",
+    "compare-serving.py": "9f7ea091f7b0a755ddddf5fe95fd2345a3a22974e7f0d84c8e616b17db3cba1c",
+    "meaningful_benchmark.py": "df202c54b66fb3504db2161a99eef13646e4a3ccc3e5a3ad8ffdb9ab7f03085a"
+  },
+  "host_runtime_hashes": {
+    "request_defaults.py": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2",
+    "kv_admission.py": "4b237a0d1c54b49958e3111d46ebc221b8f2768075d7eff9c7923eb3bdb1df6f",
+    "xpu_cpu_offload.py": "6f0b474b078b3dd6a6ad63c10d84d620592d6c5733e62d51b9a3de33f20e9b36"
+  },
+  "basis": {
+    "native_decode_gain_pct": 5.412000443734155,
+    "measured_wave_time_change_pct": -3.3644846422883234,
+    "weighted_prefill_rate_change_pct": -0.3324523687578185,
+    "card_energy_change_pct": -3.3426504709523908,
+    "measured_waves": 70,
+    "requests": 124,
+    "outputs_each": 126976,
+    "preemptions_each": 0
+  },
+  "open_followups": [
+    "C2/2Kprefill -10.44percent in historicalcomparison: two slowerB repeats, thirdnearbaseline; no controlledcause established.",
+    "Eightnewgenuinecodingagenttasks notrun for thismatrixrelease.",
+    "Native262144andRAMdelta retest interrupted atuser request to prioritizepublication. Prior0.33baselinecapacity/lifecycleproof remains historical."
+  ],
+  "packaging": "Releasechild retains measuredB native/library/plugin/modelcode. Adds exactcompiledsource snapshot and nativepreflightsource-root correction plusreleaseidentity. No inference rebuild.",
+  "rollback": "config/releases/exl3-v5",
+  "not_claimed": [
+    "Universal6percent speedup",
+    "Unchanged sampledtext",
+    "Improved codingaccuracy",
+    "New successfulcandidate256K/RAMretest",
+    "Two complete256KRAMhistories in12GiB"
+  ],
+  "deployed_release_image_id": "sha256:f8b0ef94cf95cfee20b0c5500db1173fdaaca4af4e3cbaa352a511e78e6a0c6d",
+  "deployment_receipt": "promotion.json"
+}

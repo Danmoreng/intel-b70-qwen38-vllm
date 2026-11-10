@@ -1,0 +1,237 @@
+{
+  "status": "PASS_CONTROLLED_MTP_DECODE_GAIN_GATE",
+  "geometric_mean_decode_speed_gain": 0.059850724493396346,
+  "geometric_mean_decode_time_reduction": 0.05647090020342693,
+  "block_bootstrap_95_interval": [
+    0.057652475143435744,
+    0.06213686444916755
+  ],
+  "c1_prefill_full_step_time_ratio": 1.0166453650660503,
+  "user_threshold": 0.005,
+  "matched_trace_errors": [],
+  "cases": [
+    {
+      "label": "c1-4k",
+      "proposal_mode": "frozen native baseline IDs, all native compute executed",
+      "reference_decode_round_ms": 45.27161646888089,
+      "candidate_decode_round_ms": 41.680923281774085,
+      "full_decode_speed_gain": 0.08614716048473237,
+      "full_decode_time_reduction": 0.07931444616242067,
+      "gpu_event_speed_gain": 0.08616734509498158,
+      "reference_round_trial_means_ms": [
+        45.230737594238235,
+        45.31249534352355
+      ],
+      "candidate_round_trial_means_ms": [
+        41.700690501102144,
+        41.661156062446025
+      ],
+      "prefill_full_step_time_ratio": 1.0399730220621177,
+      "roots": [
+        "benchmarks/mtp-matrix-review-20261110/cost-replay4k-abba-r1/0-A",
+        "benchmarks/mtp-matrix-review-20261110/cost-replay4k-abba-r1/1-B",
+        "benchmarks/mtp-matrix-review-20261110/cost-replay4k-abba-r1/2-B",
+        "benchmarks/mtp-matrix-review-20261110/cost-replay4k-abba-r1/3-A"
+      ]
+    },
+    {
+      "label": "c1-64k",
+      "proposal_mode": "unmodified native proposals",
+      "reference_decode_round_ms": 54.50250056247796,
+      "candidate_decode_round_ms": 51.12473060967204,
+      "full_decode_speed_gain": 0.06606919806765488,
+      "full_decode_time_reduction": 0.06197458681613832,
+      "gpu_event_speed_gain": 0.06607099675203476,
+      "reference_round_trial_means_ms": [
+        54.29589987477357,
+        54.70910125018236
+      ],
+      "candidate_round_trial_means_ms": [
+        51.06294803158562,
+        51.186513187758464
+      ],
+      "prefill_full_step_time_ratio": 1.0071664070024964,
+      "roots": [
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/0-A",
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/1-B",
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/2-B",
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/3-A"
+      ]
+    },
+    {
+      "label": "c1-128k",
+      "proposal_mode": "unmodified native proposals",
+      "reference_decode_round_ms": 64.21380312508518,
+      "candidate_decode_round_ms": 60.4631669372111,
+      "full_decode_speed_gain": 0.06203175218673196,
+      "full_decode_time_reduction": 0.058408566466123024,
+      "gpu_event_speed_gain": 0.06204460818163415,
+      "reference_round_trial_means_ms": [
+        64.23073656264933,
+        64.19686968752103
+      ],
+      "candidate_round_trial_means_ms": [
+        60.41754153147849,
+        60.50879234294371
+      ],
+      "prefill_full_step_time_ratio": 1.0031945168143779,
+      "roots": [
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/0-A",
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/1-B",
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/2-B",
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/3-A"
+      ]
+    },
+    {
+      "label": "c2-16k-16k",
+      "proposal_mode": "unmodified native proposals",
+      "reference_decode_round_ms": 53.37580243707407,
+      "candidate_decode_round_ms": 50.94861159392394,
+      "full_decode_speed_gain": 0.047639980113601155,
+      "full_decode_time_reduction": 0.04547361786291826,
+      "gpu_event_speed_gain": 0.04763879109162872,
+      "reference_round_trial_means_ms": [
+        53.36297628093689,
+        53.38862859321125
+      ],
+      "candidate_round_trial_means_ms": [
+        50.932453843756775,
+        50.96476934409111
+      ],
+      "prefill_full_step_time_ratio": 1.000418141089424,
+      "roots": [
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/0-A",
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/1-B",
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/2-B",
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/3-A"
+      ]
+    },
+    {
+      "label": "c2-16k-64k",
+      "proposal_mode": "unmodified native proposals",
+      "reference_decode_round_ms": 62.720000015588084,
+      "candidate_decode_round_ms": 60.42354149951734,
+      "full_decode_speed_gain": 0.03800602313403112,
+      "full_decode_time_reduction": 0.036614453372129985,
+      "gpu_event_speed_gain": 0.038008930991803025,
+      "reference_round_trial_means_ms": [
+        62.723625531361904,
+        62.716374499814265
+      ],
+      "candidate_round_trial_means_ms": [
+        60.428533343383606,
+        60.41854965565108
+      ],
+      "prefill_full_step_time_ratio": 1.0015287688793335,
+      "roots": [
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/0-A",
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/1-B",
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/2-B",
+        "benchmarks/mtp-matrix-review-20261110/cost-abba-r2/3-A"
+      ]
+    }
+  ],
+  "source_report_sha256": "744dbcb402b3ee94cd8efde6f2ec078bc2160e63ed194d79d45385ba0b4f7a26",
+  "original_unmatched_native_four_k_retained": "cost-comparison-r1.json",
+  "scope": "Composite controlled cost gate: four fully matched native shapes plus one bounded frozen-proposal four-K ABBA. All native MTP compute executes. No quality/native four-K stochastic speed claim; actual unmodified agents and context/RAM gates still required.",
+  "bootstrap_seed": 910710,
+  "bootstrap_replicates": 2000,
+  "contiguous_rounds_per_block": 8,
+  "prefill_followup_sha256": "0bcdd1f8d21f5940e83ba287193155b053ef493ce1ad53f00959f29c97c14773",
+  "prefill_followup": {
+    "status": "PASS_NO_REPRODUCIBLE_PREFILL_REGRESSION_AT_HALF_PERCENT_TOLERANCE",
+    "followup_cases": [
+      {
+        "input_tokens": 4096,
+        "reference_launch_s": [
+          1.7448382549955568,
+          1.7623876684992865
+        ],
+        "candidate_launch_s": [
+          1.759426272001292,
+          1.7670651230000658
+        ],
+        "paired_ratios": [
+          1.0083606700873098,
+          1.002654044047393
+        ],
+        "time_ratio": 1.0054930796951105
+      },
+      {
+        "input_tokens": 65536,
+        "reference_launch_s": [
+          38.7347703399937,
+          39.098036593997676
+        ],
+        "candidate_launch_s": [
+          38.88778614298644,
+          38.94946128999436
+        ],
+        "paired_ratios": [
+          1.0039503474952773,
+          0.9961999292817142
+        ],
+        "time_ratio": 1.0000570517647294
+      }
+    ],
+    "followup_c1_geometric_ratio": 1.0029124072010065,
+    "all_measurements": [
+      {
+        "input_tokens": 4096,
+        "reference_s": [
+          1.7300268960025278,
+          1.883275214000605,
+          1.7346716940010083,
+          1.7392321000006632,
+          1.7433345369936433,
+          1.7463419729974703,
+          1.7612987730026362,
+          1.7634765639959369
+        ],
+        "candidate_s": [
+          1.752154864003387,
+          1.7519292029937787,
+          1.8810231239986024,
+          1.7317431030023727,
+          1.7583944650032208,
+          1.7604580789993634,
+          1.767007624002872,
+          1.7671226219972596
+        ],
+        "time_ratio": 1.0048345615962462
+      },
+      {
+        "input_tokens": 65536,
+        "reference_s": [
+          38.64420470899495,
+          38.90144316900114,
+          38.7347703399937,
+          39.098036593997676
+        ],
+        "candidate_s": [
+          38.9329397689944,
+          39.16843178296767,
+          38.88778614298644,
+          38.94946128999436
+        ],
+        "time_ratio": 1.0036051598893374
+      },
+      {
+        "input_tokens": 131072,
+        "reference_s": [
+          103.34207808798601,
+          103.35944686400035
+        ],
+        "candidate_s": [
+          103.52402010601509,
+          103.83781634298794
+        ],
+        "time_ratio": 1.0031945168143779
+      }
+    ],
+    "all_measurements_c1_geometric_ratio": 1.0038778376632722,
+    "repeated_half_percent_harm": false,
+    "scope": "Fixed bounded native prefill-only follow-up. No earlier timing discarded, no additional decode estimate. Few startup pairs, local operational evidence only; not proof of zero slowdown at every context."
+  },
+  "original_composite_prefill_ratio": 1.0166453650660503
+}

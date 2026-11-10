@@ -1,0 +1,94 @@
+--- a/csrc/exl3_ops.sycl
++++ b/csrc/exl3_ops.sycl
+@@ -36,6 +36,19 @@
+ #ifndef EXL3_NO_DPAS_MB48
+ #define EXL3_DPAS_MB48
+ #endif
++// Keep the tuned24/40/48-row blocks when enabling true4-row DPAS.
++static int b70_dpas_mb(int M) {
++#ifdef EXL3_DPAS_MB4
++    if (M <= 4) return 4;
++#endif
++#if defined(EXL3_DPAS_MB24) && defined(EXL3_DPAS_MB48)
++    return M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 24 ? 24 : (M <= 32 ? 32 : (M <= 40 ? 40 : (M <= 48 ? 48 : 64)))));
++#elif defined(EXL3_DPAS_MB24)
++    return M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 24 ? 24 : (M <= 32 ? 32 : 64)));
++#else
++    return M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 32 ? 32 : 64));
++#endif
++}
+ static int g_max_mb = 64;     // largest DPAS row block; M above it runs as several blocks
+ void exl3_set_max_mb(int64_t n) { g_max_mb = (int)n; }
+ void exl3_set_local(int64_t n) { g_local = (int)n; }
+@@ -271,15 +284,7 @@
+     }
+     bool use_vec = M <= g_vec_max_m;
+     int MR = M <= 1 ? 1 : (M <= 2 ? 2 : (M <= 4 ? 4 : 8));
+-#ifdef EXL3_DPAS_MB4
+-    int MB = M <= 4 ? 4 : (M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 32 ? 32 : 64)));
+-#elif defined(EXL3_DPAS_MB24) && defined(EXL3_DPAS_MB48)
+-    int MB = M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 24 ? 24 : (M <= 32 ? 32 : (M <= 40 ? 40 : (M <= 48 ? 48 : 64)))));
+-#elif defined(EXL3_DPAS_MB24)
+-    int MB = M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 24 ? 24 : (M <= 32 ? 32 : 64)));
+-#else
+-    int MB = M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 32 ? 32 : 64));
+-#endif
++    int MB = b70_dpas_mb(M);
+     if (MB > g_max_mb) MB = g_max_mb;
+     int m_blocks = use_vec ? 1 : (M + MB - 1) / MB;
+     int Mp = use_vec ? M : m_blocks * MB;
+@@ -615,26 +620,12 @@
+     int S = xh_blocked.size(0), Kdim = xh_blocked.size(1) * 16, M = xh_blocked.size(2);
+     bool use_vec = path == 0;
+     if (!use_vec) {
+-#if defined(EXL3_DPAS_MB24) && defined(EXL3_DPAS_MB48)
+-        int MBp = M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 24 ? 24 : (M <= 32 ? 32 : (M <= 40 ? 40 : (M <= 48 ? 48 : 64)))));
+-#elif defined(EXL3_DPAS_MB24)
+-        int MBp = M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 24 ? 24 : (M <= 32 ? 32 : 64)));
+-#else
+-        int MBp = M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 32 ? 32 : 64));
+-#endif
++        int MBp = b70_dpas_mb(M);
+         int Mp = (M + MBp - 1) / MBp * MBp;
+         if (Mp != M) xh_blocked = at::constant_pad_nd(xh_blocked, {0, 0, 0, Mp - M}).contiguous();
+     }
+     int MR = M <= 1 ? 1 : (M <= 2 ? 2 : (M <= 4 ? 4 : 8));
+-#ifdef EXL3_DPAS_MB4
+-    int MB = M <= 4 ? 4 : (M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 32 ? 32 : 64)));
+-#elif defined(EXL3_DPAS_MB24) && defined(EXL3_DPAS_MB48)
+-    int MB = M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 24 ? 24 : (M <= 32 ? 32 : (M <= 40 ? 40 : (M <= 48 ? 48 : 64)))));
+-#elif defined(EXL3_DPAS_MB24)
+-    int MB = M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 24 ? 24 : (M <= 32 ? 32 : 64)));
+-#else
+-    int MB = M <= 8 ? 8 : (M <= 16 ? 16 : (M <= 32 ? 32 : 64));
+-#endif
++    int MB = b70_dpas_mb(M);
+     int tk = Kdim / 16;
+     int P = 4, rps = (tk + P - 1) / P; P = (tk + rps - 1) / rps;
+     auto part = at::zeros({P, M, N}, xh_blocked.options().dtype(at::kFloat));
+--- a/csrc/exl3_esimd.h
++++ b/csrc/exl3_esimd.h
+@@ -704,12 +704,19 @@
+             simd<uint32_t, 32> sl = 2u + 4u * j;           // prev << 2 << sl  ==  prev << (4 + 4j), 32 -> 0
+ #pragma unroll
+             for (int m = 0; m < 4; ++m) {
+-                simd<uint32_t, 32> cw, pw;
++                simd<uint32_t, 32> cw;
+                 cw.template select<16, 1>(0) = dw.template replicate_vs_w_hs<8, 4, 2, 0>(m);
+                 cw.template select<16, 1>(16) = cw.template select<16, 1>(0);
+-                pw.template select<16, 1>(0) = prev2.template replicate_vs_w_hs<8, 4, 2, 0>(m);
+-                pw.template select<16, 1>(16) = pw.template select<16, 1>(0);
+-                simd<uint32_t, 32> st = ((pw << sl) | (cw >> sr)) & 0xFFFFu;
++                // Upper lanes have j=4..7: their16-bit window is wholly in
++                // the current word. Every previous-word contribution starts
++                // at bit20 or above and vanishes under the final0xffff mask.
++                // Keep the proven32-lane B-operand layout; only form the
++                // needed16 previous-word lanes, with no upper-half copy/shift.
++                simd<uint32_t, 32> st = cw >> sr;
++                simd<uint32_t, 16> previous = prev2.template replicate_vs_w_hs<8, 4, 2, 0>(m);
++                simd<uint32_t, 16> shifts = sl.template select<16, 1>(0);
++                st.template select<16, 1>(0) = simd<uint32_t, 16>(st.template select<16, 1>(0)) | (previous << shifts);
++                st &= 0xFFFFu;
+                 Bv.template select<32, 1>(32 * m + 128 * q1) = dec<32>(st);
+             }
+         }

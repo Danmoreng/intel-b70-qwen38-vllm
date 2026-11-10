@@ -4,13 +4,15 @@ The qualified production profile serves **EXL3 4.00 bpw on one 32 GB Intel Arc
 Pro B70 at 180 W**, using vLLM 0.33.0 and Torch 2.14.0+xpu. It exposes an
 OpenAI-compatible API at `http://127.0.0.1:8081/v1`, model `Qwen3.8-27B`.
 
-The 2026-11-08 upgrade retains the native EXL3/M04/oneDNN and Intel stack.
-The paired 70-wave, 124-request serving comparison is effectively unchanged:
-total measured wave time +0.264%, weighted native decode +0.215%, and weighted
-prefill -0.236%. Original-tolerance numerical checks, actual RAM restoration,
-API/media/context, admission and restart tests passed. Sampled output changes
-across versions; finite distribution checks do not establish general coding
-accuracy. See the [qualification and deployment evidence](benchmarks/results/vllm-033-upgrade-20261108/README.md).
+The 2026-11-10 default adds the **MB4-DPAS/K4 matrix patch under MTP3**.
+Against the exact previous vLLM 0.33 image, the full 70-wave / 124-request matrix
+measured **+5.41% weighted native decode**, **3.36% less measured wave time**,
+**3.34% less card energy**, and **−0.33% weighted prefill rate** at the same 180 W.
+The user approved deployment and publication with the open follow-ups below.
+This is a serving speed result, not a new coding-quality result.
+[Complete evidence and limitations](benchmarks/results/mtp-matrix-20261110/README.md).
+The [previous vLLM 0.33 qualification](benchmarks/results/vllm-033-upgrade-20261108/README.md)
+remains the runtime and rollback basis.
 
 Since 2026-11-07 the launcher also enables the installed vLLM diagnostics
 `--enable-per-request-metrics` and `--enable-prompt-tokens-details`. These add
@@ -49,8 +51,8 @@ commands](benchmarks/results/ram-kv-layout-20261108/README.md).
 
 The local release uses the immutable image recorded in
 [config/production_image.json](config/production_image.json):
-`sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e`,
-alias `local/b70-qwen38-vllm:production-exl3-v5`.
+`sha256:f8b0ef94cf95cfee20b0c5500db1173fdaaca4af4e3cbaa352a511e78e6a0c6d`,
+alias `local/b70-qwen38-vllm:production-exl3-v6`.
 The strict launcher checks image/policy identity, native libraries, serving
 arguments, checkpoint files, middleware and the 180 W cap before loading.
 Compiler caches are isolated by policy and image ID.
@@ -81,10 +83,10 @@ its process being active does not mean model loading has finished. Check the
 API readiness endpoint. The host defaults are loopback and port 8081; the
 recovery helper targets that endpoint and the standard container name.
 
-The immediate rollback is the [saved qualified EXL3 v4 release](config/releases/exl3-v4/README.md),
-with its [strict launcher](scripts/run-server-exl3-v4-rollback.sh), policy,
-original RAM modules, source snapshot and compiler namespace. The older [v3](config/releases/exl3-v3/README.md), [v2](config/releases/exl3-v2)
-and [v1](config/releases/exl3-v1/README.md) snapshots remain available.
+The immediate rollback is the [saved pre-matrix vLLM 0.33 release](config/releases/exl3-v5/README.md),
+with `scripts/run-server-exl3-v5-rollback.sh`, a frozen policy and archived RAM
+modules. Older [v4](config/releases/exl3-v4/README.md), [v3](config/releases/exl3-v3/README.md),
+[v2](config/releases/exl3-v2) and [v1](config/releases/exl3-v1/README.md) remain available.
 
 The [EXL3 source snapshot/build instructions](engine/exl3xpu/README.md) contain
 immutable upstream and native/header pins. A rebuilt image needs its own
@@ -122,7 +124,7 @@ curl -fsS http://127.0.0.1:8081/v1/chat/completions \
 | Model / revision | `turboderp/Qwen3.8-27B-exl3` / `113cf7ab958054860e43fb7f3063b1af19171095` |
 | Served name | `Qwen3.8-27B` |
 | Weights / activations / target head | EXL3 4.00-bpw checkpoint / FP16 / 6-bpw full 248,320-row head |
-| Linear dispatch | Native EXL3 SmallM through 128 rows; INT8 large-matrix prefill; unchanged row policy |
+| Linear dispatch | Native EXL3 SmallM through 128 rows; INT8 large-matrix prefill; true MB4 for M≤4, original 24/40/48 choices; exact K4 decoder |
 | Prefill attention | Guarded oneDNN: query rows ≥64, exact active KV 4,096–262,144, query bucket 256, exact-K bucket 1; eager only |
 | Verification | M04 for supported uniform q2–5 / C1–C4; direct output copy at C4; native fallback elsewhere; no duplicate KV updates |
 | oneDNN partition cache | 64 exact-shape entries per inference thread/queue; completion-aware LRU eviction; oneDNN internal caches are a separate scope |
@@ -138,7 +140,10 @@ curl -fsS http://127.0.0.1:8081/v1/chat/completions \
 
 - **262,144 total tokens** includes input, retained conversation/reasoning,
   media tokens and generated output. The exact **261,120 input + 1,024 output**
-  boundary is qualified.
+  boundary was qualified on pre-matrix v5. The matrix delta completed
+  199,673 input + 1,024 output; its fresh 262K/RAM delta retest was interrupted
+  to prioritize publication. The configured 262,144 limit is unchanged; the
+  interrupted matrix-specific retest is not a pass.
 - **C4 at moderate context** is qualified without preemptions. Sixteen admitted
   requests share the same cache pool. All 16 pressure-test requests completed,
   with 2 preemptions; this allows waiting/recomputation and
@@ -156,119 +161,80 @@ curl -fsS http://127.0.0.1:8081/v1/chat/completions \
   same failure in its native-attention control. Coding tasks were not rerun
   for this release; the failed task remains documented.
 
-This is a **oneDNN 3.13.4 maintenance release**, incorporating the upstream
-SDPA initialization-order fix and a matching EXL3 rebuild. MTP3, original M04,
-FP16, FP8 KV, 262,144 total tokens and 180 W remain unchanged. It is not a
-demonstrated decode speedup. Eight independent paired core blocks give weighted
-cold decode **+0.111%** (95% bootstrap interval −0.701% to +0.893%) and warm
-decode **−0.752%** (−1.865% to +0.236%). Warm prose-C4 client throughput is
-**−2.464%** (−5.363% to +0.132%); that adverse result remains visible and the
-interval does not establish tight-margin noninferiority.
-
-The full-matrix historical comparison flagged 4K/32K C1 decode losses and
-4K C4 TTFT. Three balanced fresh-worker pairs retaining all original prompt
-bytes, repeats and 1,024-output budgets did not reproduce a clear loss beyond
-the pre-registered guardrails. Paired per-fixture native decode effects are
-**+1.873%** at 4K (−2.160% to +4.211%) and **+1.404%** at 32K
-(+0.581% to +2.945%). The 4K C4 client rate is **−0.923%**
-(−1.413% to −0.152%), with finite-panel request E2E p95 **+0.882%**
-(+0.122% to +1.544%). This smaller systematic C4 loss is an explicit
-maintenance tradeoff. The historical adverse table and the alternate
-within-arm median ratios remain published; these three paired starts are
-not a formal universal noninferiority proof.
-[Exact-fixture controls and counter-window limitations](benchmarks/results/b70-stack-20261010/E01-frozen-trigger-reference-report.json).
-
-See the [qualification and limitations](benchmarks/results/b70-stack-20261010/assessment.json),
-[full frozen-matrix comparison](benchmarks/results/b70-stack-20261010/benchmark-comparison.json),
-[reviewed final tradeoff](benchmarks/results/b70-stack-20261010/performance-review.json), and
-[overnight candidate decisions](benchmarks/results/b70-stack-20261010/FINAL_DECISION.md).
-The [public evidence manifest](benchmarks/results/b70-stack-20261010/PUBLICATION_MANIFEST.json) maps
-private receipt hashes to public counters and licensed runtime sources.
-
-The exact short-array equality check failed and remains a failed receipt.
-Original-tolerance independent references, actual-state replays, finite quality
-panels and sampling/state checks support the separate numerical review;
-they do not prove general task accuracy or identical generated text.
-No BF16 model execution or FP16/BF16 serving bridge was introduced.
-
-The [v3 qualification](benchmarks/results/vllm-031-upgrade/assessment.json)
-and its recorded 64K acceptance/decode loss remain historical. The bounded
-same-prefix investigation did not establish its upstream cause; no sampler
-or state patch is claimed. The [v2 report](docs/EXL3_RELEASE_V2_REPORT.md),
-[v1 report](docs/EXL3_RELEASE_REPORT.md), coding results and power comparisons
-retain their original measurement scope. Coding tasks were not rerun here.
-
-The serving tables below use fresh measurements of the exact deployed image.
-[Runtime distribution and ABI pins](config/experiments/b70-stack-20261010/runtime_requirements.json)
-record the unchanged Python stack and the rebuilt custom libraries. Existing
-official-image metadata conflicts were not bypassed with forced installs.
+Earlier [oneDNN qualification](benchmarks/results/b70-stack-20261010/FINAL_DECISION.md)
+and [vLLM 0.33 upgrade evidence](benchmarks/results/vllm-033-upgrade-20261108/README.md)
+retain their adverse results, failed equality receipts and finite quality scope.
+They are historical evidence, not fresh matrix-release tests. No model
+quantization or BF16 serving bridge is introduced here.
 
 <!-- BEGIN CURRENT SERVING MEASUREMENTS -->
-## Source-review serving benchmark
+## Current source-review serving benchmark
 
-Measured **2026-10-10** on a fresh isolated worker with the
-[frozen public corpus](benchmarks/meaningful-corpus.json). The
-[current summary](benchmarks/results/b70-stack-20261010/serving-summary.json) records scenario results, fixture hashes,
-fixed prompt namespace `20260923-201101` and image identity. Raw prompts,
-responses and stream events remain local under `benchmark-results/`.
+Measured **2026-11-10**, reusing the exact pre-matrix vLLM 0.33 reference from
+**2026-11-08**: **20 scenarios, 70 measured waves, 124 requests and 126,976
+output tokens per arm**. All 124payloads and prompt bytes match; token counts
+and finish reasons passed. Both arms: **0 preemptions**,168,000 cached prompt
+tokens,16 slots,180 W,4096 prefill,LBNHC,watermark 0.05,12 GiB ARC. Sampling: temperature 1,
+top-p 0.95,top-k 20,thinking disabled,`ignore_eos=true`,1,024 output tokens. These
+are throughput measurements, not semantic agent scores. Warmups/model start
+are excluded from measured wave totals.
 
-The complete run covered **20 scenarios, 70 measured waves and 124 successful
-requests** in **53.8 minutes**. Each request sampled at temperature 1.0,
-top-p 0.95 and top-k 20 with thinking disabled. `ignore_eos=true` required
-exactly 1,024 output tokens. These are throughput measurements rather than
-semantic answer scores. All prompt/output counts matched, all requests
-finished at the output cap, with **0 preemptions** and **0 excess recomputed
-prefill tokens**. All 124 measured prompts were verified byte-for-byte
-against the frozen original full-run fixtures; request payload values match.
-Three additional 64K resends on a fresh worker on 2026-10-10 supply the
-cold/warm 64K row, because the complete run's first 64K prefix request
-reused 14,400 tokens from preceding requests. Those extra prompts and
-payloads match the same frozen fixtures.
+| Whole measured matrix | Previous v5 | Matrix default | Change |
+|---|---:|---:|---:|
+| Sum of 70 wave times | 2,508.10 s | 2,423.72 s | -3.36% |
+| Weighted native decode per request | 45.23 tok/s | 47.68 tok/s | +5.41% |
+| Weighted aggregate decode per wave | 81.02 tok/s | 85.79 tok/s | +5.89% |
+| Weighted native prefill | 1,418.36 tok/s | 1,413.64 tok/s | -0.33% |
+| Output / measured wave time | 50.63 tok/s | 52.39 tok/s | +3.48% |
+| Card energy | 451,528.32 J | 436,435.31 J | -3.34% |
+
+Separate same-day controlled ABBA costs improve decode **5.99%** across five
+shapes: four matched native histories and one 4K frozen-proposal completion
+retaining all native draft computation. That replay is not an agent result.
 
 ### One request: context sweep
 
-Input values are token budgets. Prefill is newly computed KV tokens per native
-prefill second; decode is post-first generated tokens per native decode second.
-Rates and latencies are medians across waves. MTP acceptance is weighted
-across drafted tokens.
+Medians across measured waves. Native decode uses N−1 post-first output tokens
+per server decode second; prefill uses computed KV tokens per prefill second.
 
-| Input / output budget | Waves | Actual input | Prefill tok/s | Decode tok/s | MTP accepted | TTFT | End to end |
-|---:|---:|---:|---:|---:|---:|---:|---:|
-| 512 / 1,024 | 5 | 479–507 | 1,712.2 | 58.4 | 52.7% | 0.30 s | 17.82 s |
-| 2,048 / 1,024 | 5 | 1,992–2,047 | 2,492.8 | 59.7 | 59.1% | 0.82 s | 17.97 s |
-| 4,096 / 1,024 | 5 | 4,052–4,094 | 2,274.8 | 55.3 | 52.3% | 1.80 s | 20.28 s |
-| 8,192 / 1,024 | 5 | 8,167–8,186 | 2,324.6 | 54.9 | 52.3% | 3.53 s | 22.15 s |
-| 16,384 / 1,024 | 5 | 16,335–16,379 | 2,181.3 | 56.8 | 55.5% | 7.53 s | 25.54 s |
-| 32,768 / 1,024 | 5 | 32,704–32,762 | 1,988.7 | 53.4 | 55.9% | 16.50 s | 35.65 s |
-| 65,536 / 1,024 | 3 | 65,491–65,532 | 1,681.1 | 48.4 | 56.1% | 39.06 s | 60.20 s |
-| 131,072 / 1,024 | 3 | 131,034–131,070 | 1,269.6 | 42.1 | 55.6% | 103.40 s | 127.48 s |
+| Input budget | Waves | Actual input | Prefill tok/s | Decode tok/s | TTFT | End to end |
+|---:|---:|---:|---:|---:|---:|---:|
+| 512 | 5 | 479–507 | 1,709.2 | 63.58 | 0.297 s | 16.392 s |
+| 2,048 | 5 | 1,992–2,047 | 2,316.3 | 64.92 | 0.878 s | 16.641 s |
+| 4,096 | 5 | 4,052–4,094 | 2,197.6 | 60.51 | 1.875 s | 18.789 s |
+| 8,192 | 5 | 8,167–8,186 | 2,282.0 | 59.74 | 3.602 s | 20.702 s |
+| 16,384 | 5 | 16,335–16,379 | 2,160.2 | 61.53 | 7.593 s | 24.216 s |
+| 32,768 | 5 | 32,704–32,762 | 1,976.6 | 57.48 | 16.598 s | 34.426 s |
+| 65,536 | 3 | 65,491–65,532 | 1,668.3 | 52.37 | 39.356 s | 58.834 s |
+| 131,072 | 3 | 131,034–131,070 | 1,262.3 | 44.63 | 103.958 s | 126.983 s |
 
-### One to four simultaneous requests
+### Simultaneous requests
 
-The rates count aggregate generated tokens in sampled intervals after all
-requests emitted a first token and before any finished. C1 comes from the
-context sweep; C2–C4 each include three waves with different tasks. These are
-separate serving load points, not paired scaling measurements.
+Aggregate tok/s after all requests emitted a first token and before any
+finished; separate load points, not paired scaling measurements.
 
-| Input / output per request | C1 | C2 | C3 | C4 |
+| Input/output per request | C1 | C2 | C3 | C4 |
 |---|---:|---:|---:|---:|
-| 2,048 / 1,024 | 60.5 tok/s | 108.1 tok/s | 155.6 tok/s | 190.8 tok/s |
-| 4,096 / 1,024 | 56.0 tok/s | 108.9 tok/s | 149.1 tok/s | 181.4 tok/s |
-| 16,384 / 1,024 | 56.3 tok/s | 101.6 tok/s | 132.7 tok/s | 162.1 tok/s |
+| 2,048/1,024 | 65.63 | 114.02 | 159.71 | 202.26 |
+| 4,096/1,024 | 61.37 | 113.24 | 154.40 | 190.69 |
+| 16,384/1,024 | 60.72 | 110.50 | 137.99 | 170.08 |
 
-Some requests briefly entered the scheduler waiting queue; no request was preempted.
+### Scope and open follow-ups
 
-### Prefix reuse and maximum context
+- **128K:** median native decode is effectively unchanged,44.60→44.63tok/s;
+  lower observed acceptance offsets shorter rounds in this sampled panel.
+- **C2/2K prefill:** −10.44% median rate against the historical reference. Two
+  candidate repeats were slower,the third near baseline. Cause unresolved;
+  the planned bounded ABBA was deferred for user-approved publication.
+- **Long case:**199,673 input+1,024 output completed at 40.43 decode tok/s. Its
+  +13.75% versus one historical repeat includes a higher acceptance rate;
+  it is not an isolated kernel gain.
+- No fresh eight-run natural coding-agent panel or completed matrix-specific
+  262K/RAM retest is claimed. Finite operator/model gates pass. All 124 sampled
+  answer hashes differ from the reference; no universal text identity or
+  coding-quality improvement is established.
 
-| Scenario | Measured result |
-|---|---|
-| 16K exact resend | 14,400 / 16,382 prompt tokens cached; TTFT **7.53 s cold → 0.97–0.99 s warm** |
-| 64K exact resend | 62,400 / 65,469 prompt tokens cached; TTFT **38.78 s cold → 2.38 s warm** |
-| Frozen 200K comparison | **199,673 input + 1,024 output**; 1,004.8 prefill tok/s, 37.9 decode tok/s, 198.98 s TTFT, 225.91 s end to end |
-
-The longest-context row is one capacity and throughput observation. The
-16K/64K resends reused the same prompt on the same worker.
-
+[All 20 scenario comparisons and raw exported counters](benchmarks/results/mtp-matrix-20261110/README.md).
 <!-- END CURRENT SERVING MEASUREMENTS -->
 
 ## Pro follow-up: MTP4 and quantized DFlash experiments

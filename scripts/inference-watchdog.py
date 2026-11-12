@@ -151,7 +151,11 @@ def main():
     if reason:
         capture_failure(state)
         print(json.dumps({'action': 'restart', 'reason': reason, 'metrics': metrics}), flush=True)
-        subprocess.run(['systemctl', '--user', 'restart', SERVICE], check=True, timeout=90)
+        # try-restart preserves an operator stop racing with this observation.
+        current = subprocess.check_output(['systemctl', '--user', 'show', SERVICE,
+            '-p', 'InvocationID', '--value'], text=True, timeout=5).strip()
+        if current == props['InvocationID']:
+            subprocess.run(['systemctl', '--user', 'try-restart', SERVICE], check=True, timeout=90)
 
 
 if __name__ == '__main__':

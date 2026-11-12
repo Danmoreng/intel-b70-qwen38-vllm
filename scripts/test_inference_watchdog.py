@@ -1,6 +1,7 @@
 import importlib.util
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 spec = importlib.util.spec_from_file_location('watchdog', Path(__file__).with_name('inference-watchdog.py'))
 w = importlib.util.module_from_spec(spec)
@@ -16,6 +17,11 @@ class WatchdogTests(unittest.TestCase):
     def observe(self, state=None, now=1000, sample=None, healthy=True, fault=False, **kw):
         return w.observe(state or {}, 'invocation', 2000, now,
                          metrics() if sample is None else sample, healthy, fault, **kw)
+
+    def test_operator_stopped_service_stays_stopped(self):
+        with patch.object(w.subprocess, 'check_output', return_value='ActiveState=inactive\nInvocationID=\nExecMainStartTimestampMonotonic=0\n'), patch.object(w, 'fetch') as fetch:
+            w.main()
+            fetch.assert_not_called()
 
     def test_real_metrics_and_invalid_samples(self):
         sample = 'vllm:num_requests_running{engine="0"} 2\nvllm:generation_tokens_total{engine="0"} 100\nvllm:prompt_tokens_total{engine="0"} 1000\n'

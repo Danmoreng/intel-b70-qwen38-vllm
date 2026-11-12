@@ -4,6 +4,7 @@ Description=Check Qwen inference progress every 30 seconds
 [Timer]
 OnBootSec=2min
 OnUnitInactiveSec=30s
+AccuracySec=1s
 Unit=b70-qwen38-inference-watchdog.service
 
 [Install]

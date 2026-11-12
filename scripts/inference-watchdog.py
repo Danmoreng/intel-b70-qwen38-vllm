@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Recover a live but stalled production service; never start an inactive service."""
-import datetime
 import json
 import math
 import os
@@ -9,7 +8,6 @@ import re
 import subprocess
 import time
 import urllib.request
-from zoneinfo import ZoneInfo
 
 SERVICE = 'b70-qwen38-vllm.service'
 BASE_URL = 'http://127.0.0.1:8081'
@@ -36,7 +34,7 @@ def parse_metrics(text):
     return values
 
 
-def observe(previous, invocation, age, now, metrics, healthy, gpu_fault, allowed=True):
+def observe(previous, invocation, age, now, metrics, healthy, gpu_fault):
     """Return new persistent state and a bounded recovery decision (no side effects)."""
     restarts = [t for t in previous.get('restarts', []) if 0 <= now - t < 3600]
     if previous.get('invocation') != invocation or now < previous.get('seen_at', now):
@@ -73,7 +71,7 @@ def observe(previous, invocation, age, now, metrics, healthy, gpu_fault, allowed
         reason = 'Active inference has made no progress for 10 minutes'
     elif not healthy and now - state['unhealthy_at'] >= STALL_SECONDS:
         reason = 'Model API unavailable beyond startup grace or the 10-minute outage budget'
-    if not allowed or len(restarts) >= 3 or (restarts and now - restarts[-1] < COOLDOWN):
+    if len(restarts) >= 3 or (restarts and now - restarts[-1] < COOLDOWN):
         reason = None
     if reason:
         state['restarts'] = restarts + [now]
@@ -145,9 +143,7 @@ def main():
         fault = any('Timedout job:' in line and 'VLLM::EngineCor' in line for line in kernel.splitlines())
     except (OSError, subprocess.SubprocessError):
         fault = False  # The generic progress check also works without kernel-log access.
-    berlin = datetime.datetime.now(ZoneInfo('Europe/Berlin'))
-    allowed = berlin.hour * 60 + berlin.minute < 22 * 60 + 45
-    state, reason = observe(previous, props['InvocationID'], age, now, metrics, healthy, fault, allowed)
+    state, reason = observe(previous, props['InvocationID'], age, now, metrics, healthy, fault)
     save(state)
     if reason:
         capture_failure(state)

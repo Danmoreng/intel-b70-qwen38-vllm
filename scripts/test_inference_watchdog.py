@@ -1,5 +1,8 @@
+from datetime import datetime
 import importlib.util
+import json
 from pathlib import Path
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -69,7 +72,7 @@ class WatchdogTests(unittest.TestCase):
         self.assertEqual(state['progress_at'], 2000)
         self.assertEqual(state['restarts'], [900])
 
-    def test_restart_cooldown_hourly_limit_and_daily_cutoff(self):
+    def test_restart_cooldown_and_hourly_limit(self):
         state, _ = self.observe(fault=True)
         state['restarts'] = [950]
         _, reason = self.observe(state, now=1100)
@@ -77,9 +80,28 @@ class WatchdogTests(unittest.TestCase):
         state['restarts'] = [100, 200, 300]
         _, reason = self.observe(state, now=1600)
         self.assertIsNone(reason)
-        state['restarts'] = []
-        _, reason = self.observe(state, now=1600, allowed=False)
-        self.assertIsNone(reason)
+
+    def test_main_recovers_at_any_hour(self):
+        for hour in ('12:00', '22:45', '23:30'):
+            with self.subTest(hour=hour), tempfile.TemporaryDirectory() as directory:
+                now = datetime.fromisoformat(f'2026-11-12T{hour}:00+01:00').timestamp()
+                state_path = Path(directory) / 'watchdog.json'
+                state_path.write_text(json.dumps(dict(
+                    invocation='invocation', seen_at=now - 30,
+                    progress_at=now - 600, signature=[100, 1000, 3], busy=True)))
+                info = 'ActiveState=active\nInvocationID=invocation\nExecMainStartTimestampMonotonic=0\n'
+                with patch.object(w, 'STATE', state_path), \
+                     patch.object(w.time, 'time', return_value=now), \
+                     patch.object(w.time, 'monotonic', return_value=2000), \
+                     patch.object(w, 'fetch', return_value=''), \
+                     patch.object(w, 'parse_metrics', return_value=metrics()), \
+                     patch.object(w, 'capture_failure'), \
+                     patch.object(w.subprocess, 'check_output', side_effect=[info, '', 'invocation\n']), \
+                     patch.object(w.subprocess, 'run') as run:
+                    w.main()
+                run.assert_called_once_with(
+                    ['systemctl', '--user', 'try-restart', w.SERVICE], check=True, timeout=90)
+                self.assertEqual(json.loads(state_path.read_text())['restarts'], [now])
 
     def test_unavailable_api_after_startup_grace(self):
         state, _ = w.observe({}, 'new', 900, 1000, None, False, False)

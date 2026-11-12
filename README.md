@@ -101,8 +101,9 @@ An active request with no progress for 10 minutes triggers a service restart;
 a kernel-confirmed timed-out vLLM GPU job reduces that threshold to 60 seconds.
 An unavailable API gets at most 15 minutes of startup grace; after readiness,
 a continuous 10-minute API outage triggers recovery.
-It never starts an inactive service, never restarts after 22:45 Europe/Berlin,
-and limits recovery to three restarts per hour with a 15-minute cooldown.
+It never starts an inactive service and limits recovery to three restarts per
+hour with a 15-minute cooldown. Recovery runs at any time of day; host shutdown
+schedules belong to the operating system and are independent of the watchdog.
 State and restart reasons are kept under `~/.local/state/b70-qwen38-vllm/`;
 restart events are also in the watchdog's user journal. This recovers the known
 BCS hang; it does not fix the underlying sporadic GPU memory fault.

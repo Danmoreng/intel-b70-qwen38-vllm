@@ -1,0 +1,7 @@
+[Unit]
+Description=Detect stalled Qwen inference and recover the qualified service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 @REPO_DIR@/scripts/inference-watchdog.py
+TimeoutStartSec=115

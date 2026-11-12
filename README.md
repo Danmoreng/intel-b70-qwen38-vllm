@@ -95,6 +95,17 @@ its process being active does not mean model loading has finished. Check the
 API readiness endpoint. The host defaults are loopback and port 8081; the
 recovery helper targets that endpoint and the standard container name.
 
+The user-service installer also enables `b70-qwen38-inference-watchdog.timer`.
+Every 30 seconds it checks real prompt/output progress as well as HTTP health.
+An active request with no progress for 10 minutes triggers a service restart;
+a kernel-confirmed timed-out vLLM GPU job reduces that threshold to 60 seconds.
+An unavailable API gets a 15-minute startup grace, then a 10-minute outage window.
+It never starts an inactive service, never restarts after 22:45 Europe/Berlin,
+and limits recovery to three restarts per hour with a 15-minute cooldown.
+State and restart reasons are kept under `~/.local/state/b70-qwen38-vllm/`;
+restart events are also in the watchdog's user journal. This recovers the known
+BCS hang; it does not fix the underlying sporadic GPU memory fault.
+
 The immediate rollback is the [saved v6 MTP3 matrix release](config/releases/exl3-v6/README.md),
 with `scripts/run-server-exl3-v6-rollback.sh`, a frozen policy and archived RAM
 modules. Older [v5](config/releases/exl3-v5/README.md), [v4](config/releases/exl3-v4/README.md), [v3](config/releases/exl3-v3/README.md),

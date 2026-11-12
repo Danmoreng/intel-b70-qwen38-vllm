@@ -7,7 +7,11 @@ unit_file="$unit_dir/b70-qwen38-vllm.service"
 mkdir -p "$unit_dir"
 sed "s|@REPO_DIR@|$repo_dir|g" \
   "$repo_dir/systemd/b70-qwen38-vllm.service.in" > "$unit_file"
+sed "s|@REPO_DIR@|$repo_dir|g" \
+  "$repo_dir/systemd/b70-qwen38-inference-watchdog.service.in" > "$unit_dir/b70-qwen38-inference-watchdog.service"
+cp "$repo_dir/systemd/b70-qwen38-inference-watchdog.timer" "$unit_dir/"
 systemctl --user daemon-reload
 systemctl --user enable --now b70-qwen38-vllm.service
+systemctl --user enable --now b70-qwen38-inference-watchdog.timer
 systemctl --user status --no-pager b70-qwen38-vllm.service
 

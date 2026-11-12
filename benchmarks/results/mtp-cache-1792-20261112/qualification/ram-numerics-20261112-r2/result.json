@@ -1,0 +1,221 @@
+{
+  "status": "PASS_FACTS_D2H_DIAGNOSTIC",
+  "profile": "D",
+  "started": "2026-11-12T10:11:20.147157+01:00",
+  "deadline": "2026-11-12T22:40:00+01:00",
+  "diagnostic_only": true,
+  "pageable": false,
+  "canary_repeats": 1,
+  "canary_rows": [
+    {
+      "index": 0,
+      "usage": {
+        "prompt_tokens": 16384,
+        "total_tokens": 16432,
+        "completion_tokens": 48,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": null,
+          "multimodal_tokens": null
+        },
+        "completion_tokens_details": null
+      },
+      "parsed": {
+        "audit": "MAPLE_72",
+        "left": "CIRRUS_491",
+        "right": "BASALT_806"
+      }
+    }
+  ],
+  "numerical": {
+    "rows": [
+      {
+        "label": "fresh1",
+        "usage": {
+          "prompt_tokens": 16384,
+          "total_tokens": 16385,
+          "completion_tokens": 1,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        "record": {
+          "actual_to_logical_row": {
+            "0": 0
+          },
+          "physical_attn_page_tables": {
+            "0": [
+              0,
+              3,
+              23,
+              1,
+              18,
+              23,
+              32,
+              18,
+              10,
+              32
+            ]
+          },
+          "file": "fresh1.pt",
+          "label": "fresh1",
+          "is_partial_prefill": false,
+          "mode": "NONE",
+          "starts": [
+            16256
+          ],
+          "widths": [
+            128
+          ],
+          "inputs_sha256": "1529534ae35616155788e1747a98869ebb1459c97771849a9135ba341df88754",
+          "positions_sha256": "ad658b3daa4367b5b4f361023ba08a320bfea1e4bf50010295bf51b589e8613a",
+          "states_before": 96,
+          "states_after": 96,
+          "target_and_draft_kv_layers": 17,
+          "probability_records": 1,
+          "actual_sampled": [
+            [
+              90
+            ]
+          ],
+          "forced_teacher_token": 0,
+          "implicit_initial_states": []
+        }
+      },
+      {
+        "label": "fresh2",
+        "usage": {
+          "prompt_tokens": 16384,
+          "total_tokens": 16385,
+          "completion_tokens": 1,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        "record": {
+          "actual_to_logical_row": {
+            "0": 0
+          },
+          "physical_attn_page_tables": {
+            "0": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              2,
+              14,
+              4,
+              18,
+              14
+            ]
+          },
+          "file": "fresh2.pt",
+          "label": "fresh2",
+          "is_partial_prefill": false,
+          "mode": "NONE",
+          "starts": [
+            16256
+          ],
+          "widths": [
+            128
+          ],
+          "inputs_sha256": "1529534ae35616155788e1747a98869ebb1459c97771849a9135ba341df88754",
+          "positions_sha256": "ad658b3daa4367b5b4f361023ba08a320bfea1e4bf50010295bf51b589e8613a",
+          "states_before": 96,
+          "states_after": 96,
+          "target_and_draft_kv_layers": 17,
+          "probability_records": 1,
+          "actual_sampled": [
+            [
+              90
+            ]
+          ],
+          "forced_teacher_token": 0,
+          "implicit_initial_states": []
+        }
+      },
+      {
+        "label": "ram-parent-0",
+        "usage": {
+          "prompt_tokens": 16384,
+          "total_tokens": 16385,
+          "completion_tokens": 1,
+          "prompt_tokens_details": {
+            "cached_tokens": 14336,
+            "created_cache_tokens": null,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": null
+        },
+        "record": {
+          "actual_to_logical_row": {
+            "0": 0
+          },
+          "physical_attn_page_tables": {
+            "0": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              30,
+              0,
+              32
+            ]
+          },
+          "file": "ram-parent-0.pt",
+          "label": "ram-parent-0",
+          "is_partial_prefill": false,
+          "mode": "NONE",
+          "starts": [
+            16256
+          ],
+          "widths": [
+            128
+          ],
+          "inputs_sha256": "1529534ae35616155788e1747a98869ebb1459c97771849a9135ba341df88754",
+          "positions_sha256": "ad658b3daa4367b5b4f361023ba08a320bfea1e4bf50010295bf51b589e8613a",
+          "states_before": 96,
+          "states_after": 96,
+          "target_and_draft_kv_layers": 17,
+          "probability_records": 1,
+          "actual_sampled": [
+            [
+              90
+            ]
+          ],
+          "forced_teacher_token": 0,
+          "implicit_initial_states": []
+        }
+      }
+    ],
+    "RAM_probes": [
+      {
+        "label": "ram-parent-0",
+        "H2D_bytes": 656015360.0,
+        "device_hit_tokens": 0.0,
+        "host_hit_tokens": 14336.0
+      }
+    ],
+    "status": "PASS_GENUINE_RAM_RESTORE_NUMERICS",
+    "scope": "2GiB pressure pool, 2 slots, full12GiB ARC; transfer byte checks synchronizing; not full-production capacity or speed evidence"
+  },
+  "gpu_to_cpu_bytes": 3404857344.0,
+  "facts": {
+    "audit": "MAPLE_72",
+    "left": "CIRRUS_491",
+    "right": "BASALT_806"
+  },
+  "kernel_gpu_fault_seen": false,
+  "restore_returncode": 0,
+  "finished": "2026-11-12T10:14:17.049205+01:00"
+}

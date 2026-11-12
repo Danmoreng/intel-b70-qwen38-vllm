@@ -1,0 +1,88 @@
+{
+  "status": "PASS_D1792_C1_CAPTURED_CASES_BOUNDARY_TEST_STILL_REQUIRED",
+  "rows": [
+    {
+      "left": "fresh1",
+      "right": "fresh2",
+      "status": "PASS",
+      "metrics": {
+        "max_ssm": 0.0,
+        "max_conv": 0.0,
+        "max_logits": 0.0,
+        "max_p": 0.0,
+        "max_p_L1": 0.0,
+        "exact_state_tensors": 192,
+        "state_tensors": 192,
+        "kv_chunks": 6510
+      },
+      "errors": []
+    },
+    {
+      "left": "fresh1",
+      "right": "device-parent",
+      "status": "PASS",
+      "metrics": {
+        "max_ssm": 0.0,
+        "max_conv": 0.0,
+        "max_logits": 0.0,
+        "max_p": 0.0,
+        "max_p_L1": 0.0,
+        "exact_state_tensors": 192,
+        "state_tensors": 192,
+        "kv_chunks": 6510
+      },
+      "errors": []
+    },
+    {
+      "left": "fresh-child-audit",
+      "right": "device-child-audit",
+      "status": "PASS",
+      "metrics": {
+        "max_ssm": 0.0,
+        "max_conv": 0.0,
+        "max_logits": 0.0,
+        "max_p": 0.0,
+        "max_p_L1": 0.0,
+        "exact_state_tensors": 192,
+        "state_tensors": 192,
+        "kv_chunks": 6543
+      },
+      "errors": []
+    },
+    {
+      "left": "fresh-child-sides",
+      "right": "device-child-sides",
+      "status": "PASS",
+      "metrics": {
+        "max_ssm": 0.0,
+        "max_conv": 0.0,
+        "max_logits": 0.0,
+        "max_p": 0.0,
+        "max_p_L1": 0.0,
+        "exact_state_tensors": 192,
+        "state_tensors": 192,
+        "kv_chunks": 6543
+      },
+      "errors": []
+    },
+    {
+      "left": "fresh1",
+      "right": "device-parent-recheck",
+      "status": "PASS",
+      "metrics": {
+        "max_ssm": 0.0,
+        "max_conv": 0.0,
+        "max_logits": 0.0,
+        "max_p": 0.0,
+        "max_p_L1": 0.0,
+        "exact_state_tensors": 192,
+        "state_tensors": 192,
+        "kv_chunks": 6510
+      },
+      "errors": []
+    }
+  ],
+  "raw_controller_error": "Expected2048-specific tail capture files absent for1792 topology; raw failure and comparison retained unchanged.",
+  "limits": "All8actual captures covered by5matched comparisons. Actual16256cached parent/children and parentrecheck. Children do not cross next1792physical boundary17920; additional boundary qualification mandatory. Controlled deterministic numerical mode, not performance.",
+  "comparator_sha256": "29afbb431d9ab1b0d7520b15b2c4ea58281ebebcac9e74446e326ac40a4e2f27"
+}

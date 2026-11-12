@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "status": "QUALIFIED_RELEASE",
-  "image_tag": "local/b70-qwen38-vllm:production-exl3-v6",
-  "image_id": "sha256:f8b0ef94cf95cfee20b0c5500db1173fdaaca4af4e3cbaa352a511e78e6a0c6d",
-  "runtime_image_id": "sha256:dfd1514f44b59b634eb20148bd4343a8807c3991bdcf46c11a21aa06eae583bb",
-  "policy_sha256": "ec957c94a9d2f51511891387d271c6acd4b7dd356186fa11bb3d3852cae80463",
+  "image_tag": "local/b70-qwen38-vllm:production-exl3-v7",
+  "image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "runtime_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "policy_sha256": "997d6b63458b312c038a1bd89034487d547e0368303c648aef6c44c69e9cae9f",
   "vllm_config": {
     "dtype": "float16",
     "max_model_len": 262144,
@@ -54,7 +54,10 @@
         56,
         64
       ]
-    }
+    },
+    "block_size": 1792,
+    "prefix_match_unit": 128,
+    "long_prefill_token_threshold": 0
   },
   "request_defaults_sha256": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2",
   "checkpoint_files_sha256": {
@@ -74,9 +77,9 @@
     "/opt/exl3xpu/exl3xpu/_C.so": "d91199a8dcf983240a82fb7acd886677cde7e1cd9d9491880a155cab3f3f4e17",
     "/opt/exl3xpu/m04/m04.so": "03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
     "/opt/b70/libdnnl.so.3": "90c0feddfb51a6219903d5e1ccabc9fd32dab0c702284a16dd7692bb6042e056",
-    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "4fa3dd0304db3e3af016e1c90d392542143e3c3dc3fd56b77da50e6aae66ef08",
+    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "f028de90e2b44a207932153b6f0108543a5ee9970fe3e79adc35cbabb6c6579a",
     "/opt/exl3xpu/exl3xpu/shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2",
-    "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "bd6a715c941f363ae6adc812bc6edf859589f788c7ef50a2ac2629d997f4f8dc",
+    "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "ea1da2da25abef46d6dc34df4e62cdee54db3640e7e1d74d571e741ca8469a4e",
     "/opt/exl3xpu/csrc/exl3_ops.sycl": "b70880d1e92032de697c1d432c6899e34e17662e2086a7fbba80fa17b28e41cf",
     "/opt/exl3xpu/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7",
     "/opt/exl3xpu/exl3xpu/target_runtime.py": "afb6baf2ed7161adf66127b21fdc866714474fb0d09e86b9a5f5311bfe21dfc6",
@@ -92,16 +95,21 @@
     "/opt/exl3xpu/native-matrix-source/csrc/exl3_ops.sycl": "fbf3ae51f44ec291344c8905e661505b97eea33d3ab8e89974b77c8306b6dda9",
     "/opt/exl3xpu/native-matrix-source/csrc/fa_esimd.h": "ab21d3d1c239afbbfcf011842356a3be11d580086082235688bf78721283e126",
     "/opt/exl3xpu/native-matrix-source/scripts/build_ext.sh": "a8068273bc7a443cfbd4a6459d471323eb203911b0a2b92cbca338d1b23f219e",
-    "/opt/exl3xpu/native-matrix-source/scripts/native_build_manifest.py": "6f94e72006401a42250326a84f7bce903b28d3b9891912554ab55038e1f20977"
+    "/opt/exl3xpu/native-matrix-source/scripts/native_build_manifest.py": "6f94e72006401a42250326a84f7bce903b28d3b9891912554ab55038e1f20977",
+    "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/gpu/model_runner.py": "8ccf05600209f0cd506fdebafaa92d430a6e9ad985b499032ad3e97b7e3493f2",
+    "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/b70_cow_copy_fix.py": "b30646e39778904cb3f5ce2664d37defe7a743b8a4e6715d5b883f1ec54d5f43",
+    "/opt/b70/cache1792/install_release.py": "122c186965007b3efb7426a26c14e47a144b320643c33030ad36cdbcf4faa243",
+    "/opt/b70/cache1792/production_policy.json": "997d6b63458b312c038a1bd89034487d547e0368303c648aef6c44c69e9cae9f",
+    "/opt/b70/cache1792/production_policy.sha256": "cf6e647af34e6db502010a998556dcc68d30f9671de0166fbeacc10edf3baaa5"
   },
   "environment_overrides": {
     "EXL3_SDPA_CACHE_CAPACITY": "64"
   },
   "source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
-  "qualification_note": "Operatorapproved MB4/K4MTP releaseafter full70wavecomparison. +5.412percentnativeDecode,-3.364percentmeasuredwaveTime,-0.332percentprefillRate. C2prefillflag, nofreshagentpanel and interruptedcontext/RAMdelta-retest explicitly acceptedasopenfollowups; no claim thosegatespassed.",
+  "qualification_note": "Operatorapproved1792/128MTP3andcompletealiasCOWfixafter70validwaves, genuineagentquality4/4botharms, controlledstate/RAM/context/lifecyclegates, exactreleasechildautomaticCOWfunctionalcheck and source/nativeequivalence. Warm16K/64Krequests~10%shorter, TTFT~68\u201377%shorter; overallwave\u22120.28%notuniversalcausalclaim. Coldlatencycosts andopenintermittentBCSfault explicitlyaccepted; previousv6rollbackretained.",
   "ram_kv_runtime": {
     "path": "config/production_ram_kv.json",
-    "sha256": "8b118b2eb16390fe8f20ba1c81e92121daa6a50e5196295856cabd26e7fee12c"
+    "sha256": "632816175200e047d08d167a7b1919b707c08ef7747358b1876bac11733e9ead"
   },
   "python_runtime_port": {
     "official_xpu_wheel_sha256": "0e3735aa6b9ac132a32b54a948bb0de079e1b783ec5b04b184f4bdaf873eb995",
@@ -110,21 +118,12 @@
     "native_source_archive_sha256": "c5b46a9af81ca41bf04a95b9bf4a48044b5bad3654cb61fe327af857ae93da43"
   },
   "qualification_review": {
-    "path": "benchmarks/results/mtp-matrix-20261110/decision.json",
-    "sha256": "46f54a36a2b0014dda03879c62043a418bd06dda5b56a893fbd101b36ae4f1a3"
+    "path": "benchmarks/results/mtp-cache-1792-20261112/decision.json",
+    "sha256": "bf79b15352fb7a86fc56e4bfb32d924d95cc76aadc6bca6c0d7a41f91e0f293b"
   },
   "production_start_receipt": {
-    "path": "benchmarks/results/mtp-matrix-20261110/promotion.json",
-    "sha256": "dcbf8dd76e418fe88bc6eaba7804715b590744d33eb8de40a7fdbe5a2e601edd"
-  },
-  "matrix_release_packaging": {
-    "measured_parent": "sha256:dfd1514f44b59b634eb20148bd4343a8807c3991bdcf46c11a21aa06eae583bb",
-    "changed_files": [
-      "/opt/exl3xpu/native-matrix-source/*",
-      "/opt/exl3xpu/scripts/verify_native_artifact.py"
-    ],
-    "inference_payload_unchanged": true,
-    "note": "Releasechild retains measuredB native/library/plugin/modelcode. Adds exactcompiledsource snapshot and nativepreflightsource-root correction plusreleaseidentity. No inference rebuild."
+    "path": "benchmarks/results/mtp-cache-1792-20261112/deployment/promotion.json",
+    "sha256": "98109186188673ed02596e98b77e3f72a59f6298c4a09b119d99270f43f89450"
   },
   "matrix_native_sources": {
     "directory": "engine/exl3xpu/mb4-k4/source",
@@ -133,5 +132,11 @@
     "extra_flags": [
       "-DEXL3_DPAS_MB4"
     ]
+  },
+  "cache1792_release": {
+    "parent_image": "sha256:f8b0ef94cf95cfee20b0c5500db1173fdaaca4af4e3cbaa352a511e78e6a0c6d",
+    "helper_sha256": "b30646e39778904cb3f5ce2664d37defe7a743b8a4e6715d5b883f1ec54d5f43",
+    "source_directory": "engine/cache1792",
+    "no_native_rebuild": true
   }
 }

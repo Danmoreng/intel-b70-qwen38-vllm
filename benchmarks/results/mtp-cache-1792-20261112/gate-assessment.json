@@ -1,0 +1,40 @@
+{
+  "status": "PASS_EXACT_IMAGE_RELEASE_GATES",
+  "image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "scope": "Exact release child passes source/guard/immutable-native equivalence, automatic COW startup, real partial-page C2 functional and D2H gate. Prior controlled numerical/RAM/context/agent/full70 qualification retained through byte-identical helper/native/profile bridge; not rerun wholesale on packaging.",
+  "receipts": {
+    "child": {
+      "path": "benchmarks/results/mtp-cache-1792-20261112/release-child-gate-r2/campaign.json",
+      "sha256": "8a0c0e0596bcb14aa8e013fe3f443251b3d9ca4a2a686421f94167f33393cd66"
+    },
+    "api": {
+      "path": "benchmarks/results/mtp-cache-1792-20261112/release-child-gate-r2/api/result.json",
+      "sha256": "acd859b67efe535044078459192e5c8c21a5a6f8ad0d21192c38df6a76b62956"
+    },
+    "automatic_cow": {
+      "path": "benchmarks/results/mtp-cache-1792-20261112/release-child-gate-r2/automatic-cow-receipt.json",
+      "sha256": "f8a8063ff5d4d777de87b18210c4fe1a3cbe31fb140e4bb2e03cfe795123af56"
+    },
+    "packaging": {
+      "path": "benchmarks/results/mtp-cache-1792-20261112/packaging-identity.json",
+      "sha256": "c6369119f52bdfd7818763d539394f616a19bba52a45f739e64578d9ed77dc01"
+    },
+    "python": {
+      "path": "benchmarks/results/mtp-cache-1792-20261112/python-payload-comparison.json",
+      "sha256": "20cc4e7a0d4eea7b519a2be6336b21011fc8c65f135bee84356ebca6f1af21b1"
+    },
+    "guard": {
+      "path": "benchmarks/results/mtp-cache-1792-20261112/source-guard-review.json",
+      "sha256": "4652a6ac57fb6d1436a1662a285c5d2748e102c09ed35f00d04bf6130fcd8dab"
+    },
+    "prior_technical": {
+      "path": "benchmarks/results/mtp-cache-1792-20261112/qualification/TECHNICAL-GATES.json",
+      "sha256": "3d5258a3e95bad6c2439c8868c7842683eb484c2312812e1fdd5357d10054538"
+    }
+  },
+  "open_limits": [
+    "IntermittentBCSfaultnotfixed; no measuredfrequencycomparison.",
+    "Smallagentpanel andhistoricalservingreference.",
+    "ColdshortTTFT+0.1\u20130.15s accepted."
+  ]
+}

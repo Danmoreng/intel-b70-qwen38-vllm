@@ -1,0 +1,76 @@
+{
+  "status": "PASS_ALL_D1792_TECHNICAL_GATES",
+  "time_Berlin": "2026-11-12T10:49:04.491859+01:00",
+  "evidence": [
+    {
+      "path": "D-COW-COPY-QUALIFICATION.json",
+      "sha256": "7a40de2c4b198cb1aea80bfc93ae1372df49c6bbf831a55452f943c90041676e"
+    },
+    {
+      "path": "D-C1-NUMERICAL-QUALIFICATION.json",
+      "sha256": "4c73e5a4a5340b2142a0335cb230ac080544b236c8d478cb20eedef3d297d264"
+    },
+    {
+      "path": "boundary-numerics-20261112-r2/result.json",
+      "sha256": "721e1391aa45f8ae9cc23f68efda1343ae04f867e708cd07b8047a5932aac2fc"
+    },
+    {
+      "path": "boundary-numerics-20261112-r2/worker/audit/comparison.json",
+      "sha256": "aaa1ba76344f00304891396d2a41f0764aac580f05218e21d7ce90dd6372e011"
+    },
+    {
+      "path": "c2-independent-20261112-r2/result.json",
+      "sha256": "1c0be8da8feda99452aa30c668f260b81035e09e707caa99b7cca5146cafc576"
+    },
+    {
+      "path": "c2-independent-20261112-r2/worker/audit/fresh-c2-1-vs-device-c2.json",
+      "sha256": "d7152f3524452ccd03d67a8c2e8e5ea530c0ba26f987b16e15983c6031165aeb"
+    },
+    {
+      "path": "RAM-QUALIFICATION-20261112.json",
+      "sha256": "6bbddc6d64460386d6f6faf55a89b4610ab46ab6b700593e12b060f70c2b9a96"
+    },
+    {
+      "path": "ram-numerics-20261112-r2/result.json",
+      "sha256": "b5d17179089ee459ce3d0caba0c1bc220f88b08157b2f08e2cf30c3efb944860"
+    },
+    {
+      "path": "context262144-r1/result.json",
+      "sha256": "a44e4936c9cab3bb58927ea6dc6a93bb8c36b7de203e07d663d529cb78857f12"
+    },
+    {
+      "path": "pressure-lifecycle-20261112-r2/result.json",
+      "sha256": "2f7c22d3a67450ef60cdfbb72626971b5fd24733e0121d13985b48832e0ce36e"
+    },
+    {
+      "path": "pressure-lifecycle-20261112-r2/trace-qualification.json",
+      "sha256": "0003e01764d8e23ec06a106537c4754ed611c2af949369f275ce9c9d8cd6e16c"
+    },
+    {
+      "path": "native-c2-admission-20261112-r2/result.json",
+      "sha256": "5e35737cbec3b7918eb66225a3cfd2cfab36da97d1d0c4afc555b6cec1fb6b74"
+    },
+    {
+      "path": "native-c2-admission-20261112-r2/trace-qualification.json",
+      "sha256": "82378c0da3ebff9a00ebff52c45c084c8600b0b9830b7862cc137d2db996abac"
+    }
+  ],
+  "profile": {
+    "image": "sha256:f8b0ef94cf95cfee20b0c5500db1173fdaaca4af4e3cbaa352a511e78e6a0c6d",
+    "block": 1792,
+    "prefix": 128,
+    "cap": 0,
+    "batch": 4096,
+    "slots": 16,
+    "max_context": 262144,
+    "host_arc_bytes": 12884901888,
+    "power_W": 180
+  },
+  "scope": "Finite controlled C1/C2 state/KV/logit/p gates, actual RAM transfer, actual262144 and native lifecycle/admission checks passed. Numerical scheduling/determinism controls absent in operations/agents/sweep. Not universal bitidentity, stability or agent-quality evidence. No production adoption.",
+  "limitations": [
+    "Pressure pool is2GiB/2slots andmax28672, host12GiB retained.",
+    "C1/C2 numerical matching explicitly controls prefix chunk history; native performance scheduling is separate.",
+    "Previous failed/unmatched and internallycached references retained with scope notes.",
+    "BCS root cause remains open; passed launches have no new fault, not stability guarantee."
+  ]
+}

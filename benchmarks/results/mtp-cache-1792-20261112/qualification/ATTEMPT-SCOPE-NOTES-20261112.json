@@ -1,0 +1,35 @@
+{
+  "scope": "Preserved excluded attempts, not silently removed or counted as passing gates. Later corrected runs have separate directories and unchanged numerical tolerances.",
+  "attempts": [
+    {
+      "path": "ram-numerics-20261112-r1",
+      "classification": "Comparator coverage assertion during fresh selfrepeat prematurely required later captures. Corrected only invocation scope; r2 genuine restore passed.",
+      "engine_fault": false
+    },
+    {
+      "path": "boundary-numerics-20261112-r1",
+      "classification": "Reference prefix chunk history differed before capture: fresh1792+128 vs parent1920 before16256. Numerical differences genuine for unmatched execution. R2 matches history explicitly; production timings never use matching controls.",
+      "engine_fault": false
+    },
+    {
+      "path": "c2-numerics-20261112-r1",
+      "classification": "Finite comparison passed but supposedly fresh concurrent identical prompts internally shared14336tokens. Not counted as strict independent proof. R2 salts separate histories and validates zero fresh hits.",
+      "engine_fault": false
+    },
+    {
+      "path": "pressure-lifecycle-20261112-r1",
+      "classification": "Read-only scheduler logger len(None) killed the engine. Optional lists now guarded with or[]. R2 full lifecycle passed. This was a harness error, no kernel fault.",
+      "engine_fault": false
+    },
+    {
+      "path": "native-c2-admission-20261112-r1",
+      "classification": "Harness expected HTTP400 for max_tokens beyond remaining context. API correctly clamps max_tokens. R2 actually oversized input262145 is rejectedHTTP400; resource reservations separately verified.",
+      "engine_fault": false
+    },
+    {
+      "path": "full-serving-20261112-r1",
+      "classification": "Actual BCS memory fault after36/70waves. Campaign incomplete and excluded from full performance comparison. Neither harness correction nor successful replay resolves cause.",
+      "engine_fault": true
+    }
+  ]
+}

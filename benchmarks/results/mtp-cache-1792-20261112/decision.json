@@ -1,0 +1,87 @@
+{
+  "status": "QUALIFIED_FOR_PRODUCTION_PROMOTION",
+  "image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "policy_sha256": "997d6b63458b312c038a1bd89034487d547e0368303c648aef6c44c69e9cae9f",
+  "immediate_rollback_image_id": "sha256:f8b0ef94cf95cfee20b0c5500db1173fdaaca4af4e3cbaa352a511e78e6a0c6d",
+  "gate_assessment": {
+    "path": "benchmarks/results/mtp-cache-1792-20261112/gate-assessment.json",
+    "sha256": "32393c547fd5eaece7b5b2cd0164ea64721ba91ef26cce75e79d56bbefbb11a5"
+  },
+  "benchmark_summary": {
+    "path": "benchmarks/results/mtp-cache-1792-20261112/benchmark-summary.json",
+    "sha256": "671839aeda6689129fc3cd64ae5a617fa263bba71c4737e813f7e1c26dfbd9c5"
+  },
+  "performance_review_triggers": [
+    {
+      "scenario": "concurrency-16k-c3",
+      "metric": "prefill",
+      "change_pct": -5.193498200372715
+    },
+    {
+      "scenario": "prefix-64k-cold-warm",
+      "metric": "prefill",
+      "change_pct": -69.86863291658109
+    },
+    {
+      "scenario": "concurrency-2k-c2",
+      "metric": "prefill",
+      "change_pct": -20.916456563770414
+    },
+    {
+      "scenario": "phase-512-c1",
+      "metric": "prefill",
+      "change_pct": -33.834875675804255
+    },
+    {
+      "scenario": "prefix-16k-cold-warm",
+      "metric": "prefill",
+      "change_pct": -56.884262085805105
+    },
+    {
+      "scenario": "phase-2k-c1",
+      "metric": "prefill",
+      "change_pct": -10.407977612248908
+    },
+    {
+      "scenario": "concurrency-4k-c2",
+      "metric": "prefill",
+      "change_pct": -15.43220845643809
+    },
+    {
+      "scenario": "concurrency-2k-c3",
+      "metric": "prefill",
+      "change_pct": -21.76102759087575
+    },
+    {
+      "scenario": "concurrency-4k-c3",
+      "metric": "prefill",
+      "change_pct": -19.261697602492468
+    },
+    {
+      "scenario": "concurrency-4k-c4",
+      "metric": "prefill",
+      "change_pct": -20.688541849962995
+    },
+    {
+      "scenario": "concurrency-2k-c4",
+      "metric": "prefill",
+      "change_pct": -25.498008395013215
+    },
+    {
+      "scenario": "full-context-199680",
+      "metric": "decode",
+      "change_pct": -6.145975868945264
+    },
+    {
+      "scenario": "complete-matrix",
+      "metric": "weighted_native_prefill_tokens_per_s",
+      "change_pct": -3.8296162311956095
+    }
+  ],
+  "performance_review": {
+    "path": "benchmarks/results/mtp-cache-1792-20261112/performance-review.json",
+    "sha256": "402e854a83625580a66c331662bb58e69ff174771b5e8a648a7bc3bf24c73e86"
+  },
+  "operator_requested_production_and_cow_fix": true,
+  "rationale": "Operatorapproved1792/128MTP3andcompletealiasCOWfixafter70validwaves, genuineagentquality4/4botharms, controlledstate/RAM/context/lifecyclegates, exactreleasechildautomaticCOWfunctionalcheck and source/nativeequivalence. Warm16K/64Krequests~10%shorter, TTFT~68\u201377%shorter; overallwave\u22120.28%notuniversalcausalclaim. Coldlatencycosts andopenintermittentBCSfault explicitlyaccepted; previousv6rollbackretained."
+}

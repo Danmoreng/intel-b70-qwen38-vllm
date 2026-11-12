@@ -4,7 +4,19 @@ The qualified production profile serves **EXL3 4.00 bpw on one 32 GB Intel Arc
 Pro B70 at 180 W**, using vLLM 0.33.0 and Torch 2.14.0+xpu. It exposes an
 OpenAI-compatible API at `http://127.0.0.1:8081/v1`, model `Qwen3.8-27B`.
 
-The 2026-11-10 default adds the **MB4-DPAS/K4 matrix patch under MTP3**.
+The 2026-11-12 default uses **1792-token cache pages / 128-token prefix matching**
+and automatically installs the **complete dense-alias KV COW copy correction**
+at every worker start. Batch 4096, max 262144 tokens, MTP3 and 12 GiB RAM ARC remain.
+Warm 16K/64K prefix requests were about 10% shorter, with 68–77% shorter TTFT.
+The complete 70-wave matrix was 0.28% shorter with +1.47% weighted native decode;
+these small aggregate changes do not establish a universal speedup. Some cold
+short requests add 0.1–0.15 s TTFT. The operator accepted these costs and the open
+sporadic BCS GPU-memory fault, also previously observed with the old profile.
+This release does not claim to fix that fault.
+[Qualification, packaging and deployment evidence](benchmarks/results/mtp-cache-1792-20261112/README.md).
+
+The preceding 2026-11-10 default added the **MB4-DPAS/K4 matrix patch under MTP3**,
+which remains unchanged.
 Against the exact previous vLLM 0.33 image, the full 70-wave / 124-request matrix
 measured **+5.41% weighted native decode**, **3.36% less measured wave time**,
 **3.34% less card energy**, and **−0.33% weighted prefill rate** at the same 180 W.
@@ -51,8 +63,8 @@ commands](benchmarks/results/ram-kv-layout-20261108/README.md).
 
 The local release uses the immutable image recorded in
 [config/production_image.json](config/production_image.json):
-`sha256:f8b0ef94cf95cfee20b0c5500db1173fdaaca4af4e3cbaa352a511e78e6a0c6d`,
-alias `local/b70-qwen38-vllm:production-exl3-v6`.
+`sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1`,
+alias `local/b70-qwen38-vllm:production-exl3-v7`.
 The strict launcher checks image/policy identity, native libraries, serving
 arguments, checkpoint files, middleware and the 180 W cap before loading.
 Compiler caches are isolated by policy and image ID.
@@ -83,9 +95,9 @@ its process being active does not mean model loading has finished. Check the
 API readiness endpoint. The host defaults are loopback and port 8081; the
 recovery helper targets that endpoint and the standard container name.
 
-The immediate rollback is the [saved pre-matrix vLLM 0.33 release](config/releases/exl3-v5/README.md),
-with `scripts/run-server-exl3-v5-rollback.sh`, a frozen policy and archived RAM
-modules. Older [v4](config/releases/exl3-v4/README.md), [v3](config/releases/exl3-v3/README.md),
+The immediate rollback is the [saved v6 MTP3 matrix release](config/releases/exl3-v6/README.md),
+with `scripts/run-server-exl3-v6-rollback.sh`, a frozen policy and archived RAM
+modules. Older [v5](config/releases/exl3-v5/README.md), [v4](config/releases/exl3-v4/README.md), [v3](config/releases/exl3-v3/README.md),
 [v2](config/releases/exl3-v2) and [v1](config/releases/exl3-v1/README.md) remain available.
 
 The [EXL3 source snapshot/build instructions](engine/exl3xpu/README.md) contain

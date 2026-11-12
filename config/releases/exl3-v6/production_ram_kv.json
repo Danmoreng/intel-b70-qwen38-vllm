@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "status": "PRODUCTION",
+  "release_date": "2026-11-10",
+  "base_image_id": "sha256:f8b0ef94cf95cfee20b0c5500db1173fdaaca4af4e3cbaa352a511e78e6a0c6d",
+  "default_cpu_gib": 12,
+  "allowed_cpu_gib": [
+    1,
+    12
+  ],
+  "runtime_sha256": {
+    "kv_admission.py": "4b237a0d1c54b49958e3111d46ebc221b8f2768075d7eff9c7923eb3bdb1df6f",
+    "xpu_cpu_offload.py": "6f0b474b078b3dd6a6ad63c10d84d620592d6c5733e62d51b9a3de33f20e9b36"
+  },
+  "validation": "benchmarks/results/mtp-matrix-20261110/README.md",
+  "note": "Unchanged12GiB RAM/LBNHC modules; onlybaseimage identity moves to MB4/K4release. FreshmatrixdeltaRAM/contextretest deferred onoperatorinstruction; priorv033proof retained.",
+  "kv_cache_layout": "LBNHC",
+  "layout_validation": "benchmarks/results/ram-kv-layout-20261108/README.md",
+  "runtime_directory": "config/releases/exl3-v6/runtime"
+}

@@ -14,6 +14,7 @@ RUNTIME_VERSIONS = {
     'b70-qwen38-exl3-production-v2': ('0.30.0', '2.13.0+xpu'),
     'b70-qwen38-exl3-production-v3': ('0.31.0', '2.14.0+xpu'),
     'b70-qwen38-exl3-production-v4': ('0.33.0', '2.14.0+xpu'),
+    'b70-qwen38-exl3-production-v5': ('0.33.0', '2.14.0+xpu'),
 }
 
 # Diagnostics only: keep the frozen model/runtime/image and sampling arguments.
@@ -42,7 +43,7 @@ def main():
     assert inspected['Id']==release['image_id'], 'Production image tag moved'
     assert inspected['Config']['Labels']['org.local.b70.policy.sha256']==digest
     cfg=profile(release['image_id'])
-    if policy['policy_id'] in ('b70-qwen38-exl3-production-v2','b70-qwen38-exl3-production-v3','b70-qwen38-exl3-production-v4'):
+    if policy['policy_id'] in ('b70-qwen38-exl3-production-v2','b70-qwen38-exl3-production-v3','b70-qwen38-exl3-production-v4','b70-qwen38-exl3-production-v5'):
         assert policy['attention']['partition_cache']['capacity']==64
         image_env=dict(x.split('=',1) for x in inspected['Config']['Env'])
         assert image_env.get('EXL3_SDPA_CACHE_CAPACITY')=='64'

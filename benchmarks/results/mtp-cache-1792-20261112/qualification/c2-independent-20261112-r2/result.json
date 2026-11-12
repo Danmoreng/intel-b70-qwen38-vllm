@@ -1,0 +1,270 @@
+{
+  "status": "PASS_FACTS_D2H_DIAGNOSTIC",
+  "profile": "D",
+  "started": "2026-11-12T10:26:26.765838+01:00",
+  "deadline": "2026-11-12T22:40:00+01:00",
+  "diagnostic_only": true,
+  "pageable": false,
+  "canary_repeats": 1,
+  "canary_rows": [
+    {
+      "index": 0,
+      "usage": {
+        "prompt_tokens": 16384,
+        "total_tokens": 16432,
+        "completion_tokens": 48,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": null,
+          "multimodal_tokens": null
+        },
+        "completion_tokens_details": null
+      },
+      "parsed": {
+        "audit": "MAPLE_72",
+        "left": "CIRRUS_491",
+        "right": "BASALT_806"
+      }
+    }
+  ],
+  "numerical_c2": {
+    "status": "PASS_C2_CAP0_CONTROLLED_PREFILL_FRESH_SELFREPEAT_AND_CACHED_COW",
+    "rows": [
+      {
+        "label": "fresh-c2-1",
+        "usage": [
+          {
+            "prompt_tokens": 16384,
+            "total_tokens": 16385,
+            "completion_tokens": 1,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 16384,
+            "total_tokens": 16385,
+            "completion_tokens": 1,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          }
+        ],
+        "record": {
+          "actual_to_logical_row": {
+            "1": 0,
+            "0": 1
+          },
+          "physical_attn_page_tables": {
+            "0": [
+              0,
+              3,
+              23,
+              1,
+              18,
+              23,
+              32,
+              18,
+              37,
+              32
+            ]
+          },
+          "file": "fresh-c2-1.pt",
+          "label": "fresh-c2-1",
+          "is_partial_prefill": false,
+          "mode": "NONE",
+          "starts": [
+            16256,
+            16256
+          ],
+          "widths": [
+            128,
+            128
+          ],
+          "inputs_sha256": "0772e3a0718d7081a07b05a10f1d20440c0dbff238fcfe1c8db88a593c2daf6a",
+          "positions_sha256": "99dbace7a29911d00b93fee2a0660d0f1914068bf15d20622f4b3928010b925c",
+          "states_before": 192,
+          "states_after": 192,
+          "target_and_draft_kv_layers": 34,
+          "probability_records": 1,
+          "actual_sampled": [
+            [
+              71093
+            ],
+            [
+              248046
+            ]
+          ],
+          "forced_teacher_token": 0,
+          "implicit_initial_states": []
+        }
+      },
+      {
+        "label": "fresh-c2-2",
+        "usage": [
+          {
+            "prompt_tokens": 16384,
+            "total_tokens": 16385,
+            "completion_tokens": 1,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 16384,
+            "total_tokens": 16385,
+            "completion_tokens": 1,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          }
+        ],
+        "record": {
+          "actual_to_logical_row": {
+            "1": 0,
+            "0": 1
+          },
+          "physical_attn_page_tables": {
+            "0": [
+              0,
+              46,
+              61,
+              47,
+              45,
+              61,
+              34,
+              45,
+              9,
+              34
+            ]
+          },
+          "file": "fresh-c2-2.pt",
+          "label": "fresh-c2-2",
+          "is_partial_prefill": false,
+          "mode": "NONE",
+          "starts": [
+            16256,
+            16256
+          ],
+          "widths": [
+            128,
+            128
+          ],
+          "inputs_sha256": "0772e3a0718d7081a07b05a10f1d20440c0dbff238fcfe1c8db88a593c2daf6a",
+          "positions_sha256": "99dbace7a29911d00b93fee2a0660d0f1914068bf15d20622f4b3928010b925c",
+          "states_before": 192,
+          "states_after": 192,
+          "target_and_draft_kv_layers": 34,
+          "probability_records": 1,
+          "actual_sampled": [
+            [
+              71093
+            ],
+            [
+              248046
+            ]
+          ],
+          "forced_teacher_token": 0,
+          "implicit_initial_states": []
+        }
+      },
+      {
+        "label": "device-c2",
+        "usage": [
+          {
+            "prompt_tokens": 16384,
+            "total_tokens": 16385,
+            "completion_tokens": 1,
+            "prompt_tokens_details": {
+              "cached_tokens": 16256,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          },
+          {
+            "prompt_tokens": 16384,
+            "total_tokens": 16385,
+            "completion_tokens": 1,
+            "prompt_tokens_details": {
+              "cached_tokens": 16256,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          }
+        ],
+        "record": {
+          "actual_to_logical_row": {
+            "1": 0,
+            "0": 1
+          },
+          "physical_attn_page_tables": {
+            "0": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              78
+            ]
+          },
+          "file": "device-c2.pt",
+          "label": "device-c2",
+          "is_partial_prefill": false,
+          "mode": "NONE",
+          "starts": [
+            16256,
+            16256
+          ],
+          "widths": [
+            128,
+            128
+          ],
+          "inputs_sha256": "0772e3a0718d7081a07b05a10f1d20440c0dbff238fcfe1c8db88a593c2daf6a",
+          "positions_sha256": "99dbace7a29911d00b93fee2a0660d0f1914068bf15d20622f4b3928010b925c",
+          "states_before": 192,
+          "states_after": 192,
+          "target_and_draft_kv_layers": 34,
+          "probability_records": 1,
+          "actual_sampled": [
+            [
+              71093
+            ],
+            [
+              248046
+            ]
+          ],
+          "forced_teacher_token": 0,
+          "implicit_initial_states": []
+        }
+      }
+    ],
+    "scope": "Two separately salted teacher-forced16K branches; freshhits0each and cachedhits16256each; fenced canonical enqueue order; actual cached total32512; full target/MTP KV and logical GDN/Conv, raw logits,p; deterministic numeric control only."
+  },
+  "gpu_to_cpu_bytes": 3592028160.0,
+  "facts": {
+    "audit": "MAPLE_72",
+    "left": "CIRRUS_491",
+    "right": "BASALT_806"
+  },
+  "kernel_gpu_fault_seen": false,
+  "restore_returncode": 0,
+  "finished": "2026-11-12T10:29:34.237859+01:00"
+}

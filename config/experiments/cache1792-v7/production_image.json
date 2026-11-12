@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "status": "CANDIDATE_PREFLIGHT_ONLY",
+  "image_tag": "local/b70-qwen38-vllm:cache1792-v7-candidate",
+  "image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "runtime_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "policy_sha256": "997d6b63458b312c038a1bd89034487d547e0368303c648aef6c44c69e9cae9f",
+  "vllm_config": {
+    "dtype": "float16",
+    "max_model_len": 262144,
+    "kv_cache_dtype": "fp8",
+    "gpu_memory_utilization": 0.965,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 4096,
+    "scheduler_reserve_full_isl": true,
+    "watermark": 0.0,
+    "enable_prefix_caching": true,
+    "mamba_cache_mode": "align",
+    "speculative_config": {
+      "method": "mtp",
+      "num_speculative_tokens": 3
+    },
+    "limit_mm_per_prompt": {
+      "image": 32,
+      "video": 4
+    },
+    "mm_processor_kwargs": {
+      "max_pixels": 4194304
+    },
+    "enable_auto_tool_choice": true,
+    "tool_call_parser": "qwen3_xml",
+    "reasoning_parser": "qwen3",
+    "reasoning_config": {
+      "reasoning_start_str": "<think>",
+      "reasoning_end_str": "</think>"
+    },
+    "override_generation_config": {
+      "max_new_tokens": 16384
+    },
+    "middleware": "request_defaults.ChatDefaults",
+    "compilation_config": {
+      "cudagraph_mode": "FULL_DECODE_ONLY",
+      "cudagraph_capture_sizes": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        48,
+        56,
+        64
+      ]
+    },
+    "block_size": 1792,
+    "prefix_match_unit": 128,
+    "long_prefill_token_threshold": 0
+  },
+  "request_defaults_sha256": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2",
+  "checkpoint_files_sha256": {
+    "config.json": "dab9abc478e1b1b928ef354f27a26fc90e8191a4a3ce5f3d19aa21558216b267",
+    "generation_config.json": "e70c136c1b78ddc1fb0905bac8e733a4dc448d4f852a5dd75143fffc70be550e",
+    "model-00001-of-00002.safetensors": "b1e7fcc53a2bb211460ebb65e329cdb7a5af8bd819dcbcd89e06f0ccc041e590",
+    "model-00002-of-00002.safetensors": "c6d72f51b0cd99510239b264fef37bc26c950e6843f35421ce4830d4f87f8c05",
+    "model.safetensors.index.json": "c3111b8308db5396b1eed054967cf7dfbfc2508764f8813aebbaaf4a05860bc2",
+    "preprocessor_config.json": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+    "quantization_config.json": "c85767fc0bd991d1b7ddebe52feeb9a556216883de2cdb3f679ce85f989e29e0",
+    "tokenizer.json": "0997f410c57a1f4e53b09e4be8f4a172d90edd9564368fb0847030937229b9f3",
+    "tokenizer_config.json": "b11349aafa7cdc6a320767cf7ceb29ed82f7eda5d65e8e0819e76f0ce947bf27",
+    "video_preprocessor_config.json": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+    "vocab.json": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003"
+  },
+  "runtime_artifacts_sha256": {
+    "/opt/exl3xpu/exl3xpu/_C.so": "d91199a8dcf983240a82fb7acd886677cde7e1cd9d9491880a155cab3f3f4e17",
+    "/opt/exl3xpu/m04/m04.so": "03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+    "/opt/b70/libdnnl.so.3": "90c0feddfb51a6219903d5e1ccabc9fd32dab0c702284a16dd7692bb6042e056",
+    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "f028de90e2b44a207932153b6f0108543a5ee9970fe3e79adc35cbabb6c6579a",
+    "/opt/exl3xpu/exl3xpu/shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2",
+    "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "ea1da2da25abef46d6dc34df4e62cdee54db3640e7e1d74d571e741ca8469a4e",
+    "/opt/exl3xpu/csrc/exl3_ops.sycl": "b70880d1e92032de697c1d432c6899e34e17662e2086a7fbba80fa17b28e41cf",
+    "/opt/exl3xpu/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7",
+    "/opt/exl3xpu/exl3xpu/target_runtime.py": "afb6baf2ed7161adf66127b21fdc866714474fb0d09e86b9a5f5311bfe21dfc6",
+    "/opt/exl3xpu/exl3xpu/gdn_target_patch.py": "b661bc5514547d61413f81b947d664a87bca5a16afb36abd11bbd419434c59b7",
+    "/opt/exl3xpu/exl3xpu/vllm_plugin.py": "000238efdd4fd3621437763ab156dc6502eb11d865e4994d194385899cf014a6",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_5_mtp.py": "39068e51c14f5c1dbfd5e9683a81e5c36c1726709c3037928cc7914c3e9ef303",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/b70_mtp_policy.py": "c7c75d6b818c1cb0f1846f752060650af399f832e0dea3e8297ec274f2cfee3f",
+    "/opt/exl3xpu/exl3xpu/_C.so.manifest.json": "00820bca43fabfe019afc23b31edbfadc322efc43709673f18cecc55101e4a15",
+    "/opt/exl3xpu/exl3xpu/target_matrix_guard.py": "a945d495a6da2aa19a04151a034d2e511655da5b7563306664828d84d8ec79f6",
+    "/opt/exl3xpu/scripts/verify_native_artifact.py": "ca56098217e0da1e7b513ce159abf7f1ec653f7d4e1193ddc756f81d8c4f6a46",
+    "/opt/exl3xpu/native-matrix-source/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7",
+    "/opt/exl3xpu/native-matrix-source/csrc/exl3_esimd.h": "580247824dd9964c49d963332233c08542c589ed9e200d957732e743a353c37f",
+    "/opt/exl3xpu/native-matrix-source/csrc/exl3_ops.sycl": "fbf3ae51f44ec291344c8905e661505b97eea33d3ab8e89974b77c8306b6dda9",
+    "/opt/exl3xpu/native-matrix-source/csrc/fa_esimd.h": "ab21d3d1c239afbbfcf011842356a3be11d580086082235688bf78721283e126",
+    "/opt/exl3xpu/native-matrix-source/scripts/build_ext.sh": "a8068273bc7a443cfbd4a6459d471323eb203911b0a2b92cbca338d1b23f219e",
+    "/opt/exl3xpu/native-matrix-source/scripts/native_build_manifest.py": "6f94e72006401a42250326a84f7bce903b28d3b9891912554ab55038e1f20977",
+    "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/gpu/model_runner.py": "8ccf05600209f0cd506fdebafaa92d430a6e9ad985b499032ad3e97b7e3493f2",
+    "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/b70_cow_copy_fix.py": "b30646e39778904cb3f5ce2664d37defe7a743b8a4e6715d5b883f1ec54d5f43",
+    "/opt/b70/cache1792/install_release.py": "122c186965007b3efb7426a26c14e47a144b320643c33030ad36cdbcf4faa243",
+    "/opt/b70/cache1792/production_policy.json": "997d6b63458b312c038a1bd89034487d547e0368303c648aef6c44c69e9cae9f",
+    "/opt/b70/cache1792/production_policy.sha256": "cf6e647af34e6db502010a998556dcc68d30f9671de0166fbeacc10edf3baaa5"
+  },
+  "environment_overrides": {
+    "EXL3_SDPA_CACHE_CAPACITY": "64"
+  },
+  "source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
+  "qualification_note": "Operatorapproved MB4/K4MTP releaseafter full70wavecomparison. +5.412percentnativeDecode,-3.364percentmeasuredwaveTime,-0.332percentprefillRate. C2prefillflag, nofreshagentpanel and interruptedcontext/RAMdelta-retest explicitly acceptedasopenfollowups; no claim thosegatespassed.",
+  "ram_kv_runtime": {
+    "path": "config/experiments/cache1792-v7/production_ram_kv.json",
+    "sha256": "1576e42ed8e2f86b6960ab030c1fbd0a863fc25d9d2d99f08fb11e0bd48578fe"
+  },
+  "python_runtime_port": {
+    "official_xpu_wheel_sha256": "0e3735aa6b9ac132a32b54a948bb0de079e1b783ec5b04b184f4bdaf873eb995",
+    "source_port_script": "benchmarks/experiments/vllm-033-upgrade/port-source.py",
+    "source_port_script_sha256": "b68b666a568407aa98cbf21fdc54b28769223f5568bee25381648b3840776d86",
+    "native_source_archive_sha256": "c5b46a9af81ca41bf04a95b9bf4a48044b5bad3654cb61fe327af857ae93da43"
+  },
+  "qualification_review": {
+    "path": "benchmarks/results/mtp-matrix-20261110/decision.json",
+    "sha256": "46f54a36a2b0014dda03879c62043a418bd06dda5b56a893fbd101b36ae4f1a3"
+  },
+  "production_start_receipt": {
+    "path": "benchmarks/results/mtp-matrix-20261110/promotion.json",
+    "sha256": "dcbf8dd76e418fe88bc6eaba7804715b590744d33eb8de40a7fdbe5a2e601edd"
+  },
+  "matrix_native_sources": {
+    "directory": "engine/exl3xpu/mb4-k4/source",
+    "build_manifest_sha256": "00820bca43fabfe019afc23b31edbfadc322efc43709673f18cecc55101e4a15",
+    "patch_sha256": "b6ceb3dcb4532c42d2dfc269bb48bc18af0ad99e897412ebdf2655b0176e04c7",
+    "extra_flags": [
+      "-DEXL3_DPAS_MB4"
+    ]
+  },
+  "cache1792_release": {
+    "parent_image": "sha256:f8b0ef94cf95cfee20b0c5500db1173fdaaca4af4e3cbaa352a511e78e6a0c6d",
+    "helper_sha256": "b30646e39778904cb3f5ce2664d37defe7a743b8a4e6715d5b883f1ec54d5f43",
+    "source_directory": "engine/cache1792",
+    "no_native_rebuild": true
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "policy_id": "b70-qwen38-exl3-production-v4",
+  "policy_id": "b70-qwen38-exl3-production-v5",
   "hardware": {
     "gpu": "Intel Arc Pro B70",
     "gpu_count": 1,
@@ -91,7 +91,11 @@
     "api_image_limit": 32,
     "api_video_limit": 4,
     "media_max_pixels": 4194304,
-    "capacity_pressure_preemptions": "permitted at C16 with completion/accounting/recovery; no promise of16 simultaneous262K requests"
+    "capacity_pressure_preemptions": "permitted at C16 with completion/accounting/recovery; no promise of16 simultaneous262K requests",
+    "block_size": 1792,
+    "prefix_match_unit": 128,
+    "long_prefill_token_threshold": 0,
+    "complete_dense_alias_cow": true
   },
   "api": {
     "middleware": "request_defaults.ChatDefaults",
@@ -106,6 +110,12 @@
     "cache_isolation": "policy_sha256 + image_id",
     "diagnostic_validation_in_production": false,
     "gptq_rollback_image": "sha256:ed1ebca756abb0e0832d11cd0db026dd7e86df094c6903efe7ae8afbdc290b68",
-    "immediate_exl3_rollback_image": "sha256:f1822d3b533eb77a3d9f9c3b610bab0c8334c329a40d6ed32041345d79ad567e"
+    "immediate_exl3_rollback_image": "sha256:f8b0ef94cf95cfee20b0c5500db1173fdaaca4af4e3cbaa352a511e78e6a0c6d"
+  },
+  "cache_cow": {
+    "helper_sha256": "b30646e39778904cb3f5ce2664d37defe7a743b8a4e6715d5b883f1ec54d5f43",
+    "native_source_sha256": "cf7a8c14bc451c966135277c443fac5df65c98c049e2dedcf207025f4b231bca",
+    "activation": "GPUModelRunner.initialize_kv_cache, real allocation only; same audited install wrapper as qualification",
+    "scope": "Select covering dense aliases, unchanged native copy/streams/kernels. Open sporadic BCS fault operator accepted; no claim fixed."
   }
 }

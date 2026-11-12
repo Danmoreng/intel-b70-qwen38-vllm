@@ -1,0 +1,390 @@
+{
+  "status": "ALL_AUTOMATIC_FLAGS_REVIEWED_NO_NEW_GPU_MEASUREMENT",
+  "full_context_round_analysis": {
+    "A_counted_rounds": 364.0,
+    "D_counted_rounds": 387.0,
+    "round_count_change_pct": 6.318681318681318,
+    "A_acceptance": 0.6062271062271062,
+    "D_acceptance": 0.5486649440137812,
+    "A_decode_s": 25.30484736100334,
+    "D_decode_s": 26.961920488000032,
+    "A_ms_per_counted_round": 69.51881143132786,
+    "D_ms_per_counted_round": 69.66904518863058,
+    "counted_round_ms_change_pct": 0.21610518679697766,
+    "A_overlap_round_equivalent_ms": 69.68762023055508,
+    "D_overlap_round_equivalent_ms": 69.69607098952834,
+    "scope": "Actual rounds from native Prometheus counter. More rounds and lower acceptance explain most observed decode-time difference arithmetically; no isolated causal claim about why sampled trajectories changed. Round costs include host/runtime work; not GPU kernel timings. One199K observation per arm."
+  },
+  "flags": [
+    {
+      "trigger": {
+        "scenario": "concurrency-16k-c3",
+        "metric": "prefill",
+        "change_pct": -5.193498200372715
+      },
+      "classification": "ACTUAL_PREFILL_PHASE_LATENCY_COST",
+      "evidence": {
+        "batch_wall_s_A": 45.27995976099919,
+        "batch_wall_s_D": 45.5604204680003,
+        "batch_wall_s_change_pct": 0.6193925711980963,
+        "native_prefill_seconds_A": 32.14887155999895,
+        "native_prefill_seconds_D": 33.867194837997886,
+        "native_prefill_seconds_change_pct": 5.344894531654254,
+        "prefill_tokens_computed_A": 49088.0,
+        "prefill_tokens_computed_D": 49088.0,
+        "prefill_tokens_computed_change_pct": 0.0,
+        "prompt_tokens_cached_A": 0.0,
+        "prompt_tokens_cached_D": 0.0,
+        "prompt_tokens_cached_change_pct": null,
+        "client_ttft_max_A": 22.871552650998638,
+        "client_ttft_max_D": 22.351249421999455,
+        "client_ttft_max_change_pct": -2.274892469866774,
+        "client_ttft_median_A": 16.46828026000003,
+        "client_ttft_median_D": 17.770574809999744,
+        "client_ttft_median_change_pct": 7.907896449654617
+      },
+      "interpretation": "Same computed work, longer summed prefill phases. Retain actual per-request and maxTTFT costs; small absolute cold-latency increases are not dismissed as throughput artifacts. Historical comparison alone does not isolate cause."
+    },
+    {
+      "trigger": {
+        "scenario": "prefix-64k-cold-warm",
+        "metric": "prefill",
+        "change_pct": -69.86863291658109
+      },
+      "classification": "PREFIX_WORK_AVOIDED_ACTUAL_TIME_SHORTER",
+      "evidence": {
+        "batch_wall_s_A": 22.12976340900059,
+        "batch_wall_s_D": 19.96109432599951,
+        "batch_wall_s_change_pct": -9.799784312737113,
+        "native_prefill_seconds_A": 2.293288790002407,
+        "native_prefill_seconds_D": 0.4655124500004604,
+        "native_prefill_seconds_change_pct": -79.7010977409447,
+        "prefill_tokens_computed_A": 3069.0,
+        "prefill_tokens_computed_D": 189.0,
+        "prefill_tokens_computed_change_pct": -93.841642228739,
+        "prompt_tokens_cached_A": 62400.0,
+        "prompt_tokens_cached_D": 65280.0,
+        "prompt_tokens_cached_change_pct": 4.615384615384621,
+        "client_ttft_max_A": 2.377876741004002,
+        "client_ttft_max_D": 0.5452416789994459,
+        "client_ttft_max_change_pct": -77.07022952042372,
+        "client_ttft_median_A": 2.377876741004002,
+        "client_ttft_median_D": 0.5452416789994459,
+        "client_ttft_median_change_pct": -77.07022952042372
+      },
+      "interpretation": "Lower computed-token throughput coexists with less computed work and shorter real prefill/TTFT; not a prefill-time regression."
+    },
+    {
+      "trigger": {
+        "scenario": "concurrency-2k-c2",
+        "metric": "prefill",
+        "change_pct": -20.916456563770414
+      },
+      "classification": "ACTUAL_PREFILL_PHASE_LATENCY_COST",
+      "evidence": {
+        "batch_wall_s_A": 20.007676050001464,
+        "batch_wall_s_D": 20.08795081400058,
+        "batch_wall_s_change_pct": 0.4012198308214199,
+        "native_prefill_seconds_A": 2.862793551008508,
+        "native_prefill_seconds_D": 3.6765370780012745,
+        "native_prefill_seconds_change_pct": 28.424806486870136,
+        "prefill_tokens_computed_A": 4031.0,
+        "prefill_tokens_computed_D": 4031.0,
+        "prefill_tokens_computed_change_pct": 0.0,
+        "prompt_tokens_cached_A": 0.0,
+        "prompt_tokens_cached_D": 0.0,
+        "prompt_tokens_cached_change_pct": null,
+        "client_ttft_max_A": 1.8515376260038465,
+        "client_ttft_max_D": 1.963557168000989,
+        "client_ttft_max_change_pct": 6.050081857580869,
+        "client_ttft_median_A": 1.461216552001133,
+        "client_ttft_median_D": 1.868833264499699,
+        "client_ttft_median_change_pct": 27.895708677836684
+      },
+      "interpretation": "Same computed work, longer summed prefill phases. Retain actual per-request and maxTTFT costs; small absolute cold-latency increases are not dismissed as throughput artifacts. Historical comparison alone does not isolate cause."
+    },
+    {
+      "trigger": {
+        "scenario": "phase-512-c1",
+        "metric": "prefill",
+        "change_pct": -33.834875675804255
+      },
+      "classification": "ACTUAL_PREFILL_PHASE_LATENCY_COST",
+      "evidence": {
+        "batch_wall_s_A": 16.391573765999055,
+        "batch_wall_s_D": 16.666789048998908,
+        "batch_wall_s_change_pct": 1.6790046332874287,
+        "native_prefill_seconds_A": 0.2896965550025925,
+        "native_prefill_seconds_D": 0.436828936000893,
+        "native_prefill_seconds_change_pct": 50.78844689643749,
+        "prefill_tokens_computed_A": 496.0,
+        "prefill_tokens_computed_D": 496.0,
+        "prefill_tokens_computed_change_pct": 0.0,
+        "prompt_tokens_cached_A": 0.0,
+        "prompt_tokens_cached_D": 0.0,
+        "prompt_tokens_cached_change_pct": null,
+        "client_ttft_max_A": 0.29702632999396883,
+        "client_ttft_max_D": 0.44371196499923826,
+        "client_ttft_max_change_pct": 49.384724582580915,
+        "client_ttft_median_A": 0.29702632999396883,
+        "client_ttft_median_D": 0.44371196499923826,
+        "client_ttft_median_change_pct": 49.384724582580915
+      },
+      "interpretation": "Same computed work, longer summed prefill phases. Retain actual per-request and maxTTFT costs; small absolute cold-latency increases are not dismissed as throughput artifacts. Historical comparison alone does not isolate cause."
+    },
+    {
+      "trigger": {
+        "scenario": "prefix-16k-cold-warm",
+        "metric": "prefill",
+        "change_pct": -56.884262085805105
+      },
+      "classification": "PREFIX_WORK_AVOIDED_ACTUAL_TIME_SHORTER",
+      "evidence": {
+        "batch_wall_s_A": 17.247672899000463,
+        "batch_wall_s_D": 15.451557843998671,
+        "batch_wall_s_change_pct": -10.413666037844916,
+        "native_prefill_seconds_A": 0.9883610250035417,
+        "native_prefill_seconds_D": 0.3013474750005116,
+        "native_prefill_seconds_change_pct": -69.51038462899407,
+        "prefill_tokens_computed_A": 1982.0,
+        "prefill_tokens_computed_D": 254.0,
+        "prefill_tokens_computed_change_pct": -87.18466195761857,
+        "prompt_tokens_cached_A": 14400.0,
+        "prompt_tokens_cached_D": 16128.0,
+        "prompt_tokens_cached_change_pct": 12.00000000000001,
+        "client_ttft_max_A": 1.0137936239989358,
+        "client_ttft_max_D": 0.32650950399875,
+        "client_ttft_max_change_pct": -67.79329675493277,
+        "client_ttft_median_A": 1.0137936239989358,
+        "client_ttft_median_D": 0.32650950399875,
+        "client_ttft_median_change_pct": -67.79329675493277
+      },
+      "interpretation": "Lower computed-token throughput coexists with less computed work and shorter real prefill/TTFT; not a prefill-time regression."
+    },
+    {
+      "trigger": {
+        "scenario": "phase-2k-c1",
+        "metric": "prefill",
+        "change_pct": -10.407977612248908
+      },
+      "classification": "ACTUAL_PREFILL_PHASE_LATENCY_COST",
+      "evidence": {
+        "batch_wall_s_A": 16.640870668998105,
+        "batch_wall_s_D": 16.2468378829999,
+        "batch_wall_s_change_pct": -2.367861597123566,
+        "native_prefill_seconds_A": 0.8709080909975455,
+        "native_prefill_seconds_D": 0.9832141400002001,
+        "native_prefill_seconds_change_pct": 12.895281392324453,
+        "prefill_tokens_computed_A": 2011.0,
+        "prefill_tokens_computed_D": 2011.0,
+        "prefill_tokens_computed_change_pct": 0.0,
+        "prompt_tokens_cached_A": 0.0,
+        "prompt_tokens_cached_D": 0.0,
+        "prompt_tokens_cached_change_pct": null,
+        "client_ttft_max_A": 0.8781046860021888,
+        "client_ttft_max_D": 0.9928600119983457,
+        "client_ttft_max_change_pct": 13.068524496619172,
+        "client_ttft_median_A": 0.8781046860021888,
+        "client_ttft_median_D": 0.9928600119983457,
+        "client_ttft_median_change_pct": 13.068524496619172
+      },
+      "interpretation": "Same computed work, longer summed prefill phases. Retain actual per-request and maxTTFT costs; small absolute cold-latency increases are not dismissed as throughput artifacts. Historical comparison alone does not isolate cause."
+    },
+    {
+      "trigger": {
+        "scenario": "concurrency-4k-c2",
+        "metric": "prefill",
+        "change_pct": -15.43220845643809
+      },
+      "classification": "ACTUAL_PREFILL_PHASE_LATENCY_COST",
+      "evidence": {
+        "batch_wall_s_A": 22.252840356995875,
+        "batch_wall_s_D": 22.24461418899955,
+        "batch_wall_s_change_pct": -0.03696682250156069,
+        "native_prefill_seconds_A": 5.934620883002935,
+        "native_prefill_seconds_D": 7.063388827000381,
+        "native_prefill_seconds_change_pct": 19.020051427889783,
+        "prefill_tokens_computed_A": 8156.0,
+        "prefill_tokens_computed_D": 8156.0,
+        "prefill_tokens_computed_change_pct": 0.0,
+        "prompt_tokens_cached_A": 0.0,
+        "prompt_tokens_cached_D": 0.0,
+        "prompt_tokens_cached_change_pct": null,
+        "client_ttft_max_A": 3.553310308001528,
+        "client_ttft_max_D": 3.656487680000282,
+        "client_ttft_max_change_pct": 2.90369720219521,
+        "client_ttft_median_A": 3.001342633499007,
+        "client_ttft_median_D": 3.5656369919997815,
+        "client_ttft_median_change_pct": 18.801397487993967
+      },
+      "interpretation": "Same computed work, longer summed prefill phases. Retain actual per-request and maxTTFT costs; small absolute cold-latency increases are not dismissed as throughput artifacts. Historical comparison alone does not isolate cause."
+    },
+    {
+      "trigger": {
+        "scenario": "concurrency-2k-c3",
+        "metric": "prefill",
+        "change_pct": -21.76102759087575
+      },
+      "classification": "ACTUAL_PREFILL_PHASE_LATENCY_COST",
+      "evidence": {
+        "batch_wall_s_A": 22.571931065998797,
+        "batch_wall_s_D": 21.63108383799954,
+        "batch_wall_s_change_pct": -4.1682177091906025,
+        "native_prefill_seconds_A": 5.775307846990472,
+        "native_prefill_seconds_D": 7.409965500997714,
+        "native_prefill_seconds_change_pct": 28.304251432398807,
+        "prefill_tokens_computed_A": 6077.0,
+        "prefill_tokens_computed_D": 6077.0,
+        "prefill_tokens_computed_change_pct": 0.0,
+        "prompt_tokens_cached_A": 0.0,
+        "prompt_tokens_cached_D": 0.0,
+        "prompt_tokens_cached_change_pct": null,
+        "client_ttft_max_A": 2.4814810770039912,
+        "client_ttft_max_D": 2.6004923889995553,
+        "client_ttft_max_change_pct": 4.795979026334218,
+        "client_ttft_median_A": 2.481318268000905,
+        "client_ttft_median_D": 2.6003241280013754,
+        "client_ttft_median_change_pct": 4.796073987572269
+      },
+      "interpretation": "Same computed work, longer summed prefill phases. Retain actual per-request and maxTTFT costs; small absolute cold-latency increases are not dismissed as throughput artifacts. Historical comparison alone does not isolate cause."
+    },
+    {
+      "trigger": {
+        "scenario": "concurrency-4k-c3",
+        "metric": "prefill",
+        "change_pct": -19.261697602492468
+      },
+      "classification": "ACTUAL_PREFILL_PHASE_LATENCY_COST",
+      "evidence": {
+        "batch_wall_s_A": 25.48570215300424,
+        "batch_wall_s_D": 25.68289231700146,
+        "batch_wall_s_change_pct": 0.7737285903028468,
+        "native_prefill_seconds_A": 11.027521478987182,
+        "native_prefill_seconds_D": 13.539196305999212,
+        "native_prefill_seconds_change_pct": 22.77642198927472,
+        "prefill_tokens_computed_A": 12249.0,
+        "prefill_tokens_computed_D": 12249.0,
+        "prefill_tokens_computed_change_pct": 0.0,
+        "prompt_tokens_cached_A": 0.0,
+        "prompt_tokens_cached_D": 0.0,
+        "prompt_tokens_cached_change_pct": null,
+        "client_ttft_max_A": 5.244729487996665,
+        "client_ttft_max_D": 5.313953833998312,
+        "client_ttft_max_change_pct": 1.3198840123227917,
+        "client_ttft_median_A": 4.115107475998229,
+        "client_ttft_median_D": 5.082610855000894,
+        "client_ttft_median_change_pct": 23.511011186116605
+      },
+      "interpretation": "Same computed work, longer summed prefill phases. Retain actual per-request and maxTTFT costs; small absolute cold-latency increases are not dismissed as throughput artifacts. Historical comparison alone does not isolate cause."
+    },
+    {
+      "trigger": {
+        "scenario": "concurrency-4k-c4",
+        "metric": "prefill",
+        "change_pct": -20.688541849962995
+      },
+      "classification": "ACTUAL_PREFILL_PHASE_LATENCY_COST",
+      "evidence": {
+        "batch_wall_s_A": 29.564835917997698,
+        "batch_wall_s_D": 29.046213809999244,
+        "batch_wall_s_change_pct": -1.754185646207973,
+        "native_prefill_seconds_A": 16.220780900002865,
+        "native_prefill_seconds_D": 20.452001864998238,
+        "native_prefill_seconds_change_pct": 26.085186595391498,
+        "prefill_tokens_computed_A": 16288.0,
+        "prefill_tokens_computed_D": 16288.0,
+        "prefill_tokens_computed_change_pct": 0.0,
+        "prompt_tokens_cached_A": 0.0,
+        "prompt_tokens_cached_D": 0.0,
+        "prompt_tokens_cached_change_pct": null,
+        "client_ttft_max_A": 7.067237549003039,
+        "client_ttft_max_D": 7.184856886000489,
+        "client_ttft_max_change_pct": 1.664290130081203,
+        "client_ttft_median_A": 5.1218466384998464,
+        "client_ttft_median_D": 6.368029751500217,
+        "client_ttft_median_change_pct": 24.330738519835272
+      },
+      "interpretation": "Same computed work, longer summed prefill phases. Retain actual per-request and maxTTFT costs; small absolute cold-latency increases are not dismissed as throughput artifacts. Historical comparison alone does not isolate cause."
+    },
+    {
+      "trigger": {
+        "scenario": "concurrency-2k-c4",
+        "metric": "prefill",
+        "change_pct": -25.498008395013215
+      },
+      "classification": "ACTUAL_PREFILL_PHASE_LATENCY_COST",
+      "evidence": {
+        "batch_wall_s_A": 24.35659072799899,
+        "batch_wall_s_D": 25.079811159999736,
+        "batch_wall_s_change_pct": 2.969300753448101,
+        "native_prefill_seconds_A": 8.632460576991434,
+        "native_prefill_seconds_D": 11.538644804999421,
+        "native_prefill_seconds_change_pct": 33.665768897387125,
+        "prefill_tokens_computed_A": 8110.0,
+        "prefill_tokens_computed_D": 8110.0,
+        "prefill_tokens_computed_change_pct": 0.0,
+        "prompt_tokens_cached_A": 0.0,
+        "prompt_tokens_cached_D": 0.0,
+        "prompt_tokens_cached_change_pct": null,
+        "client_ttft_max_A": 3.495673630000965,
+        "client_ttft_max_D": 3.56595205099984,
+        "client_ttft_max_change_pct": 2.010440002056346,
+        "client_ttft_median_A": 2.5945734859997174,
+        "client_ttft_median_D": 3.306689627999731,
+        "client_ttft_median_change_pct": 27.446366265691925
+      },
+      "interpretation": "Same computed work, longer summed prefill phases. Retain actual per-request and maxTTFT costs; small absolute cold-latency increases are not dismissed as throughput artifacts. Historical comparison alone does not isolate cause."
+    },
+    {
+      "trigger": {
+        "scenario": "full-context-199680",
+        "metric": "decode",
+        "change_pct": -6.145975868945264
+      },
+      "classification": "SAMPLED_ACCEPTANCE_AND_ROUND_COUNT_DIFFERENCE",
+      "evidence": {
+        "A_counted_rounds": 364.0,
+        "D_counted_rounds": 387.0,
+        "round_count_change_pct": 6.318681318681318,
+        "A_acceptance": 0.6062271062271062,
+        "D_acceptance": 0.5486649440137812,
+        "A_decode_s": 25.30484736100334,
+        "D_decode_s": 26.961920488000032,
+        "A_ms_per_counted_round": 69.51881143132786,
+        "D_ms_per_counted_round": 69.66904518863058,
+        "counted_round_ms_change_pct": 0.21610518679697766,
+        "A_overlap_round_equivalent_ms": 69.68762023055508,
+        "D_overlap_round_equivalent_ms": 69.69607098952834,
+        "scope": "Actual rounds from native Prometheus counter. More rounds and lower acceptance explain most observed decode-time difference arithmetically; no isolated causal claim about why sampled trajectories changed. Round costs include host/runtime work; not GPU kernel timings. One199K observation per arm."
+      }
+    },
+    {
+      "trigger": {
+        "scenario": "complete-matrix",
+        "metric": "weighted_native_prefill_tokens_per_s",
+        "change_pct": -3.8296162311956095
+      },
+      "classification": "ACTUAL_SUMMED_PREFILL_PHASE_COST",
+      "evidence": {
+        "native_prefill_seconds": 3.4512895978614955,
+        "native_decode_seconds": -1.4493949702546916,
+        "prefill_tokens_computed": -0.5104977799593957,
+        "prompt_tokens_cached": 5.447619047619057,
+        "queue_time_sum_s": 0.14178527315973355,
+        "batch_wall_s": -0.27665833983493426,
+        "completion_tokens": 0.0,
+        "cached_fraction": 5.447619047619057
+      },
+      "interpretation": "Computed tokens fall0.51%, summed request-prefill phase durations rise3.45%. This cost is real in counters. Overlapping request phase sums are not wave wall or isolated GPU compute time. Whole wave sum falls0.28%."
+    }
+  ],
+  "decision": "No universal no-regression or stability claim. Warm reuse benefit confirmed; several cold-latency costs and open BCS fault remain disclosed. No automatic adoption.",
+  "evidence_hashes": {
+    "/home/sebastian/LocalLLM/benchmarks/mtp-matrix-review-20261110/full-serving-r1/serving/run-20261110-211618-w0.05/full-context-199680-r1/summary.json": "e8782b98e2c3ee2f28f5f8f08890d66125c467e8fc4c10e09f6884dde36fc948",
+    "/home/sebastian/LocalLLM/benchmarks/mtp-matrix-review-20261110/full-serving-r1/serving/run-20261110-211618-w0.05/full-context-199680-r1/metrics-before.prom": "35ee5aa4f67a49feda34a2e3a9502325293d7935b383640d999175a54fb3c1a4",
+    "/home/sebastian/LocalLLM/benchmarks/mtp-matrix-review-20261110/full-serving-r1/serving/run-20261110-211618-w0.05/full-context-199680-r1/metrics-after.prom": "63b6f1cb36978e45a069ec2d8f6790ed5b278dc1d4c6f34f183099311ba05658",
+    "/home/sebastian/LocalLLM/benchmarks/mtp-cache-followup-20261111/1792-qualification/full-serving-20261112-r2/serving/run-20261112-114854-w0.05/full-context-199680-r1/summary.json": "7b90ec0428330fcc1e4da908643c74e64f5dd9c119e99076f498878df6331dfc",
+    "/home/sebastian/LocalLLM/benchmarks/mtp-cache-followup-20261111/1792-qualification/full-serving-20261112-r2/serving/run-20261112-114854-w0.05/full-context-199680-r1/metrics-before.prom": "1097ecdc06d481be1badc22b0e6b9fdf4717b3b32d6b417d340a9e758b658466",
+    "/home/sebastian/LocalLLM/benchmarks/mtp-cache-followup-20261111/1792-qualification/full-serving-20261112-r2/serving/run-20261112-114854-w0.05/full-context-199680-r1/metrics-after.prom": "cf3a27456afc365a93bbb97676ed5f656563d906f9b58d6e26abd0a8761feefb"
+  }
+}

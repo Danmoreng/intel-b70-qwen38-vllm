@@ -1,0 +1,25 @@
+{
+  "status": "PASS_BOUNDED_TRANSITION_REPLAY_NOT_A_FIX",
+  "time_Berlin": "2026-11-12T11:47:59.579129+01:00",
+  "measured_waves": 6,
+  "measured_requests": 9,
+  "additional_warmup_requests": 3,
+  "completed_transfer_jobs": 201,
+  "transfer_event_counts": {
+    "mapping_created": 1,
+    "worker_mapping_ready": 1,
+    "transfer_begin": 201,
+    "copy_submit": 201,
+    "transfer_enqueued": 201,
+    "transfer_finished": 201
+  },
+  "transfer_bytes": 21070479360,
+  "fault_seen": false,
+  "restore_returncode": 0,
+  "scope": "128K C1 warmup+3 then2K C2warmup+3; thinmetadata logging changes timings. No performance comparison, no new synchronization. Prior fullsweep fault remains unexplained; successful replay does not close stability gate.",
+  "evidence_sha256": {
+    "campaign.json": "100821d02147d7f407bb7b1cacf4f263fc68b1afde7f08edd5a6498289867129",
+    "worker/transfers.jsonl": "533ddabfd5170e64ea22da5d3a6689bf2f468a7188e27c26f80e53775d0bd391",
+    "kernel.log": "c82e7282cff93a530952407d6ff4d9998259d192629a308d6f8c957ae0a38faa"
+  }
+}

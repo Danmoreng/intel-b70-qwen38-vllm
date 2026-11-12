@@ -1,0 +1,34 @@
+1792/128 MTP3 – Qualifizierungsbericht vom 12.11.2026
+Stand: 2026-11-12T12:44:09.156573+01:00
+
+Entscheidung: Der Versuch ist ausgewertet; eine allgemeine Produktionsfreigabe ist wegen des offenen sporadischen BCS-Speicherfehlers nicht erteilt. Die bisherige MTP3-v6-Engine ist wiederhergestellt und mit einer echten 16K-Faktenanfrage samt GPU→RAM-Transfer geprüft. Kein Defaultwechsel, Commit oder Push.
+
+Profil D: physischer Block1792 / Präfixeinheit128, long-prefill-threshold0, Prefillbatch4096, 16 konfigurierte Slots, max262144, 12GiB RAM-ARC, 180W, unveränderte F8-Modell-/Matrixkerne, vollständige Alias-COW-Kopie aktiviert.
+
+Bestandene endliche Prüfungen:
+- Kontrollierte C1- und unabhängige C2-Vergleiche von GDN/Conv, gültigem Target-/MTP-KV, Skalen, Logits und tatsächlicher Targetverteilung. Chunkhistorie und Determinismus nur in numerischen Kontrollen; nicht in Agenten oder Servingzeiten.
+- Native COW-Kopien über vollständige Seiten und tatsächlicher Übergang über die physische Grenze17920.
+- Echter RAM-Restore: 14336 Hosttokens / 656015360 H2D-Bytes, keine GPU-Prefixhits; 37 reine Transferprüfungen mit4060872704Bytes ohne Abweichung.
+- Tatsächlich261120 Eingabe- plus1024 Ausgabetokens =262144 unter vollem16-Slot-Profil. Dies ist eine einzelne Sequenz, nicht zwei gleichzeitige256K-Verläufe.
+- RAM-Druck, Präfixkinder/Elternnachprüfung, Abbruch/Drain/Slotwiederverwendung; native überlappende C2-Schritte, Graph/Eager beobachtet, große gültige Requests bei Kapazitätsmangel korrekt serialisiert, zu lange Eingabe abgewiesen.
+
+Echte Agenten: zwei kleine eingefrorene Aufgabenfamilien × zwei Seeds × A/D =8 vollständige Tool-Agentenläufe. Thinking8192, reguläres Sampling, natürliche Ausgabeenden, unabhängige versteckte Tests. Beide Arme4/4 erfolgreich. Median gepaarter Aufgabenzeitänderungen D gegen A: -0.65%.
+Gesamtzeiten A/D: 170.72/169.27s; native Prefillzeit 21.34/16.32s, Decodezeit 147.86/151.26s. Unterschiedliche gesampelte Lösungswege und Akzeptanz; kein isolierter Kernelvergleich und kein allgemeiner25%-Agentenvorteil.
+
+Stabilität: Der erste vollständige Servinglauf scheiterte nach36/70 Wellen beim2K-C2-Aufwärmlauf nach128K-C1. Kernel: BCS/CAT-Speicherfehler, Faultadresse0x0000800622c83000. Kernelprotokoll und xe-Dump gesichert; VM-Dump selbst meldet-19. Beide SSE-Dateien des Aufwärmlaufs leer. Ursache nicht bewiesen; ähnliche Fehlerfamilie zuvor auch unter OriginalA. Keine unbelegte Zuschreibung an COW, MTP-Concurrency oder Treiber.
+Begrenzte Diagnosewiederholung128K→C2 mit dünner Transferprotokollierung:6 Messwellen /9 Requests plus Aufwärmer erfolgreich,201 Transfers /21070479360Bytes abgeschlossen. Keine neue Synchronisierung. Dies reproduziert den Fehler nicht und ist weder Behebung noch Performancebeleg.
+
+Frischer vollständiger Wiederholungslauf:70/70 Wellen,124/124 exakt gepaarte Request-Payloads und Promptbytes,126976 Ausgabetokens, keine Preemption und kein neuer Kernel-Fehler in diesem Lauf. Source-Review-Servingmatrix mit Thinking aus, regulärem Sampling und festen1024 Ausgabetokens, keine echten Tool-Agentenläufe. Die frühere sporadische Störung bleibt offen.
+Gesamte Wellenzeit D gegen historische A-Referenz: -0.28%; gewichtete native Decode-Rate +1.47%; Kartenenergie -0.25%.
+Die gesamte Wellenzeit sinkt2423,72→2417,01s, also nur6,71s. Native summierte Prefillphasen steigen1268,19→1311,96s (+3,45%), bei0,51%weniger berechneten Tokens. Überlappende Anfragephasen sind keine reine GPU-Kernelzeit und nicht mit der Wellenzeit gleichzusetzen; dieser Gegenposten wird nicht weginterpretiert.
+Warme Präfixfälle: mediane ganze Anfrage16K−10,41%,64K−9,80%; maxClient-TTFT16K1,014→0,327s (−67,79%),64K2,378→0,545s (−77,07%). Berechnete Resttokens16K1982→254 und64K3069→189.
+Kalte Kleinanfragen haben echte Zusatzlatenz:512erMedian-TTFT0,297→0,444s (+49,38%, aber147ms);2K-C1 0,878→0,993s (+13,07%,115ms);2K-C2 max1,852→1,964s (+6,05%,112ms). Andere Parallelitätsfälle und sämtliche Einzelwerte stehen in derCSV. Der früher akzeptierte2,3%-Kalt-C2-Kompromiss aus dem8K-Screen ist daher keine Obergrenze für alle Kontexte.
+Lange kalte C1-Prefills:32K−1,93%,64K−1,24%,128K−0,09%,199K+0,31% native Prefillzeit. Einzelne199K-Decode-Rate−6,15% bei Akzeptanz60,62→54,87% und364→387 tatsächlich gezählten Verifikationsrunden. Zeit pro gezählter Runde69,519→69,669ms (+0,216%); gleichzeitiges stabiles Decodefenster rund69,69ms pro Rundenäquivalent in beiden Armen. Der Hauptunterschied liegt rechnerisch in mehr Runden; keine kausale Erklärung der unterschiedlichen gesampelten Texte bewiesen.
+Details: full-serving-20261112-r2/comparison.json, phase-attribution.json und scenario-comparison.csv. Markierte Untersuchungsschwellen sind keine automatischen Freigabeentscheidungen. Prefill-Tokenrate zusammen mit tatsächlicher Prefillzeit und vermiedenen Tokens beurteilen.
+
+Bisheriger gezielter Kostenscreen vom11.11. bleibt separat: warm128K ganze Anfrage−22,704%, warmC2 ganze Welle−20,301%, gemischte8K-Decode/32K-Prefill-Welle−1,157%, kaltesC2 maxTTFT+2,267%. Thinking an/Budget8192, feste512 Ausgabetokens und reguläres Sampling; gezielte Fälle aus zwei Starts, keine zugesicherte allgemeine Beschleunigung. Der Benutzer akzeptierte diesen Kalt-C2-Kompromiss.
+
+COW-Korrektur: Native Pointer-Deduplizierung übersprang bei Hybrid-Aliassen die größere Attention-Sicht. Die Korrektur wählt pro Pointer die größte geprüfte dichte Sicht; der native Kopierpfad bleibt unverändert. Der konkrete Fehler war im experimentellen feinen Präfixprofil nachgewiesen. Im alten1600/1600-Default ist dieser Attention-Tail-Trigger nicht nachgewiesen. Keine Behauptung, alte Agentenfehler seien damit erklärt.
+
+Vorversuche und Grenzen: ATTEMPT-SCOPE-NOTES-20261112.json; unveränderte Rohdaten in den jeweiligenr1-Verzeichnissen. Unpassende Chunkhistorie, unzulässig als unabhängig bezeichnete frische C2-Referenz, Comparator-Coverage, nullable Loggerlisten und API-Clamping wurden explizit korrigiert; keine numerischen Toleranzen nachträglich gelockert.
+Nächster sinnvoller Schritt ist eine getrennte, begrenzte Ursachenklärung des intermittierenden BCS-Transfers vor Produktivübernahme. Keine weitere blinde Sweep-Schleife und keine geratenen Synchronisierungs-/Umgebungsänderungen.

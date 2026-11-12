@@ -1,0 +1,91 @@
+{
+  "status": "PASS_REVIEWED_PERFORMANCE_TRADEOFF",
+  "image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "reviewed_triggers": [
+    {
+      "scenario": "concurrency-16k-c3",
+      "metric": "prefill",
+      "change_pct": -5.193498200372715
+    },
+    {
+      "scenario": "prefix-64k-cold-warm",
+      "metric": "prefill",
+      "change_pct": -69.86863291658109
+    },
+    {
+      "scenario": "concurrency-2k-c2",
+      "metric": "prefill",
+      "change_pct": -20.916456563770414
+    },
+    {
+      "scenario": "phase-512-c1",
+      "metric": "prefill",
+      "change_pct": -33.834875675804255
+    },
+    {
+      "scenario": "prefix-16k-cold-warm",
+      "metric": "prefill",
+      "change_pct": -56.884262085805105
+    },
+    {
+      "scenario": "phase-2k-c1",
+      "metric": "prefill",
+      "change_pct": -10.407977612248908
+    },
+    {
+      "scenario": "concurrency-4k-c2",
+      "metric": "prefill",
+      "change_pct": -15.43220845643809
+    },
+    {
+      "scenario": "concurrency-2k-c3",
+      "metric": "prefill",
+      "change_pct": -21.76102759087575
+    },
+    {
+      "scenario": "concurrency-4k-c3",
+      "metric": "prefill",
+      "change_pct": -19.261697602492468
+    },
+    {
+      "scenario": "concurrency-4k-c4",
+      "metric": "prefill",
+      "change_pct": -20.688541849962995
+    },
+    {
+      "scenario": "concurrency-2k-c4",
+      "metric": "prefill",
+      "change_pct": -25.498008395013215
+    },
+    {
+      "scenario": "full-context-199680",
+      "metric": "decode",
+      "change_pct": -6.145975868945264
+    },
+    {
+      "scenario": "complete-matrix",
+      "metric": "weighted_native_prefill_tokens_per_s",
+      "change_pct": -3.8296162311956095
+    }
+  ],
+  "receipts": {
+    "phase_attribution": {
+      "path": "benchmarks/results/mtp-cache-1792-20261112/qualification/full-serving-20261112-r2/phase-attribution.json",
+      "sha256": "420259cdb9936dd9b2141f801ee1eccee017f0f9f9db0225ab2481198d09564e"
+    },
+    "trigger_review": {
+      "path": "benchmarks/results/mtp-cache-1792-20261112/qualification/full-serving-20261112-r2/trigger-review.json",
+      "sha256": "5f70fb4b5acd96ad88fe2f2e6cf9562bcfa1f2428571db8667d2a8e88e3f1998"
+    },
+    "warm_screen": {
+      "path": "benchmarks/results/mtp-cache-1792-20261112/qualification/REVISED-TRADEOFF.json",
+      "sha256": "f780422c9c99da0fe4a4be4fd2c517f1042f515e89b0866a30423dc3ca0ad01a"
+    },
+    "stability_failure": {
+      "path": "benchmarks/results/mtp-cache-1792-20261112/qualification/STABILITY-GATE.json",
+      "sha256": "65657e034351bf39040f2df7c370da8773bade33518a3c13bcf6e5f7ad0cbe4a"
+    }
+  },
+  "operator_approval": "2026-11-12: user accepted warm/cold tradeoff after detailed explanation, including prior BCS fault also seen with originalprofile, then explicitly requested production adoption including COWfix.",
+  "scope": "No claim all requests faster, BCS fixed or broader quality improved. 0.28% overall observed gain alone is not a robust causal speed claim."
+}

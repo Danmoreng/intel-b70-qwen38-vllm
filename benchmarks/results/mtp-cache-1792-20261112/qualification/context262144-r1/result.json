@@ -1,0 +1,62 @@
+{
+  "status": "PASS_FACTS_D2H_DIAGNOSTIC",
+  "profile": "D",
+  "started": "2026-11-11T22:29:59.972637+01:00",
+  "deadline": "2026-11-11T22:40:00+01:00",
+  "diagnostic_only": true,
+  "pageable": false,
+  "canary_repeats": 1,
+  "canary_rows": [
+    {
+      "index": 0,
+      "usage": {
+        "prompt_tokens": 16384,
+        "total_tokens": 16432,
+        "completion_tokens": 48,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": null,
+          "multimodal_tokens": null
+        },
+        "completion_tokens_details": null
+      },
+      "parsed": {
+        "audit": "MAPLE_72",
+        "left": "CIRRUS_491",
+        "right": "BASALT_806"
+      }
+    }
+  ],
+  "capacity": {
+    "status": "PASS_ACTUAL_262144_D1792_16SLOTS",
+    "usage": {
+      "prompt_tokens": 261120,
+      "total_tokens": 262144,
+      "completion_tokens": 1024,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "created_cache_tokens": null,
+        "multimodal_tokens": null
+      },
+      "completion_tokens_details": null
+    },
+    "facts": {
+      "audit": "MAPLE_72",
+      "left": "CIRRUS_491",
+      "right": "BASALT_806"
+    },
+    "preemptions": [
+      0.0
+    ],
+    "scope": "Actual input IDs and1024output IDs;16slots,4096batch,12GiBARC,180W; no audit hooks or deterministic numerical control. Not two simultaneous262144agents or a performance result."
+  },
+  "gpu_to_cpu_bytes": 9921888256.0,
+  "facts": {
+    "audit": "MAPLE_72",
+    "left": "CIRRUS_491",
+    "right": "BASALT_806"
+  },
+  "kernel_gpu_fault_seen": false,
+  "restore_returncode": 0,
+  "finished": "2026-11-11T22:38:02.782551+01:00"
+}

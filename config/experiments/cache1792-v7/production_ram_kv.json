@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "status": "PRODUCTION",
+  "release_date": "2026-11-12",
+  "base_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "default_cpu_gib": 12,
+  "allowed_cpu_gib": [
+    1,
+    12
+  ],
+  "runtime_sha256": {
+    "kv_admission.py": "4b237a0d1c54b49958e3111d46ebc221b8f2768075d7eff9c7923eb3bdb1df6f",
+    "xpu_cpu_offload.py": "6f0b474b078b3dd6a6ad63c10d84d620592d6c5733e62d51b9a3de33f20e9b36"
+  },
+  "validation": "benchmarks/results/mtp-cache-1792-20261112/README.md",
+  "note": "Same12GiB RAM/LBNHC modules. Qualified1792/128 profile with complete dense-alias COW copy; open sporadic BCS fault explicitly accepted by operator.",
+  "kv_cache_layout": "LBNHC",
+  "layout_validation": "benchmarks/results/ram-kv-layout-20261108/README.md",
+  "runtime_directory": "config/experiments/cache1792-v7/runtime"
+}

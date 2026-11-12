@@ -2,6 +2,12 @@
 set -euo pipefail
 
 repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+for dependency in curl jq timeout; do
+  if ! command -v "$dependency" >/dev/null; then
+    printf 'Missing watchdog dependency: %s\n' "$dependency" >&2
+    exit 1
+  fi
+done
 unit_dir="${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user"
 unit_file="$unit_dir/b70-qwen38-vllm.service"
 mkdir -p "$unit_dir"
@@ -14,4 +20,3 @@ systemctl --user daemon-reload
 systemctl --user enable --now b70-qwen38-vllm.service
 systemctl --user enable --now b70-qwen38-inference-watchdog.timer
 systemctl --user status --no-pager b70-qwen38-vllm.service
-

@@ -96,6 +96,12 @@ API readiness endpoint. The host defaults are loopback and port 8081; the
 recovery helper targets that endpoint and the standard container name.
 
 The user-service installer also enables `b70-qwen38-inference-watchdog.timer`.
+The watchdog is a Bash script using `curl`, `jq` and GNU coreutils; no Python,
+compiler or build step is needed for the watchdog or its tests. Install the
+additional dependencies on Ubuntu/Debian with `sudo apt install curl jq`.
+Run `bash scripts/test-inference-watchdog.sh` to test it without restarting
+the real engine.
+Existing watchdog JSON state is retained across this implementation change.
 Every 30 seconds it checks real prompt/output progress as well as HTTP health.
 An active request with no progress for 10 minutes triggers a service restart;
 a kernel-confirmed timed-out vLLM GPU job reduces that threshold to 60 seconds.

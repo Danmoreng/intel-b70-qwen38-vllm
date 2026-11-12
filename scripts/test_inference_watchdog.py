@@ -58,6 +58,8 @@ class WatchdogTests(unittest.TestCase):
         self.assertIsNone(reason)
         _, reason = w.observe(state, 'new', 899, 1699, None, False, False)
         self.assertIsNone(reason)
+        _, reason = w.observe(state, 'new', 900, 1700, None, False, False)
+        self.assertIn('unavailable', reason)
 
     def test_new_invocation_resets_stall_but_keeps_restart_history(self):
         state, _ = self.observe(fault=True)

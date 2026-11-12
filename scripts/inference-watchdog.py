@@ -43,7 +43,8 @@ def observe(previous, invocation, age, now, metrics, healthy, gpu_fault, allowed
         previous = {}
     state = {**previous, 'invocation': invocation, 'seen_at': now, 'restarts': restarts}
     if age < STARTUP_GRACE and metrics is None and not healthy:
-        state.update(progress_at=now, unhealthy_at=now, gpu_fault=False)
+        state.update(progress_at=now, gpu_fault=False)
+        state.setdefault('unhealthy_at', now - age)
         return state, None
     if gpu_fault:
         state['gpu_fault'] = True
@@ -71,7 +72,7 @@ def observe(previous, invocation, age, now, metrics, healthy, gpu_fault, allowed
     elif state.get('busy') and stalled >= STALL_SECONDS:
         reason = 'Active inference has made no progress for 10 minutes'
     elif not healthy and now - state['unhealthy_at'] >= STALL_SECONDS:
-        reason = 'Model API has been unavailable for 10 minutes after startup grace'
+        reason = 'Model API unavailable beyond startup grace or the 10-minute outage budget'
     if not allowed or len(restarts) >= 3 or (restarts and now - restarts[-1] < COOLDOWN):
         reason = None
     if reason:

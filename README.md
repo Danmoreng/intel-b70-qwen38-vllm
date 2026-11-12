@@ -99,7 +99,8 @@ The user-service installer also enables `b70-qwen38-inference-watchdog.timer`.
 Every 30 seconds it checks real prompt/output progress as well as HTTP health.
 An active request with no progress for 10 minutes triggers a service restart;
 a kernel-confirmed timed-out vLLM GPU job reduces that threshold to 60 seconds.
-An unavailable API gets a 15-minute startup grace, then a 10-minute outage window.
+An unavailable API gets at most 15 minutes of startup grace; after readiness,
+a continuous 10-minute API outage triggers recovery.
 It never starts an inactive service, never restarts after 22:45 Europe/Berlin,
 and limits recovery to three restarts per hour with a 15-minute cooldown.
 State and restart reasons are kept under `~/.local/state/b70-qwen38-vllm/`;

@@ -24,8 +24,8 @@
     "onednn_library_sha256": "5113f7079fec68c68422827d0b6719fc17fa3f42e4316c79350b1ad4034a760e",
     "onednn_source_release": "3.14.2",
     "official_vllm_xpu_image": "vllm/vllm-openai-xpu@sha256:010bdc441c72ee222f459d3b688bb41317525f1bd7223afe6218490b0c526832",
-    "direct_build_lock_sha256": "3d1598170fc03ce8244bbb61a48b49bb5c29dba5f3d476ec0337e86b0bc75cc3",
-    "direct_source_manifest_sha256": "93f2e4809a0d8fe04f38a5d6fbcdb55a6885ef78b36216b10344e332b1064f04",
+    "direct_build_lock_sha256": "151cf7df961d8a56d4e9de9a71de136c258c1fd9aef9d872aaa877deaef399b9",
+    "direct_source_manifest_sha256": "2db845236047a9f6562a4112389361c1e769a502b2dfe581dec1a3bb1662300d",
     "torch_git_revision": "d0f2af8b66b20da4baa50644c0cd3f887a2eae2e",
     "pti_version": "1.2.1",
     "pti_base_commit": "25a77ed7693ac155bc62e563060b0976f9934b53",
@@ -104,7 +104,8 @@
     "block_size": 1792,
     "prefix_match_unit": 128,
     "long_prefill_token_threshold": 0,
-    "complete_dense_alias_cow": true
+    "complete_dense_alias_cow": true,
+    "torch_compile_mode": "NONE"
   },
   "api": {
     "middleware": "request_defaults.ChatDefaults",

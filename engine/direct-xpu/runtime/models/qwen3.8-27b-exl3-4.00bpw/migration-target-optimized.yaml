@@ -32,6 +32,7 @@ vllm:
     max_new_tokens: 16384
   middleware: request_defaults.ChatDefaults
   compilation_config:
+    mode: 0
     cudagraph_mode: FULL_DECODE_ONLY
     cudagraph_capture_sizes:
     - 1

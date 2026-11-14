@@ -56,6 +56,12 @@ candidate selection, not a policy of retaining old dependencies.
 Torch 2.15 uses a [source-pinned Intel PTI fix](pti/README.md) for the
 demonstrated native graph/profiling regression. The official Torch wheel,
 native graph recording and kernel-level replay profiling are retained.
+The selected profile also disables **Inductor model compilation** (`mode: 0`),
+while retaining `FULL_DECODE_ONLY` native graphs. The default compiled
+Torch 2.15 path reproducibly degenerates in the frozen coding request;
+matched no-compilation controls do not. The exact faulty optimization is
+unproven. This is a compatibility fallback with full quality/performance
+qualification pending, not a claim that the PTI fix repairs every compiler bug.
 Full qualification is tracked in the
 [test evidence](../../benchmarks/results/direct-xpu-20261114/README.md).
 Torch is installed without dependency downgrades:

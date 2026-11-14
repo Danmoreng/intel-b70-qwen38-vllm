@@ -39,7 +39,11 @@ def main():
     for key in ('launch', 'requests', 'out'):
         p.add_argument('--' + key, required=True, type=Path)
     p.add_argument('--image', required=True)
-    p.add_argument('--enforce-eager', action='store_true', help='Explicit diagnostic override, never a release configuration')
+    mode = p.add_mutually_exclusive_group()
+    mode.add_argument('--enforce-eager', action='store_true', help='Explicit diagnostic override, never a release configuration')
+    mode.add_argument('--disable-compile', action='store_true', help='Disable Torch compilation while retaining the original graph mode')
+    mode.add_argument('--compile-backend', choices=('eager', 'aot_eager'), help='Diagnostic Dynamo backend with the original compilation and graph modes')
+    mode.add_argument('--custom-op', action='append', default=[], choices=('gemma_rms_norm', 'all'), help='Keep Inductor and graphs but select native custom operators explicitly')
     a = p.parse_args()
     assert dt.datetime.now(ZoneInfo('Europe/Berlin')).hour < 21
     source = json.loads(a.launch.read_text())
@@ -57,8 +61,22 @@ def main():
     cmd[destinations[0]] = str(root / 'worker') + ':/results'
     if a.enforce_eager:
         cmd.append('--enforce-eager')
+    if a.disable_compile or a.compile_backend or a.custom_op:
+        index = cmd.index('--compilation-config') + 1
+        config = json.loads(cmd[index])
+        assert config['cudagraph_mode'] == 'FULL_DECODE_ONLY'
+        if a.disable_compile:
+            config['mode'] = 0
+        elif a.compile_backend:
+            config['backend'] = a.compile_backend
+        else:
+            config['custom_ops'] = ['all'] if a.custom_op == ['all'] else ['none', *('+' + op for op in a.custom_op)]
+        cmd[index] = json.dumps(config)
     state = dict(status='RUNNING_DIAGNOSTIC', image_id=a.image, launch=cmd,
                  source_launch_sha256=K.sha(a.launch), enforce_eager=a.enforce_eager,
+                 disable_compile=a.disable_compile, runner_sha256=K.sha(Path(__file__)),
+                 compile_backend=a.compile_backend,
+                 custom_ops=a.custom_op,
                  output_cap=1024, requests=[],
                  scope='Captured messages/tools/seeds/sampling are fixed across arms, with output cap1024 and any eager override recorded separately. No live tools, repaired solution, replacement task score or release approval.')
 

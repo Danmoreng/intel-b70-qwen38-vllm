@@ -1,0 +1,64 @@
+{
+  "id": "chatcmpl-a8d2b0b197a2ee7c",
+  "object": "chat.completion",
+  "created": 1794674742,
+  "model": "Qwen3.8-27B",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "refusal": null,
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+          {
+            "id": "chatcmpl-tool-94d4c877df2c080f",
+            "type": "function",
+            "function": {
+              "name": "list_files",
+              "arguments": "{}"
+            }
+          }
+        ],
+        "reasoning": "Let's check the repository.\n"
+      },
+      "logprobs": null,
+      "finish_reason": "tool_calls",
+      "stop_reason": null,
+      "token_ids": null,
+      "routed_experts": null,
+      "weight_versions": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.33.0-0ea6c956",
+  "usage": {
+    "prompt_tokens": 720,
+    "total_tokens": 743,
+    "completion_tokens": 23,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 7
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "prompt_text": null,
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": {
+    "time_to_first_token_ms": 1446.2560400024813,
+    "generation_time_ms": 264.4391549983993,
+    "queue_time_ms": 0.01396999869029969,
+    "mean_itl_ms": 12.019961590836331,
+    "tokens_per_second": 13.44482644670558,
+    "speculative_decoding": null
+  }
+}

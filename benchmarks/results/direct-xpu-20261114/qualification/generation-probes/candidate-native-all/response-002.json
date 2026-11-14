@@ -1,0 +1,54 @@
+{
+  "id": "chatcmpl-b525b02d795fb12e",
+  "object": "chat.completion",
+  "created": 1794674745,
+  "model": "Qwen3.8-27B",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "refusal": null,
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "reasoning": "Implementing a clean RangeSet.\n\nMain requirements:\n- Strict int validation: `type(x) is int` (bool is excluded).\n- start>end raises ValueError; start==end is empty.\n- For invalid add/remove, state must remain unchanged \u2014 since we always compute a new list and only assign at the end, this is trivially satisfied. But for invalid input (type error / start>end), we validate before modifying.\n- The constructor normalizes the input; ranges() returns a new list.\n- clip also validates start/end; returns a new list that is normalized (merged).\n- remove: keep both surviving fragments.\n\nImplementation:\n\n```python\nclass RangeSet:\n    def __init__(self, ranges=()):\n        self._ranges = _normalize(_extract(ranges))\n\n    def ranges(self):\n        return list(self._ranges)\n\n    def add(self, start, end):\n        _check_pair(start, end)\n        self._ranges = _normalize(self._ranges + [(start, end)])\n\n    def remove(self, start, end):\n        _check_pair(start, end)\n        self._ranges = _subtract(self._ranges, start, end)\n\n    def contains(self, point):\n        _check_int(point)\n        lo = 0\n        hi = len(self._ranges)\n        while lo < hi:\n            mid = (lo + hi) // 2\n            a, b = self._ranges[mid]\n            if point < a:\n                hi = mid\n            elif point >= b:\n                lo = mid + 1\n            else:\n                return True\n        return False\n\n    def clip(self, start, end):\n        _check_pair(start, end)\n        out = [(max(a, start), min(b, end)) for a, b in self._ranges if b > start and a < end]\n        return _normalize(out)\n```\n\n_check_pair: both are int, and if start>end, ValueError.\n\n_normalize: sort, merge overlaps and adjacent parts; input pairs need to be validated (the constructor must validate them too). In the constructor, convert the iterable into pairs \u2014 validate that each pair is a 2-element sequence and of int type. The spec says \"accepts an iterable of (start,end) pairs\"; validate endpoints, and probably raise ValueError when start>end. I'll decide to validate.\n\n_normalize(list of pairs, already validated):\n```python\ndef _normalize(pairs):\n    if not pairs:\n        return []\n    result = []\n    for a, b in sorted(pairs, key=lambda p: (p[0], p[1])):\n        if a >= b:\n            continue\n        if result and a <= result[-1][1]:\n            last_a, last_b = result.pop()\n            result.append((last_a, max(last_b, b)))\n        else:\n            result.append((a, b))\n    return result\n```\n\n_subtract:\n```python\ndef _subtract(ranges, start, end):\n    out = []\n    for a, b in ranges:\n        if b <= start or a >= end:\n            out.append((a, b))\nductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductduct"
+      },
+      "logprobs": null,
+      "finish_reason": "length",
+      "stop_reason": null,
+      "token_ids": null,
+      "routed_experts": null,
+      "weight_versions": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.33.0-0ea6c956",
+  "usage": {
+    "prompt_tokens": 1418,
+    "total_tokens": 2442,
+    "completion_tokens": 1024,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1024
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "prompt_text": null,
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": {
+    "time_to_first_token_ms": 531.2415309999778,
+    "generation_time_ms": 23933.882666999125,
+    "queue_time_ms": 0.010409999958937988,
+    "mean_itl_ms": 23.395779733136973,
+    "tokens_per_second": 41.855499760093124,
+    "speculative_decoding": null
+  }
+}

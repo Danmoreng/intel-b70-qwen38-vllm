@@ -62,7 +62,7 @@
     "runtime/tests/gateA3/make_panel.py": "baee14e976b32a23cc88f2206d5b11ff933e042cf5e37dde246a0b7224127a88",
     "runtime/tests/gateA3/ref_exl3.py": "3b8c859675139af4c1bb5668937f8deab1ab0b76cca866879b68bf02c750e586",
     "runtime/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json": "b4eadc088059190983fe0498af11864f5aaa2eaf2ec58ae9864f0715634d313d",
-    "runtime/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "f028de90e2b44a207932153b6f0108543a5ee9970fe3e79adc35cbabb6c6579a",
+    "runtime/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "f47255941d6981ac17fb18e90a3866b39864158ada694fcc8e859d28ff109daa",
     "vllm/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
     "vllm/model_executor/models/qwen3_5_mtp.py": "39068e51c14f5c1dbfd5e9683a81e5c36c1726709c3037928cc7914c3e9ef303",
     "vllm/v1/worker/gpu/model_runner.py": "8ccf05600209f0cd506fdebafaa92d430a6e9ad985b499032ad3e97b7e3493f2",
@@ -93,6 +93,11 @@
     {
       "directory": "pti",
       "change": "Backport Intel upstream native-graph lifetime fix dd8940ff817f94461795708fe3c386ab9e09d3b1 onto exact PTI1.2.1 source25a77ed7693ac155bc62e563060b0976f9934b53. Four runtime source files only; official Torch/native recording retained."
+    },
+    {
+      "file": "runtime/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml",
+      "reference_sha256": "f028de90e2b44a207932153b6f0108543a5ee9970fe3e79adc35cbabb6c6579a",
+      "change": "Disable model Inductor compilation (mode NONE/0) after exact Torch2.15 candidate repeats duct and times out. Matched no-compile control passes the captured request diagnostic while retaining actual native FULL_DECODE_ONLY graph capture. Other serving/model/cache/power settings and latest libraries unchanged; exact-image full qualification and performance still required."
     }
   ]
 }

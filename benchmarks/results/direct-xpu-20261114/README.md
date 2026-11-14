@@ -4,13 +4,17 @@ The selected candidate builds directly on official vLLM 0.33 XPU with
 **unmodified PyTorch 2.15**, matching Triton/XPU kernels, latest selected Intel
 userspace and a targeted upstream PTI fix. See the
 [build instructions](../../../engine/direct-xpu/README.md).
-**Not approved for production.** The clean Transformers 5.22.2 release child
+**Not approved for production.** The compiled Transformers 5.22.2 release child
 passes integrity/preflight, profiler replay, the complete original kernel
 suite, four model-state replay cases, startup, concurrent COW, all twelve
 operational groups and worker restart. Its first coding task then produces
 repetitive output and times out. The [final campaign](qualification/final/campaign.json)
 retains that failure and the restored v7 production identity. The serving
 comparison and separate quality capture have not run on this final child.
+
+The next candidate retains the same libraries and native graphs, but sets
+Inductor model compilation to `NONE` (`mode: 0`). It requires its own complete
+exact-image qualification; no previous pass is used to approve it.
 
 The [earlier core receipts](qualification/core/campaign.json) identify a
 different image with Transformers 5.23. That image's media failure led to the
@@ -142,6 +146,15 @@ not identify a PyTorch defect. A separate
 [bounded request probe](../../experiments/vllm-033-upgrade/run-frozen-request-probe.py)
 replays identical captured messages and sampling across images with a shorter
 output cap. That diagnostic cannot replace the original task result.
+
+The [matched probe comparison](qualification/generation-probes/comparison.json)
+records the same short request ending in 332 `duct` repetitions with the
+compiled candidate, and zero with v7 or the new image without compilation.
+The no-compilation worker still captures native graphs. Keeping Inductor but
+enabling all native custom operators also repeats; changing default operator
+selection alone does not remove the failure. The exact faulty optimization
+remains unproven. The selected compatibility fallback therefore disables
+Inductor only, with native recording and the newer libraries retained.
 
 ## Transformers compatibility exception
 

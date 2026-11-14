@@ -106,7 +106,10 @@ def main():
     elif stage=='replay':
      folder=root/'replay';folder.mkdir()
      (folder/'panel.json.gz').write_bytes((a.production_repo/'benchmark-results/exl3-optimized-quality-v2/performance-panel.json.gz').read_bytes())
-     (folder/'config.json').write_bytes((a.production_repo/'benchmark-results/exl3-optimized-quality-v2/engine-config.json').read_bytes())
+     numerical=json.loads((a.production_repo/'benchmark-results/exl3-optimized-quality-v2/engine-config.json').read_text())
+     numerical['compilation_config']=cfg['config']['vllm']['compilation_config']
+     (folder/'config.json').write_text(json.dumps(numerical,indent=2)+'\n')
+     state['numerical_compilation_config']=numerical['compilation_config'];save()
      command=common(KERNEL,root)+['-v',str(Path(__file__).parent.resolve())+':/measure:ro',
       '-e','PYTHONPATH=/measure:/opt/b70-runtime',
       '-e','B70_REPLAY_IMAGE_SCOPE=vLLM0.33 candidate, original numerical tolerances',

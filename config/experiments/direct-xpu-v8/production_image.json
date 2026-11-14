@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "status": "CANDIDATE_PREFLIGHT_ONLY",
-  "image_tag": "local/b70-qwen38-vllm:direct-xpu-v8-tf5222-reviewed",
-  "image_id": "sha256:b56cc2e23b9d9b1a50a38ce8884b06be39afcac85a3b9005dcc98948891edfcd",
-  "runtime_image_id": "sha256:e4069b0bed94fa19dd3dc122d43bf9b0930af5f2a5cb52997220b9792d8d9b67",
-  "policy_sha256": "55684d2e06771f8c31d75ed068f88141feb3f1a310fb95db152cb7cc5d158094",
+  "image_tag": "local/b70-qwen38-vllm:direct-xpu-v8-nativegraph-reviewed",
+  "image_id": "sha256:b37eb3926bade76db626a261b98de6570036fd59d81a3a06e6ab780a87f0918d",
+  "runtime_image_id": "sha256:c4104b9a15b11012039da5eee3b0d624a5e3b6c3c86201d4de2cfc5426035179",
+  "policy_sha256": "4a0e6bce3532b8d7f031a3911cf6f4f45534873b433eb52776c0ab8a9ee418de",
   "vllm_config": {
     "dtype": "float16",
     "max_model_len": 262144,
@@ -39,6 +39,7 @@
     },
     "middleware": "request_defaults.ChatDefaults",
     "compilation_config": {
+      "mode": 0,
       "cudagraph_mode": "FULL_DECODE_ONLY",
       "cudagraph_capture_sizes": [
         1,
@@ -77,7 +78,7 @@
     "/opt/exl3xpu/exl3xpu/_C.so": "f1e57d96b4c1e3850c5b84ca03360fada943f5c609414da90b2333188cb3ad76",
     "/opt/exl3xpu/m04/m04.so": "2dcca5c97ea4738f8f463d4745f4c95f02b03bf9789aa7e2dde3c573e0ca514c",
     "/opt/b70/libdnnl.so.3": "5113f7079fec68c68422827d0b6719fc17fa3f42e4316c79350b1ad4034a760e",
-    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "da33e883fd683365bcf6fc45d3b0714a792ae0962fef05ebcd572945933d1f03",
+    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "befde7adaa2d4616022da7c1802055921ba593326e3eb396b1a83beb06ea52ae",
     "/opt/exl3xpu/exl3xpu/shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2",
     "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "234bab310dee7f8856ea4047e891044476e53fad29cb5f03796ab436df6c6510",
     "/opt/exl3xpu/csrc/exl3_ops.sycl": "b70880d1e92032de697c1d432c6899e34e17662e2086a7fbba80fa17b28e41cf",
@@ -101,8 +102,8 @@
     "/opt/venv/lib/libpti_view.so.1.2.1": "2310bcda1cb05ead04bda985ee740f50c6251097803e25dc899b25be9783e97e",
     "/opt/venv/lib/pti/libpti.so": "adaebbccfba0e389ba176d12b3792b611549759ee0dfd0d4ff7d727f7aaae6e9",
     "/opt/b70-direct/pti-patch.json": "5e3b7298ebddc312df7a94a0b3e37d4e00a9aba1d4ded1e1f93ecf8f64fee5c1",
-    "/opt/b70-direct/build-lock.json": "3d1598170fc03ce8244bbb61a48b49bb5c29dba5f3d476ec0337e86b0bc75cc3",
-    "/opt/b70-direct/source-manifest.json": "93f2e4809a0d8fe04f38a5d6fbcdb55a6885ef78b36216b10344e332b1064f04",
+    "/opt/b70-direct/build-lock.json": "151cf7df961d8a56d4e9de9a71de136c258c1fd9aef9d872aaa877deaef399b9",
+    "/opt/b70-direct/source-manifest.json": "2db845236047a9f6562a4112389361c1e769a502b2dfe581dec1a3bb1662300d",
     "/opt/venv/lib/python3.12/site-packages/torch/__init__.py": "7ed81103f3d256de131b886e67be458b3205784e3b4af9c495041282391e19db",
     "/opt/venv/lib/python3.12/site-packages/torch/xpu/graphs.py": "8c92cd22d627395efddbf7410c8b9f1b3c505882cadb324ba459232f87005849"
   },
@@ -110,10 +111,10 @@
     "EXL3_SDPA_CACHE_CAPACITY": "64"
   },
   "source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
-  "qualification_note": "Direct official vLLM0.33/Torch2.15 with upstream PTI graph-lifetime backport and Transformers5.22.2 after the matched5.23 video failure. Clean exact-image final gates pending; not production-approved.",
+  "qualification_note": "Latest selected libraries, official Torch2.15 and upstream PTI lifetime fix; native FULL_DECODE_ONLY graphs retained, model Inductor mode NONE after matched coding degeneration. This new exact image requires full qualification; not production-approved.",
   "ram_kv_runtime": {
     "path": "config/experiments/direct-xpu-v8/production_ram_kv.json",
-    "sha256": "27cd7ea08d3033afe6685545bda5282f52c0fbf7c95bfa0c96e892460ad008db"
+    "sha256": "b69fe0ccd468fd27b1191f1f768fdf84ec18b3f0e05a02169c27803c74cb6b84"
   },
   "matrix_native_sources": {
     "directory": "engine/exl3xpu/mb4-k4/source",
@@ -126,7 +127,7 @@
   "direct_build": {
     "build_lock_path": "engine/direct-xpu/build-lock.json",
     "source_manifest_path": "engine/direct-xpu/source-manifest.json",
-    "build_receipt": "benchmark-results/direct-xpu-20261114/build-r10/build.json",
+    "build_receipt": "benchmark-results/direct-xpu-20261114/build-r11/build.json",
     "runtime_rootfs_identical_to_release": true,
     "pti_fix_commit": "dd8940ff817f94461795708fe3c386ab9e09d3b1"
   }

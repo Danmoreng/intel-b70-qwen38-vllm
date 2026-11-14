@@ -1,0 +1,54 @@
+{
+  "id": "chatcmpl-911affe15dc13649",
+  "object": "chat.completion",
+  "created": 1794674535,
+  "model": "Qwen3.8-27B",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "refusal": null,
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "reasoning": "Implementing a clean RangeSet:\n\n- Internal state: a list of (start, end) tuples, kept in normalized (sorted, merged, non-empty) form.\n- Validation: type must be exactly int (bool excluded), start>end \u2192 ValueError.\n- Constructor: normalize the input iterable of pairs.\n- ranges(): returns a new list of tuples (a copy).\n- add(start,end): validate; if empty, do nothing; merge.\n- remove(start,end): validate; if empty, do nothing; subtract and keep the remaining fragments.\n- contains(point): validate type; binary search or linear \u2014 even linear is fine, but the number of ranges can grow large; interval arithmetic is fine. Since the set is sorted, we can do binary search. Simple linear is O(n); use bisect on starts for O(log n).\n- clip(start,end): intersection; validate; if empty return []; otherwise build a normalized (already-merged) list.\n\nImplementation:\n\n```python\nimport bisect\n\ndef _check_bounds(start, end):\n    if type(start) is not int or type(end) is not int:\n        raise TypeError(...)\n    if start > end:\n        raise ValueError(...)\n```\n\nNote: the constructor should also validate pairs. \"Invalid add/remove must leave state unchanged\" \u2014 first validate, then mutate, and that's fine.\n\nNormalization function:\n\n```python\ndef _normalize(pairs):\n    out = []\n    for s, e in sorted(pairs):\n        if e <= s:\n            continue\n        if out and s <= out[-1][1]:\n            out[-1] = (out[-1][0], max(out[-1][1], e))\n        else:\n            out.append((s, e))\n    return out\n```\n\nFor add: either re-run _normalize over self._ranges + [(start,end)], or merge incrementally. Re-normalization is O(n log n) \u2014 acceptable. Actually, an incremental merge is better but more complex. Since \"interval arithmetic\" is required, the simple approach is sufficient.\n\nActually, I can do add incrementally: iterate over the sorted list and merge. The simplest is _normalize(self._ranges + [(start, end)]). But this copies; that's fine.\n\nremove: for each (a,b) in self._ranges, compute the subtraction:\n- if b <= start or a >= end: keep\n- otherwise: if a < start: keep (a, min(start, b)); if e > ... if end < b: keep (max(a,end), b)\n\ncollect the pieces and _normalize (they should already be in order and non-overlapping, but just to be safe normalize \u2014 it's cheap).\n\ncontains: use bisect against a list of starts? Simpler: since it's sorted and non-overlapping, use bisect_right on the ends list: idx = bisect.bisect_right(self._ends, point) - 1... let's use the starts list: idx = bisect.bisect_right(starts, point) - 1; if idx >= 0 and point < self._ranges[idx][1]: return True. This works, but the starts list needs to be maintained. Either compute per call (O(n)) orductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductductduct"
+      },
+      "logprobs": null,
+      "finish_reason": "length",
+      "stop_reason": null,
+      "token_ids": null,
+      "routed_experts": null,
+      "weight_versions": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.33.0-4e2629f6",
+  "usage": {
+    "prompt_tokens": 1418,
+    "total_tokens": 2442,
+    "completion_tokens": 1024,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1024
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "prompt_text": null,
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": {
+    "time_to_first_token_ms": 531.2671239989868,
+    "generation_time_ms": 25355.251224998938,
+    "queue_time_ms": 0.009260002116207033,
+    "mean_itl_ms": 24.785191813293196,
+    "tokens_per_second": 39.55727016644706,
+    "speculative_decoding": null
+  }
+}

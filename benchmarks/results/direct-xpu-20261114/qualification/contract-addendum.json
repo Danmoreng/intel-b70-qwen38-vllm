@@ -1,0 +1,18 @@
+{
+  "status": "REFERENCE_TARGET_FAILURE_RECORDED_BEFORE_CANDIDATE_RUN",
+  "original_contract_sha256": "8fa213deadd130a95fe367b2de358f6eba3002e692b280d2eed4265e2a134408",
+  "baseline_successful_tasks": 3,
+  "baseline_tasks": 4,
+  "baseline_failed_case": "dependencyplan-202611119",
+  "failure": "Generated solution raises KeyError instead of the specified UnknownTarget. Eight other hidden checks pass. This is a genuine sampled coding-task failure, not a harness exception or XPU arithmetic failure.",
+  "reference_target": "The original4/4 reference target FAILED and remains failed. No repaired solution, hidden feedback, seed change or successful replacement run is substituted.",
+  "candidate_requirement": "Candidate must still solve all4 frozen tasks with the unchanged algorithm, seeds, limits and independent grader. The release review must report the reference3/4 result and may not describe both arms as4/4. This amendment does not accept a candidate task failure.",
+  "serving_followup": "Run the unchanged complete serving matrix separately after the reference agent gate stopped its controller. Reuse compilation caches from that same arm to retain the operations/agents warmup history; no failed stage is overwritten.",
+  "controller_sha256": "89ad18799f480b44a80c40fb5027cbbdb721ad577dda3f1d5ed855d71a89ae5f",
+  "controller_change": "Optional --cache-root plus recorded cache path only; common worker arguments, task algorithms and measurement payloads unchanged.",
+  "unchanged_task_sources_sha256": {
+    "benchmarks/experiments/vllm-033-upgrade/agent-panel/run_task.py": "f40534e72b802f5719642d09027aa672802bd5bd1d7969fa6a7a249fb0b48705",
+    "benchmarks/experiments/vllm-033-upgrade/agent-panel/coding_tools.py": "9ff1985932a185857341ca128bda8234e2d40f3fa11093cafb4308a00106b828"
+  },
+  "scope": "Finite sampled utility comparison. The reference is an observed control, not a guaranteed-perfect model oracle. Core numerical/quality/operations/candidate task gates and performance investigation thresholds are unchanged."
+}

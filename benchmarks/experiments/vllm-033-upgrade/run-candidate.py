@@ -35,6 +35,7 @@ def main():
  p.add_argument('--production-repo',required=True,type=Path)
  p.add_argument('--fixture-root',required=True,type=Path)
  p.add_argument('--stages',default='kernels,serving')
+ p.add_argument('--cache-root',type=Path,help='Reuse prior compilation caches from the same arm after an independently recorded stage failure')
  p.add_argument('--baseline-control',action='store_true',help='Run the unchanged gate on the exact deployed image as a diagnostic control')
  p.add_argument('--linear-group',action='append',default=[],help='Diagnostic subset of the frozen linear shape classes')
  p.add_argument('--only',action='append',default=[],help='Frozen serving scenario/group filter for matched follow-up measurements')
@@ -56,7 +57,8 @@ def main():
  state={'status':'RUNNING','image_id':image,'baseline_image_id':baseline['Image'],
         'baseline_control':a.baseline_control,
         'linear_group_filters':a.linear_group,
-        'started_utc':dt.datetime.now(dt.UTC).isoformat(),'stages':{},'power_cap_w':180,'serving_scenario_filters':a.only}
+        'started_utc':dt.datetime.now(dt.UTC).isoformat(),'stages':{},'power_cap_w':180,'serving_scenario_filters':a.only,
+        'compilation_cache_root':str(a.cache_root.resolve() if a.cache_root else root/'cache')}
  def save():(root/'campaign.json').write_text(json.dumps(state,indent=2)+'\n')
  def stop(name,folder):
   subprocess.run(['docker','stop','--time','90',name],capture_output=True,timeout=105)
@@ -121,7 +123,7 @@ def main():
      cmd[cmd.index('--network')+1]='bridge'
      cmd[cmd.index('--rm'):cmd.index('--rm')+1]=['-d']
      cmd+=['-p','127.0.0.1:8082:8000']
-     cache=root/'cache'
+     cache=a.cache_root.resolve() if a.cache_root else root/'cache'
      for key,target in [('vllm','/root/.cache/vllm'),('triton','/root/.triton/cache'),('neo_compiler_cache','/root/.cache/neo_compiler_cache')]:
       path=cache/key;path.mkdir(parents=True,exist_ok=True);cmd+=['-v',str(path)+':'+target]
      argv=serving_arguments(cfg['argv'][1:],overlay)+['--enable-per-request-metrics','--enable-prompt-tokens-details']

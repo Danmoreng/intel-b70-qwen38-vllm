@@ -102,3 +102,14 @@ preemption. The original mixed-load miss remains recorded; bounded cache
 retention is not guaranteed after arbitrary prior workloads. Both arms use
 the same fresh-worker ordering for the final comparison, with unchanged
 assertions. The candidate result remains pending.
+
+## Fresh coding-task reference
+
+The unchanged v7 reference solves **3/4** frozen tasks. One dependency-planning
+solution raises `KeyError` instead of the requested `UnknownTarget`; its other
+eight hidden checks pass. [All task results](qualification/baseline-agents/summary.json)
+are retained, with no repaired code, hidden feedback or selected replacement
+run. The [pre-candidate addendum](qualification/contract-addendum.json) records
+that the reference4/4 target failed; the candidate still must solve all four
+cases. Candidate task results remain pending. The full serving measurement
+runs separately after this failure, preserving the same arm's compiler caches.

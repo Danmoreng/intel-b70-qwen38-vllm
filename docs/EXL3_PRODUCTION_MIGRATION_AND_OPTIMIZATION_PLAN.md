@@ -1,5 +1,9 @@
 # B70 / Qwen3.8-27B EXL3 Production Migration and Optimization Plan
 
+> Historical plan dated 2026-10-01. The GPTQ baseline and pending EXL3 migration
+> below describe that date. EXL3 is now production; see the
+> [current configuration](CURRENT_CONFIGURATION.md) and [archive index](ARCHIVE.md).
+
 **Date:** 2026-10-01  
 **Target:** Intel Arc Pro B70, Qwen3.8-27B, vLLM-based serving  
 **Current production baseline:** GPTQ INT4 / G128  

@@ -1,4 +1,4 @@
-"""Both qualified EXL3 versions must use the pinned local-directory downloader."""
+"""All supported EXL3 policy versions must use the pinned local-directory downloader."""
 import json
 import os
 from pathlib import Path
@@ -31,8 +31,8 @@ class ModelDownloadDispatch(unittest.TestCase):
             result=subprocess.run(['bash',str(root/'scripts'/entry),*extra],capture_output=True,text=True,env=env,timeout=10)
             return result,json.loads(log.read_text()) if log.exists() else None
 
-    def test_v1_and_v2_download_to_pinned_exl3_cache(self):
-        for version in (1,2):
+    def test_supported_policies_download_to_pinned_exl3_cache(self):
+        for version in range(1, 6):
             with self.subTest(version=version):
                 result,argv=self.invoke(f'b70-qwen38-exl3-production-v{version}')
                 self.assertEqual(result.returncode,0,result.stderr)
@@ -41,8 +41,15 @@ class ModelDownloadDispatch(unittest.TestCase):
                 self.assertEqual(argv[-6:],['download','test/pinned-exl3','--revision','frozen-revision','--local-dir','/models/checkpoint'])
                 self.assertNotIn('wrong-serving-alias',argv)
 
+    def test_checked_in_policy_uses_pinned_downloader(self):
+        policy = json.loads((REPO/'config/production_policy.json').read_text())['policy_id']
+        result, argv = self.invoke(policy)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(argv[-2:], ['--local-dir', '/models/checkpoint'])
+        self.assertNotIn('wrong-serving-alias', argv)
+
     def test_unknown_policy_or_override_starts_no_download(self):
-        for policy,extra in [('unexpected',()),('b70-qwen38-exl3-production-v2',('--override',))]:
+        for policy,extra in [('unexpected',()),('b70-qwen38-exl3-production-v6',()),('b70-qwen38-exl3-production-v5',('--override',))]:
             with self.subTest(policy=policy,extra=extra):
                 result,argv=self.invoke(policy,'download-exl3-model.sh',extra)
                 self.assertNotEqual(result.returncode,0)

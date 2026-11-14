@@ -1,0 +1,223 @@
+{
+  "status": "MATCHED_TRANSFORMERS_MEDIA_REGRESSION_AND_COMPATIBILITY_PIN",
+  "latest_tested": "5.23.0",
+  "selected": "5.22.2",
+  "reference": "5.17.0",
+  "unchanged": "Torch2.15 official wheel, targetedPTIfix, native libraries, XPU kernels, Triton, Intel userspace and serving profile. Diagnostic child changes only the Transformers wheel.",
+  "rejected": {
+    "image_id": "sha256:940da169e05d6545ed350677645736f1034cd63242a4773d427bbfe86184a658",
+    "status": "FAILED",
+    "stages": {
+      "cow": {
+        "status": "PASS"
+      },
+      "operations": {
+        "status": "RUNNING"
+      }
+    },
+    "production_restored": true,
+    "actual_http_status": 400,
+    "worker_warning": "Token indices sequence length is longer than the specified maximum sequence length for this model (295241 > 262144)",
+    "context": "Existing valid ffmpeg320x240/4fps/2s red clip, first one-video request. API and natural RAM checks before it pass."
+  },
+  "compatible_control": {
+    "image_id": "sha256:a898f61967c9342ee597fdcc33544f55ffb3d41c9c9207800603b9560f9a2594",
+    "status": "PASS_REQUESTED_STAGES",
+    "stages": {
+      "media": {
+        "status": "PASS"
+      }
+    },
+    "production_restored": true,
+    "media": {
+      "status": "PASS_ISOLATED_ESTABLISHED_MEDIA_GATE",
+      "cases": {
+        "media": {
+          "status": "PASS",
+          "responses": {
+            "videos_1": {
+              "id": "chatcmpl-8435b2db0871384a",
+              "object": "chat.completion",
+              "created": 1794668497,
+              "model": "Qwen3.8-27B",
+              "choices": [
+                {
+                  "index": 0,
+                  "message": {
+                    "role": "assistant",
+                    "content": "Red",
+                    "refusal": null,
+                    "annotations": null,
+                    "audio": null,
+                    "function_call": null,
+                    "reasoning": null
+                  },
+                  "logprobs": null,
+                  "finish_reason": "stop",
+                  "stop_reason": null,
+                  "token_ids": null,
+                  "routed_experts": null,
+                  "weight_versions": null
+                }
+              ],
+              "service_tier": null,
+              "system_fingerprint": "vllm-0.33.0-34b6d146",
+              "usage": {
+                "prompt_tokens": 202,
+                "total_tokens": 204,
+                "completion_tokens": 2,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "created_cache_tokens": 0,
+                  "multimodal_tokens": {
+                    "video": 176
+                  }
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0
+                }
+              },
+              "prompt_logprobs": null,
+              "prompt_token_ids": null,
+              "prompt_text": null,
+              "kv_transfer_params": null,
+              "ec_transfer_params": null,
+              "metrics": {
+                "time_to_first_token_ms": 356.80751700056135,
+                "generation_time_ms": 33.87378299885313,
+                "queue_time_ms": 0.018139999156119302,
+                "mean_itl_ms": 33.87378299885313,
+                "tokens_per_second": 5.119262170989493,
+                "speculative_decoding": null
+              }
+            },
+            "videos_4": {
+              "id": "chatcmpl-af5ee7c1a8a78358",
+              "object": "chat.completion",
+              "created": 1794668498,
+              "model": "Qwen3.8-27B",
+              "choices": [
+                {
+                  "index": 0,
+                  "message": {
+                    "role": "assistant",
+                    "content": "Red",
+                    "refusal": null,
+                    "annotations": null,
+                    "audio": null,
+                    "function_call": null,
+                    "reasoning": null
+                  },
+                  "logprobs": null,
+                  "finish_reason": "stop",
+                  "stop_reason": null,
+                  "token_ids": null,
+                  "routed_experts": null,
+                  "weight_versions": null
+                }
+              ],
+              "service_tier": null,
+              "system_fingerprint": "vllm-0.33.0-34b6d146",
+              "usage": {
+                "prompt_tokens": 736,
+                "total_tokens": 738,
+                "completion_tokens": 2,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "created_cache_tokens": 0,
+                  "multimodal_tokens": {
+                    "video": 704
+                  }
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0
+                }
+              },
+              "prompt_logprobs": null,
+              "prompt_token_ids": null,
+              "prompt_text": null,
+              "kv_transfer_params": null,
+              "ec_transfer_params": null,
+              "metrics": {
+                "time_to_first_token_ms": 508.2667599999695,
+                "generation_time_ms": 36.48096100005205,
+                "queue_time_ms": 0.01061999864759855,
+                "mean_itl_ms": 36.48096100005205,
+                "tokens_per_second": 3.6714242628284826,
+                "speculative_decoding": null
+              }
+            },
+            "over_video_limit": {
+              "status": 400,
+              "error": "{\"error\":{\"message\":\"At most 4 video(s) may be provided in one prompt. (parameter=video)\",\"type\":\"BadRequestError\",\"param\":\"video\",\"code\":400}}"
+            },
+            "oversized_image": {
+              "id": "chatcmpl-98d4bd7a7e75ec93",
+              "object": "chat.completion",
+              "created": 1794668498,
+              "model": "Qwen3.8-27B",
+              "choices": [
+                {
+                  "index": 0,
+                  "message": {
+                    "role": "assistant",
+                    "content": "Red",
+                    "refusal": null,
+                    "annotations": null,
+                    "audio": null,
+                    "function_call": null,
+                    "reasoning": null
+                  },
+                  "logprobs": null,
+                  "finish_reason": "stop",
+                  "stop_reason": null,
+                  "token_ids": null,
+                  "routed_experts": null,
+                  "weight_versions": null
+                }
+              ],
+              "service_tier": null,
+              "system_fingerprint": "vllm-0.33.0-34b6d146",
+              "usage": {
+                "prompt_tokens": 4081,
+                "total_tokens": 4083,
+                "completion_tokens": 2,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "created_cache_tokens": 0,
+                  "multimodal_tokens": {
+                    "image": 4056
+                  }
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0
+                }
+              },
+              "prompt_logprobs": null,
+              "prompt_token_ids": null,
+              "prompt_text": null,
+              "kv_transfer_params": null,
+              "ec_transfer_params": null,
+              "metrics": {
+                "time_to_first_token_ms": 2919.1978790004214,
+                "generation_time_ms": 39.064329997927416,
+                "queue_time_ms": 0.01590000101714395,
+                "mean_itl_ms": 39.064329997927416,
+                "tokens_per_second": 0.6760725921848519,
+                "speculative_decoding": null
+              }
+            }
+          },
+          "video_fixture_sha256": "779d1910eae95ecdda9d39712972cca54ec05d674d1f85a8634beaf996078444",
+          "fixture": "ffmpeg constant-red 320x240,4fps,2s; API decodes real H264 video",
+          "scope": "Small-media count limits and one 6.3MP image; does not promise 32 maximum-area images plus 4 long videos at maximum text context"
+        }
+      },
+      "started_unix": 1794668497.3494618,
+      "finished_unix": 1794668501.655505
+    }
+  },
+  "cpu_isolation": "Same CPU vLLM0.33 preprocessing path with four240x320 RGB frames and identical metadata:5.23 fails its final text-only HF pass,5.22.2 returns178 input IDs and640x1536 pixel patches. The directHF video processor alone returns the same178 IDs in both versions.",
+  "cpu_523_error": "Found1<|video_pad|> tokens in the text but no videos were passed. vLLM already processed the video separately before its text pass.",
+  "limits": "The strict new validation is a confirmed compatibility problem; the exact mechanism behind the inflated API token count has not been isolated. This does not attribute every video issue to one code line. No upstream issue/comment was posted. A clean5.22.2 build still requires final exact-image qualification."
+}

@@ -42,7 +42,7 @@
     }
   },
   "python_packages": {
-    "transformers": "5.23.0",
+    "transformers": "5.22.2",
     "tokenizers": "0.23.3",
     "aiohttp": "3.14.5",
     "multidict": "7.2.1",
@@ -118,7 +118,7 @@
   "dependency_policy": "Newest stable components tested first. Preserve newer reference components. Use unmodified Torch2.15 with PTI1.2.1 rebuilt from its exact source plus upstream native-graph lifetime fix; no older Torch pin or native-recording fallback is needed after qualification.",
   "metadata_overrides": {
     "core": "Retain newer reference components and test latest SYCL2026.2/PTI1.2.1 beyond Torch2.15 exact metadata. Preserve CCL2022.1.2; never silently downgrade the reference.",
-    "vllm": "Torch2.15, Transformers5.23, kernels0.1.17.1 and xgrammar0.2.9 exceed0.33 exact/range metadata; full profile qualification required, not a clean pip-check claim.",
+    "vllm": "Torch2.15, Transformers5.22.2, kernels0.1.17.1 and xgrammar0.2.9 exceed0.33 exact/range metadata; full profile qualification required, not a clean pip-check claim.",
     "pti": "Python metadata remains1.2.1; the two PTI libraries are rebuilt with the recorded upstream native-graph lifetime backport. Library hashes and source provenance are retained."
   },
   "regression_probe": {
@@ -135,5 +135,14 @@
     "libigdgmm12": "22.10.2"
   },
   "torch_git_revision": "d0f2af8b66b20da4baa50644c0cd3f887a2eae2e",
-  "pristine_torch_init_sha256": "7ed81103f3d256de131b886e67be458b3205784e3b4af9c495041282391e19db"
+  "pristine_torch_init_sha256": "7ed81103f3d256de131b886e67be458b3205784e3b4af9c495041282391e19db",
+  "compatibility_exceptions": {
+    "transformers": {
+      "latest_tested": "5.23.0",
+      "selected": "5.22.2",
+      "reason": "5.23 breaks vLLM0.33 two-pass Qwen video preprocessing. A valid2s320x240 clip is rejected as295241 tokens; the CPU integration also rejects the deferred video placeholder after the video has been processed separately.",
+      "control": "Same Torch2.15/PTI-fixed image with only Transformers changed to5.22.2 passes the unchanged real1/4video count, rejection-over-limit and oversized-image API gate. Direct HF4-frame processing alone passes in both versions.",
+      "selection_rule": "Latest compatible stable minor patch5.22.2, above the reference5.17.0. No other new component is rolled back. Full clean-image qualification still required."
+    }
+  }
 }

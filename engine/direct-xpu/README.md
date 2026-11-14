@@ -50,7 +50,7 @@ candidate selection, not a policy of retaining old dependencies.
 | SYCL runtime / PTI | 2026.2.0 / 1.2.1 |
 | Intel Compute Runtime / IGC / GMM | 26.40.40196.8 / 2.42.6 / 22.10.2 |
 | Custom oneDNN source / reported version | 3.14.2 / 3.14.1 |
-| Transformers / xgrammar | 5.23.0 / 0.2.9 |
+| Transformers / xgrammar | 5.22.2 / 0.2.9 |
 <!-- END DIRECT STACK -->
 
 Torch 2.15 uses a [source-pinned Intel PTI fix](pti/README.md) for the
@@ -60,6 +60,9 @@ Full qualification is tracked in the
 [test evidence](../../benchmarks/results/direct-xpu-20261114/README.md).
 Torch is installed without dependency downgrades:
 the reference's newer CCL is retained, and runtime/PTI upgrades are explicit.
+Transformers 5.23 fails the existing video API contract; the otherwise identical
+5.22.2 control passes. The build selects 5.22.2, still newer than the reference
+5.17, and records this measured compatibility exception in the lock.
 These choices exceed package metadata constraints; `pip check` is not clean.
 GPU tests, rather than successful imports, determine compatibility.
 The host's kernel/DRM driver is unchanged; Intel userspace components are

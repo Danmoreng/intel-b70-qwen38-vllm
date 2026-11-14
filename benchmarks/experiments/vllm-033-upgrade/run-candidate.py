@@ -117,7 +117,7 @@ def main():
      results=[json.loads(f.read_text()) for f in (folder/'observations/steps').glob('*-result.json')]
      assert len(results)==4 and all(r['status']=='PASS_LOCAL_ATTENTION_ORIGINAL_TOLERANCE' for r in results)
      assert any(r['graph_mode']=='FULL' for r in results) and any(r['label']=='long-prefill' for r in results)
-    elif stage in ('startup','serving','operations','agents','ram','cow'):
+    elif stage in ('startup','serving','operations','agents','ram','cow','media'):
      folder=root/'worker';cmd=common(NAME,folder)
      # The API stays on loopback and needs no external network.
      cmd[cmd.index('--network')+1]='bridge'
@@ -152,6 +152,10 @@ def main():
        '--output-root',str(root/'serving'),'--execute']
       for selected in a.only:command+=['--only',selected]
       with (root/'serving.log').open('w') as log:run(command,stdout=log,stderr=subprocess.STDOUT,timeout=5700)
+     elif stage=='media':
+      command=[sys.executable,str(Path(__file__).parent/'operations-client.py'),
+       '--out',str(root/'isolated-media'),'--only-media']
+      with (root/'media.log').open('w') as log:run(command,stdout=log,stderr=subprocess.STDOUT,timeout=900)
      elif stage=='cow':
       command=[sys.executable,str(REPO/'scripts/check-cache1792-api.py'),
        '--base',BASE,'--out',str(root/'cow'),

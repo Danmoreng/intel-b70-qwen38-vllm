@@ -9,6 +9,7 @@ def module(name,path):
 D=module('upgrade_api_contract',REPO/'scripts/run-exl3-contract-diagnostics.py')
 O=module('upgrade_api_media',REPO/'scripts/run-exl3-final-operations.py')
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',required=True,type=Path)
+p.add_argument('--only-media',action='store_true',help='Run the unchanged media group alone for version isolation')
 p.add_argument('--tokenizer-baseline',type=Path);p.add_argument('--tokenizer-fixtures',type=Path);a=p.parse_args()
 assert bool(a.tokenizer_baseline)==bool(a.tokenizer_fixtures)
 root=a.out.resolve();root.mkdir(parents=True,exist_ok=False)
@@ -16,6 +17,11 @@ state={'status':'RUNNING','cases':{},'started_unix':time.time()}
 def save():(root/'operations.json').write_text(json.dumps(state,indent=2)+'\n')
 save()
 try:
+ if a.only_media:
+  destination=root/'media';destination.mkdir()
+  state['cases']['media']=D.media_case(destination,{'image':32,'video':4})
+  state['status']='PASS_ISOLATED_ESTABLISHED_MEDIA_GATE';save()
+  raise SystemExit(0)
  if a.tokenizer_baseline:
   subprocess.run([sys.executable,str(Path(__file__).parent/'check-tokenizer.py'),'--base',D.BASE,'--fixtures',str(a.tokenizer_fixtures),'--compare',str(a.tokenizer_baseline),'--out',str(root/'tokenizer-pair.json')],check=True,timeout=600)
   state['cases']['paired-tokenizer']={'status':'PASS_ALL124_RENDERED_TOKEN_IDS_IDENTICAL'};save()
@@ -53,5 +59,10 @@ try:
  admission=json.loads((root/'admission.json').read_text());assert admission['validation']=='passed'
  state['cases']['completion-reserved-admission']={'status':'PASS','preemptions':admission['metricDelta'].get('vllm:num_preemptions_total'),'prompt_tokens':[r['usage']['prompt_tokens'] for r in admission['rows']]}
  state['status']='PASS_ESTABLISHED_OPERATIONAL_AND_NEW_RAM_GATES'
-except BaseException as e:state.update(status='FAILED',error=repr(e));raise
+except SystemExit:
+ raise
+except BaseException as e:
+ state.update(status='FAILED',error=repr(e))
+ if isinstance(e,D.urllib.error.HTTPError):state['http_error_body']=e.read().decode(errors='replace')
+ raise
 finally:state['finished_unix']=time.time();save()

@@ -4,11 +4,12 @@ The selected candidate builds directly on official vLLM 0.33 XPU with
 **unmodified PyTorch 2.15**, matching Triton/XPU kernels, latest selected Intel
 userspace and a targeted upstream PTI fix. See the
 [build instructions](../../../engine/direct-xpu/README.md).
-The frozen release child passes CPU integrity, strict launcher preflight,
+The earlier Torch2.15/PTI-fixed release child passed CPU integrity, strict launcher preflight,
 profiler replay, the full original kernel suite, four model-state replay cases
-and startup/decode. [Exact-image receipts](qualification/core/campaign.json)
-identify those results. Quality, operations and full paired serving qualification
-remain pending. Production manifests still identify v7.
+and startup/decode. [Receipts](qualification/core/campaign.json) identify that
+earlier image. Its later media gate exposed a Transformers5.23 compatibility
+regression. The selected clean build uses5.22.2; its full exact-image
+qualification remains pending. Production manifests still identify v7.
 
 ## Confirmed graph/profiler regression and correction
 
@@ -113,3 +114,19 @@ run. The [pre-candidate addendum](qualification/contract-addendum.json) records
 that the reference4/4 target failed; the candidate still must solve all four
 cases. Candidate task results remain pending. The full serving measurement
 runs separately after this failure, preserving the same arm's compiler caches.
+
+## Transformers compatibility exception
+
+The full Torch2.15/PTI-fixed candidate passes real partial-page C2 forks,
+RAM restoration and the API group, then fails the unchanged small-video gate
+with Transformers5.23. The otherwise identical image with **5.22.2** passes
+one/four videos, rejection over the count limit and oversized-image handling.
+[Matched control evidence](qualification/transformers-media-compatibility.json)
+retains the failed attempt and the successful control. The selected version
+is the newest patch in the prior stable minor and is above the reference5.17.
+Torch2.15, PTI and the newer Intel/XPU components remain selected.
+
+A CPU-only control also exposes5.23's new validation rejecting vLLM's
+second text pass after video preprocessing. DirectHF video processing alone
+works in both versions. The exact cause of the inflated API token estimate is
+not proven; this is a measured compatibility pin, not a relaxed media test.

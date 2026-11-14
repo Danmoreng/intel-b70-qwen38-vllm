@@ -96,5 +96,9 @@ long-image, abort/extension, structured-output and 32 maximum-area image
 checks. The later natural-retention test returned the same correct answer but
 recorded zero CPU hits and zero H2D bytes. That is a
 [failed RAM-retention measurement on the old build](qualification/baseline-mixed-load-ram-failure.json),
-not evidence of a 2.15 regression. A separate fresh-cache comparison is pending;
-the original failure is retained and its assertions are unchanged.
+not evidence of a 2.15 regression. The [fresh-cache v7 repeat](qualification/baseline-isolated-ram.json) passes:
+44,800 host tokens, 1,716,649,984 H2D bytes, identical correct answer and no
+preemption. The original mixed-load miss remains recorded; bounded cache
+retention is not guaranteed after arbitrary prior workloads. Both arms use
+the same fresh-worker ordering for the final comparison, with unchanged
+assertions. The candidate result remains pending.

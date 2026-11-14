@@ -1,0 +1,27 @@
+{
+  "status": "FROZEN_BEFORE_CANDIDATE_FULL_QUALITY_OPERATIONS_AGENTS_SERVING",
+  "date": "2026-11-14",
+  "baseline_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "candidate_image_id": "sha256:940da169e05d6545ed350677645736f1034cd63242a4773d427bbfe86184a658",
+  "power_cap_w": 180,
+  "source_files_sha256": {
+    "benchmarks/experiments/vllm-033-upgrade/run-candidate.py": "224429543c796d12fa460b8ac86cd8d2bf089532416c948933668c4904da385e",
+    "benchmarks/experiments/vllm-033-upgrade/operations-client.py": "0dcf5db75e71751b727c45752366ac07b8d797719852c21b38aad6c1ea557d59",
+    "benchmarks/experiments/vllm-033-upgrade/profile-graph-replay.py": "77b46be26b3a80f2f68292eb539f8767c48a4fa3b0337d5ee63c52c3fa74a22e",
+    "benchmarks/experiments/vllm-033-upgrade/run-quality.py": "6113bcfbab16d50ebdd5f14b14bacdefa865a0bb442f43c49d17ae3a3b6f0b32",
+    "benchmarks/experiments/vllm-033-upgrade/compare-quality.py": "7f13051733aac748ed4482d15ec04b94dab72bd14c1216dfb6f68a7b53d34003",
+    "benchmarks/experiments/vllm-033-upgrade/compare-serving.py": "9f7ea091f7b0a755ddddf5fe95fd2345a3a22974e7f0d84c8e616b17db3cba1c",
+    "benchmarks/experiments/vllm-033-upgrade/agent-panel/run_task.py": "f40534e72b802f5719642d09027aa672802bd5bd1d7969fa6a7a249fb0b48705",
+    "benchmarks/experiments/vllm-033-upgrade/agent-panel/coding_tools.py": "9ff1985932a185857341ca128bda8234e2d40f3fa11093cafb4308a00106b828",
+    "benchmarks/experiments/vllm-033-upgrade/cow-fixture.json": "13ed872afc40b29a142bc7c4305715a3613fbcead822ab0a4c5ab321c40f28cf",
+    "scripts/current-profile-benchmark.py": "01105118930b595aaf31b2bf58f3427b76a3b94721ceeabd947b432105ad3345",
+    "scripts/check-cache1792-api.py": "0d22d689a226e57fea80b32ec238bed02733a82971f1e1d90707e6c9af76625a"
+  },
+  "numerical_gates": "Original fixed matrix/attention/GDN tolerances unchanged; profiler requires exact eager/replay results and >=9 actual GPU kernel events. Exact-image core already passed.",
+  "quality": "Same16short+4long frozen teacher-forced windows, all arrays finite, API and vocabulary alignment verified. Report paired NLL/PPL/KL/top1 and window uncertainty; investigate material deterioration, no new arbitrary hard quality cutoff or automatic quality approval.",
+  "agents": "Same frozen2familiesx2seeds, regular Thinking8192 sampling, natural endings, real tools and independent hidden tests. Require4/4 each arm; no hidden feedback or manual repair.",
+  "serving": "All70measured waves/124byte-identical payloads/prompts, exact output accounting, no preemption. Existing5%cell/2%weighted adverse triggers require follow-up investigation, not automatic acceptance.",
+  "operations": "Unchanged API/media/long/concurrency/abort/admission assertions. Isolate natural RAM retention at start of fresh worker in both arms after earlier mixed-load v7 miss; preserve both failed and passing controls. Require actual H2D and correct identical answer.",
+  "cow": "Exact child additionally runs existing concurrent partial-page fork/parent-recheck API gate with public frozen16K fixture; oldv7 previously passed this same functional contract.",
+  "bounds": "One GPU engine, no CPU builds/hashing during performance, restore original service after every controller. Daily Europe/Berlin closing22:45/save-stop22:55/hard23:00."
+}

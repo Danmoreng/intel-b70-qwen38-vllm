@@ -1,0 +1,27 @@
+{
+  "status": "RELEASE_BLOCKED_BY_CODING_TIMEOUT_AND_REPETITIVE_OUTPUT",
+  "image_id": "sha256:b56cc2e23b9d9b1a50a38ce8884b06be39afcac85a3b9005dcc98948891edfcd",
+  "original_campaign_status": "FAILED",
+  "completed_prior_stages": [
+    "profiler",
+    "kernels",
+    "replay",
+    "startup",
+    "cow",
+    "operations"
+  ],
+  "task": "rangeset-202611117",
+  "task_result": "FAILED_HARNESS_OR_LIMIT",
+  "error": "TimeoutError('timed out')",
+  "planned_tasks": 4,
+  "attempted_tasks": 1,
+  "completed_tasks": 0,
+  "unattempted_tasks": 3,
+  "raw_response_sha256": "4dee62c442fb9428f2c85493089fa000f637c7281c906e3e348e92905fa14c96",
+  "prompt_tokens": 1418,
+  "completion_tokens": 16384,
+  "reasoning_tokens": 16384,
+  "finish_reason": "length",
+  "trailing_duct_repetitions": 15692,
+  "scope": "Observed serious generation failure; exact responsible component and reproducibility across controlled images remain unproven. No broad GPU or PyTorch-specific attribution. The earlier PTI numerical/profiling fix passes its independent gates. This is neither4/4 nor a0/4 independent-grader score; the first task times out before grading. No release approval, remaining serving/quality stages pending."
+}

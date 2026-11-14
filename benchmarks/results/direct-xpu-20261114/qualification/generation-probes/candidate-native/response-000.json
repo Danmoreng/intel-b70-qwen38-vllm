@@ -1,0 +1,72 @@
+{
+  "id": "chatcmpl-89f43b8f25a07428",
+  "object": "chat.completion",
+  "created": 1794673301,
+  "model": "Qwen3.8-27B",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "refusal": null,
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+          {
+            "id": "chatcmpl-tool-a71b0454787eb596",
+            "type": "function",
+            "function": {
+              "name": "list_files",
+              "arguments": "{}"
+            }
+          },
+          {
+            "id": "chatcmpl-tool-b981418d30af0121",
+            "type": "function",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\": \"rangeset.py\"}"
+            }
+          }
+        ],
+        "reasoning": "Let's check the files in the repository.\n"
+      },
+      "logprobs": null,
+      "finish_reason": "tool_calls",
+      "stop_reason": null,
+      "token_ids": null,
+      "routed_experts": null,
+      "weight_versions": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.33.0-34b6d146",
+  "usage": {
+    "prompt_tokens": 720,
+    "total_tokens": 773,
+    "completion_tokens": 53,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 10
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "prompt_text": null,
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": {
+    "time_to_first_token_ms": 567.1390329989663,
+    "generation_time_ms": 640.4592229991977,
+    "queue_time_ms": 0.005570000212173909,
+    "mean_itl_ms": 12.316523519215341,
+    "tokens_per_second": 43.88876825280922,
+    "speculative_decoding": null
+  }
+}

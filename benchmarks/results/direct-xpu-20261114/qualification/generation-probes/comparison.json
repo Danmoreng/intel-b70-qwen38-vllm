@@ -1,0 +1,49 @@
+{
+  "status": "MATCHED_SHORT_REQUEST_DIAGNOSTIC",
+  "runner_sha256": "cbf3f59155fcb0c168bf12b534d81b9b04c3c938f456a5ed23d40716080a218d",
+  "cases": {
+    "candidate-native": {
+      "image_id": "sha256:b56cc2e23b9d9b1a50a38ce8884b06be39afcac85a3b9005dcc98948891edfcd",
+      "enforce_eager": false,
+      "request_source_sha256": [
+        "2590e3fec1dafeda83fbbd355527490005e4f98465b9eec74809643e7e10a321",
+        "71151f4c2368f2cb4aa1116fb29d1f3644279270dfb466538fbf3be685454b29",
+        "cf356f5bd9d4e02a59e084df296ed43ac4e81fc90593edb95d67ad6164fb0346"
+      ],
+      "trailing_duct_repetitions": [
+        0,
+        0,
+        332
+      ]
+    },
+    "reference-native": {
+      "image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+      "enforce_eager": false,
+      "request_source_sha256": [
+        "2590e3fec1dafeda83fbbd355527490005e4f98465b9eec74809643e7e10a321",
+        "71151f4c2368f2cb4aa1116fb29d1f3644279270dfb466538fbf3be685454b29",
+        "cf356f5bd9d4e02a59e084df296ed43ac4e81fc90593edb95d67ad6164fb0346"
+      ],
+      "trailing_duct_repetitions": [
+        0,
+        0,
+        0
+      ]
+    },
+    "candidate-eager": {
+      "image_id": "sha256:b56cc2e23b9d9b1a50a38ce8884b06be39afcac85a3b9005dcc98948891edfcd",
+      "enforce_eager": true,
+      "request_source_sha256": [
+        "2590e3fec1dafeda83fbbd355527490005e4f98465b9eec74809643e7e10a321",
+        "71151f4c2368f2cb4aa1116fb29d1f3644279270dfb466538fbf3be685454b29",
+        "cf356f5bd9d4e02a59e084df296ed43ac4e81fc90593edb95d67ad6164fb0346"
+      ],
+      "trailing_duct_repetitions": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "scope": "Same captured histories, tools, seeds and sampling; output cap1024 in all arms. Eager disables both compilation and graph capture, so it does not isolate either alone. No replacement coding score or release approval; candidate original task remains failed."
+}

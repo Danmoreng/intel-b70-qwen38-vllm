@@ -1,0 +1,4392 @@
+{
+  "case": "prose-4096",
+  "label": "c4-verification",
+  "req_ids": [
+    "0-9273c159",
+    "1-ac84024c",
+    "2-bcc735a9",
+    "3-b478d33d"
+  ],
+  "actual_rows": 16,
+  "padded_rows": 16,
+  "rows_by_request": [
+    4,
+    4,
+    4,
+    4
+  ],
+  "computed": [
+    4096,
+    4096,
+    4096,
+    4096
+  ],
+  "prefill_lengths": [
+    4096,
+    4096,
+    4096,
+    4096
+  ],
+  "graph_mode": "FULL",
+  "positions": [
+    [
+      4103,
+      4104,
+      4105,
+      4106,
+      4099,
+      4100,
+      4101,
+      4102,
+      4097,
+      4098,
+      4099,
+      4100,
+      4096,
+      4097,
+      4098,
+      4099
+    ],
+    [
+      4103,
+      4104,
+      4105,
+      4106,
+      4099,
+      4100,
+      4101,
+      4102,
+      4097,
+      4098,
+      4099,
+      4100,
+      4096,
+      4097,
+      4098,
+      4099
+    ],
+    [
+      4103,
+      4104,
+      4105,
+      4106,
+      4099,
+      4100,
+      4101,
+      4102,
+      4097,
+      4098,
+      4099,
+      4100,
+      4096,
+      4097,
+      4098,
+      4099
+    ]
+  ],
+  "input_ids": [
+    15,
+    15,
+    314,
+    279,
+    220,
+    19,
+    11,
+    15,
+    8323,
+    5176,
+    557,
+    264,
+    760,
+    1118,
+    7796,
+    1881
+  ],
+  "model_input_tensors": {
+    "positions": {
+      "shape": [
+        3,
+        16
+      ],
+      "dtype": "torch.int64",
+      "sha256": "463feb90420f447a6a1e3ae9e35ed4286b05045dff990c61d5681f6243cdc1bf"
+    },
+    "inputs_embeds": {
+      "shape": [
+        16,
+        5120
+      ],
+      "dtype": "torch.float16",
+      "sha256": "b51b7b098a2de481fbfc5c0eec1dd695ad256dfade3959ba6218111fa26e7082"
+    }
+  },
+  "logits_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "state": [
+    {
+      "layer": "language_model.model.layers.0.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.0.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.1.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.2.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "07dd51fc5c5cb02ad5e4a80d4d056eb4a5231fbb2ecdf484f06960a5dbbeed26"
+    },
+    {
+      "layer": "language_model.model.layers.0.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.0.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.1.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.2.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "80712581fb01ce5baa62d4e01c50f9de0427e9ed6ac8418695769f7cf689ca6a"
+    },
+    {
+      "layer": "language_model.model.layers.4.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.4.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.5.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.6.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "30273362a1d9f87c17802769986391fe9afeab697941d7151ea5800c5465097a"
+    },
+    {
+      "layer": "language_model.model.layers.4.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.4.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.5.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.6.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "e588f0b60ade91d8a8d3fa30fb859100c50de5580b2d46236d2599bcb16b2e1b"
+    },
+    {
+      "layer": "language_model.model.layers.8.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.8.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.9.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.10.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "569f136b1dec28f382a6d96e96805544938aa0c9055ff0a8fe790acdfde3a0b1"
+    },
+    {
+      "layer": "language_model.model.layers.8.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.8.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.9.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.10.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "e6ed193909196c2475b21bdced6963305016292fb0c31c234de3929647df1120"
+    },
+    {
+      "layer": "language_model.model.layers.12.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.12.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.13.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.14.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "389ded6e676050d3dfc2d8bbfa830fdd0735e047ba756a1c059fc54cba523d33"
+    },
+    {
+      "layer": "language_model.model.layers.12.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.12.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.13.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.14.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "573ecc28b981841e2044f22a81ea47bcedd4b48591a0327ab3d7fae4f199fad0"
+    },
+    {
+      "layer": "language_model.model.layers.16.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.16.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.17.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.18.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "fbe49ac47a8b1a09c69cbea47f93a98d068f7c06c3fda283020b4309a25edd6e"
+    },
+    {
+      "layer": "language_model.model.layers.16.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.16.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.17.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.18.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "ad1e503576ad9d7f5840af57c36022ff437f075050f951e5d4f57733afee19cd"
+    },
+    {
+      "layer": "language_model.model.layers.20.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.20.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.21.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.22.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "878d5a76cf6ff2fd01c9d6108fc9b0e59e3e1a33257cde0f291112dbbd35aca2"
+    },
+    {
+      "layer": "language_model.model.layers.20.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.20.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.21.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.22.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "6c3594c2e1a832dc201a213ebe4f85552a4d0634d65df88e5b719fb1f6b6c5bf"
+    },
+    {
+      "layer": "language_model.model.layers.24.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.24.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.25.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.26.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "f0a130dc9bbc1867f0b77eae90122eaa16a4fd737b5cc137841b94a754e24fa7"
+    },
+    {
+      "layer": "language_model.model.layers.24.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.24.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.25.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.26.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "3b0404f03897151109789ed5c7e354ab84654b362e3898ce442279b6891a64c3"
+    },
+    {
+      "layer": "language_model.model.layers.28.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.28.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.29.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.30.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "4744b7fabbce108d563692429d543c98659e4aab9a8e0334f7b6edfbdca3705b"
+    },
+    {
+      "layer": "language_model.model.layers.28.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.28.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.29.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.30.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "b17ac657c9ce9cec85de7e1bb1c0665867d309f98513e73d7268302ff42a666b"
+    },
+    {
+      "layer": "language_model.model.layers.32.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.32.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.33.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.34.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "5266b867bb826889a9bc1542535836eb7c5d2482f5c9069ab40f5b23d56abdb2"
+    },
+    {
+      "layer": "language_model.model.layers.32.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.32.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.33.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.34.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "c490fc19124c4e03b77046a2f2a3a2dde90a7bd0a79e7dbf50ddf8159d196073"
+    },
+    {
+      "layer": "language_model.model.layers.36.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.36.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.37.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.38.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "6109da72c38f39a4819b0f82af4c75f64c94ae6bcb7dec457e5d392aac382272"
+    },
+    {
+      "layer": "language_model.model.layers.36.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.36.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.37.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.38.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "243e6664cf7bdf3b03a3174beb6793c2b1c29b644bf096c96f7badb2926e6643"
+    },
+    {
+      "layer": "language_model.model.layers.40.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.40.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.41.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.42.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "a3b35d5692ec8f2f26de76f9cd5132466869d55fb0013c347b66d4c39053e2cf"
+    },
+    {
+      "layer": "language_model.model.layers.40.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.40.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.41.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.42.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "d3ce5dc4afd69d9ce213718e6433f8564acf0a2578344808ff5387650732e071"
+    },
+    {
+      "layer": "language_model.model.layers.44.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.44.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.45.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.46.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "d5174d8e83dca4518725318c5142fc19a758f0e2264596dd605bb2ce7d0c4bf0"
+    },
+    {
+      "layer": "language_model.model.layers.44.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.44.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.45.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.46.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "0d049f8849b459d6542f06f586cd9a687e87b652b691ec6e2ad67c1474d68d31"
+    },
+    {
+      "layer": "language_model.model.layers.48.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.48.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.49.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.50.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "765926a93aca42db0c896a27ed2d71dceea51ffea4cd2d3ffb0df3a3c14d296e"
+    },
+    {
+      "layer": "language_model.model.layers.48.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.48.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.49.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.50.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "f02f4144607aee032ea44fcc49033f161a6777e6b37bed08e05a92c054938873"
+    },
+    {
+      "layer": "language_model.model.layers.52.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.52.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.53.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.54.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "86e203da36962026fe914333e2a5ba5a9c83f3fad7241af29e04b60401dba53e"
+    },
+    {
+      "layer": "language_model.model.layers.52.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.52.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.53.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.54.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "4c5e587ecfad5b266d22ead408562c450b697aad38ad0b6ab93a163d3278cc0a"
+    },
+    {
+      "layer": "language_model.model.layers.56.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.56.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.57.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.58.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "5d6ddd5db941b6f5e2140f6cee915bbc6d7b10449f7a1cae8d78b802ee879164"
+    },
+    {
+      "layer": "language_model.model.layers.56.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.56.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.57.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.58.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "038a619087ffd10ea5ec912d21cb85573ae3969b078c3b940505dbc3f5f3c03b"
+    },
+    {
+      "layer": "language_model.model.layers.60.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.60.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.61.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        },
+        {
+          "layer": "language_model.model.layers.62.linear_attn",
+          "kind": "GDN",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        6,
+        10240
+      ],
+      "stride": [
+        1638400,
+        10240,
+        1
+      ],
+      "dtype": "torch.float16",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 5898240,
+      "before_sha256": "3fcab4aecc2f252fd7dacda770c6f8f50c57e00787221f22903c90b9027a268a"
+    },
+    {
+      "layer": "language_model.model.layers.60.linear_attn",
+      "kind": "GDN",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.60.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.61.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        },
+        {
+          "layer": "language_model.model.layers.62.linear_attn",
+          "kind": "GDN",
+          "part": 1
+        }
+      ],
+      "shape": [
+        205,
+        48,
+        128,
+        128
+      ],
+      "stride": [
+        819200,
+        16384,
+        128,
+        1
+      ],
+      "dtype": "torch.float32",
+      "active_indices": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        47,
+        48,
+        51,
+        52,
+        53,
+        57,
+        58,
+        61,
+        62,
+        65,
+        66,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "saved_bytes": 150994944,
+      "before_sha256": "c6782d94cd3b32e406b43e159718c6efdcc0a81553bf8393ccdba1663a90df93"
+    },
+    {
+      "layer": "language_model.model.layers.3.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.3.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "f655f339be4763b0181497205742a3c39d960ffbd722fd19643eaaba94ae44b4"
+    },
+    {
+      "layer": "language_model.model.layers.7.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.7.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "0df07fb7782838ffc82a0eec3bb74f38b58e531009d14627b0834070cacf914a"
+    },
+    {
+      "layer": "language_model.model.layers.11.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.11.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "d2d2668ab3a0aed4e757630bb18f6ae7fb49ddaab50ec4fb1215b01644e274c8"
+    },
+    {
+      "layer": "language_model.model.layers.15.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.15.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "f0ed867d03c90370e46c729b88ad114c07eb50ca4148e83f52908732c39832cf"
+    },
+    {
+      "layer": "language_model.model.layers.19.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.19.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "804c629aac1da3ad1e4bde51f4e8742292acf1715ec00cd9a750c9dcdf9f6ce5"
+    },
+    {
+      "layer": "language_model.model.layers.23.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.23.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "791ccf80130050810acb5183d5284ef8aa80ac3ab133b868e8aa51a230d73a77"
+    },
+    {
+      "layer": "language_model.model.layers.27.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.27.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "f2618a314cc86eed601f759668b921702e448dd64c2396e08ef2e27351552e10"
+    },
+    {
+      "layer": "language_model.model.layers.31.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.31.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "fe83cb7b8231cb84e7ad80119b2016eda106f7b9f7a4d1cc0fc67e53bdf72fed"
+    },
+    {
+      "layer": "language_model.model.layers.35.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.35.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "df9f9f9cbc8fdb5ba37600aba2a14a0957b7c1d7007813220445e45e6dcd7803"
+    },
+    {
+      "layer": "language_model.model.layers.39.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.39.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "60eeef72c97b80c8a35adb37f10552b533eda7253b4813bcf6bfe9aa436e28fc"
+    },
+    {
+      "layer": "language_model.model.layers.43.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.43.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "ff3ecd04a525a531c342feaba432806d7bee4debb9c0323bb4565f36541e8694"
+    },
+    {
+      "layer": "language_model.model.layers.47.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.47.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "31d0a13edc1c6928d33403e696bc4fdec1c43cc5f7e9461311f8e8dde373282e"
+    },
+    {
+      "layer": "language_model.model.layers.51.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.51.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "b4fbd3f04618b3a29724e19c145d439ec16191ed5cfc540a539ac7032daed590"
+    },
+    {
+      "layer": "language_model.model.layers.55.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.55.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "1073581b30068ced26e8b9067ac92f49516823d619b285f1c5fa9895788e56ee"
+    },
+    {
+      "layer": "language_model.model.layers.59.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.59.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "b5c2a1bfcc4504963b81bf244faf3c5786af8da0379e196e8e6de9d5eca1b4d6"
+    },
+    {
+      "layer": "language_model.model.layers.63.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "language_model.model.layers.63.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "0a6df2cd28fea731e00556344be92c3ece25961edb952745cbf81684c7587766"
+    },
+    {
+      "layer": "mtp.layers.0.self_attn.attn",
+      "kind": "attention",
+      "owners": [
+        {
+          "layer": "mtp.layers.0.self_attn.attn",
+          "kind": "attention",
+          "part": 0
+        }
+      ],
+      "shape": [
+        205,
+        4,
+        1600,
+        512
+      ],
+      "stride": [
+        3276800,
+        512,
+        2048,
+        1
+      ],
+      "dtype": "torch.uint8",
+      "active_indices": [
+        13,
+        14,
+        15,
+        31,
+        32,
+        33,
+        49,
+        50,
+        54,
+        67,
+        68,
+        75
+      ],
+      "saved_bytes": 39321600,
+      "before_sha256": "2c56533b0238e03cc464c54aadaa50951a2610d46a7c2f9ed626b4472067c4db"
+    }
+  ],
+  "restored_state_sha256": "29cb1ccdd83c8a2f3f54657a1559b0bbdbf45519b699164fb4df6002db34e7d0",
+  "routes": {
+    "native": {
+      "shape": [
+        16,
+        248320
+      ],
+      "sha256": "821ae84a38fcb84b63b530461b16cdfae57c06e3295b1cba4925922fbd0f0b5c",
+      "mutated_model_inputs": [],
+      "actual_routes": {
+        "native": 16
+      },
+      "local_attention_checks": [],
+      "local_original_tolerance_pass": true,
+      "execution": "new XPU graph replay of actual verification batch, with native shadow attention",
+      "initial_state_verified_sha256": "29cb1ccdd83c8a2f3f54657a1559b0bbdbf45519b699164fb4df6002db34e7d0"
+    },
+    "native-repeat": {
+      "shape": [
+        16,
+        248320
+      ],
+      "sha256": "821ae84a38fcb84b63b530461b16cdfae57c06e3295b1cba4925922fbd0f0b5c",
+      "mutated_model_inputs": [],
+      "actual_routes": {
+        "native": 16
+      },
+      "local_attention_checks": [],
+      "local_original_tolerance_pass": true,
+      "execution": "new XPU graph replay of actual verification batch, with native shadow attention",
+      "initial_state_verified_sha256": "29cb1ccdd83c8a2f3f54657a1559b0bbdbf45519b699164fb4df6002db34e7d0"
+    },
+    "m04": {
+      "shape": [
+        16,
+        248320
+      ],
+      "sha256": "45e73495e8f643b9fcb7eaa639fc8105cd5b2e9df9d8986d8793d4b13a29b823",
+      "mutated_model_inputs": [],
+      "actual_routes": {
+        "M04": 16
+      },
+      "local_attention_checks": [
+        [
+          0.001953125,
+          0.0,
+          0.0
+        ],
+        [
+          0.001953125,
+          0.0,
+          0.0
+        ],
+        [
+          0.001953125,
+          0.0,
+          0.0
+        ],
+        [
+          0.00390625,
+          0.0,
+          0.0
+        ],
+        [
+          0.00390625,
+          0.0,
+          0.0
+        ],
+        [
+          0.00390625,
+          0.0,
+          0.0
+        ],
+        [
+          0.0078125,
+          0.0,
+          0.0
+        ],
+        [
+          0.015625,
+          0.0,
+          0.0
+        ],
+        [
+          0.00390625,
+          0.0,
+          0.0
+        ],
+        [
+          0.0078125,
+          0.0,
+          0.0
+        ],
+        [
+          0.0078125,
+          0.0,
+          0.0
+        ],
+        [
+          0.015625,
+          0.0,
+          0.0
+        ],
+        [
+          0.015625,
+          0.0,
+          0.0
+        ],
+        [
+          0.015625,
+          0.0,
+          0.0
+        ],
+        [
+          0.03125,
+          0.0,
+          0.0
+        ],
+        [
+          0.015625,
+          0.0,
+          0.0
+        ]
+      ],
+      "local_original_tolerance_pass": true,
+      "execution": "new XPU graph replay of actual verification batch, with native shadow attention",
+      "initial_state_verified_sha256": "29cb1ccdd83c8a2f3f54657a1559b0bbdbf45519b699164fb4df6002db34e7d0"
+    },
+    "onednn": {
+      "shape": [
+        16,
+        248320
+      ],
+      "sha256": "821ae84a38fcb84b63b530461b16cdfae57c06e3295b1cba4925922fbd0f0b5c",
+      "mutated_model_inputs": [],
+      "actual_routes": {
+        "native": 16
+      },
+      "local_attention_checks": [],
+      "local_original_tolerance_pass": true,
+      "execution": "new XPU graph replay of actual verification batch, with native shadow attention",
+      "initial_state_verified_sha256": "29cb1ccdd83c8a2f3f54657a1559b0bbdbf45519b699164fb4df6002db34e7d0"
+    },
+    "combined": {
+      "shape": [
+        16,
+        248320
+      ],
+      "sha256": "45e73495e8f643b9fcb7eaa639fc8105cd5b2e9df9d8986d8793d4b13a29b823",
+      "mutated_model_inputs": [],
+      "actual_routes": {
+        "M04": 16
+      },
+      "local_attention_checks": [
+        [
+          0.001953125,
+          0.0,
+          0.0
+        ],
+        [
+          0.001953125,
+          0.0,
+          0.0
+        ],
+        [
+          0.001953125,
+          0.0,
+          0.0
+        ],
+        [
+          0.00390625,
+          0.0,
+          0.0
+        ],
+        [
+          0.00390625,
+          0.0,
+          0.0
+        ],
+        [
+          0.00390625,
+          0.0,
+          0.0
+        ],
+        [
+          0.0078125,
+          0.0,
+          0.0
+        ],
+        [
+          0.015625,
+          0.0,
+          0.0
+        ],
+        [
+          0.00390625,
+          0.0,
+          0.0
+        ],
+        [
+          0.0078125,
+          0.0,
+          0.0
+        ],
+        [
+          0.0078125,
+          0.0,
+          0.0
+        ],
+        [
+          0.015625,
+          0.0,
+          0.0
+        ],
+        [
+          0.015625,
+          0.0,
+          0.0
+        ],
+        [
+          0.015625,
+          0.0,
+          0.0
+        ],
+        [
+          0.03125,
+          0.0,
+          0.0
+        ],
+        [
+          0.015625,
+          0.0,
+          0.0
+        ]
+      ],
+      "local_original_tolerance_pass": true,
+      "execution": "new XPU graph replay of actual verification batch, with native shadow attention",
+      "initial_state_verified_sha256": "29cb1ccdd83c8a2f3f54657a1559b0bbdbf45519b699164fb4df6002db34e7d0"
+    }
+  },
+  "full_storage_snapshots": [],
+  "selected_early_targets": [],
+  "comparisons": {
+    "native-repeat": {
+      "max_abs": 0.0,
+      "rms": 0.0,
+      "kl_native_to_route_mean": 0.0,
+      "rows": [
+        {
+          "row": 0,
+          "native_top1": 15,
+          "route_top1": 15,
+          "native_margin": 7.1796875,
+          "route_margin": 7.1796875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 1,
+          "native_top1": 16392,
+          "route_top1": 16392,
+          "native_margin": 0.9921875,
+          "route_margin": 0.9921875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 2,
+          "native_top1": 279,
+          "route_top1": 279,
+          "native_margin": 1.1875,
+          "route_margin": 1.1875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 3,
+          "native_top1": 220,
+          "route_top1": 220,
+          "native_margin": 1.2890625,
+          "route_margin": 1.2890625,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 4,
+          "native_top1": 19,
+          "route_top1": 19,
+          "native_margin": 0.171875,
+          "route_margin": 0.171875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 5,
+          "native_top1": 11,
+          "route_top1": 11,
+          "native_margin": 1.671875,
+          "route_margin": 1.671875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 6,
+          "native_top1": 15,
+          "route_top1": 15,
+          "native_margin": 1.8125,
+          "route_margin": 1.8125,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 7,
+          "native_top1": 15,
+          "route_top1": 15,
+          "native_margin": 6.4921875,
+          "route_margin": 6.4921875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 8,
+          "native_top1": 995,
+          "route_top1": 995,
+          "native_margin": 0.125,
+          "route_margin": 0.125,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 9,
+          "native_top1": 557,
+          "route_top1": 557,
+          "native_margin": 0.8125,
+          "route_margin": 0.8125,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 10,
+          "native_top1": 1381,
+          "route_top1": 1381,
+          "native_margin": 1.3046875,
+          "route_margin": 1.3046875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 11,
+          "native_top1": 3349,
+          "route_top1": 3349,
+          "native_margin": 0.0859375,
+          "route_margin": 0.0859375,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 12,
+          "native_top1": 8323,
+          "route_top1": 8323,
+          "native_margin": 0.1484375,
+          "route_margin": 0.1484375,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 13,
+          "native_top1": 11316,
+          "route_top1": 11316,
+          "native_margin": 0.65625,
+          "route_margin": 0.65625,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 14,
+          "native_top1": 1881,
+          "route_top1": 1881,
+          "native_margin": 2.609375,
+          "route_margin": 2.609375,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 15,
+          "native_top1": 10679,
+          "route_top1": 10679,
+          "native_margin": 3.5,
+          "route_margin": 3.5,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        }
+      ]
+    },
+    "m04": {
+      "max_abs": 0.04296875,
+      "rms": 0.004113003145903349,
+      "kl_native_to_route_mean": 9.473107638768852e-06,
+      "rows": [
+        {
+          "row": 0,
+          "native_top1": 15,
+          "route_top1": 15,
+          "native_margin": 7.1796875,
+          "route_margin": 7.1796875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 1,
+          "native_top1": 16392,
+          "route_top1": 16392,
+          "native_margin": 0.9921875,
+          "route_margin": 0.9921875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 2,
+          "native_top1": 279,
+          "route_top1": 279,
+          "native_margin": 1.1875,
+          "route_margin": 1.1796875,
+          "delta_at_native_winner": -0.015625,
+          "delta_at_route_winner": -0.015625
+        },
+        {
+          "row": 3,
+          "native_top1": 220,
+          "route_top1": 220,
+          "native_margin": 1.2890625,
+          "route_margin": 1.28125,
+          "delta_at_native_winner": -0.015625,
+          "delta_at_route_winner": -0.015625
+        },
+        {
+          "row": 4,
+          "native_top1": 19,
+          "route_top1": 19,
+          "native_margin": 0.171875,
+          "route_margin": 0.171875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 5,
+          "native_top1": 11,
+          "route_top1": 11,
+          "native_margin": 1.671875,
+          "route_margin": 1.6640625,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 6,
+          "native_top1": 15,
+          "route_top1": 15,
+          "native_margin": 1.8125,
+          "route_margin": 1.8125,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 7,
+          "native_top1": 15,
+          "route_top1": 15,
+          "native_margin": 6.4921875,
+          "route_margin": 6.4921875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 8,
+          "native_top1": 995,
+          "route_top1": 995,
+          "native_margin": 0.125,
+          "route_margin": 0.125,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 9,
+          "native_top1": 557,
+          "route_top1": 557,
+          "native_margin": 0.8125,
+          "route_margin": 0.8125,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 10,
+          "native_top1": 1381,
+          "route_top1": 1381,
+          "native_margin": 1.3046875,
+          "route_margin": 1.3046875,
+          "delta_at_native_winner": 0.0078125,
+          "delta_at_route_winner": 0.0078125
+        },
+        {
+          "row": 11,
+          "native_top1": 3349,
+          "route_top1": 3349,
+          "native_margin": 0.0859375,
+          "route_margin": 0.0859375,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 12,
+          "native_top1": 8323,
+          "route_top1": 8323,
+          "native_margin": 0.1484375,
+          "route_margin": 0.15625,
+          "delta_at_native_winner": 0.0078125,
+          "delta_at_route_winner": 0.0078125
+        },
+        {
+          "row": 13,
+          "native_top1": 11316,
+          "route_top1": 11316,
+          "native_margin": 0.65625,
+          "route_margin": 0.65625,
+          "delta_at_native_winner": -0.0078125,
+          "delta_at_route_winner": -0.0078125
+        },
+        {
+          "row": 14,
+          "native_top1": 1881,
+          "route_top1": 1881,
+          "native_margin": 2.609375,
+          "route_margin": 2.625,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 15,
+          "native_top1": 10679,
+          "route_top1": 10679,
+          "native_margin": 3.5,
+          "route_margin": 3.5,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        }
+      ]
+    },
+    "onednn": {
+      "max_abs": 0.0,
+      "rms": 0.0,
+      "kl_native_to_route_mean": 0.0,
+      "rows": [
+        {
+          "row": 0,
+          "native_top1": 15,
+          "route_top1": 15,
+          "native_margin": 7.1796875,
+          "route_margin": 7.1796875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 1,
+          "native_top1": 16392,
+          "route_top1": 16392,
+          "native_margin": 0.9921875,
+          "route_margin": 0.9921875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 2,
+          "native_top1": 279,
+          "route_top1": 279,
+          "native_margin": 1.1875,
+          "route_margin": 1.1875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 3,
+          "native_top1": 220,
+          "route_top1": 220,
+          "native_margin": 1.2890625,
+          "route_margin": 1.2890625,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 4,
+          "native_top1": 19,
+          "route_top1": 19,
+          "native_margin": 0.171875,
+          "route_margin": 0.171875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 5,
+          "native_top1": 11,
+          "route_top1": 11,
+          "native_margin": 1.671875,
+          "route_margin": 1.671875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 6,
+          "native_top1": 15,
+          "route_top1": 15,
+          "native_margin": 1.8125,
+          "route_margin": 1.8125,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 7,
+          "native_top1": 15,
+          "route_top1": 15,
+          "native_margin": 6.4921875,
+          "route_margin": 6.4921875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 8,
+          "native_top1": 995,
+          "route_top1": 995,
+          "native_margin": 0.125,
+          "route_margin": 0.125,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 9,
+          "native_top1": 557,
+          "route_top1": 557,
+          "native_margin": 0.8125,
+          "route_margin": 0.8125,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 10,
+          "native_top1": 1381,
+          "route_top1": 1381,
+          "native_margin": 1.3046875,
+          "route_margin": 1.3046875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 11,
+          "native_top1": 3349,
+          "route_top1": 3349,
+          "native_margin": 0.0859375,
+          "route_margin": 0.0859375,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 12,
+          "native_top1": 8323,
+          "route_top1": 8323,
+          "native_margin": 0.1484375,
+          "route_margin": 0.1484375,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 13,
+          "native_top1": 11316,
+          "route_top1": 11316,
+          "native_margin": 0.65625,
+          "route_margin": 0.65625,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 14,
+          "native_top1": 1881,
+          "route_top1": 1881,
+          "native_margin": 2.609375,
+          "route_margin": 2.609375,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 15,
+          "native_top1": 10679,
+          "route_top1": 10679,
+          "native_margin": 3.5,
+          "route_margin": 3.5,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        }
+      ]
+    },
+    "combined": {
+      "max_abs": 0.04296875,
+      "rms": 0.004113003145903349,
+      "kl_native_to_route_mean": 9.473107638768852e-06,
+      "rows": [
+        {
+          "row": 0,
+          "native_top1": 15,
+          "route_top1": 15,
+          "native_margin": 7.1796875,
+          "route_margin": 7.1796875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 1,
+          "native_top1": 16392,
+          "route_top1": 16392,
+          "native_margin": 0.9921875,
+          "route_margin": 0.9921875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 2,
+          "native_top1": 279,
+          "route_top1": 279,
+          "native_margin": 1.1875,
+          "route_margin": 1.1796875,
+          "delta_at_native_winner": -0.015625,
+          "delta_at_route_winner": -0.015625
+        },
+        {
+          "row": 3,
+          "native_top1": 220,
+          "route_top1": 220,
+          "native_margin": 1.2890625,
+          "route_margin": 1.28125,
+          "delta_at_native_winner": -0.015625,
+          "delta_at_route_winner": -0.015625
+        },
+        {
+          "row": 4,
+          "native_top1": 19,
+          "route_top1": 19,
+          "native_margin": 0.171875,
+          "route_margin": 0.171875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 5,
+          "native_top1": 11,
+          "route_top1": 11,
+          "native_margin": 1.671875,
+          "route_margin": 1.6640625,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 6,
+          "native_top1": 15,
+          "route_top1": 15,
+          "native_margin": 1.8125,
+          "route_margin": 1.8125,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 7,
+          "native_top1": 15,
+          "route_top1": 15,
+          "native_margin": 6.4921875,
+          "route_margin": 6.4921875,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 8,
+          "native_top1": 995,
+          "route_top1": 995,
+          "native_margin": 0.125,
+          "route_margin": 0.125,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 9,
+          "native_top1": 557,
+          "route_top1": 557,
+          "native_margin": 0.8125,
+          "route_margin": 0.8125,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 10,
+          "native_top1": 1381,
+          "route_top1": 1381,
+          "native_margin": 1.3046875,
+          "route_margin": 1.3046875,
+          "delta_at_native_winner": 0.0078125,
+          "delta_at_route_winner": 0.0078125
+        },
+        {
+          "row": 11,
+          "native_top1": 3349,
+          "route_top1": 3349,
+          "native_margin": 0.0859375,
+          "route_margin": 0.0859375,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 12,
+          "native_top1": 8323,
+          "route_top1": 8323,
+          "native_margin": 0.1484375,
+          "route_margin": 0.15625,
+          "delta_at_native_winner": 0.0078125,
+          "delta_at_route_winner": 0.0078125
+        },
+        {
+          "row": 13,
+          "native_top1": 11316,
+          "route_top1": 11316,
+          "native_margin": 0.65625,
+          "route_margin": 0.65625,
+          "delta_at_native_winner": -0.0078125,
+          "delta_at_route_winner": -0.0078125
+        },
+        {
+          "row": 14,
+          "native_top1": 1881,
+          "route_top1": 1881,
+          "native_margin": 2.609375,
+          "route_margin": 2.625,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        },
+        {
+          "row": 15,
+          "native_top1": 10679,
+          "route_top1": 10679,
+          "native_margin": 3.5,
+          "route_margin": 3.5,
+          "delta_at_native_winner": 0.0,
+          "delta_at_route_winner": 0.0
+        }
+      ]
+    }
+  },
+  "status": "PASS_LOCAL_ATTENTION_ORIGINAL_TOLERANCE"
+}

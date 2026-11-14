@@ -1,0 +1,174 @@
+[
+  {
+    "step": 0,
+    "wall_s": 6.367211984001187,
+    "rendered_tokens": 720,
+    "usage": {
+      "prompt_tokens": 720,
+      "total_tokens": 773,
+      "completion_tokens": 53,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "created_cache_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 10
+      }
+    },
+    "finish_reason": "tool_calls",
+    "tool_names": [
+      "list_files",
+      "read_file"
+    ],
+    "native_delta": {
+      "prompt_tokens": 720.0,
+      "cached_tokens": 0.0,
+      "prefill_tokens": 720.0,
+      "prefill_seconds": 5.734061366001697,
+      "decode_seconds": 0.6224666439993598,
+      "generation_tokens": 53.0,
+      "draft_tokens": 48.0,
+      "accepted_tokens": 39.0,
+      "preemptions": 0.0,
+      "completed": 1.0,
+      "verify_rounds": 16.0
+    },
+    "metrics": {
+      "time_to_first_token_ms": 5734.061366001697,
+      "generation_time_ms": 622.4666439993598,
+      "queue_time_ms": 0.018250000721309334,
+      "mean_itl_ms": 11.970512384603072,
+      "tokens_per_second": 8.337885071317602,
+      "speculative_decoding": null
+    }
+  },
+  {
+    "step": 1,
+    "wall_s": 1.2618329910001194,
+    "rendered_tokens": 963,
+    "usage": {
+      "prompt_tokens": 963,
+      "total_tokens": 1026,
+      "completion_tokens": 63,
+      "prompt_tokens_details": {
+        "cached_tokens": 512,
+        "created_cache_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 7
+      }
+    },
+    "finish_reason": "tool_calls",
+    "tool_names": [
+      "read_file",
+      "read_file"
+    ],
+    "native_delta": {
+      "prompt_tokens": 963.0,
+      "cached_tokens": 512.0,
+      "prefill_tokens": 451.0,
+      "prefill_seconds": 0.45784948299842654,
+      "decode_seconds": 0.7721455489991058,
+      "generation_tokens": 63.0,
+      "draft_tokens": 57.0,
+      "accepted_tokens": 44.0,
+      "preemptions": 0.0,
+      "completed": 1.0,
+      "verify_rounds": 19.0
+    },
+    "metrics": {
+      "time_to_first_token_ms": 457.84948299842654,
+      "generation_time_ms": 772.1455489991058,
+      "queue_time_ms": 0.0049100017349701375,
+      "mean_itl_ms": 12.453960467727512,
+      "tokens_per_second": 51.219719072919304,
+      "speculative_decoding": null
+    }
+  },
+  {
+    "step": 2,
+    "wall_s": 697.5929137130006,
+    "rendered_tokens": 1418,
+    "usage": {
+      "prompt_tokens": 1418,
+      "total_tokens": 17802,
+      "completion_tokens": 16384,
+      "prompt_tokens_details": {
+        "cached_tokens": 768,
+        "created_cache_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 16384
+      }
+    },
+    "finish_reason": "length",
+    "tool_names": [],
+    "native_delta": {
+      "prompt_tokens": 1418.0,
+      "cached_tokens": 768.0,
+      "prefill_tokens": 650.0,
+      "prefill_seconds": 0.5363578420001431,
+      "decode_seconds": 697.0156128999988,
+      "generation_tokens": 16384.0,
+      "draft_tokens": 47952.0,
+      "accepted_tokens": 399.0,
+      "preemptions": 0.0,
+      "completed": 1.0,
+      "verify_rounds": 15984.0
+    },
+    "metrics": {
+      "time_to_first_token_ms": 536.3578420001431,
+      "generation_time_ms": 697015.6128999988,
+      "queue_time_ms": 0.004940000508213416,
+      "mean_itl_ms": 42.545053586034236,
+      "tokens_per_second": 23.48785565406981,
+      "speculative_decoding": null
+    }
+  },
+  {
+    "step": 3,
+    "wall_s": 17.378775274999498,
+    "rendered_tokens": 17826,
+    "usage": {
+      "prompt_tokens": 17826,
+      "total_tokens": 18566,
+      "completion_tokens": 740,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280,
+        "created_cache_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      }
+    },
+    "finish_reason": "tool_calls",
+    "tool_names": [
+      "write_file"
+    ],
+    "native_delta": {
+      "prompt_tokens": 17826.0,
+      "cached_tokens": 1280.0,
+      "prefill_tokens": 16546.0,
+      "prefill_seconds": 8.039405415998772,
+      "decode_seconds": 9.306339588998526,
+      "generation_tokens": 740.0,
+      "draft_tokens": 633.0,
+      "accepted_tokens": 528.0,
+      "preemptions": 0.0,
+      "completed": 1.0,
+      "verify_rounds": 211.0
+    },
+    "metrics": {
+      "time_to_first_token_ms": 8039.405415998772,
+      "generation_time_ms": 9306.339588998526,
+      "queue_time_ms": 0.01823000275180675,
+      "mean_itl_ms": 12.593152353177977,
+      "tokens_per_second": 42.66175939902302,
+      "speculative_decoding": null
+    }
+  }
+]

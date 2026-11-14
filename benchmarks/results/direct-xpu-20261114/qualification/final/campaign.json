@@ -1,0 +1,67 @@
+{
+  "status": "FAILED",
+  "image_id": "sha256:b56cc2e23b9d9b1a50a38ce8884b06be39afcac85a3b9005dcc98948891edfcd",
+  "baseline_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "baseline_control": false,
+  "linear_group_filters": [],
+  "started_utc": "2026-11-14T15:26:54.150996+00:00",
+  "stages": {
+    "profiler": {
+      "status": "PASS"
+    },
+    "kernels": {
+      "status": "PASS"
+    },
+    "replay": {
+      "status": "PASS"
+    },
+    "startup": {
+      "status": "PASS"
+    },
+    "cow": {
+      "status": "PASS"
+    },
+    "operations": {
+      "status": "PASS"
+    },
+    "agents": {
+      "status": "RUNNING"
+    }
+  },
+  "power_cap_w": 180,
+  "serving_scenario_filters": [],
+  "compilation_cache_root": "/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmark-results/direct-xpu-20261114/release-final-r1/cache",
+  "error": "CalledProcessError(1, ['/usr/bin/python3', '/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmarks/experiments/vllm-033-upgrade/agent-panel/run.py', '--base', 'http://127.0.0.1:8082', '--container', 'b70-v033-candidate', '--image', 'sha256:b56cc2e23b9d9b1a50a38ce8884b06be39afcac85a3b9005dcc98948891edfcd', '--out', '/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmark-results/direct-xpu-20261114/release-final-r1/agents', '--launch', '/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmark-results/direct-xpu-20261114/release-final-r1/launch.json', '--runtime-source', '/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmarks/experiments/vllm-033-upgrade/runtime', '--worker-source', '/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmarks/experiments/vllm-033-upgrade/run-candidate.py'])",
+  "restored_models": {
+    "object": "list",
+    "data": [
+      {
+        "id": "Qwen3.8-27B",
+        "object": "model",
+        "created": 1794673055,
+        "owned_by": "vllm",
+        "root": "/models/checkpoint",
+        "parent": null,
+        "max_model_len": 262144,
+        "permission": [
+          {
+            "id": "modelperm-a33dcc948d906edf",
+            "object": "model_permission",
+            "created": 1794673055,
+            "allow_create_engine": false,
+            "allow_sampling": true,
+            "allow_logprobs": true,
+            "allow_search_indices": false,
+            "allow_view": true,
+            "allow_fine_tuning": false,
+            "organization": "*",
+            "group": null,
+            "is_blocking": false
+          }
+        ]
+      }
+    ]
+  },
+  "production_restored": true,
+  "finished_utc": "2026-11-14T16:17:35.415148+00:00"
+}

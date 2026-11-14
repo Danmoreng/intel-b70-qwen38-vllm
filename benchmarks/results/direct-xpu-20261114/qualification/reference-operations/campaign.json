@@ -1,0 +1,51 @@
+{
+  "status": "FAILED",
+  "image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "baseline_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "baseline_control": true,
+  "linear_group_filters": [],
+  "started_utc": "2026-11-14T13:04:29.294509+00:00",
+  "stages": {
+    "operations": {
+      "status": "PASS"
+    },
+    "agents": {
+      "status": "RUNNING"
+    }
+  },
+  "power_cap_w": 180,
+  "serving_scenario_filters": [],
+  "error": "CalledProcessError(1, ['/usr/bin/python3', '/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmarks/experiments/vllm-033-upgrade/agent-panel/run.py', '--base', 'http://127.0.0.1:8082', '--container', 'b70-v033-candidate', '--image', 'sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1', '--out', '/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmark-results/direct-xpu-20261114/full-baseline-r3/agents', '--launch', '/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmark-results/direct-xpu-20261114/full-baseline-r3/launch.json', '--runtime-source', '/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmarks/experiments/vllm-033-upgrade/runtime', '--worker-source', '/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmarks/experiments/vllm-033-upgrade/run-candidate.py'])",
+  "restored_models": {
+    "object": "list",
+    "data": [
+      {
+        "id": "Qwen3.8-27B",
+        "object": "model",
+        "created": 1794663368,
+        "owned_by": "vllm",
+        "root": "/models/checkpoint",
+        "parent": null,
+        "max_model_len": 262144,
+        "permission": [
+          {
+            "id": "modelperm-ac618fd0d4ddc793",
+            "object": "model_permission",
+            "created": 1794663368,
+            "allow_create_engine": false,
+            "allow_sampling": true,
+            "allow_logprobs": true,
+            "allow_search_indices": false,
+            "allow_view": true,
+            "allow_fine_tuning": false,
+            "organization": "*",
+            "group": null,
+            "is_blocking": false
+          }
+        ]
+      }
+    ]
+  },
+  "production_restored": true,
+  "finished_utc": "2026-11-14T13:36:08.322627+00:00"
+}

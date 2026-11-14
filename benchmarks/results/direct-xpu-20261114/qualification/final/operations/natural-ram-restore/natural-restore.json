@@ -1,0 +1,167 @@
+{
+  "power_cap_w": 180,
+  "method": "Natural GPU prefix eviction by a near-262K competing prompt; production developer mode remains disabled. Reuse the favored history three times to exercise ARC.",
+  "rows": [
+    {
+      "label": "favored-0",
+      "seconds": 25.743843533000472,
+      "ttftSeconds": 25.429442947999632,
+      "usage": {
+        "prompt_tokens": 48058,
+        "total_tokens": 48087,
+        "completion_tokens": 29,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "outputSha256": "907000e5b01091d4fe4b4e58f55afd5faba8dbf80fba4414cfd044f75e2f13d2",
+      "output": "ALPHA-3dbc9ee7 BETA-7a6ec5d1 GAMMA-707bbd33"
+    },
+    {
+      "label": "favored-1",
+      "seconds": 0.7869852620024176,
+      "ttftSeconds": 0.4737545659991156,
+      "usage": {
+        "prompt_tokens": 48058,
+        "total_tokens": 48087,
+        "completion_tokens": 29,
+        "prompt_tokens_details": {
+          "cached_tokens": 47872,
+          "created_cache_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "outputSha256": "907000e5b01091d4fe4b4e58f55afd5faba8dbf80fba4414cfd044f75e2f13d2",
+      "output": "ALPHA-3dbc9ee7 BETA-7a6ec5d1 GAMMA-707bbd33"
+    },
+    {
+      "label": "favored-2",
+      "seconds": 0.7859820619996754,
+      "ttftSeconds": 0.4719901859971287,
+      "usage": {
+        "prompt_tokens": 48058,
+        "total_tokens": 48087,
+        "completion_tokens": 29,
+        "prompt_tokens_details": {
+          "cached_tokens": 47872,
+          "created_cache_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "outputSha256": "907000e5b01091d4fe4b4e58f55afd5faba8dbf80fba4414cfd044f75e2f13d2",
+      "output": "ALPHA-3dbc9ee7 BETA-7a6ec5d1 GAMMA-707bbd33"
+    },
+    {
+      "label": "near-max-context-pressure",
+      "seconds": 331.33337757200206,
+      "ttftSeconds": 331.020453070003,
+      "usage": {
+        "prompt_tokens": 261929,
+        "total_tokens": 261943,
+        "completion_tokens": 14,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "outputSha256": "3342ebb48dda8f14b8b6f1ee597f8834e7271fdfd974e6ffeda59c37a126128a",
+      "output": "ORANGE-pressure-layout-69f630b3"
+    },
+    {
+      "label": "restored-after-pressure",
+      "seconds": 2.9560289609980828,
+      "ttftSeconds": 2.6950988929966115,
+      "usage": {
+        "prompt_tokens": 48058,
+        "total_tokens": 48087,
+        "completion_tokens": 29,
+        "prompt_tokens_details": {
+          "cached_tokens": 44800,
+          "created_cache_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "outputSha256": "907000e5b01091d4fe4b4e58f55afd5faba8dbf80fba4414cfd044f75e2f13d2",
+      "output": "ALPHA-3dbc9ee7 BETA-7a6ec5d1 GAMMA-707bbd33"
+    }
+  ],
+  "restore_delta": {
+    "vllm:kv_offload_total_bytes_total": 1935933440.0,
+    "vllm:kv_offload_total_bytes_total:CPU_to_GPU": 1716649984.0,
+    "vllm:kv_offload_total_bytes_total:GPU_to_CPU": 219283456.0,
+    "vllm:kv_offload_total_bytes_created": 0.0,
+    "vllm:kv_offload_total_bytes_created:CPU_to_GPU": 0.0,
+    "vllm:kv_offload_total_bytes_created:GPU_to_CPU": 0.0,
+    "vllm:kv_offload_total_time_total": 0.1489281250000012,
+    "vllm:kv_offload_total_time_total:CPU_to_GPU": 0.1403125,
+    "vllm:kv_offload_total_time_total:GPU_to_CPU": 0.008615625000000904,
+    "vllm:kv_offload_total_time_created": 0.0,
+    "vllm:kv_offload_total_time_created:CPU_to_GPU": 0.0,
+    "vllm:kv_offload_total_time_created:GPU_to_CPU": 0.0,
+    "vllm:kv_offload_size_bucket": 2.0,
+    "vllm:kv_offload_size_bucket:CPU_to_GPU": 1.0,
+    "vllm:kv_offload_size_count": 2.0,
+    "vllm:kv_offload_size_count:CPU_to_GPU": 1.0,
+    "vllm:kv_offload_size_sum": 1935933440.0,
+    "vllm:kv_offload_size_sum:CPU_to_GPU": 1716649984.0,
+    "vllm:kv_offload_size_bucket:GPU_to_CPU": 1.0,
+    "vllm:kv_offload_size_count:GPU_to_CPU": 1.0,
+    "vllm:kv_offload_size_sum:GPU_to_CPU": 219283456.0,
+    "vllm:kv_offload_size_created": 0.0,
+    "vllm:kv_offload_size_created:CPU_to_GPU": 0.0,
+    "vllm:kv_offload_size_created:GPU_to_CPU": 0.0,
+    "vllm:kv_offload_cpu_cache_usage_perc": 0.0,
+    "vllm:kv_offload_cpu_cache_write_usage_perc": 0.0,
+    "vllm:kv_offload_cpu_cache_read_usage_perc": 0.0,
+    "vllm:kv_offload_cpu_allocation_size_bucket": 10.0,
+    "vllm:kv_offload_cpu_allocation_size_count": 1.0,
+    "vllm:kv_offload_cpu_allocation_size_sum": 4.0,
+    "vllm:kv_offload_cpu_allocation_size_created": 0.0,
+    "vllm:kv_offload_load_bytes_total": 1716649984.0,
+    "vllm:kv_offload_load_bytes_created": 1794670886.8696725,
+    "vllm:kv_offload_load_time_total": 0.1403125,
+    "vllm:kv_offload_load_time_created": 1794670886.8696878,
+    "vllm:kv_offload_load_size_bucket": 1.0,
+    "vllm:kv_offload_load_size_count": 1.0,
+    "vllm:kv_offload_load_size_sum": 1716649984.0,
+    "vllm:kv_offload_load_size_created": 1794670886.8697095,
+    "vllm:kv_offload_store_bytes_total": 219283456.0,
+    "vllm:kv_offload_store_bytes_created": 0.0,
+    "vllm:kv_offload_store_time_total": 0.008615625000000904,
+    "vllm:kv_offload_store_time_created": 0.0,
+    "vllm:kv_offload_store_size_bucket": 1.0,
+    "vllm:kv_offload_store_size_count": 1.0,
+    "vllm:kv_offload_store_size_sum": 219283456.0,
+    "vllm:kv_offload_store_size_created": 0.0,
+    "vllm:kv_offload_lookup_sync_delay_seconds_bucket": 10.0,
+    "vllm:kv_offload_lookup_sync_delay_seconds_count": 1.0,
+    "vllm:kv_offload_lookup_sync_delay_seconds_sum": 7.224000000860542e-05,
+    "vllm:kv_offload_lookup_sync_delay_seconds_created": 0.0,
+    "vllm:kv_offload_config_info": 0.0,
+    "vllm:prefix_cache_queries_total": 48058.0,
+    "vllm:prefix_cache_queries_created": 0.0,
+    "vllm:prefix_cache_hits_total": 0.0,
+    "vllm:prefix_cache_hits_created": 0.0,
+    "vllm:external_prefix_cache_queries_total": 48058.0,
+    "vllm:external_prefix_cache_queries_created": 0.0,
+    "vllm:external_prefix_cache_hits_total": 44800.0,
+    "vllm:external_prefix_cache_hits_created": 0.0
+  },
+  "preemptions": 0.0,
+  "correct_markers": true,
+  "same_answer": true,
+  "passed": true
+}

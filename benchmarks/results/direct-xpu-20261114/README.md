@@ -4,12 +4,18 @@ The selected candidate builds directly on official vLLM 0.33 XPU with
 **unmodified PyTorch 2.15**, matching Triton/XPU kernels, latest selected Intel
 userspace and a targeted upstream PTI fix. See the
 [build instructions](../../../engine/direct-xpu/README.md).
-The earlier Torch2.15/PTI-fixed release child passed CPU integrity, strict launcher preflight,
-profiler replay, the full original kernel suite, four model-state replay cases
-and startup/decode. [Receipts](qualification/core/campaign.json) identify that
-earlier image. Its later media gate exposed a Transformers5.23 compatibility
-regression. The selected clean build uses5.22.2; its full exact-image
-qualification remains pending. Production manifests still identify v7.
+**Not approved for production.** The clean Transformers 5.22.2 release child
+passes integrity/preflight, profiler replay, the complete original kernel
+suite, four model-state replay cases, startup, concurrent COW, all twelve
+operational groups and worker restart. Its first coding task then produces
+repetitive output and times out. The [final campaign](qualification/final/campaign.json)
+retains that failure and the restored v7 production identity. The serving
+comparison and separate quality capture have not run on this final child.
+
+The [earlier core receipts](qualification/core/campaign.json) identify a
+different image with Transformers 5.23. That image's media failure led to the
+matched 5.22.2 compatibility control below; its core pass is not substituted
+for final-image evidence.
 
 ## Confirmed graph/profiler regression and correction
 
@@ -102,7 +108,9 @@ not evidence of a 2.15 regression. The [fresh-cache v7 repeat](qualification/bas
 preemption. The original mixed-load miss remains recorded; bounded cache
 retention is not guaranteed after arbitrary prior workloads. Both arms use
 the same fresh-worker ordering for the final comparison, with unchanged
-assertions. The candidate result remains pending.
+assertions. The [final candidate](qualification/final/operations/operations.json)
+also passes this fresh-worker RAM test, with the same 44,800 host hits and
+1,716,649,984 H2D bytes, and all other operational groups.
 
 ## Fresh coding-task reference
 
@@ -112,8 +120,28 @@ eight hidden checks pass. [All task results](qualification/baseline-agents/summa
 are retained, with no repaired code, hidden feedback or selected replacement
 run. The [pre-candidate addendum](qualification/contract-addendum.json) records
 that the reference4/4 target failed; the candidate still must solve all four
-cases. Candidate task results remain pending. The full serving measurement
-runs separately after this failure, preserving the same arm's compiler caches.
+cases. The final candidate fails before completing its first task, as recorded
+below. The reference's full serving measurement ran separately after its task
+failure, preserving the same arm's compiler caches.
+
+## Final candidate coding failure
+
+The first `rangeset-202611117` task reads the project correctly, then its third
+request emits 16,384 reasoning tokens, ending with **15,692 repetitions of
+`duct`**. It subsequently writes code but exceeds the unchanged 900-second
+task limit before natural completion and independent grading.
+[Failure receipt](qualification/final/coding-failure.json) and
+[compressed raw response](qualification/final/agents/rangeset-202611117/response-002.json.gz)
+retain the observation. Only one of four planned tasks was attempted; this is
+not a four-task independent acceptance score. No repaired solution, changed
+seed or replacement run is used to erase it.
+
+This blocks release. The responsible component and repeatability across
+controlled images are still under investigation; the observation alone does
+not identify a PyTorch defect. A separate
+[bounded request probe](../../experiments/vllm-033-upgrade/run-frozen-request-probe.py)
+replays identical captured messages and sampling across images with a shorter
+output cap. That diagnostic cannot replace the original task result.
 
 ## Transformers compatibility exception
 

@@ -1,0 +1,72 @@
+{
+  "id": "chatcmpl-bfa8cf7fef9765cc",
+  "object": "chat.completion",
+  "created": 1794673469,
+  "model": "Qwen3.8-27B",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "refusal": null,
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [
+          {
+            "id": "chatcmpl-tool-9530527f307f49de",
+            "type": "function",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\": \"tests/test_visible.py\"}"
+            }
+          },
+          {
+            "id": "chatcmpl-tool-90322360450b6d49",
+            "type": "function",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\": \"README.txt\"}"
+            }
+          }
+        ],
+        "reasoning": "Read the test and README.\n"
+      },
+      "logprobs": null,
+      "finish_reason": "tool_calls",
+      "stop_reason": null,
+      "token_ids": null,
+      "routed_experts": null,
+      "weight_versions": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.33.0-c956cfea",
+  "usage": {
+    "prompt_tokens": 963,
+    "total_tokens": 1026,
+    "completion_tokens": 63,
+    "prompt_tokens_details": {
+      "cached_tokens": 512,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 7
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "prompt_text": null,
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": {
+    "time_to_first_token_ms": 461.5028469997924,
+    "generation_time_ms": 761.6097270001774,
+    "queue_time_ms": 0.0047100002120714635,
+    "mean_itl_ms": 12.28402785484157,
+    "tokens_per_second": 51.507932580539034,
+    "speculative_decoding": null
+  }
+}

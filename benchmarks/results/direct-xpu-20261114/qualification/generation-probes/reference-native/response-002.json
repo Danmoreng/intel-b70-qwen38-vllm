@@ -1,0 +1,54 @@
+{
+  "id": "chatcmpl-a18a89f1ee3ec4dc",
+  "object": "chat.completion",
+  "created": 1794673470,
+  "model": "Qwen3.8-27B",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "refusal": null,
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "reasoning": "Implement the normalized RangeSet. Important details:\n\n- The constructor takes an iterable of (start, end) pairs. Should we validate the types? Probably yes \u2014 validate the types of each pair, and if start > end, ValueError. Empty ranges (start==end) are discarded. The input must not be aliased \u2014 copy the tuples.\n- ranges() returns a new list of tuples (tuples are immutable so they're fine, but the list must be new).\n- add: validate; if start==end, do nothing; union and normalize; don't mutate the state if invalid (validate first, and since computation is pure, only assign at the end).\n- remove: validate; if start==end, do nothing; perform subtraction while preserving both halves.\n- contains: strictly validate the int type; start<=point<end.\n- clip: validate; if start==end, empty; return a normalized list of the intersections \u2014 the result of intersecting with a single interval is automatically sorted and non-adjacent? Intersection with a single interval: fragments of the normalized set that intersect [start,end). Can two intersection fragments become adjacent? If the original fragments were non-adjacent (b1 < a2 - 1, i.e., at least one integer gap), the intersection preserves the gap. If b1 == a2 they would have already been merged. So fragments can't become adjacent: a2 >= b1+2 \u2192 after clipping, a2' >= a2 >= b1+2 > b1'. So no re-merging needed. Actually, if there was originally a gap of exactly 1 (b1+1 == a2), they'd be adjacent... but wait, in normalization adjacency is merged: b1 and a2 with a2 == b1 are merged. Gap of zero integers: a2 = b1+1 \u2192 adjacent, already merged. So after clipping, gaps are preserved. No problem, just return the list.\n\nType checking: strict int, excluding bool. Check `type(x) is int`.\n\nAlso, the constructor should handle non-pair inputs \u2014 for non-iterables, TypeError probably arises naturally. Should we check that each element is a tuple/list of length 2? Just iterate with unpacking and let ValueError be raised for incorrect lengths? That's fine.\n\nEdge case: if clip is called with start > end, should we raise ValueError? The spec says \"start > end raises ValueError\" generally. Yes, apply it to clip too.\n\nWrite the code:\n\n```python\nclass RangeSet:\n    def __init__(self, ranges=()):\n        parsed = []\n        for pair in ranges:\n            start, end = pair\n            self._check_bounds(start, end)\n            if start < end:\n                parsed.append((start, end))\n        self._ranges = self._normalize(parsed)\n\n    @staticmethod\n    def _check_ints(*values):\n        for v in values:\n            if type(v) is not int:\n                raise TypeError(...)\n\n    @staticmethod\n    def _check_bounds(start, end):\n        _check_ints(start, end)\n        if start > end:\n            raise ValueError\n\n    @staticmethod\n    def _normalize(ranges):\n        out = []\n        for a, b in sorted(ranges):\n            if out and a <= out[-1][1]:\n                out[-1] = (out[-1][0], max(out[-1][1], b))\n            else:\n                out.append((a, b))\n        return out\n```\n\nMerging condition: a <= out[-1][1] covers both overlap and adjacency (a == prev's end \u2192 adjacent).\n\nadd:\n```python\ndef add(self, start, end):\n    self._check_bounds(start, end)\n    if start >= end:\n        return\n    self._ranges = self._normalize(self._ranges + [(start, end)])\n```\n\nremove:\n```python\ndef remove(self, start, end):\n    self._check_bounds(start, end)\n    if start >= end:\n        return\n    out = []\n    for a, b in self._ranges:\n        if b <= start or a >= end:\n            out.append((a, b))\n        else:\n            if a < start:\n                out.append((a, start))\n            if b > end:\n                out.append((end, b))\n    self._ranges = out\n```\nWait: a < start means the left part; but the condition is that the fragment intersects [start, end), i.e., b > start and a < end. Left part: a < start \u2192 keep (a, min(b, start)) = since a < start and it intersects, (a, start). Right part: b > end"
+      },
+      "logprobs": null,
+      "finish_reason": "length",
+      "stop_reason": null,
+      "token_ids": null,
+      "routed_experts": null,
+      "weight_versions": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": "vllm-0.33.0-c956cfea",
+  "usage": {
+    "prompt_tokens": 1418,
+    "total_tokens": 2442,
+    "completion_tokens": 1024,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1024
+    }
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "prompt_text": null,
+  "kv_transfer_params": null,
+  "ec_transfer_params": null,
+  "metrics": {
+    "time_to_first_token_ms": 537.7559740009019,
+    "generation_time_ms": 16366.130320999218,
+    "queue_time_ms": 0.005009998858440667,
+    "mean_itl_ms": 15.99817235679298,
+    "tokens_per_second": 60.57778561270148,
+    "speculative_decoding": null
+  }
+}

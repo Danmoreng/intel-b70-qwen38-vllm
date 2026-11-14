@@ -1,0 +1,16 @@
+{
+  "status": "BCS_FAULT_DURING_REFERENCE_IMAGE_RESTORE",
+  "observed_at_berlin": "2026-11-14T11:32:43+01:00",
+  "image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "container": "b70-qwen38-vllm",
+  "host_engine_pid": 101165,
+  "fault": "Engine memory CAT error [18], class=bcs, guc_id=19; engine reset and timed-out job",
+  "candidate_stages_before_restore": [
+    "kernels PASS",
+    "startup/decode smoke PASS"
+  ],
+  "core_dump": "Not captured: requires root; kernel and production logs retained locally.",
+  "action": "Restart reference service; verify readiness and immutable image identity.",
+  "limits": "Same fault class documented before this campaign; this event does not establish cause or demonstrate the candidate fixes it.",
+  "recovery": "Reference service restart succeeded; controller verified readiness and exact original v7 image identity."
+}

@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "status": "CANDIDATE_PREFLIGHT_ONLY",
+  "image_tag": "local/b70-qwen38-vllm:direct-xpu-v8-reviewed",
+  "image_id": "sha256:940da169e05d6545ed350677645736f1034cd63242a4773d427bbfe86184a658",
+  "runtime_image_id": "sha256:09dbb88f8f0c7ec9dd1ef5ce9a005e1b07a85c87126a398a42cf721579fa41b1",
+  "policy_sha256": "4601aede4d82c02d3ce32e60b49800847317bb10ea4e29635f8ea89dcecb66b5",
+  "vllm_config": {
+    "dtype": "float16",
+    "max_model_len": 262144,
+    "kv_cache_dtype": "fp8",
+    "gpu_memory_utilization": 0.965,
+    "max_num_seqs": 16,
+    "max_num_batched_tokens": 4096,
+    "scheduler_reserve_full_isl": true,
+    "watermark": 0.0,
+    "enable_prefix_caching": true,
+    "mamba_cache_mode": "align",
+    "speculative_config": {
+      "method": "mtp",
+      "num_speculative_tokens": 3
+    },
+    "limit_mm_per_prompt": {
+      "image": 32,
+      "video": 4
+    },
+    "mm_processor_kwargs": {
+      "max_pixels": 4194304
+    },
+    "enable_auto_tool_choice": true,
+    "tool_call_parser": "qwen3_xml",
+    "reasoning_parser": "qwen3",
+    "reasoning_config": {
+      "reasoning_start_str": "<think>",
+      "reasoning_end_str": "</think>"
+    },
+    "override_generation_config": {
+      "max_new_tokens": 16384
+    },
+    "middleware": "request_defaults.ChatDefaults",
+    "compilation_config": {
+      "cudagraph_mode": "FULL_DECODE_ONLY",
+      "cudagraph_capture_sizes": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        48,
+        56,
+        64
+      ]
+    },
+    "block_size": 1792,
+    "prefix_match_unit": 128,
+    "long_prefill_token_threshold": 0
+  },
+  "request_defaults_sha256": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2",
+  "checkpoint_files_sha256": {
+    "config.json": "dab9abc478e1b1b928ef354f27a26fc90e8191a4a3ce5f3d19aa21558216b267",
+    "generation_config.json": "e70c136c1b78ddc1fb0905bac8e733a4dc448d4f852a5dd75143fffc70be550e",
+    "model-00001-of-00002.safetensors": "b1e7fcc53a2bb211460ebb65e329cdb7a5af8bd819dcbcd89e06f0ccc041e590",
+    "model-00002-of-00002.safetensors": "c6d72f51b0cd99510239b264fef37bc26c950e6843f35421ce4830d4f87f8c05",
+    "model.safetensors.index.json": "c3111b8308db5396b1eed054967cf7dfbfc2508764f8813aebbaaf4a05860bc2",
+    "preprocessor_config.json": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+    "quantization_config.json": "c85767fc0bd991d1b7ddebe52feeb9a556216883de2cdb3f679ce85f989e29e0",
+    "tokenizer.json": "0997f410c57a1f4e53b09e4be8f4a172d90edd9564368fb0847030937229b9f3",
+    "tokenizer_config.json": "b11349aafa7cdc6a320767cf7ceb29ed82f7eda5d65e8e0819e76f0ce947bf27",
+    "video_preprocessor_config.json": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+    "vocab.json": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003"
+  },
+  "runtime_artifacts_sha256": {
+    "/opt/exl3xpu/exl3xpu/_C.so": "f1e57d96b4c1e3850c5b84ca03360fada943f5c609414da90b2333188cb3ad76",
+    "/opt/exl3xpu/m04/m04.so": "2dcca5c97ea4738f8f463d4745f4c95f02b03bf9789aa7e2dde3c573e0ca514c",
+    "/opt/b70/libdnnl.so.3": "ac1432e0477c772cd8781cf15ba5746867ed09a5b5118ced0db9c34aebbc1ee2",
+    "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml": "da33e883fd683365bcf6fc45d3b0714a792ae0962fef05ebcd572945933d1f03",
+    "/opt/exl3xpu/exl3xpu/shared_kv_verify.py": "efb06f59250cbf4efb16f3eb6eb119bbd4c24c9ff086459b4afb85cc21adacb2",
+    "/opt/exl3xpu/exl3xpu/attention_dispatch.py": "234bab310dee7f8856ea4047e891044476e53fad29cb5f03796ab436df6c6510",
+    "/opt/exl3xpu/csrc/exl3_ops.sycl": "b70880d1e92032de697c1d432c6899e34e17662e2086a7fbba80fa17b28e41cf",
+    "/opt/exl3xpu/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7",
+    "/opt/exl3xpu/exl3xpu/target_runtime.py": "afb6baf2ed7161adf66127b21fdc866714474fb0d09e86b9a5f5311bfe21dfc6",
+    "/opt/exl3xpu/exl3xpu/gdn_target_patch.py": "b661bc5514547d61413f81b947d664a87bca5a16afb36abd11bbd419434c59b7",
+    "/opt/exl3xpu/exl3xpu/vllm_plugin.py": "000238efdd4fd3621437763ab156dc6502eb11d865e4994d194385899cf014a6",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen3_5_mtp.py": "39068e51c14f5c1dbfd5e9683a81e5c36c1726709c3037928cc7914c3e9ef303",
+    "/opt/venv/lib/python3.12/site-packages/vllm/model_executor/models/b70_mtp_policy.py": "c7c75d6b818c1cb0f1846f752060650af399f832e0dea3e8297ec274f2cfee3f",
+    "/opt/exl3xpu/exl3xpu/_C.so.manifest.json": "8f289ef6a6e108d48dfda4e6b6c4f2f59668e617be540c6f8cbe8aa6df7c0b10",
+    "/opt/exl3xpu/exl3xpu/target_matrix_guard.py": "9e78c57b30c79b51547b5b771cf443ec42950cc8b29d0942ffd218e36b10c3f4",
+    "/opt/exl3xpu/scripts/verify_native_artifact.py": "ca56098217e0da1e7b513ce159abf7f1ec653f7d4e1193ddc756f81d8c4f6a46",
+    "/opt/exl3xpu/native-matrix-source/csrc/bounded_partition_cache.h": "1b5f09229a508f71470f5f4bc4eb74cdc3c5a359129ebeec00dd5f8d648291e7",
+    "/opt/exl3xpu/native-matrix-source/csrc/exl3_esimd.h": "580247824dd9964c49d963332233c08542c589ed9e200d957732e743a353c37f",
+    "/opt/exl3xpu/native-matrix-source/csrc/exl3_ops.sycl": "fbf3ae51f44ec291344c8905e661505b97eea33d3ab8e89974b77c8306b6dda9",
+    "/opt/exl3xpu/native-matrix-source/csrc/fa_esimd.h": "ab21d3d1c239afbbfcf011842356a3be11d580086082235688bf78721283e126",
+    "/opt/exl3xpu/native-matrix-source/scripts/build_ext.sh": "a8068273bc7a443cfbd4a6459d471323eb203911b0a2b92cbca338d1b23f219e",
+    "/opt/exl3xpu/native-matrix-source/scripts/native_build_manifest.py": "6f94e72006401a42250326a84f7bce903b28d3b9891912554ab55038e1f20977",
+    "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/gpu/model_runner.py": "8ccf05600209f0cd506fdebafaa92d430a6e9ad985b499032ad3e97b7e3493f2",
+    "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/b70_cow_copy_fix.py": "b30646e39778904cb3f5ce2664d37defe7a743b8a4e6715d5b883f1ec54d5f43",
+    "/opt/venv/lib/libpti_view.so.1.2.1": "2310bcda1cb05ead04bda985ee740f50c6251097803e25dc899b25be9783e97e",
+    "/opt/venv/lib/pti/libpti.so": "adaebbccfba0e389ba176d12b3792b611549759ee0dfd0d4ff7d727f7aaae6e9",
+    "/opt/b70-direct/pti-patch.json": "5e3b7298ebddc312df7a94a0b3e37d4e00a9aba1d4ded1e1f93ecf8f64fee5c1",
+    "/opt/b70-direct/build-lock.json": "f5342aabbc65c3edf0c32460a2ead6ea5be98ae7c976daa39208fc82d2a92d3b",
+    "/opt/b70-direct/source-manifest.json": "93f2e4809a0d8fe04f38a5d6fbcdb55a6885ef78b36216b10344e332b1064f04",
+    "/opt/venv/lib/python3.12/site-packages/torch/__init__.py": "7ed81103f3d256de131b886e67be458b3205784e3b4af9c495041282391e19db",
+    "/opt/venv/lib/python3.12/site-packages/torch/xpu/graphs.py": "8c92cd22d627395efddbf7410c8b9f1b3c505882cadb324ba459232f87005849"
+  },
+  "environment_overrides": {
+    "EXL3_SDPA_CACHE_CAPACITY": "64"
+  },
+  "source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
+  "qualification_note": "Direct official vLLM0.33/Torch2.15 with source-pinned upstream PTI graph-lifetime fix. Final exact-image gates pending; this candidate is not production-approved.",
+  "ram_kv_runtime": {
+    "path": "config/experiments/direct-xpu-v8/production_ram_kv.json",
+    "sha256": "082976a90e2823592fc98f60e053ae2323c79b47c04a33e6ccce74f28db507b3"
+  },
+  "matrix_native_sources": {
+    "directory": "engine/exl3xpu/mb4-k4/source",
+    "build_manifest_sha256": "00820bca43fabfe019afc23b31edbfadc322efc43709673f18cecc55101e4a15",
+    "patch_sha256": "b6ceb3dcb4532c42d2dfc269bb48bc18af0ad99e897412ebdf2655b0176e04c7",
+    "extra_flags": [
+      "-DEXL3_DPAS_MB4"
+    ]
+  },
+  "direct_build": {
+    "build_lock_path": "engine/direct-xpu/build-lock.json",
+    "source_manifest_path": "engine/direct-xpu/source-manifest.json",
+    "build_receipt": "benchmark-results/direct-xpu-20261114/build-r9/build.json",
+    "runtime_rootfs_identical_to_release": true,
+    "pti_fix_commit": "dd8940ff817f94461795708fe3c386ab9e09d3b1"
+  }
+}

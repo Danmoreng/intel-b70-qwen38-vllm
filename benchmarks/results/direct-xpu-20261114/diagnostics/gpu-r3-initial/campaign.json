@@ -1,0 +1,46 @@
+{
+  "status": "FAILED",
+  "image_id": "sha256:fc1747d95371c90c8912d224b4068a2df3a1cb42fcd275518e0e44a85910e8ac",
+  "baseline_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "started_utc": "2026-11-14T09:28:29.365807+00:00",
+  "stages": {
+    "kernels": {
+      "status": "RUNNING"
+    }
+  },
+  "power_cap_w": 180,
+  "serving_scenario_filters": [],
+  "error": "CalledProcessError(1, ['docker', 'run', '--rm', '--name', 'b70-v033-kernels', '--network', 'none', '--device', '/dev/dri', '--shm-size', '14g', '--memory', '23g', '--memory-swap', '23g', '--label', 'org.local.b70.release-status=EXPERIMENT', '-v', '/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw:/models/checkpoint:ro', '-v', '/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmarks/experiments/vllm-033-upgrade/runtime:/opt/b70-runtime:ro', '-v', '/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmark-results/direct-xpu-20261114/gpu-r3-initial/kernels:/results', '-e', 'VLLM_WORKER_MULTIPROC_METHOD=spawn', '-e', 'EXL3_DRAFT_VOCAB=/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json', '-e', 'EXL3_KV_BLOCK_EXACT=0', '-e', 'EXL3_ONEDNN_ATTN=0', '-e', 'EXL3_INT8_PREFILL=1', '-e', 'EXL3_TARGET_RUNTIME=vllm033', '-e', 'EXL3_FIX_SPARSE_GDN_RETIREMENT=0', '-e', 'B70_ONEDNN_PREFILL=0', '-e', 'B70_ONEDNN_MIXED_ROUTE=0', '-e', 'B70_GPTQ_W4A8_PREFILL=0', '-e', 'EXL3_GUARDED_ATTN=1', '-e', 'EXL3_GUARDED_PREFILL=1', '-e', 'EXL3_M04_LIBRARY=/opt/exl3xpu/m04/m04.so', '-e', 'EXL3_M04_LIBRARY_SHA256=2dcca5c97ea4738f8f463d4745f4c95f02b03bf9789aa7e2dde3c573e0ca514c', '-e', 'VLLM_KV_CACHE_LAYOUT=LBNHC', '-e', 'EXL3_SDPA_CACHE_CAPACITY=64', '-e', 'HF_HUB_OFFLINE=1', '-e', 'PYTHONPATH=/opt/b70-runtime', '-e', 'ZE_AFFINITY_MASK=0', '-e', 'EXL3_LOADER_REPORT_DIR=/results/loader', '-e', 'EXL3_LIB=/opt/exl3xpu/exl3xpu/_C.so', '--entrypoint', 'python', 'sha256:fc1747d95371c90c8912d224b4068a2df3a1cb42fcd275518e0e44a85910e8ac', '-u', 'tests/test_linear_rows_xpu.py', '--model', '/models/checkpoint', '--out', '/results/linear'])",
+  "restored_models": {
+    "object": "list",
+    "data": [
+      {
+        "id": "Qwen3.8-27B",
+        "object": "model",
+        "created": 1794648621,
+        "owned_by": "vllm",
+        "root": "/models/checkpoint",
+        "parent": null,
+        "max_model_len": 262144,
+        "permission": [
+          {
+            "id": "modelperm-a3bb3f1ffc797adc",
+            "object": "model_permission",
+            "created": 1794648621,
+            "allow_create_engine": false,
+            "allow_sampling": true,
+            "allow_logprobs": true,
+            "allow_search_indices": false,
+            "allow_view": true,
+            "allow_fine_tuning": false,
+            "organization": "*",
+            "group": null,
+            "is_blocking": false
+          }
+        ]
+      }
+    ]
+  },
+  "production_restored": true,
+  "finished_utc": "2026-11-14T09:30:21.842024+00:00"
+}

@@ -1,0 +1,106 @@
+{
+  "status": "DIAGNOSTIC_CONTROLS_NOT_RELEASE_APPROVAL",
+  "rows": [
+    {
+      "case": "gpu-baseline-linear-r1",
+      "scope": "Deployed v7: Torch2.14.0, PTI1.1, runtime2026.1.1, old driver; unchanged full gate",
+      "status": "PASS_REQUESTED_STAGES",
+      "image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+      "receipts_sha256": {
+        "campaign.json": "2fe619836eef9aea1e3f0a416fd38a7e36508f9db24c7d4e30333d040652411d",
+        "linear-original-tolerances.log": "e6771d6527590fa9d5b26847b006cb7fbda6faacc368b0c0b84d00569308a521"
+      }
+    },
+    {
+      "case": "gpu-r3-initial",
+      "scope": "Torch2.15, PTI1.1, compiler/runtime2026.2, latest driver",
+      "status": "FAILED",
+      "image_id": "sha256:fc1747d95371c90c8912d224b4068a2df3a1cb42fcd275518e0e44a85910e8ac",
+      "receipts_sha256": {
+        "campaign.json": "b56d0a27f69f3eb73f9fd88a6533509c6b0ee1a26f9e98623232708b023ec2e6",
+        "linear-original-tolerances.log": "25e0f3638faa6a80a997ae2e5f883ac4e14f51fb22ef2c53a5cf214a09514e7b"
+      }
+    },
+    {
+      "case": "gpu-pti121-linear-r1",
+      "scope": "Torch2.15: PTI-only upgrade1.1 to1.2.1",
+      "status": "FAILED",
+      "image_id": "sha256:e43e5b33d6e7942929b58ab6ef62cfb06781657d83ef15b61e27a613bed7597a",
+      "receipts_sha256": {
+        "campaign.json": "07ac2bf53fd3e88498190ed9513e237716eb2279f94af4a3614a897bc552c5e4",
+        "linear-original-tolerances.log": "b0b9a9c8865e4d6001d7c26edf9e683b37a849099ce281461f6e9b550163fa59"
+      }
+    },
+    {
+      "case": "gpu-driver2635-linear-r1",
+      "scope": "Torch2.15: Compute/IGC reference driver control",
+      "status": "FAILED",
+      "image_id": "sha256:67b53538d26fa3f96ddb875e49f74133d0cbd03c416cb7efb3bd343c878025b0",
+      "receipts_sha256": {
+        "campaign.json": "9f0f34ac943ed807b499beeea380c535679ac33f190cb17fe88643c76d020411",
+        "linear-original-tolerances.log": "bd45816b9fa6240157180c2e9a83d0331ec4e11b3bc8881c33d9ea22f6cd4df3"
+      }
+    },
+    {
+      "case": "gpu-compiler2611-linear-r1",
+      "scope": "Torch2.15: EXL3-only compiler2026.1.1 control",
+      "status": "FAILED",
+      "image_id": "sha256:0a68b072d17e7f4cb4e0e3b1b687863153787caa65b9a647f1b570c78c0fdd51",
+      "receipts_sha256": {
+        "campaign.json": "2236dbba32903f1bd9e6c9d7f9b907b57bc8fdf3c472d34db370737338d190fe",
+        "linear-original-tolerances.log": "ca5afe28045b13ef570c95cb07b4bc9c52e898b5c4228e7055c539c76a13bb86"
+      }
+    },
+    {
+      "case": "gpu-r4-initial",
+      "scope": "Torch2.15: runtime2026.1.2, native compiler2026.1.1, PTI1.2.1",
+      "status": "FAILED",
+      "image_id": "sha256:955c847e06c54d42a0e671e933e7f1a0611837938f41feefff041d94799f5efa",
+      "receipts_sha256": {
+        "campaign.json": "343f2c4808fc00cfa9686d34ea49a0f7918cf04d535ba994d2efd147d2030aeb",
+        "linear-original-tolerances.log": "6481e9ee5de9ef497aee24082ee86d86a1ab3bca60bbd1b6057f14bfa8ec7abc"
+      }
+    },
+    {
+      "case": "gpu-torch215-matched-r1",
+      "scope": "Torch2.15: prescribed runtime2026.1.2 and PTI1.1, matched native rebuild",
+      "status": "FAILED",
+      "image_id": "sha256:d7640cc147f0145f563023e5d9b4fb793931aca41135685caab8962e093c1a08",
+      "receipts_sha256": {
+        "campaign.json": "70ac03a883629ed3561175acc65fe6c886dc4154cca578f28530e55a0404c4f3",
+        "linear-original-tolerances.log": "28a7f1737f7a4fdc6426a67de9b8f37ac67929543c83fd3d385dd662ebc7115d"
+      }
+    },
+    {
+      "case": "gpu-standalone-gateup-r1",
+      "scope": "Diagnostic subset: gate-up alone, not full qualification",
+      "status": "PASS_REQUESTED_STAGES",
+      "image_id": "sha256:e43e5b33d6e7942929b58ab6ef62cfb06781657d83ef15b61e27a613bed7597a",
+      "receipts_sha256": {
+        "campaign.json": "5aeb840f0778c109d622875a3bfb9e11f064f759c3ab22556013b14df2d4670a",
+        "linear-original-tolerances.log": "e3dc1daca4f24ef736c497f634e52e7b601926807852ffe5e560936e787aeec4"
+      }
+    },
+    {
+      "case": "gpu-no-profiler-linear-r1",
+      "scope": "Diagnostic omission of attention-qkv profiling branch INCLUDING five extra compiled calls, not full qualification",
+      "status": "PASS_REQUESTED_STAGES",
+      "image_id": "sha256:b2a2e031c1c48cb399291a310e177218408bd747fa29c74c8e6f33f4702cd403",
+      "receipts_sha256": {
+        "campaign.json": "04fb27e0bc8c8e6d8b5fa11fc9f28cae741e553b3cfed3ca9fd220607d5dc80e",
+        "linear-original-tolerances.log": "2ae1738cd90d1bdc8c673199f3e029f63aa8da20df5d6a9f93abc582da995605"
+      }
+    },
+    {
+      "case": "gpu-r5-initial",
+      "scope": "Torch2.14.1/kernel0.1.16.4 with latest compiler/runtime/PTI/driver; diagnostic accidentally downgraded unused single-GPU CCL, corrected in final recipe",
+      "status": "PASS_REQUESTED_STAGES",
+      "image_id": "sha256:4854af719c53acc94bfb7fc0fe6ae895aab68640d55e9cc5a3b02555439ef9cc",
+      "receipts_sha256": {
+        "campaign.json": "1ee60cea6e3e8ddd9ba499c9382983295c134bf1e0ef8b12e4e73e49f78bf850",
+        "linear-original-tolerances.log": "7ba752b15e328c4d78798216e591fbd6735d3c394e271642cbd5ce08460eb0a3"
+      }
+    }
+  ],
+  "limitation": "The Torch2.15/Triton/kernel coupled stack is implicated; neither a specific upstream source bug nor PTI alone is proven. All original numerical thresholds retained. The omitted branch diagnostic is not a qualification gate."
+}

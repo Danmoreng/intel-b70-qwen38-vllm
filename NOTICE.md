@@ -4,7 +4,15 @@ This repository does not redistribute model weights, Intel driver packages, or
 the vLLM container. The build downloads pinned upstream artifacts and verifies
 their SHA-256 digests before executing or installing them.
 
-- vLLM is licensed under Apache-2.0.
+- vLLM is licensed under Apache-2.0. The direct-XPU integration retains the
+  patched vLLM Python files and their license under `engine/direct-xpu/vllm`.
+- `engine/direct-xpu/runtime` is the consolidated final EXL3 Python source
+  snapshot, with its upstream MIT license and file provenance manifest.
+  Its native build downloads pinned oneDNN (Apache-2.0), vLLM-XPU-kernels
+  (Apache-2.0) and SYCL-TLA (BSD-3-Clause) source archives with their licenses.
+- `engine/direct-xpu/pti` backports Intel's native-graph lifetime fix to the
+  exact source of PTI 1.2.1. The build retains its MIT license and source
+  provenance. The official PyTorch wheel remains unmodified.
 - `engine/exl3xpu` publishes a pinned source snapshot and migration patch of
   `0xSero/exl3xpu`, MIT License, copyright2026 0xSero. Its full license is
   retained both beside the archive and within the source snapshot. Build and

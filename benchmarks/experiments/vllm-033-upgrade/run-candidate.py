@@ -35,13 +35,15 @@ def main():
  p.add_argument('--production-repo',required=True,type=Path)
  p.add_argument('--fixture-root',required=True,type=Path)
  p.add_argument('--stages',default='kernels,serving')
+ p.add_argument('--baseline-control',action='store_true',help='Run the unchanged gate on the exact deployed image as a diagnostic control')
+ p.add_argument('--linear-group',action='append',default=[],help='Diagnostic subset of the frozen linear shape classes')
  p.add_argument('--only',action='append',default=[],help='Frozen serving scenario/group filter for matched follow-up measurements')
  p.add_argument('--tokenizer-baseline',type=Path);p.add_argument('--tokenizer-fixtures',type=Path)
  a=p.parse_args();assert bool(a.tokenizer_baseline)==bool(a.tokenizer_fixtures)
  time_guard();root=a.out.resolve();root.mkdir(parents=True,exist_ok=False)
  image=json.loads(subprocess.check_output(['docker','image','inspect',a.image],text=True))[0]['Id']
  baseline=json.loads(subprocess.check_output(['docker','inspect','b70-qwen38-vllm'],text=True))[0]
- assert image!=baseline['Image']
+ assert (image==baseline['Image']) if a.baseline_control else (image!=baseline['Image'])
  assert int(CAP.read_text())==180000000
  cfg=profile(image);assert cfg['env']['EXL3_TARGET_RUNTIME']=='vllm033'
  release=json.loads((a.production_repo/'config/production_image.json').read_text())
@@ -52,6 +54,8 @@ def main():
       'PYTHONPATH':'/opt/b70-runtime','ZE_AFFINITY_MASK':'0','EXL3_LOADER_REPORT_DIR':'/results/loader',
       'EXL3_LIB':'/opt/exl3xpu/exl3xpu/_C.so'}
  state={'status':'RUNNING','image_id':image,'baseline_image_id':baseline['Image'],
+        'baseline_control':a.baseline_control,
+        'linear_group_filters':a.linear_group,
         'started_utc':dt.datetime.now(dt.UTC).isoformat(),'stages':{},'power_cap_w':180,'serving_scenario_filters':a.only}
  def save():(root/'campaign.json').write_text(json.dumps(state,indent=2)+'\n')
  def stop(name,folder):
@@ -78,7 +82,11 @@ def main():
     assert subprocess.run(['docker','inspect',name],capture_output=True).returncode!=0,'Existing worker '+name
    for stage in a.stages.split(','):
     time_guard();state['stages'][stage]={'status':'RUNNING'};save();print('START',stage,flush=True)
-    if stage in ('kernels','linear'):
+    if stage=='profiler':
+     command=common(KERNEL,root)+['-v',str(Path(__file__).parent.resolve())+':/measure:ro',
+      '--entrypoint','python',image,'-u','/measure/profile-graph-replay.py','--out','/results/profiler']
+     with (root/'profiler.log').open('w') as log:run(command,stdout=log,stderr=subprocess.STDOUT,timeout=300)
+    elif stage in ('kernels','linear'):
      checks=[('native-artifact',['scripts/verify_native_artifact.py']),
              ('gdn-semantics-and-graphs',['-m','unittest','discover','-s','tests','-p','test_target_gdn.py','-v']),
              ('attention-metadata',['-m','unittest','discover','-s','tests','-p','test_attention_metadata.py','-v']),
@@ -87,6 +95,8 @@ def main():
              ('attention-original-tolerances',['tests/test_guarded_attention_xpu.py','--library','/opt/exl3xpu/m04/m04.so','--out','/results/attention']),
              ('linear-original-tolerances',['tests/test_linear_rows_xpu.py','--model','/models/checkpoint','--out','/results/linear'])]
      if stage=='linear':checks=[x for x in checks if x[0]=='linear-original-tolerances']
+     if a.linear_group:
+      checks=[(label,args+['--groups',*a.linear_group] if label=='linear-original-tolerances' else args) for label,args in checks]
      for label,args in checks:
       print('CHECK',label,flush=True)
       command=common(KERNEL,root/'kernels')+['--entrypoint','python',image,'-u',*args]
@@ -105,7 +115,7 @@ def main():
      results=[json.loads(f.read_text()) for f in (folder/'observations/steps').glob('*-result.json')]
      assert len(results)==4 and all(r['status']=='PASS_LOCAL_ATTENTION_ORIGINAL_TOLERANCE' for r in results)
      assert any(r['graph_mode']=='FULL' for r in results) and any(r['label']=='long-prefill' for r in results)
-    elif stage in ('startup','serving','operations'):
+    elif stage in ('startup','serving','operations','agents','ram'):
      folder=root/'worker';cmd=common(NAME,folder)
      # The API stays on loopback and needs no external network.
      cmd[cmd.index('--network')+1]='bridge'
@@ -140,6 +150,16 @@ def main():
        '--output-root',str(root/'serving'),'--execute']
       for selected in a.only:command+=['--only',selected]
       with (root/'serving.log').open('w') as log:run(command,stdout=log,stderr=subprocess.STDOUT,timeout=5700)
+     elif stage=='ram':
+      command=[sys.executable,str(REPO/'benchmarks/results/ram-kv-layout-20261108/check-production.py'),
+       '--base',BASE,'--out',str(root/'isolated-ram'),'--natural-restore']
+      with (root/'isolated-ram.log').open('w') as log:run(command,stdout=log,stderr=subprocess.STDOUT,timeout=1080)
+     elif stage=='agents':
+      command=[sys.executable,str(Path(__file__).parent/'agent-panel/run.py'),
+       '--base',BASE,'--container',NAME,'--image',image,'--out',str(root/'agents'),
+       '--launch',str(root/'launch.json'),'--runtime-source',str(runtime.resolve()),
+       '--worker-source',str(Path(__file__).resolve())]
+      with (root/'agents.log').open('w') as log:run(command,stdout=log,stderr=subprocess.STDOUT,timeout=4200)
      elif stage=='operations':
       command=[sys.executable,str(Path(__file__).parent/'operations-client.py'),'--out',str(root/'operations')]
       if a.tokenizer_baseline:command+=['--tokenizer-baseline',str(a.tokenizer_baseline.resolve()),'--tokenizer-fixtures',str(a.tokenizer_fixtures.resolve())]

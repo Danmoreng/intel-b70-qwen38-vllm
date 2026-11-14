@@ -15,8 +15,7 @@ There are two paths:
 
 - **Existing qualified installation:** use the exact image identified by
   [the current manifest](../config/production_image.json) and the setup below.
-- **New source build:** follow the stages below with the required native build
-  inputs. A new image needs its own validation and release manifest. Cloning
+- **New source build:** use the [direct XPU builder](../engine/direct-xpu/README.md). A new image needs its own validation and release manifest. Cloning
   this repository and running `build-image.sh` alone does not produce the
   qualified current engine.
 
@@ -90,32 +89,16 @@ The installer starts the engine and enables its watchdog. Model loading is
 asynchronous; check `curl -fsS http://127.0.0.1:8081/health` until it succeeds,
 then make the [example request](../README.md#make-a-request).
 
-## Source-build stages
+## Direct-build candidate
 
-The build is a staged reconstruction requiring compiled dependencies and local
-parent images. The following map makes the prerequisites explicit; it is not a
-single-command clean-machine installer.
+A [consolidated direct 0.33 XPU builder](../engine/direct-xpu/README.md) is being
+validated separately. It reconstructs the native dependencies from public
+sources and does not require an old local engine image. Until its GPU/model
+qualification and release packaging pass, the production manifests above
+still identify the deployed reference image.
 
-| Stage | Inputs and instructions | Result |
-|---|---|---|
-| 1. Compiler/base | [Base Dockerfile](../docker/Dockerfile), pinned upstream images; `B70_BASE_BUILD_IMAGE=local/b70-qwen38-vllm:base-development ./scripts/build-image.sh` | vLLM 0.31 / Torch 2.14 compiler/base image |
-| 2. Native EXL3 and M04 | [Native bootstrap](../engine/exl3xpu/README.md), extracted source archive, compatible builder/base images, verified Torch-2.14 M04 artifacts and oneDNN 3.13.4 installation | Native 0.31 EXL3 candidate |
-| 3. vLLM 0.33 adapters | [Python overlay workflow](../engine/exl3xpu/README.md), the preceding native base and SHA-verified official XPU wheel | 0.33 candidate retaining the native ABI |
-| 4. MB4/K4 kernels | [Matrix build and image preparation](../engine/exl3xpu/mb4-k4/README.md), pinned native builder, oneDNN headers/library, same-binary numerical and matrix-panel receipts | Guarded matrix candidate and source-attested release layer |
-| 5. Fine-prefix cache | [Cache layer](../engine/cache1792/README.md), the pinned v6 parent image | 1792/128 cache layer with the automatic COW correction |
-| 6. Validate and package | [Current qualification scope](BENCHMARKS.md), current configuration and release-specific serving, numerical, capacity and operational gates | Independently qualified manifest, image and runtime overlay |
+## Deployed reference build chain
 
-The matrix image preparation and cache Dockerfiles pin local parent IDs.
-Stage 5's command only works when that exact parent is present. An independent
-rebuild must reconstruct and review its parent chain, update the corresponding
-candidate inputs and record new identities; re-tagging a different image as
-production cannot satisfy the launcher's hash checks. The native bootstrap also
-requires M04 and oneDNN build artifacts that the repository does not ship as
-binaries. Existing build/gate receipts are evidence for the reference build,
-not substitutes for missing inputs or fresh validation.
-
-Keep development tags separate from production and rollback tags. The base
-builder rejects protected release aliases. Published source pins and the
-[current manifest](../config/production_image.json) are the authority for the
-reference build; no clean-host reconstruction was performed for this
-documentation consolidation.
+The deployed reference was assembled through an older staged build. Its
+[reconstruction map](REFERENCE_BUILD_CHAIN.md) is retained for reproducibility;
+the new builder above starts directly from the official 0.33 XPU image.

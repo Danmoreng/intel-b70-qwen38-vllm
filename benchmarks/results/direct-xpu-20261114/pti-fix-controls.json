@@ -1,0 +1,305 @@
+{
+  "status": "TARGETED_PTI_FIX_PASSES_DIAGNOSTIC_GATES_FINAL_IMAGE_PENDING",
+  "base_pti_source": "25a77ed7693ac155bc62e563060b0976f9934b53",
+  "upstream_fix": "dd8940ff817f94461795708fe3c386ab9e09d3b1",
+  "upstream_url": "https://github.com/intel/pti-gpu/commit/dd8940ff817f94461795708fe3c386ab9e09d3b1",
+  "torch_modified": false,
+  "native_recording_disabled": false,
+  "matched_control": {
+    "status": "FAILED",
+    "image_id": "sha256:983f9f486cce5778dd9da4645737b6fc9ba22532e8daf023f5ca4cc57e56ead0",
+    "baseline_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+    "stages": {
+      "profiler": {
+        "status": "RUNNING"
+      }
+    },
+    "production_restored": true,
+    "started_utc": "2026-11-14T12:14:03.821001+00:00",
+    "finished_utc": "2026-11-14T12:15:39.836706+00:00"
+  },
+  "patched": {
+    "status": "PASS_REQUESTED_STAGES",
+    "image_id": "sha256:05d98b3ada318c570b37311b1f4dab9f0b328195927073b41cfc4d9d87c236c7",
+    "baseline_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+    "stages": {
+      "profiler": {
+        "status": "PASS"
+      },
+      "kernels": {
+        "status": "PASS"
+      }
+    },
+    "production_restored": true,
+    "started_utc": "2026-11-14T12:07:13.387915+00:00",
+    "finished_utc": "2026-11-14T12:09:05.831772+00:00"
+  },
+  "original_full_matrix_source_sha256": "2e4b37daef939595cc665ef11b0e4d5cd3224036dc26b5c2034232a72b04e839",
+  "standalone_script": "benchmarks/experiments/vllm-033-upgrade/profile-graph-replay.py",
+  "standalone_script_sha256": "77b46be26b3a80f2f68292eb539f8767c48a4fa3b0337d5ee63c52c3fa74a22e",
+  "same_compiler_and_dependencies": true,
+  "control_failure": {
+    "label": "after-profile",
+    "rows": 2,
+    "bit_identical_to_eager": false
+  },
+  "patched_profiler": {
+    "status": "PASS_GRAPH_NUMERICS_AND_REPLAY_KERNEL_PROFILING",
+    "torch": "2.15.0+xpu",
+    "torch_git_revision": "d0f2af8b66b20da4baa50644c0cd3f887a2eae2e",
+    "cases": [
+      {
+        "label": "before-profile",
+        "rows": 1,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile-mutated",
+        "rows": 1,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile",
+        "rows": 2,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile-mutated",
+        "rows": 2,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile",
+        "rows": 3,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile-mutated",
+        "rows": 3,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile",
+        "rows": 4,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile-mutated",
+        "rows": 4,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile",
+        "rows": 8,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile-mutated",
+        "rows": 8,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile",
+        "rows": 16,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile-mutated",
+        "rows": 16,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile",
+        "rows": 32,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile-mutated",
+        "rows": 32,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile",
+        "rows": 64,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile-mutated",
+        "rows": 64,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile",
+        "rows": 128,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-profile-mutated",
+        "rows": 128,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile",
+        "rows": 1,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile-mutated",
+        "rows": 1,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile",
+        "rows": 2,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile-mutated",
+        "rows": 2,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile",
+        "rows": 3,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile-mutated",
+        "rows": 3,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile",
+        "rows": 4,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile-mutated",
+        "rows": 4,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile",
+        "rows": 8,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile-mutated",
+        "rows": 8,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile",
+        "rows": 16,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile-mutated",
+        "rows": 16,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile",
+        "rows": 32,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile-mutated",
+        "rows": 32,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile",
+        "rows": 64,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile-mutated",
+        "rows": 64,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile",
+        "rows": 128,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-profile-mutated",
+        "rows": 128,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "before-replay-profile",
+        "rows": 2,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-replay-profile-mutated",
+        "rows": 2,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-replay-profile-new-graph",
+        "rows": 1,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-replay-profile-new-graph",
+        "rows": 2,
+        "bit_identical_to_eager": true
+      },
+      {
+        "label": "after-replay-profile-new-graph",
+        "rows": 4,
+        "bit_identical_to_eager": true
+      }
+    ],
+    "source_sha256": "77b46be26b3a80f2f68292eb539f8767c48a4fa3b0337d5ee63c52c3fa74a22e",
+    "kernel_events": 9,
+    "categories": {
+      "null": 62,
+      "xpu_driver": 8,
+      "overhead": 122,
+      "xpu_runtime": 3,
+      "ac2g": 12,
+      "kernel": 9,
+      "Trace": 2
+    },
+    "trace_sha256": "94dc98b7f59edab80ac151dbca67f9bb4c4d73c222e3f5cdeabb04aa6916887c"
+  },
+  "torch2141_minimal_control": {
+    "torch": "2.14.1+xpu",
+    "status": "PASS_PLAIN_TORCH_MINIMAL_DIAGNOSTIC",
+    "cases": 27,
+    "campaign": {
+      "status": "PASS_REQUESTED_STAGES",
+      "image_id": "sha256:41dbad6742f5cfff919066e6449b40be0e0344c704eece638ec4cd9119049b92",
+      "baseline_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+      "stages": {
+        "linear": {
+          "status": "PASS"
+        }
+      },
+      "production_restored": true,
+      "started_utc": "2026-11-14T11:55:06.506360+00:00",
+      "finished_utc": "2026-11-14T11:56:28.312193+00:00"
+    }
+  },
+  "non_native_workaround_rejected": {
+    "reason": "Matrix and model math passed, but native replay kernel profiling returned zero GPU kernel events. It is not selected in the final build.",
+    "campaign": {
+      "status": "FAILED",
+      "image_id": "sha256:dea69a593d971556ad8994fe05273638d0b17151e9d4c87b24a7439d3df091ab",
+      "baseline_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+      "stages": {
+        "linear": {
+          "status": "RUNNING"
+        }
+      },
+      "production_restored": true,
+      "started_utc": "2026-11-14T11:56:42.770210+00:00",
+      "finished_utc": "2026-11-14T11:58:04.515985+00:00"
+    }
+  },
+  "hardware_scope": "Tested only on this Linux Arc Pro B70. No proof of reproduction on other GPUs."
+}

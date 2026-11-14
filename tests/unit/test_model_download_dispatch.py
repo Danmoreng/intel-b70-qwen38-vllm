@@ -32,7 +32,7 @@ class ModelDownloadDispatch(unittest.TestCase):
             return result,json.loads(log.read_text()) if log.exists() else None
 
     def test_supported_policies_download_to_pinned_exl3_cache(self):
-        for version in range(1, 6):
+        for version in range(1, 7):
             with self.subTest(version=version):
                 result,argv=self.invoke(f'b70-qwen38-exl3-production-v{version}')
                 self.assertEqual(result.returncode,0,result.stderr)
@@ -49,7 +49,7 @@ class ModelDownloadDispatch(unittest.TestCase):
         self.assertNotIn('wrong-serving-alias', argv)
 
     def test_unknown_policy_or_override_starts_no_download(self):
-        for policy,extra in [('unexpected',()),('b70-qwen38-exl3-production-v6',()),('b70-qwen38-exl3-production-v5',('--override',))]:
+        for policy,extra in [('unexpected',()),('b70-qwen38-exl3-production-v7',()),('b70-qwen38-exl3-production-v6',('--override',))]:
             with self.subTest(policy=policy,extra=extra):
                 result,argv=self.invoke(policy,'download-exl3-model.sh',extra)
                 self.assertNotEqual(result.returncode,0)

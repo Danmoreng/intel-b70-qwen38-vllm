@@ -1,0 +1,46 @@
+{
+  "status": "PASS_REQUESTED_STAGES",
+  "image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "baseline_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "baseline_control": true,
+  "started_utc": "2026-11-14T09:30:32.851747+00:00",
+  "stages": {
+    "linear": {
+      "status": "PASS"
+    }
+  },
+  "power_cap_w": 180,
+  "serving_scenario_filters": [],
+  "restored_models": {
+    "object": "list",
+    "data": [
+      {
+        "id": "Qwen3.8-27B",
+        "object": "model",
+        "created": 1794648726,
+        "owned_by": "vllm",
+        "root": "/models/checkpoint",
+        "parent": null,
+        "max_model_len": 262144,
+        "permission": [
+          {
+            "id": "modelperm-b55ed96d7e15d8fb",
+            "object": "model_permission",
+            "created": 1794648726,
+            "allow_create_engine": false,
+            "allow_sampling": true,
+            "allow_logprobs": true,
+            "allow_search_indices": false,
+            "allow_view": true,
+            "allow_fine_tuning": false,
+            "organization": "*",
+            "group": null,
+            "is_blocking": false
+          }
+        ]
+      }
+    ]
+  },
+  "production_restored": true,
+  "finished_utc": "2026-11-14T09:32:06.809787+00:00"
+}

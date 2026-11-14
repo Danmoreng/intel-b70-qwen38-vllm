@@ -19,6 +19,16 @@ try:
  if a.tokenizer_baseline:
   subprocess.run([sys.executable,str(Path(__file__).parent/'check-tokenizer.py'),'--base',D.BASE,'--fixtures',str(a.tokenizer_fixtures),'--compare',str(a.tokenizer_baseline),'--out',str(root/'tokenizer-pair.json')],check=True,timeout=600)
   state['cases']['paired-tokenizer']={'status':'PASS_ALL124_RENDERED_TOKEN_IDS_IDENTICAL'};save()
+ # Isolate the retention fixture from cache entries accumulated by unrelated
+ # capacity/media requests; preserve its actual H2D and correctness assertions.
+ print('START isolated-natural-ram-restore',flush=True)
+ cmd=[sys.executable,str(REPO/'benchmarks/results/ram-kv-layout-20261108/check-production.py'),
+      '--base',D.BASE,'--out',str(root/'natural-ram-restore'),'--natural-restore']
+ with (root/'natural-ram-restore.log').open('w') as log:subprocess.run(cmd,check=True,stdout=log,stderr=subprocess.STDOUT,timeout=1080)
+ restore=json.loads((root/'natural-ram-restore/natural-restore.json').read_text());assert restore['passed']
+ state['cases']['natural-cpu-restore']={'status':'PASS','restore_delta':restore['restore_delta'],
+  'correct_markers':restore['correct_markers'],'same_answer':restore['same_answer'],'initial_condition':'Fresh worker before unrelated capacity/media workloads'}
+ save();print('PASS isolated-natural-ram-restore',flush=True)
  cases=[('api',lambda x:D.smoke(x,262144,{'image':32,'video':4})),
         ('media',lambda x:D.media_case(x,{'image':32,'video':4})),
         ('near-limit',lambda x:D.long_case('near-limit',x,262144)),
@@ -36,13 +46,6 @@ try:
  assert response['usage']['prompt_tokens']>100000 and native['preemptions']==0
  state['cases']['32-unique-max-area-images']={'status':'PASS','usage':response['usage'],'native':native,
   'pixels_each':4194304,'unique_images':32,'fixture_sha256':[hashlib.sha256(x['image_url']['url'].encode()).hexdigest() for x in pictures]}
- save()
- cmd=[sys.executable,str(REPO/'benchmarks/results/ram-kv-layout-20261108/check-production.py'),
-      '--base',D.BASE,'--out',str(root/'natural-ram-restore'),'--natural-restore']
- with (root/'natural-ram-restore.log').open('w') as log:subprocess.run(cmd,check=True,stdout=log,stderr=subprocess.STDOUT,timeout=1080)
- restore=json.loads((root/'natural-ram-restore/natural-restore.json').read_text());assert restore['passed']
- state['cases']['natural-cpu-restore']={'status':'PASS','restore_delta':restore['restore_delta'],
-  'correct_markers':restore['correct_markers'],'same_answer':restore['same_answer']}
  save()
  cmd=[sys.executable,str(REPO/'scripts/test-kv-cache-candidate.py'),'--base',D.BASE,
   '--mode','admission','--tokens','200000','--secondary-tokens','131000','--count','2','--out',str(root/'admission.json')]

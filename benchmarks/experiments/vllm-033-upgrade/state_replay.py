@@ -17,7 +17,12 @@ import types
 import numpy as np
 import torch
 
-RUNNER_SHA256 = '9145e2601f9e93db5e6c7e648c6741cff55f2a49f046800f79311e4977550121'
+SUPPORTED_RUNNER_SHA256 = {
+    '9145e2601f9e93db5e6c7e648c6741cff55f2a49f046800f79311e4977550121',
+    # Deployed v7 / direct-build export adds complete COW setup in __init__.
+    # execute_model's AST is identical to pristine 0.33; retain exact-file guards.
+    '8ccf05600209f0cd506fdebafaa92d430a6e9ad985b499032ad3e97b7e3493f2',
+}
 
 
 def tensor_hash(t):
@@ -367,7 +372,8 @@ class Replay:
 def install(runner, output):
     assert type(runner).__name__ == 'XPUModelRunnerV2'
     original = runner.execute_model
-    assert hashlib.sha256(Path(inspect.getfile(inspect.unwrap(original.__func__))).read_bytes()).hexdigest() == RUNNER_SHA256
+    source_sha256 = hashlib.sha256(Path(inspect.getfile(inspect.unwrap(original.__func__))).read_bytes()).hexdigest()
+    assert source_sha256 in SUPPORTED_RUNNER_SHA256, source_sha256
     assert runner.batch_sharder is None and runner.ubatch_runner is None and runner.pcp_manager is None and runner.dp_size == 1
     source = textwrap.dedent(inspect.getsource(original))
     tree = ast.parse(source)
@@ -390,7 +396,7 @@ def install(runner, output):
     exec(compile(ast.fix_missing_locations(tree),'<matched-state-V2>', 'exec'),namespace)
     runner.execute_model = types.MethodType(namespace[original.__name__],runner)
     runner._matched_state_replay = Replay(runner,output)
-    return dict(source_sha256=RUNNER_SHA256,call_sites=sites,scope='Diagnostic only, target body replay from saved active KV/GDN blocks; full-vocabulary head on actual batch rows.')
+    return dict(source_sha256=source_sha256,call_sites=sites,scope='Diagnostic only, target body replay from saved active KV/GDN blocks; full-vocabulary head on actual batch rows.')
 
 
 class ReplayWorkerExtension:

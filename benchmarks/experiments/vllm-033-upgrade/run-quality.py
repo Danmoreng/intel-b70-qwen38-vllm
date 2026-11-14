@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Fresh, exclusive teacher-forced reference/candidate capture; always restore service."""
-import argparse,datetime as dt,json,signal,subprocess,sys,time,urllib.request
+import argparse,datetime as dt,fcntl,json,signal,subprocess,sys,time,urllib.request
 from pathlib import Path
 from zoneinfo import ZoneInfo
 REPO=Path(__file__).resolve().parents[3];EXP=Path(__file__).parent
@@ -12,6 +12,8 @@ p.add_argument('--production-repo',required=True,type=Path)
 p.add_argument('--kinds',default='short,long');p.add_argument('--long-windows',type=int,default=4,choices=(1,4))
 a=p.parse_args()
 assert dt.datetime.now(ZoneInfo('Europe/Berlin')).hour<21
+qualification_lock=Path('/tmp/b70-v033-qualification.lock').open('a')
+fcntl.flock(qualification_lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
 root=a.out.resolve();root.mkdir(parents=True,exist_ok=False)
 image=json.loads(subprocess.check_output(['docker','image','inspect',a.image],text=True))[0]['Id']
 baseline=json.loads(subprocess.check_output(['docker','inspect','b70-qwen38-vllm'],text=True))[0]['Image']
@@ -27,7 +29,7 @@ def save():(root/'campaign.json').write_text(json.dumps(state,indent=2)+'\n')
 for sig in (signal.SIGINT,signal.SIGTERM,signal.SIGHUP):signal.signal(sig,lambda n,f:(_ for _ in ()).throw(KeyboardInterrupt(str(n))))
 name='b70-v033-quality';assert subprocess.run(['docker','inspect',name],capture_output=True).returncode!=0
 cfg=profile(image)
-common=['docker','run','--rm','--name',name,'--network','none','--device','/dev/dri','--shm-size','8g',
+common=['docker','run','--rm','--name',name,'--network','none','--device','/dev/dri','--shm-size','8g','--memory','23g','--memory-swap','23g',
  '-v',str(MODEL)+':/models/checkpoint:ro','-v',str(root)+':/results',
  '-v',str((REPO/'benchmarks/experiments/quantization-reference').resolve())+':/scripts:ro',
  '-v',str(EXP.resolve())+':/measure:ro','-v',str((REPO/'runtime').resolve())+':/opt/b70-runtime:ro']

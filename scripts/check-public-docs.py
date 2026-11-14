@@ -20,6 +20,11 @@ DOCS = [
     'docs/EXL3_BENCHMARK_REPRODUCTION.md',
     'docs/EXL3_PRODUCTION_MIGRATION_AND_OPTIMIZATION_PLAN.md',
     'docs/archive/README-before-consolidation-20261114.md',
+    'engine/direct-xpu/README.md',
+    'engine/direct-xpu/pti/README.md',
+    'docs/REFERENCE_BUILD_CHAIN.md',
+    'benchmarks/results/direct-xpu-20261114/README.md',
+    'benchmarks/results/direct-xpu-20261114/UPSTREAM_ISSUES.md',
 ]
 
 
@@ -48,7 +53,10 @@ def blocks():
         raise ValueError('Benchmark summary is for another release')
     # Deliberately select a dated campaign. A future release must review this
     # source and the dated prose, rather than silently inherit old numbers.
-    campaign = 'benchmarks/results/mtp-cache-1792-20261112/qualification/full-serving-20261112-r2/comparison.json'
+    if policy['policy_id'] == 'b70-qwen38-exl3-production-v6':
+        campaign = 'benchmarks/results/direct-xpu-20261114/qualification/comparison.json'
+    else:
+        campaign = 'benchmarks/results/mtp-cache-1792-20261112/qualification/full-serving-20261112-r2/comparison.json'
     comparison = read_json(campaign)
     if (comparison['changes_pct'] != summary['changes_pct'] or
             not comparison['all70_waves_valid_each'] or
@@ -111,7 +119,21 @@ def blocks():
         ])
     rollback_text = (f'Use the [saved {rollback} release](../config/releases/{rollback}/README.md)\n'
                      f'with `{launcher}`. Its immutable image is\n`{rollback_id}`.')
+    direct = read_json('engine/direct-xpu/build-lock.json')
+    core, packages, drivers = (direct[key] for key in ('core_packages', 'python_packages', 'dpkg_packages'))
+    direct_stack = table([
+        ['Component', 'Candidate'], ['---', '---'],
+        ['vLLM / base image', direct['latest_stable']['version'] + ' XPU, pinned registry digest'],
+        ['PyTorch / Triton XPU', core['torch'] + ' / ' + core['triton-xpu']],
+        ['vLLM XPU kernels', core['vllm-xpu-kernels']],
+        ['Intel compiler package', '`' + direct['compiler_package'] + '`'],
+        ['SYCL runtime / PTI', core['intel-sycl-rt'] + ' / ' + core['intel-pti']],
+        ['Intel Compute Runtime / IGC / GMM', ' / '.join(drivers[n].removesuffix('-0') for n in ('libze-intel-gpu1', 'intel-igc-core-2', 'libigdgmm12'))],
+        ['Custom oneDNN source / reported version', direct['sources']['onednn']['version'] + ' / ' + direct['sources']['onednn']['runtime_version']],
+        ['Transformers / xgrammar', packages['transformers'] + ' / ' + packages['xgrammar']],
+    ])
     return {
+        ('engine/direct-xpu/README.md', 'DIRECT STACK'): direct_stack,
         ('README.md', 'PUBLIC PROFILE'): profile,
         ('README.md', 'PUBLIC MEASUREMENTS'): table(measurements),
         ('docs/CURRENT_CONFIGURATION.md', 'RELEASE IDENTITIES'): pins,

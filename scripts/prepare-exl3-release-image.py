@@ -19,18 +19,20 @@ def main():
     p.add_argument('--runtime-image',required=True);p.add_argument('--policy',type=Path,required=True)
     p.add_argument('--tag',required=True);p.add_argument('--out',type=Path,required=True)
     p.add_argument('--cache-capacity',type=int,choices=(64,),help='Freeze the reviewed native partition-cache default explicitly')
+    p.add_argument('--keep-default-command',action='store_true',help='Preserve the direct-build vLLM entrypoint default command')
     args=p.parse_args();root=args.out.resolve();assert not root.exists()
     assert subprocess.run(['docker','image','inspect',args.tag],capture_output=True).returncode!=0
     base=inspect(args.runtime_image);root.mkdir()
     policy_sha=hashlib.sha256(args.policy.read_bytes()).hexdigest()
     capacity_env=('ENV EXL3_SDPA_CACHE_CAPACITY=64\n' if args.cache_capacity is not None else '')
+    command = base['Config']['Cmd'] if args.keep_default_command else ["models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml", "--gpu", "0"]
     dockerfile=f'''FROM {base['Id']}
 LABEL org.local.b70.policy.sha256="{policy_sha}" \\
       org.local.b70.exl3.runtime-image="{base['Id']}" \\
       org.opencontainers.image.source="https://github.com/Danmoreng/intel-b70-qwen38-vllm"
 ENV B70_POLICY_SHA256={policy_sha}
 {capacity_env}\
-CMD ["models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml", "--gpu", "0"]
+CMD {json.dumps(command)}
 '''
     (root/'Dockerfile').write_text(dockerfile)
     with (root/'build.log').open('w') as log:

@@ -1,5 +1,5 @@
 {
-  "policy_id": "b70-qwen38-exl3-production-v5",
+  "policy_id": "b70-qwen38-exl3-production-v7",
   "hardware": {
     "gpu": "Intel Arc Pro B70",
     "gpu_count": 1,
@@ -15,16 +15,23 @@
   },
   "runtime": {
     "vllm": "0.33.0",
-    "torch": "2.14.0+xpu",
-    "oneapi_compiler": "2026.1.1",
-    "onednn": "3.13.4",
-    "native_library_sha256": "d91199a8dcf983240a82fb7acd886677cde7e1cd9d9491880a155cab3f3f4e17",
+    "torch": "2.15.0+xpu",
+    "oneapi_compiler": "2026.2.0",
+    "onednn": "3.14.1",
+    "native_library_sha256": "f1e57d96b4c1e3850c5b84ca03360fada943f5c609414da90b2333188cb3ad76",
     "exl3_source_commit": "fc8f8c9fa1627f28a7fbe6ee4fc7bf961dabef81",
-    "onednn_source_commit": "c531fe1a5cd631b7f60277cdf6675c588cadbc28",
-    "onednn_library_sha256": "90c0feddfb51a6219903d5e1ccabc9fd32dab0c702284a16dd7692bb6042e056",
+    "onednn_source_commit": "4db284662a37cf46401655b5ee99391d9de52c00",
+    "onednn_library_sha256": "5113f7079fec68c68422827d0b6719fc17fa3f42e4316c79350b1ad4034a760e",
     "vllm_xpu_wheel_sha256": "0e3735aa6b9ac132a32b54a948bb0de079e1b783ec5b04b184f4bdaf873eb995",
     "python_adapter_port": "benchmarks/experiments/vllm-033-upgrade/port-source.py",
-    "python_adapter_port_sha256": "b68b666a568407aa98cbf21fdc54b28769223f5568bee25381648b3840776d86"
+    "python_adapter_port_sha256": "b68b666a568407aa98cbf21fdc54b28769223f5568bee25381648b3840776d86",
+    "pti": "1.2.1 with Intel native-graph fix dd8940ff817f94461795708fe3c386ab9e09d3b1",
+    "direct_build": {
+      "official_base_digest": "vllm/vllm-openai-xpu@sha256:010bdc441c72ee222f459d3b688bb41317525f1bd7223afe6218490b0c526832",
+      "build_lock_sha256": "953aa2fb685ab74763328e5ed6432470a2b8aac5c8bb037652c23b32d29029f2",
+      "source_manifest_sha256": "0fbaf8c2c10d36ddc85a392deaa1bdd98a2fb30889ba66e598ed05569ee0cb41",
+      "m04_empty_split_patch_sha256": "99d8e02718a14854a322718f4186b8cad296daaf253a27984a1ed7754598a862"
+    }
   },
   "linears": {
     "small_matrix_kernel": "native EXL3 SmallM; true MB4 for M<=4, original24/40/48 blocks; exact K4 window decode",
@@ -46,7 +53,7 @@
     "key_bucket_tokens": 1,
     "mixed_metadata": "V2 CPU once-per-step exact prefill and fixed query partition; native GPU decode lengths",
     "decode_verification": "M04 at uniform q2..5/C1..C4; otherwise unchanged native",
-    "m04_library_sha256": "03ed092ce98faa5e1da18ed7f07b5b6862949bee2be0e742a0c28ef42ea1b6b3",
+    "m04_library_sha256": "d44e22642f0973fd344c2ffd953d555a0e9f34de938fbf4841087aef91f709f0",
     "unsupported_contract": "native fallback; no duplicate KV updates",
     "partition_cache": {
       "capacity": 64,
@@ -54,7 +61,8 @@
       "eviction": "completed LRU, oldest event wait only if all entries busy",
       "onednn_internal_cache": "separate scope"
     },
-    "m04_output_copy": "direct permuted-view copy at C4 only; original copy C1-C3 and no-output fallback"
+    "m04_output_copy": "direct permuted-view copy at C4 only; original copy C1-C3 and no-output fallback",
+    "packed_causal_empty_split": "zero contribution before normalized LSE combine; no changes to nonempty rows"
   },
   "speculation": {
     "method": "mtp",
@@ -95,7 +103,8 @@
     "block_size": 1792,
     "prefix_match_unit": 128,
     "long_prefill_token_threshold": 0,
-    "complete_dense_alias_cow": true
+    "complete_dense_alias_cow": true,
+    "compilation": "standard vLLM compilation, FULL_DECODE_ONLY graphs retained"
   },
   "api": {
     "middleware": "request_defaults.ChatDefaults",

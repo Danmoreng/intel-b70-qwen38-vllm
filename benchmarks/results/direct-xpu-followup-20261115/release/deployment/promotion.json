@@ -1,0 +1,439 @@
+{
+  "status": "PASS_STRICT_PRODUCTION_DEPLOYMENT_AND_RESTART",
+  "started_unix": 1794737194.337239,
+  "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+  "policy_sha256": "2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48",
+  "rollback_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "decision_sha256": "dd362c54a7773753586e5598ea720e02f559e67cfd5f521eb96df4ab4069e01c",
+  "stages": {
+    "first_start_readiness": {
+      "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+      "policy_sha256": "2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48",
+      "models_endpoint_healthy": true,
+      "verified_unix": 1794737331.0093694
+    },
+    "first_start_api": {
+      "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+      "policy_sha256": "2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48",
+      "container_id": "7aa5115f85cb811422efc7cb3768a47d6f503f13db0ef1ba913b3ad1a11f1256",
+      "models_endpoint": true,
+      "real_generated_reply": "Paris",
+      "streaming_done": true,
+      "streaming_usage": {
+        "prompt_tokens": 23,
+        "total_tokens": 25,
+        "completion_tokens": 2,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "defaults_response": {
+        "id": "chatcmpl-b695065879e18de0",
+        "object": "chat.completion",
+        "created": 1794737331,
+        "model": "Qwen3.8-27B",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "\n\n13 \u00d7 29 = **377**",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": "The user wants me to calculate 13 \u00d7 29.\n\n13 \u00d7 29 = 13 \u00d7 30 - 13 = 390 - 13 = 377.\n"
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null,
+            "weight_versions": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.33.0-34b6d146",
+        "usage": {
+          "prompt_tokens": 24,
+          "total_tokens": 88,
+          "completion_tokens": 64,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 49
+          }
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": {
+          "time_to_first_token_ms": 67.47582300022259,
+          "generation_time_ms": 599.8220849996869,
+          "queue_time_ms": 0.004399999852466863,
+          "mean_itl_ms": 9.520985476185507,
+          "tokens_per_second": 95.90918723516916,
+          "speculative_decoding": null
+        }
+      },
+      "default_contract": "16384 completion,8192 thinking budget,medium reasoning; unchanged hashed middleware plus live request with no overrides",
+      "command": [
+        "serve",
+        "/models/checkpoint",
+        "--served-model-name",
+        "Qwen3.8-27B",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--revision",
+        "113cf7ab958054860e43fb7f3063b1af19171095",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "262144",
+        "--kv-cache-dtype",
+        "fp8",
+        "--gpu-memory-utilization",
+        "0.965",
+        "--max-num-seqs",
+        "16",
+        "--max-num-batched-tokens",
+        "4096",
+        "--scheduler-reserve-full-isl",
+        "--enable-prefix-caching",
+        "--mamba-cache-mode",
+        "align",
+        "--speculative-config",
+        "{\"method\":\"mtp\",\"num_speculative_tokens\":3}",
+        "--limit-mm-per-prompt",
+        "{\"image\":32,\"video\":4}",
+        "--mm-processor-kwargs",
+        "{\"max_pixels\":4194304}",
+        "--enable-auto-tool-choice",
+        "--tool-call-parser",
+        "qwen3_xml",
+        "--reasoning-parser",
+        "qwen3",
+        "--reasoning-config",
+        "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+        "--override-generation-config",
+        "{\"max_new_tokens\":16384}",
+        "--middleware",
+        "request_defaults.ChatDefaults",
+        "--compilation-config",
+        "{\"cudagraph_mode\":\"FULL_DECODE_ONLY\",\"cudagraph_capture_sizes\":[1,2,4,8,12,16,24,32,40,48,56,64]}",
+        "--block-size",
+        "1792",
+        "--prefix-match-unit",
+        "128",
+        "--long-prefill-token-threshold",
+        "0",
+        "--watermark",
+        "0.05",
+        "--scheduler-cls",
+        "kv_admission.CompletionReservedScheduler",
+        "--kv-transfer-config",
+        "{\"kv_connector\": \"OffloadingConnector\", \"kv_role\": \"kv_both\", \"kv_connector_extra_config\": {\"cpu_bytes_to_use\": 12884901888, \"spec_name\": \"BoundedXPUOffloadingSpec\", \"spec_module_path\": \"xpu_cpu_offload\", \"blocks_per_chunk\": 1, \"eviction_policy\": \"arc\", \"store_threshold\": 0}}",
+        "--enable-per-request-metrics",
+        "--enable-prompt-tokens-details"
+      ],
+      "environment": {
+        "B70_GPTQ_W4A8_PREFILL": "0",
+        "B70_ONEDNN_MIXED_ROUTE": "0",
+        "B70_ONEDNN_PREFILL": "0",
+        "EXL3_DRAFT_VOCAB": "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json",
+        "EXL3_FIX_SPARSE_GDN_RETIREMENT": "0",
+        "EXL3_GUARDED_ATTN": "1",
+        "EXL3_GUARDED_PREFILL": "1",
+        "EXL3_INT8_PREFILL": "1",
+        "EXL3_KV_BLOCK_EXACT": "0",
+        "EXL3_M04_LIBRARY": "/opt/exl3xpu/m04/m04.so",
+        "EXL3_M04_LIBRARY_SHA256": "d44e22642f0973fd344c2ffd953d555a0e9f34de938fbf4841087aef91f709f0",
+        "EXL3_ONEDNN_ATTN": "0",
+        "EXL3_SDPA_CACHE_CAPACITY": "64",
+        "EXL3_TARGET_RUNTIME": "vllm033",
+        "HF_HUB_OFFLINE": "1",
+        "PYTHONPATH": "/opt/b70-runtime",
+        "VLLM_KV_CACHE_LAYOUT": "LBNHC",
+        "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+        "ZE_AFFINITY_MASK": "0"
+      },
+      "mounts": [
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48/131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19/reports",
+          "Destination": "/results",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw",
+          "Destination": "/models/checkpoint",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/runtime",
+          "Destination": "/opt/b70-runtime",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48/131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19/neo_compiler_cache",
+          "Destination": "/root/.cache/neo_compiler_cache",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48/131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19/vllm",
+          "Destination": "/root/.cache/vllm",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48/131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19/triton",
+          "Destination": "/root/.triton/cache",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        }
+      ],
+      "verified_unix": 1794737332.512917
+    },
+    "restart_readiness": {
+      "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+      "policy_sha256": "2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48",
+      "models_endpoint_healthy": true,
+      "verified_unix": 1794737397.819643
+    },
+    "restart_api": {
+      "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+      "policy_sha256": "2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48",
+      "container_id": "1ce22af00db626cf1370491872bf66a47ef20e449447ca1f688880ce789c7858",
+      "models_endpoint": true,
+      "real_generated_reply": "Paris",
+      "streaming_done": true,
+      "streaming_usage": {
+        "prompt_tokens": 23,
+        "total_tokens": 25,
+        "completion_tokens": 2,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "defaults_response": {
+        "id": "chatcmpl-9428d5342da202e9",
+        "object": "chat.completion",
+        "created": 1794737398,
+        "model": "Qwen3.8-27B",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "\n\n13 \u00d7 29 = **377**",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": "The user wants me to calculate 13 \u00d7 29.\n\n13 \u00d7 29 = 13 \u00d7 30 - 13 = 390 - 13 = 377.\n"
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null,
+            "weight_versions": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.33.0-34b6d146",
+        "usage": {
+          "prompt_tokens": 24,
+          "total_tokens": 88,
+          "completion_tokens": 64,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 49
+          }
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": {
+          "time_to_first_token_ms": 68.36836899992704,
+          "generation_time_ms": 599.8702450001474,
+          "queue_time_ms": 0.0045199999476608355,
+          "mean_itl_ms": 9.52174992063726,
+          "tokens_per_second": 95.77417206841159,
+          "speculative_decoding": null
+        }
+      },
+      "default_contract": "16384 completion,8192 thinking budget,medium reasoning; unchanged hashed middleware plus live request with no overrides",
+      "command": [
+        "serve",
+        "/models/checkpoint",
+        "--served-model-name",
+        "Qwen3.8-27B",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--revision",
+        "113cf7ab958054860e43fb7f3063b1af19171095",
+        "--dtype",
+        "float16",
+        "--max-model-len",
+        "262144",
+        "--kv-cache-dtype",
+        "fp8",
+        "--gpu-memory-utilization",
+        "0.965",
+        "--max-num-seqs",
+        "16",
+        "--max-num-batched-tokens",
+        "4096",
+        "--scheduler-reserve-full-isl",
+        "--enable-prefix-caching",
+        "--mamba-cache-mode",
+        "align",
+        "--speculative-config",
+        "{\"method\":\"mtp\",\"num_speculative_tokens\":3}",
+        "--limit-mm-per-prompt",
+        "{\"image\":32,\"video\":4}",
+        "--mm-processor-kwargs",
+        "{\"max_pixels\":4194304}",
+        "--enable-auto-tool-choice",
+        "--tool-call-parser",
+        "qwen3_xml",
+        "--reasoning-parser",
+        "qwen3",
+        "--reasoning-config",
+        "{\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+        "--override-generation-config",
+        "{\"max_new_tokens\":16384}",
+        "--middleware",
+        "request_defaults.ChatDefaults",
+        "--compilation-config",
+        "{\"cudagraph_mode\":\"FULL_DECODE_ONLY\",\"cudagraph_capture_sizes\":[1,2,4,8,12,16,24,32,40,48,56,64]}",
+        "--block-size",
+        "1792",
+        "--prefix-match-unit",
+        "128",
+        "--long-prefill-token-threshold",
+        "0",
+        "--watermark",
+        "0.05",
+        "--scheduler-cls",
+        "kv_admission.CompletionReservedScheduler",
+        "--kv-transfer-config",
+        "{\"kv_connector\": \"OffloadingConnector\", \"kv_role\": \"kv_both\", \"kv_connector_extra_config\": {\"cpu_bytes_to_use\": 12884901888, \"spec_name\": \"BoundedXPUOffloadingSpec\", \"spec_module_path\": \"xpu_cpu_offload\", \"blocks_per_chunk\": 1, \"eviction_policy\": \"arc\", \"store_threshold\": 0}}",
+        "--enable-per-request-metrics",
+        "--enable-prompt-tokens-details"
+      ],
+      "environment": {
+        "B70_GPTQ_W4A8_PREFILL": "0",
+        "B70_ONEDNN_MIXED_ROUTE": "0",
+        "B70_ONEDNN_PREFILL": "0",
+        "EXL3_DRAFT_VOCAB": "/opt/exl3xpu/models/qwen3.8-27b-exl3-4.00bpw/draft_vocab.json",
+        "EXL3_FIX_SPARSE_GDN_RETIREMENT": "0",
+        "EXL3_GUARDED_ATTN": "1",
+        "EXL3_GUARDED_PREFILL": "1",
+        "EXL3_INT8_PREFILL": "1",
+        "EXL3_KV_BLOCK_EXACT": "0",
+        "EXL3_M04_LIBRARY": "/opt/exl3xpu/m04/m04.so",
+        "EXL3_M04_LIBRARY_SHA256": "d44e22642f0973fd344c2ffd953d555a0e9f34de938fbf4841087aef91f709f0",
+        "EXL3_ONEDNN_ATTN": "0",
+        "EXL3_SDPA_CACHE_CAPACITY": "64",
+        "EXL3_TARGET_RUNTIME": "vllm033",
+        "HF_HUB_OFFLINE": "1",
+        "PYTHONPATH": "/opt/b70-runtime",
+        "VLLM_KV_CACHE_LAYOUT": "LBNHC",
+        "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+        "ZE_AFFINITY_MASK": "0"
+      },
+      "mounts": [
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48/131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19/reports",
+          "Destination": "/results",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/exl3xpu/turboderp-Qwen3.8-27B-exl3-4.00bpw",
+          "Destination": "/models/checkpoint",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn/runtime",
+          "Destination": "/opt/b70-runtime",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48/131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19/neo_compiler_cache",
+          "Destination": "/root/.cache/neo_compiler_cache",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48/131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19/vllm",
+          "Destination": "/root/.cache/vllm",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/home/sebastian/.cache/b70-qwen38-vllm-production/2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48/131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19/triton",
+          "Destination": "/root/.triton/cache",
+          "Mode": "",
+          "RW": true,
+          "Propagation": "rprivate"
+        }
+      ],
+      "verified_unix": 1794737399.0023592
+    }
+  },
+  "finished_unix": 1794737399.002387
+}

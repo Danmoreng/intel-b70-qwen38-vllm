@@ -1,0 +1,9 @@
+{
+  "status": "DIAGNOSTIC_ONLY_NOT_RELEASE_SOURCE",
+  "started_utc": "2026-11-14T17:35:46.916868+00:00",
+  "parent_image": "sha256:b37eb3926bade76db626a261b98de6570036fd59d81a3a06e6ab780a87f0918d",
+  "reference_image": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "dockerfile_sha256": "1c330930a2f54201a918920ac087ca8338b5de20a0d9cfd30d0a80d3e65370c9",
+  "change": "Only vllm-xpu-kernels package to exact production0.1.15.4. Every other selected component and native binary stays from R11. Unsupported cross-Torch package pairing is a diagnostic; CPU import alone proves no GPU compatibility. Reusing old binary is NOT the public direct-source release recipe.",
+  "reason": "Both coherent2.14.1/kernel.16.4 and2.15/kernel.17.1 repeat; short full-model prefill NLL differs only0.000295, so inspect shared decode/state components next."
+}

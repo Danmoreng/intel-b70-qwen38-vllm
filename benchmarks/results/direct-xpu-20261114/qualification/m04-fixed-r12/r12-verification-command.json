@@ -1,0 +1,30 @@
+{
+  "command": [
+    "timeout",
+    "--signal=INT",
+    "--kill-after=240s",
+    "5258s",
+    "/usr/bin/python3",
+    "/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmarks/experiments/vllm-033-upgrade/run-candidate.py",
+    "--image",
+    "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+    "--out",
+    "/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmark-results/direct-xpu-20261114/release-m04fix-r12",
+    "--production-repo",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm-onednn",
+    "--fixture-root",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+    "--tokenizer-baseline",
+    "/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmark-results/direct-xpu-20261114/tokenizer-baseline.json",
+    "--tokenizer-fixtures",
+    "/home/sebastian/LocalLLM/intel-b70-qwen38-vllm/benchmark-results/meaningful-full-profile/run-20260923-201101-w0.00",
+    "--keep-production-stopped",
+    "--reference-image",
+    "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+    "--stages",
+    "m04-boundary,profiler,kernels,replay,startup,cow,agents,operations,serving"
+  ],
+  "started_at": "2026-11-14T21:07:21.030746+01:00",
+  "deadline": "22:35 Europe/Berlin;240s emergency cleanup; closing22:45",
+  "scope": "All tests on frozen R12. Old production intentionally left stopped per user instruction."
+}

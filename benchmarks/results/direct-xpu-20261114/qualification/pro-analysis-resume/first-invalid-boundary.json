@@ -1,0 +1,512 @@
+{
+  "status": "FIRST_INVALID_TARGET_HIDDEN_BEFORE_SAMPLING",
+  "steps": 1522,
+  "last_calls": {
+    "v2_model_sample": 1534,
+    "v2_rejection": 1521,
+    "legacy_v1_rejection": 0
+  },
+  "first": {
+    "index": 359,
+    "emitted_before": 885,
+    "previous": {
+      "step": 371,
+      "req_ids": [
+        "chatcmpl-bace9d4d7c52001f-9a30312b"
+      ],
+      "num_reqs": 1,
+      "num_draft_tokens": 3,
+      "idx_mapping_np": [
+        3
+      ],
+      "cu_num_logits_np": [
+        0,
+        4
+      ],
+      "num_computed_tokens_np": [
+        2298
+      ],
+      "prefill_len_np": [
+        1418
+      ],
+      "query_start_loc_np": [
+        0,
+        4
+      ],
+      "num_scheduled_tokens": [
+        4
+      ],
+      "num_draft_tokens_per_req": [
+        3
+      ],
+      "calls": {
+        "v2_model_sample": 371,
+        "v2_rejection": 358,
+        "legacy_v1_rejection": 0
+      },
+      "hidden": {
+        "shape": [
+          4,
+          5120
+        ],
+        "stride": [
+          5120,
+          1
+        ],
+        "dtype": "torch.float16"
+      },
+      "target_raw": {
+        "shape": [
+          4,
+          248320
+        ],
+        "stride": [
+          248320,
+          1
+        ],
+        "dtype": "torch.float16"
+      },
+      "draft_logits_none": true,
+      "target_processed": {
+        "shape": [
+          4,
+          248320
+        ],
+        "stride": [
+          248320,
+          1
+        ],
+        "dtype": "torch.float32"
+      },
+      "values": {
+        "logits_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "positions": [
+          2298,
+          2299,
+          2300,
+          2301
+        ],
+        "input_ids": [
+          1385,
+          1960,
+          14031,
+          10324
+        ],
+        "cu_num_logits": [
+          0,
+          4
+        ],
+        "idx_mapping": [
+          3
+        ],
+        "expanded_idx_mapping": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "expanded_local_pos": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "seq_lens": [
+          2302
+        ],
+        "state_num_computed_tokens": [
+          0,
+          0,
+          0,
+          2298,
+          8,
+          8,
+          15,
+          10,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "hidden": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            5120.0,
+            20.25,
+            -13.234375
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            5120.0,
+            14.3203125,
+            -11.265625
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            5120.0,
+            32.03125,
+            -13.34375
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            5120.0,
+            29.0625,
+            -12.21875
+          ]
+        ],
+        "target_raw": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            248320.0,
+            34.90625,
+            -11.2890625
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            248320.0,
+            33.46875,
+            -12.8359375
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            248320.0,
+            30.25,
+            -12.4375
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            248320.0,
+            28.15625,
+            -12.7578125
+          ]
+        ],
+        "target_processed": [
+          [
+            0.0,
+            0.0,
+            248319.0,
+            1.0,
+            34.90625,
+            34.90625
+          ],
+          [
+            0.0,
+            0.0,
+            248319.0,
+            1.0,
+            33.46875,
+            33.46875
+          ],
+          [
+            0.0,
+            0.0,
+            248319.0,
+            1.0,
+            30.25,
+            30.25
+          ],
+          [
+            0.0,
+            0.0,
+            248319.0,
+            1.0,
+            28.15625,
+            28.15625
+          ]
+        ],
+        "sampled_token_ids": [
+          [
+            1960,
+            14031,
+            10324,
+            11
+          ]
+        ],
+        "num_sampled": [
+          4
+        ],
+        "num_rejected": [
+          0
+        ]
+      }
+    },
+    "first_invalid": {
+      "step": 372,
+      "req_ids": [
+        "chatcmpl-bace9d4d7c52001f-9a30312b"
+      ],
+      "num_reqs": 1,
+      "num_draft_tokens": 3,
+      "idx_mapping_np": [
+        3
+      ],
+      "cu_num_logits_np": [
+        0,
+        4
+      ],
+      "num_computed_tokens_np": [
+        2302
+      ],
+      "prefill_len_np": [
+        1418
+      ],
+      "query_start_loc_np": [
+        0,
+        4
+      ],
+      "num_scheduled_tokens": [
+        4
+      ],
+      "num_draft_tokens_per_req": [
+        3
+      ],
+      "calls": {
+        "v2_model_sample": 372,
+        "v2_rejection": 359,
+        "legacy_v1_rejection": 0
+      },
+      "hidden": {
+        "shape": [
+          4,
+          5120
+        ],
+        "stride": [
+          5120,
+          1
+        ],
+        "dtype": "torch.float16"
+      },
+      "target_raw": {
+        "shape": [
+          4,
+          248320
+        ],
+        "stride": [
+          248320,
+          1
+        ],
+        "dtype": "torch.float16"
+      },
+      "draft_logits_none": true,
+      "target_processed": {
+        "shape": [
+          4,
+          248320
+        ],
+        "stride": [
+          248320,
+          1
+        ],
+        "dtype": "torch.float32"
+      },
+      "values": {
+        "logits_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "positions": [
+          2302,
+          2303,
+          2304,
+          2305
+        ],
+        "input_ids": [
+          11,
+          809,
+          8,
+          198
+        ],
+        "cu_num_logits": [
+          0,
+          4
+        ],
+        "idx_mapping": [
+          3
+        ],
+        "expanded_idx_mapping": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "expanded_local_pos": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "seq_lens": [
+          2306
+        ],
+        "state_num_computed_tokens": [
+          0,
+          0,
+          0,
+          2302,
+          8,
+          8,
+          15,
+          10,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "hidden": [
+          [
+            5120.0,
+            0.0,
+            0.0,
+            0.0,
+            -Infinity,
+            Infinity
+          ],
+          [
+            5120.0,
+            0.0,
+            0.0,
+            0.0,
+            -Infinity,
+            Infinity
+          ],
+          [
+            5120.0,
+            0.0,
+            0.0,
+            0.0,
+            -Infinity,
+            Infinity
+          ],
+          [
+            5120.0,
+            0.0,
+            0.0,
+            0.0,
+            -Infinity,
+            Infinity
+          ]
+        ],
+        "target_raw": [
+          [
+            248320.0,
+            0.0,
+            0.0,
+            0.0,
+            -Infinity,
+            Infinity
+          ],
+          [
+            248320.0,
+            0.0,
+            0.0,
+            0.0,
+            -Infinity,
+            Infinity
+          ],
+          [
+            248320.0,
+            0.0,
+            0.0,
+            0.0,
+            -Infinity,
+            Infinity
+          ],
+          [
+            248320.0,
+            0.0,
+            0.0,
+            0.0,
+            -Infinity,
+            Infinity
+          ]
+        ],
+        "target_processed": [
+          [
+            248320.0,
+            0.0,
+            0.0,
+            0.0,
+            -Infinity,
+            Infinity
+          ],
+          [
+            248320.0,
+            0.0,
+            0.0,
+            0.0,
+            -Infinity,
+            Infinity
+          ],
+          [
+            248320.0,
+            0.0,
+            0.0,
+            0.0,
+            -Infinity,
+            Infinity
+          ],
+          [
+            248320.0,
+            0.0,
+            0.0,
+            0.0,
+            -Infinity,
+            Infinity
+          ]
+        ],
+        "sampled_token_ids": [
+          [
+            1023,
+            3,
+            3,
+            3
+          ]
+        ],
+        "num_sampled": [
+          1
+        ],
+        "num_rejected": [
+          3
+        ]
+      }
+    },
+    "bad_tensor_names": [
+      "hidden",
+      "target_raw",
+      "target_processed"
+    ]
+  },
+  "scope": "Added diagnostic kernels, no explicit new synchronization. Active-row summaries count NaN/+inf separately from intentional -inf. Not engine or performance qualification.",
+  "all_2048_output_token_ids_identical_to_uninstrumented_r11": true
+}

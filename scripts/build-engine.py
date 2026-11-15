@@ -41,6 +41,7 @@ def prepare_context(out, download_cache=None):
     manifest = json.loads((SOURCE / 'source-manifest.json').read_text())
     actual_files = {str(p.relative_to(SOURCE)) for folder in ('runtime', 'vllm', 'm04', 'pti')
                     for p in (SOURCE / folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+    actual_files.update({'m04-empty-split.patch', 'rebuild-m04.sh'})
     if actual_files != set(manifest['files_sha256']):
         raise RuntimeError('Integration source inventory differs from its manifest')
     for name, expected in manifest['files_sha256'].items():

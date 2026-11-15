@@ -1,0 +1,8 @@
+{
+  "status": "DIAGNOSTIC_ONLY_NOT_RELEASE_SELECTION",
+  "started_utc": "2026-11-14T17:33:50.320589+00:00",
+  "parent_image": "sha256:b37eb3926bade76db626a261b98de6570036fd59d81a3a06e6ab780a87f0918d",
+  "dockerfile_sha256": "91f6618b8346745a9484312fcb94ee1986f74ad37ecb20d58375326cd2960dd5",
+  "change": "Only Intel Compute Runtime/OpenCL/ocloc to26.35.39758.10 and IGC2.41.5. Retain newerGMM22.10.2, Torch2.15/PTIfix/SYCL2026.2/all native artifacts and mode0/nativegraphs. No production override or metadata claim of qualification.",
+  "reason": "Generation repetition reproduces in Torch2.15 with/without compiler/graphs and also in coherentTorch2.14.1 stack; do not pinTorch alone."
+}

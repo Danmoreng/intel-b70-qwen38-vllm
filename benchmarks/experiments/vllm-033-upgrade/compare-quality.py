@@ -5,11 +5,15 @@ from pathlib import Path
 import numpy as np
 p=argparse.ArgumentParser(description=__doc__)
 p.add_argument('--baseline',required=True,type=Path);p.add_argument('--candidate',required=True,type=Path)
-p.add_argument('--out',required=True,type=Path);a=p.parse_args()
-result={'status':'MEASURED_PAIRED_FINITE_QUALITY','baseline':str(a.baseline),'candidate':str(a.candidate),
+p.add_argument('--out',required=True,type=Path)
+p.add_argument('--kinds',nargs='+',choices=('short','long'),default=['short','long'],
+               help='Explicit subsets are diagnostic only; release comparison requires both kinds')
+a=p.parse_args()
+result={'status':'MEASURED_PAIRED_FINITE_QUALITY' if set(a.kinds)=={'short','long'} else 'MEASURED_PAIRED_FINITE_QUALITY_DIAGNOSTIC_SUBSET',
+        'captured_kinds':a.kinds,'baseline':str(a.baseline),'candidate':str(a.candidate),
         'limits':'Finite teacher-forced panels, not coding-task success or general text equivalence. Confidence intervals resample paired windows, not independent tokens.'}
 rng=np.random.default_rng(20261108)
-for kind in ('short','long'):
+for kind in a.kinds:
  panel=json.loads((a.baseline/kind/'panel.json').read_text());other=json.loads((a.candidate/kind/'panel.json').read_text())
  assert panel==other
  old_meta=json.loads((a.baseline/kind/'capture/summary.json').read_text())
@@ -55,4 +59,4 @@ for kind in ('short','long'):
   'top1_matches':sum(r['top1_matches'] for r in rows),
   'full_vocabulary_positions':sum(r['full_vocabulary_positions'] for r in rows),'all_arrays_bitidentical':all(identity)}
 a.out.parent.mkdir(parents=True,exist_ok=True);a.out.write_text(json.dumps(result,indent=2)+'\n')
-print(json.dumps({kind:{k:v for k,v in result[kind].items() if k!='windows'} for kind in ('short','long')},indent=2))
+print(json.dumps({kind:{k:v for k,v in result[kind].items() if k!='windows'} for kind in a.kinds},indent=2))

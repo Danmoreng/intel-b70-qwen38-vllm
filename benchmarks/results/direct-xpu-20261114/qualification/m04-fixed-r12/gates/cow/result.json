@@ -1,0 +1,44 @@
+{
+  "status": "PASS_RELEASE_FACTS_PARTIAL_COW_C2_PARENT_RECHECK_AND_D2H",
+  "rows": [
+    {
+      "label": "parent-prime",
+      "parsed": {
+        "audit": "MAPLE_72",
+        "left": "CIRRUS_491",
+        "right": "BASALT_806"
+      },
+      "cached_tokens": 0,
+      "partial_page_hit": false
+    },
+    {
+      "label": "child-audit",
+      "parsed": {
+        "audit": "MAPLE_72"
+      },
+      "cached_tokens": 16256,
+      "partial_page_hit": true
+    },
+    {
+      "label": "child-sides",
+      "parsed": {
+        "left": "CIRRUS_491",
+        "right": "BASALT_806"
+      },
+      "cached_tokens": 16256,
+      "partial_page_hit": true
+    },
+    {
+      "label": "parent-after-children",
+      "parsed": {
+        "audit": "MAPLE_72",
+        "left": "CIRRUS_491",
+        "right": "BASALT_806"
+      },
+      "cached_tokens": 16256,
+      "partial_page_hit": true
+    }
+  ],
+  "gpu_to_cpu_bytes": 718405632.0,
+  "scope": "Real release API, no developer endpoint/audit/determinism hooks. Two concurrent256-token continuations with actual16256-token partial-page hits, parent facts rechecked. Finite functional deployment gate; prior numerical proof separate."
+}

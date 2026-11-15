@@ -48,7 +48,7 @@ for guards in (target_runtime.SOURCE_HASHES, attention_dispatch.SOURCE_HASHES):
     for name, expected in guards.items():
         assert hashlib.sha256((root / name).read_bytes()).hexdigest() == expected, name
 profile = yaml.safe_load((ENGINE / 'models/qwen3.8-27b-exl3-4.00bpw/migration-target-optimized.yaml').read_text())
-assert profile['vllm']['compilation_config']['mode'] == 0, 'Selected Inductor compatibility fallback missing'
+assert 'mode' not in profile['vllm']['compilation_config'], 'Candidate must test standard compilation after the M04 fix'
 assert profile['vllm']['compilation_config']['cudagraph_mode'] == 'FULL_DECODE_ONLY', 'Native recording must remain enabled'
 m04 = ENGINE / 'm04/m04.so'
 assert hashlib.sha256(m04.read_bytes()).hexdigest() == profile['env']['EXL3_M04_LIBRARY_SHA256']

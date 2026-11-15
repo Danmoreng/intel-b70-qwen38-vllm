@@ -130,5 +130,6 @@
     }
   },
   "scope": "Original task failure retained. Fixed captured messages/tools/seeds/sampling, cap1024 across diagnostic arms. No replacement task score. Eager/backend controls also change default custom-op selection; keeping Inductor while explicitly enabling all custom ops still repeats. Exact faulty Inductor optimization unproven.",
-  "selection": "Same latest libraries with CompilationMode.NONE/0, keeping actual FULL_DECODE_ONLY native graphs. A new immutable image/profile requires fresh exact-image gates."
+  "selection": "Same latest libraries with CompilationMode.NONE/0, keeping actual FULL_DECODE_ONLY native graphs. A new immutable image/profile requires fresh exact-image gates.",
+  "subsequent_full_test": "Short controls are not a sufficient workaround: selected R11 still fails the full coding task. See ../release-nativegraph/coding-failure.json and r11-raw/comparison.json; do not infer a proven Inductor-only cause from these earlier capped requests."
 }

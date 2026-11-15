@@ -1,0 +1,41 @@
+{
+  "status": "RELEASE_BLOCKED_BY_CODING_TIMEOUT_AND_INCOMPLETE_TOOL_OUTPUT",
+  "image_id": "sha256:b37eb3926bade76db626a261b98de6570036fd59d81a3a06e6ab780a87f0918d",
+  "observed_utc": "2026-11-14T17:19:36.260190+00:00",
+  "compilation_mode": 0,
+  "native_graph_mode": "FULL_DECODE_ONLY",
+  "task": "rangeset-202611117",
+  "planned_tasks": 4,
+  "attempted_tasks": 1,
+  "completed_tasks": 0,
+  "unattempted_tasks": 3,
+  "raw_response_sha256": "7b8cd8d19dedc22da30c209feb78e192af6e5d58cf9d5186359b58dde0f8d339",
+  "usage": {
+    "prompt_tokens": 1418,
+    "total_tokens": 17802,
+    "completion_tokens": 16384,
+    "prompt_tokens_details": {
+      "cached_tokens": 768,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 483
+    }
+  },
+  "finish_reason": "length",
+  "parsed_tool_calls": [
+    {
+      "id": "chatcmpl-tool-b915e3b0e009f5f1",
+      "type": "function",
+      "function": {
+        "name": "write_file",
+        "arguments": "{\"path\": \"rangeset.py\"}"
+      }
+    }
+  ],
+  "scope": "Full task failed despite a clean short diagnostic with the original R10-captured history. Here the first assistant reasoning differs slightly, and the full request allows16384 instead of1024 tokens. The duct repetition is absent in the parsed response, but a write_file call has only a path and no content; the next request times out. The raw generated tokens were not requested by this frozen task run, so the missing output cannot yet be attributed to a compiler, native graph, sampler or parser. This disproves sufficiency of the no-Inductor short control as a release fix. No completed independent-grader score and no production approval.",
+  "next_step": "Preserve this failed attempt. Replay its captured requests with raw token IDs and a common2048-token diagnostic cap, comparing the selected image, old production and eager controls; do not substitute these diagnostics for the frozen tasks.",
+  "raw_token_followup": "../generation-probes/r11-raw/comparison.json",
+  "raw_token_finding": "Selected image repeats token1023 (duct)1163 consecutive times in a2048-token replay, inside the write_file content. Old production completes the identical1418-token prompt in1351 output tokens. Prompt token IDs match exactly. Inductor is disabled in the failing selected image; this is not isolated to Inductor."
+}

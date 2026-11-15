@@ -1,0 +1,67 @@
+{
+  "status": "FUNCTIONAL_PASS_PERFORMANCE_REVIEW_REQUIRED_NOT_RELEASE_APPROVED",
+  "recorded_utc": "2026-11-14T21:41:45.025066+00:00",
+  "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+  "full_campaign_status": "PASS_REQUESTED_STAGES",
+  "quality": "All16short and4long teacher-forced windows finite and aligned; see quality-comparison.json.",
+  "serving_waves": 70,
+  "requests": 124,
+  "paired_payloads_and_prompt_bytes_verified": 124,
+  "preemptions": 0,
+  "changes_pct": {
+    "batch_wall_s": 1.8200941477305665,
+    "output_tokens_per_s": -1.787558892933061,
+    "card_energy_j": 0.8336493625812791,
+    "output_tokens_per_joule": -0.8267571072267943,
+    "weighted_native_decode_tokens_per_s": 0.34554012408489765,
+    "weighted_aggregate_decode_tokens_per_s": 0.1525680453822842,
+    "weighted_native_prefill_tokens_per_s": -6.534049154682952,
+    "speculative_acceptance": 0.41593692420047734,
+    "prompt_tokens_cached": 0.0
+  },
+  "investigation_triggers": [
+    {
+      "scenario": "phase-4k-c1",
+      "metric": "decode",
+      "change_pct": -6.952112896600604
+    },
+    {
+      "scenario": "phase-4k-c1",
+      "metric": "wall",
+      "change_pct": 6.479377001974607
+    },
+    {
+      "scenario": "concurrency-2k-c2",
+      "metric": "prefill",
+      "change_pct": -85.56360347220844
+    },
+    {
+      "scenario": "concurrency-2k-c2",
+      "metric": "wall",
+      "change_pct": 42.20175883075965
+    },
+    {
+      "scenario": "complete-matrix",
+      "metric": "weighted_native_prefill_tokens_per_s",
+      "change_pct": -6.534049154682952
+    }
+  ],
+  "localization": {
+    "flagged_cell": "concurrency-2k-c2",
+    "candidate_wall_seconds": [
+      28.420885045,
+      20.269886619,
+      61.846986765
+    ],
+    "baseline_wall_seconds": [
+      19.3427595,
+      19.986310492,
+      21.217168235
+    ],
+    "remaining67_waves_wall_delta_seconds": -6.070422820001113,
+    "scope": "Excluding the flagged cell is descriptive localization only, never a replacement release score."
+  },
+  "cause": "Not established. No compilation-cache files were written during the slow-wave window. Logged Triton JIT warnings occur later; they do not establish the cause of these stalls.",
+  "next_test": "Repeat only the exact three concurrency-2k-c2 requests on unchanged R12 with existing caches and the same warmup, then a matched v7 control if needed. Preserve every attempt; trace host/GPU/offload waits separately if reproduced. phase-4k-c1 decode and wall triggers also require review; original ranges overlap. Do not rerun all numerical/quality/agent panels unless code changes require it. A fresh-worker repeat changes RAM-cache history: if it passes, preserve the original failure and repeat after the same128K/cache-pressure prologue. A fresh pass alone cannot dismiss a post-load stall.",
+  "production": "No promotion, no dependency rollback inferred from an unlocalized performance observation. Existing production files unchanged; service intentionally left stopped for exclusive tests."
+}

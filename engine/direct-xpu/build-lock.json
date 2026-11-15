@@ -124,7 +124,13 @@
   "regression_probe": {
     "status": "TORCH_215_PTI_GRAPH_FIX_SELECTED_PENDING_FULL_QUALIFICATION",
     "observed": "Original Torch2.15/PTI1.2.1 produces wrong two-row graph outputs after XPU profiling, also in standalone PyTorch without vLLM/EXL3/Triton/weights.",
-    "selection": "Backport Intel PTI native-graph resource/lifetime fix dd8940ff817f94461795708fe3c386ab9e09d3b1 to exact wheel source 25a77ed7693ac155bc62e563060b0976f9934b53. Original full matrix/attention/GDN gates and standalone native replay profiling (9 real kernel events) pass. Full final-image qualification remains required."
+    "selection": "Backport Intel PTI native-graph resource/lifetime fix dd8940ff817f94461795708fe3c386ab9e09d3b1 to exact wheel source 25a77ed7693ac155bc62e563060b0976f9934b53. Original full matrix/attention/GDN gates and standalone native replay profiling (9 real kernel events) pass. Full final-image qualification remains required.",
+    "generation_m04": {
+      "status": "MINIMAL_KERNEL_FIX_PENDING_END_TO_END_AND_FULL_QUALIFICATION",
+      "observed": "Active V2 trace reproduces exact token loop; first target invalidity is self-attention layer3, rows preceding a64-token tile boundary. Original packed M04 kernel fails11/40 standalone FP32-oracle cases, fixed kernel passes40/40.",
+      "cause": "New header contract normalizes every split independently. An entirely causally masked split has zero denominator;0/0 partial output poisons the later zero-weight combine. Older header kept multi-split partials unnormalized and skipped zero-mass splits.",
+      "selection": "Retain newest stack, MTP3 and native graphs. Zero contribution only for structurally empty packed causal splits; restore standard compilation as a new candidate requiring fresh qualification. No Torch patch, token mask or NaN sanitization."
+    }
   },
   "dpkg_packages": {
     "intel-igc-core-2": "2.42.6",
@@ -143,13 +149,6 @@
       "reason": "5.23 breaks vLLM0.33 two-pass Qwen video preprocessing. A valid2s320x240 clip is rejected as295241 tokens; the CPU integration also rejects the deferred video placeholder after the video has been processed separately.",
       "control": "Same Torch2.15/PTI-fixed image with only Transformers changed to5.22.2 passes the unchanged real1/4video count, rejection-over-limit and oversized-image API gate. Direct HF4-frame processing alone passes in both versions.",
       "selection_rule": "Latest compatible stable minor patch5.22.2, above the reference5.17.0. No other new component is rolled back. Full clean-image qualification still required."
-    },
-    "inductor": {
-      "latest_tested": "Torch2.15 default Inductor model compilation",
-      "selected": "CompilationMode.NONE (0), native graph mode FULL_DECODE_ONLY retained",
-      "reason": "Original frozen coding task degenerates into repeated duct and times out. Same-image1024-token captured-request control reproduces332 trailing repetitions; oldv7 and same-new-image without compilation do not. Enabling all native custom ops while keeping Inductor does not remove the repetition.",
-      "scope": "Confirmed execution-path compatibility problem; exact defective optimization is not proven. Not a blanket PyTorch arithmetic attribution or a claim that graph capture must be disabled.",
-      "qualification": "No release approval from this diagnostic; all final-image gates and full performance/quality comparison required."
     }
   }
 }

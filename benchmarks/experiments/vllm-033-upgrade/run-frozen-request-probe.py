@@ -11,6 +11,7 @@ import subprocess
 import sys
 import time
 import urllib.request
+import urllib.error
 from zoneinfo import ZoneInfo
 
 HERE = Path(__file__).resolve().parent
@@ -24,12 +25,33 @@ NAME = 'b70-v033-generation-probe'
 BASE = 'http://127.0.0.1:8082'
 
 
+def token_run_summary(token_ids):
+    """Describe raw token runs without treating transport completion as quality."""
+    if not token_ids:
+        return dict(count=0, longest=None, suffix=None)
+    best = None
+    start = 0
+    for end in range(1, len(token_ids) + 1):
+        if end < len(token_ids) and token_ids[end] == token_ids[start]:
+            continue
+        run = dict(token_id=int(token_ids[start]), start_index=start, length=end - start)
+        if best is None or run['length'] > best['length']:
+            best = run
+        suffix = run
+        start = end
+    return dict(count=len(token_ids), longest=best, suffix=suffix)
+
+
 def ready(base):
     end = time.monotonic() + 900
     while time.monotonic() < end:
         try:
             return K.http_json(base + '/v1/models', timeout=3)
         except OSError:
+            if base == BASE:
+                item = subprocess.run(['docker', 'inspect', NAME], capture_output=True, text=True)
+                if item.returncode == 0 and not json.loads(item.stdout)[0]['State']['Running']:
+                    raise RuntimeError('Diagnostic worker exited during readiness; see worker.log')
             time.sleep(2)
     raise TimeoutError('Model readiness: ' + base)
 
@@ -39,11 +61,23 @@ def main():
     for key in ('launch', 'requests', 'out'):
         p.add_argument('--' + key, required=True, type=Path)
     p.add_argument('--image', required=True)
+    p.add_argument('--output-cap', type=int, default=1024, choices=(1024, 2048, 16384),
+                   help='Common recorded output cap for every diagnostic arm')
+    p.add_argument('--tokenize-first', action='store_true',
+                   help='Reproduce the live task harness tokenization before each request')
+    p.add_argument('--return-token-ids', action='store_true',
+                   help='Record raw generated tokens as well as parsed tool calls')
+    p.add_argument('--logprobs', action='store_true',
+                   help='Diagnostic only: record chosen-token and top-five model probabilities')
     mode = p.add_mutually_exclusive_group()
     mode.add_argument('--enforce-eager', action='store_true', help='Explicit diagnostic override, never a release configuration')
     mode.add_argument('--disable-compile', action='store_true', help='Disable Torch compilation while retaining the original graph mode')
     mode.add_argument('--compile-backend', choices=('eager', 'aot_eager'), help='Diagnostic Dynamo backend with the original compilation and graph modes')
     mode.add_argument('--custom-op', action='append', default=[], choices=('gemma_rms_norm', 'all'), help='Keep Inductor and graphs but select native custom operators explicitly')
+    mode.add_argument('--isolate-request-cache', action='store_true',
+                      help='Diagnostic only: separate cache salts prevent cross-request prefix reuse')
+    mode.add_argument('--disable-speculation', action='store_true',
+                      help='Diagnostic only: remove MTP while retaining the other selected flags')
     a = p.parse_args()
     assert dt.datetime.now(ZoneInfo('Europe/Berlin')).hour < 21
     source = json.loads(a.launch.read_text())
@@ -61,6 +95,10 @@ def main():
     cmd[destinations[0]] = str(root / 'worker') + ':/results'
     if a.enforce_eager:
         cmd.append('--enforce-eager')
+    if a.disable_speculation:
+        index = cmd.index('--speculative-config')
+        assert json.loads(cmd[index + 1]) == {'method': 'mtp', 'num_speculative_tokens': 3}
+        del cmd[index:index + 2]
     if a.disable_compile or a.compile_backend or a.custom_op:
         index = cmd.index('--compilation-config') + 1
         config = json.loads(cmd[index])
@@ -76,12 +114,18 @@ def main():
                  source_launch_sha256=K.sha(a.launch), enforce_eager=a.enforce_eager,
                  disable_compile=a.disable_compile, runner_sha256=K.sha(Path(__file__)),
                  compile_backend=a.compile_backend,
+                 isolate_request_cache=a.isolate_request_cache,
+                 disable_speculation=a.disable_speculation,
                  custom_ops=a.custom_op,
-                 output_cap=1024, requests=[],
-                 scope='Captured messages/tools/seeds/sampling are fixed across arms, with output cap1024 and any eager override recorded separately. No live tools, repaired solution, replacement task score or release approval.')
+                 output_cap=a.output_cap, tokenize_first=a.tokenize_first,
+                 return_token_ids=a.return_token_ids, logprobs=a.logprobs, requests=[],
+                 scope='Captured messages/tools/seeds/sampling are fixed across arms, with the common output cap and every override recorded separately. No live tools, repaired solution, replacement task score or release approval.')
 
     def save():
         (root / 'result.json').write_text(json.dumps(state, indent=2) + '\n')
+
+    (root / 'runner-source.py').write_bytes(Path(__file__).read_bytes())
+    assert K.sha(root / 'runner-source.py') == state['runner_sha256']
 
     for sig in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP):
         signal.signal(sig, lambda n, f: (_ for _ in ()).throw(KeyboardInterrupt(str(n))))
@@ -106,13 +150,43 @@ def main():
             for index in range(3):
                 original = a.requests / f'request-{index:03d}.json'
                 request = json.loads(original.read_text())
-                request['max_tokens'] = 1024
+                request['max_tokens'] = a.output_cap
+                if a.isolate_request_cache:
+                    request['cache_salt'] = request['cache_salt'] + f'-diagnostic-isolated-{index}'
+                if a.return_token_ids:
+                    request['return_token_ids'] = True
+                if a.logprobs:
+                    request.update(logprobs=True, top_logprobs=5)
                 (root / f'request-{index:03d}.json').write_text(json.dumps(request, indent=2) + '\n')
+                if a.tokenize_first:
+                    rendered_messages = []
+                    for original_message in request['messages']:
+                        message = dict(original_message)
+                        reasoning = message.pop('reasoning_content', None)
+                        if reasoning is not None and message.get('reasoning') is None:
+                            message['reasoning'] = reasoning
+                        rendered_messages.append(message)
+                    rendered = K.http_json(BASE + '/tokenize', dict(
+                        model=request['model'], messages=rendered_messages, tools=request['tools'],
+                        chat_template_kwargs=request['chat_template_kwargs'], add_generation_prompt=True), 120)
+                    (root / f'tokenize-{index:03d}.json').write_text(json.dumps(rendered, indent=2) + '\n')
                 old = K.snapshot(BASE)
                 start = time.monotonic()
-                response = K.http_json(BASE + '/v1/chat/completions', request, 180)
+                try:
+                    response = K.http_json(BASE + '/v1/chat/completions', request,
+                                           min(900, max(180, a.output_cap // 15 + 60)))
+                except urllib.error.HTTPError as exc:
+                    body = exc.read().decode('utf-8', errors='replace')
+                    (root / f'http-error-{index:03d}.json').write_text(json.dumps(
+                        dict(status=exc.code, body=body), indent=2) + '\n')
+                    raise RuntimeError(f'API HTTP {exc.code}: {body[:500]}') from exc
                 new = K.snapshot(BASE)
                 (root / f'response-{index:03d}.json').write_text(json.dumps(response, indent=2) + '\n')
+                if a.return_token_ids:
+                    token_ids = response['choices'][0]['token_ids']
+                    assert token_ids and len(token_ids) == response['usage']['completion_tokens']
+                    decode = K.http_json(BASE + '/detokenize', dict(model=request['model'], tokens=token_ids), 120)
+                    (root / f'raw-output-{index:03d}.json').write_text(json.dumps(decode, indent=2) + '\n')
                 message = response['choices'][0]['message']
                 text = (message.get('reasoning') or message.get('reasoning_content') or '') + (message.get('content') or '')
                 count = 0
@@ -121,6 +195,9 @@ def main():
                 state['requests'].append(dict(index=index, source_request_sha256=K.sha(original),
                     seconds=time.monotonic() - start, usage=response['usage'],
                     finish_reason=response['choices'][0]['finish_reason'], trailing_duct_repetitions=count,
+                    parsed_text_trailing_duct_repetitions=count,
+                    raw_token_runs=(token_run_summary(response['choices'][0]['token_ids'])
+                                    if response['choices'][0].get('token_ids') is not None else None),
                     response_sha256=hashlib.sha256(json.dumps(response, sort_keys=True).encode()).hexdigest(),
                     native_delta={key: new[key] - old[key] for key in old}))
                 save()

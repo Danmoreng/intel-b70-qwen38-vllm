@@ -1,0 +1,54 @@
+{
+  "status": "FROZEN_M04_FIXED_R12_UNQUALIFIED",
+  "date": "2026-11-14",
+  "baseline_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "candidate_image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+  "power_cap_w": 180,
+  "source_files_sha256": {
+    "benchmarks/experiments/vllm-033-upgrade/run-candidate.py": "a0204973a2bb8a71117047d2ce86ea034eca0e3b1ea5212bc2bbda7e58129169",
+    "benchmarks/experiments/vllm-033-upgrade/run-quality.py": "35f124cfa5a8a9e4bf44ff9c8715409d227fda16da1d8b64fce7fb8f232ae257",
+    "benchmarks/experiments/vllm-033-upgrade/compare-quality.py": "e2db01875e3f499034889d8d8dccd667af1452bd1693e3f4af9576143a491edd",
+    "benchmarks/experiments/vllm-033-upgrade/compare-serving.py": "9f7ea091f7b0a755ddddf5fe95fd2345a3a22974e7f0d84c8e616b17db3cba1c",
+    "benchmarks/experiments/vllm-033-upgrade/operations-client.py": "6419a7c8ee634e834e9352e87083919a0f8dfce954c33dc108a0d589fe67fe27",
+    "benchmarks/experiments/vllm-033-upgrade/m04-boundary-probe.py": "e1408c24f9835bcf37c5af6b05baab795b5434fbb9defed64ac7a3d87a85f1d8"
+  },
+  "numerical_gates": "Original fixed matrix/attention/GDN tolerances unchanged; profiler requires exact eager/replay results and >=9 actual GPU kernel events. All gates must run on this final image; previous image core passes are diagnostic only.",
+  "quality": "Same16short+4long frozen teacher-forced windows, all arrays finite, API and vocabulary alignment verified. Report paired NLL/PPL/KL/top1 and window uncertainty; investigate material deterioration, no new arbitrary hard quality cutoff or automatic quality approval.",
+  "agents": "The unchanged frozen reference completed3/4; the original4/4 reference target remains failed as recorded in contract-addendum.json. Candidate must solve4/4 identical tasks, with unchanged seeds, algorithm, real tools, independent hidden tests, limits and natural endings. No manual repairs or successful replacement runs.",
+  "serving": "All70measured waves/124byte-identical payloads/prompts, exact output accounting, no preemption. Existing5%cell/2%weighted adverse triggers require follow-up investigation, not automatic acceptance.",
+  "operations": "Unchanged API/media/long/concurrency/abort/admission assertions. Isolate natural RAM retention at start of fresh worker in both arms after earlier mixed-load v7 miss; preserve both failed and passing controls. Require actual H2D and correct identical answer.",
+  "cow": "Exact child additionally runs existing concurrent partial-page fork/parent-recheck API gate with public frozen16K fixture; oldv7 previously passed this same functional contract.",
+  "bounds": "User grants exclusive GPU for tests; old production remains intentionally stopped after the current in-flight quality controller. No CPU builds/comparisons during serving. Daily closing22:45/save-stop22:55/hard23:00.",
+  "frozen_utc": "2026-11-14T19:54:38.044663+00:00",
+  "runtime_image_id": "sha256:b8c5484e362c66c8fb0c3eead9cabb7c25af8c988808591d4ce5d92502ec73a0",
+  "policy_sha256": "2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48",
+  "transformers_selection": "5.22.2 following matched5.23 video incompatibility and successful5.22.2 CPU/API media controls. No relaxed operations/media assertions.",
+  "prior_candidate_failure": "R10/R11 coding failures retained. Active V2 and layer traces reproduce identical output IDs; standalone M04 boundary A/B isolates empty causal split normalization. Earlier V1 probes did not cover the active sampler.",
+  "numerical_configuration": "Original model/KV/panels/tolerances. Standard compilation and FULL_DECODE_ONLY native graphs, as in reference; no mode0 workaround. Quality capture started20:52:45EuropeBerlin on this immutable image before this archival contract rewrite.",
+  "stage_order": [
+    "quality-short-long",
+    "m04-boundary",
+    "profiler",
+    "kernels",
+    "replay",
+    "startup",
+    "cow",
+    "agents",
+    "operations",
+    "serving"
+  ],
+  "stage_order_scope": "Quality starts first to fit its conservative before21:00 start guard. All requested gates remain unchanged. Every controller restores v7. No other GPU work and no CPU builds or comparisons during serving performance. User update20:55: subsequent campaigns skip old-engine restoration explicitly.",
+  "changes": "M04 zero-mass packed causal split normalization; standard compilation restored. All other versions/model/sampling and qualification gates retained. Previous results remain historical, not transferred as R12 passes.",
+  "selected_release_files_sha256": {
+    "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/production_policy.json": "2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48",
+    "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/image.json": "1eb42c7dd76359e8f36008fef689978e0438a2405197be0ede8091a8d873ab65",
+    "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/production_ram_kv.json": "b69fe0ccd468fd27b1191f1f768fdf84ec18b3f0e05a02169c27803c74cb6b84",
+    "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/build.json": "d802dc2d47995583073a140fa7f8038d3f80378c8ab6366fa7750651f488a277",
+    "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/artifacts.json": "d8be313f99ae01b5ba3d6fe948439b9371132b38ad6f7e3023069e0a314cecb3"
+  },
+  "user_exclusive_gpu_update": {
+    "recorded_utc": "2026-11-14T19:56:02.912592+00:00",
+    "instruction": "Do not restore old engine between tests; full GPU available for new-image verification",
+    "effect": "Explicit keep-production-stopped continuation option; no changes to gates/model/seeds/tolerances. The already running quality controller retains its original finally block."
+  }
+}

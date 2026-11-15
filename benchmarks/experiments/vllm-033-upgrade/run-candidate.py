@@ -37,13 +37,25 @@ def main():
  p.add_argument('--stages',default='kernels,serving')
  p.add_argument('--cache-root',type=Path,help='Reuse prior compilation caches from the same arm after an independently recorded stage failure')
  p.add_argument('--baseline-control',action='store_true',help='Run the unchanged gate on the exact deployed image as a diagnostic control')
+ p.add_argument('--keep-production-stopped',action='store_true',help='User-authorized exclusive GPU testing: do not restart production between/after test campaigns')
+ p.add_argument('--reference-image',help='Immutable original production image for a continuation while its service is intentionally stopped')
  p.add_argument('--linear-group',action='append',default=[],help='Diagnostic subset of the frozen linear shape classes')
  p.add_argument('--only',action='append',default=[],help='Frozen serving scenario/group filter for matched follow-up measurements')
+ p.add_argument('--serving-scenarios',type=Path,help='Explicit scenario ordering for a recorded targeted follow-up; default full matrix is unchanged')
  p.add_argument('--tokenizer-baseline',type=Path);p.add_argument('--tokenizer-fixtures',type=Path)
  a=p.parse_args();assert bool(a.tokenizer_baseline)==bool(a.tokenizer_fixtures)
  time_guard();root=a.out.resolve();root.mkdir(parents=True,exist_ok=False)
  image=json.loads(subprocess.check_output(['docker','image','inspect',a.image],text=True))[0]['Id']
- baseline=json.loads(subprocess.check_output(['docker','inspect','b70-qwen38-vllm'],text=True))[0]
+ production_inspect=subprocess.run(['docker','inspect','b70-qwen38-vllm'],capture_output=True,text=True)
+ if production_inspect.returncode==0:
+  baseline=json.loads(production_inspect.stdout)[0]
+  if a.reference_image:assert baseline['Image']==a.reference_image
+ else:
+  assert a.keep_production_stopped and a.reference_image, 'Missing production requires explicit exclusive-test continuation and original image'
+  assert subprocess.run(['systemctl','--user','is-active','--quiet',SERVICE]).returncode!=0
+  reference=json.loads(subprocess.check_output(['docker','image','inspect',a.reference_image],text=True))[0]
+  assert reference['Id']==a.reference_image, 'Reference must be an immutable image ID'
+  baseline={'Image':reference['Id'],'State':{'Running':False}}
  assert (image==baseline['Image']) if a.baseline_control else (image!=baseline['Image'])
  assert int(CAP.read_text())==180000000
  cfg=profile(image);assert cfg['env']['EXL3_TARGET_RUNTIME']=='vllm033'
@@ -56,6 +68,7 @@ def main():
       'EXL3_LIB':'/opt/exl3xpu/exl3xpu/_C.so'}
  state={'status':'RUNNING','image_id':image,'baseline_image_id':baseline['Image'],
         'baseline_control':a.baseline_control,
+        'keep_production_stopped':a.keep_production_stopped,
         'linear_group_filters':a.linear_group,
         'started_utc':dt.datetime.now(dt.UTC).isoformat(),'stages':{},'power_cap_w':180,'serving_scenario_filters':a.only,
         'compilation_cache_root':str(a.cache_root.resolve() if a.cache_root else root/'cache')}
@@ -77,14 +90,24 @@ def main():
   signal.signal(sig,lambda n,f:(_ for _ in ()).throw(KeyboardInterrupt('signal '+str(n))))
  lock_path=Path('/tmp/b70-v033-qualification.lock')
  with lock_path.open('a') as lock:
-  fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB);idle('http://127.0.0.1:8081');save()
+  fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+  if baseline['State']['Running']:idle('http://127.0.0.1:8081')
+  save()
   run(['systemctl','--user','stop',SERVICE],timeout=120)
   try:
    for name in (NAME,KERNEL):
     assert subprocess.run(['docker','inspect',name],capture_output=True).returncode!=0,'Existing worker '+name
    for stage in a.stages.split(','):
     time_guard();state['stages'][stage]={'status':'RUNNING'};save();print('START',stage,flush=True)
-    if stage=='profiler':
+    if stage=='m04-boundary':
+     command=common(KERNEL,root)+['-v',str(Path(__file__).parent.resolve())+':/measure:ro',
+      '--entrypoint','python',image,'-u','/measure/m04-boundary-probe.py','--out','/results/m04-boundary.json']
+     with (root/'m04-boundary.log').open('w') as log:run(command,stdout=log,stderr=subprocess.STDOUT,timeout=300)
+    elif stage=='sampler':
+     command=common(KERNEL,root)+['-v',str(Path(__file__).parent.resolve())+':/measure:ro',
+      '--entrypoint','python',image,'-u','/measure/sampler-probe.py','--out','/results/sampler.json']
+     with (root/'sampler.log').open('w') as log:run(command,stdout=log,stderr=subprocess.STDOUT,timeout=300)
+    elif stage=='profiler':
      command=common(KERNEL,root)+['-v',str(Path(__file__).parent.resolve())+':/measure:ro',
       '--entrypoint','python',image,'-u','/measure/profile-graph-replay.py','--out','/results/profiler']
      with (root/'profiler.log').open('w') as log:run(command,stdout=log,stderr=subprocess.STDOUT,timeout=300)
@@ -153,6 +176,7 @@ def main():
       command=[sys.executable,str(REPO/'scripts/current-profile-benchmark.py'),'--base',BASE,'--container',NAME,
        '--expected-max-num-seqs','16','--fixture-root',str(a.fixture_root.resolve()),'--legacy-prefix-namespace',
        '--output-root',str(root/'serving'),'--execute']
+      if a.serving_scenarios:command+=['--scenarios',str(a.serving_scenarios.resolve())]
       for selected in a.only:command+=['--only',selected]
       with (root/'serving.log').open('w') as log:run(command,stdout=log,stderr=subprocess.STDOUT,timeout=5700)
      elif stage=='media':
@@ -195,10 +219,16 @@ def main():
   finally:
    stop(NAME,'worker-final.log');stop(KERNEL,'kernel-final.log')
    CAP.write_text('180000000\n')
-   run(['systemctl','--user','start',SERVICE],timeout=120)
-   state['restored_models']=ready('http://127.0.0.1:8081')
-   actual=json.loads(subprocess.check_output(['docker','inspect','b70-qwen38-vllm'],text=True))[0]
-   assert actual['Image']==baseline['Image']
-   state['production_restored']=True;state['finished_utc']=dt.datetime.now(dt.UTC).isoformat();save()
-   print('RESTORED_PRODUCTION',flush=True)
+   if a.keep_production_stopped:
+    state['production_restored']=False
+    state['production_restore_skipped']='User requested exclusive GPU tests without intermediate production restarts'
+    print('PRODUCTION_LEFT_STOPPED_FOR_EXCLUSIVE_TESTS',flush=True)
+   else:
+    run(['systemctl','--user','start',SERVICE],timeout=120)
+    state['restored_models']=ready('http://127.0.0.1:8081')
+    actual=json.loads(subprocess.check_output(['docker','inspect','b70-qwen38-vllm'],text=True))[0]
+    assert actual['Image']==baseline['Image']
+    state['production_restored']=True
+    print('RESTORED_PRODUCTION',flush=True)
+   state['finished_utc']=dt.datetime.now(dt.UTC).isoformat();save()
 if __name__=='__main__':main()

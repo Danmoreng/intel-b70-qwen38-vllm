@@ -1,0 +1,16 @@
+{
+  "status": "MATCHED_LONG_CONTEXT_OFFLOAD_EXERCISED",
+  "note": "Cumulative GPU-to-CPU bytes immediately before first measured2K-C2 wave, after128K warmup+3requests and2K-C2 warmup. This is transferred traffic, not evidence that12GiB remained retained. The full historical36-wave prefix was not replayed.",
+  "arms": {
+    "03-v7-after-128k": [
+      "vllm:kv_offload_total_bytes_total{engine=\"0\",model_name=\"Qwen3.8-27B\",transfer_type=\"CPU_to_GPU\"} 0.0",
+      "vllm:kv_offload_total_bytes_total{engine=\"0\",model_name=\"Qwen3.8-27B\",transfer_type=\"GPU_to_CPU\"} 1.9911671808e+10",
+      "vllm:kv_offload_cpu_cache_usage_perc{engine=\"0\",model_name=\"Qwen3.8-27B\"} 0.0"
+    ],
+    "04-r12-after-128k": [
+      "vllm:kv_offload_total_bytes_total{engine=\"0\",model_name=\"Qwen3.8-27B\",transfer_type=\"CPU_to_GPU\"} 0.0",
+      "vllm:kv_offload_total_bytes_total{engine=\"0\",model_name=\"Qwen3.8-27B\",transfer_type=\"GPU_to_CPU\"} 1.9911671808e+10",
+      "vllm:kv_offload_cpu_cache_usage_perc{engine=\"0\",model_name=\"Qwen3.8-27B\"} 0.0"
+    ]
+  }
+}

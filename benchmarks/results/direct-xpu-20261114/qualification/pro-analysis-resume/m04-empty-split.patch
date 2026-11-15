@@ -1,0 +1,20 @@
+--- a/csrc/xpu/attn/xe_2/collective/chunk_prefill_epilogue.hpp
++++ b/csrc/xpu/attn/xe_2/collective/chunk_prefill_epilogue.hpp
+@@ -609,7 +609,17 @@
+     // FlashAttention's split-K contract.
+     CUTLASS_PRAGMA_UNROLL
+     for (int i = 0; i < rA_sum.size(); i++) {
++#ifdef B70_VERIFY_MASK
++      // Packed causal verification can leave this split empty for an early
++      // query row while a later row sees keys in it. Its LSE is -inf and its
++      // contribution must be zero. Avoid normalizing the empty 0/0 partial;
++      // multiplying its NaN output by the later zero split weight is not safe.
++      rA_sum(i) = rA_sum(i) == ElementA(0)
++                       ? ElementA(0)
++                       : ElementA(1) / rA_sum(i);
++#else
+       rA_sum(i) = ElementA(1) / rA_sum(i);
++#endif
+     }
+ 
+     CUTLASS_PRAGMA_UNROLL

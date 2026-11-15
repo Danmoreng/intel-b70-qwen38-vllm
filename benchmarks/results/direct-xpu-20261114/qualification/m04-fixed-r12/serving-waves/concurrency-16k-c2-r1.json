@@ -1,0 +1,188 @@
+{
+  "fully_overlapped_sample_count": 77,
+  "fully_overlapped_speculative_tokens_per_request": 3,
+  "fully_overlapped_draft_tokens": 2316.0,
+  "fully_overlapped_accepted_tokens": 1230.0,
+  "fully_overlapped_speculative_acceptance": 0.5310880829015544,
+  "fully_overlapped_round_equivalents": 386.0,
+  "fully_overlapped_round_equivalent_ms": 50.401670968911304,
+  "fully_overlapped_token_accounting_residual": 0.0,
+  "fully_overlapped_counter_window_valid": true,
+  "fully_overlapped_counter_window_issues": [],
+  "fully_overlapped_sample_start_s": 14.845403891005844,
+  "fully_overlapped_sample_end_s": 34.30044888500561,
+  "scenario": {
+    "name": "concurrency-16k-c2",
+    "group": "concurrency-sweep",
+    "prompt_tokens": 16384,
+    "output_tokens": 1024,
+    "concurrency": 2,
+    "repeats": 3,
+    "shared_prefix_fraction": 0.0,
+    "prompt_set": "",
+    "prompt_style": "source-review",
+    "expected_peak_running": null,
+    "warmups": 1
+  },
+  "repeat": 1,
+  "batch_wall_s": 34.647234788004425,
+  "requests": [
+    {
+      "marker": "B70-20260923-201101-concurrency-16k-c2-R1-Q1",
+      "wall_s": 34.506606726004975,
+      "ttft_s": 14.82548377400235,
+      "post_first_generation_s": 19.681122952002625,
+      "usage": {
+        "prompt_tokens": 16346,
+        "total_tokens": 17370,
+        "completion_tokens": 1024,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 16128
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "finish_reason": "length",
+      "events": 394,
+      "output_chars": 4227,
+      "output_sha256": "d7e639ee881039f6122fc6db6c1d0748aa3ae531f113da9b53b54945b2a388b3",
+      "content_chars": 4227,
+      "reasoning_chars": 0,
+      "max_stream_gap_s": 0.05522785799985286,
+      "stream_gaps_over_2s": 0
+    },
+    {
+      "marker": "B70-20260923-201101-concurrency-16k-c2-R1-Q2",
+      "wall_s": 34.64596945000085,
+      "ttft_s": 9.395029922001413,
+      "post_first_generation_s": 25.250939527999435,
+      "usage": {
+        "prompt_tokens": 16375,
+        "total_tokens": 17399,
+        "completion_tokens": 1024,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": 16128
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "finish_reason": "length",
+      "events": 402,
+      "output_chars": 3874,
+      "output_sha256": "ce5760f9d8503d50c9d9c4545c86b324602ac5b7ba31a877f3dd6dd789616697",
+      "content_chars": 3874,
+      "reasoning_chars": 0,
+      "max_stream_gap_s": 1.624885199998971,
+      "stream_gaps_over_2s": 0
+    }
+  ],
+  "legacy_aggregate_output_tokens_per_s": 59.11005633006704,
+  "request_ttft_s": {
+    "n": 2,
+    "mean": 12.110256848001882,
+    "median": 12.110256848001882,
+    "p95": 14.553961081402305,
+    "min": 9.395029922001413,
+    "max": 14.82548377400235
+  },
+  "request_tpot_s": {
+    "n": 2,
+    "mean": 0.02196092985337344,
+    "median": 0.02196092985337344,
+    "p95": 0.02441099579589403,
+    "min": 0.019238634361683896,
+    "max": 0.024683225345062985
+  },
+  "request_post_first_decode_tps": {
+    "n": 2,
+    "mean": 46.246042701714984,
+    "median": 46.246042701714984,
+    "p95": 51.405471512623,
+    "min": 40.51334402292831,
+    "max": 51.97874138050167
+  },
+  "request_e2e_s": {
+    "n": 2,
+    "mean": 34.57628808800291,
+    "median": 34.57628808800291,
+    "p95": 34.63900131380106,
+    "min": 34.506606726004975,
+    "max": 34.64596945000085
+  },
+  "peak_running": 2.0,
+  "peak_waiting": 1.0,
+  "peak_waiting_capacity": 1.0,
+  "peak_kv_cache_usage": 0.28248587570621464,
+  "preemptions": 0.0,
+  "requested_prompt_tokens": 32721,
+  "logical_prompt_tokens_observed": 32721.0,
+  "prefill_tokens_computed": 32721.0,
+  "prompt_tokens_cached": 0.0,
+  "prefill_recompute_excess": 0.0,
+  "native_prefill_seconds": 19.626045111006533,
+  "native_decode_seconds": 44.93348162899201,
+  "native_prefill_compute_tokens_per_s": 1667.223315493637,
+  "native_weighted_decode_tokens_per_s": 45.53397435109677,
+  "aggregate_prefill_wave_tokens_per_s": 2207.0780622605275,
+  "aggregate_prefill_window_s": 14.82548377400235,
+  "aggregate_decode_wave_tokens_per_s": 81.02668804585662,
+  "aggregate_decode_window_s": 25.250939527999435,
+  "effective_decode_concurrency": 1.779477614255408,
+  "fully_overlapped_decode_sampled_s": 19.455044993999763,
+  "fully_overlapped_generation_tokens": 2002.0,
+  "fully_overlapped_aggregate_decode_tokens_per_s": 102.9038997657136,
+  "completion_tokens": 2048,
+  "post_first_completion_tokens": 2046,
+  "finished_requests_delta": 2.0,
+  "speculative_draft_tokens": 2370.0,
+  "speculative_accepted_tokens": 1256.0,
+  "speculative_acceptance": 0.529957805907173,
+  "queue_time_sum_s": 4.498142940996331,
+  "queue_observations": 2.0,
+  "card_energy_j": 6241.59259,
+  "average_card_power_w": 180.14691874229933,
+  "scheduler_transitions": [
+    {
+      "elapsed_s": 0.006534323001687881,
+      "running": 0.0,
+      "waiting": 0.0,
+      "waiting_capacity": 0.0,
+      "kv_cache_usage": 0.0,
+      "preemptions_total": 0.0
+    },
+    {
+      "elapsed_s": 1.5425421680047293,
+      "running": 1.0,
+      "waiting": 1.0,
+      "waiting_capacity": 1.0,
+      "kv_cache_usage": 0.11299435028248583,
+      "preemptions_total": 0.0
+    },
+    {
+      "elapsed_s": 6.403275865006435,
+      "running": 2.0,
+      "waiting": 0.0,
+      "waiting_capacity": 0.0,
+      "kv_cache_usage": 0.23728813559322037,
+      "preemptions_total": 0.0
+    },
+    {
+      "elapsed_s": 34.55655602900515,
+      "running": 1.0,
+      "waiting": 0.0,
+      "waiting_capacity": 0.0,
+      "kv_cache_usage": 0.24858757062146897,
+      "preemptions_total": 0.0
+    }
+  ],
+  "server_preemption_lines": [],
+  "admission_expectation_met": true,
+  "all_outputs_nonempty": true,
+  "all_prompt_counts_match": true,
+  "all_completion_counts_exact": true,
+  "all_finish_reasons_length": true
+}

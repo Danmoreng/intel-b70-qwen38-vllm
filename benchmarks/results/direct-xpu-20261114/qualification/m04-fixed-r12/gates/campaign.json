@@ -1,0 +1,61 @@
+{
+  "status": "PASS_REQUESTED_STAGES",
+  "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+  "baseline_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "baseline_control": false,
+  "keep_production_stopped": true,
+  "linear_group_filters": [],
+  "started_utc": "2026-11-14T20:07:21.313695+00:00",
+  "stages": {
+    "m04-boundary": {
+      "status": "PASS"
+    },
+    "profiler": {
+      "status": "PASS"
+    },
+    "kernels": {
+      "status": "PASS"
+    },
+    "replay": {
+      "status": "PASS"
+    },
+    "startup": {
+      "status": "PASS"
+    },
+    "cow": {
+      "status": "PASS"
+    },
+    "agents": {
+      "status": "PASS"
+    },
+    "operations": {
+      "status": "PASS"
+    },
+    "serving": {
+      "status": "PASS"
+    }
+  },
+  "power_cap_w": 180,
+  "serving_scenario_filters": [],
+  "compilation_cache_root": "/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmark-results/direct-xpu-20261114/release-m04fix-r12/cache",
+  "numerical_compilation_config": {
+    "cudagraph_mode": "FULL_DECODE_ONLY",
+    "cudagraph_capture_sizes": [
+      1,
+      2,
+      4,
+      8,
+      12,
+      16,
+      24,
+      32,
+      40,
+      48,
+      56,
+      64
+    ]
+  },
+  "production_restored": false,
+  "production_restore_skipped": "User requested exclusive GPU tests without intermediate production restarts",
+  "finished_utc": "2026-11-14T21:38:10.905322+00:00"
+}

@@ -1,0 +1,30 @@
+{
+  "runner": {
+    "klass": "XPUModelRunnerV2",
+    "module": "vllm.v1.worker.xpu_model_runner",
+    "source": "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/xpu_model_runner.py",
+    "sha256": "3b079556316176408068357974a9c7b020c827a50781d264123314ce30f42cc6",
+    "signature": "(*args, **kwargs)"
+  },
+  "sampler": {
+    "klass": "Sampler",
+    "module": "vllm.v1.worker.gpu.sample.sampler",
+    "source": "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/gpu/sample/sampler.py",
+    "sha256": "7f9941f9d7d04a7481ec393925ed5d000d4d77ee6db2ca6a8d9547c211d00a09",
+    "signature": "(self, logits: torch.Tensor, input_batch: vllm.v1.worker.gpu.input_batch.InputBatch) -> vllm.v1.worker.gpu.sample.output.SamplerOutput"
+  },
+  "rejection_sampler": {
+    "klass": "RejectionSampler",
+    "module": "vllm.v1.worker.gpu.spec_decode.rejection_sampler",
+    "source": "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py",
+    "sha256": "bf695ab48fc5e864dc9e6d6f126b4b1a840a356124fe714ab8aa7a466d6d7d4b",
+    "signature": "(self, logits: torch.Tensor, input_batch: vllm.v1.worker.gpu.input_batch.InputBatch, draft_logits: torch.Tensor | None = None, invalid_drafts: torch.Tensor | None = None) -> vllm.v1.worker.gpu.sample.output.SamplerOutput"
+  },
+  "model_state": {
+    "klass": "MambaHybridModelState",
+    "module": "vllm.v1.worker.gpu.model_states.mamba_hybrid",
+    "source": "/opt/venv/lib/python3.12/site-packages/vllm/v1/worker/gpu/model_states/mamba_hybrid.py",
+    "sha256": "262de489e3c02a2b1b93acd2a0d88ddced82ecebe050ca95ea91ba3fe501e6f4",
+    "signature": "(*args, **kwargs)"
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "status": "BUILT_CPU_CHECKED_GPU_UNTESTED",
+  "tag": "local/b70-qwen38-vllm:direct-xpu-m04fix-r12",
+  "started_at": "2026-11-14T20:48:33.844930+01:00",
+  "git_commit": "4c2c5dc1959d0097b69babbf5fe23ab9acafabce",
+  "git_dirty": true,
+  "gpu_tests_executed": false,
+  "production_changed": false,
+  "build_lock": {
+    "schema": 1,
+    "status": "CANDIDATE_BUILD_NOT_QUALIFIED",
+    "checked_at": "2026-11-14",
+    "latest_stable": {
+      "version": "0.33.0",
+      "release_tag": "v0.33.0rc3",
+      "published_at": "2026-11-02T10:10:05Z",
+      "prerelease": false,
+      "url": "https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3"
+    },
+    "upstream_image": "vllm/vllm-openai-xpu@sha256:010bdc441c72ee222f459d3b688bb41317525f1bd7223afe6218490b0c526832",
+    "upstream_image_id": "sha256:7b3eb7c792a5d3a049effcb0d792ce95d4a482dd47a965d8a05a244a47682813",
+    "compiler_package": "intel-oneapi-compiler-dpcpp-cpp-2026.2=2026.2.0-863",
+    "native_build_jobs": 4,
+    "sources": {
+      "onednn": {
+        "url": "https://codeload.github.com/uxlfoundation/oneDNN/tar.gz/4db284662a37cf46401655b5ee99391d9de52c00",
+        "commit": "4db284662a37cf46401655b5ee99391d9de52c00",
+        "sha256": "55e319d174c6c3884b66e7d643d9579a96d73b20159580dc3b1f89de4875da9c",
+        "version": "3.14.2",
+        "runtime_version": "3.14.1",
+        "release_tag": "v3.14.2",
+        "version_note": "Official v3.14.2 tag resolves to this commit, whose CMakeLists.txt still sets PROJECT_VERSION3.14.1. Preserve the release source unchanged; check its actual runtime version separately."
+      },
+      "xpu-kernels": {
+        "url": "https://codeload.github.com/vllm-project/vllm-xpu-kernels/tar.gz/6a1ec18b69b00eaf67a457e0bdd40e72632feaae",
+        "commit": "6a1ec18b69b00eaf67a457e0bdd40e72632feaae",
+        "sha256": "4bb373502619cafedb5a951c681b8c129906baa6da3d81bc8ced1bbab5510e63"
+      },
+      "sycl-tla": {
+        "url": "https://codeload.github.com/intel/sycl-tla/tar.gz/7b56b936b87f799f80dde60c2fd8d11c1128cebb",
+        "commit": "7b56b936b87f799f80dde60c2fd8d11c1128cebb",
+        "sha256": "820b1953977156f12c48d5555a951f3dde2adaaf499612a1f9fe61b91e73fd22"
+      },
+      "pti": {
+        "url": "https://codeload.github.com/intel/pti-gpu/tar.gz/25a77ed7693ac155bc62e563060b0976f9934b53",
+        "commit": "25a77ed7693ac155bc62e563060b0976f9934b53",
+        "sha256": "8948d94feac8786bf5ee1f69305061c0678aebdff89bcc37665ff84b7ae53fa7",
+        "version": "1.2.1",
+        "fix_commit": "dd8940ff817f94461795708fe3c386ab9e09d3b1"
+      }
+    },
+    "python_packages": {
+      "transformers": "5.22.2",
+      "tokenizers": "0.23.3",
+      "aiohttp": "3.14.5",
+      "multidict": "7.2.1",
+      "orjson": "3.13.0",
+      "pillow": "13.0.0",
+      "certifi": "2026.10.23",
+      "xgrammar": "0.2.9",
+      "mcp": "2.3.0",
+      "mcp-types": "2.3.0",
+      "yarl": "1.25.1",
+      "auto-round-lib": "0.16.0"
+    },
+    "core_packages": {
+      "torch": "2.15.0+xpu",
+      "triton-xpu": "3.9.0",
+      "vllm-xpu-kernels": "0.1.17.1",
+      "intel-sycl-rt": "2026.2.0",
+      "dpcpp-cpp-rt": "2026.2.0",
+      "intel-pti": "1.2.1",
+      "torchvision": "0.29.2+xpu",
+      "oneccl": "2022.1.2",
+      "oneccl-devel": "2022.1.2",
+      "pyzes": "0.1.3"
+    },
+    "pristine_vllm_sha256": {
+      "v1/worker/gpu/model_runner.py": "9145e2601f9e93db5e6c7e648c6741cff55f2a49f046800f79311e4977550121",
+      "model_executor/models/qwen3_5_mtp.py": "fbf31b1dd2b63eaf1911e325e3b43db602cf1d4268dfb2d388727e44caffadc2"
+    },
+    "artifacts": [
+      {
+        "filename": "torch-2.15.0+xpu-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "url": "https://download-r2.pytorch.org/whl/xpu/torch-2.15.0%2Bxpu-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "sha256": "7ccfe7bd112232fddafb644656e8f10045ee5bc828407678c58a73ac6b86ff58"
+      },
+      {
+        "filename": "vllm_xpu_kernels-0.1.17.1-cp38-abi3-manylinux_2_28_x86_64.whl",
+        "url": "https://github.com/vllm-project/vllm-xpu-kernels/releases/download/v0.1.17/vllm_xpu_kernels-0.1.17.1-cp38-abi3-manylinux_2_28_x86_64.whl",
+        "sha256": "ff07d74977f0e3debd67d73534b75e1f569fece23ae7bbc8465c749eb6e9a287"
+      }
+    ],
+    "driver_packages": [
+      {
+        "name": "intel-ocloc_26.40.40196.8-0_amd64.deb",
+        "url": "https://github.com/intel/compute-runtime/releases/download/26.40.40196.8/intel-ocloc_26.40.40196.8-0_amd64.deb",
+        "sha256": "b2868d6d7958cc5ca28fa9b48a7d39961760ee39ef07673d5b58894dd53d6b4e"
+      },
+      {
+        "name": "intel-opencl-icd_26.40.40196.8-0_amd64.deb",
+        "url": "https://github.com/intel/compute-runtime/releases/download/26.40.40196.8/intel-opencl-icd_26.40.40196.8-0_amd64.deb",
+        "sha256": "96046069e94680b761df6e83ddc64244721178b826e3e1f8af3ca104cfd0c7c2"
+      },
+      {
+        "name": "libigdgmm12_22.10.2_amd64.deb",
+        "url": "https://github.com/intel/compute-runtime/releases/download/26.40.40196.8/libigdgmm12_22.10.2_amd64.deb",
+        "sha256": "053fceadb84a1d2f9a30a0d1bc9b16424b3f1a90cc49900fcd80aadcf25c8a4d"
+      },
+      {
+        "name": "libze-intel-gpu1_26.40.40196.8-0_amd64.deb",
+        "url": "https://github.com/intel/compute-runtime/releases/download/26.40.40196.8/libze-intel-gpu1_26.40.40196.8-0_amd64.deb",
+        "sha256": "d9c86b2bb195baea6936c2708846cd1fceeadc39bc5e167f728858a5ca6fb86e"
+      },
+      {
+        "name": "intel-igc-core-2_2.42.6+23070_amd64.deb",
+        "url": "https://github.com/intel/intel-graphics-compiler/releases/download/v2.42.6/intel-igc-core-2_2.42.6%2B23070_amd64.deb",
+        "sha256": "e20539632f2d99875d8f8b225d5da58b31f98baa54bb47c6328aa98ec473ab9d"
+      },
+      {
+        "name": "intel-igc-opencl-2_2.42.6+23070_amd64.deb",
+        "url": "https://github.com/intel/intel-graphics-compiler/releases/download/v2.42.6/intel-igc-opencl-2_2.42.6%2B23070_amd64.deb",
+        "sha256": "7f5593cf828503ffb8450967768bde9209e22753bc576296e846b5a751011fa3"
+      }
+    ],
+    "dependency_policy": "Newest stable components tested first. Preserve newer reference components. Use unmodified Torch2.15 with PTI1.2.1 rebuilt from its exact source plus upstream native-graph lifetime fix; no older Torch pin or native-recording fallback is needed after qualification.",
+    "metadata_overrides": {
+      "core": "Retain newer reference components and test latest SYCL2026.2/PTI1.2.1 beyond Torch2.15 exact metadata. Preserve CCL2022.1.2; never silently downgrade the reference.",
+      "vllm": "Torch2.15, Transformers5.22.2, kernels0.1.17.1 and xgrammar0.2.9 exceed0.33 exact/range metadata; full profile qualification required, not a clean pip-check claim.",
+      "pti": "Python metadata remains1.2.1; the two PTI libraries are rebuilt with the recorded upstream native-graph lifetime backport. Library hashes and source provenance are retained."
+    },
+    "regression_probe": {
+      "status": "TORCH_215_PTI_GRAPH_FIX_SELECTED_PENDING_FULL_QUALIFICATION",
+      "observed": "Original Torch2.15/PTI1.2.1 produces wrong two-row graph outputs after XPU profiling, also in standalone PyTorch without vLLM/EXL3/Triton/weights.",
+      "selection": "Backport Intel PTI native-graph resource/lifetime fix dd8940ff817f94461795708fe3c386ab9e09d3b1 to exact wheel source 25a77ed7693ac155bc62e563060b0976f9934b53. Original full matrix/attention/GDN gates and standalone native replay profiling (9 real kernel events) pass. Full final-image qualification remains required.",
+      "generation_m04": {
+        "status": "MINIMAL_KERNEL_FIX_PENDING_END_TO_END_AND_FULL_QUALIFICATION",
+        "observed": "Active V2 trace reproduces exact token loop; first target invalidity is self-attention layer3, rows preceding a64-token tile boundary. Original packed M04 kernel fails11/40 standalone FP32-oracle cases, fixed kernel passes40/40.",
+        "cause": "New header contract normalizes every split independently. An entirely causally masked split has zero denominator;0/0 partial output poisons the later zero-weight combine. Older header kept multi-split partials unnormalized and skipped zero-mass splits.",
+        "selection": "Retain newest stack, MTP3 and native graphs. Zero contribution only for structurally empty packed causal splits; restore standard compilation as a new candidate requiring fresh qualification. No Torch patch, token mask or NaN sanitization."
+      }
+    },
+    "dpkg_packages": {
+      "intel-igc-core-2": "2.42.6",
+      "intel-igc-opencl-2": "2.42.6",
+      "intel-ocloc": "26.40.40196.8-0",
+      "intel-opencl-icd": "26.40.40196.8-0",
+      "libze-intel-gpu1": "26.40.40196.8-0",
+      "libigdgmm12": "22.10.2"
+    },
+    "torch_git_revision": "d0f2af8b66b20da4baa50644c0cd3f887a2eae2e",
+    "pristine_torch_init_sha256": "7ed81103f3d256de131b886e67be458b3205784e3b4af9c495041282391e19db",
+    "compatibility_exceptions": {
+      "transformers": {
+        "latest_tested": "5.23.0",
+        "selected": "5.22.2",
+        "reason": "5.23 breaks vLLM0.33 two-pass Qwen video preprocessing. A valid2s320x240 clip is rejected as295241 tokens; the CPU integration also rejects the deferred video placeholder after the video has been processed separately.",
+        "control": "Same Torch2.15/PTI-fixed image with only Transformers changed to5.22.2 passes the unchanged real1/4video count, rejection-over-limit and oversized-image API gate. Direct HF4-frame processing alone passes in both versions.",
+        "selection_rule": "Latest compatible stable minor patch5.22.2, above the reference5.17.0. No other new component is rolled back. Full clean-image qualification still required."
+      }
+    }
+  },
+  "context_manifest_sha256": "f91d66500e1e4ecf10b8dd587e7d03859d7be19dbc43d8938b6c1d404cabace9",
+  "command": [
+    "docker",
+    "build",
+    "--force-rm",
+    "--memory",
+    "6g",
+    "--memory-swap",
+    "6g",
+    "--cpu-quota",
+    "400000",
+    "--iidfile",
+    "/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmark-results/direct-xpu-20261114/build-r12/image-id",
+    "-t",
+    "local/b70-qwen38-vllm:direct-xpu-m04fix-r12",
+    "/home/sebastian/LocalLLM/intel-b70-direct-xpu-20261114/benchmark-results/direct-xpu-20261114/build-r12/context"
+  ],
+  "effective_build_timeout_seconds": 900,
+  "image_id": "sha256:b8c5484e362c66c8fb0c3eead9cabb7c25af8c988808591d4ce5d92502ec73a0",
+  "finished_unix": 1794685911.8366022
+}

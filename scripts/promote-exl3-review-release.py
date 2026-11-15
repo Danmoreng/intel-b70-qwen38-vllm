@@ -106,6 +106,8 @@ def main():
         ram_manifest.pop('runtime_directory', None)
     saved=a.rollback_release.resolve();old=json.loads((saved/'production_image.json').read_text())
     assert old['image_id']==decision['immediate_rollback_image_id']
+    if 'immediate_rollback_image_id' in candidate:
+        assert candidate['immediate_rollback_image_id']==old['image_id']
     inventory=json.loads((saved/'snapshot-inventory.json').read_text())
     for name,digest in inventory['files_sha256'].items():assert sha(saved/name)==digest
     working=subprocess.check_output(['systemctl','--user','show',SERVICE,'--property=WorkingDirectory','--value'],text=True).strip()

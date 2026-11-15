@@ -1,0 +1,22 @@
+{
+  "status": "KERNEL_CAUSE_AND_MINIMAL_FIX_DEMONSTRATED_FULL_R12_QUALIFICATION_RUNNING",
+  "unpatched_failed_cases": 11,
+  "patched_passed_cases": 40,
+  "total_boundary_cases": 40,
+  "raw_prompt_tokens": 1418,
+  "original_and_patched_prefix_identical_tokens": 885,
+  "original_raw_output_tokens": 2048,
+  "original_longest_token_run": 1163,
+  "original_loop_token_id": 1023,
+  "patched_raw_output_tokens": 1171,
+  "patched_longest_token_run": 1,
+  "patched_finish_reason": "tool_calls",
+  "patched_write_file_fields": [
+    "path",
+    "content"
+  ],
+  "root_cause": "Packed causal empty KV splits normalize0/0 under new header LSE contract; old multi-split epilogue stores unnormalized partials and reducer skips zero denominator. Minimal patch makes empty partial contribution zero; nonempty arithmetic unchanged.",
+  "limitations": "No performance or production approval. Standalone and short raw results belong to diagnostic images; complete fixed R12 image131dd9... with standard compilation must pass every unchanged gate.",
+  "final_candidate_image": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+  "final_candidate_m04_sha256": "d44e22642f0973fd344c2ffd953d555a0e9f34de938fbf4841087aef91f709f0"
+}

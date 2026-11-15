@@ -1,0 +1,476 @@
+{
+  "status": "MTP_DEPENDENT_GENERATION_REGRESSION_UNRESOLVED",
+  "recorded_utc": "2026-11-14T18:18:21.061794+00:00",
+  "common_output_cap": 2048,
+  "common_tokenization_before_request": true,
+  "common_raw_token_ids": true,
+  "cases": {
+    "selected-native": {
+      "image_id": "sha256:b37eb3926bade76db626a261b98de6570036fd59d81a3a06e6ab780a87f0918d",
+      "status": "COMPLETED_FROZEN_REQUEST_DIAGNOSTIC",
+      "overrides": {
+        "enforce_eager": false,
+        "disable_compile": false,
+        "disable_speculation": false,
+        "isolate_request_cache": false,
+        "disable_prefix_caching": false,
+        "logprobs": false
+      },
+      "runner_sha256": "2dabb89d420e0c5cc6780a5f344305628145fe7253bfbec8cc033b8fabfbfe03",
+      "requests": [
+        {
+          "index": 0,
+          "output_tokens": 53,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 9764,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 1,
+          "output_tokens": 63,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 4274,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 2,
+          "output_tokens": 2048,
+          "finish_reason": "length",
+          "max_same_token_id": 1023,
+          "max_same_token_run": 1163,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        }
+      ]
+    },
+    "reference-native": {
+      "image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+      "status": "COMPLETED_FROZEN_REQUEST_DIAGNOSTIC",
+      "overrides": {
+        "enforce_eager": false,
+        "disable_compile": false,
+        "disable_speculation": false,
+        "isolate_request_cache": false,
+        "disable_prefix_caching": false,
+        "logprobs": false
+      },
+      "runner_sha256": "2dabb89d420e0c5cc6780a5f344305628145fe7253bfbec8cc033b8fabfbfe03",
+      "requests": [
+        {
+          "index": 0,
+          "output_tokens": 53,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 9764,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 1,
+          "output_tokens": 63,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 4274,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 2,
+          "output_tokens": 1351,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 60856,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        }
+      ]
+    },
+    "selected-eager": {
+      "image_id": "sha256:b37eb3926bade76db626a261b98de6570036fd59d81a3a06e6ab780a87f0918d",
+      "status": "COMPLETED_FROZEN_REQUEST_DIAGNOSTIC",
+      "overrides": {
+        "enforce_eager": true,
+        "disable_compile": false,
+        "disable_speculation": false,
+        "isolate_request_cache": false,
+        "disable_prefix_caching": false,
+        "logprobs": false
+      },
+      "runner_sha256": "2dabb89d420e0c5cc6780a5f344305628145fe7253bfbec8cc033b8fabfbfe03",
+      "requests": [
+        {
+          "index": 0,
+          "output_tokens": 53,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 9764,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 1,
+          "output_tokens": 63,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 4274,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 2,
+          "output_tokens": 2048,
+          "finish_reason": "length",
+          "max_same_token_id": 1023,
+          "max_same_token_run": 1163,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        }
+      ]
+    },
+    "torch2141-new-intel": {
+      "image_id": "sha256:6a0baf1b5ec559850faef75c0e5f0a344456ef2215d5e8c1ebd416660544b568",
+      "status": "COMPLETED_FROZEN_REQUEST_DIAGNOSTIC",
+      "overrides": {
+        "enforce_eager": false,
+        "disable_compile": false,
+        "disable_speculation": false,
+        "isolate_request_cache": false,
+        "disable_prefix_caching": false,
+        "logprobs": false
+      },
+      "runner_sha256": "2dabb89d420e0c5cc6780a5f344305628145fe7253bfbec8cc033b8fabfbfe03",
+      "requests": [
+        {
+          "index": 0,
+          "output_tokens": 53,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 9764,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 1,
+          "output_tokens": 63,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 4274,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 2,
+          "output_tokens": 2048,
+          "finish_reason": "length",
+          "max_same_token_id": 1023,
+          "max_same_token_run": 1354,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        }
+      ]
+    },
+    "reference-driver": {
+      "image_id": "sha256:b24806c2d176f8e52150b652011c7941c28da0c208740cf257d446a01c3d2a8f",
+      "status": "COMPLETED_FROZEN_REQUEST_DIAGNOSTIC",
+      "overrides": {
+        "enforce_eager": false,
+        "disable_compile": false,
+        "disable_speculation": false,
+        "isolate_request_cache": false,
+        "disable_prefix_caching": false,
+        "logprobs": false
+      },
+      "runner_sha256": "2dabb89d420e0c5cc6780a5f344305628145fe7253bfbec8cc033b8fabfbfe03",
+      "requests": [
+        {
+          "index": 0,
+          "output_tokens": 53,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 9764,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 1,
+          "output_tokens": 63,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 4274,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 2,
+          "output_tokens": 2048,
+          "finish_reason": "length",
+          "max_same_token_id": 1023,
+          "max_same_token_run": 1163,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        }
+      ]
+    },
+    "reference-vendor": {
+      "image_id": "sha256:f5d97c1928b94e8067c5c614a60d37ae51cef8ed1934c02ce7fd1371059bb352",
+      "status": "COMPLETED_FROZEN_REQUEST_DIAGNOSTIC",
+      "overrides": {
+        "enforce_eager": false,
+        "disable_compile": false,
+        "disable_speculation": false,
+        "isolate_request_cache": false,
+        "disable_prefix_caching": false,
+        "logprobs": false
+      },
+      "runner_sha256": "2dabb89d420e0c5cc6780a5f344305628145fe7253bfbec8cc033b8fabfbfe03",
+      "requests": [
+        {
+          "index": 0,
+          "output_tokens": 53,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 9764,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 1,
+          "output_tokens": 63,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 4274,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 2,
+          "output_tokens": 2048,
+          "finish_reason": "length",
+          "max_same_token_id": 1023,
+          "max_same_token_run": 1163,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        }
+      ]
+    },
+    "no-prefix-startup-failure": {
+      "image_id": "sha256:b37eb3926bade76db626a261b98de6570036fd59d81a3a06e6ab780a87f0918d",
+      "status": "FAILED_DIAGNOSTIC",
+      "overrides": {
+        "enforce_eager": false,
+        "disable_compile": false,
+        "disable_speculation": false,
+        "isolate_request_cache": false,
+        "disable_prefix_caching": true,
+        "logprobs": false
+      },
+      "runner_sha256": "95385786d32bd3b48ac668e0b74cbc71081ac12e7434f3b815e23bc4990f892c",
+      "requests": []
+    },
+    "isolated-request-cache": {
+      "image_id": "sha256:b37eb3926bade76db626a261b98de6570036fd59d81a3a06e6ab780a87f0918d",
+      "status": "COMPLETED_FROZEN_REQUEST_DIAGNOSTIC",
+      "overrides": {
+        "enforce_eager": false,
+        "disable_compile": false,
+        "disable_speculation": false,
+        "isolate_request_cache": true,
+        "disable_prefix_caching": false,
+        "logprobs": false
+      },
+      "runner_sha256": "38f756b012f7f1e9673e222550ae7cbf23885eea36e3b9e7ecebe23c4f606e13",
+      "requests": [
+        {
+          "index": 0,
+          "output_tokens": 53,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 9764,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {
+            "cache_salt": {
+              "reference": "mtp-cache-followup-20261111-rangeset202611117",
+              "diagnostic": "mtp-cache-followup-20261111-rangeset202611117-diagnostic-isolated-0"
+            }
+          }
+        },
+        {
+          "index": 1,
+          "output_tokens": 63,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 4274,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {
+            "cache_salt": {
+              "reference": "mtp-cache-followup-20261111-rangeset202611117",
+              "diagnostic": "mtp-cache-followup-20261111-rangeset202611117-diagnostic-isolated-1"
+            }
+          }
+        },
+        {
+          "index": 2,
+          "output_tokens": 2048,
+          "finish_reason": "length",
+          "max_same_token_id": 1023,
+          "max_same_token_run": 1356,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {
+            "cache_salt": {
+              "reference": "mtp-cache-followup-20261111-rangeset202611117",
+              "diagnostic": "mtp-cache-followup-20261111-rangeset202611117-diagnostic-isolated-2"
+            }
+          }
+        }
+      ]
+    },
+    "older-runtime-compiler": {
+      "image_id": "sha256:9f4e069eff73256a83bbaf3a4946fa3077bff2ab1bbec0c224eac28979f9212f",
+      "status": "COMPLETED_FROZEN_REQUEST_DIAGNOSTIC",
+      "overrides": {
+        "enforce_eager": false,
+        "disable_compile": true,
+        "disable_speculation": false,
+        "isolate_request_cache": false,
+        "disable_prefix_caching": false,
+        "logprobs": false
+      },
+      "runner_sha256": "38f756b012f7f1e9673e222550ae7cbf23885eea36e3b9e7ecebe23c4f606e13",
+      "requests": [
+        {
+          "index": 0,
+          "output_tokens": 53,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 9764,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 1,
+          "output_tokens": 63,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 4274,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 2,
+          "output_tokens": 2048,
+          "finish_reason": "length",
+          "max_same_token_id": 1023,
+          "max_same_token_run": 1163,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        }
+      ]
+    },
+    "no-mtp": {
+      "image_id": "sha256:b37eb3926bade76db626a261b98de6570036fd59d81a3a06e6ab780a87f0918d",
+      "status": "COMPLETED_FROZEN_REQUEST_DIAGNOSTIC",
+      "overrides": {
+        "enforce_eager": false,
+        "disable_compile": false,
+        "disable_speculation": true,
+        "isolate_request_cache": false,
+        "disable_prefix_caching": false,
+        "logprobs": false
+      },
+      "runner_sha256": "38f756b012f7f1e9673e222550ae7cbf23885eea36e3b9e7ecebe23c4f606e13",
+      "requests": [
+        {
+          "index": 0,
+          "output_tokens": 36,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 9764,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 1,
+          "output_tokens": 62,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 4274,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        },
+        {
+          "index": 2,
+          "output_tokens": 1211,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 60856,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {}
+        }
+      ]
+    },
+    "mtp-logprobs": {
+      "image_id": "sha256:b37eb3926bade76db626a261b98de6570036fd59d81a3a06e6ab780a87f0918d",
+      "status": "FAILED_DIAGNOSTIC",
+      "overrides": {
+        "enforce_eager": false,
+        "disable_compile": false,
+        "disable_speculation": false,
+        "isolate_request_cache": false,
+        "disable_prefix_caching": false,
+        "logprobs": true
+      },
+      "runner_sha256": "e852582dd7c26a6e398cf95bdf6be19b5e7fffea337964a6cbd2acb193f9f6e4",
+      "requests": [
+        {
+          "index": 0,
+          "output_tokens": 53,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 9764,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {
+            "logprobs": {
+              "reference": null,
+              "diagnostic": true
+            },
+            "top_logprobs": {
+              "reference": null,
+              "diagnostic": 5
+            }
+          }
+        },
+        {
+          "index": 1,
+          "output_tokens": 63,
+          "finish_reason": "tool_calls",
+          "max_same_token_id": 4274,
+          "max_same_token_run": 1,
+          "prompt_ids_identical_to_reference": true,
+          "request_payload_differences": {
+            "logprobs": {
+              "reference": null,
+              "diagnostic": true
+            },
+            "top_logprobs": {
+              "reference": null,
+              "diagnostic": 5
+            }
+          }
+        }
+      ]
+    }
+  },
+  "scope": "Captured R11 live-task history, common seed/sampling/messages/tools. No live tool execution, independent grading or replacement task score. Old production and no-MTP controls produce normal complete tool calls; selected MTP repeats token1023. Eager, older driver, old vendor, coherentTorch2.14.1, older compiler/runtime and isolated cache controls do not fix it. Exclusions apply to these recorded configurations; they do not prove an isolated library culprit. No release or performance approval.",
+  "limitations": {
+    "no-prefix-startup-failure": "Hybrid RAM offload rejects globally disabled prefix caching; worker exited before requests. Controller interrupted only after verified exit to avoid a900s readiness wait. Not a generation test.",
+    "mtp-logprobs": "Initial API logprobs attempt fails HTTP400 on request2 after two completed calls. Its helper did not retain the HTTP body; no numerical conclusion follows from the status code. Subsequent runner records HTTP bodies.",
+    "torch2141-new-intel": "Coupled Torch2.14.1/Triton3.8/kernel0.1.16.4; Transformers5.23/unpatchedPTI1.2 also differ. Not a pureTorch-only control.",
+    "reference-vendor": "Exact previous vendor binary copied only for a diagnostic cross-Torch pairing, not a public release-source recipe.",
+    "older-runtime-compiler": "Actual package audit records nine coupled SYCL/runtime dependencies plus differently compiled native libraries; one absent PTI metadata receipt is reported, while the fixedPTI libraries themselves are copied from selectedimage.",
+    "recovery-sync": "Only XPU synchronization around recovered-token Triton launch. This is a timing/lifetime diagnostic; full task/quality/performance qualification remains required even if it helps."
+  }
+}

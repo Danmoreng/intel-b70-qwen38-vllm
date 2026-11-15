@@ -45,6 +45,8 @@ COPY direct/build-native.sh direct/write-m04-receipt.py /build-tools/
 RUN bash /build-tools/build-native.sh
 COPY direct/pti/ /build-tools/pti/
 RUN bash -c 'source /opt/intel/oneapi/setvars.sh --force >/dev/null 2>&1 && python /build-tools/pti/build.py'
+COPY direct/m04-empty-split.patch direct/rebuild-m04.sh /build-tools/
+RUN bash /build-tools/rebuild-m04.sh
 
 FROM runtime-base AS candidate
 WORKDIR /opt/exl3xpu
@@ -62,7 +64,7 @@ COPY direct/pti/ /opt/b70-direct/pti/
 COPY matrix-source/ /opt/exl3xpu/native-matrix-source/
 COPY m04-source/ /opt/exl3xpu/m04/
 COPY runtime/ /opt/b70-runtime/
-COPY direct/build-lock.json direct/source-manifest.json direct/install.py direct/check-image.py /opt/b70-direct/
+COPY direct/build-lock.json direct/source-manifest.json direct/install.py direct/check-image.py direct/m04-empty-split.patch direct/rebuild-m04.sh /opt/b70-direct/
 COPY cow_copy_fix.py /opt/b70-direct/b70_cow_copy_fix.py
 COPY b70_mtp_policy.py /opt/b70-direct/b70_mtp_policy.py
 ENV LD_LIBRARY_PATH=/opt/b70:/opt/b70/lib:/opt/ucx/lib:/opt/venv/lib:/usr/local/lib

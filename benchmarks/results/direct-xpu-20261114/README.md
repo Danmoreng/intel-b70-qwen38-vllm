@@ -1,25 +1,100 @@
 # Direct vLLM XPU qualification — 2026-11-14
 
-The selected candidate builds directly on official vLLM 0.33 XPU with
-**unmodified PyTorch 2.15**, matching Triton/XPU kernels, latest selected Intel
-userspace and a targeted upstream PTI fix. See the
-[build instructions](../../../engine/direct-xpu/README.md).
-**Not approved for production.** The compiled Transformers 5.22.2 release child
-passes integrity/preflight, profiler replay, the complete original kernel
-suite, four model-state replay cases, startup, concurrent COW, all twelve
-operational groups and worker restart. Its first coding task then produces
-repetitive output and times out. The [final campaign](qualification/final/campaign.json)
-retains that failure and the restored v7 production identity. The serving
-comparison and separate quality capture have not run on this final child.
+**R12 is under verification; production remains unchanged.** The candidate
+builds directly on official vLLM 0.33 XPU, with the official PyTorch 2.15 wheel,
+newer Intel userspace, a targeted Intel PTI backport and a correction to our
+packed M04 causal attention. Standard model compilation, MTP3 and native graphs
+are enabled. No diagnostic tracing is installed in the release candidate.
 
-The next candidate retains the same libraries and native graphs, but sets
-Inductor model compilation to `NONE` (`mode: 0`). It requires its own complete
-exact-image qualification; no previous pass is used to approve it.
+See the [build instructions](../../../engine/direct-xpu/README.md) and
+[frozen image and test contract](qualification/m04-fixed-r12/frozen-contract.json).
+The immutable release image is
+`sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19`.
 
-The [earlier core receipts](qualification/core/campaign.json) identify a
-different image with Transformers 5.23. That image's media failure led to the
-matched 5.22.2 compatibility control below; its core pass is not substituted
-for final-image evidence.
+## Current final-image results
+
+| Gate | R12 result |
+| --- | --- |
+| Build, imports, native ABI and source identities | Pass |
+| Independent M04 boundary calculation | 40/40 cases and four changed-input graph replays pass |
+| Profiled native graphs and original kernel tolerances | Pass |
+| Model/state replay | Four cases pass |
+| Startup and concurrent partial-page COW | Pass |
+| Frozen coding tasks with independent hidden tests | 4/4 pass, natural completion |
+| Teacher-forced quality | All 16 short and four long windows finite and API-aligned |
+| Operations, media, RAM retention, capacity and restart | Pass |
+| Complete serving comparison | 70/70 valid waves; performance review required |
+
+These are results on this exact image, rather than inherited passes from an
+earlier candidate. Detailed final-image receipts are archived with the
+verification result. The earlier v7 coding reference scored 3/4; the original
+candidate requirement remained 4/4, with no repaired solutions or selected
+replacement runs. R12 completes the previously looping task in about 45 seconds.
+
+The [quality comparison](qualification/m04-fixed-r12/quality-comparison.json)
+uses the same frozen inputs as v7: short-panel perplexity changes by -0.038%,
+long-suffix perplexity by -0.186%, and full long-prompt perplexity by -1.253%.
+Negative values favor the candidate. Paired window uncertainty includes zero;
+these finite panels do not establish a general quality improvement. No
+numerical tolerances or task acceptance criteria were relaxed.
+
+The [complete comparison](qualification/m04-fixed-r12/serving-comparison.json)
+verifies all 124 payloads and prompt bytes, exact output lengths and zero
+preemptions. Total measured answer time is **1.82% longer**, native weighted
+decode is **0.35% faster**, and native weighted prefill is **6.53% slower**.
+**No production approval:** the user's no-overall-slowdown requirement remains.
+
+Two slow waves in `concurrency-2k-c2` account for essentially the full observed
+loss: candidate times are 28.42, 20.27 and 61.85 seconds, versus 19.34, 19.99 and
+21.22 seconds in v7. The remaining 67 waves together are 6.07 seconds faster.
+That exclusion only localizes the issue; it does not replace the full score.
+No compile-cache writes occurred during those stalls, and later Triton JIT
+warnings do not prove their cause. The 4K single-request decode/wall medians
+also trigger review, with overlapping observed ranges.
+
+The next measurement should repeat only the exact three flagged parallel
+requests on the unchanged image and caches, then a matched reference if needed.
+If reproduced, observe host/GPU/offload waits in a separate diagnostic run.
+A fresh-worker pass alone cannot dismiss the original post-load stall: also
+repeat after the same 128K/cache-pressure prologue when needed.
+No further GPU run started near the daily closing phase. The
+[final verification receipt](qualification/m04-fixed-r12/verification-result.json)
+and [campaign](qualification/m04-fixed-r12/gates/campaign.json) retain every
+completed gate. Existing 5% per-cell and 2% aggregate thresholds are investigation
+triggers, not permission to accept a confirmed smaller overall slowdown.
+
+## Targeted follow-up on 2026-11-15
+
+[38 additional measured waves](../direct-xpu-followup-20261115/README.md) on the
+same two immutable images repeat the 2K/C2 and 4K/C1 cases with fresh workers
+and after the original 128K sequence. The large 2K stalls do not reproduce in
+six new-image waves. The 4K median cost remains: 17.63 to 18.70 seconds (+6.07%),
+with total time across ten answers +2.73%. Draft acceptance is lower while
+estimated verification-round time is nearly unchanged. This follow-up does
+not replace or erase the full-matrix results above. The new profile remains
+unpromoted; original v7 production was restored once after the measurements.
+
+## Corrected packed-attention regression
+
+A trace of the actual V2 worker reproduces the original failing token sequence.
+Layer observation finds the first NaN in decoder layer 3's attention output,
+before the LM head and sampler. An empty causal split was normalized as `0/0`
+under the newer kernel's split-normalization contract. The previous kernel
+kept partial outputs unnormalized and skipped empty splits.
+
+The minimal correction emits a zero contribution for that legal empty split.
+An independent FP32 oracle fails 11/40 boundary cases without it and passes
+40/40 with it. The captured real request preserves its first 885 tokens and
+then completes a valid tool call. The [diagnostic report](qualification/pro-analysis-resume/README.md)
+links the source comparison, patch, matched probes and first-invalid traces.
+This finding supersedes the earlier, unproven Inductor hypothesis. Standard
+compilation is restored; no PyTorch arithmetic patch or dependency downgrade
+is used for this failure.
+
+Historical [R10 coding failure](qualification/final/coding-failure.json),
+[raw probe comparison](qualification/generation-probes/comparison.json) and
+[earlier candidate campaign](qualification/final/campaign.json) remain retained.
+They describe different images and do not override the final R12 results.
 
 ## Confirmed graph/profiler regression and correction
 
@@ -54,108 +129,6 @@ A temporary workaround using non-native SYCL recording passed matrix/model
 math but omitted replay kernel records. It is not selected: the PTI fix keeps
 native recording and kernel-level replay profiling, with no Torch override.
 
-## Remaining qualification
-
-The final direct-build image must independently pass the complete numerical
-suite, model-state replay, startup/decode, frozen short/long quality panel,
-operational/cache/capacity checks and the full 70-wave/124-request serving
-matrix against a fresh reference run. Diagnostic success is not a substitute
-for those final-image results.
-
-The earlier [diagnostic receipts](diagnostics.json) retain version-isolation
-experiments; they are not the selected configuration. The official oneDNN
-3.14.2 source tag still reports library version 3.14.1, recorded
-[separately](onednn-version.json). The exact source-boundary adaptation for
-model replay is documented in [its receipt](replay-source-adaptation.json).
-
-## Scope and known limits
-
-Only this Linux Arc Pro B70 has been tested. The PTI lifetime code is not
-model-specific; reproduction on other GPUs has not been established.
-[Upstream references](UPSTREAM_ISSUES.md) distinguish the matching correction
-from separate graph-related reports.
-
-GPU tests run exclusively and restore the original service image. The host
-kernel/DRM driver is unchanged; driver updates here mean Intel userspace
-inside Docker. The [pre-existing sporadic BCS fault](reference-restore-fault.json)
-remains open and is separate from the corrected arithmetic regression.
-Several selected components intentionally exceed package metadata constraints;
-no clean `pip check` is claimed.
-
-## Standalone regression check
-
-With exclusive GPU access, run the script in a locally built image. It uses no
-model weights and writes numerical results plus a Chrome trace:
-
-```bash
-mkdir -p benchmark-results/pti-check
-docker run --rm --network none --device /dev/dri \
-  -v "$PWD/benchmarks/experiments/vllm-033-upgrade:/measure:ro" \
-  -v "$PWD/benchmark-results/pti-check:/results" \
-  --entrypoint python local/b70-qwen38-vllm:direct-xpu-development \
-  /measure/profile-graph-replay.py --out /results/replay
-```
-
-The output directory must be fresh. Passing requires bit-identical eager and
-graph outputs before and after profiling, changed-input replays and at least
-nine real GPU kernel records from three profiled graph replays.
-
-## Operational reference finding
-
-The first fresh v7 reference passed API/media, near-limit context, C4/C16,
-long-image, abort/extension, structured-output and 32 maximum-area image
-checks. The later natural-retention test returned the same correct answer but
-recorded zero CPU hits and zero H2D bytes. That is a
-[failed RAM-retention measurement on the old build](qualification/baseline-mixed-load-ram-failure.json),
-not evidence of a 2.15 regression. The [fresh-cache v7 repeat](qualification/baseline-isolated-ram.json) passes:
-44,800 host tokens, 1,716,649,984 H2D bytes, identical correct answer and no
-preemption. The original mixed-load miss remains recorded; bounded cache
-retention is not guaranteed after arbitrary prior workloads. Both arms use
-the same fresh-worker ordering for the final comparison, with unchanged
-assertions. The [final candidate](qualification/final/operations/operations.json)
-also passes this fresh-worker RAM test, with the same 44,800 host hits and
-1,716,649,984 H2D bytes, and all other operational groups.
-
-## Fresh coding-task reference
-
-The unchanged v7 reference solves **3/4** frozen tasks. One dependency-planning
-solution raises `KeyError` instead of the requested `UnknownTarget`; its other
-eight hidden checks pass. [All task results](qualification/baseline-agents/summary.json)
-are retained, with no repaired code, hidden feedback or selected replacement
-run. The [pre-candidate addendum](qualification/contract-addendum.json) records
-that the reference4/4 target failed; the candidate still must solve all four
-cases. The final candidate fails before completing its first task, as recorded
-below. The reference's full serving measurement ran separately after its task
-failure, preserving the same arm's compiler caches.
-
-## Final candidate coding failure
-
-The first `rangeset-202611117` task reads the project correctly, then its third
-request emits 16,384 reasoning tokens, ending with **15,692 repetitions of
-`duct`**. It subsequently writes code but exceeds the unchanged 900-second
-task limit before natural completion and independent grading.
-[Failure receipt](qualification/final/coding-failure.json) and
-[compressed raw response](qualification/final/agents/rangeset-202611117/response-002.json.gz)
-retain the observation. Only one of four planned tasks was attempted; this is
-not a four-task independent acceptance score. No repaired solution, changed
-seed or replacement run is used to erase it.
-
-This blocks release. The responsible component and repeatability across
-controlled images are still under investigation; the observation alone does
-not identify a PyTorch defect. A separate
-[bounded request probe](../../experiments/vllm-033-upgrade/run-frozen-request-probe.py)
-replays identical captured messages and sampling across images with a shorter
-output cap. That diagnostic cannot replace the original task result.
-
-The [matched probe comparison](qualification/generation-probes/comparison.json)
-records the same short request ending in 332 `duct` repetitions with the
-compiled candidate, and zero with v7 or the new image without compilation.
-The no-compilation worker still captures native graphs. Keeping Inductor but
-enabling all native custom operators also repeats; changing default operator
-selection alone does not remove the failure. The exact faulty optimization
-remains unproven. The selected compatibility fallback therefore disables
-Inductor only, with native recording and the newer libraries retained.
-
 ## Transformers compatibility exception
 
 The full Torch2.15/PTI-fixed candidate passes real partial-page C2 forks,
@@ -171,3 +144,25 @@ A CPU-only control also exposes5.23's new validation rejecting vLLM's
 second text pass after video preprocessing. DirectHF video processing alone
 works in both versions. The exact cause of the inflated API token estimate is
 not proven; this is a measured compatibility pin, not a relaxed media test.
+
+## Scope and limits
+
+Only this Linux Arc Pro B70 has been tested. The host kernel/DRM driver is
+unchanged; updated Intel driver components are userspace packages inside the
+image. Broader GPU impact has not been established. The
+[upstream references](UPSTREAM_ISSUES.md) distinguish the PTI correction from
+separate graph reports.
+
+The user granted exclusive GPU access and requested that the old engine stay
+stopped between tests. The current controller therefore stops its own test
+containers without restarting v7 between stages. Daily work and shutdown
+limits remain enforced.
+
+The [pre-existing sporadic BCS fault](reference-restore-fault.json) remains open.
+A historical v7 mixed-load RAM-retention miss and its passing fresh-worker
+control remain recorded in [the failed measurement](qualification/baseline-mixed-load-ram-failure.json)
+and [isolated repeat](qualification/baseline-isolated-ram.json). Both final arms
+use the same fresh-worker ordering; arbitrary prior-load retention is not
+guaranteed. Several components exceed package metadata constraints, so no clean
+`pip check` is claimed. The official oneDNN 3.14.2 source tag still reports
+3.14.1 internally, as recorded [separately](onednn-version.json).

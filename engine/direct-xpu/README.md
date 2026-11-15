@@ -56,12 +56,25 @@ candidate selection, not a policy of retaining old dependencies.
 Torch 2.15 uses a [source-pinned Intel PTI fix](pti/README.md) for the
 demonstrated native graph/profiling regression. The official Torch wheel,
 native graph recording and kernel-level replay profiling are retained.
-The selected profile also disables **Inductor model compilation** (`mode: 0`),
-while retaining `FULL_DECODE_ONLY` native graphs. The default compiled
-Torch 2.15 path reproducibly degenerates in the frozen coding request;
-matched no-compilation controls do not. The exact faulty optimization is
-unproven. This is a compatibility fallback with full quality/performance
-qualification pending, not a claim that the PTI fix repairs every compiler bug.
+The direct build also repairs an **empty causal split in packed M04 attention**.
+The newer kernel normalizes every partial output independently; a fully masked
+split has zero mass and produced `0/0`, poisoning the later zero-weight combine.
+The old kernel kept partial outputs unnormalized and skipped zero-mass splits.
+The fix emits the mathematically correct zero contribution for an empty split;
+it does not sanitize invalid logits or change sampling. An independent FP32
+boundary probe fails11/40 cases before the fix and passes40/40 after it. The
+captured real request retains the first885 tokens exactly and then produces a
+complete tool call instead of repetition. See the [diagnostic evidence](../../benchmarks/results/direct-xpu-20261114/qualification/pro-analysis-resume/README.md).
+
+Standard model compilation is restored for the new candidate, retaining MTP3
+and `FULL_DECODE_ONLY` native graphs. The earlier Inductor workaround came from
+incomplete parsed-only observations and is not a proven cause. **Final-image numerical, coding, quality and operational checks pass on R12.** The complete
+70-wave serving comparison has a 1.82% wall-time loss concentrated in two
+parallel-request stalls. A [targeted follow-up](../../benchmarks/results/direct-xpu-followup-20261115/README.md)
+does not reproduce those stalls, but retains a 4K/C1 latency cost (+6.07% median,
++2.73% total time across ten answers), associated with lower draft acceptance.
+No production promotion has occurred. Neither local correction alone approves
+the upgraded engine.
 Full qualification is tracked in the
 [test evidence](../../benchmarks/results/direct-xpu-20261114/README.md).
 Torch is installed without dependency downgrades:

@@ -1,0 +1,25 @@
+{
+  "status": "FROZEN_BEFORE_FOLLOWUP_MEASUREMENTS",
+  "recorded_utc": "2026-11-15T09:09:44.459127+00:00",
+  "images": {
+    "R12": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+    "v7": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1"
+  },
+  "order": [
+    "R12-fresh",
+    "v7-fresh",
+    "v7-after-128k",
+    "R12-after-128k"
+  ],
+  "unchanged": "Image IDs, model revision,180W,16slots,12GiB RAM,LBNHC,1792/128,MTP3,normal compilation/native graphs, original prompts/payloads/sampling/output counts and validation assertions. No image or model rebuild. No CPU builds/comparisons during timings.",
+  "requests": "Each target panel:5 frozen4K-C1 waves +3 frozen2K-C2 waves. Pressure sessions first replay original128K-C1 warmup+3waves in same worker. Each scenario retains its original warmup.",
+  "limits": "Fresh and pressure regimes use independent fresh workers, own original arm compilation caches. Pressure reproduces the immediately preceding128K sequence, not the entire historical36-wave prefix. No test failure or slow sample discarded. No production promotion in this measurement task.",
+  "review": "Report each paired seed, medians/ranges/pooled wall+prefill/decode, TTFT, MTP acceptance, round-equivalent times, cached tokens, queue times, all request hashes. Existing5%cell/2%aggregate triggers remain review signals, not acceptance thresholds. User indicated willingness to accept isolated2K-C2 cost, but wants further measurements first.",
+  "bounds": "Each controller timeout45min,240s cleanup. Campaign maximum3h, stop own workers in finally. Refuse new major stages after22:00; closing22:45/save-stop22:55/hard23:00EuropeBerlin. Production intentionally stopped between tests per user.",
+  "files_sha256": {
+    "benchmarks/experiments/vllm-033-upgrade/run-candidate.py": "da467a8a031631956e91390b7c7199dade55601f2c11bb79df3378bfbb7eb510",
+    "scripts/current-profile-benchmark.py": "01105118930b595aaf31b2bf58f3427b76a3b94721ceeabd947b432105ad3345",
+    "benchmark-results/direct-xpu-followup-20261115/fresh-scenarios.json": "f49244c1a08f450138c13df88ee9b582a6be1e385fee63d79a536b3d9b83acc0",
+    "benchmark-results/direct-xpu-followup-20261115/after-128k-scenarios.json": "9f130a4c8c8c7af598b602ded16c87967e1a56679f7385bc47194f39e1e8b88d"
+  }
+}

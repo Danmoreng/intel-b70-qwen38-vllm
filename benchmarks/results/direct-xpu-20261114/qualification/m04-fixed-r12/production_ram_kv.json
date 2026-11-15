@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "status": "PRODUCTION",
+  "release_date": "2026-11-14",
+  "base_image_id": "sha256:b37eb3926bade76db626a261b98de6570036fd59d81a3a06e6ab780a87f0918d",
+  "default_cpu_gib": 12,
+  "allowed_cpu_gib": [
+    1,
+    12
+  ],
+  "runtime_sha256": {
+    "kv_admission.py": "4b237a0d1c54b49958e3111d46ebc221b8f2768075d7eff9c7923eb3bdb1df6f",
+    "xpu_cpu_offload.py": "6f0b474b078b3dd6a6ad63c10d84d620592d6c5733e62d51b9a3de33f20e9b36"
+  },
+  "validation": "benchmarks/results/direct-xpu-20261114/README.md",
+  "note": "Unchanged qualified12GiB LBNHC runtime modules and1792/128 COW geometry; new engine image requires full qualification.",
+  "kv_cache_layout": "LBNHC",
+  "layout_validation": "benchmarks/results/ram-kv-layout-20261108/README.md",
+  "runtime_directory": "config/experiments/direct-xpu-v8/runtime"
+}

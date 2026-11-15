@@ -1,0 +1,32 @@
+{
+  "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+  "actual_test_overlay": {
+    "sha256": "632816175200e047d08d167a7b1919b707c08ef7747358b1876bac11733e9ead",
+    "cpu_gib": 12,
+    "runtime_directory": "runtime",
+    "environment": {
+      "VLLM_KV_CACHE_LAYOUT": "LBNHC"
+    },
+    "scheduler": "kv_admission.CompletionReservedScheduler",
+    "watermark": "0.05",
+    "transfer": {
+      "kv_connector": "OffloadingConnector",
+      "kv_role": "kv_both",
+      "kv_connector_extra_config": {
+        "cpu_bytes_to_use": 12884901888,
+        "spec_name": "BoundedXPUOffloadingSpec",
+        "spec_module_path": "xpu_cpu_offload",
+        "blocks_per_chunk": 1,
+        "eviction_policy": "arc",
+        "store_threshold": 0
+      }
+    }
+  },
+  "runtime_sha256": {
+    "request_defaults.py": "88eebbd1d64d848f66478129875a66b02bf264f9ae026bc1496b4bbcb183ece2",
+    "kv_admission.py": "4b237a0d1c54b49958e3111d46ebc221b8f2768075d7eff9c7923eb3bdb1df6f",
+    "xpu_cpu_offload.py": "6f0b474b078b3dd6a6ad63c10d84d620592d6c5733e62d51b9a3de33f20e9b36"
+  },
+  "metadata_erratum": "The frozen-contract production_ram_kv.json attachment was copied from the earlier R11 draft; its base_image_id and runtime_directory are not an R12 deployment attestation. It was not loaded by the R12 test controller. The controller loads the qualified v7 overlay settings and mounts the unchanged, hash-identical modules listed here. This receipt records actual tested configuration; do not use the draft manifest for promotion.",
+  "production_status": "No deployment or release approval."
+}

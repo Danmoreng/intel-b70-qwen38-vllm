@@ -53,7 +53,9 @@ def blocks():
         raise ValueError('Benchmark summary is for another release')
     # Deliberately select a dated campaign. A future release must review this
     # source and the dated prose, rather than silently inherit old numbers.
-    if policy['policy_id'] == 'b70-qwen38-exl3-production-v6':
+    if policy['policy_id'] == 'b70-qwen38-exl3-production-v7':
+        campaign = 'benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/serving-comparison.json'
+    elif policy['policy_id'] == 'b70-qwen38-exl3-production-v6':
         campaign = 'benchmarks/results/direct-xpu-20261114/qualification/comparison.json'
     else:
         campaign = 'benchmarks/results/mtp-cache-1792-20261112/qualification/full-serving-20261112-r2/comparison.json'
@@ -63,7 +65,11 @@ def blocks():
             not comparison['paired_payloads_and_prompt_bytes_verified']):
         raise ValueError('Serving comparison and qualified summary differ')
 
-    rollback_id = policy['release']['immediate_exl3_rollback_image']
+    # The exact tested policy keeps its frozen provenance. The later approved
+    # deployment decision records the actual preceding production release.
+    rollback_id = release.get('immediate_rollback_image_id', policy['release']['immediate_exl3_rollback_image'])
+    if rollback_id != decision['immediate_rollback_image_id']:
+        raise ValueError('Rollback identity differs from the approved decision')
     saved = [p for p in (REPO / 'config/releases').glob('*/production_image.json')
              if json.loads(p.read_text())['image_id'] == rollback_id]
     if len(saved) != 1:
@@ -122,7 +128,7 @@ def blocks():
     direct = read_json('engine/direct-xpu/build-lock.json')
     core, packages, drivers = (direct[key] for key in ('core_packages', 'python_packages', 'dpkg_packages'))
     direct_stack = table([
-        ['Component', 'Candidate'], ['---', '---'],
+        ['Component', 'Selected version'], ['---', '---'],
         ['vLLM / base image', direct['latest_stable']['version'] + ' XPU, pinned registry digest'],
         ['PyTorch / Triton XPU', core['torch'] + ' / ' + core['triton-xpu']],
         ['vLLM XPU kernels', core['vllm-xpu-kernels']],

@@ -17,8 +17,8 @@
   "environment_overrides": {
     "EXL3_SDPA_CACHE_CAPACITY": "64"
   },
-  "status": "CANDIDATE_PREFLIGHT_ONLY",
-  "image_tag": "local/b70-qwen38-vllm:direct-xpu-v8-m04-reviewed",
+  "status": "QUALIFIED_RELEASE",
+  "image_tag": "local/b70-qwen38-vllm:production-exl3-v8",
   "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
   "runtime_image_id": "sha256:b8c5484e362c66c8fb0c3eead9cabb7c25af8c988808591d4ce5d92502ec73a0",
   "policy_sha256": "2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48",
@@ -231,5 +231,13 @@
     "runtime_rootfs_identical_to_release": true,
     "pti_fix_commit": "dd8940ff817f94461795708fe3c386ab9e09d3b1",
     "m04_patch_sha256": "99d8e02718a14854a322718f4186b8cad296daaf253a27984a1ed7754598a862"
+  },
+  "qualification_review": {
+    "path": "benchmarks/results/direct-xpu-followup-20261115/release/decision.json",
+    "sha256": "dd362c54a7773753586e5598ea720e02f559e67cfd5f521eb96df4ab4069e01c"
+  },
+  "production_start_receipt": {
+    "path": "benchmarks/results/direct-xpu-followup-20261115/release/deployment/promotion.json",
+    "sha256": "baead6da1bf0fc6475a6d487f90b1e984cd6078b19571dbc0f674e3d23876ba7"
   }
 }

@@ -1,0 +1,40 @@
+{
+  "status": "PASS_READ_ONLY_ROLLBACK_PREFLIGHT",
+  "recorded_utc": "2026-11-15T10:11:00.157060+00:00",
+  "command": "./scripts/run-server-exl3-v7-rollback.sh --check-only",
+  "exit_code": 0,
+  "result": {
+    "status": "LAUNCH_PREFLIGHT_PASS",
+    "release_status": "QUALIFIED_RELEASE",
+    "image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+    "policy_sha256": "997d6b63458b312c038a1bd89034487d547e0368303c648aef6c44c69e9cae9f",
+    "cache": "/home/sebastian/.cache/b70-qwen38-vllm-production/997d6b63458b312c038a1bd89034487d547e0368303c648aef6c44c69e9cae9f/dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+    "ram_kv": {
+      "sha256": "1c65f3d19d5ffbdd46f03ab33539f601e390023b07b321b33b64046106582904",
+      "cpu_gib": 12,
+      "runtime_directory": "config/releases/exl3-v7/runtime",
+      "environment": {
+        "VLLM_KV_CACHE_LAYOUT": "LBNHC"
+      },
+      "scheduler": "kv_admission.CompletionReservedScheduler",
+      "watermark": "0.05",
+      "transfer": {
+        "kv_connector": "OffloadingConnector",
+        "kv_role": "kv_both",
+        "kv_connector_extra_config": {
+          "cpu_bytes_to_use": 12884901888,
+          "spec_name": "BoundedXPUOffloadingSpec",
+          "spec_module_path": "xpu_cpu_offload",
+          "blocks_per_chunk": 1,
+          "eviction_policy": "arc",
+          "store_threshold": 0
+        }
+      }
+    },
+    "observability_flags": [
+      "--enable-per-request-metrics",
+      "--enable-prompt-tokens-details"
+    ]
+  },
+  "note": "CPU/artifact/model/profile/power validation only. New v8 production was not stopped or replaced by this check."
+}

@@ -89,16 +89,18 @@ The installer starts the engine and enables its watchdog. Model loading is
 asynchronous; check `curl -fsS http://127.0.0.1:8081/health` until it succeeds,
 then make the [example request](../README.md#make-a-request).
 
-## Direct-build candidate
+## Direct source build
 
-A [consolidated direct 0.33 XPU builder](../engine/direct-xpu/README.md) is being
-validated separately. It reconstructs the native dependencies from public
-sources and does not require an old local engine image. Until its GPU/model
-qualification and release packaging pass, the production manifests above
-still identify the deployed reference image.
+The [direct XPU builder](../engine/direct-xpu/README.md) is the source recipe
+for the current qualified profile. It starts from the pinned official vLLM
+0.33 XPU image, compiles the native libraries and installs the current scripts;
+no historical local parent image is required. Its lock records Torch2.15,
+Intel userspace, the upstream PTI backport and the packed M04 correction.
 
-## Deployed reference build chain
+A rebuild has a new image identity and needs its own validation and release
+manifest. It cannot inherit this host's binary hashes simply by using the
+production tag. See the [current qualification](BENCHMARKS.md) and keep new
+build tags separate from production and rollback aliases.
 
-The deployed reference was assembled through an older staged build. Its
-[reconstruction map](REFERENCE_BUILD_CHAIN.md) is retained for reproducibility;
-the new builder above starts directly from the official 0.33 XPU image.
+The preceding release's [staged reconstruction map](REFERENCE_BUILD_CHAIN.md)
+is retained as historical documentation.

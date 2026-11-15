@@ -5,9 +5,11 @@ local parent image or previously compiled native library is required. The
 build compiles oneDNN, EXL3 MB4/K4 and M04 from public sources and installs the
 current Python integration. Model weights are mounted separately for testing.
 
-**Status: candidate, not a qualified replacement.** The deployed engine and
-its release manifests remain unchanged. Build/import checks must be followed
-by numerical GPU, model, quality, cache, capacity and serving measurements.
+**Status: qualified production recipe, deployed as EXL3 v8 on 2026-11-15.**
+The exact R12 image passed numerical, model, quality, cache, capacity and serving
+checks. [Approval, measured tradeoffs and deployment receipt](../../benchmarks/results/direct-xpu-followup-20261115/release/README.md).
+A fresh rebuild requires its own qualification; these receipts identify the
+tested image, not every future build.
 
 ## Build
 
@@ -38,10 +40,10 @@ containers. The wrapper does not change the service or publish an image.
 The policy is to test the newest stable components first. Retain a newer
 reference component if an upstream image ships an older one; select an older
 version only after recording a regression. Pins below identify a reproducible
-candidate selection, not a policy of retaining old dependencies.
+qualified selection.
 
 <!-- BEGIN DIRECT STACK -->
-| Component | Candidate |
+| Component | Selected version |
 | --- | --- |
 | vLLM / base image | 0.33.0 XPU, pinned registry digest |
 | PyTorch / Triton XPU | 2.15.0+xpu / 3.9.0 |
@@ -66,15 +68,15 @@ boundary probe fails11/40 cases before the fix and passes40/40 after it. The
 captured real request retains the first885 tokens exactly and then produces a
 complete tool call instead of repetition. See the [diagnostic evidence](../../benchmarks/results/direct-xpu-20261114/qualification/pro-analysis-resume/README.md).
 
-Standard model compilation is restored for the new candidate, retaining MTP3
+Standard model compilation is enabled in production, retaining MTP3
 and `FULL_DECODE_ONLY` native graphs. The earlier Inductor workaround came from
 incomplete parsed-only observations and is not a proven cause. **Final-image numerical, coding, quality and operational checks pass on R12.** The complete
 70-wave serving comparison has a 1.82% wall-time loss concentrated in two
 parallel-request stalls. A [targeted follow-up](../../benchmarks/results/direct-xpu-followup-20261115/README.md)
 does not reproduce those stalls, but retains a 4K/C1 latency cost (+6.07% median,
 +2.73% total time across ten answers), associated with lower draft acceptance.
-No production promotion has occurred. Neither local correction alone approves
-the upgraded engine.
+The operator approved these measured tradeoffs after the follow-up; the exact
+R12 image is now production. Neither correction alone established qualification.
 Full qualification is tracked in the
 [test evidence](../../benchmarks/results/direct-xpu-20261114/README.md).
 Torch is installed without dependency downgrades:
@@ -107,7 +109,7 @@ targets Torch 2.15. The Intel userspace is from
   from the qualified reference, file hashes, and explicit rebases for the
   newer Torch guard and M04 header API. No native binaries or weights.
 - [Dockerfile](../../docker/direct-xpu/Dockerfile): upstream, runtime, native
-  builder and final candidate stages; no vLLM upgrade chain.
+  builder and final runtime stages; no vLLM upgrade chain.
 - [build-native.sh](build-native.sh): oneDNN, existing
   [matrix inputs](../exl3xpu/mb4-k4/source), and [M04 source](m04/csrc/shared_kv_verification.cpp).
   M04 retains the packed causal mask and Python operator signature, and uses

@@ -25,6 +25,8 @@ DOCS = [
     'docs/REFERENCE_BUILD_CHAIN.md',
     'benchmarks/results/direct-xpu-20261114/README.md',
     'benchmarks/results/direct-xpu-20261114/UPSTREAM_ISSUES.md',
+    'benchmarks/results/direct-xpu-followup-20261115/README.md',
+    'benchmarks/results/direct-xpu-followup-20261115/release/README.md',
 ]
 
 

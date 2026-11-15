@@ -70,21 +70,21 @@ shutdown schedules are independent operating-system policy.
 
 ## Immediate rollback
 
-The rollback target is derived from the current policy and checked by the
-public-documentation checker:
+The rollback target is recorded in the release manifest and approved deployment
+decision, and checked by the public-documentation checker:
 
 <!-- BEGIN IMMEDIATE ROLLBACK -->
-Use the [saved exl3-v6 release](../config/releases/exl3-v6/README.md)
-with `scripts/run-server-exl3-v6-rollback.sh`. Its immutable image is
-`sha256:f8b0ef94cf95cfee20b0c5500db1173fdaaca4af4e3cbaa352a511e78e6a0c6d`.
+Use the [saved exl3-v7 release](../config/releases/exl3-v7/README.md)
+with `scripts/run-server-exl3-v7-rollback.sh`. Its immutable image is
+`sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1`.
 <!-- END IMMEDIATE ROLLBACK -->
 
 Validate the saved image and runtime before stopping the current engine:
 
 ```bash
-./scripts/run-server-exl3-v6-rollback.sh --check-only
+./scripts/run-server-exl3-v7-rollback.sh --check-only
 systemctl --user stop b70-qwen38-vllm.service
-./scripts/run-server-exl3-v6-rollback.sh
+./scripts/run-server-exl3-v7-rollback.sh
 ```
 
 The final command runs the rollback in the foreground with its archived policy

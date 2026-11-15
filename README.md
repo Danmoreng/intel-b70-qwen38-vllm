@@ -18,7 +18,7 @@ start with [installation and build requirements](docs/INSTALLATION.md).
 | --- | --- |
 | GPU / power cap | 1 × Intel Arc Pro B70 (32 GB) / 180 W |
 | Model | Qwen3.8-27B / EXL3 4.00 bpw |
-| Runtime | vLLM 0.33.0, Torch 2.14.0+xpu |
+| Runtime | vLLM 0.33.0, Torch 2.15.0+xpu |
 | Context budget | 262,144 input + output tokens |
 | Speculative decoding | MTP, 3 draft tokens |
 | Prefix cache | FP8 GPU KV + 12 GiB host RAM |
@@ -28,6 +28,8 @@ start with [installation and build requirements](docs/INSTALLATION.md).
 The context budget includes input, reasoning, media and output. Four parallel
 requests at moderate context have been tested; sixteen admitted requests share
 the same memory pool. See [limits](#limits) before sizing a workload.
+The engine builds directly from the official vLLM 0.33 XPU base with Torch
+2.15, newer Intel userspace and the qualified PTI/M04 fixes.
 [Full configuration and release identities](docs/CURRENT_CONFIGURATION.md).
 
 ## Start the service
@@ -74,7 +76,7 @@ use automatic tool choice and the `qwen3_xml` parser.
 
 ## Measured performance
 
-The table summarizes the **2026-11-12** serving qualification of the current
+The table summarizes the **2026-11-14** serving qualification of the current
 profile at 180 W. Each request produces 1,024 tokens with thinking disabled.
 Values are medians over repeated waves; K denotes the input budget in multiples
 of 1,024. Actual token counts vary slightly with the frozen prompt.
@@ -82,12 +84,12 @@ of 1,024. Actual token counts vary slightly with the frozen prompt.
 <!-- BEGIN PUBLIC MEASUREMENTS -->
 | Workload | Waves | First token | Decode tok/s | Wave time |
 | --- | ---: | ---: | ---: | ---: |
-| 4K cold, one request | 5 | 1.90 s | 62.52 | 18.27 s |
-| 64K cold, one request | 3 | 38.87 s | 54.37 | 57.67 s |
-| 128K cold, one request | 3 | 103.87 s | 43.18 | 127.85 s |
-| 16K prefix reuse, one request | 3 | 0.33 s | 67.63 | 15.45 s |
-| 64K prefix reuse, one request | 3 | 0.55 s | 56.14 | 19.96 s |
-| 4K each, four requests (combined decode) | 3 | 6.37 s | 189.87 | 29.05 s |
+| 4K cold, one request | 5 | 1.89 s | 60.64 | 18.74 s |
+| 64K cold, one request | 3 | 38.52 s | 53.26 | 58.20 s |
+| 128K cold, one request | 3 | 103.50 s | 44.61 | 126.42 s |
+| 16K prefix reuse, one request | 3 | 0.33 s | 68.53 | 15.34 s |
+| 64K prefix reuse, one request | 3 | 0.57 s | 53.00 | 20.69 s |
+| 4K each, four requests (combined decode) | 3 | 6.19 s | 189.20 | 29.55 s |
 <!-- END PUBLIC MEASUREMENTS -->
 
 Time to first token includes client-observed waiting and prompt processing.
@@ -96,16 +98,17 @@ combined throughput while all requests overlap. These columns measure different
 intervals and should not be added together. Warm rows reuse a preceding prompt;
 they are separate cases from the cold rows.
 
-The measured native image used the qualified cache settings and COW helper.
-The packaged release installs that helper automatically; its packaging checks
-are separate from the full serving matrix.
+The full matrix covers **20 scenarios, 70 measured waves and 124 requests** on
+this exact release image, with zero preemptions. It measured **51.68 output
+tok/s** across total wave time, including prompt processing and request overhead.
+Four natural tool-agent runs passed all four tasks with independent hidden
+checks. This small panel supports functionality, not general coding accuracy.
 
-The full matrix covers **20 scenarios, 70 measured waves and 124 requests**,
-with zero preemptions in the successful repeat. It measured 52.53 output tok/s
-across total wave time, including prompt processing and request overhead.
-Eight separate tool-agent runs solved four of four tasks on each compared
-profile. This small panel supports functionality; it does not establish general
-coding quality. [Measurement scope, quality and raw evidence](docs/BENCHMARKS.md).
+Compared with the preceding profile, summed full-matrix wave time increased
+1.82%. A 38-wave follow-up did not reproduce the large 2K parallel stalls;
+a smaller 4K single-request cost remained (+6.07% median, +2.73% total time).
+These measured tradeoffs were accepted for production. See
+[measurement scope and evidence](docs/BENCHMARKS.md).
 
 ## Limits
 

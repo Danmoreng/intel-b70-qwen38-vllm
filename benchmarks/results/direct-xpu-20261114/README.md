@@ -1,10 +1,12 @@
 # Direct vLLM XPU qualification — 2026-11-14
 
-**R12 is under verification; production remains unchanged.** The candidate
+**R12 was approved and deployed as EXL3 v8 on 2026-11-15.** See the
+[release decision and deployment](../direct-xpu-followup-20261115/release/README.md).
+The engine
 builds directly on official vLLM 0.33 XPU, with the official PyTorch 2.15 wheel,
 newer Intel userspace, a targeted Intel PTI backport and a correction to our
 packed M04 causal attention. Standard model compilation, MTP3 and native graphs
-are enabled. No diagnostic tracing is installed in the release candidate.
+are enabled. No diagnostic tracing is installed in the release image.
 
 See the [build instructions](../../../engine/direct-xpu/README.md) and
 [frozen image and test contract](qualification/m04-fixed-r12/frozen-contract.json).
@@ -23,7 +25,7 @@ The immutable release image is
 | Frozen coding tasks with independent hidden tests | 4/4 pass, natural completion |
 | Teacher-forced quality | All 16 short and four long windows finite and API-aligned |
 | Operations, media, RAM retention, capacity and restart | Pass |
-| Complete serving comparison | 70/70 valid waves; performance review required |
+| Complete serving comparison | 70/70 valid waves; tradeoffs reviewed and accepted |
 
 These are results on this exact image, rather than inherited passes from an
 earlier candidate. Detailed final-image receipts are archived with the
@@ -42,7 +44,9 @@ The [complete comparison](qualification/m04-fixed-r12/serving-comparison.json)
 verifies all 124 payloads and prompt bytes, exact output lengths and zero
 preemptions. Total measured answer time is **1.82% longer**, native weighted
 decode is **0.35% faster**, and native weighted prefill is **6.53% slower**.
-**No production approval:** the user's no-overall-slowdown requirement remains.
+The [targeted follow-up](../direct-xpu-followup-20261115/README.md) and
+[explicit operator acceptance](../direct-xpu-followup-20261115/release/operator-acceptance.json)
+complete the performance review; the original losses remain in these receipts.
 
 Two slow waves in `concurrency-2k-c2` account for essentially the full observed
 loss: candidate times are 28.42, 20.27 and 61.85 seconds, versus 19.34, 19.99 and
@@ -52,16 +56,13 @@ No compile-cache writes occurred during those stalls, and later Triton JIT
 warnings do not prove their cause. The 4K single-request decode/wall medians
 also trigger review, with overlapping observed ranges.
 
-The next measurement should repeat only the exact three flagged parallel
-requests on the unchanged image and caches, then a matched reference if needed.
-If reproduced, observe host/GPU/offload waits in a separate diagnostic run.
-A fresh-worker pass alone cannot dismiss the original post-load stall: also
-repeat after the same 128K/cache-pressure prologue when needed.
-No further GPU run started near the daily closing phase. The
-[final verification receipt](qualification/m04-fixed-r12/verification-result.json)
-and [campaign](qualification/m04-fixed-r12/gates/campaign.json) retain every
-completed gate. Existing 5% per-cell and 2% aggregate thresholds are investigation
-triggers, not permission to accept a confirmed smaller overall slowdown.
+The subsequent follow-up below tests the exact flagged requests on unchanged
+images and existing caches, both fresh and after the original 128K prologue.
+No further GPU run started near the daily closing phase on November 14. The
+[original verification receipt](qualification/m04-fixed-r12/verification-result.json)
+and [campaign](qualification/m04-fixed-r12/gates/campaign.json) retain their
+original approval state. The later operator decision accepts the measured
+tradeoffs; investigation thresholds were not redefined to hide the losses.
 
 ## Targeted follow-up on 2026-11-15
 
@@ -71,8 +72,9 @@ and after the original 128K sequence. The large 2K stalls do not reproduce in
 six new-image waves. The 4K median cost remains: 17.63 to 18.70 seconds (+6.07%),
 with total time across ten answers +2.73%. Draft acceptance is lower while
 estimated verification-round time is nearly unchanged. This follow-up does
-not replace or erase the full-matrix results above. The new profile remains
-unpromoted; original v7 production was restored once after the measurements.
+not replace or erase the full-matrix results above. Original v7 production was
+restored once after those measurements, then the operator accepted the review
+and authorized the unchanged R12 production deployment.
 
 ## Corrected packed-attention regression
 

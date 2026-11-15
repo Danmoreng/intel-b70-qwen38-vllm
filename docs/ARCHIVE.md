@@ -12,7 +12,8 @@ rollback target, use [configuration](CURRENT_CONFIGURATION.md),
 
 | Date / topic | Preserved report |
 |---|---|
-| 2026-11-12: current profile qualification | [1792/128 cache, COW correction and deployment](../benchmarks/results/mtp-cache-1792-20261112/README.md) |
+| 2026-11-14/15: direct XPU production release | [R12 qualification](../benchmarks/results/direct-xpu-20261114/README.md) and [v8 approval/deployment](../benchmarks/results/direct-xpu-followup-20261115/release/README.md) |
+| 2026-11-12: preceding v7 qualification | [1792/128 cache, COW correction and deployment](../benchmarks/results/mtp-cache-1792-20261112/README.md) |
 | 2026-11-10: previous matrix profile | [MB4/K4 serving comparison and deferred investigations](../benchmarks/results/mtp-matrix-20261110/README.md) |
 | 2026-11-08: runtime upgrade | [vLLM 0.33 qualification](../benchmarks/results/vllm-033-upgrade-20261108/README.md) |
 | 2026-11-08: RAM layout | [LBNHC comparison, measured at 230 W](../benchmarks/results/ram-kv-layout-20261108/README.md) |

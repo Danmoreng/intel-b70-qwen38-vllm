@@ -1,0 +1,8 @@
+{
+  "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+  "frozen_policy_sha256": "2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48",
+  "actual_immediate_rollback": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "note": "The tested policy remains byte-identical. Its inherited release.immediate_exl3_rollback_image still names historicalv6. Deployment-specific immediate_rollback_image_id in the new image manifest and approved decision names actual precedingv7, and is checked by the promoter and docs checker. No image rebuild or policy relabel is performed.",
+  "runtime_overlay": "New manifest binds unchanged tested modules to R12; supersedes the unused R11 draft attachment for deployment only.",
+  "source_provenance": "Build receipt records dirty worktree at build time. source_commit in the new manifest archives the exact recipe and diagnostics; it is not falsely presented as a clean build-time commit."
+}

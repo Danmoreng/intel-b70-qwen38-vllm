@@ -1,0 +1,65 @@
+{
+  "status": "PASS_REVIEWED_PERFORMANCE_TRADEOFF",
+  "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+  "recorded_utc": "2026-11-15T10:05:33.831162+00:00",
+  "reviewed_triggers": [
+    {
+      "scenario": "phase-4k-c1",
+      "metric": "decode",
+      "change_pct": -6.952112896600604
+    },
+    {
+      "scenario": "phase-4k-c1",
+      "metric": "wall",
+      "change_pct": 6.479377001974607
+    },
+    {
+      "scenario": "concurrency-2k-c2",
+      "metric": "prefill",
+      "change_pct": -85.56360347220844
+    },
+    {
+      "scenario": "concurrency-2k-c2",
+      "metric": "wall",
+      "change_pct": 42.20175883075965
+    },
+    {
+      "scenario": "complete-matrix",
+      "metric": "weighted_native_prefill_tokens_per_s",
+      "change_pct": -6.534049154682952
+    }
+  ],
+  "receipts": {
+    "full_matrix": {
+      "path": "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/serving-comparison.json",
+      "sha256": "aa29c6e0e91c8451d05a064f32949550b21d2bf9d887e4bd6883f33060510402"
+    },
+    "localization": {
+      "path": "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/verification-result.json",
+      "sha256": "67ef97bf81ee6cff084f7ef0e8ff03f426c399bf27123ff71cdba213d42168b8"
+    },
+    "targeted_followup": {
+      "path": "benchmarks/results/direct-xpu-followup-20261115/comparison.json",
+      "sha256": "2a0938f9c61e6d9a2f473001cb70c636824fbc7d65c8546738d8e552d8235a0f"
+    },
+    "repeatability": {
+      "path": "benchmarks/results/direct-xpu-followup-20261115/within-image-output-repeatability.json",
+      "sha256": "18e91e3d85c7ddf0127a87a8cb4de81f354912103772509540f3866929b9252e"
+    },
+    "offload": {
+      "path": "benchmarks/results/direct-xpu-followup-20261115/offload-prologue-evidence.json",
+      "sha256": "d98ff8c150bcfb95e9f877c32d5c6d0d6aaa71fbba73f1e17e6c3d8a3878b3fa"
+    },
+    "operator_acceptance": {
+      "path": "benchmarks/results/direct-xpu-followup-20261115/release/operator-acceptance.json",
+      "sha256": "c01aa8977e0d7a5fd26aaec6b14cea9a548cfc34528f8368dc48fc5a5abae42c"
+    }
+  },
+  "assessment": [
+    "Full matrix retains +1.8201% summed wave time and -6.5340% weighted native prefill. Two 2K/C2 stalls dominate; excluding them is localization only, not the release score.",
+    "Unchanged R12 targeted 2K/C2 waves range18.31-21.04s, no28/62s stall in six repeats. Fresh versus after128K controls are finite and do not exclude rare recurrence.",
+    "4K/C1 retains +6.07% median and +2.73% total time across ten responses per image. Lower MTP acceptance accompanies nearly unchanged estimated verification-round cost; library causality not established.",
+    "Other full-matrix cells and 128K prologue support the accepted overall tradeoff. Operator explicitly approves promotion after reviewing these costs.",
+    "Original compilation caches were reused separately per image. Offload traffic proves transfers, not12GiB retained histories; full historical36-wave prefix was not replayed."
+  ]
+}

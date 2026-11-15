@@ -1,0 +1,48 @@
+{
+  "status": "QUALIFIED_FOR_PRODUCTION_PROMOTION",
+  "recorded_utc": "2026-11-15T10:05:33.831162+00:00",
+  "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+  "policy_sha256": "2d232cb1344ea5faf358937b0c4e641cc0647423f6a3385d9213f73bd259db48",
+  "immediate_rollback_image_id": "sha256:dc81825313d587ca22eaeeceb26808a8eed63cfb84b9dde22599223b8dab59d1",
+  "gate_assessment": {
+    "path": "benchmarks/results/direct-xpu-followup-20261115/release/gate-assessment.json",
+    "sha256": "3e4b11be14d4dc331336815b5817550c6088fc64373229a64001e94709085b91"
+  },
+  "benchmark_summary": {
+    "path": "benchmarks/results/direct-xpu-followup-20261115/release/benchmark-summary.json",
+    "sha256": "c172ded98b4e58c52a31d1b661eddfb29803cd0af0724f344e3348f0667d137d"
+  },
+  "performance_review_triggers": [
+    {
+      "scenario": "phase-4k-c1",
+      "metric": "decode",
+      "change_pct": -6.952112896600604
+    },
+    {
+      "scenario": "phase-4k-c1",
+      "metric": "wall",
+      "change_pct": 6.479377001974607
+    },
+    {
+      "scenario": "concurrency-2k-c2",
+      "metric": "prefill",
+      "change_pct": -85.56360347220844
+    },
+    {
+      "scenario": "concurrency-2k-c2",
+      "metric": "wall",
+      "change_pct": 42.20175883075965
+    },
+    {
+      "scenario": "complete-matrix",
+      "metric": "weighted_native_prefill_tokens_per_s",
+      "change_pct": -6.534049154682952
+    }
+  ],
+  "performance_review": {
+    "path": "benchmarks/results/direct-xpu-followup-20261115/release/performance-review.json",
+    "sha256": "8e6d05e625f3d986da3b2fc68a5cbe4eb6dddb8573eae2e9ce109fc35b23f1fd"
+  },
+  "operator_requested_production": true,
+  "rationale": "Operator approved the exact PTI/M04-fixed R12 after all final-image gates, aligned quality panels, natural tool-agent4/4 success, full70-wave serving comparison and38-wave follow-up. Accept +1.82% full summed wave time and observed4K latency cost; rare2K stalls remain recorded although not reproduced. Standard compilation, MTP3, native graphs and12GiB RAM retained. Previous productionv7 is the immediate rollback."
+}

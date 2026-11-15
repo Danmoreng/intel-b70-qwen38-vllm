@@ -1,0 +1,60 @@
+{
+  "status": "PASS_EXACT_IMAGE_RELEASE_GATES",
+  "image_id": "sha256:131dd9e11809de2f3136547618f130ee238f0b90cd5718567bcdd0dad5360e19",
+  "stages": {
+    "m04-boundary": {
+      "status": "PASS"
+    },
+    "profiler": {
+      "status": "PASS"
+    },
+    "kernels": {
+      "status": "PASS"
+    },
+    "replay": {
+      "status": "PASS"
+    },
+    "startup": {
+      "status": "PASS"
+    },
+    "cow": {
+      "status": "PASS"
+    },
+    "agents": {
+      "status": "PASS"
+    },
+    "operations": {
+      "status": "PASS"
+    },
+    "serving": {
+      "status": "PASS"
+    }
+  },
+  "receipts": {
+    "campaign": {
+      "path": "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/gates/campaign.json",
+      "sha256": "f57b8ed4ac78a374ad41f79ee584cd0d99fb564809e0c6fc5f6547a5378ba929"
+    },
+    "quality": {
+      "path": "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/quality-campaign.json",
+      "sha256": "da994c6a7c944c1b95458a1a83934612dafd07c2c395bbbf98a23466378e8723"
+    },
+    "quality_comparison": {
+      "path": "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/quality-comparison.json",
+      "sha256": "a4dd7335844caed61735a52e905f08c4ca5d415539d167a7100a35189c3ea59c"
+    },
+    "frozen_inventory": {
+      "path": "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/evidence-inventory.json",
+      "sha256": "0823635729457259e7cd3c7fc07f68805ef64c15c8f728a9f23a6ece9dc32b03"
+    },
+    "tested_overlay": {
+      "path": "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/tested-runtime-overlay.json",
+      "sha256": "bf5ced1594d37c22e3a4e89b307c163c3301fef32bc8d050208e4666018ea4f0"
+    },
+    "metadata_child": {
+      "path": "benchmarks/results/direct-xpu-20261114/qualification/m04-fixed-r12/image.json",
+      "sha256": "1eb42c7dd76359e8f36008fef689978e0438a2405197be0ede8091a8d873ab65"
+    }
+  },
+  "scope": "All nine requested final-image stages pass, plus aligned finite short/long quality panels. Serving regressions are separately reviewed, not erased. No broad quality or rare-stall guarantee."
+}

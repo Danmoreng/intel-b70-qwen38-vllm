@@ -98,6 +98,13 @@ combined throughput while all requests overlap. These columns measure different
 intervals and should not be added together. Warm rows reuse a preceding prompt;
 they are separate cases from the cold rows.
 
+![Single-request prefill and decode throughput from 512 to 195K input tokens, with prefix reuse at 16K and 64K](docs/assets/exl3-v8-context-throughput.png)
+
+![Combined prefill and decode throughput, time to first token, and decode throughput per request for one to four concurrent requests](docs/assets/exl3-v8-concurrency-throughput.png)
+
+Open circles show the medians from six [2K retest waves](benchmarks/results/direct-xpu-followup-20261115/README.md)
+with two concurrent requests on 2026-11-15.
+
 The full matrix covers **20 scenarios, 70 measured waves and 124 requests** on
 this exact release image, with zero preemptions. It measured **51.68 output
 tok/s** across total wave time, including prompt processing and request overhead.
